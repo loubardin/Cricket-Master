@@ -2578,24 +2578,6 @@ body:not(.m2):not(.m3) #game.sk #bS,body.m2 #game.sk #b2,body.m3 #game.sk #b3{tr
 body #game.sk.p2 #scores>.pc.sc.act>.pills{top:-.7dvh!important;bottom:-.7dvh!important}
 /* textes de la case joueur : toujours centrés dans leur moitié */
 body #game.sk.p2 #scores .sc>.nm,body #game.sk.p2 #scores .sc>.pts,body #game.sk.p2 #scores .sc>.mpr{text-align:center!important;justify-content:center!important}
-
-/* ===== v79 ===== */
-/* joueur qui attend : ni contour ni fond */
-#game.sk #scores>.pc.sc:not(.act){background:transparent!important;box-shadow:none!important}
-#game.sk #scores>.pc.sc:not(.act)::after{content:none!important}
-/* la bulle de la case du joueur dépasse du cadre noir, comme sur tous les switchs */
-#game.sk:not(.rot) main,#game.sk #scores{overflow:visible!important}
-#game.sk #scores{padding-top:1.6dvh!important}
-body #game.sk.p2 #scores>.pc.sc.act>.pills{top:-1.3dvh!important;bottom:-1.3dvh!important;box-shadow:0 8px 18px rgba(var(--acc-rgb),.3)!important}
-/* historique des fléchettes en blanc */
-body #game.sk #scores>.pc.sc.act .pill{background:transparent!important;border:2px solid #fff!important;color:#fff!important;box-shadow:none!important;text-shadow:none!important;opacity:1!important}
-body #game.sk #scores>.pc.sc.act .pill *{color:#fff!important}
-body #game.sk #scores>.pc.sc.act .pill.z{opacity:.55!important}
-body #game.sk #scores>.pc.sc.act .pill.undo svg{stroke:#fff!important}
-/* bulles orange qui se chevauchent : en mode produit (jour) */
-html:not(.night) #game.sk #grid .num,html:not(.night) body #game.sk.p2 #scores>.pc.sc.act>.pills,html:not(.night) #game.sk:not(.p2) #scores>.pc.sc.act .pills,
-html:not(.night) #game.sk .fthumb,html:not(.night) #game.sk .rball{mix-blend-mode:multiply}
-body #game.sk.p2 #scores>.pc.sc.act>.pills{align-self:stretch!important;justify-self:stretch!important}
 </style>
 </head>
 <body>
@@ -4978,7 +4960,7 @@ function alignLabels(){document.querySelectorAll('#setup .sect .opt').forEach(o=
  sb.addEventListener('click',()=>{S.sound=!S.sound;store.set(K_S,S);up();haptic();audioInit();SFX.ui()})}
 
 /* ===== style « switch » du tableau de cricket (avec retour au style d'origine) ===== */
-function applyBStyle(){const on=S.bstyle!=='classic';if(!on&&R&&R.sc)R.sc.forEach(sc=>[sc.nm,sc.pts,sc.m,sc.pills].forEach(e=>['left','right','width','text-align','justify-content'].forEach(k=>e.style.removeProperty(k))));$('game').classList.toggle('sk',on);$('bStyle').classList.toggle('on',on);
+function applyBStyle(){const on=S.bstyle!=='classic';if(!on&&R&&R.sc)R.sc.forEach(sc=>[sc.nm,sc.pts,sc.m,sc.pills].forEach(e=>['left','right','width'].forEach(k=>e.style.removeProperty(k))));$('game').classList.toggle('sk',on);$('bStyle').classList.toggle('on',on);
   if(G&&R&&$('game').classList.contains('on')){render();if(typeof refitNames==='function')refitNames()}}
 $('bStyle').addEventListener('click',()=>{S.bstyle=S.bstyle==='classic'?'sw':'classic';store.set(K_S,S);haptic();SFX.ui();applyBStyle()});
 applyBStyle();
@@ -5031,11 +5013,7 @@ function placeHead(){
       const first=c.parentElement.firstElementChild===c;
       if(!first){L=0;W=Math.max(0,pr.left-cr.left)}else{L=Math.max(0,pr.right-cr.left);W=Math.max(0,cr.right-pr.right)}
     }
-    const first=c.parentElement.firstElementChild===c,gap=Math.max(8,cr.width*.05);
-    // collé vers la bulle (vers le centre) : à gauche on aligne à droite, à droite on aligne à gauche
-    if(first){W=Math.max(0,W-gap)}else{L+=gap;W=Math.max(0,W-gap)}
-    [sc.nm,sc.pts,sc.m].forEach(e=>{set(e,'left',L+'px');set(e,'right','auto');set(e,'width',W+'px');
-      set(e,'text-align',first?'right':'left');set(e,'justify-content',first?'flex-end':'flex-start')});
+    [sc.nm,sc.pts,sc.m].forEach(e=>{set(e,'left',L+'px');set(e,'right','auto');set(e,'width',W+'px')});
   });
 }
 {const _pf=placeFrame;placeFrame=function(){const r=_pf.apply(this,arguments);try{placeTracks();placeHead()}catch(e){}return r}}
