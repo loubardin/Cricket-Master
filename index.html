@@ -87,6 +87,8 @@ main{flex:1;display:flex;flex-direction:column;min-height:0;gap:2px;padding-top:
 .tst.on{display:block;animation:toast 1.7s var(--ease) forwards}
 .tst span{display:inline-block;background:var(--accent);color:var(--ink);font-weight:900;font-size:5.4dvh;
   letter-spacing:-.02em;padding:1.2dvh 6vw;box-shadow:0 0 0 4px var(--ink)}
+/* les yeux de « DERNIÈRE FOIS » ne se séparent jamais */
+.tst .eyes{white-space:nowrap;font-style:normal}
 .tst small{display:block;font-size:2dvh;letter-spacing:.1em;margin-top:.3dvh}
 @keyframes toast{0%{opacity:0;transform:scale(.5) rotate(-4deg)}12%{opacity:1;transform:scale(1.1) rotate(1deg)}
   22%{transform:scale(1) rotate(0)}80%{opacity:1}100%{opacity:0;transform:scale(.95)}}
@@ -2167,6 +2169,16 @@ html.night .ov{background:rgba(31,37,48,.98)}
 #setup.b2.teams .tbub .nslot .pname{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #setup.b2.teams .nslot>b{display:none!important}
 #setup.b2.teams .nslot{padding-left:calc(var(--u)*1.8)!important}
+
+/* tableau du cricket : toutes les lignes de la même couleur (verticales et horizontales) */
+#game #grid{background:var(--bg)}
+#game #scores{box-shadow:0 2px 0 var(--bg)}
+
+/* Départ : sur la page Joueurs, sous « Équipes » */
+#setup.b2 .sect.s1 .opt.ordopt{display:flex!important;align-items:center;justify-content:space-between;gap:calc(var(--u)*2);min-height:0!important;margin:0 0 calc(var(--u)*2.4)!important;padding:0!important;box-shadow:none!important}
+#setup.b2 .sect.s1 .opt.ordopt>span{font-size:calc(var(--u)*2.05)!important}
+#setup.b2 .sect.s1 .opt.ordopt .seg.mini{width:auto!important;flex:0 0 58%;height:calc(var(--u)*5.8)!important}
+#setup.b2 .sect.s1 .teamopt{margin-bottom:calc(var(--u)*2.4)!important}
 </style>
 </head>
 <body>
@@ -2213,6 +2225,7 @@ html.night .ov{background:rgba(31,37,48,.98)}
     <div class="glab"><span>Joueurs</span></div>
     <div class="sect s1">
       <div class="opt ck xk teamopt"><span>Équipes</span><div class="seg mini" data-k="teams"><button data-v="0">Non</button><button data-v="1">Oui</button></div><button id="tShuffle" class="tshuf" aria-label="Mélanger les équipes"><b>⤮</b>Mélanger</button></div>
+      <div class="opt ck xk ordopt"><span>Départ</span><div class="seg mini" id="segOrd"><button data-v="fixed">Ordre saisi</button><button data-v="draw">Tirage</button></div></div>
       <div class="seg mini" id="segN"><button data-v="2">2</button><button data-v="3">3</button><button data-v="4">4</button><button data-v="5">5</button><button data-v="6">6</button></div>
       <div id="names"></div>
       <div id="rchips"></div>
@@ -2231,7 +2244,6 @@ html.night .ov{background:rgba(31,37,48,.98)}
       <div class="opt xo"><span>2 manches gagnantes</span><div class="seg mini yn" data-k="xlegs"><button data-v="2">Oui</button><button data-v="1">Non</button></div></div>
       <div class="opt xo"><span>Droit de réponse</span><div class="seg mini yn" data-k="xrep"><button data-v="1">Oui</button><button data-v="0">Non</button></div></div>
       <div class="opt xo"><span>Aide finish</span><div class="seg mini yn" data-k="xhint"><button data-v="1">Oui</button><button data-v="0">Non</button></div></div>
-      <div class="opt ck xk"><span>Départ</span><div class="seg mini" id="segOrd"><button data-v="fixed">Ordre saisi</button><button data-v="draw">Tirage</button></div></div>
       <div class="opt kl"><span>Vies</span><div class="seg mini" id="segLives"><button data-v="3">3</button><button data-v="4">4</button><button data-v="5">5</button></div></div>
       <div class="opt kl"><span>Numéros</span><div class="seg mini" id="segKn"><button data-v="draw">Tirage</button><button data-v="throw">1er lancer</button></div></div>
       <div class="opt kl"><span>Tuer = +1 ♥</span><div class="seg mini yn" data-k="kbonus"><button data-v="1">Oui</button><button data-v="0">Non</button></div></div>
@@ -2741,7 +2753,7 @@ function throwDart(t){
   if(HOLD)releaseHold();
   if(G.winner!==null)return;
   const m=t===0?0:G.mult;
-  if(t===25&&m===3){toast('DERNIÈRE FOIS 👁️👁️');SFX.meh();shake(25);return}       // pas de triple bull : rien ne se passe
+  if(t===25&&m===3){toast('DERNIÈRE <i class="eyes">FOIS 👁️👁️</i>');SFX.meh();shake(25);return}       // pas de triple bull : rien ne se passe
   snapshot();
   const P=G.players,who=G.cur,me=P[who];
   const mpr0=me.darts>=3?mpr(me):0,thr=me.members?me.members[me.mi]:me.name;   // MPR avant cette fléchette (en dessous de 3 fléchettes : pas encore significatif)
@@ -3095,10 +3107,64 @@ function fitName(el){
   const need=()=>rg.getBoundingClientRect().width+extra*fs;
   while(need()>avail&&fs>9&&n++<40){fs-=1;el.style.setProperty('font-size',fs+'px','important')}
 }
+
+/* ===== cases joueur du cricket : nom et score aussi gros que possible, sans jamais déborder =====
+   Règles : chaque texte reste dans sa propre bande (sa ligne de la grille de la case) ;
+   marges latérales = 7 % de la largeur disponible (min. 4 px), 2 px en haut et en bas de la bande ;
+   tous les scores sont calibrés sur le plus long (au moins 2 chiffres) pour garder la même taille. */
+const FCV=document.createElement('canvas').getContext('2d');
+function gmet(cs,txt,fs){FCV.font=`${cs.fontStyle} ${cs.fontWeight} ${fs}px ${cs.fontFamily}`;
+  const m=FCV.measureText(txt),h=FCV.measureText('H'),f=parseFloat(cs.fontSize)||fs,
+    ls=cs.letterSpacing==='normal'?0:parseFloat(cs.letterSpacing)/f;
+  // largeur : mesurée par le navigateur lui-même (mêmes polices de secours que l'écran)
+  const M=window.__fitM||(window.__fitM=Object.assign(document.body.appendChild(document.createElement('span')).style,{position:'absolute',left:'-9999px',top:'0',visibility:'hidden',whiteSpace:'nowrap',display:'inline-block'})&&document.body.lastChild);
+  M.style.fontFamily=cs.fontFamily;M.style.fontWeight=cs.fontWeight;M.style.fontStyle=cs.fontStyle;M.style.textTransform=cs.textTransform;
+  M.style.letterSpacing=(ls*fs)+'px';M.style.fontSize=fs+'px';M.textContent=txt;
+  return{w:M.offsetWidth*1.03,a:m.actualBoundingBoxAscent,d:m.actualBoundingBoxDescent,fa:h.fontBoundingBoxAscent,fd:h.fontBoundingBoxDescent}}
+function relOff(el,box){let x=0,y=0,e=el;while(e&&e!==box){x+=e.offsetLeft;y+=e.offsetTop;e=e.offsetParent}return e===box?{x,y}:null}
+function glyphY(el,cell,fs){   // haut / bas réels des lettres (et de la couronne pour le nom), dans la case
+  const cs=getComputedStyle(el),o=relOff(el,cell);if(!o)return null;
+  const act=(el.firstChild&&el.firstChild.nodeType===3?el.firstChild.textContent:el.textContent).trim();
+  const g=gmet(cs,act,fs),lh=parseFloat(cs.lineHeight)||el.offsetHeight,top=o.y+(el.offsetHeight-lh)/2;
+  const base=top+(lh-(g.fa+g.fd))/2+g.fa;
+  return{o,act,cs,g,t:base-g.a,b:base+g.d,cx:o.x+el.offsetWidth/2,cy:o.y+el.offsetHeight/2,boxT:o.y}}
+function fitBox(el,cell,band,crown){
+  let fs=parseFloat(getComputedStyle(el).fontSize),k=1;
+  for(let it=0;it<8;it++){
+    const m=glyphY(el,cell,fs);if(!m||!m.act||!el.offsetHeight)return;
+    // couronne / escargot posés au-dessus du nom : place toujours réservée (≈ 0,95 em au-dessus de la boîte)
+    const top=crown?Math.min(m.t,m.boxT-.95*fs):m.t,hw=Math.max(1,m.g.w/2);
+    k=Math.min((m.cx-band.L)/hw,(band.R-m.cx)/hw);
+    if(m.cy-top>.5)k=Math.min(k,(m.cy-band.T)/(m.cy-top));
+    if(m.b-m.cy>.5)k=Math.min(k,(band.B-m.cy)/(m.b-m.cy));
+    if(!(k>0))k=.8;
+    if(k>=1&&k<1.02)return;
+    fs=Math.max(8,Math.min(400,fs*k*.995));
+    el.style.setProperty('font-size',fs.toFixed(2)+'px','important');
+  }
+  if(k<1)el.style.setProperty('font-size',(fs*k*.97).toFixed(2)+'px','important');
+}
+function fitHead(){
+  if(!R||!G||!R.sc)return;const p2=$('game').classList.contains('p2');
+  R.sc.forEach(s=>{const c=s.c;if(!c.clientWidth)return;
+    const side=el=>{const o=relOff(el,c);let L=0,Rr=c.clientWidth;if(p2&&o){L=o.x;Rr=o.x+el.offsetWidth}const mx=6+(Rr-L)*.08;return[L+mx,Rr-mx]};
+    // 1. le nom : entre le haut de la case (couronne comprise) et la mi-distance avec le score
+    const mN=glyphY(s.nm,c,parseFloat(getComputedStyle(s.nm).fontSize)),mP=glyphY(s.pts,c,parseFloat(getComputedStyle(s.pts).fontSize));
+    if(!mN||!mP)return;
+    let [L,Rr]=side(s.nm);fitBox(s.nm,c,{L,R:Rr,T:3,B:(mN.cy*.62+mP.cy*.38)},true);
+    // 2. le score : entre le bas du nom et le haut du MPR (et des fléchettes si elles sont dessous)
+    const nb=glyphY(s.nm,c,parseFloat(getComputedStyle(s.nm).fontSize)).b;
+    const below=[s.m,s.pills].map(x=>relOff(x,c)).filter(o=>o).map((o,k)=>{const x=k?s.pills:s.m;return o.y+(x.offsetHeight?0:0)}).filter(y=>y>mP.cy);
+    const mo=relOff(s.m,c),mprTop=mo?mo.y+s.m.offsetHeight*.12:c.clientHeight;
+    const lim=Math.min(mprTop,...below,c.clientHeight-3);
+    [L,Rr]=side(s.pts);fitBox(s.pts,c,{L,R:Rr,T:nb+5,B:lim-4},false);
+  });
+  if(p2&&R.sc.length===2){const fs=Math.min(...R.sc.map(s=>parseFloat(getComputedStyle(s.nm).fontSize)));R.sc.forEach(s=>s.nm.style.setProperty('font-size',fs+'px','important'))}
+}
 let refitT=null;
 // 2 joueurs : même taille de nom des deux côtés (la plus petite des deux)
 function eqNames(){if(R&&G&&G.players.length===2){const fs=Math.min(...R.sc.map(s=>parseFloat(getComputedStyle(s.nm).fontSize)));R.sc.forEach(s=>s.nm.style.setProperty('font-size',fs+'px','important'))}}
-function refitNames(){eqNames();clearTimeout(refitT);refitT=setTimeout(()=>{if(!R)return;R.sc.forEach(s=>fitName(s.nm));eqNames()},450)}
+function refitNames(){fitHead();clearTimeout(refitT);refitT=setTimeout(()=>{if(!R)return;fitHead()},450)}
 const UNDO_PILL='<button class="pill undo" aria-label="Annuler la dernière fléchette"><svg viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button>';
 document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('.pill.undo')){if(onKiller())kUndo();else undo()}});
 function pillHTML(d){
@@ -3126,7 +3192,7 @@ function placeFrame(){
 }
 let frameRaf=0;
 function trackFrame(ms=450){const t0=performance.now();cancelAnimationFrame(frameRaf);const step=()=>{placeFrame();if(performance.now()-t0<ms)frameRaf=requestAnimationFrame(step)};step()}
-addEventListener('resize',()=>trackFrame(100));
+addEventListener('resize',()=>{trackFrame(100);if(typeof refitNames==='function')refitNames()});
 /* équipe : nom du joueur qui lance (pendant la pause de fin de tour : celui qui vient de lancer) */
 function thrower(p,i){
   if(!p.members)return p.name;
@@ -3152,7 +3218,6 @@ function render(){
       if(badge&&s.badge!==undefined&&s.badge!==badge){const e=s.nm.querySelector('.'+badge);if(e)e.classList.add('pop')}
       s.badge=badge;s.nmTxt=key;
     }
-    fitName(s.nm);
     const txt=String(p.score);
     if(!s.busy&&s.pts.textContent!==txt){
       if(s.pts.textContent!==''){s.pts.classList.remove('pop');void s.pts.offsetWidth;s.pts.classList.add('pop')}
@@ -4117,7 +4182,7 @@ function xMiss(){
 const xOk=(rule,m)=>rule===0||(rule===1&&m===2)||(rule===2&&m>=2);
 function xThrow(n,m,quiet){
   m=m||1;if(!XG||XG.winner!==null||XG.legW!==null)return;
-  if(n===25&&m===3){toast('DERNIÈRE FOIS 👁️👁️');SFX.meh();anim($('xkeys').querySelector('.bull'),'xno',450);XG.mult=1;xRender();return}   // pas de triple bulle
+  if(n===25&&m===3){toast('DERNIÈRE <i class="eyes">FOIS 👁️👁️</i>');SFX.meh();anim($('xkeys').querySelector('.bull'),'xno',450);XG.mult=1;xRender();return}   // pas de triple bulle
   XH.push(JSON.stringify(XG));
   const P=XG.players,who=XG.cur,me=P[who],v=n*m,d={n,m,v,eff:0,type:'miss'};
   me.darts++;me.legDarts++;XG.mult=1;
@@ -4418,6 +4483,7 @@ document.querySelectorAll('#setup .sect.s2 .opt').forEach(o=>{const b=[...o.quer
 const SU=$('setup');
 function setupPage(n,anim){SU.classList.toggle('p2',n===2);$('go').textContent=n===2?'Lancer la partie':'Suivant';
   SU.querySelector('.sh h1').textContent=n===2?'Joueurs':'Nouvelle partie';SU.scrollTop=0;$('ppick').classList.remove('on');
+  if(typeof placeThumbs==='function')requestAnimationFrame(placeThumbs);
   SU.classList.remove('p1in','p2in');if(anim){void SU.offsetWidth;SU.classList.add(n===2?'p2in':'p1in')}}
 {const _show=show;show=function(id){if(id==='setup'&&!SU.classList.contains('on'))setupPage(1);_show(id)}}
 $('go').addEventListener('click',e=>{if(!SU.classList.contains('p2')){e.stopImmediatePropagation();haptic();SFX.ui();setupPage(2,1)}},true);
