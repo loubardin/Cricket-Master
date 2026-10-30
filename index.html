@@ -2491,6 +2491,17 @@ html.sang #game.sk #grid>.row::after{border-width:3px}
 #game.sk footer{gap:2.6vw!important;padding:1.4dvh 3.5vw calc(var(--sab) + 1.4dvh)!important;background:transparent!important;height:calc(10dvh + var(--sab))!important}
 #game.sk footer button{border-radius:99px!important;box-shadow:0 6px 16px rgba(0,0,0,.18)!important}
 #game.sk footer button:active{transform:scale(.96)}
+
+/* rails limités à la colonne des nombres + joueur en cours */
+#game.sk #grid>.row{background:transparent!important}
+#game.sk #grid>.row::after{content:none!important}
+#game.sk .rtrack{position:absolute;top:0;bottom:0;z-index:0;background:var(--m-cell);border-radius:99px;pointer-events:none;
+  transition:left .35s cubic-bezier(.3,.9,.3,1),width .35s cubic-bezier(.3,.9,.3,1)}
+#game.sk .rtrackb{position:absolute;top:0;bottom:0;z-index:4;border:2px solid var(--m-strong);border-radius:99px;pointer-events:none;
+  transition:left .35s cubic-bezier(.3,.9,.3,1),width .35s cubic-bezier(.3,.9,.3,1)}
+html.sang #game.sk .rtrackb{border-width:3px}
+#game.sk #grid>.row.lit .pc.mk:not(.intk){color:var(--ink)!important}
+#game:not(.sk) .rtrack,#game:not(.sk) .rtrackb,#game:not(.sk) .rflash{display:none!important}
 </style>
 </head>
 <body>
@@ -4879,16 +4890,28 @@ applyBStyle();
 /* quand on marque : la bulle orange s'étire sur tout le switch puis revient sur le nombre */
 function flashRow(t){
   if(!$('game').classList.contains('sk')||!R||!R.num[t])return;
-  const num=R.num[t],row=num.parentElement,rr=row.getBoundingClientRect(),nr=num.getBoundingClientRect();
+  const num=R.num[t],row=num.parentElement,rr=row.getBoundingClientRect(),nr=num.getBoundingClientRect(),tk=row.querySelector('.rtrack');
   const f=document.createElement('i');f.className='rflash';
-  const L=nr.left-rr.left,W=nr.width;
+  const L=nr.left-rr.left,W=nr.width,TL=tk?tk.offsetLeft:0,TW=tk?tk.offsetWidth:rr.width;
   f.style.cssText=`left:${L}px;width:${W}px`;row.append(f);
-  requestAnimationFrame(()=>{f.style.left='0px';f.style.width=rr.width+'px';row.classList.add('lit')});
+  requestAnimationFrame(()=>{f.style.left=TL+'px';f.style.width=TW+'px';row.classList.add('lit')});
   setTimeout(()=>{f.style.left=L+'px';f.style.width=W+'px';row.classList.remove('lit')},260);
   setTimeout(()=>f.remove(),560);
 }
 {const _t=throwDart;throwDart=function(t){const before=G?JSON.stringify(G.players.map(p=>[p.marks,p.score])):'';const r=_t.apply(this,arguments);
   try{if(t&&G&&JSON.stringify(G.players.map(p=>[p.marks,p.score]))!==before)flashRow(t)}catch(e){}return r}}
+
+/* le rail de chaque nombre couvre la colonne des nombres + celle du joueur en cours (comme l'ancien cadre) */
+function placeTracks(){
+  if(!$('game').classList.contains('sk')||!R||!G)return;const cur=shownCur();
+  TARGETS.forEach(t=>{const num=R.num[t],row=num&&num.parentElement,c=R.mk[t]&&R.mk[t][cur];if(!row||!c)return;
+    let tk=row.querySelector('.rtrack'),tb=row.querySelector('.rtrackb');
+    if(!tk){tk=document.createElement('i');tk.className='rtrack';row.prepend(tk);tb=document.createElement('i');tb.className='rtrackb';row.append(tb)}
+    const a=num.offsetLeft,b=a+num.offsetWidth,x=c.offsetLeft,y=x+c.offsetWidth,L=Math.min(a,x),Rr=Math.max(b,y);
+    tk.style.left=tb.style.left=L+'px';tk.style.width=tb.style.width=(Rr-L)+'px';
+    row.querySelectorAll('.pc.mk').forEach(m=>m.classList.toggle('intk',m.offsetLeft>=L-1&&m.offsetLeft+m.offsetWidth<=Rr+1))});
+}
+{const _pf=placeFrame;placeFrame=function(){const r=_pf.apply(this,arguments);try{placeTracks()}catch(e){}return r}}
 /* démarrage : toujours l'accueil (« Reprendre la partie » si une partie est en cours) */
 goHome();
 
