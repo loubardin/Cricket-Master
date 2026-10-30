@@ -2355,6 +2355,27 @@ html.night #setup.b2 .sect,html.night #setup.b2 .sect.s1,html.night #setup.b2 .s
 /* choix du jeu : même largeur, même hauteur et même texte que les autres switchs */
 #setup.b2 .seg.gamepick{height:calc(var(--u)*5.8)!important;width:auto!important;max-width:none!important;margin-left:0!important;margin-right:0!important;align-self:stretch!important}
 #setup.b2 .seg.gamepick button{font-size:calc(var(--u)*2.5)!important}
+
+/* titre du menu centré (le bouton retour reste à gauche) */
+#setup.b2 .sh{position:relative;justify-content:center!important}
+#setup.b2 .sh .circ{position:absolute!important;left:0;top:50%;translate:0 -50%}
+#setup.b2 .sh h1{text-align:center;flex:0 1 auto!important;margin:0!important}
+/* intitulés : même famille arrondie, en moins épais (les switchs gardent la police épaisse) */
+#setup.b2 .opt>span,#setup.b2 .teamopt>span,#setup.b2 .sect.s2 .opt>span,#setup.b2 .sect.s1 .opt.ordopt>span{font-family:"FunL","Fun",-apple-system,sans-serif!important;font-weight:800!important;letter-spacing:0!important}
+/* mode nuit : textes des tableaux en blanc (plus de vert) */
+html.night.sang{--ink:#f2f4f8;--m-ink:#f2f4f8}
+
+/* mode nuit : cartes du Killer sombres, textes blancs ; cadre du joueur en rouge */
+html.night #kplayers .kc,html.night #kplayers.grid .kc{background:#283040!important;color:#f2f4f8}
+html.night #kplayers.grid .kc.act{background:#364055!important}
+html.night #kplayers.grid .kc.tap{background:color-mix(in srgb,var(--accent) 30%,#283040)!important}
+html.night #kplayers.grid .kc.dead{background:#1a1f28!important}
+html.night #kplayers .kc:not(.act) .kname{color:#c9d0dc!important}
+html.night #kplayers .kc:not(.tgt):not(.def) .kno{color:#f2f4f8!important;-webkit-text-fill-color:#f2f4f8}
+html.night #kplayers .kc.dim .kno{opacity:.75}
+html.night #kplayers.grid .kc.act .khist .pill{background:#2b3241;border-color:#3a4356}
+html.sang #pframe{animation-name:breathe2!important}
+@keyframes breathe2{0%,100%{border-color:var(--accent);box-shadow:0 0 0 0 rgba(var(--acc-rgb),0)}50%{border-color:var(--accent);box-shadow:0 0 14px 0 rgba(var(--acc-rgb),.35)}}
 </style>
 </head>
 <body>
