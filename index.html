@@ -2112,6 +2112,20 @@ html.night .ov{background:rgba(31,37,48,.98)}
 #hResume{animation:hpulse 2.4s ease-in-out infinite;transform-origin:center}
 @keyframes hpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.045)}}
 #hResume:active{animation:none;transform:scale(.97)}
+
+/* ===== MENU v60 : règles en grille (intitulé au-dessus, à gauche) ===== */
+#setup.b2 .sect.s2{display:flex!important;flex-direction:row!important;flex-wrap:wrap!important;align-items:flex-start!important;column-gap:calc(var(--u)*4.4);row-gap:calc(var(--u)*3);
+  padding:calc(var(--u)*2.6) calc(var(--u)*2.6) calc(var(--u)*3)!important;overflow:visible!important}
+#setup.b2 .sect.s2 .opt{grid-template-columns:1fr!important;justify-items:stretch;align-content:start;row-gap:calc(var(--u)*1.2);
+  min-height:0!important;padding:0!important;box-shadow:none!important;flex:0 0 calc(50% - var(--u)*2.2)!important;width:auto!important;max-width:none!important;order:1;min-width:0}
+#setup.b2 .sect.s2 .opt.wide{flex-basis:100%!important;order:0}
+#setup.b2 .sect.s2 .opt>span{text-align:left;justify-self:start;padding-left:calc(var(--u)*.4)}
+#setup.b2 .sect.s2 .opt .seg.mini{width:100%!important;max-width:none!important;justify-self:stretch;margin:0!important}
+#setup.b2 .sect.s2{column-gap:calc(var(--u)*6)!important;row-gap:calc(var(--u)*4.6)!important;padding-top:calc(var(--u)*3.4)!important;align-items:stretch!important}
+#setup.b2 .sect.s2 .opt{grid-template-rows:1fr auto!important;row-gap:calc(var(--u)*2.4)!important;flex-basis:calc(50% - var(--u)*3)!important}
+#setup.b2 .sect.s2 .opt>span{align-self:end;white-space:normal!important;line-height:1.15}
+/* bulles joueurs : mêmes proportions que dans « Ajouter un joueur » */
+#setup.b2 .nslot,#setup.b2 .nslot+.nslot,#setup.b2 .nslot.drag{border-radius:calc(var(--u)*2.4)!important;min-height:calc(var(--u)*6)!important}
 </style>
 </head>
 <body>
@@ -4356,6 +4370,10 @@ document.addEventListener('click',e=>{
   else if(['sBack','bBack','bWinMenu','askNo','bInfoClose','knCancel','kBack','xBack'].includes(id))SFX.back();
   else SFX.ui();
 });
+
+/* règles du menu : les options courtes (Oui/Non…) vont par deux sur une ligne */
+document.querySelectorAll('#setup .sect.s2 .opt').forEach(o=>{const b=[...o.querySelectorAll('.seg button')];
+  if(b.length>2||b.some(x=>x.textContent.trim().length>7))o.classList.add('wide')});
 /* démarrage : toujours l'accueil (« Reprendre la partie » si une partie est en cours) */
 goHome();
 
