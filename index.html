@@ -2108,6 +2108,10 @@ html.night #kplayers.grid .kc{background:#283040}
 html.night .xc{background:#283040}
 html.night .xc.act{background:#364055}
 html.night .ov{background:rgba(31,37,48,.98)}
+/* accueil : « Reprendre la partie » respire doucement */
+#hResume{animation:hpulse 2.4s ease-in-out infinite;transform-origin:center}
+@keyframes hpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.045)}}
+#hResume:active{animation:none;transform:scale(.97)}
 </style>
 </head>
 <body>
@@ -4352,11 +4356,8 @@ document.addEventListener('click',e=>{
   else if(['sBack','bBack','bWinMenu','askNo','bInfoClose','knCancel','kBack','xBack'].includes(id))SFX.back();
   else SFX.ui();
 });
-/* démarrage : reprise automatique d'une partie en cours */
-if(S.last==='x01'&&XG&&XG.players&&XG.winner===null)showX01();
-else if(S.last==='killer'&&KG&&KG.players&&KG.winner===null)showKiller();
-else if(G&&G.players&&G.winner===null){build();render();show('game')}
-else goHome();
+/* démarrage : toujours l'accueil (« Reprendre la partie » si une partie est en cours) */
+goHome();
 
 /* ---- mode nuit ---- */
 (function(){const K='darts.theme.v1';let n=false;try{n=localStorage.getItem(K)==='night'}catch(e){}
