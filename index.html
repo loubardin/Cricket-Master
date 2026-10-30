@@ -2265,6 +2265,31 @@ html.sang #setup.b2 .nslot .pcol,html.sang #ppick .rchip::before{background:#f7f
 html.sang #setup.b2 .nslot.bot .pname::after{filter:grayscale(1) brightness(3)}
 html.sang #setup.b2 #names>.padd{background:var(--accent)!important}
 html.sang #setup.b2 .padd::before{color:#fff!important}
+
+/* ===== v68 ===== */
+/* sélecteur de manches */
+#setup .stp{display:flex;align-items:center;justify-content:space-between;height:calc(var(--u)*5.8);border:var(--m-bd,2px solid #141414);border-radius:99px;background:var(--m-cell);padding:0 calc(var(--u)*.6)}
+html.sang #setup .stp{border-width:3px}
+#setup .stp button{width:calc(var(--u)*7);height:100%;font-family:"Fun",sans-serif!important;font-size:calc(var(--u)*3.6);color:var(--m-ink);line-height:1}
+#setup .stp button:disabled{opacity:.25}
+#setup .stp button:active:not(:disabled){transform:scale(.85)}
+#setup .stp b{min-width:calc(var(--u)*9);height:100%;display:grid;place-items:center;border-radius:99px;background:var(--accent);color:#fff;
+  font-family:"Fun",sans-serif!important;font-weight:400;font-size:calc(var(--u)*2.9);box-shadow:0 0 0 calc(var(--u)*1.7) var(--accent),0 8px 18px rgba(var(--acc-rgb),.38)}
+#setup .stp b.pop{animation:stpop .35s var(--ease)}
+@keyframes stpop{0%{transform:scale(1)}40%{transform:scale(1.25)}100%{transform:scale(1)}}
+/* 301 : regroupement — manches, score, entrée/sortie, réponse/aide */
+#setup.g-x01 .sect.s2 .opt:has(.stp[data-k="xlegs"]){order:0!important}
+#setup.g-x01 .sect.s2 .opt:has([data-k="xstart"]){order:1!important}
+#setup.g-x01 .sect.s2 .opt:has([data-k="xin"]){order:2!important}
+#setup.g-x01 .sect.s2 .opt:has([data-k="xout"]){order:3!important;margin-top:calc(var(--u)*-1.2)!important}
+#setup.g-x01 .sect.s2 .opt:has([data-k="xrep"]){order:4!important}
+#setup.g-x01 .sect.s2 .opt:has([data-k="xhint"]){order:5!important}
+#setup:not(.g-x01):not(.g-killer) .sect.s2 .legopt{order:2!important}
+/* picto son de l'accueil */
+.sndt{position:absolute;top:calc(var(--sat) + 2dvh);left:5vw;z-index:5;width:min(9vw,4.4dvh);height:min(9vw,4.4dvh);border-radius:50%;background:var(--m-cell);
+  display:grid;place-items:center;font-size:min(4.2vw,2.1dvh);line-height:1;transition:opacity .2s,transform .15s}
+.sndt.off{opacity:.55}
+.sndt:active{transform:scale(.9)}
 </style>
 </head>
 <body>
@@ -2277,7 +2302,7 @@ html.sang #setup.b2 .padd::before{color:#fff!important}
 
 <!-- ===== MENU ===== -->
 <section id="home" class="screen on simple">
-  <button id="skinT" class="thsw skin" aria-label="Thème"><span class="d">🟠</span><span class="n">🔴</span><i></i></button>
+  <button id="sndT" class="sndt" aria-label="Son">🔊</button>
   <button id="themeT" class="thsw" aria-label="Mode nuit"><span class="d">☀️</span><span class="n">🌙</span><i></i></button>
   <div class="hb">
     <svg class="board" viewBox="0 0 200 200" aria-hidden="true">
@@ -2323,12 +2348,12 @@ html.sang #setup.b2 .padd::before{color:#fff!important}
     <div class="glab"><span>Règles</span></div>
     <div class="sect s2">
       <div class="opt ck"><span>Mode</span><div class="seg mini" id="segMode"><button data-v="standard">Standard</button><button data-v="cut">Coupe-gorge</button></div></div>
-      <div class="opt ck"><span>2 manches gagnantes</span><div class="seg mini yn" data-k="clegs"><button data-v="2">Oui</button><button data-v="1">Non</button></div></div>
+      <div class="opt ck legopt wide"><span>Manches gagnantes</span><div class="stp" data-k="clegs"><button data-d="-1" aria-label="Moins">−</button><b>1</b><button data-d="1" aria-label="Plus">+</button></div></div>
       <div class="opt ck"><span>Fermeture</span><div class="seg mini" data-k="seq"><button data-v="0">Libre</button><button data-v="1">15 → Bulle</button></div></div>
       <div class="opt xo"><span>Score</span><div class="seg mini" data-k="xstart"><button data-v="301">301</button><button data-v="401">401</button><button data-v="501">501</button><button data-v="701">701</button></div></div>
       <div class="opt xo"><span>Entrée</span><div class="seg mini" data-k="xin"><button data-v="0">Simple</button><button data-v="1">Double</button><button data-v="2">Master</button></div></div>
       <div class="opt xo"><span>Sortie</span><div class="seg mini" data-k="xout"><button data-v="0">Simple</button><button data-v="1">Double</button><button data-v="2">Master</button></div></div>
-      <div class="opt xo"><span>2 manches gagnantes</span><div class="seg mini yn" data-k="xlegs"><button data-v="2">Oui</button><button data-v="1">Non</button></div></div>
+      <div class="opt xo legopt wide"><span>Manches gagnantes</span><div class="stp" data-k="xlegs"><button data-d="-1" aria-label="Moins">−</button><b>1</b><button data-d="1" aria-label="Plus">+</button></div></div>
       <div class="opt xo"><span>Droit de réponse</span><div class="seg mini yn" data-k="xrep"><button data-v="1">Oui</button><button data-v="0">Non</button></div></div>
       <div class="opt xo"><span>Aide finish</span><div class="seg mini yn" data-k="xhint"><button data-v="1">Oui</button><button data-v="0">Non</button></div></div>
       <div class="opt kl"><span>Vies</span><div class="seg mini" id="segLives"><button data-v="3">3</button><button data-v="4">4</button><button data-v="5">5</button></div></div>
@@ -2336,7 +2361,6 @@ html.sang #setup.b2 .padd::before{color:#fff!important}
       <div class="opt kl"><span>Tuer = +1 ♥</span><div class="seg mini yn" data-k="kbonus"><button data-v="1">Oui</button><button data-v="0">Non</button></div></div>
       <div class="opt kl"><span>Défense finale</span><div class="seg mini yn" data-k="kdef"><button data-v="1">Oui</button><button data-v="0">Non</button></div></div>
       <div class="opt kl"><span>Vainqueur +1 ♥</span><div class="seg mini yn" data-k="kcarry"><button data-v="1">Oui</button><button data-v="0">Non</button></div></div>
-      <div class="opt"><span>Son</span><div class="seg mini yn" id="segSound"><button data-v="1">Oui</button><button data-v="0">Non</button></div></div>
     </div>
   </div>
 
@@ -3445,7 +3469,7 @@ function renderSetup(){
   $('segMode').querySelectorAll('button').forEach(b=>b.classList.toggle('sel',b.dataset.v===S.mode));
   $('segN').querySelectorAll('button').forEach(b=>b.classList.toggle('sel',+b.dataset.v===S.n));
   $('segOrd').querySelectorAll('button').forEach(b=>b.classList.toggle('sel',b.dataset.v===(S.order||'fixed')));
-  $('segSound').querySelectorAll('button').forEach(b=>b.classList.toggle('sel',(b.dataset.v==='1')===S.sound));
+  
   S.names=S.names.slice(0,S.n);S.n=S.names.length;
   const teamsOn=(S.game==='cricket'||S.game==='x01')&&S.teams>0;
   $('setup').classList.toggle('teams',teamsOn);
@@ -3468,7 +3492,7 @@ function renderSetup(){
   if(S.n<maxP()){const add=el('button','padd','+');add.setAttribute('aria-label','Ajouter un joueur');add.addEventListener('click',openPick);box.append(add)}
   if(teamsOn&&!teamsOK())box.append(el('div','phint','Équipes : il faut au moins 3 joueurs'));
   $('rchips').innerHTML='';
-  requestAnimationFrame(placeThumbs);
+  requestAnimationFrame(placeThumbs);if(typeof renderStp==='function')renderStp();
 }
 let PICK=0;
 const maxP=()=>10;            // jusqu'à 10 joueurs (cricket et killer)
@@ -3599,7 +3623,6 @@ $('segMode').addEventListener('click',e=>{const v=e.target.dataset.v;if(v){S.mod
 $('tShuffle').addEventListener('click',()=>{haptic();const a=shuffle(S.names.slice(0,S.n));S.names.splice(0,S.n,...a);store.set(K_S,S);SFX.lock();renderSetup();document.querySelectorAll('#names .nslot').forEach((x,k)=>{x.style.animationDelay=(k*60)+'ms';anim(x,'shufin',700)})});
 $('segN').addEventListener('click',e=>{const v=e.target.dataset.v;if(v){S.n=+v;store.set(K_S,S);renderSetup()}});
 $('segOrd').addEventListener('click',e=>{const v=e.target.dataset.v;if(v){S.order=v;store.set(K_S,S);renderSetup()}});
-$('segSound').addEventListener('click',e=>{const v=e.target.dataset.v;if(v){S.sound=v==='1';store.set(K_S,S);renderSetup();audioInit()}});
 function launchNew(){
   const names=S.names.slice(0,S.n).map((s,i)=>(s||'').trim().toUpperCase()||('J'+(i+1)));
   if(S.game==='cricket'&&S.teams>0&&teamsOK()){
@@ -3754,7 +3777,7 @@ applyTheme();
    Un killer qui touche le numéro d'un adversaire lui retire autant de vies que de marques ; sur son propre numéro, il en perd.
    Le dernier survivant gagne. */
 /* ---- joueurs enregistrés : nom + couleur ---- */
-if(S.xlegs>2)S.xlegs=2;
+if(S.xlegs>10)S.xlegs=10;
 const K_R='cricket.roster.v1';
 const PCOLS=['#d62828','#f77f00','#2b9348','#1d4ed8','#7b2cbf','#0ea5e9','#c9184a','#8d5a2b','#0f8b8d','#111111'];
 let ROSTER=store.get(K_R,null);
@@ -4606,17 +4629,24 @@ new MutationObserver(()=>SU.classList.toggle('pk',$('ppick').classList.contains(
 
 /* vibration à chaque saisie de fléchette (pavé, tableau, DOUBLE/SPEW/TRIPLE, Killer) */
 document.addEventListener('pointerdown',e=>{const b=e.target.closest&&e.target.closest('footer button,#game .num,#game .pc.mk.act,#xkeys button,#kplayers .kc,#knumPad button,.pill.undo,#xUndo');if(b)haptic()},{passive:true});
+
+/* manches gagnantes : − / + de 1 à 10 */
+function renderStp(){document.querySelectorAll('#setup .stp').forEach(g=>{const v=Math.min(10,Math.max(1,+S[g.dataset.k]||1)),b=g.querySelector('b');
+  if(b.textContent!==String(v)){b.textContent=v;b.classList.remove('pop');void b.offsetWidth;b.classList.add('pop')}
+  g.querySelector('[data-d="-1"]').disabled=v<=1;g.querySelector('[data-d="1"]').disabled=v>=10})}
+document.querySelectorAll('#setup .stp').forEach(g=>g.addEventListener('click',e=>{const d=+(e.target.closest('button')||{}).dataset?.d;if(!d)return;
+  const k=g.dataset.k,v=Math.min(10,Math.max(1,(+S[k]||1)+d));if(v===(+S[k]||1))return;S[k]=v;store.set(K_S,S);haptic();SFX.ui();renderStp()}));
+renderStp();
+/* son : picto discret sur l'accueil */
+{const sb=$('sndT'),up=()=>{sb.textContent=S.sound?'🔊':'🔇';sb.classList.toggle('off',!S.sound)};up();
+ sb.addEventListener('click',()=>{S.sound=!S.sound;store.set(K_S,S);up();haptic();audioInit();SFX.ui()})}
 /* démarrage : toujours l'accueil (« Reprendre la partie » si une partie est en cours) */
 goHome();
 
 
-/* ---- thème (orange / sang) ---- */
-(function(){const K='darts.skin.v1';let v='';try{v=localStorage.getItem(K)||''}catch(e){}
- const ap=()=>{document.documentElement.classList.toggle('sang',v==='sang');if(typeof renderSetup==='function'&&$('setup').classList.contains('on'))renderSetup()};ap();
- document.getElementById('skinT').addEventListener('click',()=>{v=v==='sang'?'':'sang';ap();haptic();try{localStorage.setItem(K,v)}catch(e){}});})();
 /* ---- mode nuit ---- */
 (function(){const K='darts.theme.v1';let n=false;try{n=localStorage.getItem(K)==='night'}catch(e){}
- const ap=()=>{document.documentElement.classList.toggle('night',n);const m=document.querySelector('meta[name=theme-color]');if(m)m.content=n?'#1f2530':'#f4f2ee';if(typeof topColor==='function')requestAnimationFrame(topColor)};ap();
+ const ap=()=>{document.documentElement.classList.toggle('night',n);document.documentElement.classList.toggle('sang',n);if(typeof renderSetup==='function'&&$('setup').classList.contains('on'))renderSetup();const m=document.querySelector('meta[name=theme-color]');if(m)m.content=n?'#1f2530':'#f4f2ee';if(typeof topColor==='function')requestAnimationFrame(topColor)};ap();
  document.getElementById('themeT').addEventListener('click',()=>{n=!n;ap();try{localStorage.setItem(K,n?'night':'day')}catch(e){}});})();
 
 
