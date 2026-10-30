@@ -2202,42 +2202,6 @@ html.night .ov{background:rgba(31,37,48,.98)}
 /* équipes : plus de contour */
 #setup.b2 .tbub{border:0!important;box-shadow:none!important}
 
-/* ===== TIRAGE (ordre / numéros) : bulles + bulle orange qui saute ===== */
-#draw{--u:min(1dvh,1.7vw);background:var(--m-home)!important;justify-content:center;gap:0!important;padding-left:6vw!important;padding-right:6vw!important}
-#draw .dt{font-family:"Fun",sans-serif!important;font-size:calc(var(--u)*4.4)!important;text-align:center;color:var(--m-ink);margin-bottom:calc(var(--u)*2.6)}
-#slots{background:var(--m-card);border-radius:calc(var(--u)*3.2);padding:calc(var(--u)*2);gap:calc(var(--u)*1.2)!important;margin:0!important;
-  box-shadow:0 1px 2px rgba(0,0,0,.05),0 8px 24px rgba(0,0,0,.06)}
-html.night #slots{box-shadow:0 8px 24px rgba(0,0,0,.25)}
-#draw .slot{--pc:#cfc9be;background:var(--m-cell)!important;border-radius:calc(var(--u)*2.4);padding:0 calc(var(--u)*2.4)!important;height:calc(var(--u)*7);gap:calc(var(--u)*2)!important;transition:background-color .3s}
-#draw .slot b{font-size:calc(var(--u)*2.4)!important;width:auto!important;color:var(--m-sub)!important;min-width:calc(var(--u)*2.4)}
-#draw .slot span{font-size:calc(var(--u)*3.2)!important;color:var(--m-sub)!important;letter-spacing:.03em}
-#draw #slots.nums .slot b{color:var(--m-ink)!important;font-size:calc(var(--u)*2.8)!important}
-#draw #slots.nums .slot span{font-size:calc(var(--u)*3.8)!important}
-#draw .slot.lock{background:color-mix(in srgb,var(--pc) 26%,var(--m-card))!important;animation:dlock .5s var(--ease)!important}
-#draw .slot.lock span,#draw .slot.lock b{color:var(--m-ink)!important}
-#draw .slot.lock span{animation:none!important}
-@keyframes dlock{0%{transform:scale(1)}35%{transform:scale(1.05)}100%{transform:scale(1)}}
-/* réserve de bulles */
-#dpool{position:relative;display:flex;flex-wrap:wrap;justify-content:center;gap:calc(var(--u)*1.4);margin:calc(var(--u)*3) 0 calc(var(--u)*1);transition:opacity .4s}
-#dpool.done{opacity:.0;pointer-events:none}
-#dpool .dch{position:relative;z-index:1;--pc:#cfc9be;display:inline-flex;align-items:center;gap:calc(var(--u)*1.2);height:calc(var(--u)*6.2);padding:0 calc(var(--u)*2.4);
-  border-radius:calc(var(--u)*2.4);background:color-mix(in srgb,var(--pc) 24%,var(--m-card));color:var(--m-ink);font-size:calc(var(--u)*2.4);letter-spacing:.02em;
-  transition:opacity .3s,transform .25s var(--ease),background-color .12s,color .12s}
-#dpool .dch::before{content:"";width:calc(var(--u)*1.7);height:calc(var(--u)*1.7);border-radius:50%;background:var(--pc)}
-#dpool.nb .dch{width:calc(var(--u)*7.4);justify-content:center;padding:0;background:var(--m-cell);font-size:calc(var(--u)*2.8)}
-#dpool.nb .dch::before{content:none}
-#dpool .dch.hot{background:transparent!important;color:#fff;transform:scale(1.12)}
-#dpool .dch.hot::before{background:#fff}
-#dpool .dch.used{opacity:.22;transform:scale(.88)}
-#dthumb{position:absolute;z-index:0;left:0;top:0;border-radius:calc(var(--u)*2.4);background:var(--accent);opacity:0;pointer-events:none;
-  box-shadow:0 0 0 calc(var(--u)*1.1) var(--accent),0 8px 18px rgba(255,90,31,.38);transition:translate .13s var(--ease),width .13s var(--ease),height .13s,opacity .2s}
-#dthumb.land{animation:dland .45s var(--ease)}
-@keyframes dland{0%{scale:1}40%{scale:1.22}100%{scale:1}}
-.dfly{position:fixed;z-index:60;pointer-events:none;transition:transform .5s cubic-bezier(.3,.7,.2,1),opacity .5s}
-/* boutons */
-#drawGo,#drawAgain{border-radius:20px!important;height:calc(var(--u)*7.6);padding:0!important;font-family:"Fun",sans-serif!important;font-size:calc(var(--u)*3)!important;font-weight:400!important;margin-top:calc(var(--u)*1.6)}
-#drawGo{background:var(--accent)!important;color:#fff!important;box-shadow:0 8px 22px rgba(255,90,31,.32);margin-top:calc(var(--u)*3)}
-#drawAgain{background:var(--m-cell)!important;color:var(--m-ink)!important}
 </style>
 </head>
 <body>
@@ -2485,7 +2449,8 @@ function silentWav(){
   w(36,'data');v.setUint32(40,n,true);b.fill(128,44);
   let bin='';b.forEach(x=>bin+=String.fromCharCode(x));return'data:audio/wav;base64,'+btoa(bin);
 }
-try{if(navigator.audioSession)navigator.audioSession.type='playback'}catch(e){}
+// « ambient » : les sons du jeu se mélangent à la musique (Spotify…) au lieu de la couper
+try{if(navigator.audioSession)navigator.audioSession.type='ambient'}catch(e){}
 function audioInit(){
   try{
     if(!AC){const C=window.AudioContext||window.webkitAudioContext;if(!C)return;AC=new C();bus()}
@@ -2494,10 +2459,6 @@ function audioInit(){
       unlocked=true;
       // un tampon muet joué pendant le geste débloque le contexte audio d'iOS
       const src=AC.createBufferSource();src.buffer=AC.createBuffer(1,1,22050);src.connect(AC.destination);src.start(0);
-      if(!navigator.audioSession){
-        keepAlive=new Audio(silentWav());keepAlive.loop=true;keepAlive.setAttribute('playsinline','');
-        keepAlive.play().catch(()=>{});
-      }
     }
   }catch(e){}
 }
@@ -3221,6 +3182,9 @@ function fitHead(){
     [L,Rr]=side(s.pts);fitBox(s.pts,c,{L,R:Rr,T:nb+5,B:lim-4},false);
   });
   if(p2&&R.sc.length===2){const fs=Math.min(...R.sc.map(s=>parseFloat(getComputedStyle(s.nm).fontSize)));R.sc.forEach(s=>s.nm.style.setProperty('font-size',fs+'px','important'))}
+  // scores : tout le monde à la même taille, la plus grande qui tient dans toutes les cases
+  const vis=R.sc.filter(s=>s.c.clientWidth&&s.c.style.display!=='none');
+  if(vis.length){const fs=Math.min(...vis.map(s=>parseFloat(getComputedStyle(s.pts).fontSize)));vis.forEach(s=>s.pts.style.setProperty('font-size',fs.toFixed(2)+'px','important'))}
 }
 let refitT=null;
 // 2 joueurs : même taille de nom des deux côtés (la plus petite des deux)
@@ -3580,38 +3544,21 @@ let drawOrder=null,DRAWCB=null;
 /* roue de tirage : défile dans un ordre fixe (comme un vrai rouleau), ralentit
    progressivement et s'arrête PILE sur le résultat — plus de changement de dernière seconde */
 async function spinTo(slot,reel,pick,steps=26){
-  const sp=slot.querySelector('span'),n=reel.length,P=$('dpool'),th=$('dthumb');
-  const chip=v=>P&&P.querySelector(`.dch[data-v="${CSS.escape(String(v))}"]`);
-  const go=c=>{if(!c)return;P.querySelectorAll('.dch.hot').forEach(x=>x.classList.remove('hot'));c.classList.add('hot');
-    th.style.opacity=1;th.style.width=c.offsetWidth+'px';th.style.height=c.offsetHeight+'px';th.style.translate=`${c.offsetLeft}px ${c.offsetTop}px`};
+  const sp=slot.querySelector('span'),n=reel.length;
   slot.classList.add('spin');
-  if(n<2){go(chip(pick));await sleep(220)}
+  if(n<2){sp.textContent=pick}
   else{
     const end=reel.indexOf(pick),st=((end-(steps-1))%n+n)%n;
     for(let i=0;i<steps;i++){
-      const v=reel[(st+i)%n];go(chip(v));
-      SFX.tick();if(i%3===0)haptic();
-      const k=i/(steps-1);await sleep(45+Math.pow(k,3)*340);   // ralentit jusqu'à s'arrêter pile
+      sp.textContent=reel[(st+i)%n];
+      sp.classList.remove('roll');void sp.offsetWidth;sp.classList.add('roll');
+      SFX.tick();
+      const k=i/(steps-1);await sleep(40+Math.pow(k,3)*330);   // 40 ms → ~370 ms
     }
   }
-  // la bulle choisie s'envole jusqu'à sa place
-  const c=chip(pick);
-  if(c){th.classList.remove('land');void th.offsetWidth;th.classList.add('land');
-    await sleep(160);
-    const r=c.getBoundingClientRect(),t=sp.getBoundingClientRect(),f=c.cloneNode(true);
-    f.classList.remove('hot');f.className='dch dfly';f.style.cssText+=`;left:${r.left}px;top:${r.top}px;width:${r.width}px;height:${r.height}px;margin:0`;
-    document.body.append(f);c.classList.remove('hot');c.classList.add('used');th.style.opacity=0;
-    requestAnimationFrame(()=>{f.style.transform=`translate(${t.left-r.left}px,${t.top+t.height/2-r.top-r.height/2}px) scale(.9)`;f.style.opacity='.0'});
-    await sleep(380);f.remove();
-  }
-  sp.textContent=pick;
+  await sleep(90);                                   // le rouleau s'arrête : validation quasi immédiate
   slot.classList.remove('spin');slot.classList.add('lock');SFX.lock();haptic();
-  await sleep(300);
-}
-function makePool(items,nums,colorOf){
-  let P=$('dpool');if(!P){P=el('div','');P.id='dpool';$('slots').after(P)}
-  P.className=nums?'nb':'';P.innerHTML='<div id="dthumb"></div>'+items.map(v=>`<div class="dch" data-v="${esc(String(v))}">${esc(String(v))}</div>`).join('');
-  if(colorOf)P.querySelectorAll('.dch').forEach(d=>d.style.setProperty('--pc',colorOf(d.dataset.v)||'#cfc9be'));
+  await sleep(350);
 }
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 async function runDraw(names){
@@ -3620,18 +3567,15 @@ async function runDraw(names){
   $('drawGo').style.visibility=$('drawAgain').style.visibility='hidden';
   box.classList.toggle('many',names.length>=5);
   box.innerHTML=names.map((_,k)=>`<div class="slot"><b>${k+1}</b><span>?</span></div>`).join('');
-  const mix=shuffle(names);makePool(mix,false,n=>pcol(n));
   ov.classList.add('on');
   const left=[...names],order=[];
-  await sleep(450);
+  await sleep(350);
   for(let k=0;k<names.length;k++){
     const slot=box.children[k],sp=slot.querySelector('span');
     const pick=left.splice(Math.floor(Math.random()*left.length),1)[0];
-    const pool=mix.filter(v=>v===pick||left.includes(v));   // la bulle saute sur les joueurs encore en lice
-    slot.style.setProperty('--pc',pcol(pick)||'#cfc9be');
+    const pool=shuffle([pick,...left]);
     await spinTo(slot,pool,pick,pool.length===1?1:9+pool.length);order.push(pick);
   }
-  $('dpool').classList.add('done');
   drawOrder=order;SFX.lead();confetti(35);
   $('drawGo').style.visibility=$('drawAgain').style.visibility='visible';
 }
@@ -3904,17 +3848,15 @@ async function runNumDraw(names){
   $('drawGo').style.visibility=$('drawAgain').style.visibility='hidden';
   box.classList.toggle('many',names.length>=5);box.classList.add('nums');
   box.innerHTML=names.map(n=>`<div class="slot"><b>${esc(n)}</b><span>?</span></div>`).join('');
-  makePool(Array.from({length:20},(_,i)=>i+1),true);
   ov.classList.add('on');
   const pool=Array.from({length:20},(_,i)=>i+1),nums=[];
-  await sleep(400);
+  await sleep(300);
   for(let k=0;k<names.length;k++){
-    const slot=box.children[k],sp=slot.querySelector('span');slot.style.setProperty('--pc',pcol(names[k])||'#cfc9be');
+    const slot=box.children[k],sp=slot.querySelector('span');
     const pick=pool.splice(Math.floor(Math.random()*pool.length),1)[0];
     const reel=Array.from({length:20},(_,i)=>i+1).filter(v=>v===pick||!nums.includes(v));   // rouleau 1 → 20, sans les numéros déjà pris
-    await spinTo(slot,reel,pick,16);nums.push(pick);
+    await spinTo(slot,reel,pick,13);nums.push(pick);
   }
-  $('dpool').classList.add('done');
   NUMS=nums;SFX.lead();confetti(30);
   $('drawGo').style.visibility=$('drawAgain').style.visibility='visible';
 }
