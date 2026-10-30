@@ -4370,7 +4370,14 @@ goHome();
 
 
 /* hors ligne : le service worker garde l'appli en cache sur le téléphone (en ligne, https) */
-if('serviceWorker' in navigator&&location.protocol==='https:'){addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})})}
+if('serviceWorker' in navigator&&location.protocol==='https:'){
+ /* nouvelle version installée → on recharge une fois pour l'afficher */
+ const had=!!navigator.serviceWorker.controller;let done=false;
+ navigator.serviceWorker.addEventListener('controllerchange',()=>{if(had&&!done&&document.getElementById('home').classList.contains('on')){done=true;location.reload()}});
+ addEventListener('load',()=>{navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(reg=>{
+   reg.update().catch(()=>{});
+   document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')reg.update().catch(()=>{})});
+ }).catch(()=>{})})}
 </script>
 </body>
 </html>

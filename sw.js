@@ -1,15 +1,25 @@
-/* Loubard Fléchard — mise en cache pour jouer hors ligne.
-   Change le numéro de VERSION à chaque mise à jour publiée pour forcer le rafraîchissement. */
-const VERSION='lf-4';
+/* Loubard Fléchard — hors ligne + mises à jour automatiques.
+   Page : réseau d'abord (version la plus récente), cache si pas de réseau.
+   Change VERSION à chaque mise à jour publiée. */
+const VERSION='lf-5';
 const FILES=['./','index.html','manifest.json','icon-180.png','icon-192.png','icon-512.png'];
-self.addEventListener('install',e=>{e.waitUntil(caches.open(VERSION).then(c=>c.addAll(FILES)).then(()=>self.skipWaiting()))});
+self.addEventListener('install',e=>{e.waitUntil(caches.open(VERSION)
+  .then(c=>Promise.all(FILES.map(f=>fetch(f,{cache:'reload'}).then(r=>r.ok&&c.put(f,r)).catch(()=>{}))))
+  .then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==VERSION).map(x=>caches.delete(x)))).then(()=>self.clients.claim()))});
-/* on sert le cache tout de suite (marche sans réseau) et on le met à jour en arrière-plan quand il y a du réseau */
 self.addEventListener('fetch',e=>{
-  if(e.request.method!=='GET')return;
+  const q=e.request;if(q.method!=='GET')return;
+  const page=q.mode==='navigate'||/\/(index\.html)?$/.test(new URL(q.url).pathname);
   e.respondWith(caches.open(VERSION).then(async c=>{
-    const hit=await c.match(e.request,{ignoreSearch:true});
-    const net=fetch(e.request).then(r=>{if(r&&r.ok)c.put(e.request,r.clone());return r}).catch(()=>null);
-    return hit||await net||c.match('index.html');
+    if(page){
+      /* réseau d'abord, sans cache HTTP ; au bout de 3 s sans réponse → version en cache */
+      const net=fetch(q.url,{cache:'no-store'}).then(r=>{if(r&&r.ok)c.put('index.html',r.clone());return r}).catch(()=>null);
+      const slow=new Promise(ok=>setTimeout(()=>ok(null),3000));
+      const r=await Promise.race([net,slow]);
+      return r||await c.match('index.html')||await net||Response.error();
+    }
+    const hit=await c.match(q,{ignoreSearch:true});
+    const net=fetch(q).then(r=>{if(r&&r.ok)c.put(q,r.clone());return r}).catch(()=>null);
+    return hit||await net||Response.error();
   }));
 });
