@@ -668,7 +668,7 @@ body.m3 .kc.tgt .kno{background:#a3160d;color:#fff}
 .seg.gamepick.th{background:var(--panel);gap:0}
 .thumb{position:absolute;left:0;top:0;z-index:0;background:var(--accent);border-radius:inherit;pointer-events:none;
   transition:transform .45s cubic-bezier(.34,1.7,.5,1),width .45s cubic-bezier(.34,1.7,.5,1)}
-.seg.mini .thumb{border-radius:99px;box-shadow:0 2px 6px rgba(255,90,31,.45)}
+.seg.mini .thumb{border-radius:99px;box-shadow:0 2px 6px rgba(var(--acc-rgb),.45)}
 .thumb.jump{animation:thjump .45s ease-out}
 @keyframes thjump{0%{scale:1 1}25%{scale:1.25 .78}55%{scale:.94 1.1}80%{scale:1.03 .97}100%{scale:1 1}}
 .seg.th>button.sel{animation:selpop .45s var(--ease)}
@@ -982,7 +982,7 @@ body.shake .screen.on{animation:shakeScr .09s linear 12}
 .hrow.small .htx b{font-size:min(4.4vw,2.2dvh)}
 .hch{flex:0 0 auto;color:#c4beb4;font-size:min(7vw,3.4dvh);font-weight:400;line-height:1}
 .hfoot{margin-top:auto}
-.hmain{display:none;width:100%;background:var(--accent);color:#fff;border-radius:16px;padding:2.2dvh 0;font-size:min(4.6vw,2.3dvh);font-weight:700;box-shadow:0 6px 18px rgba(255,90,31,.3)}
+.hmain{display:none;width:100%;background:var(--accent);color:#fff;border-radius:16px;padding:2.2dvh 0;font-size:min(4.6vw,2.3dvh);font-weight:700;box-shadow:0 6px 18px rgba(var(--acc-rgb),.3)}
 .hmain:active{filter:brightness(.95)}
 /* ---- menu « Nouvelle partie » ---- */
 #setup{background:var(--ui-bg);padding:calc(var(--sat) + 2dvh) 5vw 0;gap:2.4dvh}
@@ -1033,13 +1033,13 @@ body.shake .screen.on{animation:shakeScr .09s linear 12}
 #setup .nslot.target{box-shadow:inset 0 0 0 2px var(--accent)!important;border-radius:10px!important}
 /* bouton principal */
 #setup .gobar{background:linear-gradient(rgba(244,242,238,0),var(--ui-bg) 35%)!important;margin:auto -5vw 0;padding:2dvh 5vw calc(var(--sab) + 2dvh)}
-#setup #go{background:var(--accent);color:#fff;border-radius:16px;font-size:min(4.6vw,2.3dvh);font-weight:700;padding:2.2dvh 0;box-shadow:0 6px 18px rgba(255,90,31,.3)}
+#setup #go{background:var(--accent);color:#fff;border-radius:16px;font-size:min(4.6vw,2.3dvh);font-weight:700;padding:2.2dvh 0;box-shadow:0 6px 18px rgba(var(--acc-rgb),.3)}
 /* petit menu « + » */
 #ppick{border-radius:16px!important;box-shadow:0 12px 36px rgba(0,0,0,.18)!important}
 #ppick .rchip{font-weight:600}
 
 /* menu : option cochée en orange */
-#setup .seg .thumb{background:var(--accent)!important;box-shadow:0 2px 6px rgba(255,90,31,.35)!important}
+#setup .seg .thumb{background:var(--accent)!important;box-shadow:0 2px 6px rgba(var(--acc-rgb),.35)!important}
 #setup .seg.th>button.sel{color:#fff!important}
 
 /* =====================================================================
@@ -1055,7 +1055,7 @@ body.shake .screen.on{animation:shakeScr .09s linear 12}
 #kplayers.grid .kc{background:#ebe7e0!important;border-radius:20px;box-shadow:none!important;padding:1.6dvh 4vw!important;
   transition:background-color .25s,box-shadow .25s,transform .25s}
 /* joueur qui lance : carte blanche, liseré orange, légèrement soulevée */
-#kplayers.grid .kc.act{background:#fff!important;box-shadow:0 0 0 2.5px var(--accent),0 10px 28px rgba(255,90,31,.18),0 2px 6px rgba(0,0,0,.06)!important}
+#kplayers.grid .kc.act{background:#fff!important;box-shadow:0 0 0 2.5px var(--accent),0 10px 28px rgba(var(--acc-rgb),.18),0 2px 6px rgba(0,0,0,.06)!important}
 #kplayers.grid .kc.tap{background:#ffe3d6!important}
 #kplayers.grid .kc.dead{opacity:.22;background:#ebe7e0!important}
 /* contenu */
@@ -1238,7 +1238,7 @@ body.m3 #kplayers.grid.mekiller .kc.tgt:not(.act):not(.dead),body.m3 #kplayers.g
 @keyframes markin{0%{transform:scale(.7)}60%{transform:scale(1.08)}100%{transform:none}}
 /* le cadre du joueur en cours « respire » doucement */
 #pframe{animation:breathe 2.6s ease-in-out infinite}
-@keyframes breathe{0%,100%{border-color:var(--accent);box-shadow:0 0 0 0 rgba(255,90,31,0)}50%{border-color:#ff7a45;box-shadow:0 0 14px 0 rgba(255,90,31,.28)}}
+@keyframes breathe{0%,100%{border-color:var(--accent);box-shadow:0 0 0 0 rgba(var(--acc-rgb),0)}50%{border-color:#ff7a45;box-shadow:0 0 14px 0 rgba(var(--acc-rgb),.28)}}
 /* changement de joueur : son nom arrive avec un petit rebond */
 .nmIn{animation:nmIn .55s var(--ease)}
 @keyframes nmIn{0%{transform:translateY(-35%) scale(.9);opacity:0}60%{transform:translateY(6%) scale(1.04);opacity:1}100%{transform:none}}
@@ -1470,13 +1470,13 @@ html.night #home .hlogo circle:nth-child(2){fill:#1f2530}
 #setup.b2 .circ svg{stroke:var(--m-ink)!important}
 #setup.b2 .glab span{color:var(--m-sub)!important}
 #setup.b2 .seg.gamepick{background:var(--m-cell)!important;border-radius:22px!important;padding:4px!important;overflow:visible}
-#setup.b2 .seg.gamepick .thumb{border-radius:18px!important;box-shadow:0 4px 14px rgba(255,90,31,.35)!important}
+#setup.b2 .seg.gamepick .thumb{border-radius:18px!important;box-shadow:0 4px 14px rgba(var(--acc-rgb),.35)!important}
 #setup.b2 .seg.gamepick button{color:var(--m-sub)!important}
 #setup.b2 .seg.gamepick button.sel{color:#fff!important}
 #setup.b2 .opt{background:transparent!important}
 #setup.b2 .opt>span{background:transparent!important;color:var(--m-ink)!important}
 #setup.b2 .opt .seg.mini{background:var(--m-cell)!important;border-radius:16px!important;padding:3px!important;overflow:visible}
-#setup.b2 .opt .seg .thumb{border-radius:13px!important;box-shadow:0 2px 8px rgba(255,90,31,.3)!important}
+#setup.b2 .opt .seg .thumb{border-radius:13px!important;box-shadow:0 2px 8px rgba(var(--acc-rgb),.3)!important}
 #setup.b2 .opt .seg.mini button{color:var(--m-sub)!important}
 #setup.b2 .opt .seg.mini button.sel{color:#fff!important}
 #setup.b2 .nslot,#setup.b2 .nslot+.nslot{background:var(--m-cell)!important;border-radius:16px!important;overflow:hidden;box-shadow:inset 14vw 0 0 var(--m-strong)!important}
@@ -1509,7 +1509,7 @@ html.night .htab td:first-child{color:#f2f4f8}
 #home.simple .hbtns{display:flex;flex-direction:column;gap:1.2dvh}
 #home.simple .hduo{display:flex;gap:1.2dvh}
 #home.simple .big{width:100%;margin:0!important;flex:1 1 0!important;border-radius:20px!important;padding:2.3dvh 0!important;font-size:min(4.8vw,2.4dvh)!important;font-weight:800!important;box-shadow:none!important}
-#home.simple .big.acc{background:var(--accent)!important;color:#fff!important;box-shadow:0 6px 18px rgba(255,90,31,.3)!important}
+#home.simple .big.acc{background:var(--accent)!important;color:#fff!important;box-shadow:0 6px 18px rgba(var(--acc-rgb),.3)!important}
 #home.simple .big.dark{background:var(--m-cell)!important;color:var(--m-ink)!important}
 #home.simple .big.light{background:transparent!important;color:var(--m-ink)!important;box-shadow:inset 0 0 0 2px var(--m-strong)!important}
 
@@ -1639,12 +1639,12 @@ body #game.p2 #scores .sc:not(.act) .pill{min-width:0!important;width:9vw;font-s
 #home.simple .hs{color:var(--m-ink)!important}
 
 /* switchs : partie orange sans contour, qui « vole » doucement jusqu'à sa place */
-#setup.b2 .seg.gamepick .thumb,#setup.b2 .opt .seg .thumb{box-shadow:0 3px 10px rgba(255,90,31,.3)!important;
+#setup.b2 .seg.gamepick .thumb,#setup.b2 .opt .seg .thumb{box-shadow:0 3px 10px rgba(var(--acc-rgb),.3)!important;
   transition:transform .75s cubic-bezier(.3,1.25,.45,1),width .75s cubic-bezier(.3,1.25,.45,1)!important}
 #setup.b2 .thumb.jump{animation:thfly .75s ease-in-out!important}
-@keyframes thfly{0%{scale:1;box-shadow:0 3px 10px rgba(255,90,31,.3)}
-  40%{scale:1.07 1.12;box-shadow:0 12px 22px rgba(255,90,31,.38),0 4px 8px rgba(0,0,0,.12)}
-  100%{scale:1;box-shadow:0 3px 10px rgba(255,90,31,.3)}}
+@keyframes thfly{0%{scale:1;box-shadow:0 3px 10px rgba(var(--acc-rgb),.3)}
+  40%{scale:1.07 1.12;box-shadow:0 12px 22px rgba(var(--acc-rgb),.38),0 4px 8px rgba(0,0,0,.12)}
+  100%{scale:1;box-shadow:0 3px 10px rgba(var(--acc-rgb),.3)}}
 
 /* menu : joueurs = petites bulles colorées sans contour ; équipes = grosses bulles */
 #setup.b2 .nslot,#setup.b2 .nslot+.nslot{border:0!important;background:color-mix(in srgb,var(--pc,#cfc9be) 24%,var(--m-bg))!important}
@@ -1727,11 +1727,11 @@ body #game.p2 #scores .sc:not(.act) .pill{min-width:0!important;width:9vw;font-s
 #setup.b2 .seg.gamepick .thumb,#setup.b2 .opt .seg .thumb{scale:1.5 1.16;z-index:0}
 #setup.b2 .seg button{position:relative;z-index:1}
 #setup.b2 .thumb.jump{animation:thfly2 .75s ease-in-out!important}
-@keyframes thfly2{0%{scale:1.5 1.16}40%{scale:1.6 1.32;box-shadow:0 12px 22px rgba(255,90,31,.38),0 4px 8px rgba(0,0,0,.12)}100%{scale:1.5 1.16}}
+@keyframes thfly2{0%{scale:1.5 1.16}40%{scale:1.6 1.32;box-shadow:0 12px 22px rgba(var(--acc-rgb),.38),0 4px 8px rgba(0,0,0,.12)}100%{scale:1.5 1.16}}
 
 #setup.b2 .seg.gamepick .thumb,#setup.b2 .opt .seg .thumb{scale:1.5 1.3}
 #setup.b2 .thumb.jump{animation:thfly3 .75s ease-in-out!important}
-@keyframes thfly3{0%{scale:1.5 1.3}40%{scale:1.58 1.45;box-shadow:0 12px 22px rgba(255,90,31,.38),0 4px 8px rgba(0,0,0,.12)}100%{scale:1.5 1.3}}
+@keyframes thfly3{0%{scale:1.5 1.3}40%{scale:1.58 1.45;box-shadow:0 12px 22px rgba(var(--acc-rgb),.38),0 4px 8px rgba(0,0,0,.12)}100%{scale:1.5 1.3}}
 #setup.b2 #names>.padd{align-self:stretch;width:auto!important}
 #setup.b2 .teamopt{margin:1.2dvh 0 3dvh!important}
 
@@ -1766,7 +1766,7 @@ body #game.p2 #scores .sc:not(.act) .pill{min-width:0!important;width:9vw;font-s
 /* partie orange : moins large, 25 % plus haute */
 #setup.b2 .seg.gamepick .thumb,#setup.b2 .opt .seg .thumb{scale:1.2 1.62!important}
 #setup.b2 .thumb.jump{animation:thfly4 .75s ease-in-out!important}
-@keyframes thfly4{0%{scale:1.2 1.62}40%{scale:1.28 1.76;box-shadow:0 12px 22px rgba(255,90,31,.38),0 4px 8px rgba(0,0,0,.12)}100%{scale:1.2 1.62}}
+@keyframes thfly4{0%{scale:1.2 1.62}40%{scale:1.28 1.76;box-shadow:0 12px 22px rgba(var(--acc-rgb),.38),0 4px 8px rgba(0,0,0,.12)}100%{scale:1.2 1.62}}
 #setup.b2{--gap:2.4dvh}
 #setup.b2 .teamopt{margin:1.4dvh 0 3.4dvh!important}
 #setup.b2 .seg.gamepick{margin-top:1.4dvh!important}
@@ -1820,7 +1820,7 @@ body #game.p2 #scores .sc>.pts[data-n="3"]{font-size:min(5.4dvh,12.4vw)!importan
 #xmain{flex:1;display:flex;flex-direction:column;min-height:0;padding:0 3vw 1.2dvh;gap:1.2dvh}
 #xplayers{flex:1 1 auto;min-height:0;display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:2.4vw}
 .xc{position:relative;container-type:size;min-height:0;border-radius:22px;background:#e6e2da;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4dvh;padding:1dvh 2vw;transition:background-color .25s,box-shadow .25s}
-.xc.act{background:#fff;box-shadow:inset 0 0 0 4px var(--accent),0 8px 20px rgba(255,90,31,.18)}
+.xc.act{background:#fff;box-shadow:inset 0 0 0 4px var(--accent),0 8px 20px rgba(var(--acc-rgb),.18)}
 .xc.won{background:#fff;box-shadow:inset 0 0 0 4px #e0a800}
 .xn{font-size:min(14cqi,3dvh);letter-spacing:.03em;text-transform:uppercase;display:flex;align-items:center;gap:.4em;white-space:nowrap;max-width:100%;overflow:hidden}
 .xl{display:inline-flex;gap:3px}.xl i{width:.42em;height:.42em;border-radius:50%;box-shadow:inset 0 0 0 2px currentColor;opacity:.5}.xl i.on{background:#e0a800;box-shadow:none;opacity:1}
@@ -1910,7 +1910,7 @@ body.m3 #xkeys .xk.bull .lbl{background:none!important;-webkit-text-fill-color:#
 #xplayers .xb{position:static!important;align-self:end;gap:.4dvh}
 #xplayers.many .xc{padding:.6dvh 2vw!important}
 /* 301 : cadre à l'extérieur de la case, contenu resserré */
-#xplayers .xc.act{box-shadow:0 0 0 4px var(--accent),0 8px 20px rgba(255,90,31,.25)!important}
+#xplayers .xc.act{box-shadow:0 0 0 4px var(--accent),0 8px 20px rgba(var(--acc-rgb),.25)!important}
 #xplayers .xc.pend{box-shadow:0 0 0 4px #e0a800!important}
 #xplayers .xc.won{box-shadow:0 0 0 4px #e0a800!important}
 #xplayers{gap:3.2vw!important;padding:4px}
@@ -2031,11 +2031,11 @@ body #game.p2 #scores .sc>.mpr{top:15.6dvh!important}
 #setup.b2 .gobar{padding:calc(var(--u)*2) 6vw calc(var(--u)*2 + var(--sab))!important}
 /* partie orange des switchs : même débordement tout autour (plus de forme étirée) */
 #setup.b2 .seg.gamepick .thumb,#setup.b2 .opt .seg .thumb{scale:none!important;
-  box-shadow:0 0 0 calc(var(--u)*.9) var(--accent),0 6px 16px rgba(255,90,31,.35)!important}
+  box-shadow:0 0 0 calc(var(--u)*.9) var(--accent),0 6px 16px rgba(var(--acc-rgb),.35)!important}
 #setup.b2 .thumb.jump{animation:thfly6 .75s ease-in-out!important}
-@keyframes thfly6{0%{box-shadow:0 0 0 calc(var(--u)*.9) var(--accent),0 6px 16px rgba(255,90,31,.35)}
-  40%{box-shadow:0 0 0 calc(var(--u)*1.6) var(--accent),0 14px 26px rgba(255,90,31,.42)}
-  100%{box-shadow:0 0 0 calc(var(--u)*.9) var(--accent),0 6px 16px rgba(255,90,31,.35)}}
+@keyframes thfly6{0%{box-shadow:0 0 0 calc(var(--u)*.9) var(--accent),0 6px 16px rgba(var(--acc-rgb),.35)}
+  40%{box-shadow:0 0 0 calc(var(--u)*1.6) var(--accent),0 14px 26px rgba(var(--acc-rgb),.42)}
+  100%{box-shadow:0 0 0 calc(var(--u)*.9) var(--accent),0 6px 16px rgba(var(--acc-rgb),.35)}}
 
 /* textes du menu : même taille dans Safari et en plein écran */
 #setup.b2{--t1:calc(var(--u)*2.3);--t2:calc(var(--u)*1.8)}
@@ -2092,15 +2092,15 @@ body #game.p2 #scores .sc>.mpr{top:15.6dvh!important}
 /* bouton de lancement : orange, en bas, position standard */
 #setup.b2 .gobar{padding:calc(var(--u)*1.4) 6vw max(calc(var(--u)*1.6),var(--sab))!important}
 #setup.b2 #go{background:var(--accent)!important;color:#fff!important;border:0!important;height:calc(var(--u)*7.6)!important;
-  box-shadow:0 8px 22px rgba(255,90,31,.32)!important}
+  box-shadow:0 8px 22px rgba(var(--acc-rgb),.32)!important}
 #setup.b2 #go:active{transform:scale(.98)}
 /* switchs : la partie orange déborde nettement de la case noire */
-#setup.b2 .seg.gamepick .thumb,#setup.b2 .opt .seg .thumb{box-shadow:0 0 0 calc(var(--u)*1.7) var(--accent),0 8px 18px rgba(255,90,31,.38)!important}
-@keyframes thfly6{0%{box-shadow:0 0 0 calc(var(--u)*1.7) var(--accent),0 8px 18px rgba(255,90,31,.38)}
-  40%{box-shadow:0 0 0 calc(var(--u)*2.4) var(--accent),0 14px 26px rgba(255,90,31,.42)}
-  100%{box-shadow:0 0 0 calc(var(--u)*1.7) var(--accent),0 8px 18px rgba(255,90,31,.38)}}
+#setup.b2 .seg.gamepick .thumb,#setup.b2 .opt .seg .thumb{box-shadow:0 0 0 calc(var(--u)*1.7) var(--accent),0 8px 18px rgba(var(--acc-rgb),.38)!important}
+@keyframes thfly6{0%{box-shadow:0 0 0 calc(var(--u)*1.7) var(--accent),0 8px 18px rgba(var(--acc-rgb),.38)}
+  40%{box-shadow:0 0 0 calc(var(--u)*2.4) var(--accent),0 14px 26px rgba(var(--acc-rgb),.42)}
+  100%{box-shadow:0 0 0 calc(var(--u)*1.7) var(--accent),0 8px 18px rgba(var(--acc-rgb),.38)}}
 html.night #setup.b2 .sect{box-shadow:0 1px 0 rgba(255,255,255,.04) inset,0 8px 24px rgba(0,0,0,.25)!important}
-html.night #setup.b2 #go{box-shadow:0 8px 22px rgba(255,90,31,.22)!important}
+html.night #setup.b2 #go{box-shadow:0 8px 22px rgba(var(--acc-rgb),.22)!important}
 
 /* ===== NUIT v59 : tout l'appli en sombre ===== */
 html.night{--bg:#11151c;--page:#1f2530;--panel:#2b3241;--panel2:#252b38;--hi:#364055;--ink:#f2f4f8;--mute:#97a1b4;--deadc:#0c0f14;
@@ -2212,6 +2212,41 @@ html.night .ov{background:rgba(31,37,48,.98)}
 #setup.b2 .opt.xo .seg.mini button{font-size:calc(var(--u)*2.05)!important}
 #setup.b2 .teamopt .seg.mini{width:calc(var(--u)*24)!important;min-width:calc(var(--u)*24)!important}
 #setup.b2 .seg.mini button{padding-left:calc(var(--u)*1.2)!important;padding-right:calc(var(--u)*1.2)!important}
+
+/* ===== v66 ===== */
+:root{--m-home:#f7f2e5;--ui-bg:#f7f2e5;--m-cell:#ece5d3;--acc-rgb:255,90,31}
+html:not(.night) #home,html:not(.night) #setup.b2,html:not(.night) #hist,html:not(.night) #draw{background:#f7f2e5!important}
+html:not(.night) body{background:#f7f2e5}
+/* plus de grandes cases blanches dans les menus */
+#setup.b2 .sect,#setup.b2 .sect.s1,#setup.b2 .sect.s2{background:transparent!important;box-shadow:none!important;border-radius:0!important}
+#setup.b2 .sect.s1{padding-left:0!important;padding-right:0!important}
+#setup.b2 .sect.s2{padding-left:0!important;padding-right:0!important}
+#slots{background:transparent!important;box-shadow:none!important}
+/* croix : plus grande, calée à droite de la bulle */
+#setup.b2 .nslot .pdel{font-size:calc(var(--u)*3)!important;padding:0 calc(var(--u)*1.3) 0 calc(var(--u)*1.6)!important;margin-left:auto!important;line-height:1}
+/* « Ajouter un joueur » : un simple + dans un rond noir */
+#setup.b2 .padd,#setup.b2.teams #names>.padd,#setup.b2:not(.teams) #names>.padd{flex:0 0 auto!important;width:calc(var(--u)*6.2)!important;min-width:0!important;height:calc(var(--u)*6.2)!important;
+  min-height:0!important;border-radius:50%!important;border:0!important;background:var(--m-strong)!important;padding:0!important;margin:0!important;grid-column:auto!important;
+  display:grid!important;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,.18)}
+#setup.b2 .padd::before{content:"+"!important;color:var(--m-bg,#fff)!important;font-size:calc(var(--u)*4)!important;line-height:1;margin:0!important;font-family:"Fun",sans-serif!important}
+#setup.b2 .padd::after{content:none!important}
+#setup.b2 .padd:active{transform:scale(.92)}
+#setup.b2.teams #names>.padd{align-self:center;justify-self:start}
+/* équipes : zone de dépôt */
+#setup.b2 .tbub.tdrop{background:color-mix(in srgb,var(--accent) 12%,transparent)!important;border-radius:calc(var(--u)*2.6)!important}
+#setup.b2 .tbub.tnew{border:2px dashed var(--m-sub)!important;border-radius:calc(var(--u)*2.6)!important;min-height:calc(var(--u)*10);display:grid!important;place-items:center}
+#setup.b2 .tbub.tnew .tlab{padding:0!important;color:var(--m-sub)!important}
+
+/* ===== THÈME « SANG » : rouge sang, contours vert foncé, fond ivoire, prénoms sans couleur ===== */
+html.sang{--accent:#8e0e0e;--acc-rgb:142,14,14;--m-strong:#1f3d2b;--ink:#1f3d2b}
+html.sang:not(.night){--m-ink:#1f3d2b}
+html.sang.night{--m-strong:#7fae92}
+html.sang .seg.mini,html.sang .seg.gamepick,html.sang #setup.b2 .circ{border-color:var(--m-strong)!important}
+#skinT{right:auto!important;left:5vw}
+#skinT i{transition:transform .3s var(--ease)}
+html.night #skinT i{transform:none}html.sang #skinT i{transform:translateX(100%)!important}
+html.night #skinT .d{opacity:1}html.night #skinT .n{opacity:.45}
+#skinT .n{opacity:.45}html.sang #skinT .n{opacity:1!important}html.sang #skinT .d{opacity:.45!important}
 </style>
 </head>
 <body>
@@ -2224,6 +2259,7 @@ html.night .ov{background:rgba(31,37,48,.98)}
 
 <!-- ===== MENU ===== -->
 <section id="home" class="screen on simple">
+  <button id="skinT" class="thsw skin" aria-label="Thème"><span class="d">🟠</span><span class="n">🔴</span><i></i></button>
   <button id="themeT" class="thsw" aria-label="Mode nuit"><span class="d">☀️</span><span class="n">🌙</span><i></i></button>
   <div class="hb">
     <svg class="board" viewBox="0 0 200 200" aria-hidden="true">
@@ -3397,8 +3433,9 @@ function renderSetup(){
   $('setup').classList.toggle('teams',teamsOn);
   $('segN').querySelectorAll('button').forEach(b=>b.classList.toggle('sel',+b.dataset.v===S.n));
   const box=$('names');box.innerHTML='';let TB=null;
+  const TS=teamsOn?normT():[],starts=new Set();{let k=0;TS.forEach(z=>{starts.add(k);k+=z})}
   for(let i=0;i<S.n;i++){
-    if(teamsOn&&i%2===0){TB=el('div','tbub');TB.append(el('div','tlab','Équipe '+(i/2+1)));box.append(TB)}
+    if(teamsOn&&starts.has(i)){TB=el('div','tbub');TB.dataset.t=[...starts].indexOf(i);TB.append(el('div','tlab','Équipe '+([...starts].indexOf(i)+1)));box.append(TB)}
     const slot=el('div','nslot');slot.dataset.i=i;
     const nm=el('span','pname',esc(S.names[i]));nm.style.color=pcol(S.names[i])||'';
     const cdot=el('button','pcol');cdot.setAttribute('aria-label','Couleur');
@@ -3407,7 +3444,7 @@ function renderSetup(){
     slot.style.setProperty('--pc',pcol(S.names[i])||'#cfc9be');
     {const bm=botMetal(S.names[i]);slot.classList.toggle('bot',!!bm);if(bm){slot.style.setProperty('--m1',bm[0]);slot.style.setProperty('--m2',bm[1])}}
     const del=el('button','pdel','✕');del.setAttribute('aria-label','Retirer');
-    del.addEventListener('click',()=>{S.names.splice(i,1);S.n=S.names.length;store.set(K_S,S);haptic();SFX.back();renderSetup()});
+    del.addEventListener('click',()=>{{const t=normT();let k=0,j=0;while(j<t.length&&k+t[j]<=i){k+=t[j];j++}if(j<t.length)t[j]--;S.tsz=t.filter(x=>x>0)}S.names.splice(i,1);S.n=S.names.length;store.set(K_S,S);haptic();SFX.back();renderSetup()});
     slot.append(el('b','',String(i+1)),cdot,nm,del);(teamsOn&&TB?TB:box).append(slot);
   }
   if(S.n<maxP()){const add=el('button','padd','+');add.setAttribute('aria-label','Ajouter un joueur');add.addEventListener('click',openPick);box.append(add)}
@@ -3417,7 +3454,13 @@ function renderSetup(){
 }
 let PICK=0;
 const maxP=()=>10;            // jusqu'à 10 joueurs (cricket et killer)
-const teamsOK=()=>S.n>=3;   // équipes de 2 ; s'il y a un nombre impair, la dernière équipe est un joueur seul
+function normT(){let t=(Array.isArray(S.tsz)?S.tsz:[]).filter(x=>x>0),sum=t.reduce((a,b)=>a+b,0);
+  if(!t.length&&S.n){t=[];for(let k=0;k<S.n;k+=2)t.push(Math.min(2,S.n-k));sum=S.n}
+  while(sum<S.n){if(t.length&&t[t.length-1]===1)t[t.length-1]++;else t.push(1);sum++}
+  while(sum>S.n){t[t.length-1]--;if(!t[t.length-1])t.pop();sum--}
+  S.tsz=t;return t}
+function groupsOf(names){const t=normT(),g=[];let k=0;for(const z of t){g.push(names.slice(k,k+z));k+=z}return g}
+const teamsOK=()=>S.n>=3&&normT().length>=2;   // équipes de 2 ; s'il y a un nombre impair, la dernière équipe est un joueur seul
 if(S.teams>1)S.teams=1;
 /* « + » : choisir un joueur enregistré (ou en créer un) */
 function openPick(){
@@ -3490,12 +3533,15 @@ function startDrag(e){
   DRAG={slot,slots,rs,from,over:from,x0:PRE.x0,y0:PRE.y0};PRE=null;
   slots.forEach(x=>{if(x!==slot)x.style.transition='transform .22s cubic-bezier(.2,.8,.2,1)'});
   slot.classList.add('drag');haptic();SFX.tick();
+  if($('setup').classList.contains('teams')){DRAG.teams=1;const z=el('div','tbub tnew','<div class="tlab">+ Nouvelle équipe</div>');$('names').querySelector('.padd')?$('names').insertBefore(z,$('names').querySelector('.padd')):$('names').append(z)}
   try{slot.setPointerCapture(e.pointerId)}catch(_){}
 }
 $('names').addEventListener('pointermove',e=>{
   if(PRE&&!DRAG){if(Math.hypot(e.clientX-PRE.x0,e.clientY-PRE.y0)>6)startDrag(e);else return}
   if(!DRAG)return;e.preventDefault();const D=DRAG,dx=e.clientX-D.x0,dy=e.clientY-D.y0;
-  D.slot.style.transform=`translate(${dx}px,${dy}px) scale(1.04)`;
+  D.slot.style.transform=`translate(${dx}px,${dy}px) scale(1.04)`;D.px=e.clientX;D.py=e.clientY;
+  if(D.teams){const t=teamAt(D.px,D.py);if(t!==D.tt){D.tt=t;SFX.tick();haptic()}
+    $('names').querySelectorAll('.tbub').forEach(b=>b.classList.toggle('tdrop',b===t));return}
   // case la plus proche du centre de la case déplacée → nouvelle place
   const cx=D.rs[D.from].cx+dx,cy=D.rs[D.from].cy+dy;let over=D.from,best=1e9;
   D.rs.forEach((r,k)=>{const d=(r.cx-cx)**2+(r.cy-cy)**2;if(d<best){best=d;over=k}});
@@ -3507,8 +3553,21 @@ $('names').addEventListener('pointermove',e=>{
     x.querySelector('b').textContent=nk+1});
   D.slot.querySelector('b').textContent=over+1;
 },{passive:false});
+function teamAt(x,y){return[...$('names').querySelectorAll('.tbub')].find(b=>{const r=b.getBoundingClientRect();return x>=r.left-4&&x<=r.right+4&&y>=r.top-4&&y<=r.bottom+4})||null}
 const endDrag=()=>{
   PRE=null;if(!DRAG)return;const D=DRAG;DRAG=null;const {from,over}=D;
+  if(D.teams){
+    const t=D.px!=null?teamAt(D.px,D.py):null,names=S.names.slice(0,S.n),G2=groupsOf(names),nm=names[from];
+    if(t){
+      const src=G2.findIndex(g=>g.includes(nm));G2[src]=G2[src].filter(x=>x!==nm);
+      let dst=t.classList.contains('tnew')?-1:+t.dataset.t;
+      if(dst<0)G2.push([nm]);
+      else{const sl=[...t.querySelectorAll('.nslot')].filter(x=>x!==D.slot);let at=sl.filter(x=>{const r=x.getBoundingClientRect();return r.top+r.height/2<D.py}).length;
+        if(dst===src&&false){}G2[dst].splice(Math.min(at,G2[dst].length),0,nm)}
+      const NG=G2.filter(g=>g.length);S.names.splice(0,S.n,...NG.flat());S.tsz=NG.map(g=>g.length);store.set(K_S,S);SFX.lock();haptic();
+    }
+    renderSetup();return;
+  }
   D.slot.style.transition='transform .2s cubic-bezier(.2,.8,.2,1)';
   D.slot.style.transform=`translate(${D.rs[over].x-D.rs[from].x}px,${D.rs[over].y-D.rs[from].y}px)`;
   setTimeout(()=>{
@@ -3530,14 +3589,14 @@ function launchNew(){
   const names=S.names.slice(0,S.n).map((s,i)=>(s||'').trim().toUpperCase()||('J'+(i+1)));
   if(S.game==='cricket'&&S.teams>0&&teamsOK()){
     // équipes : la colonne d'une équipe porte « A & B » ; le tirage (s'il y en a un) décide de l'ordre des équipes
-    const T=[];for(let k=0;k<S.n;k+=2)T.push(names.slice(k,k+2));
+    const T=groupsOf(names);
     const labels=T.map(t=>t.join(' & ')),map=Object.fromEntries(labels.map((l,k)=>[l,T[k]]));
     DRAWCB=o=>startGame(S.mode,o,0,o.map(l=>map[l]));
     if(S.order==='draw')runDraw(labels);else DRAWCB(labels);
     return;
   }
   if(S.game==='x01'&&S.teams>0&&teamsOK()){
-    const T=[];for(let k=0;k<S.n;k+=2)T.push(names.slice(k,k+2));
+    const T=groupsOf(names);
     const labels=T.map(t=>t.join(' & ')),map=Object.fromEntries(labels.map((l,k)=>[l,T[k]]));
     DRAWCB=o=>startX01(o,0,o.map(l=>map[l]));
     if(S.order==='draw')runDraw(labels);else DRAWCB(labels);
@@ -3694,7 +3753,7 @@ const isBot=n=>!!botLv(n);
 const BOTMETAL={'SPEWTARD':['#5f6b3a','#a3ae74'],"P'TIT JEUNE":['#9a5a2a','#d9945b'],'MEC CHAUD':['#8d959e','#e3e7eb'],'LE MENTOR':['#b8860b','#ffe27a'],"L'ANCIEN":['#4fb3cc','#d8f6ff']};
 const botMetal=n=>BOTMETAL[botBase(n)]||null;
 ROSTER=ROSTER.filter(r=>!isBot(r.name));
-const pcol=n=>{const bm=botMetal(n);if(bm)return bm[0];const r=ROSTER.find(x=>x.name===String(n||'').trim().toUpperCase());return r?r.color:''};
+const pcol=n=>{const bm=botMetal(n);if(bm)return bm[0];if(document.documentElement.classList.contains('sang'))return'';const r=ROSTER.find(x=>x.name===String(n||'').trim().toUpperCase());return r?r.color:''};
 function renderRoster(){
   const box=$('rList');box.innerHTML='';
   ROSTER.forEach((r,i)=>{
@@ -4535,6 +4594,11 @@ document.addEventListener('pointerdown',e=>{const b=e.target.closest&&e.target.c
 /* démarrage : toujours l'accueil (« Reprendre la partie » si une partie est en cours) */
 goHome();
 
+
+/* ---- thème (orange / sang) ---- */
+(function(){const K='darts.skin.v1';let v='';try{v=localStorage.getItem(K)||''}catch(e){}
+ const ap=()=>{document.documentElement.classList.toggle('sang',v==='sang');if(typeof renderSetup==='function'&&$('setup').classList.contains('on'))renderSetup()};ap();
+ document.getElementById('skinT').addEventListener('click',()=>{v=v==='sang'?'':'sang';ap();haptic();try{localStorage.setItem(K,v)}catch(e){}});})();
 /* ---- mode nuit ---- */
 (function(){const K='darts.theme.v1';let n=false;try{n=localStorage.getItem(K)==='night'}catch(e){}
  const ap=()=>{document.documentElement.classList.toggle('night',n);const m=document.querySelector('meta[name=theme-color]');if(m)m.content=n?'#1f2530':'#f4f2ee';if(typeof topColor==='function')requestAnimationFrame(topColor)};ap();
