@@ -2337,6 +2337,20 @@ html.night #setup.b2 .sect,html.night #setup.b2 .sect.s1,html.night #setup.b2 .s
 #setup.b2 .seg.gamepick button{font-size:calc(var(--u)*3.4)!important}
 #setup.b2 .nslot .pname{font-size:calc(var(--u)*2.7)!important}
 #setup.g-x01.b2 .sect.s2{row-gap:calc(var(--u)*2.3)!important}
+
+/* ===== panneau « Ajouter un joueur » : police unique, + rouge au lieu du champ ===== */
+#ppick,#ppick *{font-family:"Fun",-apple-system,sans-serif!important;font-weight:400!important}
+#ppick .pph b{font-size:calc(var(--u)*3)!important;letter-spacing:.01em}
+#ppick .psec{text-transform:none!important;letter-spacing:.01em!important;font-size:calc(var(--u)*2.4)!important}
+#ppick .pnew{display:none!important}
+#ppick.typing .pnew{display:flex!important;gap:calc(var(--u)*1.2);align-items:center}
+#ppick.typing .pplus{display:none}
+#ppick #pList{display:flex;flex-wrap:wrap;align-items:center;gap:calc(var(--u)*1.2)}
+#ppick .pplus{width:var(--bh);height:var(--bh);border-radius:50%;background:var(--accent);color:#fff;font-size:calc(var(--u)*4)!important;line-height:1;
+  display:grid;place-items:center;box-shadow:0 4px 12px rgba(var(--acc-rgb),.35);flex:0 0 auto}
+#ppick .pplus:active{transform:scale(.9)}
+#ppick .pnew input{height:var(--bh);border-radius:calc(var(--u)*2.4)!important;font-size:max(16px,calc(var(--u)*2.4))!important;padding:0 calc(var(--u)*2)!important;text-transform:uppercase}
+#ppick .pnew #pAdd{width:var(--bh);height:var(--bh);border-radius:50%!important;padding:0!important;flex:0 0 auto;font-size:calc(var(--u)*3)!important;display:grid;place-items:center;background:var(--accent)!important;color:#fff!important}
 </style>
 </head>
 <body>
@@ -2496,9 +2510,8 @@ html.night #setup.b2 .sect,html.night #setup.b2 .sect.s1,html.night #setup.b2 .s
 <!-- ===== CHOIX D'UN JOUEUR (« + » du menu) ===== -->
 <div id="ppick" role="menu">
   <div class="pph"><b id="pTitle">Ajouter un joueur</b><button id="pClose" aria-label="Fermer">✕</button></div>
-  <div class="psec">Joueurs enregistrés</div>
   <div id="pList"></div>
-  <div class="pnew"><input id="pNew" maxlength="8" placeholder="NOUVEAU JOUEUR" autocomplete="off" spellcheck="false"><button class="big acc" id="pAdd">Ajouter</button></div>
+  <div class="pnew"><input id="pNew" maxlength="8" placeholder="NOUVEAU JOUEUR" autocomplete="off" spellcheck="false"><button class="big acc" id="pAdd" aria-label="Ajouter">✓</button></div>
   <div class="pbots"><span class="psec">🤖 Bots</span><div id="pBots"></div></div>
 </div>
 
@@ -3564,10 +3577,10 @@ function openPick(){
     const x=el('button','rchipx','✕');x.setAttribute('aria-label','Oublier ce joueur');
     x.addEventListener('click',e=>{e.stopPropagation();if(x.classList.contains('arm')){ROSTER=ROSTER.filter(q=>q.name!==r.name);store.set(K_R,ROSTER);SFX.back();openPick()}else{x.classList.add('arm');x.textContent='Oublier ?';setTimeout(()=>{x.classList.remove('arm');x.textContent='✕'},2500)}});
     w.append(b,x);box.append(w)});
-  if(!box.children.length)box.append(el('p','note','Tous les joueurs enregistrés sont déjà dans la partie.'));
+  {const pl=el('button','pplus','+');pl.setAttribute('aria-label','Nouveau joueur');pl.addEventListener('click',()=>{haptic();SFX.ui();$('ppick').classList.add('typing');$('pNew').value='';setTimeout(()=>$('pNew').focus(),30)});box.append(pl)}
   const need=S.teams&&(S.game==='cricket'||S.game==='x01')&&!teamsOK()?3-S.n:0;
   $('pTitle').textContent=need>0?`Équipes : il manque ${need} joueur${need>1?'s':''}`:'Ajouter un joueur';
-  $('pNew').value='';
+  $('pNew').value='';$('ppick').classList.remove('typing');
   const pp=$('ppick'),a=document.querySelector('#names .padd');pp.classList.add('on');
   pp.classList.remove('pop');void pp.offsetWidth;pp.classList.add('pop');
 }
