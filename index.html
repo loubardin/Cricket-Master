@@ -2559,6 +2559,25 @@ body:not(.m2):not(.m3) #game.sk #bS,body.m2 #game.sk #b2,body.m3 #game.sk #b3{tr
 #game.sk #bS small,#game.sk #bS .sub{display:none!important}
 #game.sk footer button>*,#game.sk footer #bS{padding-top:.2em!important}
 #game.sk footer button .bt{display:block;padding-top:.2em}
+
+/* ===== v78 ===== */
+/* switch du bas : collé au tableau, même hauteur qu'une ligne de nombre, textes centrés */
+#game.sk footer{height:var(--rowh,calc(var(--u)*6.6))!important;margin-top:1.1dvh!important}
+#game.sk footer button,#game.sk footer #bS{display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:center!important;height:100%!important;padding:0!important;line-height:1!important}
+#game.sk footer button>*,#game.sk footer #bS,#game.sk footer button .bt{padding-top:0!important}
+#game.sk footer button .bt,#game.sk footer #bS{text-box:trim-both cap alphabetic}
+/* spew : le switch tremble, la bulle s'écrase et rebondit, éclair bleu */
+#game.sk footer.spewfx{animation:spewshake .55s cubic-bezier(.36,.07,.19,.97)}
+@keyframes spewshake{0%,100%{translate:0 0}12%{translate:-9px 0}26%{translate:8px 0}40%{translate:-6px 0}54%{translate:4px 0}70%{translate:-2px 0}}
+#game.sk footer.spewfx .fthumb{animation:spewjelly .7s cubic-bezier(.3,1.6,.5,1)}
+@keyframes spewjelly{0%{scale:1 1;background:var(--accent)}15%{scale:1.35 .62;background:#2f9fd8;box-shadow:0 0 0 calc(var(--u)*2.6) #2f9fd8,0 0 30px rgba(47,159,216,.7)}
+  40%{scale:.82 1.25;background:#2f9fd8}65%{scale:1.08 .94}100%{scale:1 1;background:var(--accent)}}
+#game.sk footer.spewfx #bS{animation:spewtxt .6s cubic-bezier(.3,1.6,.5,1)}
+@keyframes spewtxt{0%{scale:1}20%{scale:1.7}100%{scale:1}}
+/* bulle de la case joueur : un peu moins large, un peu plus haute */
+body #game.sk.p2 #scores>.pc.sc.act>.pills{top:-.7dvh!important;bottom:-.7dvh!important}
+/* textes de la case joueur : toujours centrés dans leur moitié */
+body #game.sk.p2 #scores .sc>.nm,body #game.sk.p2 #scores .sc>.pts,body #game.sk.p2 #scores .sc>.mpr{text-align:center!important;justify-content:center!important}
 </style>
 </head>
 <body>
@@ -4941,7 +4960,7 @@ function alignLabels(){document.querySelectorAll('#setup .sect .opt').forEach(o=
  sb.addEventListener('click',()=>{S.sound=!S.sound;store.set(K_S,S);up();haptic();audioInit();SFX.ui()})}
 
 /* ===== style « switch » du tableau de cricket (avec retour au style d'origine) ===== */
-function applyBStyle(){const on=S.bstyle!=='classic';$('game').classList.toggle('sk',on);$('bStyle').classList.toggle('on',on);
+function applyBStyle(){const on=S.bstyle!=='classic';if(!on&&R&&R.sc)R.sc.forEach(sc=>[sc.nm,sc.pts,sc.m,sc.pills].forEach(e=>['left','right','width'].forEach(k=>e.style.removeProperty(k))));$('game').classList.toggle('sk',on);$('bStyle').classList.toggle('on',on);
   if(G&&R&&$('game').classList.contains('on')){render();if(typeof refitNames==='function')refitNames()}}
 $('bStyle').addEventListener('click',()=>{S.bstyle=S.bstyle==='classic'?'sw':'classic';store.set(K_S,S);haptic();SFX.ui();applyBStyle()});
 applyBStyle();
@@ -4964,7 +4983,8 @@ function flashRow(t){
   a1.onfinish=()=>{f.remove();num.classList.remove('away')};
 }
 {const _t=throwDart;throwDart=function(t){const before=G?JSON.stringify(G.players.map(p=>[p.marks,p.score])):'';const r=_t.apply(this,arguments);
-  try{if(t&&G&&JSON.stringify(G.players.map(p=>[p.marks,p.score]))!==before)flashRow(t)}catch(e){}return r}}
+  try{if(t&&G&&JSON.stringify(G.players.map(p=>[p.marks,p.score]))!==before)flashRow(t);
+    if(t===0&&$('game').classList.contains('sk')){const f=document.querySelector('#game footer');f.classList.remove('spewfx');void f.offsetWidth;f.classList.add('spewfx');setTimeout(()=>f.classList.remove('spewfx'),750)}}catch(e){}return r}}
 
 /* le rail de chaque nombre couvre la colonne des nombres + celle du joueur en cours (comme l'ancien cadre) */
 function placeTracks(){
@@ -4976,7 +4996,27 @@ function placeTracks(){
     tk.style.left=tb.style.left=L+'px';tk.style.width=tb.style.width=(Rr-L)+'px';
     row.querySelectorAll('.pc.mk').forEach(m=>m.classList.toggle('intk',m.offsetLeft>=L-1&&m.offsetLeft+m.offsetWidth<=Rr+1))});
 }
-{const _pf=placeFrame;placeFrame=function(){const r=_pf.apply(this,arguments);try{placeTracks()}catch(e){}return r}}
+function placeHead(){
+  const g=$('game');if(!g.classList.contains('sk')||!R||!G)return;
+  const row=R.num[15]&&R.num[15].parentElement;if(row)g.style.setProperty('--rowh',row.offsetHeight+'px');
+  if(!g.classList.contains('p2'))return;
+  const nr=R.num[15].getBoundingClientRect(),set=(e,k,v)=>e.style.setProperty(k,v,'important');
+  R.sc.forEach(sc=>{const c=sc.c,cr=c.getBoundingClientRect();if(!cr.width)return;let L,W;
+    if(c.classList.contains('act')){
+      // bulle : au-dessus de la colonne des nombres, un peu plus étroite qu'elle
+      const ins=nr.width*.08,bl=nr.left-cr.left+ins,bw=nr.width-2*ins;set(sc.pills,'left',bl+'px');set(sc.pills,'right','auto');set(sc.pills,'width',bw+'px');
+      const first=!c.previousElementSibling||c.parentElement.firstElementChild===c;
+      if(first){L=0;W=Math.max(0,nr.left-cr.left)}else{L=Math.max(0,nr.right-cr.left);W=Math.max(0,cr.right-nr.right)}
+    }else{
+      ['left','right','width'].forEach(k=>sc.pills.style.removeProperty(k));
+      const pr=sc.pills.getBoundingClientRect();
+      const first=c.parentElement.firstElementChild===c;
+      if(!first){L=0;W=Math.max(0,pr.left-cr.left)}else{L=Math.max(0,pr.right-cr.left);W=Math.max(0,cr.right-pr.right)}
+    }
+    [sc.nm,sc.pts,sc.m].forEach(e=>{set(e,'left',L+'px');set(e,'right','auto');set(e,'width',W+'px')});
+  });
+}
+{const _pf=placeFrame;placeFrame=function(){const r=_pf.apply(this,arguments);try{placeTracks();placeHead()}catch(e){}return r}}
 /* démarrage : toujours l'accueil (« Reprendre la partie » si une partie est en cours) */
 goHome();
 
