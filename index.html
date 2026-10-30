@@ -2534,6 +2534,31 @@ body.m2 #game.sk .fthumb{translate:0 0;background:linear-gradient(160deg,#9aa3ad
 body.m3 #game.sk .fthumb{translate:200% 0;background:linear-gradient(160deg,#f6cf4a,#d39a00);box-shadow:0 0 0 calc(var(--u,1dvh)*1.4) #d9a300,0 8px 18px rgba(224,168,0,.35)}
 body:not(.m2):not(.m3) #game.sk #bS,body.m2 #game.sk #b2,body.m3 #game.sk #b3{color:#fff!important}
 #game.sk footer button:active{transform:scale(.95)}
+
+/* ===== v77 : style switch — cartes divisées en 2, boutons du bas = switch 3 positions des menus ===== */
+#game.sk{--u:min(1dvh,1.7vw)}
+#game.sk>header{background:transparent!important;box-shadow:none!important}
+/* cartes : contour par-dessus (comme les switchs) */
+#game.sk #scores>.pc.sc,#game.sk #scores>.pc.sc.act,html.sang #game.sk #scores>.pc.sc{position:relative;box-shadow:none!important;overflow:visible}
+#game.sk #scores>.pc.sc::after{content:"";position:absolute;inset:0;border:2px solid var(--m-strong);border-radius:26px;pointer-events:none;z-index:6}
+html.sang #game.sk #scores>.pc.sc::after{border-width:3px}
+/* carte du joueur en cours à 2 joueurs : moitié gauche = nom/score/MPR, moitié droite = bulle avec l'historique */
+body #game.sk.p2 #scores>.pc.sc.act>.pills{top:0!important;bottom:0!important;height:auto!important;transform:none!important;width:var(--midw)!important;
+  border-radius:26px!important;background:var(--accent)!important;gap:1dvh!important;padding:0!important;z-index:1;
+  box-shadow:0 0 0 calc(var(--u)*1.1) var(--accent),0 8px 18px rgba(var(--acc-rgb),.3)!important}
+body #game.sk.p2 #scores>.pc.sc.act>.pills .pill{width:62%!important;max-width:none!important}
+/* carte en cours à 3 joueurs et + : petite bulle sous le score */
+#game.sk:not(.p2) #scores>.pc.sc.act .pills{border-radius:99px;padding:.4dvh 1.2vw;box-shadow:0 0 0 .5dvh var(--accent),0 6px 14px rgba(var(--acc-rgb),.3)!important}
+/* boutons du bas : mêmes proportions que les switchs 3 positions des menus */
+#game.sk footer{height:calc(var(--u)*6.6)!important;margin:2dvh 3.5vw calc(var(--sab) + 2dvh)!important;flex:0 0 auto}
+#game.sk footer button{font-family:"Fun",sans-serif!important;font-weight:400!important;font-size:calc(var(--u)*2.6)!important;letter-spacing:.01em!important;
+  transition:transform .22s var(--ease),color .2s!important;line-height:1}
+#game.sk footer button .bt{font-size:inherit!important}
+body:not(.m2):not(.m3) #game.sk #bS,body.m2 #game.sk #b2,body.m3 #game.sk #b3{transform:scale(1.35)}
+#game.sk .fthumb,body.m2 #game.sk .fthumb,body.m3 #game.sk .fthumb{background:var(--accent)!important;box-shadow:0 0 0 calc(var(--u)*1.7) var(--accent),0 8px 18px rgba(var(--acc-rgb),.38)!important}
+#game.sk #bS small,#game.sk #bS .sub{display:none!important}
+#game.sk footer button>*,#game.sk footer #bS{padding-top:.2em!important}
+#game.sk footer button .bt{display:block;padding-top:.2em}
 </style>
 </head>
 <body>
