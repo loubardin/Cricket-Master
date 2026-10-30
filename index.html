@@ -2394,6 +2394,15 @@ html.sang #pframe{animation-name:breathe2!important}
 #setup.b2 .grp.gslideR{animation:gslideR .32s var(--ease)}
 @keyframes gslideL{from{opacity:0;translate:28% 0}to{opacity:1;translate:0 0}}
 @keyframes gslideR{from{opacity:0;translate:-28% 0}to{opacity:1;translate:0 0}}
+
+/* v72 : réglages plus serrés, glissement de jeu plus ample */
+#setup.b2 .sect.s2{row-gap:calc(var(--u)*1.7)!important}
+#setup.g-x01.b2 .sect.s2{row-gap:calc(var(--u)*1.5)!important}
+#setup.b2 .sect.s2 .opt,#setup.b2 .sect.s1 .opt.ordopt{row-gap:calc(var(--u)*1.35)!important}
+#setup.b2 .grp.gslideL{animation:gslideL2 .55s cubic-bezier(.2,.9,.25,1)!important}
+#setup.b2 .grp.gslideR{animation:gslideR2 .55s cubic-bezier(.2,.9,.25,1)!important}
+@keyframes gslideL2{0%{opacity:0;translate:70% 0;scale:.96}60%{opacity:1}100%{opacity:1;translate:0 0;scale:1}}
+@keyframes gslideR2{0%{opacity:0;translate:-70% 0;scale:.96}60%{opacity:1}100%{opacity:1;translate:0 0;scale:1}}
 </style>
 </head>
 <body>
