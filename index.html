@@ -2179,6 +2179,19 @@ html.night .ov{background:rgba(31,37,48,.98)}
 #setup.b2 .sect.s1 .opt.ordopt>span{font-size:calc(var(--u)*2.05)!important}
 #setup.b2 .sect.s1 .opt.ordopt .seg.mini{width:auto!important;flex:0 0 58%;height:calc(var(--u)*5.8)!important}
 #setup.b2 .sect.s1 .teamopt{margin-bottom:calc(var(--u)*2.4)!important}
+
+/* ===== v63 ===== */
+/* joueurs (sans équipes) : plusieurs par ligne selon la longueur des noms */
+#setup.b2:not(.teams) #names{display:flex!important;flex-direction:row!important;flex-wrap:wrap!important;justify-content:flex-start!important;gap:calc(var(--u)*1.6)!important;align-items:center!important}
+#setup.b2:not(.teams) #names>.nslot,#setup.b2:not(.teams) #names>.nslot+.nslot{margin:0!important;flex:0 0 auto;width:auto!important}
+#setup.b2:not(.teams) #names>.padd,#setup.b2:not(.teams) #names>.phint{flex:1 0 100%;margin-top:calc(var(--u)*.6)!important}
+/* intitulés des règles : centrés au-dessus du switch, un peu plus gros et plus gras */
+#setup.b2 .sect.s2 .opt>span,#setup.b2 .sect.s1 .opt.ordopt>span{text-align:center!important;justify-self:center!important;padding:0!important;
+  font-size:calc(var(--u)*2.4)!important;font-weight:700!important;color:var(--m-ink)!important}
+/* Départ : sous la liste des joueurs, même présentation que les règles */
+#setup.b2 .sect.s1 .opt.ordopt{display:grid!important;grid-template-columns:1fr!important;row-gap:calc(var(--u)*2.8)!important;justify-items:stretch;
+  margin:calc(var(--u)*3) 0 0!important;padding:calc(var(--u)*2.6) 0 0!important;border-top:1px solid var(--m-line)!important}
+#setup.b2 .sect.s1 .opt.ordopt .seg.mini{width:100%!important;flex:none}
 </style>
 </head>
 <body>
@@ -2225,10 +2238,10 @@ html.night .ov{background:rgba(31,37,48,.98)}
     <div class="glab"><span>Joueurs</span></div>
     <div class="sect s1">
       <div class="opt ck xk teamopt"><span>Équipes</span><div class="seg mini" data-k="teams"><button data-v="0">Non</button><button data-v="1">Oui</button></div><button id="tShuffle" class="tshuf" aria-label="Mélanger les équipes"><b>⤮</b>Mélanger</button></div>
-      <div class="opt ck xk ordopt"><span>Départ</span><div class="seg mini" id="segOrd"><button data-v="fixed">Ordre saisi</button><button data-v="draw">Tirage</button></div></div>
       <div class="seg mini" id="segN"><button data-v="2">2</button><button data-v="3">3</button><button data-v="4">4</button><button data-v="5">5</button><button data-v="6">6</button></div>
       <div id="names"></div>
       <div id="rchips"></div>
+      <div class="opt ck xk ordopt"><span>Départ</span><div class="seg mini" id="segOrd"><button data-v="fixed">Ordre saisi</button><button data-v="draw">Tirage</button></div></div>
     </div>
   </div>
 
@@ -3432,6 +3445,10 @@ function placeThumbs(){
   });
 }
 addEventListener('resize',()=>{if($('setup').classList.contains('on'))placeThumbs()});
+/* bulle orange : replacée automatiquement dès qu'un switch devient visible ou change de taille (plus besoin de toucher) */
+{let q=0;const RO=new ResizeObserver(()=>{if(!q){q=1;requestAnimationFrame(()=>{q=0;placeThumbs()})}});
+ document.querySelectorAll('#setup .seg,#hist .seg').forEach(g=>RO.observe(g));
+ if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>requestAnimationFrame(placeThumbs));}
 /* appui sur l'option déjà choisie : on passe à la suivante (interrupteur) */
 $('setup').addEventListener('click',e=>{
   const b=e.target.closest('.seg button.sel');if(!b)return;
