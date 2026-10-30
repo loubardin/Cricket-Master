@@ -2720,7 +2720,7 @@ html body #game#game.sk.p2 #scores .sc:not(.act)>.pills{display:none!important}
 #game#game.sk.p2 .pb.me{z-index:2;background:var(--pc);box-shadow:inset 0 0 0 var(--bw) var(--m-strong),0 0 0 var(--h) var(--pc)}
 #game#game.sk.p2 .pb.ot{z-index:1;top:calc(var(--h)*-1);bottom:calc(var(--h)*-1);background:var(--pgrey)}
 #game#game.sk.p2 .pb.dead{--pc:var(--pgrey);box-shadow:0 0 0 var(--h) var(--pgrey)}
-#game#game.sk.p2 .pb b{font-style:normal;position:absolute;top:50%;transform:translateY(-50%);font-family:"Fun",sans-serif;font-weight:400;font-size:calc(var(--r)*.34);
+#game#game.sk.p2 .pb b{font-style:normal;position:absolute;top:50%;transform:translateY(-50%);font-family:"Fun",sans-serif!important;font-weight:400!important;font-size:calc(var(--r)*.34);
   line-height:1;color:#fff;text-box:trim-both cap alphabetic}
 #game#game.sk.p2 .pb.cl b{left:calc(var(--r)*.42)}
 #game#game.sk.p2 .pb.cr b{right:calc(var(--r)*.42)}
@@ -2730,6 +2730,17 @@ html body #game#game.sk.p2 #scores .sc:not(.act)>.pills{display:none!important}
 /* Spew : texte cerné comme les nombres */
 body:not(.m2):not(.m3) #game#game.sk.p2 footer #bS::after,body.m2 #game#game.sk.p2 footer #b2::after,body.m3 #game#game.sk.p2 footer #b3::after{
   -webkit-text-stroke:calc(var(--bw)*2.4) var(--m-strong);paint-order:stroke fill}
+
+/* ===== v81 : 1 contre 1 — sans rails, couleurs franches, textes sans contour ===== */
+#game#game.sk.p2{--h:calc(var(--r)*.12);--pgrey:#808080}
+html.night #game#game.sk.p2{--pgrey:#5a6170}
+#game#game.sk.p2 .rtrack,#game#game.sk.p2 .rtrackb{display:none!important}
+#game#game.sk.p2 #grid .num .lbl,html body #game#game.sk.p2 #scores .sc.act>.pts{-webkit-text-stroke:0!important}
+body #game#game.sk.p2 footer #b2::after,body #game#game.sk.p2 footer #bS::after,body #game#game.sk.p2 footer #b3::after{-webkit-text-stroke:0!important}
+/* joueur en attente : en gris */
+html body #game#game.sk.p2 #scores .sc:not(.act)>.nm,html body #game#game.sk.p2 #scores .sc:not(.act)>.pts,html body #game#game.sk.p2 #scores .sc:not(.act)>.mpr{color:var(--pgrey)!important}
+/* aucune marque : petit cercle gris épais */
+#game#game.sk.p2 .pz{width:calc(var(--r)*.24);height:calc(var(--r)*.24);margin-top:calc(var(--r)*-.12);border-width:calc(var(--r)*.07)}
 </style>
 </head>
 <body>
@@ -5179,7 +5190,7 @@ function fitSk(){
 {const _fh=fitHead;fitHead=function(){if(skp2())return fitSk();return _fh.apply(this,arguments)}}
 {const _eq=eqNames;eqNames=function(){if(skp2())return;return _eq.apply(this,arguments)}}
 /* 1 contre 1 : barres de progression de chaque ligne */
-const PBC=['#f1ab1c','#e6820e','#d64a10','#c4160f'];   // 0, 1, 2, 3 marques
+const PBC=['#fcc200','#f7941d','#ff5a1f','#ed1c24'];   // 0, 1, 2, 3 marques
 function drawBars(){
   if(!skp2()||!R||!G)return;const cur=shownCur(),oth=1-cur,curL=cur===0,P=G.players;
   const tot=(p,t)=>p.marks[t]+((p.extra&&p.extra[t])||0);
@@ -5198,7 +5209,7 @@ function drawBars(){
     if(curL)put(ot,c,b+ko/3*(W-b));else put(ot,a-ko/3*a,c);
     ot.style.opacity=ko?1:0;ot.classList.toggle('cl',!curL);ot.classList.toggle('cr',curL);ot.firstChild.textContent=ko?tot(P[oth],t):'';
     // aucune marque : petit cercle contre la bulle
-    const gap=r*.16,sz=r*.2,h=r*.095;
+    const gap=r*.2,sz=r*.24,h=r*.12;
     zm.style.left=(curL?a-h-gap-sz:b+h+gap)+'px';zo.style.left=(curL?b+h+gap:a-h-gap-sz)+'px';
     zm.style.opacity=km||dd?0:1;zo.style.opacity=ko||dd?0:1;
   });
