@@ -2502,6 +2502,38 @@ html.sang #game.sk #grid>.row::after{border-width:3px}
 html.sang #game.sk .rtrackb{border-width:3px}
 #game.sk #grid>.row.lit .pc.mk:not(.intk){color:var(--ink)!important}
 #game:not(.sk) .rtrack,#game:not(.sk) .rtrackb,#game:not(.sk) .rflash{display:none!important}
+
+/* ===== v76 : style switch, suite ===== */
+#game.sk #grid>.row.lit .pc.mk{color:inherit!important}
+#game.sk .rball{position:absolute;top:0;bottom:0;z-index:3;border-radius:99px;background:var(--accent);overflow:hidden;pointer-events:none;
+  box-shadow:0 0 0 calc(var(--mk)*.16) var(--accent),0 6px 16px rgba(var(--acc-rgb),.35)}
+#game.sk .rballin{position:absolute;top:0;bottom:0}
+#game.sk .rballin>.rclone{position:absolute;inset:0;display:flex;background:transparent!important}
+#game.sk .rclone .num{background:transparent!important;box-shadow:none!important}
+#game.sk .rclone,#game.sk .rclone *{color:#fff!important}
+#game.sk #grid .num.away{background:transparent!important;box-shadow:none!important}
+#game.sk #grid .num.away .lbl,#game.sk #grid .num.away .x{color:var(--ink)!important}
+/* cases joueurs : comme un switch — contour noir, bulle sur l'historique des fléchettes */
+#game.sk #scores>.pc.sc,#game.sk #scores>.pc.sc.act{background:var(--m-cell)!important;border-radius:26px!important;box-shadow:inset 0 0 0 2px var(--m-strong)!important}
+html.sang #game.sk #scores>.pc.sc{box-shadow:inset 0 0 0 3px var(--m-strong)!important}
+#game.sk #scores>.pc.sc.act .pills{background:var(--accent);border-radius:99px;box-shadow:0 0 0 .7dvh var(--accent),0 6px 16px rgba(var(--acc-rgb),.35)}
+#game.sk #scores>.mid{box-shadow:inset 0 0 0 2px var(--m-strong)!important;border-radius:26px!important}
+/* boutons du bas : un seul switch, bulle au repos sur SPEW */
+#game.sk footer{position:relative;gap:0!important;margin:0 3.5vw calc(var(--sab) + 1.4dvh)!important;padding:0!important;height:8dvh!important;
+  background:var(--m-cell)!important;border-radius:99px;overflow:visible}
+#game.sk footer::after{content:"";position:absolute;inset:0;border:2px solid var(--m-strong);border-radius:99px;pointer-events:none;z-index:4}
+html.sang #game.sk footer::after{border-width:3px}
+#game.sk footer button{position:relative;z-index:2;background:transparent!important;box-shadow:none!important;border-radius:99px!important;color:var(--m-ink)!important;
+  text-shadow:none!important;animation:none!important;opacity:1!important;filter:none!important;transition:color .2s}
+#game.sk footer button::before,#game.sk footer button::after{display:none!important}
+#game .fthumb{display:none}
+#game.sk .fthumb{display:block;position:absolute;top:0;bottom:0;left:0;width:calc(100% / 3);z-index:1;border-radius:99px;
+  background:linear-gradient(160deg,#6fc6f0,#2f9fd8);box-shadow:0 0 0 calc(var(--u,1dvh)*1.4) #2f9fd8,0 8px 18px rgba(47,159,216,.35);
+  translate:100% 0;transition:translate .42s cubic-bezier(.3,1.35,.5,1),background .25s,box-shadow .25s}
+body.m2 #game.sk .fthumb{translate:0 0;background:linear-gradient(160deg,#9aa3ad,#5f6a76);box-shadow:0 0 0 calc(var(--u,1dvh)*1.4) #6b7682,0 8px 18px rgba(0,0,0,.25)}
+body.m3 #game.sk .fthumb{translate:200% 0;background:linear-gradient(160deg,#f6cf4a,#d39a00);box-shadow:0 0 0 calc(var(--u,1dvh)*1.4) #d9a300,0 8px 18px rgba(224,168,0,.35)}
+body:not(.m2):not(.m3) #game.sk #bS,body.m2 #game.sk #b2,body.m3 #game.sk #b3{color:#fff!important}
+#game.sk footer button:active{transform:scale(.95)}
 </style>
 </head>
 <body>
@@ -2610,6 +2642,7 @@ html.sang #game.sk .rtrackb{border-width:3px}
     <button id="b2" aria-label="Double"><span class="bt">DOUBLE</span></button>
     <button id="bS" aria-label="Spew">SPEW</button>
     <button id="b3" aria-label="Triple">TRIPLE</button>
+    <i class="fthumb"></i>
   </footer>
 </section>
 
@@ -3368,10 +3401,10 @@ function markHTML(k,e){
   return`<div class="mw${e?' has':''}">${SVG[k]}${e?`<span class="tn">${e}</span>`:''}</div>`;
 }
 /* même cadre 100×100 pour les trois marques : le X va de 29 à 71, le cercle l'entoure (r=40) */
-const SVG=['',   // marques (de l'extérieur vers le centre) : 1 = grand cercle, 2 = + cercle intérieur, 3 = + point central
- '<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="42" pathLength="100"/></svg>',
- '<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="42" pathLength="100"/><circle cx="50" cy="50" r="24" pathLength="100"/></svg>',
- '<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="42" pathLength="100"/><circle cx="50" cy="50" r="24" pathLength="100"/><circle class="dot" cx="50" cy="50" r="9"/></svg>'];
+const SVG=['',   // marques : 1 = point central, 2 = + cercle intérieur, 3 = + grand cercle
+ '<svg viewBox="0 0 100 100"><circle class="dot" cx="50" cy="50" r="9"/></svg>',
+ '<svg viewBox="0 0 100 100"><circle class="dot" cx="50" cy="50" r="9"/><circle cx="50" cy="50" r="24" pathLength="100"/></svg>',
+ '<svg viewBox="0 0 100 100"><circle class="dot" cx="50" cy="50" r="9"/><circle cx="50" cy="50" r="24" pathLength="100"/><circle cx="50" cy="50" r="42" pathLength="100"/></svg>'];
 let R=null; // références DOM
 
 function build(){
@@ -4887,16 +4920,23 @@ function applyBStyle(){const on=S.bstyle!=='classic';$('game').classList.toggle(
   if(G&&R&&$('game').classList.contains('on')){render();if(typeof refitNames==='function')refitNames()}}
 $('bStyle').addEventListener('click',()=>{S.bstyle=S.bstyle==='classic'?'sw':'classic';store.set(K_S,S);haptic();SFX.ui();applyBStyle()});
 applyBStyle();
-/* quand on marque : la bulle orange s'étire sur tout le switch puis revient sur le nombre */
+/* quand on marque : la bulle part fort jusqu'à l'autre bout du switch et revient en rebondissant (balle) ;
+   tout ce qu'elle recouvre s'écrit en blanc */
 function flashRow(t){
   if(!$('game').classList.contains('sk')||!R||!R.num[t])return;
-  const num=R.num[t],row=num.parentElement,rr=row.getBoundingClientRect(),nr=num.getBoundingClientRect(),tk=row.querySelector('.rtrack');
-  const f=document.createElement('i');f.className='rflash';
-  const L=nr.left-rr.left,W=nr.width,TL=tk?tk.offsetLeft:0,TW=tk?tk.offsetWidth:rr.width;
-  f.style.cssText=`left:${L}px;width:${W}px`;row.append(f);
-  requestAnimationFrame(()=>{f.style.left=TL+'px';f.style.width=TW+'px';row.classList.add('lit')});
-  setTimeout(()=>{f.style.left=L+'px';f.style.width=W+'px';row.classList.remove('lit')},260);
-  setTimeout(()=>f.remove(),560);
+  const num=R.num[t],row=num.parentElement,tk=row.querySelector('.rtrack');if(!tk)return;
+  row.querySelectorAll('.rball').forEach(x=>x.remove());
+  const NL=num.offsetLeft,NW=num.offsetWidth,TL=tk.offsetLeft,TW=tk.offsetWidth;
+  const X=(NL+NW/2)>(TL+TW/2)?TL-NL:(TL+TW-NW)-NL;if(Math.abs(X)<4)return;
+  const f=document.createElement('div');f.className='rball';f.style.left=NL+'px';f.style.width=NW+'px';
+  const inner=document.createElement('div');inner.className='rballin';inner.style.left=(-NL)+'px';inner.style.width=row.offsetWidth+'px';
+  const cl=row.cloneNode(true);cl.removeAttribute('id');cl.classList.add('rclone');cl.querySelectorAll('.rtrack,.rtrackb,.rball').forEach(x=>x.remove());
+  inner.append(cl);f.append(inner);row.append(f);num.classList.add('away');
+  const K=[[0,0,'cubic-bezier(.1,.75,.3,1)'],[.27,X,'cubic-bezier(.5,0,.85,.45)'],[.66,0,'cubic-bezier(.2,.7,.4,1)'],[.79,X*.13,'cubic-bezier(.5,0,.85,.45)'],[.89,0,'cubic-bezier(.2,.7,.4,1)'],[.95,X*.035,'ease-in'],[1,0,'linear']];
+  const opt={duration:1000,fill:'both'};
+  const a1=f.animate(K.map(([o,x,e])=>({offset:o,transform:`translateX(${x}px)`,easing:e})),opt);
+  inner.animate(K.map(([o,x,e])=>({offset:o,transform:`translateX(${-x}px)`,easing:e})),opt);
+  a1.onfinish=()=>{f.remove();num.classList.remove('away')};
 }
 {const _t=throwDart;throwDart=function(t){const before=G?JSON.stringify(G.players.map(p=>[p.marks,p.score])):'';const r=_t.apply(this,arguments);
   try{if(t&&G&&JSON.stringify(G.players.map(p=>[p.marks,p.score]))!==before)flashRow(t)}catch(e){}return r}}

@@ -1,7 +1,7 @@
 /* Loubard Fléchard — hors ligne + mises à jour automatiques.
    Page : réseau d'abord (version la plus récente), cache si pas de réseau.
    Change VERSION à chaque mise à jour publiée. */
-const VERSION='lf-34';
+const VERSION='lf-35';
 const FILES=['./','index.html','manifest.json','icon-180.png','icon-192.png','icon-512.png'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(VERSION)
   .then(c=>Promise.all(FILES.map(f=>fetch(f,{cache:'reload'}).then(r=>r.ok&&c.put(f,r)).catch(()=>{}))))
