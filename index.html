@@ -2072,6 +2072,42 @@ body #game.p2 #scores .sc>.mpr{top:15.6dvh!important}
 #ppick .rchip::before{content:"";width:min(3.4vw,1.7dvh);height:min(3.4vw,1.7dvh);border-radius:50%;background:var(--pc,#cfc9be)}
 #ppick .pbot{border-radius:16px!important;font-family:"Fun",-apple-system,sans-serif!important;font-weight:400!important;letter-spacing:.02em}
 #ppick .pnew{margin-bottom:.4dvh}
+
+/* ===== MENU v59 : blocs distincts, respiration, lancement orange en bas ===== */
+#setup.b2{background:var(--m-home)!important}
+#setup.b2 .sh,#setup.b2 .gobar{background:var(--m-home)!important}
+#setup.b2 .grp,#setup.b2 .glab{background:transparent!important}
+#setup.b2 .seg.gamepick{margin-bottom:calc(var(--u)*1)!important}
+#setup.b2 .glab{padding:calc(var(--u)*4.4) calc(var(--u)*1) calc(var(--u)*1.6)!important}
+#setup.b2 .sect{background:var(--m-card)!important;border-radius:calc(var(--u)*3.2)!important;
+  box-shadow:0 1px 2px rgba(0,0,0,.05),0 8px 24px rgba(0,0,0,.06)!important}
+#setup.b2 .sect.s1{padding:calc(var(--u)*2.2) calc(var(--u)*2.2) calc(var(--u)*2.4)!important}
+#setup.b2 .sect.s1 .teamopt{margin:0 0 calc(var(--u)*2.2)!important}
+#setup.b2 .sect.s2{padding:0 calc(var(--u)*2.2)!important;overflow:hidden}
+#setup.b2 .sect.s2 .opt{min-height:calc(var(--u)*8.2)!important;box-shadow:0 1px 0 var(--m-line)}
+#setup.b2 .sect.s2 .opt:last-child{box-shadow:none}
+#setup.b2 .sect.s2+*,#setup.b2 .grp:last-of-type{margin-bottom:calc(var(--u)*3)}
+/* bouton de lancement : orange, en bas, position standard */
+#setup.b2 .gobar{padding:calc(var(--u)*1.4) 6vw max(calc(var(--u)*1.6),var(--sab))!important}
+#setup.b2 #go{background:var(--accent)!important;color:#fff!important;border:0!important;height:calc(var(--u)*7.6)!important;
+  box-shadow:0 8px 22px rgba(255,90,31,.32)!important}
+#setup.b2 #go:active{transform:scale(.98)}
+/* switchs : la partie orange déborde nettement de la case noire */
+#setup.b2 .seg.gamepick .thumb,#setup.b2 .opt .seg .thumb{box-shadow:0 0 0 calc(var(--u)*1.7) var(--accent),0 8px 18px rgba(255,90,31,.38)!important}
+@keyframes thfly6{0%{box-shadow:0 0 0 calc(var(--u)*1.7) var(--accent),0 8px 18px rgba(255,90,31,.38)}
+  40%{box-shadow:0 0 0 calc(var(--u)*2.4) var(--accent),0 14px 26px rgba(255,90,31,.42)}
+  100%{box-shadow:0 0 0 calc(var(--u)*1.7) var(--accent),0 8px 18px rgba(255,90,31,.38)}}
+html.night #setup.b2 .sect{box-shadow:0 1px 0 rgba(255,255,255,.04) inset,0 8px 24px rgba(0,0,0,.25)!important}
+html.night #setup.b2 #go{box-shadow:0 8px 22px rgba(255,90,31,.22)!important}
+
+/* ===== NUIT v59 : tout l'appli en sombre ===== */
+html.night{--bg:#11151c;--page:#1f2530;--panel:#2b3241;--panel2:#252b38;--hi:#364055;--ink:#f2f4f8;--mute:#97a1b4;--deadc:#0c0f14;
+  --ui-bg:#1f2530;--ui-card:#283040;--ui-line:#343c4d;--ui-sub:#97a1b4;--ui-track:#2b3241;color-scheme:dark}
+html.night body.theme-color .mk:not(.act):not(.dead){background:#283040}
+html.night #kplayers.grid .kc{background:#283040}
+html.night .xc{background:#283040}
+html.night .xc.act{background:#364055}
+html.night .ov{background:rgba(31,37,48,.98)}
 </style>
 </head>
 <body>

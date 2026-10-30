@@ -1,6 +1,6 @@
 /* Loubard Fléchard — mise en cache pour jouer hors ligne.
    Change le numéro de VERSION à chaque mise à jour publiée pour forcer le rafraîchissement. */
-const VERSION='lf-2';
+const VERSION='lf-3';
 const FILES=['./','index.html','manifest.json','icon-180.png','icon-192.png','icon-512.png'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(VERSION).then(c=>c.addAll(FILES)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==VERSION).map(x=>caches.delete(x)))).then(()=>self.clients.claim()))});
