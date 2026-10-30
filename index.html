@@ -2258,10 +2258,8 @@ html.night #skinT .d{opacity:1}html.night #skinT .n{opacity:.45}
 /* thème sang : contours verts plus épais, joueurs en vert, bots en rouge, + rouge */
 html.sang{--m-bd:3px solid var(--m-strong)}
 html.sang .seg.mini,html.sang .seg.gamepick,html.sang #setup.b2 .circ{border-width:3px!important}
-html.sang #setup.b2 .nslot,html.sang #setup.b2 .nslot+.nslot,html.sang #ppick .rchip{background:#2e6b45!important}
 html.sang #setup.b2 .nslot.bot.bot,html.sang #ppick .pbot{background:var(--accent)!important}
-html.sang #setup.b2 .nslot :is(.pname,b,.pdel),html.sang #ppick .rchip,html.sang #ppick .pbot,html.sang #ppick .pbot small{color:#f7f2e5!important}
-html.sang #setup.b2 .nslot .pcol,html.sang #ppick .rchip::before{background:#f7f2e5!important;box-shadow:none!important}
+html.sang #setup.b2 .nslot.bot :is(.pname,b,.pdel),html.sang #ppick .pbot,html.sang #ppick .pbot small{color:#f7f2e5!important}
 html.sang #setup.b2 .nslot.bot .pname::after{filter:grayscale(1) brightness(3)}
 html.sang #setup.b2 #names>.padd{background:var(--accent)!important}
 html.sang #setup.b2 .padd::before{color:#fff!important}
@@ -2322,6 +2320,23 @@ html.sang #setup .sld .sldt{border-width:3px}
 #setup .sld .sldv{box-shadow:0 0 0 calc(var(--u)*1) var(--accent),0 6px 14px rgba(var(--acc-rgb),.35)}
 html.night #setup.b2 .sect,html.night #setup.b2 .sect.s1,html.night #setup.b2 .sect.s2{background:transparent!important;box-shadow:none!important}
 #setup.b2 .sect.s2{row-gap:calc(var(--u)*2.8)!important}
+
+/* ===== v70 ===== */
+/* case fantôme pendant le déplacement */
+#setup.b2 .nslot.ph{background:transparent!important;box-shadow:inset 0 0 0 2px var(--m-sub)!important;border:0!important;opacity:.6}
+#setup.b2 .nslot.ph *{visibility:hidden}
+#setup.b2.teams .tbub .nslot.ph{width:100%!important}
+#setup.b2 .nslot.drag{box-shadow:0 12px 30px rgba(0,0,0,.25)!important;cursor:grabbing}
+/* même police partout (chiffres compris), textes plus grands */
+#setup.b2 .seg button,#setup.b2 .opt>span{font-family:"Fun",-apple-system,sans-serif!important;font-weight:400!important}
+#setup.b2 .opt .seg.mini button,#setup.b2 .teamopt .seg.mini button,#setup.b2 .opt.xo .seg.mini button{font-size:calc(var(--u)*2.5)!important}
+#setup.b2 .opt .seg.mini[data-k="xstart"] button{font-size:calc(var(--u)*2.9)!important}
+#setup.b2 .opt .seg.mini.legs button{font-size:calc(var(--u)*2.5)!important;padding:0!important}
+#setup .seg.mini button.sel{transform:scale(1.35)}
+#setup.b2 .sect.s2 .opt>span,#setup.b2 .sect.s1 .opt.ordopt>span,#setup.b2 .teamopt>span{font-size:calc(var(--u)*3.35)!important;margin-left:0!important}
+#setup.b2 .seg.gamepick button{font-size:calc(var(--u)*3.4)!important}
+#setup.b2 .nslot .pname{font-size:calc(var(--u)*2.7)!important}
+#setup.g-x01.b2 .sect.s2{row-gap:calc(var(--u)*2.3)!important}
 </style>
 </head>
 <body>
@@ -2380,12 +2395,12 @@ html.night #setup.b2 .sect,html.night #setup.b2 .sect.s1,html.night #setup.b2 .s
     <div class="glab"><span>Règles</span></div>
     <div class="sect s2">
       <div class="opt ck"><span>Mode</span><div class="seg mini" id="segMode"><button data-v="standard">Standard</button><button data-v="cut">Coupe-gorge</button></div></div>
-      <div class="opt ck legopt wide"><span>Manches gagnantes</span><div class="sld" data-k="clegs"><input type="range" min="1" max="10" step="1" value="1" aria-label="Manches gagnantes"><div class="sldt"><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i><i>10</i></div><b class="sldv">1</b></div></div>
+      <div class="opt ck legopt wide"><span>Manches gagnantes</span><div class="seg mini legs" data-k="clegs"><button data-v="1">1</button><button data-v="2">2</button><button data-v="3">3</button><button data-v="4">4</button><button data-v="5">5</button><button data-v="6">6</button><button data-v="7">7</button><button data-v="8">8</button><button data-v="9">9</button><button data-v="10">10</button></div></div>
       <div class="opt ck"><span>Fermeture</span><div class="seg mini" data-k="seq"><button data-v="0">Libre</button><button data-v="1">15 → Bulle</button></div></div>
       <div class="opt xo"><span>Score</span><div class="seg mini" data-k="xstart"><button data-v="301">301</button><button data-v="401">401</button><button data-v="501">501</button><button data-v="701">701</button></div></div>
       <div class="opt xo"><span>Entrée</span><div class="seg mini" data-k="xin"><button data-v="0">Simple</button><button data-v="1">Double</button><button data-v="2">Master</button></div></div>
       <div class="opt xo"><span>Sortie</span><div class="seg mini" data-k="xout"><button data-v="0">Simple</button><button data-v="1">Double</button><button data-v="2">Master</button></div></div>
-      <div class="opt xo legopt wide"><span>Manches gagnantes</span><div class="sld" data-k="xlegs"><input type="range" min="1" max="10" step="1" value="1" aria-label="Manches gagnantes"><div class="sldt"><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i><i>10</i></div><b class="sldv">1</b></div></div>
+      <div class="opt xo legopt wide"><span>Manches gagnantes</span><div class="seg mini legs" data-k="xlegs"><button data-v="1">1</button><button data-v="2">2</button><button data-v="3">3</button><button data-v="4">4</button><button data-v="5">5</button><button data-v="6">6</button><button data-v="7">7</button><button data-v="8">8</button><button data-v="9">9</button><button data-v="10">10</button></div></div>
       <div class="opt xo"><span>Droit de réponse</span><div class="seg mini yn" data-k="xrep"><button data-v="1">Oui</button><button data-v="0">Non</button></div></div>
       <div class="opt xo"><span>Aide finish</span><div class="seg mini yn" data-k="xhint"><button data-v="1">Oui</button><button data-v="0">Non</button></div></div>
       <div class="opt kl"><span>Vies</span><div class="seg mini" id="segLives"><button data-v="3">3</button><button data-v="4">4</button><button data-v="5">5</button></div></div>
@@ -3594,56 +3609,67 @@ $('setup').addEventListener('click',e=>{
   const bs=[...b.parentElement.querySelectorAll('button')];if(bs.length<2)return;
   e.stopPropagation();bs[(bs.indexOf(b)+1)%bs.length].click();
 },true);
-/* ---- ordre des joueurs : on attrape la case et on la déplace ---- */
+/* ---- placer les joueurs : on attrape une case, les autres se poussent en direct ----
+   Sans équipes : n'importe quelle place de la liste. Avec équipes : n'importe quelle équipe,
+   à n'importe quelle place, ou dans « + Nouvelle équipe » ; une équipe vidée disparaît. */
 let DRAG=null,PRE=null;
 $('names').addEventListener('pointerdown',e=>{
-  const slot=e.target.closest('.nslot');if(!slot||e.target.closest('button'))return;
-  PRE={slot,x0:e.clientX,y0:e.clientY,id:e.pointerId};
+  const slot=e.target.closest('.nslot');if(!slot||e.target.closest('.pdel'))return;
+  PRE={slot,x0:e.clientX,y0:e.clientY};
 });
+let DRAGGED=0;$('names').addEventListener('click',e=>{if(performance.now()-DRAGGED<400){e.stopPropagation();e.preventDefault()}},true);
+function flipNames(mutate){
+  const els=[...$('names').querySelectorAll('.nslot:not(.drag),.ph,.padd,.tbub')];
+  const a=new Map(els.map(x=>[x,x.getBoundingClientRect()]));mutate();
+  els.forEach(x=>{if(!x.isConnected||x.classList.contains('tbub'))return;const r=x.getBoundingClientRect(),o=a.get(x),dx=o.left-r.left,dy=o.top-r.top;
+    if(Math.abs(dx)<.5&&Math.abs(dy)<.5)return;x.style.transition='none';x.style.transform=`translate(${dx}px,${dy}px)`;
+    requestAnimationFrame(()=>{x.style.transition='transform .24s cubic-bezier(.2,.8,.2,1)';x.style.transform=''})});
+}
 function startDrag(e){
-  const slot=PRE.slot,slots=[...$('names').querySelectorAll('.nslot')];
-  const rs=slots.map(x=>{const r=x.getBoundingClientRect();return{x:r.left,y:r.top,cx:r.left+r.width/2,cy:r.top+r.height/2}});
-  const from=slots.indexOf(slot);
-  DRAG={slot,slots,rs,from,over:from,x0:PRE.x0,y0:PRE.y0};PRE=null;
-  slots.forEach(x=>{if(x!==slot)x.style.transition='transform .22s cubic-bezier(.2,.8,.2,1)'});
+  const slot=PRE.slot,r=slot.getBoundingClientRect();PRE=null;
+  const ph=el('div','nslot ph');ph.style.width=r.width+'px';ph.style.height=r.height+'px';
+  const teams=$('setup').classList.contains('teams');
+  DRAG={slot,ph,teams,ox:e.clientX-r.left,oy:e.clientY-r.top};
+  slot.parentElement.insertBefore(ph,slot);
+  Object.assign(slot.style,{position:'fixed',left:r.left+'px',top:r.top+'px',width:r.width+'px',margin:'0',zIndex:50,transition:'none'});
+  slot.style.setProperty('width',r.width+'px','important');slot.style.setProperty('margin','0','important');
   slot.classList.add('drag');haptic();SFX.tick();
-  if($('setup').classList.contains('teams')){DRAG.teams=1;const z=el('div','tbub tnew','<div class="tlab">+ Nouvelle équipe</div>');$('names').querySelector('.padd')?$('names').insertBefore(z,$('names').querySelector('.padd')):$('names').append(z)}
+  if(teams){const z=el('div','tbub tnew','<div class="tlab">+ Nouvelle équipe</div>');const pa=$('names').querySelector('.padd');pa?$('names').insertBefore(z,pa):$('names').append(z)}
   try{slot.setPointerCapture(e.pointerId)}catch(_){}
+}
+function dropSpot(px,py){   // où la case atterrirait : [conteneur, élément avant lequel l'insérer]
+  const D=DRAG;let box=$('names');
+  if(D.teams){box=[...$('names').querySelectorAll('.tbub')].find(b=>{const r=b.getBoundingClientRect();return px>=r.left&&px<=r.right&&py>=r.top&&py<=r.bottom});if(!box)return null}
+  const sl=[...box.querySelectorAll(':scope>.nslot:not(.drag):not(.ph)')];
+  const ref=sl.find(x=>{const r=x.getBoundingClientRect(),cy=r.top+r.height/2,cx=r.left+r.width/2;return cy>py+r.height/2||(Math.abs(cy-py)<=r.height/2&&cx>px)});
+  return[box,ref||(D.teams?null:box.querySelector(':scope>.padd'))];
 }
 $('names').addEventListener('pointermove',e=>{
   if(PRE&&!DRAG){if(Math.hypot(e.clientX-PRE.x0,e.clientY-PRE.y0)>6)startDrag(e);else return}
-  if(!DRAG)return;e.preventDefault();const D=DRAG,dx=e.clientX-D.x0,dy=e.clientY-D.y0;
-  D.slot.style.transform=`translate(${dx}px,${dy}px) scale(1.04)`;D.px=e.clientX;D.py=e.clientY;
-  if(D.teams){const t=teamAt(D.px,D.py);if(t!==D.tt){D.tt=t;SFX.tick();haptic()}
-    $('names').querySelectorAll('.tbub').forEach(b=>b.classList.toggle('tdrop',b===t));return}
-  // case la plus proche du centre de la case déplacée → nouvelle place
-  const cx=D.rs[D.from].cx+dx,cy=D.rs[D.from].cy+dy;let over=D.from,best=1e9;
-  D.rs.forEach((r,k)=>{const d=(r.cx-cx)**2+(r.cy-cy)**2;if(d<best){best=d;over=k}});
-  if(over!==D.over){D.over=over;SFX.tick();haptic()}
-  // les autres joueurs ne bougent pas : la place visée est simplement surlignée
-  D.slots.forEach((x,k)=>x.classList.toggle('tgt',k===over&&k!==D.from));
+  if(!DRAG)return;e.preventDefault();const D=DRAG;
+  D.slot.style.left=(e.clientX-D.ox)+'px';D.slot.style.top=(e.clientY-D.oy)+'px';D.slot.style.transform='scale(1.06)';
+  const sp=dropSpot(e.clientX,e.clientY);if(!sp)return;const [box,ref]=sp;
+  if(D.ph.parentElement===box&&(D.ph.nextElementSibling===ref||(ref===null&&!D.ph.nextElementSibling)))return;
+  flipNames(()=>{ref?box.insertBefore(D.ph,ref):box.append(D.ph)});
+  // numéros en direct (sans équipes)
+  if(!D.teams){let k=0;$('names').querySelectorAll(':scope>.nslot:not(.drag)').forEach(x=>{k++;const b=x.querySelector('b');if(b&&!x.classList.contains('ph'))b.textContent=k});}
+  $('names').querySelectorAll('.tbub').forEach(b=>b.classList.toggle('tdrop',b===box&&D.teams));
+  SFX.tick();haptic();
 },{passive:false});
-function teamAt(x,y){return[...$('names').querySelectorAll('.tbub')].find(b=>{const r=b.getBoundingClientRect();return x>=r.left-4&&x<=r.right+4&&y>=r.top-4&&y<=r.bottom+4})||null}
 const endDrag=()=>{
-  PRE=null;if(!DRAG)return;const D=DRAG;DRAG=null;const {from,over}=D;
+  PRE=null;if(!DRAG)return;const D=DRAG;DRAG=null;DRAGGED=performance.now();
+  const names=S.names.slice(0,S.n),nameOf=x=>x===D.ph?names[+D.slot.dataset.i]:names[+x.dataset.i];
   if(D.teams){
-    const t=D.px!=null?teamAt(D.px,D.py):null,names=S.names.slice(0,S.n),G2=groupsOf(names),nm=names[from];
-    if(t){
-      const src=G2.findIndex(g=>g.includes(nm));G2[src]=G2[src].filter(x=>x!==nm);
-      let dst=t.classList.contains('tnew')?-1:+t.dataset.t;
-      if(dst<0)G2.push([nm]);
-      else{const sl=[...t.querySelectorAll('.nslot')].filter(x=>x!==D.slot);let at=sl.filter(x=>{const r=x.getBoundingClientRect();return r.top+r.height/2<D.py}).length;
-        if(dst===src&&false){}G2[dst].splice(Math.min(at,G2[dst].length),0,nm)}
-      const NG=G2.filter(g=>g.length);S.names.splice(0,S.n,...NG.flat());S.tsz=NG.map(g=>g.length);store.set(K_S,S);SFX.lock();haptic();
-    }
-    renderSetup();return;
+    const G2=[...$('names').querySelectorAll('.tbub')].map(b=>[...b.querySelectorAll(':scope>.nslot:not(.drag)')].map(nameOf)).filter(g=>g.length);
+    S.names.splice(0,S.n,...G2.flat());S.tsz=G2.map(g=>g.length);
+  }else{
+    const order=[...$('names').querySelectorAll(':scope>.nslot:not(.drag)')].map(nameOf);S.names.splice(0,S.n,...order);
   }
-  D.slots.forEach(x=>x.classList.remove('tgt'));
-  D.slot.style.transition='transform .2s cubic-bezier(.2,.8,.2,1)';
-  D.slot.style.transform=`translate(${D.rs[over].x-D.rs[from].x}px,${D.rs[over].y-D.rs[from].y}px)`;
-  setTimeout(()=>{
-    if(from!==over){const a=S.names.slice(0,S.n),[x]=a.splice(from,1);a.splice(over,0,x);S.names.splice(0,S.n,...a);store.set(K_S,S);SFX.lock();haptic()}
-    renderSetup()},200);
+  store.set(K_S,S);SFX.lock();haptic();
+  // la case se pose en douceur à sa nouvelle place
+  const t=D.ph.getBoundingClientRect();D.slot.style.transition='left .18s ease,top .18s ease,transform .18s ease';
+  D.slot.style.left=t.left+'px';D.slot.style.top=t.top+'px';D.slot.style.transform='';
+  setTimeout(renderSetup,190);
 };
 $('names').addEventListener('pointerup',endDrag);$('names').addEventListener('pointercancel',endDrag);
 $('segGame').addEventListener('click',e=>{const v=e.target.dataset.v;if(v){S.game=v;store.set(K_S,S);renderSetup()}});
@@ -3809,7 +3835,7 @@ applyTheme();
    Un killer qui touche le numéro d'un adversaire lui retire autant de vies que de marques ; sur son propre numéro, il en perd.
    Le dernier survivant gagne. */
 /* ---- joueurs enregistrés : nom + couleur ---- */
-if(S.xlegs>10)S.xlegs=10;
+if(S.xlegs>10)S.xlegs=10;if(!S.xlegs)S.xlegs=1;if(!S.clegs)S.clegs=1;if(S.clegs>10)S.clegs=10;
 const K_R='cricket.roster.v1';
 const PCOLS=['#d62828','#f77f00','#2b9348','#1d4ed8','#7b2cbf','#0ea5e9','#c9184a','#8d5a2b','#0f8b8d','#111111'];
 let ROSTER=store.get(K_R,null);
@@ -3823,7 +3849,7 @@ const isBot=n=>!!botLv(n);
 const BOTMETAL={'SPEWTARD':['#5f6b3a','#a3ae74'],"P'TIT JEUNE":['#9a5a2a','#d9945b'],'MEC CHAUD':['#8d959e','#e3e7eb'],'LE MENTOR':['#b8860b','#ffe27a'],"L'ANCIEN":['#4fb3cc','#d8f6ff']};
 const botMetal=n=>BOTMETAL[botBase(n)]||null;
 ROSTER=ROSTER.filter(r=>!isBot(r.name));
-const pcol=n=>{const bm=botMetal(n);if(bm)return bm[0];if(document.documentElement.classList.contains('sang'))return'';const r=ROSTER.find(x=>x.name===String(n||'').trim().toUpperCase());return r?r.color:''};
+const pcol=n=>{const bm=botMetal(n);if(bm)return bm[0];const r=ROSTER.find(x=>x.name===String(n||'').trim().toUpperCase());return r?r.color:''};
 function renderRoster(){
   const box=$('rList');box.innerHTML='';
   ROSTER.forEach((r,i)=>{
@@ -4675,7 +4701,7 @@ function alignLabels(){document.querySelectorAll('#setup .sect .opt').forEach(o=
   const first=sw.matches('.sld')?sw.querySelector('.sldt i'):sw.querySelector('button');if(!first||!first.offsetWidth)return;
   const rg=document.createRange();rg.selectNodeContents(first);const r=rg.getBoundingClientRect(),fr=first.getBoundingClientRect(),ol=o.getBoundingClientRect().left;
   const sc=sw.matches('.sld')?1:fr.width/first.offsetWidth||1,tw=r.width/sc,cx=fr.left+fr.width/2-ol;
-  let ml=Math.max(0,cx-tw/2);sp.style.fontSize='';sp.style.marginLeft=ml.toFixed(1)+'px';
+  let ml=0;sp.style.fontSize='';sp.style.marginLeft=ml.toFixed(1)+'px';
   // une seule ligne : si l'intitulé dépasse, il rétrécit un peu (puis se recale au bord)
   const avail=o.clientWidth-ml;if(sp.scrollWidth>avail+1){const fs=parseFloat(getComputedStyle(sp).fontSize),k=avail/sp.scrollWidth;
     if(k>=.8)sp.style.setProperty('font-size',(fs*k*.98)+'px','important');else{sp.style.marginLeft='0px';const k2=Math.min(1,o.clientWidth/sp.scrollWidth);sp.style.setProperty('font-size',(fs*k2*.98)+'px','important')}}})}
