@@ -2202,6 +2202,16 @@ html.night .ov{background:rgba(31,37,48,.98)}
 /* équipes : plus de contour */
 #setup.b2 .tbub{border:0!important;box-shadow:none!important}
 
+
+/* ===== v65 : switchs plus larges, intitulés dans la police des switchs ===== */
+#setup.b2 .opt>span,#setup.b2 .teamopt>span,#setup.b2 .sect.s2 .opt>span,#setup.b2 .sect.s1 .opt.ordopt>span{
+  font-family:"Fun",-apple-system,sans-serif!important;font-weight:400!important;text-transform:none!important;letter-spacing:.01em!important;
+  font-size:calc(var(--u)*2.05)!important;color:var(--m-ink)!important}
+#setup.b2 .sect.s2{column-gap:calc(var(--u)*4.2)!important;padding-left:calc(var(--u)*2)!important;padding-right:calc(var(--u)*2)!important}
+#setup.b2 .sect.s2 .opt{flex-basis:calc(50% - var(--u)*2.1)!important}
+#setup.b2 .opt.xo .seg.mini button{font-size:calc(var(--u)*2.05)!important}
+#setup.b2 .teamopt .seg.mini{width:calc(var(--u)*24)!important;min-width:calc(var(--u)*24)!important}
+#setup.b2 .seg.mini button{padding-left:calc(var(--u)*1.2)!important;padding-right:calc(var(--u)*1.2)!important}
 </style>
 </head>
 <body>
@@ -4506,7 +4516,7 @@ document.addEventListener('click',e=>{
 
 /* règles du menu : les options courtes (Oui/Non…) vont par deux sur une ligne */
 document.querySelectorAll('#setup .sect.s2 .opt').forEach(o=>{const b=[...o.querySelectorAll('.seg button')];
-  if((b.length>2&&!['xin','xout'].includes(o.querySelector('.seg').dataset.k))||b.some(x=>x.textContent.trim().length>7))o.classList.add('wide')});
+  if(b.length>2||b.some(x=>x.textContent.trim().length>7))o.classList.add('wide')});
 
 /* menu en deux pages : 1. jeu + règles → 2. joueurs */
 const SU=$('setup');
