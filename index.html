@@ -2732,7 +2732,9 @@ document.addEventListener('visibilitychange',()=>{if(document.visibilityState===
 
 /* ================= HAPTIQUE ================= */
 const hapLabel=$('hap');
+let HAPT=0;
 function haptic(){
+  const t=performance.now();if(t-HAPT<60)return;HAPT=t;   // pas de double vibration pour un même appui
   if(navigator.vibrate){try{navigator.vibrate(12)}catch(e){}return}
   try{hapLabel.click()}catch(e){}   // iOS : bascule d'un <input switch> = retour haptique (selon version d'iOS)
 }
@@ -4575,6 +4577,9 @@ $('go').addEventListener('click',e=>{if(!SU.classList.contains('p2')){e.stopImme
 $('sBack').addEventListener('click',e=>{if(SU.classList.contains('p2')){e.stopImmediatePropagation();haptic();SFX.back();setupPage(1,1)}},true);
 /* panneau « Ajouter un joueur » ouvert : on laisse de la place sous la liste */
 new MutationObserver(()=>SU.classList.toggle('pk',$('ppick').classList.contains('on'))).observe($('ppick'),{attributes:true,attributeFilter:['class']});
+
+/* vibration à chaque saisie de fléchette (pavé, tableau, DOUBLE/SPEW/TRIPLE, Killer) */
+document.addEventListener('pointerdown',e=>{const b=e.target.closest&&e.target.closest('footer button,#game .num,#game .pc.mk.act,#xkeys button,#kplayers .kc,#knumPad button,.pill.undo,#xUndo');if(b)haptic()},{passive:true});
 /* démarrage : toujours l'accueil (« Reprendre la partie » si une partie est en cours) */
 goHome();
 
