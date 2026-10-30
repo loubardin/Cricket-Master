@@ -2446,6 +2446,12 @@ html.night #setup.b2 .seg button:not(.sel),html.night #setup.b2 .opt .seg.mini b
 @keyframes thlagR{0%{margin-left:calc(var(--u)*-9)}100%{margin-left:0}}
 #setup.b2.p2in #go span,#setup.b2.p1in #go span{animation:golag .9s cubic-bezier(.25,1.45,.45,1)}
 @keyframes golag{0%{translate:calc(var(--u)*6) 0}100%{translate:0 0}}
+
+/* marques en cercles */
+.mw svg circle.dot{fill:currentColor;stroke:none}
+.mw svg circle{stroke-width:9}
+.mw svg>.dot:last-child{animation:dotin .35s cubic-bezier(.3,1.6,.5,1)!important;transform-origin:50% 50%;transform-box:fill-box}
+@keyframes dotin{0%{transform:scale(0)}100%{transform:scale(1)}}
 </style>
 </head>
 <body>
@@ -3312,10 +3318,10 @@ function markHTML(k,e){
   return`<div class="mw${e?' has':''}">${SVG[k]}${e?`<span class="tn">${e}</span>`:''}</div>`;
 }
 /* même cadre 100×100 pour les trois marques : le X va de 29 à 71, le cercle l'entoure (r=40) */
-const SVG=['',
- '<svg viewBox="0 0 100 100"><path d="M29 71 71 29"/></svg>',
- '<svg viewBox="0 0 100 100"><path d="M29 71 71 29M29 29 71 71"/></svg>',
- '<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40"/><path d="M29 71 71 29M29 29 71 71"/></svg>'];
+const SVG=['',   // marques : 1 = point central, 2 = + un cercle, 3 = + deux cercles
+ '<svg viewBox="0 0 100 100"><circle class="dot" cx="50" cy="50" r="11"/></svg>',
+ '<svg viewBox="0 0 100 100"><circle class="dot" cx="50" cy="50" r="11"/><circle cx="50" cy="50" r="27"/></svg>',
+ '<svg viewBox="0 0 100 100"><circle class="dot" cx="50" cy="50" r="11"/><circle cx="50" cy="50" r="27"/><circle cx="50" cy="50" r="43"/></svg>'];
 let R=null; // références DOM
 
 function build(){
