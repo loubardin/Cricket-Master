@@ -2456,6 +2456,41 @@ html.night #setup.b2 .seg button:not(.sel),html.night #setup.b2 .opt .seg.mini b
 .mw svg circle{stroke-width:7!important;stroke-dasharray:101!important;stroke-dashoffset:0}
 .mw svg circle.dot{stroke:none!important}
 @keyframes mdraw{from{stroke-dashoffset:101}to{stroke-dashoffset:0}}
+
+/* =====================  TABLEAU DE CRICKET — STYLE « SWITCH »  ===================== */
+#bStyle svg{fill:none;stroke:currentColor;stroke-width:2}
+#bStyle.on{background:var(--accent)!important;color:#fff!important}
+#bStyle.on svg{stroke:#fff}
+#game.sk{background:var(--m-home)}
+#game.sk main{gap:0!important;padding:0 3.5vw!important;background:transparent!important}
+/* cartes des joueurs */
+#game.sk #scores{gap:2.4vw!important;box-shadow:none!important;padding-top:.6dvh;margin-bottom:1.6dvh}
+#game.sk #scores>.pc.sc{background:var(--m-cell)!important;border-radius:22px!important;box-shadow:none!important}
+#game.sk #scores>.pc.sc.act{background:var(--m-card)!important;box-shadow:inset 0 0 0 3px var(--accent),0 8px 22px rgba(var(--acc-rgb),.22)!important}
+#game.sk #scores>.mid{background:var(--m-cell)!important;border-radius:22px!important;box-shadow:none!important}
+#game.sk #pframe,#game.sk #vbar{display:none!important}
+/* lignes des nombres = switchs */
+#game.sk #grid{background:transparent!important;gap:1.1dvh!important}
+#game.sk #grid>.row{position:relative;background:var(--m-cell);border-radius:99px;overflow:visible}
+#game.sk #grid>.row::after{content:"";position:absolute;inset:0;border:2px solid var(--m-strong);border-radius:99px;pointer-events:none;z-index:3}
+html.sang #game.sk #grid>.row::after{border-width:3px}
+#game.sk #grid .pc.mk{background:transparent!important;box-shadow:none!important;position:relative;z-index:1;transition:color .12s}
+#game.sk #grid .pc.mk.dead{opacity:.35}
+#game.sk #grid .num{position:relative;z-index:2;background:var(--accent)!important;color:#fff!important;border-radius:99px!important;
+  box-shadow:0 0 0 calc(var(--mk)*.16) var(--accent),0 6px 16px rgba(var(--acc-rgb),.35)!important;transition:background-color .2s,box-shadow .2s,opacity .2s}
+#game.sk #grid .num .lbl,#game.sk #grid .num .x{color:#fff!important}
+#game.sk #grid .num.dead{background:#a39d92!important;box-shadow:0 0 0 calc(var(--mk)*.16) #a39d92!important}
+#game.sk #grid>.row:has(.num.dead){opacity:.55}
+#game.sk #grid .num.seqoff{opacity:.45}
+#game.sk #grid .num.pressed{transform:scale(.94)}
+/* la bulle qui s'étire quand on marque ; les marques recouvertes passent en blanc */
+#game.sk .rflash{position:absolute;top:0;bottom:0;z-index:0;border-radius:99px;background:var(--accent);pointer-events:none;
+  box-shadow:0 0 0 calc(var(--mk)*.16) var(--accent);transition:left .2s cubic-bezier(.3,.9,.3,1),width .2s cubic-bezier(.3,.9,.3,1)}
+#game.sk #grid>.row.lit .pc.mk{color:#fff!important}
+/* boutons du bas en pilules */
+#game.sk footer{gap:2.6vw!important;padding:1.4dvh 3.5vw calc(var(--sab) + 1.4dvh)!important;background:transparent!important;height:calc(10dvh + var(--sab))!important}
+#game.sk footer button{border-radius:99px!important;box-shadow:0 6px 16px rgba(0,0,0,.18)!important}
+#game.sk footer button:active{transform:scale(.96)}
 </style>
 </head>
 <body>
@@ -2550,7 +2585,7 @@ html.night #setup.b2 .seg button:not(.sel),html.night #setup.b2 .opt .seg.mini b
   <header>
     <button class="circ" id="bBack" aria-label="Retour"><svg viewBox="0 0 24 24"><path d="M15 5 8 12l7 7"/></svg></button>
     <div id="title"></div>
-    <div class="circ" style="visibility:hidden" aria-hidden="true"></div>   <!-- garde le titre centré -->
+    <button class="circ" id="bStyle" aria-label="Changer de style"><svg viewBox="0 0 24 24"><rect x="2.5" y="7" width="19" height="10" rx="5"/><circle cx="16" cy="12" r="3.2" fill="currentColor" stroke="none"/></svg></button>
   </header>
   <main>
     <div class="row" id="scores"></div>
@@ -4835,6 +4870,25 @@ function alignLabels(){document.querySelectorAll('#setup .sect .opt').forEach(o=
 /* son : picto discret sur l'accueil */
 {const sb=$('sndT'),up=()=>{sb.textContent=S.sound?'🔊':'🔇';sb.classList.toggle('off',!S.sound)};up();
  sb.addEventListener('click',()=>{S.sound=!S.sound;store.set(K_S,S);up();haptic();audioInit();SFX.ui()})}
+
+/* ===== style « switch » du tableau de cricket (avec retour au style d'origine) ===== */
+function applyBStyle(){const on=S.bstyle!=='classic';$('game').classList.toggle('sk',on);$('bStyle').classList.toggle('on',on);
+  if(G&&R&&$('game').classList.contains('on')){render();if(typeof refitNames==='function')refitNames()}}
+$('bStyle').addEventListener('click',()=>{S.bstyle=S.bstyle==='classic'?'sw':'classic';store.set(K_S,S);haptic();SFX.ui();applyBStyle()});
+applyBStyle();
+/* quand on marque : la bulle orange s'étire sur tout le switch puis revient sur le nombre */
+function flashRow(t){
+  if(!$('game').classList.contains('sk')||!R||!R.num[t])return;
+  const num=R.num[t],row=num.parentElement,rr=row.getBoundingClientRect(),nr=num.getBoundingClientRect();
+  const f=document.createElement('i');f.className='rflash';
+  const L=nr.left-rr.left,W=nr.width;
+  f.style.cssText=`left:${L}px;width:${W}px`;row.append(f);
+  requestAnimationFrame(()=>{f.style.left='0px';f.style.width=rr.width+'px';row.classList.add('lit')});
+  setTimeout(()=>{f.style.left=L+'px';f.style.width=W+'px';row.classList.remove('lit')},260);
+  setTimeout(()=>f.remove(),560);
+}
+{const _t=throwDart;throwDart=function(t){const before=G?JSON.stringify(G.players.map(p=>[p.marks,p.score])):'';const r=_t.apply(this,arguments);
+  try{if(t&&G&&JSON.stringify(G.players.map(p=>[p.marks,p.score]))!==before)flashRow(t)}catch(e){}return r}}
 /* démarrage : toujours l'accueil (« Reprendre la partie » si une partie est en cours) */
 goHome();
 
