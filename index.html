@@ -2056,7 +2056,7 @@ body #game.p2 #scores .sc>.mpr{top:15.6dvh!important}
 
 
 /* ordis : bulles métalliques ; menu « + » bien séparé */
-#setup.b2 .nslot.bot,#setup.b2 .nslot.bot+.nslot{background:linear-gradient(110deg,var(--m1) 0%,var(--m2) 45%,var(--m1) 100%)!important}
+#setup.b2 .nslot.bot,#setup.b2 .nslot.bot.bot{background:linear-gradient(110deg,var(--m1) 0%,var(--m2) 45%,var(--m1) 100%)!important}
 #setup.b2 .nslot.bot .pname,#setup.b2 .nslot.bot b,#setup.b2 .nslot.bot .pdel,#setup.b2 .nslot.bot .grip{color:#111!important}
 #setup.b2 .nslot.bot .grip i{background:#111!important}
 #setup.b2 .nslot.bot .pcol{background:linear-gradient(135deg,var(--m2),var(--m1))!important;box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.35)!important}
@@ -2247,6 +2247,24 @@ html.sang .seg.mini,html.sang .seg.gamepick,html.sang #setup.b2 .circ{border-col
 html.night #skinT i{transform:none}html.sang #skinT i{transform:translateX(100%)!important}
 html.night #skinT .d{opacity:1}html.night #skinT .n{opacity:.45}
 #skinT .n{opacity:.45}html.sang #skinT .n{opacity:1!important}html.sang #skinT .d{opacity:.45!important}
+
+/* ===== v67 ===== */
+#setup.b2 .nslot.tgt{box-shadow:0 0 0 calc(var(--u)*.5) var(--m-strong)!important}
+/* mélanger : un emoji dans un rond rouge */
+#setup.b2 .teamopt .tshuf{width:calc(var(--u)*5.8)!important;min-width:0!important;height:calc(var(--u)*5.8)!important;padding:0!important;border:0!important;border-radius:50%!important;
+  background:var(--accent)!important;font-size:calc(var(--u)*2.8)!important;display:grid!important;place-items:center;line-height:1;box-shadow:0 4px 12px rgba(var(--acc-rgb),.3)}
+#setup.b2 .teamopt .tshuf b{display:none}
+#setup.b2 .teamopt .tshuf:active{transform:scale(.92)}
+/* thème sang : contours verts plus épais, joueurs en vert, bots en rouge, + rouge */
+html.sang{--m-bd:3px solid var(--m-strong)}
+html.sang .seg.mini,html.sang .seg.gamepick,html.sang #setup.b2 .circ{border-width:3px!important}
+html.sang #setup.b2 .nslot,html.sang #setup.b2 .nslot+.nslot,html.sang #ppick .rchip{background:#2e6b45!important}
+html.sang #setup.b2 .nslot.bot.bot,html.sang #ppick .pbot{background:var(--accent)!important}
+html.sang #setup.b2 .nslot :is(.pname,b,.pdel),html.sang #ppick .rchip,html.sang #ppick .pbot,html.sang #ppick .pbot small{color:#f7f2e5!important}
+html.sang #setup.b2 .nslot .pcol,html.sang #ppick .rchip::before{background:#f7f2e5!important;box-shadow:none!important}
+html.sang #setup.b2 .nslot.bot .pname::after{filter:grayscale(1) brightness(3)}
+html.sang #setup.b2 #names>.padd{background:var(--accent)!important}
+html.sang #setup.b2 .padd::before{color:#fff!important}
 </style>
 </head>
 <body>
@@ -2293,7 +2311,7 @@ html.night #skinT .d{opacity:1}html.night #skinT .n{opacity:.45}
   <div class="grp">
     <div class="glab"><span>Joueurs</span></div>
     <div class="sect s1">
-      <div class="opt ck xk teamopt"><span>Équipes</span><div class="seg mini" data-k="teams"><button data-v="0">Non</button><button data-v="1">Oui</button></div><button id="tShuffle" class="tshuf" aria-label="Mélanger les équipes"><b>⤮</b>Mélanger</button></div>
+      <div class="opt ck xk teamopt"><span>Équipes</span><div class="seg mini" data-k="teams"><button data-v="0">Non</button><button data-v="1">Oui</button></div><button id="tShuffle" class="tshuf" aria-label="Mélanger les équipes">🔀</button></div>
       <div class="seg mini" id="segN"><button data-v="2">2</button><button data-v="3">3</button><button data-v="4">4</button><button data-v="5">5</button><button data-v="6">6</button></div>
       <div id="names"></div>
       <div id="rchips"></div>
@@ -3546,12 +3564,8 @@ $('names').addEventListener('pointermove',e=>{
   const cx=D.rs[D.from].cx+dx,cy=D.rs[D.from].cy+dy;let over=D.from,best=1e9;
   D.rs.forEach((r,k)=>{const d=(r.cx-cx)**2+(r.cy-cy)**2;if(d<best){best=d;over=k}});
   if(over!==D.over){D.over=over;SFX.tick();haptic()}
-  // les autres se décalent d'une place pour laisser la sienne
-  D.slots.forEach((x,k)=>{if(k===D.from)return;let nk=k;
-    if(D.from<over&&k>D.from&&k<=over)nk=k-1;else if(over<D.from&&k>=over&&k<D.from)nk=k+1;
-    x.style.transform=nk!==k?`translate(${D.rs[nk].x-D.rs[k].x}px,${D.rs[nk].y-D.rs[k].y}px)`:'';
-    x.querySelector('b').textContent=nk+1});
-  D.slot.querySelector('b').textContent=over+1;
+  // les autres joueurs ne bougent pas : la place visée est simplement surlignée
+  D.slots.forEach((x,k)=>x.classList.toggle('tgt',k===over&&k!==D.from));
 },{passive:false});
 function teamAt(x,y){return[...$('names').querySelectorAll('.tbub')].find(b=>{const r=b.getBoundingClientRect();return x>=r.left-4&&x<=r.right+4&&y>=r.top-4&&y<=r.bottom+4})||null}
 const endDrag=()=>{
@@ -3568,6 +3582,7 @@ const endDrag=()=>{
     }
     renderSetup();return;
   }
+  D.slots.forEach(x=>x.classList.remove('tgt'));
   D.slot.style.transition='transform .2s cubic-bezier(.2,.8,.2,1)';
   D.slot.style.transform=`translate(${D.rs[over].x-D.rs[from].x}px,${D.rs[over].y-D.rs[from].y}px)`;
   setTimeout(()=>{
