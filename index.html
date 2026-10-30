@@ -2126,6 +2126,26 @@ html.night .ov{background:rgba(31,37,48,.98)}
 #setup.b2 .sect.s2 .opt>span{align-self:end;white-space:normal!important;line-height:1.15}
 /* bulles joueurs : mêmes proportions que dans « Ajouter un joueur » */
 #setup.b2 .nslot,#setup.b2 .nslot+.nslot,#setup.b2 .nslot.drag{border-radius:calc(var(--u)*2.4)!important;min-height:calc(var(--u)*6)!important}
+
+/* ===== MENU v61 : deux pages (1. règles → 2. joueurs), sans défilement ===== */
+#setup.b2:not(.p2) .grp:has(.sect.s1){display:none!important}
+#setup.b2.p2 .grp:has(.sect.s2),#setup.b2.p2 .seg.gamepick{display:none!important}
+#setup.b2:not(.p2) .grp:has(.sect.s2) .glab{display:none!important}
+#setup.b2.p2 .grp:has(.sect.s1) .glab{display:none!important}
+#setup.b2 .grp:has(.sect.s2),#setup.b2.p2 .grp:has(.sect.s1){margin-top:calc(var(--u)*2.2)!important}
+#setup.b2 .sect.s2{row-gap:calc(var(--u)*2.7)!important;padding:calc(var(--u)*2.6) calc(var(--u)*2.6) calc(var(--u)*2.8)!important}
+#setup.b2 .sect.s2 .opt{row-gap:calc(var(--u)*2.1)!important}
+#setup.b2.p1in .grp,#setup.b2.p2in .grp{animation:pgin .28s var(--ease)}
+@keyframes pgin{from{opacity:0;translate:4% 0}to{opacity:1;translate:0 0}}
+#setup.b2.p1in .grp{animation-name:pgback}
+@keyframes pgback{from{opacity:0;translate:-4% 0}to{opacity:1;translate:0 0}}
+/* fenêtre « Ajouter un joueur » : panneau fixe en bas, compact, ne bouge plus */
+#ppick{left:4vw!important;right:4vw!important;top:auto!important;bottom:calc(var(--sab) + 1.6dvh)!important;width:auto!important;
+  height:42dvh!important;max-height:none!important;gap:1dvh!important;padding:1.8dvh 4vw!important;border-radius:22px!important;box-shadow:0 -6px 30px rgba(0,0,0,.22)!important}
+#ppick.pop{animation:ppup .26s var(--ease)!important}
+@keyframes ppup{from{opacity:0;translate:0 30%}to{opacity:1;translate:0 0}}
+#setup.b2.pk .sect.s1{padding-bottom:calc(42dvh + 2dvh)!important}
+#setup.b2.pk .gobar{visibility:hidden}
 </style>
 </head>
 <body>
@@ -3297,10 +3317,6 @@ function openPick(){
   $('pTitle').textContent=need>0?`Équipes : il manque ${need} joueur${need>1?'s':''}`:'Ajouter un joueur';
   $('pNew').value='';
   const pp=$('ppick'),a=document.querySelector('#names .padd');pp.classList.add('on');
-  // petit menu posé sous le « + » (ou au-dessus s'il n'y a pas la place)
-  const r=a?a.getBoundingClientRect():{left:innerWidth*.1,bottom:innerHeight*.4,top:innerHeight*.4},h=pp.offsetHeight;
-  pp.style.left=Math.max(8,Math.min(innerWidth-pp.offsetWidth-8,r.left))+'px';
-  pp.style.top=(r.bottom+8+h<innerHeight-8?r.bottom+8:Math.max(8,r.top-8-h))+'px';
   pp.classList.remove('pop');void pp.offsetWidth;pp.classList.add('pop');
 }
 function addPlayer(n){
@@ -4373,7 +4389,18 @@ document.addEventListener('click',e=>{
 
 /* règles du menu : les options courtes (Oui/Non…) vont par deux sur une ligne */
 document.querySelectorAll('#setup .sect.s2 .opt').forEach(o=>{const b=[...o.querySelectorAll('.seg button')];
-  if(b.length>2||b.some(x=>x.textContent.trim().length>7))o.classList.add('wide')});
+  if((b.length>2&&!['xin','xout'].includes(o.querySelector('.seg').dataset.k))||b.some(x=>x.textContent.trim().length>7))o.classList.add('wide')});
+
+/* menu en deux pages : 1. jeu + règles → 2. joueurs */
+const SU=$('setup');
+function setupPage(n,anim){SU.classList.toggle('p2',n===2);$('go').textContent=n===2?'Lancer la partie':'Suivant';
+  SU.querySelector('.sh h1').textContent=n===2?'Joueurs':'Nouvelle partie';SU.scrollTop=0;$('ppick').classList.remove('on');
+  SU.classList.remove('p1in','p2in');if(anim){void SU.offsetWidth;SU.classList.add(n===2?'p2in':'p1in')}}
+{const _show=show;show=function(id){if(id==='setup'&&!SU.classList.contains('on'))setupPage(1);_show(id)}}
+$('go').addEventListener('click',e=>{if(!SU.classList.contains('p2')){e.stopImmediatePropagation();haptic();SFX.ui();setupPage(2,1)}},true);
+$('sBack').addEventListener('click',e=>{if(SU.classList.contains('p2')){e.stopImmediatePropagation();haptic();SFX.back();setupPage(1,1)}},true);
+/* panneau « Ajouter un joueur » ouvert : on laisse de la place sous la liste */
+new MutationObserver(()=>SU.classList.toggle('pk',$('ppick').classList.contains('on'))).observe($('ppick'),{attributes:true,attributeFilter:['class']});
 /* démarrage : toujours l'accueil (« Reprendre la partie » si une partie est en cours) */
 goHome();
 
