@@ -2430,6 +2430,12 @@ html.night #setup.b2 #go{box-shadow:0 0 0 calc(var(--u)*1.2) var(--accent),0 8px
 /* mode nuit : vert plus foncé, options non choisies en vert */
 html.sang.night{--m-strong:#3f7a55}
 html.night #setup.b2 .seg button:not(.sel),html.night #setup.b2 .opt .seg.mini button:not(.sel),html.night #setup.b2 .teamopt .seg.mini button:not(.sel),html.night #setup.b2 .seg.gamepick button:not(.sel){color:#5f9e74!important}
+
+/* changement de page / de jeu : les bulles des switchs sont déjà à leur place (pas d'effet de rattrapage) */
+#setup.noth .sect .thumb{transition:none!important;animation:none!important}
+#setup.noth .sect .seg button{transition:none!important}
+/* plus d'espace autour du choix du jeu */
+#setup.b2 .seg.gamepick{margin-top:calc(var(--u)*3)!important;margin-bottom:calc(var(--u)*3)!important}
 </style>
 </head>
 <body>
@@ -3765,7 +3771,8 @@ const endDrag=()=>{
 };
 $('names').addEventListener('pointerup',endDrag);$('names').addEventListener('pointercancel',endDrag);
 const GAMES=['cricket','x01','killer'];
-function setGame(v){if(!v||v===S.game)return;const d=GAMES.indexOf(v)-GAMES.indexOf(S.game);S.game=v;store.set(K_S,S);renderSetup();
+function noInertia(){const u=$('setup');u.classList.add('noth');clearTimeout(u._nt);u._nt=setTimeout(()=>u.classList.remove('noth'),650)}
+function setGame(v){if(!v||v===S.game)return;noInertia();const d=GAMES.indexOf(v)-GAMES.indexOf(S.game);S.game=v;store.set(K_S,S);renderSetup();
   const g=document.querySelector('#setup .grp:has(.sect.s2)');if(g){g.classList.remove('gslideL','gslideR');void g.offsetWidth;g.classList.add(d>0?'gslideL':'gslideR')}}
 $('segGame').addEventListener('click',e=>{const v=e.target.dataset.v;if(v)setGame(v)});
 /* glisser le doigt vers la gauche / la droite sur la page des règles : jeu suivant / précédent */
@@ -4775,7 +4782,7 @@ document.querySelectorAll('#setup .sect.s2 .opt').forEach(o=>{const b=[...o.quer
 
 /* menu en deux pages : 1. jeu + règles → 2. joueurs */
 const SU=$('setup');
-function setupPage(n,anim){SU.classList.toggle('p2',n===2);$('go').innerHTML='<span>'+(n===2?'Lancer la partie':'Suivant')+'</span>';
+function setupPage(n,anim){if(typeof noInertia==='function')noInertia();SU.classList.toggle('p2',n===2);$('go').innerHTML='<span>'+(n===2?'Lancer la partie':'Suivant')+'</span>';
   SU.querySelector('.sh h1').textContent=n===2?'Joueurs':'Nouvelle partie';SU.scrollTop=0;$('ppick').classList.remove('on');
   if(typeof placeThumbs==='function')requestAnimationFrame(placeThumbs);
   SU.classList.remove('p1in','p2in');if(anim){void SU.offsetWidth;SU.classList.add(n===2?'p2in':'p1in')}}
