@@ -2415,6 +2415,13 @@ html.sang #pframe{animation-name:breathe2!important}
 #setup.b2 .gobar{padding-top:calc(var(--u)*2.4)!important;padding-bottom:max(calc(var(--u)*2.6),calc(var(--sab) + var(--u)*1))!important}
 html.night #setup.b2 #go{box-shadow:0 0 0 calc(var(--u)*1.2) var(--accent),0 8px 18px rgba(var(--acc-rgb),.3)!important}
 #setup.b2 .sect.s1 .opt.ordopt{row-gap:calc(var(--u)*2.2)!important}
+
+/* faux switch : rail du switch, la bulle orange ne couvre que le texte */
+#setup.b2 #go,html.night #setup.b2 #go{background:var(--m-cell)!important;box-shadow:none!important;color:#fff!important;display:flex!important;align-items:center;justify-content:center;overflow:visible}
+#setup.b2 #go span{height:100%;display:grid;place-items:center;padding:0 calc(var(--u)*4.2);border-radius:99px;background:var(--accent);
+  box-shadow:0 0 0 calc(var(--u)*1.7) var(--accent),0 8px 18px rgba(var(--acc-rgb),.38);transition:transform .2s var(--ease)}
+#setup.b2 #go:active{transform:none}
+#setup.b2 #go:active span{transform:scale(.94)}
 </style>
 </head>
 <body>
@@ -2489,7 +2496,7 @@ html.night #setup.b2 #go{box-shadow:0 0 0 calc(var(--u)*1.2) var(--accent),0 8px
     </div>
   </div>
 
-  <div class="gobar"><button id="go" class="big acc">Lancer la partie</button></div>
+  <div class="gobar"><button id="go" class="big acc"><span>Suivant</span></button></div>
 </section>
 
 <!-- ===== JEU ===== -->
@@ -4760,7 +4767,7 @@ document.querySelectorAll('#setup .sect.s2 .opt').forEach(o=>{const b=[...o.quer
 
 /* menu en deux pages : 1. jeu + règles → 2. joueurs */
 const SU=$('setup');
-function setupPage(n,anim){SU.classList.toggle('p2',n===2);$('go').textContent=n===2?'Lancer la partie':'Suivant';
+function setupPage(n,anim){SU.classList.toggle('p2',n===2);$('go').innerHTML='<span>'+(n===2?'Lancer la partie':'Suivant')+'</span>';
   SU.querySelector('.sh h1').textContent=n===2?'Joueurs':'Nouvelle partie';SU.scrollTop=0;$('ppick').classList.remove('on');
   if(typeof placeThumbs==='function')requestAnimationFrame(placeThumbs);
   SU.classList.remove('p1in','p2in');if(anim){void SU.offsetWidth;SU.classList.add(n===2?'p2in':'p1in')}}
