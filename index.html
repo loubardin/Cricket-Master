@@ -2791,6 +2791,98 @@ body:not(.m2):not(.m3) #game#game.sk.p2.vB footer #bS::after{color:#111!importan
 #game#game.sk.p2.vB.dk #grid>.row:not(:has(.num.dead)) .num .lbl,#game#game.sk.p2.vB.dk #grid>.row:not(:has(.num.dead)) .pc.mk.intk,
 html body #game#game.sk.p2.vB.dk #scores .sc.act>.nm,html body #game#game.sk.p2.vB.dk #scores .sc.act>.pts,html body #game#game.sk.p2.vB.dk #scores .sc.act>.mpr,
 html body #game#game.sk.p2.vA.dk #scores .sc.act>.nm,html body #game#game.sk.p2.vA.dk #scores .sc.act>.mpr{color:#fff!important}
+
+/* ===== v83 : version A seule ; double = argent, triple = or (les nombres tremblent) ; historique coloré ===== */
+#game.sk.p2 #bStyle{display:none!important}
+body.m2 #game#game.sk.p2 #grid .num:not(.dead),body.m2 html body #game#game.sk.p2 #scores>.pc.sc.act{background:linear-gradient(160deg,#eef1f4,#a9b1ba 55%,#808a95)!important}
+body.m3 #game#game.sk.p2 #grid .num:not(.dead),body.m3 html body #game#game.sk.p2 #scores>.pc.sc.act{background:linear-gradient(160deg,#ffe58a,#f2b705 50%,#c48a00)!important}
+html body.m2 #game#game.sk.p2 #scores>.pc.sc.act{background:linear-gradient(160deg,#eef1f4,#a9b1ba 55%,#808a95)!important}
+html body.m3 #game#game.sk.p2 #scores>.pc.sc.act{background:linear-gradient(160deg,#ffe58a,#f2b705 50%,#c48a00)!important}
+body.m3 #game#game.sk.p2 #grid .num.bull{background:var(--dead)!important;box-shadow:0 0 0 var(--h) var(--dead)!important}
+body.m2 #game#game.sk.p2 #grid .num:not(.dead) .lbl,body.m3 #game#game.sk.p2 #grid .num:not(.dead):not(.bull) .lbl{animation:numshake .28s linear infinite;display:inline-block}
+body.m3 #game#game.sk.p2 #grid .num:not(.dead):not(.bull) .lbl{animation-duration:.2s}
+@keyframes numshake{0%,100%{transform:translate(0,0) rotate(0)}20%{transform:translate(-1.5px,.5px) rotate(-3deg)}40%{transform:translate(1.5px,-.5px) rotate(2deg)}
+  60%{transform:translate(-1px,-.5px) rotate(-2deg)}80%{transform:translate(1px,.5px) rotate(3deg)}}
+html body #game#game.sk.p2 #scores .sc>.pills .pill.s{background:#a9def2!important}
+html body #game#game.sk.p2 #scores .sc>.pills .pill.d{background:linear-gradient(160deg,#c3cad2,#9aa3ad 45%,#7d8792)!important;color:#fff!important}
+html body #game#game.sk.p2 #scores .sc>.pills .pill.t{background:linear-gradient(160deg,#f6cf4a,#e0a800 50%,#b47e00)!important;color:#fff!important}
+
+/* fenêtre de couleur (appui long sur un joueur) : bulle à contour, pastilles rondes */
+#cpick{position:fixed;z-index:200;background:var(--m-home,#f7f2e5);border:2px solid var(--m-strong,#111);border-radius:24px;padding:12px 14px 14px;
+  box-shadow:0 0 0 5px var(--accent),0 12px 30px rgba(0,0,0,.25);animation:cpin .28s cubic-bezier(.3,1.5,.5,1);font-family:"FunTxt",-apple-system,sans-serif}
+@keyframes cpin{0%{transform:scale(.6);opacity:0}100%{transform:none;opacity:1}}
+#cpick .cpt{font-size:15px;letter-spacing:.04em;text-align:center;margin-bottom:10px;color:var(--ink)}
+#cpick .cpg{display:grid;grid-template-columns:repeat(5,38px);gap:10px}
+#cpick .cpc{width:38px;height:38px;border-radius:50%;background:var(--c);border:2px solid var(--m-strong,#111);padding:0}
+#cpick .cpc.on{box-shadow:0 0 0 4px var(--m-home,#f7f2e5),0 0 0 6px var(--c)}
+#cpick .cpc:active{transform:scale(.9)}
+#names .nslot,#ppick .rchip{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+
+/* ===== v84 : DA « bulle » partout — accueil, 301, Killer =====
+   Mêmes règles que le Cricket : fond ivoire, traits fins noirs, joueur en cours = bulle de sa couleur (--pc) avec halo,
+   les autres = simple contour ; switch Double / Spew / Triple avec bulle bleue (argent au double, or au triple). */
+:root{--bub-bw:1.5px;--bub-h:5px;--spew:#009df4;--silver:linear-gradient(160deg,#eef1f4,#a9b1ba 55%,#808a95);--gold:linear-gradient(160deg,#ffe58a,#f2b705 50%,#c48a00)}
+html.sang{--bub-bw:2px}
+/* --- accueil --- */
+#home#home{background:var(--m-home)!important}
+#home#home .hbtns .big{border-radius:99px!important;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong)!important;background:transparent!important;color:var(--ink)!important;
+  font-family:"Fun",sans-serif!important;font-weight:400!important;letter-spacing:.02em!important;transition:transform .15s}
+#home#home .hbtns .big.acc{background:var(--accent)!important;color:#fff!important;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong),0 0 0 var(--bub-h) var(--accent)!important}
+#home#home #hResume{background:var(--spew)!important;color:#fff!important;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong),0 0 0 var(--bub-h) var(--spew)!important}
+#home#home .hbtns .big:active{transform:scale(.96)}
+#home#home .sndt{background:transparent!important;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong)!important}
+#home#home .thsw{background:transparent!important;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong)!important}
+/* --- 301 et Killer : fond, cartes --- */
+#x01#x01,#x01#x01 #xmain,#killer#killer,#killer#killer #kmain{background:var(--m-home)!important}
+#x01#x01 #xplayers .xc,#killer#killer #kplayers .kc{background:transparent!important;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong)!important;border-radius:22px!important;opacity:1!important;filter:none!important}
+#x01#x01 #xplayers .xc.act,#killer#killer #kplayers .kc.act{background:var(--pc)!important;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong),0 0 0 var(--bub-h) var(--pc)!important}
+#x01#x01 #xplayers .xc *,#killer#killer #kplayers .kc .kname,#killer#killer #kplayers .kc .kno{color:var(--ink)!important}
+#x01#x01 #xplayers .xc.act .xn,#x01#x01 #xplayers .xc.act .xs,#killer#killer #kplayers .kc.act .kname{color:#111!important}
+#x01#x01 #xplayers .xc.act .xr,#killer#killer #kplayers .kc.act .kno{color:#fff!important}
+#x01#x01.dk #xplayers .xc.act .xn,#x01#x01.dk #xplayers .xc.act .xs,#killer#killer.dk #kplayers .kc.act .kname{color:#fff!important}
+#x01#x01 #xplayers .xc.act .xco,#x01#x01 #xplayers .xc.act .xco *{color:#111!important}
+body.m2 #x01#x01 #xplayers .xc.act,body.m2 #killer#killer #kplayers .kc.act{background:var(--silver)!important;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong),0 0 0 var(--bub-h) #a9b1ba!important}
+body.m3 #x01#x01 #xplayers .xc.act,body.m3 #killer#killer #kplayers .kc.act{background:var(--gold)!important;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong),0 0 0 var(--bub-h) #e8ab05!important}
+/* fléchettes du tour : pilules blanches à contour, spew bleu, double argent, triple or */
+#x01#x01 .khist .pill,#killer#killer .khist .pill{background:#fff!important;color:#111!important;border:var(--bub-bw) solid var(--m-strong)!important;opacity:1}
+#x01#x01 .khist .pill.e,#killer#killer .khist .pill.e{opacity:.4}
+#x01#x01 .khist .pill.s,#killer#killer .khist .pill.s{background:#a9def2!important}
+#x01#x01 .khist .pill.d,#killer#killer .khist .pill.d{background:linear-gradient(160deg,#c3cad2,#9aa3ad 45%,#7d8792)!important;color:#fff!important}
+#x01#x01 .khist .pill.t,#killer#killer .khist .pill.t{background:linear-gradient(160deg,#f6cf4a,#e0a800 50%,#b47e00)!important;color:#fff!important}
+/* pavé du 301 : touches séparées, contour fin, la touche appuyée prend la couleur du joueur */
+#x01#x01 #xkeys{background:transparent!important;box-shadow:none!important;border:0!important;gap:7px!important;padding:0!important;overflow:visible!important}
+#x01#x01 #xkeys button{background:transparent!important;border:0!important;border-radius:16px!important;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong)!important;color:var(--ink)!important;
+  transition:background-color .12s,transform .12s}
+#x01#x01 #xkeys button:active,#x01#x01 #xkeys button.pressed{background:var(--pc)!important;color:#fff!important;transform:scale(.95);box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong),0 0 0 4px var(--pc)!important}
+#x01#x01 #xkeys button[data-n="25"],#x01#x01 #xkeys button.bull{border-radius:99px!important}
+body.m2 #x01#x01 #xkeys button .lbl,body.m3 #x01#x01 #xkeys button .lbl{display:inline-block;animation:numshake .28s linear infinite}
+body.m3 #x01#x01 #xkeys button .lbl{animation-duration:.2s}
+/* --- switch Double / Spew / Triple du 301 et du Killer --- */
+:is(#x01,#killer) footer{position:relative!important;height:7dvh!important;margin:1.6dvh 3.5vw max(1.6dvh,var(--sab))!important;padding:0!important;display:grid!important;
+  grid-template-columns:1fr 1fr 1fr!important;gap:0!important;background:transparent!important;box-shadow:none!important;flex:0 0 auto!important}
+:is(#x01,#killer) footer::after{content:""!important;display:block!important;position:absolute;inset:0;border:var(--bub-bw) solid var(--m-strong);border-radius:99px;pointer-events:none;z-index:3}
+:is(#x01,#killer) footer #b2,:is(#x01,#killer) footer #bS,:is(#x01,#killer) footer #b3{position:relative;z-index:2;background:transparent!important;box-shadow:none!important;border:0!important;
+  font-size:0!important;transform:none!important;animation:none;color:var(--ink)!important;width:auto!important;min-width:0!important;padding:0!important;display:flex!important;align-items:center;justify-content:center}
+:is(#x01,#killer) footer #bS{animation:none}
+:is(#x01,#killer) footer button::before{display:none!important}
+:is(#x01,#killer) footer button .bt,:is(#x01,#killer) footer #bS small{display:none!important}
+:is(#x01,#killer) footer #b2::after,:is(#x01,#killer) footer #bS::after,:is(#x01,#killer) footer #b3::after{display:block!important;position:static!important;font-family:"Fun",sans-serif;
+  font-size:2.6dvh;line-height:1;text-box:trim-both cap alphabetic;color:var(--ink);background:none!important;border:0!important;box-shadow:none!important;transition:scale .25s,color .2s}
+:is(#x01,#killer) footer #b2::after{content:"Double"!important}
+:is(#x01,#killer) footer #bS::after{content:"Spew"!important}
+:is(#x01,#killer) footer #b3::after{content:"Triple"!important}
+body:not(.m2):not(.m3) :is(#x01,#killer) footer #bS::after,body.m2 :is(#x01,#killer) footer #b2::after,body.m3 :is(#x01,#killer) footer #b3::after{color:#fff;scale:1.4}
+:is(#x01,#killer) footer .fthumb{display:block!important;position:absolute!important;top:0!important;bottom:0!important;left:0!important;width:33.333%!important;height:auto!important;border-radius:99px!important;
+  translate:100% 0!important;transform:none!important;background:var(--spew)!important;box-shadow:0 0 0 var(--bub-h) var(--spew)!important;z-index:1;transition:translate .35s cubic-bezier(.3,1.4,.5,1),background .2s,box-shadow .2s!important}
+body.m2 :is(#x01,#killer) footer .fthumb{translate:0 0!important;background:var(--silver)!important;box-shadow:0 0 0 var(--bub-h) #a9b1ba!important}
+body.m3 :is(#x01,#killer) footer .fthumb{translate:200% 0!important;background:var(--gold)!important;box-shadow:0 0 0 var(--bub-h) #e8ab05!important}
+#killer#killer #kplayers .kc.act .klives .h.on{color:#fff!important}
+#killer#killer #kplayers .kc.act .klives .h:not(.on){color:rgba(255,255,255,.35)!important}
+:is(#x01,#killer) footer button{opacity:1!important;filter:none!important}
+#x01#x01 #xkeys button,#x01#x01 #xkeys button .lbl{opacity:1!important;filter:none!important;-webkit-text-fill-color:currentColor!important;background-clip:border-box!important;-webkit-background-clip:border-box!important;text-shadow:none!important}
+#x01#x01 #xkeys button .lbl{color:var(--ink)!important;background:none!important}
+#x01#x01 #xkeys button:active .lbl,#x01#x01 #xkeys button.pressed .lbl{color:#fff!important}
+body:is(.m2,.m3) #x01#x01 #xplayers .xc.act .xn,body:is(.m2,.m3) #x01#x01 #xplayers .xc.act .xs,body:is(.m2,.m3) #killer#killer #kplayers .kc.act .kname{color:#111!important}
 </style>
 </head>
 <body>
@@ -5189,7 +5281,7 @@ function alignLabels(){document.querySelectorAll('#setup .sect .opt').forEach(o=
  sb.addEventListener('click',()=>{S.sound=!S.sound;store.set(K_S,S);up();haptic();audioInit();SFX.ui()})}
 
 /* ===== style « switch » du tableau de cricket (avec retour au style d'origine) ===== */
-function applyBStyle(){const on=true;{const vb=S.bstyle==='B';$('game').classList.toggle('vA',!vb);$('game').classList.toggle('vB',vb)}if(!on&&R&&R.sc)R.sc.forEach(sc=>[sc.nm,sc.pts,sc.m,sc.pills].forEach(e=>['left','right','width'].forEach(k=>e.style.removeProperty(k))));$('game').classList.toggle('sk',on);$('bStyle').classList.toggle('on',on);
+function applyBStyle(){const on=true;{const vb=false;$('game').classList.toggle('vA',!vb);$('game').classList.toggle('vB',vb)}if(!on&&R&&R.sc)R.sc.forEach(sc=>[sc.nm,sc.pts,sc.m,sc.pills].forEach(e=>['left','right','width'].forEach(k=>e.style.removeProperty(k))));$('game').classList.toggle('sk',on);$('bStyle').classList.toggle('on',on);
   if(G&&R&&$('game').classList.contains('on')){render();if(typeof refitNames==='function')refitNames()}}
 $('bUndo2').addEventListener('click',()=>{haptic();undo()});
 $('bStyle').addEventListener('click',()=>{S.bstyle=S.bstyle==='B'?'A':'B';store.set(K_S,S);haptic();SFX.ui();applyBStyle()});
@@ -5197,7 +5289,13 @@ applyBStyle();
 /* quand on marque : la bulle part fort jusqu'à l'autre bout du switch et revient en rebondissant (balle) ;
    tout ce qu'elle recouvre s'écrit en blanc */
 function flashRow(t){
-  if(skp2()&&!$('game').classList.contains('vA'))return;   // 1 contre 1 : c'est la barre qui s'allonge
+  if(skp2()){   // 1 contre 1 : la bulle elle-même file jusqu'au bord du rail et rebondit (pas de double)
+    const num=R.num[t],tk=num&&num.parentElement.querySelector('.rtrack');if(!tk)return;
+    const NL=num.offsetLeft,NW=num.offsetWidth,TL=tk.offsetLeft,TW=tk.offsetWidth;
+    const X=(NL+NW/2)>(TL+TW/2)?TL-NL:(TL+TW-NW)-NL;if(Math.abs(X)<4)return;
+    const K=[[0,0,'cubic-bezier(.1,.75,.3,1)'],[.27,X,'cubic-bezier(.5,0,.85,.45)'],[.66,0,'cubic-bezier(.2,.7,.4,1)'],[.79,X*.13,'cubic-bezier(.5,0,.85,.45)'],[.89,0,'cubic-bezier(.2,.7,.4,1)'],[.95,X*.035,'ease-in'],[1,0,'linear']];
+    num.getAnimations().forEach(a=>{if(a.id==='bnc')a.cancel()});
+    const a=num.animate(K.map(([o,x,e])=>({offset:o,transform:`translateX(${x}px)`,easing:e})),{duration:1000});a.id='bnc';return}
   if(!$('game').classList.contains('sk')||!R||!R.num[t])return;
   const num=R.num[t],row=num.parentElement,tk=row.querySelector('.rtrack');if(!tk)return;
   row.querySelectorAll('.rball').forEach(x=>x.remove());
@@ -5277,7 +5375,7 @@ function drawBars(){
 function pcolI(i){const p=G.players[i],c=p&&pcol(p.name);return /^#[0-9a-f]{6}$/i.test(c||'')?c:(i?'#fcc200':'#ff5a1f')}
 function skColors(){const g=$('game');
   if(!skp2()||!G||!R){g.style.removeProperty('--accent');g.style.removeProperty('--acc-rgb');g.classList.remove('dk');return}
-  const c=pcolI(shownCur()),rgb=[1,3,5].map(k=>parseInt(c.slice(k,k+2),16));
+  const c=G.mult===2?'#a9b1ba':G.mult===3?'#e8ab05':pcolI(shownCur()),rgb=[1,3,5].map(k=>parseInt(c.slice(k,k+2),16));
   g.style.setProperty('--accent',c);g.style.setProperty('--acc-rgb',rgb.join(','));
   g.classList.toggle('dk',(.299*rgb[0]+.587*rgb[1]+.114*rgb[2])/255<.5);
   TARGETS.forEach(t=>G.players.forEach((p,i)=>{const m=R.mk[t]&&R.mk[t][i];if(m)m.style.setProperty('--mc',pcolI(i))}));
@@ -5305,6 +5403,36 @@ function placeHead(){
   });
 }
 {const _pf=placeFrame;placeFrame=function(){const r=_pf.apply(this,arguments);try{placeTracks();placeHead()}catch(e){}return r}}
+/* appui long sur un joueur (case du menu ou bulle de « Ajouter un joueur ») : petite fenêtre pour choisir sa couleur */
+{let LP=null,LPdone=0;
+ const nameOf=e=>{const s=e.closest('.nslot:not(.ph)');if(s){const n=s.querySelector('.pname');return n?n.textContent.trim():''}const c=e.closest('.rchip');return c?c.textContent.trim():''};
+ const close=()=>{const p=$('cpick');if(p)p.remove()};
+ function openColors(name,anchor){
+   close();const r0=anchor.getBoundingClientRect(),cur=pcol(name);
+   const p=el('div','',`<div class="cpt">${esc(name)}</div>`);p.id='cpick';const g=el('div','cpg');
+   PCOLS.forEach(c=>{const b=el('button','cpc'+(c===cur?' on':''));b.style.setProperty('--c',c);b.setAttribute('aria-label','Couleur');
+     b.addEventListener('click',()=>{let r=ROSTER.find(q=>q.name===name);if(!r){r={name,color:c};ROSTER.push(r)}r.color=c;store.set(K_R,ROSTER);haptic();SFX.ui();close();
+       if(typeof renderSetup==='function'&&$('setup').classList.contains('on'))renderSetup();if($('ppick').classList.contains('on')){openPick();$('ppick').classList.remove('pop')}});
+     g.append(b)});
+   p.append(g);document.body.append(p);
+   const w=p.offsetWidth,h=p.offsetHeight,top=r0.top-h-12>8?r0.top-h-12:r0.bottom+12;
+   p.style.left=Math.max(12,Math.min(innerWidth-w-12,r0.left+r0.width/2-w/2))+'px';p.style.top=top+'px';
+ }
+ document.addEventListener('pointerdown',e=>{
+   const pp=$('cpick');if(pp&&!e.target.closest('#cpick')){close()}
+   const t=e.target.closest&&e.target.closest('#names .nslot:not(.ph),#ppick .rchip');if(!t||e.target.closest('.pdel,.pcol,.rchipx'))return;
+   const name=nameOf(t);if(!name||isBot(name))return;
+   LP={x:e.clientX,y:e.clientY,t:setTimeout(()=>{LP=null;LPdone=performance.now();if(typeof PRE!=='undefined')PRE=null;haptic();openColors(name,t)},480)}},true);
+ document.addEventListener('pointermove',e=>{if(LP&&Math.hypot(e.clientX-LP.x,e.clientY-LP.y)>8){clearTimeout(LP.t);LP=null}},true);
+ ['pointerup','pointercancel'].forEach(ev=>document.addEventListener(ev,()=>{if(LP){clearTimeout(LP.t);LP=null}},true));
+ document.addEventListener('click',e=>{if(performance.now()-LPdone<600&&!e.target.closest('#cpick')){e.stopPropagation();e.preventDefault()}},true);
+ document.addEventListener('contextmenu',e=>{if(e.target.closest&&e.target.closest('#names .nslot,#ppick .rchip'))e.preventDefault()});
+}
+/* 301 et Killer : couleur du joueur en cours sur la carte (--pc) */
+function setPc(sec,p){const c0=p&&pcol(p.members?p.members[p.mi||0]:p.name);const c=/^#[0-9a-f]{6}$/i.test(c0||'')?c0:getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()||'#ff5a1f';
+  sec.style.setProperty('--pc',c);if(/^#[0-9a-f]{6}$/i.test(c)){const v=[1,3,5].map(k=>parseInt(c.slice(k,k+2),16));sec.classList.toggle('dk',(.299*v[0]+.587*v[1]+.114*v[2])/255<.5)}}
+{const _x=xRender;xRender=function(){const r=_x.apply(this,arguments);try{if(XG)setPc($('x01'),XG.players[XG.cur])}catch(e){}return r}}
+{const _k=kRender;kRender=function(){const r=_k.apply(this,arguments);try{if(KG)setPc($('killer'),KG.players[KG.cur])}catch(e){}return r}}
 /* démarrage : toujours l'accueil (« Reprendre la partie » si une partie est en cours) */
 goHome();
 
