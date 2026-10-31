@@ -2703,44 +2703,94 @@ body.m3 #game#game.sk.p2 .fthumb{transform:translateX(calc(var(--colw)*2))!impor
    Chaque ligne : la bulle du nombre s'allonge vers le joueur en cours à chaque marque (1/3, 2/3, tout le rail)
    et change de couleur (jaune → orange → rouge-orange → rouge). L'adversaire : barre grise derrière, de son côté.
    Le nombre affiché dans la barre = toutes les marques touchées sur ce nombre. */
-#game#game.sk.p2{--spew:#1d9bf0;--pgrey:#cbcbcb}
-html.night #game#game.sk.p2{--pgrey:#4a5160}
+#game#game.sk.p2.vC{--spew:#1d9bf0;--pgrey:#cbcbcb}
+html.night #game#game.sk.p2.vC{--pgrey:#4a5160}
 /* en-tête = un grand switch : rail sur toute la largeur, bulle bleue sur le joueur en cours */
-html body #game#game.sk.p2 #scores::after{content:"";position:absolute;inset:0;border:var(--bw) solid var(--m-strong);border-radius:calc(var(--r)*.38);pointer-events:none;z-index:0}
-html body #game#game.sk.p2 #scores>.pc.sc{z-index:1}
-html body #game#game.sk.p2 #scores>.pc.sc.act{background:var(--spew)!important;box-shadow:0 0 0 var(--h) var(--spew)!important}
-html body #game#game.sk.p2 #scores .sc:not(.act)>.pills{display:none!important}
+html body #game#game.sk.p2.vC #scores::after{content:"";position:absolute;inset:0;border:var(--bw) solid var(--m-strong);border-radius:calc(var(--r)*.38);pointer-events:none;z-index:0}
+html body #game#game.sk.p2.vC #scores>.pc.sc{z-index:1}
+html body #game#game.sk.p2.vC #scores>.pc.sc.act{background:var(--spew)!important;box-shadow:0 0 0 var(--h) var(--spew)!important}
+html body #game#game.sk.p2.vC #scores .sc:not(.act)>.pills{display:none!important}
 /* les anciennes marques et la bulle fixe laissent la place aux barres */
-#game#game.sk.p2 #grid .pc.mk .mw{display:none!important}
-#game#game.sk.p2 #grid .num,#game#game.sk.p2 #grid .num.dead{background:transparent!important;box-shadow:none!important;z-index:3}
-#game#game.sk.p2 #grid .num .lbl{color:#fff!important;-webkit-text-stroke:calc(var(--bw)*2.4) var(--m-strong);paint-order:stroke fill}
-#game#game.sk.p2 .rball{display:none!important}
-#game#game.sk.p2 .pb{position:absolute;top:0;bottom:0;border-radius:99px;pointer-events:none;
+#game#game.sk.p2.vC #grid .pc.mk .mw{display:none!important}
+#game#game.sk.p2.vC #grid .num,#game#game.sk.p2.vC #grid .num.dead{background:transparent!important;box-shadow:none!important;z-index:3}
+#game#game.sk.p2.vC #grid .num .lbl{color:#fff!important;-webkit-text-stroke:calc(var(--bw)*2.4) var(--m-strong);paint-order:stroke fill}
+#game#game.sk.p2.vC .rball{display:none!important}
+#game#game.sk.p2.vC .pb{position:absolute;top:0;bottom:0;border-radius:99px;pointer-events:none;
   transition:left .5s cubic-bezier(.3,1.45,.5,1),width .5s cubic-bezier(.3,1.45,.5,1),background-color .3s,box-shadow .3s,opacity .25s}
-#game#game.sk.p2 .pb.me{z-index:2;background:var(--pc);box-shadow:inset 0 0 0 var(--bw) var(--m-strong),0 0 0 var(--h) var(--pc)}
-#game#game.sk.p2 .pb.ot{z-index:1;top:calc(var(--h)*-1);bottom:calc(var(--h)*-1);background:var(--pgrey)}
-#game#game.sk.p2 .pb.dead{--pc:var(--pgrey);box-shadow:0 0 0 var(--h) var(--pgrey)}
-#game#game.sk.p2 .pb b{font-style:normal;position:absolute;top:50%;transform:translateY(-50%);font-family:"FunTxt",-apple-system,"SF Pro Display",system-ui,sans-serif!important;font-weight:900!important;font-size:calc(var(--r)*.34);
+#game#game.sk.p2.vC .pb.me{z-index:2;background:var(--pc);box-shadow:inset 0 0 0 var(--bw) var(--m-strong),0 0 0 var(--h) var(--pc)}
+#game#game.sk.p2.vC .pb.ot{z-index:1;top:calc(var(--h)*-1);bottom:calc(var(--h)*-1);background:var(--pgrey)}
+#game#game.sk.p2.vC .pb.dead{--pc:var(--pgrey);box-shadow:0 0 0 var(--h) var(--pgrey)}
+#game#game.sk.p2.vC .pb b{font-style:normal;position:absolute;top:50%;transform:translateY(-50%);font-family:"FunTxt",-apple-system,"SF Pro Display",system-ui,sans-serif!important;font-weight:900!important;font-size:calc(var(--r)*.34);
   line-height:1;color:#fff;text-box:trim-both cap alphabetic}
-#game#game.sk.p2 .pb.cl b{left:calc(var(--r)*.42)}
-#game#game.sk.p2 .pb.cr b{right:calc(var(--r)*.42)}
+#game#game.sk.p2.vC .pb.cl b{left:calc(var(--r)*.42)}
+#game#game.sk.p2.vC .pb.cr b{right:calc(var(--r)*.42)}
 /* aucune marque : petit cercle gris contre la bulle */
-#game#game.sk.p2 .pz{position:absolute;top:50%;width:calc(var(--r)*.2);height:calc(var(--r)*.2);margin-top:calc(var(--r)*-.1);border-radius:50%;
+#game#game.sk.p2.vC .pz{position:absolute;top:50%;width:calc(var(--r)*.2);height:calc(var(--r)*.2);margin-top:calc(var(--r)*-.1);border-radius:50%;
   border:calc(var(--r)*.045) solid var(--pgrey);box-sizing:border-box;pointer-events:none;z-index:1;transition:opacity .2s}
 /* Spew : texte cerné comme les nombres */
-body:not(.m2):not(.m3) #game#game.sk.p2 footer #bS::after,body.m2 #game#game.sk.p2 footer #b2::after,body.m3 #game#game.sk.p2 footer #b3::after{
+body:not(.m2):not(.m3) #game#game.sk.p2.vC footer #bS::after,body.m2 #game#game.sk.p2.vC footer #b2::after,body.m3 #game#game.sk.p2.vC footer #b3::after{
   -webkit-text-stroke:calc(var(--bw)*2.4) var(--m-strong);paint-order:stroke fill}
 
 /* ===== v81 : 1 contre 1 — sans rails, couleurs franches, textes sans contour ===== */
-#game#game.sk.p2{--h:calc(var(--r)*.12);--pgrey:#808080}
-html.night #game#game.sk.p2{--pgrey:#5a6170}
-#game#game.sk.p2 .rtrack,#game#game.sk.p2 .rtrackb{display:none!important}
-#game#game.sk.p2 #grid .num .lbl,html body #game#game.sk.p2 #scores .sc.act>.pts{-webkit-text-stroke:0!important}
-body #game#game.sk.p2 footer #b2::after,body #game#game.sk.p2 footer #bS::after,body #game#game.sk.p2 footer #b3::after{-webkit-text-stroke:0!important}
+#game#game.sk.p2.vC{--h:calc(var(--r)*.12);--pgrey:#808080}
+html.night #game#game.sk.p2.vC{--pgrey:#5a6170}
+#game#game.sk.p2.vC .rtrack,#game#game.sk.p2.vC .rtrackb{display:none!important}
+#game#game.sk.p2.vC #grid .num .lbl,html body #game#game.sk.p2.vC #scores .sc.act>.pts{-webkit-text-stroke:0!important}
+body #game#game.sk.p2.vC footer #b2::after,body #game#game.sk.p2.vC footer #bS::after,body #game#game.sk.p2.vC footer #b3::after{-webkit-text-stroke:0!important}
 /* joueur en attente : en gris */
-html body #game#game.sk.p2 #scores .sc:not(.act)>.nm,html body #game#game.sk.p2 #scores .sc:not(.act)>.pts,html body #game#game.sk.p2 #scores .sc:not(.act)>.mpr{color:var(--pgrey)!important}
+html body #game#game.sk.p2.vC #scores .sc:not(.act)>.nm,html body #game#game.sk.p2.vC #scores .sc:not(.act)>.pts,html body #game#game.sk.p2.vC #scores .sc:not(.act)>.mpr{color:var(--pgrey)!important}
 /* aucune marque : petit cercle gris épais */
-#game#game.sk.p2 .pz{width:calc(var(--r)*.24);height:calc(var(--r)*.24);margin-top:calc(var(--r)*-.12);border-width:calc(var(--r)*.07)}
+#game#game.sk.p2.vC .pz{width:calc(var(--r)*.24);height:calc(var(--r)*.24);margin-top:calc(var(--r)*-.12);border-width:calc(var(--r)*.07)}
+
+/* ===== v82 : 1 contre 1 — deux versions en alternance (bouton en haut à droite) : A et B =====
+   Couleur du joueur en cours = --accent (posée par skColors), couleur de chaque colonne = --mc. */
+#game#game.sk.p2{--bdead:#c8c8c8}
+/* commun : en-tête en grand rail, couronne du meneur au-dessus de son nom */
+html body #game#game.sk.p2 #scores::after{content:"";position:absolute;inset:0;border:var(--bw) solid var(--m-strong);border-radius:calc(var(--r)*.38);pointer-events:none;z-index:0}
+html body #game#game.sk.p2 #scores>.pc.sc{z-index:1}
+html body #game#game.sk.p2 #scores .sc>.nm{position:relative!important}
+html body #game#game.sk.p2 #scores .sc>.nm>.hat{display:block!important;position:absolute;left:50%;bottom:calc(100% + var(--r)*.12);width:calc(var(--r)*.95)!important;height:calc(var(--r)*.8)!important;
+  margin:0!important;transform:none!important;translate:-50% 0;animation:none!important;z-index:8}
+#game#game.sk.p2 .mw svg path{stroke-linecap:butt}
+/* --- version A : rails, bulles de la couleur du joueur, marques / X Ⓧ (disque plein) --- */
+html body #game#game.sk.p2.vA #scores .sc.act>.pts{color:#fff!important;-webkit-text-stroke:0!important}
+html body #game#game.sk.p2.vA.dk #scores .sc.act>.nm,html body #game#game.sk.p2.vA.dk #scores .sc.act>.mpr{color:#fff!important}
+html body #game#game.sk.p2.vA #scores .sc:not(.act)>.pills{position:absolute!important;left:50%!important;right:auto!important;top:auto!important;bottom:0!important;
+  transform:translate(-50%,50%)!important;margin:0!important;z-index:7}
+#game#game.sk.p2.vA .mw{width:calc(var(--r)*.62)!important;height:calc(var(--r)*.62)!important}
+#game#game.sk.p2.vA .mw svg{stroke-width:5!important}
+#game#game.sk.p2.vA .mw svg .disc{fill:var(--mc,var(--accent));stroke:none}
+#game#game.sk.p2.vA .mk.dead .mw svg .disc{fill:var(--dead)}
+#game#game.sk.p2.vA #grid .pc.mk.dead{color:var(--ink)!important}
+#game#game.sk.p2.vA .mw .tn{display:none!important}
+#game#game.sk.p2.vA #grid .num.dead{box-shadow:0 0 0 var(--h) var(--dead)!important}
+/* --- version B : rail rempli de la couleur du joueur, nombres noirs, marques \ X Ⓧ (cercle), +n --- */
+#game#game.sk.p2.vB .rtrack{background:var(--accent)!important;box-shadow:0 0 0 var(--h) var(--accent)}
+#game#game.sk.p2.vB #grid .num,#game#game.sk.p2.vB #grid .num.dead{background:transparent!important;box-shadow:none!important}
+#game#game.sk.p2.vB #grid .num .lbl{color:var(--ink)!important}
+#game#game.sk.p2.vB #grid>.row:has(.num.dead)>.rtrack,#game#game.sk.p2.vB #grid>.row:has(.num.dead)>.rtrackb{display:block!important}
+#game#game.sk.p2.vB #grid>.row:has(.num.dead)>.rtrack{background:var(--bdead)!important;box-shadow:0 0 0 var(--h) var(--bdead)}
+#game#game.sk.p2.vB #grid .num.dead .lbl{color:#8a8a8a!important}
+#game#game.sk.p2.vB #grid .pc.mk.dead{color:var(--ink)!important}
+#game#game.sk.p2.vB .mw svg{stroke-width:5!important}
+#game#game.sk.p2.vB #grid>.row .mw .tn{left:100%!important;right:auto!important;width:auto!important;margin-left:calc(var(--r)*.08)!important;text-align:left!important}
+#game#game.sk.p2.vB .mw .tn::before{content:"+"}
+#game#game.sk.p2.vB.dk #grid>.row:not(:has(.num.dead)) .num .lbl,#game#game.sk.p2.vB.dk #grid>.row:not(:has(.num.dead)) .pc.mk.intk{color:#fff!important}
+html body #game#game.sk.p2.vB #scores .sc.act>.pts{color:var(--ink)!important;-webkit-text-stroke:0!important}
+html body #game#game.sk.p2.vB.dk #scores .sc.act>.nm,html body #game#game.sk.p2.vB.dk #scores .sc.act>.pts,html body #game#game.sk.p2.vB.dk #scores .sc.act>.mpr{color:#fff!important}
+html body #game#game.sk.p2.vB #scores .sc:not(.act)>.nm,html body #game#game.sk.p2.vB #scores .sc:not(.act)>.pts,html body #game#game.sk.p2.vB #scores .sc:not(.act)>.mpr{color:#808080!important}
+html body #game#game.sk.p2.vB #scores .sc:not(.act)>.pills{display:none!important}
+body:not(.m2):not(.m3) #game#game.sk.p2.vB footer #bS::after,body.m2 #game#game.sk.p2.vB footer #b2::after,body.m3 #game#game.sk.p2.vB footer #b3::after{color:var(--ink)}
+#game#game.sk.p2.vB #grid>.row>div.mk:first-of-type .mw .tn{left:100%!important;right:auto!important}
+#game#game.sk.p2.vB .mw{width:calc(var(--r)*.62)!important;height:calc(var(--r)*.62)!important}
+/* textes posés sur la couleur du joueur : noirs (blancs si la couleur est foncée), même en mode nuit */
+#game#game.sk.p2.vB #grid>.row:not(:has(.num.dead)) .num .lbl,#game#game.sk.p2.vB #grid>.row:not(:has(.num.dead)) .pc.mk.intk,
+html body #game#game.sk.p2.vB #scores .sc.act>.nm,html body #game#game.sk.p2.vB #scores .sc.act>.pts,html body #game#game.sk.p2.vB #scores .sc.act>.mpr,
+html body #game#game.sk.p2.vA #scores .sc.act>.nm,html body #game#game.sk.p2.vA #scores .sc.act>.mpr,
+body:not(.m2):not(.m3) #game#game.sk.p2.vB footer #bS::after{color:#111!important}
+#game#game.sk.p2.vB.dk #grid>.row:not(:has(.num.dead)) .num .lbl,#game#game.sk.p2.vB.dk #grid>.row:not(:has(.num.dead)) .pc.mk.intk,
+html body #game#game.sk.p2.vB.dk #scores .sc.act>.nm,html body #game#game.sk.p2.vB.dk #scores .sc.act>.pts,html body #game#game.sk.p2.vB.dk #scores .sc.act>.mpr,
+html body #game#game.sk.p2.vA.dk #scores .sc.act>.nm,html body #game#game.sk.p2.vA.dk #scores .sc.act>.mpr{color:#fff!important}
 </style>
 </head>
 <body>
@@ -3606,7 +3656,7 @@ const mpr5=p=>{const a=p.turnMarks.slice(-5);return a.length?a.reduce((x,y)=>x+y
 /* case : marques de fermeture, puis bâtons pour chaque marque qui a marqué des points */
 function markHTML(k,e){
   if(!k)return'';
-  return`<div class="mw${e?' has':''}">${(skp2()?SVG2:SVG)[k]}${e?`<span class="tn">${e}</span>`:''}</div>`;
+  return`<div class="mw${e?' has':''}">${(bmode()==='A'?SVGA:bmode()==='B'?SVGB:SVG)[k]}${e?`<span class="tn">${e}</span>`:''}</div>`;
 }
 /* même cadre 100×100 pour les trois marques : le X va de 29 à 71, le cercle l'entoure (r=40) */
 const SVG=['',   // marques : 1 = point central, 2 = + cercle intérieur, 3 = + grand cercle
@@ -3618,6 +3668,15 @@ var SVG2=['',
  '<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="47" pathLength="100"/></svg>',
  '<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="47" pathLength="100"/><circle cx="50" cy="50" r="32" pathLength="100"/></svg>',
  '<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="47" pathLength="100"/><circle cx="50" cy="50" r="32" pathLength="100"/><circle class="dot" cx="50" cy="50" r="15"/></svg>'];
+var SVGA=['',
+ '<svg viewBox="0 0 100 100"><path d="M20 80 80 20"/></svg>',
+ '<svg viewBox="0 0 100 100"><path d="M20 80 80 20"/><path d="M20 20 80 80"/></svg>',
+ '<svg viewBox="0 0 100 100"><circle class="disc" cx="50" cy="50" r="33"/><path d="M20 80 80 20"/><path d="M20 20 80 80"/></svg>'];
+var SVGB=['',
+ '<svg viewBox="0 0 100 100"><path d="M20 20 80 80"/></svg>',
+ '<svg viewBox="0 0 100 100"><path d="M20 20 80 80"/><path d="M20 80 80 20"/></svg>',
+ '<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="31" pathLength="100"/><path d="M20 20 80 80"/><path d="M20 80 80 20"/></svg>'];
+function bmode(){return skp2()?(document.getElementById('game').classList.contains('vB')?'B':'A'):''}
 function skp2(){const g=document.getElementById('game');return !!g&&g.classList.contains('sk')&&g.classList.contains('p2')}
 let R=null; // références DOM
 
@@ -3805,7 +3864,7 @@ function render(){
     G.players.forEach((p,i)=>{
       const c=R.mk[t][i],k=p.marks[t],act=i===shownCur();
       c.classList.toggle('act',act);
-      const e=(p.extra&&p.extra[t])||0,key=k+'-'+e+(skp2()?'s':'');
+      const e=(p.extra&&p.extra[t])||0,key=k+'-'+e+bmode();
       if(c.dataset.k!==key){c.dataset.k=key;c.innerHTML=markHTML(k,e)}
       c.classList.toggle('dead',dd);
     });
@@ -5130,15 +5189,15 @@ function alignLabels(){document.querySelectorAll('#setup .sect .opt').forEach(o=
  sb.addEventListener('click',()=>{S.sound=!S.sound;store.set(K_S,S);up();haptic();audioInit();SFX.ui()})}
 
 /* ===== style « switch » du tableau de cricket (avec retour au style d'origine) ===== */
-function applyBStyle(){const on=S.bstyle!=='classic';if(!on&&R&&R.sc)R.sc.forEach(sc=>[sc.nm,sc.pts,sc.m,sc.pills].forEach(e=>['left','right','width'].forEach(k=>e.style.removeProperty(k))));$('game').classList.toggle('sk',on);$('bStyle').classList.toggle('on',on);
+function applyBStyle(){const on=true;{const vb=S.bstyle==='B';$('game').classList.toggle('vA',!vb);$('game').classList.toggle('vB',vb)}if(!on&&R&&R.sc)R.sc.forEach(sc=>[sc.nm,sc.pts,sc.m,sc.pills].forEach(e=>['left','right','width'].forEach(k=>e.style.removeProperty(k))));$('game').classList.toggle('sk',on);$('bStyle').classList.toggle('on',on);
   if(G&&R&&$('game').classList.contains('on')){render();if(typeof refitNames==='function')refitNames()}}
 $('bUndo2').addEventListener('click',()=>{haptic();undo()});
-$('bStyle').addEventListener('click',()=>{S.bstyle=S.bstyle==='classic'?'sw':'classic';store.set(K_S,S);haptic();SFX.ui();applyBStyle()});
+$('bStyle').addEventListener('click',()=>{S.bstyle=S.bstyle==='B'?'A':'B';store.set(K_S,S);haptic();SFX.ui();applyBStyle()});
 applyBStyle();
 /* quand on marque : la bulle part fort jusqu'à l'autre bout du switch et revient en rebondissant (balle) ;
    tout ce qu'elle recouvre s'écrit en blanc */
 function flashRow(t){
-  if(skp2())return;   // 1 contre 1 : c'est la barre qui s'allonge
+  if(skp2()&&!$('game').classList.contains('vA'))return;   // 1 contre 1 : c'est la barre qui s'allonge
   if(!$('game').classList.contains('sk')||!R||!R.num[t])return;
   const num=R.num[t],row=num.parentElement,tk=row.querySelector('.rtrack');if(!tk)return;
   row.querySelectorAll('.rball').forEach(x=>x.remove());
@@ -5192,7 +5251,7 @@ function fitSk(){
 /* 1 contre 1 : barres de progression de chaque ligne */
 const PBC=['#fcc200','#f7941d','#ff5a1f','#ed1c24'];   // 0, 1, 2, 3 marques
 function drawBars(){
-  if(!skp2()||!R||!G)return;const cur=shownCur(),oth=1-cur,curL=cur===0,P=G.players;
+  if(!skp2()||!R||!G||!$('game').classList.contains('vC'))return;const cur=shownCur(),oth=1-cur,curL=cur===0,P=G.players;
   const tot=(p,t)=>p.marks[t]+((p.extra&&p.extra[t])||0);
   TARGETS.forEach(t=>{const num=R.num[t],row=num&&num.parentElement;if(!row)return;
     let me=row.querySelector('.pb.me');
@@ -5214,6 +5273,16 @@ function drawBars(){
     zm.style.opacity=km||dd?0:1;zo.style.opacity=ko||dd?0:1;
   });
 }
+/* couleur des joueurs : bulle / rail du joueur en cours, disques des marques de chaque colonne */
+function pcolI(i){const p=G.players[i],c=p&&pcol(p.name);return /^#[0-9a-f]{6}$/i.test(c||'')?c:(i?'#fcc200':'#ff5a1f')}
+function skColors(){const g=$('game');
+  if(!skp2()||!G||!R){g.style.removeProperty('--accent');g.style.removeProperty('--acc-rgb');g.classList.remove('dk');return}
+  const c=pcolI(shownCur()),rgb=[1,3,5].map(k=>parseInt(c.slice(k,k+2),16));
+  g.style.setProperty('--accent',c);g.style.setProperty('--acc-rgb',rgb.join(','));
+  g.classList.toggle('dk',(.299*rgb[0]+.587*rgb[1]+.114*rgb[2])/255<.5);
+  TARGETS.forEach(t=>G.players.forEach((p,i)=>{const m=R.mk[t]&&R.mk[t][i];if(m)m.style.setProperty('--mc',pcolI(i))}));
+}
+{const _r=render;render=function(){const x=_r.apply(this,arguments);try{skColors()}catch(e){}return x}}
 function placeHead(){
   const g=$('game');if(!g.classList.contains('sk')||!R||!G)return;
   if(skp2()){R.sc.forEach(sc=>[sc.nm,sc.pts,sc.m,sc.pills].forEach(e=>['left','right','width'].forEach(k=>e.style.removeProperty(k))));layoutSk();fitSk();drawBars();return}
