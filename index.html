@@ -3003,6 +3003,23 @@ html body #game#game.sk.p2.pn.curL #scores>.sc.act{grid-template-columns:var(--c
 html body #game#game.sk.p2.pn #scores .sc.act>.pills .pill{font-size:calc(var(--r)*.22)!important;height:calc(var(--r)*.38)!important;padding:0 .2em!important}
 html body #game#game.sk.p2.pn #scores .sc:not(.act)>.pills{gap:calc(var(--r)*.05)!important}
 html body #game#game.sk.p2.pn #scores .sc:not(.act)>.pills .pill{min-width:calc(var(--r)*.36)!important;height:calc(var(--r)*.28)!important;font-size:calc(var(--r)*.17)!important;padding:0 .2em!important}
+
+/* ===== v89 ===== */
+.screen.sinL{animation:gslideL2 .55s cubic-bezier(.2,.9,.25,1)}
+.screen.sinR{animation:gslideR2 .55s cubic-bezier(.2,.9,.25,1)}
+#setup.b2.p2in .grp{animation:gslideL2 .55s cubic-bezier(.2,.9,.25,1)!important}
+#setup.b2.p1in .grp{animation:gslideR2 .55s cubic-bezier(.2,.9,.25,1)!important}
+/* rebond : le vrai bouton devient invisible (mais reste cliquable) pendant que sa copie rebondit */
+#game#game.sk.p2 #grid .num.bnc{background:transparent!important;box-shadow:none!important}
+#game#game.sk.p2 #grid .num.bnc .lbl{opacity:0!important}
+#game#game.sk.p2 #grid .num.nghost{transform:none}
+/* Cricket à plusieurs : nombres à gauche du joueur en cours, fléchettes à gauche de sa case */
+html body #game#game.sk.p2.pn.curR #scores>.sc.act{grid-template-columns:calc(var(--midw)*.05) calc(var(--midw)*.9) calc(var(--colw) + var(--midw)*.05)!important}
+/* joueurs en attente : historique en petits ronds */
+html body #game#game.sk.p2.pn #scores .sc:not(.act)>.pills .pill{min-width:0!important;width:calc(var(--r)*.2)!important;height:calc(var(--r)*.2)!important;padding:0!important;
+  border-radius:50%!important;font-size:0!important;color:transparent!important}
+html body #game#game.sk.p2.pn #scores .sc:not(.act)>.pills .pill>*{display:none!important}
+html body #game#game.sk.p2.pn #scores .sc:not(.act)>.pills{gap:calc(var(--r)*.08)!important}
 </style>
 </head>
 <body>
@@ -5416,8 +5433,12 @@ function flashRow(t){
     const NL=num.offsetLeft,NW=num.offsetWidth,TL=tk.offsetLeft,TW=tk.offsetWidth;
     const X=(NL+NW/2)>(TL+TW/2)?TL-NL:(TL+TW-NW)-NL;if(Math.abs(X)<4)return;
     const K=[[0,0,'cubic-bezier(.1,.75,.3,1)'],[.27,X,'cubic-bezier(.5,0,.85,.45)'],[.66,0,'cubic-bezier(.2,.7,.4,1)'],[.79,X*.13,'cubic-bezier(.5,0,.85,.45)'],[.89,0,'cubic-bezier(.2,.7,.4,1)'],[.95,X*.035,'ease-in'],[1,0,'linear']];
-    num.getAnimations().forEach(a=>{if(a.id==='bnc')a.cancel()});
-    const a=num.animate(K.map(([o,x,e])=>({offset:o,transform:`translateX(${x}px)`,easing:e})),{duration:1000});a.id='bnc';return}
+    const row=num.parentElement;row.querySelectorAll('.nghost').forEach(x=>x.remove());
+    const gh=num.cloneNode(true);gh.classList.add('nghost');gh.classList.remove('pressed','pgrey','away');gh.removeAttribute('id');
+    Object.entries({position:'absolute',left:NL+'px',top:num.offsetTop+'px',width:NW+'px',height:num.offsetHeight+'px',margin:'0','pointer-events':'none','z-index':'3',flex:'none',order:'0'}).forEach(([k,v])=>gh.style.setProperty(k,v,'important'));
+    row.append(gh);num.classList.add('bnc');
+    const a=gh.animate(K.map(([o,x,e])=>({offset:o,transform:`translateX(${x}px)`,easing:e})),{duration:1000});
+    a.onfinish=()=>{gh.remove();if(!row.querySelector('.nghost'))num.classList.remove('bnc')};return}
   if(!$('game').classList.contains('sk')||!R||!R.num[t])return;
   const num=R.num[t],row=num.parentElement,tk=row.querySelector('.rtrack');if(!tk)return;
   row.querySelectorAll('.rball').forEach(x=>x.remove());
@@ -5562,11 +5583,11 @@ function pnSet(){const g=$('game'),on=!!G&&G.players.length>2;g.classList.toggle
 function pnOrder(){const g=$('game');if(!g.classList.contains('pn')||!R||!G)return;const n=G.players.length,cur=shownCur();
   const prev=R.pnCur,turned=prev!==undefined&&prev!==cur;
   const all=[...TARGETS.map(t=>R.num[t]),...G.players.flatMap((p,i)=>TARGETS.map(t=>R.mk[t][i]))],old=turned?all.map(c=>c.offsetLeft):null;
-  g.classList.add('curL');g.classList.remove('curR','rot');
+  g.classList.add('curR');g.classList.remove('curL','rot');
   G.players.forEach((p,i)=>{R.sc[i].c.dataset.o=i;R.sc[i].c.style.order=i*2;TARGETS.forEach(t=>{R.mk[t][i].style.order=i*2})});
-  TARGETS.forEach(t=>{R.num[t].style.order=cur*2+1});
+  TARGETS.forEach(t=>{R.num[t].style.order=cur*2-1});
   if(turned)all.forEach((c,k)=>{const dx=old[k]-c.offsetLeft;if(Math.abs(dx)>1)c.animate([{transform:'translateX('+dx+'px)'},{transform:'none'}],{duration:450,easing:'cubic-bezier(.3,1.25,.5,1)'})});
-  if(R.pnCur!==cur){R.pnCur=cur;const m=g.querySelector('main'),x=R.mk[15][cur].offsetLeft;m.scrollTo({left:Math.max(0,x),behavior:turned?'smooth':'auto'})}
+  if(R.pnCur!==cur){R.pnCur=cur;const m=g.querySelector('main'),x=R.num[15].offsetLeft;m.scrollTo({left:Math.max(0,x),behavior:turned?'smooth':'auto'})}
 }
 function pnPlace(){const g=$('game');if(!g.classList.contains('pn')||!R||!G)return;
   const W=innerWidth,colw=W*.20,mid=W*.15,n=G.players.length,cur=shownCur();
@@ -5610,11 +5631,11 @@ const bgOf=e=>{const c=getComputedStyle(e).backgroundColor;return c&&c!=='rgba(0
    if(t.id==='go'){const th=t.querySelector('.gth');if(!th){pass(t);return}if(t.classList.contains('on2'))return;
      t.classList.add('on2');const col=bgOf(th);
      th.animate([{transform:'none'},{transform:'translateX('+(t.clientWidth-th.offsetWidth)+'px)'}],{duration:170,easing:'cubic-bezier(.55,0,.75,.6)',fill:'forwards'});
-     setTimeout(()=>inflateFx(th,col,()=>{pass(t);t.classList.remove('on2')}),110);return}
+     setTimeout(()=>{pass(t);t.classList.remove('on2')},190);return}
    const sw=t.closest('.hsw');
    if(sw&&sw.classList.contains('two')){const th=sw.querySelector('.hth');
-     if(t.id==='hPlay'){sw.classList.add('new');setTimeout(()=>inflateFx(th,bgOf(th),()=>pass(t)),210)}else inflateFx(th,bgOf(th),()=>pass(t));return}
-   const src=t.id==='drawGo'?t.querySelector('span'):t;inflateFx(src,bgOf(src),()=>pass(t))},true);
+     if(t.id==='hPlay'){sw.classList.add('new');setTimeout(()=>pass(t),220)}else pass(t);return}
+   pass(t)},true);
 }
 /* annuler : rond blanc centré au-dessus de l'historique du joueur en cours, à cheval sur sa case */
 let undoRaf=0;
@@ -5634,6 +5655,10 @@ document.addEventListener('scroll',()=>placeUndo(),true);
 {const _x=xRender;xRender=function(){const x=_x.apply(this,arguments);try{placeUndo()}catch(e){}return x}}
 {const _k=kRender;kRender=function(){const x=_k.apply(this,arguments);try{placeUndo()}catch(e){}return x}}
 {const _sh=show;show=function(id){const r=_sh.apply(this,arguments);try{placeUndo()}catch(e){}return r}}
+/* changement d'écran : la page glisse (comme le choix du jeu) ; retour à l'accueil : elle arrive par la gauche */
+{const _sh=show;show=function(id){const cur=document.querySelector('.screen.on'),r=_sh.apply(this,arguments),nw=$(id);
+  if(cur&&nw&&cur!==nw&&nw.classList.contains('screen')){nw.classList.remove('sinL','sinR');void nw.offsetWidth;nw.classList.add(id==='home'?'sinR':'sinL');
+    setTimeout(()=>nw.classList.remove('sinL','sinR'),600)}return r}}
 /* tirage au sort : la case validée prend la couleur du joueur */
 new MutationObserver(()=>{const box=$('slots');box.querySelectorAll('.slot.lock').forEach(sl=>{if(sl.dataset.c)return;
   const nm=(box.classList.contains('nums')?sl.querySelector('b'):sl.querySelector('span')).textContent.trim(),c=pcol(nm);
