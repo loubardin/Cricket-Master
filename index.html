@@ -2948,6 +2948,42 @@ html body footer #fUndo#fUndo::after,html body footer #fUndo#fUndo::before{displ
 html body footer #fUndo#fUndo:active{transform:scale(.88)}
 html body footer #fUndo#fUndo svg{display:block!important;width:calc(var(--fu,46px)*.5)!important;height:calc(var(--fu,46px)*.5)!important;min-width:0!important;fill:none!important;stroke:currentColor!important;stroke-width:2.6!important;color:inherit}
 html body footer #fUndo#fUndo{color:#fff!important}html body .lt footer #fUndo#fUndo{color:#111!important}
+
+/* ===== v87 ===== */
+/* annuler : rond blanc à cheval sur le bord de la case du joueur en cours */
+html body #fUndo#fUndo{position:fixed!important;bottom:auto!important;right:auto!important;translate:-50% -50%!important;
+  width:min(5.4dvh,11vw)!important;height:min(5.4dvh,11vw)!important;min-width:0!important;margin:0!important;padding:0!important;border-radius:50%!important;
+  background:#fff!important;color:#111!important;border:var(--bub-bw,1.5px) solid var(--m-strong)!important;box-shadow:none!important;display:grid;place-items:center!important;
+  z-index:60!important;font-size:0!important;grid-area:auto!important;opacity:1!important;transition:transform .12s}
+html body #fUndo#fUndo::before,html body #fUndo#fUndo::after{content:none!important;display:none!important}
+html body #fUndo#fUndo:active{transform:scale(.86)}
+html body #fUndo#fUndo svg{display:block;width:50%;height:50%;fill:none;stroke:#111;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+#game#game.sk.p2{--fu:calc(var(--r)*.6);--gb:max(var(--g),var(--sab,0px))}
+#game#game.sk.p2.curL #scores>.sc.act{--ux:calc(var(--colw) + var(--midw)*.5)}
+#game#game.sk.p2.curR #scores>.sc.act{--ux:calc(var(--midw)*.5)}
+:is(#x01,#killer){--fu:4.6dvh}
+:is(#x01,#killer) footer{margin-bottom:max(1.6dvh,var(--sab))!important}
+#x01#x01 #xplayers .xc.act,#killer#killer #kplayers .kc.act{overflow:visible!important;position:relative}
+#x01#x01 #xplayers .xc.act>#fUndo#fUndo,#killer#killer #kplayers .kc.act>#fUndo#fUndo{top:100%!important}
+/* Cricket à plusieurs : colonnes plus étroites, la colonne des nombres se place à droite du joueur en cours */
+#game#game.sk.p2.pn{--colw:24vw}
+#game#game.sk.p2.pn #grid .num.bull .lbl{font-size:.8em!important}
+#game#game.sk.p2.pn footer{--midw:33.333vw;--colw:calc((100vw - 2*var(--g) - 33.333vw)/2)}
+/* accueil : Reprendre / Nouvelle partie en un seul switch */
+#home .hsw{position:relative;display:block}
+#home .hsw:not(.two) .hth{display:none}
+#home .hsw:not(.two) #hResume{display:none!important}
+#home .hsw.two{display:grid;grid-template-columns:1fr 1fr;border-radius:99px;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong)}
+#home .hsw.two .hth{position:absolute;top:0;bottom:0;left:0;width:50%;border-radius:99px;background:var(--accent);box-shadow:0 0 0 var(--bub-h) var(--accent);z-index:0;
+  transition:transform .22s cubic-bezier(.3,1.4,.5,1)}
+#home .hsw.two.new .hth{transform:translateX(100%)}
+#home#home .hsw.two .big,#home#home .hsw.two #hResume{position:relative;z-index:1;background:transparent!important;box-shadow:none!important;color:var(--ink)!important;margin:0!important;width:auto!important;
+  display:block!important;transition:color .2s}
+#home#home .hsw.two:not(.new) #hResume,#home#home .hsw.two.new #hPlay{color:#fff!important}
+/* menu : faux switch « Tout bon ? » | « Suivant → » */
+html body #setup#setup.b2 #go{background:transparent!important;justify-content:flex-start!important;position:relative}
+html body #setup#setup.b2 #go span{width:50%!important;min-width:0!important;margin:0!important;padding:0!important;position:relative;z-index:2;white-space:nowrap}
+html body #setup#setup.b2 #go em{position:absolute;right:0;top:0;bottom:0;width:50%;display:grid;place-items:center;font-style:normal;color:var(--ink);z-index:1;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -5357,6 +5393,7 @@ applyBStyle();
 function flashRow(t){
   if(skp2()){   // 1 contre 1 : la bulle elle-même file jusqu'au bord du rail et rebondit (pas de double)
     const num=R.num[t],tk=num&&num.parentElement.querySelector('.rtrack');if(!tk)return;
+    try{inflateFx(num,getComputedStyle($('game')).getPropertyValue('--accent').trim(),null,true)}catch(e){}
     const NL=num.offsetLeft,NW=num.offsetWidth,TL=tk.offsetLeft,TW=tk.offsetWidth;
     const X=(NL+NW/2)>(TL+TW/2)?TL-NL:(TL+TW-NW)-NL;if(Math.abs(X)<4)return;
     const K=[[0,0,'cubic-bezier(.1,.75,.3,1)'],[.27,X,'cubic-bezier(.5,0,.85,.45)'],[.66,0,'cubic-bezier(.2,.7,.4,1)'],[.79,X*.13,'cubic-bezier(.5,0,.85,.45)'],[.89,0,'cubic-bezier(.2,.7,.4,1)'],[.95,X*.035,'ease-in'],[1,0,'linear']];
@@ -5404,7 +5441,7 @@ function layoutSk(){
    même taille pour les deux joueurs */
 function fitSk(){
   if(!R||!G||!R.sc)return;const g=$('game'),r=parseFloat(g.style.getPropertyValue('--rowh'))||58;
-  const colw=(g.querySelector('main').clientWidth-innerWidth*.07-R.num[15].offsetWidth)/2,avail=colw*.86;
+  const colw=g.classList.contains('pn')?R.mk[15][0].offsetWidth:(g.querySelector('main').clientWidth-innerWidth*.07-R.num[15].offsetWidth)/2,avail=colw*.86;
   const fit=(key,base)=>{const els=R.sc.map(s=>s[key]);let fs=base;
     els.forEach(e=>{e.style.setProperty('font-size',base+'px','important');const w=e.offsetWidth;if(w>avail)fs=Math.min(fs,base*avail/w)});
     els.forEach(e=>e.style.setProperty('font-size',fs.toFixed(2)+'px','important'))};
@@ -5501,24 +5538,20 @@ function setPc(sec,p){const c0=p&&pcol(p.members?p.members[p.mi||0]:p.name);cons
 {const _k=kRender;kRender=function(){const r=_k.apply(this,arguments);try{if(KG)setPc($('killer'),KG.players[KG.cur])}catch(e){}return r}}
 /* ===== Cricket à 3 joueurs et + : disposition du 1 contre 1 (joueur en cours | nombres | les autres, à faire glisser) ===== */
 function pnSet(){const g=$('game'),on=!!G&&G.players.length>2;g.classList.toggle('pn',on);
-  if(on){g.classList.add('p2');document.documentElement.style.setProperty('--midw','33.333vw')}}
+  if(on){g.classList.add('p2');document.documentElement.style.setProperty('--midw','26vw')}}
 {const _b=build;build=function(){const r=_b.apply(this,arguments);try{pnSet()}catch(e){}return r}}
 function pnOrder(){const g=$('game');if(!g.classList.contains('pn')||!R||!G)return;const n=G.players.length,cur=shownCur();
-  const prev=R.pnCur,turned=prev!==undefined&&prev!==cur,cells=i=>TARGETS.map(t=>R.mk[t][i]),old=turned?G.players.map((p,i)=>cells(i)[0].offsetLeft):null;
+  const prev=R.pnCur,turned=prev!==undefined&&prev!==cur;
+  const all=[...TARGETS.map(t=>R.num[t]),...G.players.flatMap((p,i)=>TARGETS.map(t=>R.mk[t][i]))],old=turned?all.map(c=>c.offsetLeft):null;
   g.classList.add('curL');g.classList.remove('curR','rot');
-  G.players.forEach((p,i)=>{const o=i===cur?0:1+((i-cur+n)%n);R.sc[i].c.dataset.o=o;R.sc[i].c.style.order=o;TARGETS.forEach(t=>{R.mk[t][i].style.order=o})});
-  TARGETS.forEach(t=>{R.num[t].style.order=1});
-  if(turned){const W=innerWidth,mid=W/3,colw=(W*.93-mid)/2;
-    G.players.forEach((p,i)=>{const nw=cells(i)[0].offsetLeft;let dx=old[i]-nw;
-      if(i===prev){cells(i).forEach(c=>{const gh=c.cloneNode(true);gh.style.cssText=`position:absolute;left:${old[i]}px;top:0;bottom:0;width:${c.offsetWidth}px;z-index:1;pointer-events:none;display:grid;place-items:center`;
-          c.parentElement.append(gh);gh.animate([{transform:'none',opacity:1},{transform:'translateX('+(-colw)+'px)',opacity:0}],{duration:380,easing:'cubic-bezier(.5,0,.6,1)',fill:'forwards'}).onfinish=()=>gh.remove()});
-        const sc=R.sc[i].c;sc.style.transition='none';requestAnimationFrame(()=>requestAnimationFrame(()=>{sc.style.transition=''}));return}
-      if(Math.abs(dx)>1)cells(i).forEach(c=>c.animate([{transform:'translateX('+dx+'px)'},{transform:'none'}],{duration:420,easing:'cubic-bezier(.3,1.3,.5,1)'}))})}
-  if(R.pnCur!==cur){R.pnCur=cur;const m=g.querySelector('main');if(m.scrollLeft)m.scrollTo({left:0,behavior:'smooth'})}
+  G.players.forEach((p,i)=>{R.sc[i].c.dataset.o=i;R.sc[i].c.style.order=i*2;TARGETS.forEach(t=>{R.mk[t][i].style.order=i*2})});
+  TARGETS.forEach(t=>{R.num[t].style.order=cur*2+1});
+  if(turned)all.forEach((c,k)=>{const dx=old[k]-c.offsetLeft;if(Math.abs(dx)>1)c.animate([{transform:'translateX('+dx+'px)'},{transform:'none'}],{duration:450,easing:'cubic-bezier(.3,1.25,.5,1)'})});
+  if(R.pnCur!==cur){R.pnCur=cur;const m=g.querySelector('main'),x=R.mk[15][cur].offsetLeft;m.scrollTo({left:Math.max(0,x),behavior:turned?'smooth':'auto'})}
 }
 function pnPlace(){const g=$('game');if(!g.classList.contains('pn')||!R||!G)return;
-  const W=innerWidth,gp=W*.035,mid=W/3,colw=(W-2*gp-mid)/2,n=G.players.length;
-  R.sc.forEach(sc=>{const o=+sc.c.dataset.o||0,L=o===0?0:colw+mid+(o-2)*colw,w=o===0?colw+mid:colw;
+  const W=innerWidth,colw=W*.24,mid=W*.26,n=G.players.length,cur=shownCur();
+  R.sc.forEach((sc,i)=>{const L=i*colw+(i>cur?mid:0),w=i===cur?colw+mid:colw;
     sc.c.style.setProperty('left',L+'px','important');sc.c.style.setProperty('width',w+'px','important')});
   $('scores').style.setProperty('width',(colw*n+mid)+'px','important');
 }
@@ -5533,23 +5566,54 @@ document.addEventListener('click',e=>{if(!e.target.closest||!e.target.closest('#
   K[N]={borderRadius:'99px',scale:'1 1',rotate:'0deg'};
   f.getAnimations().forEach(x=>{if(x.id==='wave')x.cancel()});const an=f.animate(K,{duration:1100,easing:'linear'});an.id='wave'},true);
 
-/* toucher une bulle : elle gonfle sur tout l'écran, puis on passe à la suite */
-{let SKIP=false;
- const colorOf=t=>{if(t.classList.contains('sc')){const g=$('game');return getComputedStyle(g).getPropertyValue('--accent').trim()||'#ff5a1f'}
-   const sp=t.querySelector('span');return getComputedStyle(sp&&t.id==='go'||t.id==='drawGo'?sp:t).backgroundColor};
- function inflate(t,cb){const r=t.getBoundingClientRect(),src=t.id==='go'||t.id==='drawGo'?t.querySelector('span'):t,rs=src.getBoundingClientRect(),br=getComputedStyle(src).borderRadius;
-   const o=document.createElement('div');o.className='inflate';o.style.background=colorOf(t);document.body.append(o);
-   const W=innerWidth,H=innerHeight,from={left:rs.left+'px',top:rs.top+'px',width:rs.width+'px',height:rs.height+'px',borderRadius:br},
-     to={left:'-40px',top:'-40px',width:(W+80)+'px',height:(H+80)+'px',borderRadius:'80px'};
-   Object.assign(o.style,from);haptic();
-   const sq={left:(rs.left+rs.width*.04)+'px',top:(rs.top+rs.height*.06)+'px',width:(rs.width*.92)+'px',height:(rs.height*.88)+'px',borderRadius:br,offset:.18};
-   o.animate([from,sq,to],{duration:300,easing:'cubic-bezier(.6,0,.2,1)',fill:'forwards'}).onfinish=()=>{cb();
-     o.animate([{opacity:1},{opacity:0}],{duration:170,easing:'ease-out',fill:'forwards'}).onfinish=()=>o.remove()}}
- document.addEventListener('click',e=>{if(SKIP||!e.target.closest)return;
-   let t=e.target.closest('#hPlay,#hResume,#drawGo,#setup.p2 #go,#game.sk.p2 #scores>.sc.act');if(!t||e.target.closest('.pill.undo'))return;
-   if(t.id==='drawGo'&&$('drawGo').style.visibility==='hidden')return;
-   e.stopPropagation();e.preventDefault();inflate(t,()=>{SKIP=true;try{t.click()}finally{SKIP=false}})},true);
+/* ===== bulle qui gonfle sur tout l'écran (très court, très dynamique) ===== */
+function inflateFx(src,color,cb,fast){const rs=src.getBoundingClientRect(),br=getComputedStyle(src).borderRadius;
+  const o=document.createElement('div');o.className='inflate';o.style.background=color;document.body.append(o);
+  const W=innerWidth,H=innerHeight,from={left:rs.left+'px',top:rs.top+'px',width:rs.width+'px',height:rs.height+'px',borderRadius:br},
+    sq={left:(rs.left+rs.width*.05)+'px',top:(rs.top+rs.height*.1)+'px',width:(rs.width*.9)+'px',height:(rs.height*.8)+'px',borderRadius:br,offset:.14},
+    to={left:'-60px',top:'-60px',width:(W+120)+'px',height:(H+120)+'px',borderRadius:'120px'};
+  Object.assign(o.style,from);
+  o.animate([from,sq,to],{duration:fast?190:230,easing:'cubic-bezier(.8,0,.25,1)',fill:'forwards'}).onfinish=()=>{if(cb)cb();
+    o.animate([{opacity:1},{opacity:0}],{duration:fast?150:140,easing:'ease-out',fill:'forwards'}).onfinish=()=>o.remove()}}
+const bgOf=e=>{const c=getComputedStyle(e).backgroundColor;return c&&c!=='rgba(0, 0, 0, 0)'?c:getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()};
+/* accueil : « Reprendre » / « Nouvelle partie » = un seul switch, bulle sur Reprendre */
+{const hb=document.querySelector('#home .hbtns'),sw=el('div','hsw'),th=el('i','hth');
+ hb.insertBefore(sw,$('hResume'));sw.append(th,$('hResume'),$('hPlay'));
+ const _gh=goHome;goHome=function(){const r=_gh.apply(this,arguments);const two=$('hResume').style.display!=='none';
+   sw.classList.toggle('two',two);sw.classList.remove('new');$('hResume').textContent=two?'Reprendre':'Reprendre la partie';$('hPlay').textContent=two?'Nouvelle partie':'Jouer';return r}}
+/* menu : bouton du bas = faux switch « Tout bon ? » → « Suivant → » */
+{const _sp=setupPage;setupPage=function(n,anim){const r=_sp.apply(this,arguments);
+   $('go').innerHTML='<span>Tout bon ?</span><em>'+(n===2?'C\'est parti':'Suivant')+' →</em>';return r}}
+{let SKIP=false;const pass=t=>{SKIP=true;try{t.click()}finally{SKIP=false}};
+ document.addEventListener('click',e=>{if(SKIP||!e.target.closest)return;const t=e.target.closest('#hPlay,#hResume,#drawGo,#go');if(!t)return;
+   if(t.id==='drawGo'&&t.style.visibility==='hidden')return;
+   e.stopPropagation();e.preventDefault();haptic();
+   if(t.id==='go'){const sp=t.querySelector('span');if(!sp){pass(t);return}const dx=t.clientWidth-sp.offsetWidth;
+     const an=sp.animate([{transform:'none'},{transform:'translateX('+dx+'px)'}],{duration:200,easing:'cubic-bezier(.3,1.35,.5,1)',fill:'forwards'});
+     an.onfinish=()=>{if(SU.classList.contains('p2'))inflateFx(sp,bgOf(sp),()=>{pass(t);an.cancel()});else{pass(t);an.cancel()}};return}
+   const sw=t.closest('.hsw');
+   if(sw&&sw.classList.contains('two')){const th=sw.querySelector('.hth');
+     if(t.id==='hPlay'){sw.classList.add('new');setTimeout(()=>inflateFx(th,bgOf(th),()=>pass(t)),210)}else inflateFx(th,bgOf(th),()=>pass(t));return}
+   const src=t.id==='drawGo'?t.querySelector('span'):t;inflateFx(src,bgOf(src),()=>pass(t))},true);
 }
+/* annuler : rond blanc centré au-dessus de l'historique du joueur en cours, à cheval sur sa case */
+let undoRaf=0;
+function undoAnchor(){
+  if(document.querySelector('.ov.on,#info.on,#win.on,#knext.on,#kinfo.on,#xinfo.on'))return null;
+  if($('x01').classList.contains('on')){const c=XG&&XG.winner===null&&document.querySelector('#xplayers .xc.act');if(!c)return null;const h=c.querySelector('.khist')||c,hr=h.getBoundingClientRect(),cr=c.getBoundingClientRect();return[hr.left+hr.width/2,cr.bottom]}
+  if($('killer').classList.contains('on')){const c=KG&&KG.winner===null&&document.querySelector('#kplayers .kc.act');if(!c)return null;const h=c.querySelector('.khist')||c,hr=h.getBoundingClientRect(),cr=c.getBoundingClientRect();return[hr.left+hr.width/2,cr.bottom]}
+  if($('game').classList.contains('on')&&G&&R&&G.winner===null&&!$('win').classList.contains('on')){const s=R.sc[shownCur()];if(!s)return null;const pr=s.pills.getBoundingClientRect(),cr=s.c.getBoundingClientRect();return[pr.left+pr.width/2,cr.top]}
+  return null}
+function placeUndo(){const fu=$('fUndo');if(fu.parentElement!==document.body)document.body.append(fu);
+  const t0=performance.now();cancelAnimationFrame(undoRaf);
+  const step=()=>{const a=undoAnchor();if(a){fu.style.display='';fu.style.left=a[0]+'px';fu.style.top=a[1]+'px'}else fu.style.display='none';
+    if(performance.now()-t0<700)undoRaf=requestAnimationFrame(step)};step()}
+addEventListener('resize',()=>placeUndo());
+document.addEventListener('scroll',()=>placeUndo(),true);
+{const _r=render;render=function(){const x=_r.apply(this,arguments);try{placeUndo()}catch(e){}return x}}
+{const _x=xRender;xRender=function(){const x=_x.apply(this,arguments);try{placeUndo()}catch(e){}return x}}
+{const _k=kRender;kRender=function(){const x=_k.apply(this,arguments);try{placeUndo()}catch(e){}return x}}
+{const _sh=show;show=function(id){const r=_sh.apply(this,arguments);try{placeUndo()}catch(e){}return r}}
 /* tirage au sort : la case validée prend la couleur du joueur */
 new MutationObserver(()=>{const box=$('slots');box.querySelectorAll('.slot.lock').forEach(sl=>{if(sl.dataset.c)return;
   const nm=(box.classList.contains('nums')?sl.querySelector('b'):sl.querySelector('span')).textContent.trim(),c=pcol(nm);
