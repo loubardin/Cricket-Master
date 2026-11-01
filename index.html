@@ -2984,6 +2984,25 @@ html body #fUndo#fUndo svg{display:block;width:50%;height:50%;fill:none;stroke:#
 html body #setup#setup.b2 #go{background:transparent!important;justify-content:flex-start!important;position:relative}
 html body #setup#setup.b2 #go span{width:50%!important;min-width:0!important;margin:0!important;padding:0!important;position:relative;z-index:2;white-space:nowrap}
 html body #setup#setup.b2 #go em{position:absolute;right:0;top:0;bottom:0;width:50%;display:grid;place-items:center;font-style:normal;color:var(--ink);z-index:1;white-space:nowrap}
+
+/* ===== v88 ===== */
+/* menu : faux switch — bulle seule qui glisse, le texte d'arrivée passe en blanc gras */
+html body #setup#setup.b2 #go{overflow:visible}
+html body #setup#setup.b2 #go .gth{position:absolute;left:0;top:0;bottom:0;width:50%;border-radius:99px;background:var(--accent);box-shadow:0 0 0 calc(var(--u,1dvh)*1.2) var(--accent);z-index:1}
+html body #setup#setup.b2 #go .ga,html body #setup#setup.b2 #go em{position:absolute;top:0;bottom:0;width:50%;display:grid;place-items:center;font-style:normal;font-weight:inherit;white-space:nowrap;z-index:2;
+  transition:color .12s,scale .18s cubic-bezier(.3,1.6,.5,1)}
+html body #setup#setup.b2 #go .ga{left:0;color:#fff;scale:1.12}
+html body #setup#setup.b2 #go em{right:0;color:var(--ink);scale:.92}
+html body #setup#setup.b2 #go.on2 .ga{color:var(--ink);scale:.92}
+html body #setup#setup.b2 #go.on2 em{color:#fff;scale:1.12}
+html body #setup#setup.b2 #go:active span,html body #setup#setup.b2 #go span{display:none}
+/* Cricket à plusieurs : joueur en cours et colonne des nombres beaucoup plus étroits */
+#game#game.sk.p2.pn{--colw:20vw}
+#game#game.sk.p2.pn #grid .num.bull .lbl{font-size:.55em!important}
+html body #game#game.sk.p2.pn.curL #scores>.sc.act{grid-template-columns:var(--colw) calc(var(--midw)*.9) calc(var(--midw)*.1)!important}
+html body #game#game.sk.p2.pn #scores .sc.act>.pills .pill{font-size:calc(var(--r)*.22)!important;height:calc(var(--r)*.38)!important;padding:0 .2em!important}
+html body #game#game.sk.p2.pn #scores .sc:not(.act)>.pills{gap:calc(var(--r)*.05)!important}
+html body #game#game.sk.p2.pn #scores .sc:not(.act)>.pills .pill{min-width:calc(var(--r)*.36)!important;height:calc(var(--r)*.28)!important;font-size:calc(var(--r)*.17)!important;padding:0 .2em!important}
 </style>
 </head>
 <body>
@@ -5393,7 +5412,7 @@ applyBStyle();
 function flashRow(t){
   if(skp2()){   // 1 contre 1 : la bulle elle-même file jusqu'au bord du rail et rebondit (pas de double)
     const num=R.num[t],tk=num&&num.parentElement.querySelector('.rtrack');if(!tk)return;
-    try{inflateFx(num,getComputedStyle($('game')).getPropertyValue('--accent').trim(),null,true)}catch(e){}
+    if(t===25)try{inflateFx(num,getComputedStyle($('game')).getPropertyValue('--accent').trim(),null,true)}catch(e){}
     const NL=num.offsetLeft,NW=num.offsetWidth,TL=tk.offsetLeft,TW=tk.offsetWidth;
     const X=(NL+NW/2)>(TL+TW/2)?TL-NL:(TL+TW-NW)-NL;if(Math.abs(X)<4)return;
     const K=[[0,0,'cubic-bezier(.1,.75,.3,1)'],[.27,X,'cubic-bezier(.5,0,.85,.45)'],[.66,0,'cubic-bezier(.2,.7,.4,1)'],[.79,X*.13,'cubic-bezier(.5,0,.85,.45)'],[.89,0,'cubic-bezier(.2,.7,.4,1)'],[.95,X*.035,'ease-in'],[1,0,'linear']];
@@ -5538,7 +5557,7 @@ function setPc(sec,p){const c0=p&&pcol(p.members?p.members[p.mi||0]:p.name);cons
 {const _k=kRender;kRender=function(){const r=_k.apply(this,arguments);try{if(KG)setPc($('killer'),KG.players[KG.cur])}catch(e){}return r}}
 /* ===== Cricket à 3 joueurs et + : disposition du 1 contre 1 (joueur en cours | nombres | les autres, à faire glisser) ===== */
 function pnSet(){const g=$('game'),on=!!G&&G.players.length>2;g.classList.toggle('pn',on);
-  if(on){g.classList.add('p2');document.documentElement.style.setProperty('--midw','26vw')}}
+  if(on){g.classList.add('p2');document.documentElement.style.setProperty('--midw','15vw')}}
 {const _b=build;build=function(){const r=_b.apply(this,arguments);try{pnSet()}catch(e){}return r}}
 function pnOrder(){const g=$('game');if(!g.classList.contains('pn')||!R||!G)return;const n=G.players.length,cur=shownCur();
   const prev=R.pnCur,turned=prev!==undefined&&prev!==cur;
@@ -5550,7 +5569,7 @@ function pnOrder(){const g=$('game');if(!g.classList.contains('pn')||!R||!G)retu
   if(R.pnCur!==cur){R.pnCur=cur;const m=g.querySelector('main'),x=R.mk[15][cur].offsetLeft;m.scrollTo({left:Math.max(0,x),behavior:turned?'smooth':'auto'})}
 }
 function pnPlace(){const g=$('game');if(!g.classList.contains('pn')||!R||!G)return;
-  const W=innerWidth,colw=W*.24,mid=W*.26,n=G.players.length,cur=shownCur();
+  const W=innerWidth,colw=W*.20,mid=W*.15,n=G.players.length,cur=shownCur();
   R.sc.forEach((sc,i)=>{const L=i*colw+(i>cur?mid:0),w=i===cur?colw+mid:colw;
     sc.c.style.setProperty('left',L+'px','important');sc.c.style.setProperty('width',w+'px','important')});
   $('scores').style.setProperty('width',(colw*n+mid)+'px','important');
@@ -5583,14 +5602,15 @@ const bgOf=e=>{const c=getComputedStyle(e).backgroundColor;return c&&c!=='rgba(0
    sw.classList.toggle('two',two);sw.classList.remove('new');$('hResume').textContent=two?'Reprendre':'Reprendre la partie';$('hPlay').textContent=two?'Nouvelle partie':'Jouer';return r}}
 /* menu : bouton du bas = faux switch « Tout bon ? » → « Suivant → » */
 {const _sp=setupPage;setupPage=function(n,anim){const r=_sp.apply(this,arguments);
-   $('go').innerHTML='<span>Tout bon ?</span><em>'+(n===2?'C\'est parti':'Suivant')+' →</em>';return r}}
+   $('go').innerHTML='<i class="gth"></i><b class="ga">Tout bon ?</b><em>'+(n===2?'C\'est parti':'Suivant')+' →</em>';return r}}
 {let SKIP=false;const pass=t=>{SKIP=true;try{t.click()}finally{SKIP=false}};
  document.addEventListener('click',e=>{if(SKIP||!e.target.closest)return;const t=e.target.closest('#hPlay,#hResume,#drawGo,#go');if(!t)return;
    if(t.id==='drawGo'&&t.style.visibility==='hidden')return;
    e.stopPropagation();e.preventDefault();haptic();
-   if(t.id==='go'){const sp=t.querySelector('span');if(!sp){pass(t);return}const dx=t.clientWidth-sp.offsetWidth;
-     const an=sp.animate([{transform:'none'},{transform:'translateX('+dx+'px)'}],{duration:200,easing:'cubic-bezier(.3,1.35,.5,1)',fill:'forwards'});
-     an.onfinish=()=>{if(SU.classList.contains('p2'))inflateFx(sp,bgOf(sp),()=>{pass(t);an.cancel()});else{pass(t);an.cancel()}};return}
+   if(t.id==='go'){const th=t.querySelector('.gth');if(!th){pass(t);return}if(t.classList.contains('on2'))return;
+     t.classList.add('on2');const col=bgOf(th);
+     th.animate([{transform:'none'},{transform:'translateX('+(t.clientWidth-th.offsetWidth)+'px)'}],{duration:170,easing:'cubic-bezier(.55,0,.75,.6)',fill:'forwards'});
+     setTimeout(()=>inflateFx(th,col,()=>{pass(t);t.classList.remove('on2')}),110);return}
    const sw=t.closest('.hsw');
    if(sw&&sw.classList.contains('two')){const th=sw.querySelector('.hth');
      if(t.id==='hPlay'){sw.classList.add('new');setTimeout(()=>inflateFx(th,bgOf(th),()=>pass(t)),210)}else inflateFx(th,bgOf(th),()=>pass(t));return}
