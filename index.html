@@ -2883,6 +2883,44 @@ body.m3 :is(#x01,#killer) footer .fthumb{translate:200% 0!important;background:v
 #x01#x01 #xkeys button .lbl{color:var(--ink)!important;background:none!important}
 #x01#x01 #xkeys button:active .lbl,#x01#x01 #xkeys button.pressed .lbl{color:#fff!important}
 body:is(.m2,.m3) #x01#x01 #xplayers .xc.act .xn,body:is(.m2,.m3) #x01#x01 #xplayers .xc.act .xs,body:is(.m2,.m3) #killer#killer #kplayers .kc.act .kname{color:#111!important}
+
+/* ===== v85 ===== */
+/* en-tête du Cricket : un seul cadre (celui du rail), par-dessus la bulle, comme sur les lignes des nombres */
+html body #game#game.sk.p2 #scores>.pc.sc::after{display:none!important}
+html body #game#game.sk.p2 #scores::after{z-index:6!important}
+/* spew : la bulle ondule (l'animation est lancée en JS) */
+#game#game.sk.p2 footer.spewfx .fthumb{animation:none!important}
+/* bulle qui gonfle sur tout l'écran */
+.inflate{position:fixed;z-index:300;pointer-events:none}
+/* page Joueurs : contenu centré dans la hauteur */
+html body #setup#setup.b2.p2>.grp{margin-top:auto!important;margin-bottom:auto!important;flex:0 0 auto!important;height:auto!important;min-height:0!important}
+#setup.b2.p2>.gobar{margin-top:0!important}
+/* tirage au sort : cases à contour noir, validées par une bulle de la couleur du joueur */
+#draw#draw{background:var(--m-home)!important;padding-left:6vw!important;padding-right:6vw!important}
+#draw #slots{gap:14px!important;margin-bottom:4dvh!important;align-self:stretch}
+#draw .slot{background:transparent!important;border-radius:99px!important;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong)!important;padding:1.6dvh 6vw!important;transition:background-color .2s,box-shadow .2s}
+#draw .slot b{color:var(--mute)!important}
+#draw .slot span{color:var(--ink)!important}
+#draw .slot.spin span{color:var(--mute)!important}
+#draw .slot.lock{background:var(--pc,var(--accent))!important;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong),0 0 0 var(--bub-h) var(--pc,var(--accent))!important}
+#draw .slot.lock b,#draw .slot.lock span{color:#fff!important}
+#draw .slot.lock.lt b,#draw .slot.lock.lt span{color:#111!important}
+#draw #drawGo{position:relative;height:6.2dvh!important;border-radius:99px!important;background:transparent!important;box-shadow:none!important;color:#fff!important;
+  display:flex!important;align-items:center;justify-content:center;overflow:visible;padding:0!important;align-self:stretch}
+#draw #drawGo::after{content:"";position:absolute;inset:0;border:var(--bub-bw) solid var(--m-strong);border-radius:99px;pointer-events:none;z-index:3}
+#draw #drawGo span{height:100%;display:grid;place-items:center;padding:0 7vw;border-radius:99px;background:var(--accent);box-shadow:0 0 0 var(--bub-h) var(--accent);white-space:nowrap}
+#draw #drawGo:active span{transform:scale(.95)}
+#draw #drawAgain{background:transparent!important;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong)!important;border-radius:99px!important;color:var(--ink)!important;
+  height:6.2dvh!important;padding:0!important;align-self:stretch;margin-top:1dvh}
+/* Cricket à 3 joueurs et plus : mêmes proportions qu'à 2 ; joueur en cours à gauche, nombres, puis les autres (on fait glisser) */
+#game#game.pn main{overflow-x:auto!important;overflow-y:hidden!important;scrollbar-width:none;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+#game#game.pn main::-webkit-scrollbar{display:none}
+#game#game.pn #grid{width:max-content!important}
+#game#game.pn #grid>.row>.pc.mk{flex:0 0 var(--colw)!important;width:var(--colw)!important}
+#game#game.pn #grid>.row>.num{flex:0 0 var(--midw)!important;position:relative!important;left:auto!important}
+#game#game.pn #nshadow,#game#game.pn #scores>.mid{display:none!important}
+html body #game#game.pn #scores{flex:0 0 auto!important}
+html body #game#game.sk.p2.lt #grid .num:not(.dead) .lbl,html body #game#game.sk.p2.lt #scores .sc.act>.pts{color:#111!important}
 </style>
 </head>
 <body>
@@ -5377,13 +5415,13 @@ function skColors(){const g=$('game');
   if(!skp2()||!G||!R){g.style.removeProperty('--accent');g.style.removeProperty('--acc-rgb');g.classList.remove('dk');return}
   const c=G.mult===2?'#a9b1ba':G.mult===3?'#e8ab05':pcolI(shownCur()),rgb=[1,3,5].map(k=>parseInt(c.slice(k,k+2),16));
   g.style.setProperty('--accent',c);g.style.setProperty('--acc-rgb',rgb.join(','));
-  g.classList.toggle('dk',(.299*rgb[0]+.587*rgb[1]+.114*rgb[2])/255<.5);
+  g.classList.toggle('dk',(.299*rgb[0]+.587*rgb[1]+.114*rgb[2])/255<.5);g.classList.toggle('lt',(.299*rgb[0]+.587*rgb[1]+.114*rgb[2])/255>.62);
   TARGETS.forEach(t=>G.players.forEach((p,i)=>{const m=R.mk[t]&&R.mk[t][i];if(m)m.style.setProperty('--mc',pcolI(i))}));
 }
 {const _r=render;render=function(){const x=_r.apply(this,arguments);try{skColors()}catch(e){}return x}}
 function placeHead(){
   const g=$('game');if(!g.classList.contains('sk')||!R||!G)return;
-  if(skp2()){R.sc.forEach(sc=>[sc.nm,sc.pts,sc.m,sc.pills].forEach(e=>['left','right','width'].forEach(k=>e.style.removeProperty(k))));layoutSk();fitSk();drawBars();return}
+  if(skp2()){R.sc.forEach(sc=>[sc.nm,sc.pts,sc.m,sc.pills].forEach(e=>['left','right','width'].forEach(k=>e.style.removeProperty(k))));layoutSk();pnPlace();fitSk();drawBars();return}
   const row=R.num[15]&&R.num[15].parentElement;if(row)g.style.setProperty('--rowh',row.offsetHeight+'px');
   if(!g.classList.contains('p2'))return;
   const nr=R.num[15].getBoundingClientRect(),set=(e,k,v)=>e.style.setProperty(k,v,'important');
@@ -5433,6 +5471,56 @@ function setPc(sec,p){const c0=p&&pcol(p.members?p.members[p.mi||0]:p.name);cons
   sec.style.setProperty('--pc',c);if(/^#[0-9a-f]{6}$/i.test(c)){const v=[1,3,5].map(k=>parseInt(c.slice(k,k+2),16));sec.classList.toggle('dk',(.299*v[0]+.587*v[1]+.114*v[2])/255<.5)}}
 {const _x=xRender;xRender=function(){const r=_x.apply(this,arguments);try{if(XG)setPc($('x01'),XG.players[XG.cur])}catch(e){}return r}}
 {const _k=kRender;kRender=function(){const r=_k.apply(this,arguments);try{if(KG)setPc($('killer'),KG.players[KG.cur])}catch(e){}return r}}
+/* ===== Cricket à 3 joueurs et + : disposition du 1 contre 1 (joueur en cours | nombres | les autres, à faire glisser) ===== */
+function pnSet(){const g=$('game'),on=!!G&&G.players.length>2;g.classList.toggle('pn',on);
+  if(on){g.classList.add('p2');document.documentElement.style.setProperty('--midw','33.333vw')}}
+{const _b=build;build=function(){const r=_b.apply(this,arguments);try{pnSet()}catch(e){}return r}}
+function pnOrder(){const g=$('game');if(!g.classList.contains('pn')||!R||!G)return;const n=G.players.length,cur=shownCur();
+  g.classList.add('curL');g.classList.remove('curR','rot');
+  G.players.forEach((p,i)=>{const o=i===cur?0:1+((i-cur+n)%n);R.sc[i].c.dataset.o=o;R.sc[i].c.style.order=o;TARGETS.forEach(t=>{R.mk[t][i].style.order=o})});
+  TARGETS.forEach(t=>{R.num[t].style.order=1});
+  if(R.pnCur!==cur){R.pnCur=cur;const m=g.querySelector('main');if(m.scrollLeft)m.scrollTo({left:0,behavior:'smooth'})}
+}
+function pnPlace(){const g=$('game');if(!g.classList.contains('pn')||!R||!G)return;
+  const W=innerWidth,gp=W*.035,mid=W/3,colw=(W-2*gp-mid)/2,n=G.players.length;
+  R.sc.forEach(sc=>{const o=+sc.c.dataset.o||0,L=o===0?0:colw+mid+(o-2)*colw,w=o===0?colw+mid:colw;
+    sc.c.style.setProperty('left',L+'px','important');sc.c.style.setProperty('width',w+'px','important')});
+  $('scores').style.setProperty('width',(colw*n+mid)+'px','important');
+}
+{const _r=render;render=function(){const x=_r.apply(this,arguments);try{pnOrder()}catch(e){}return x}}
+
+/* spew : la bulle du switch ondule comme une vague */
+document.addEventListener('click',e=>{if(!e.target.closest||!e.target.closest('#bS'))return;
+  const f=document.querySelector('footer .fthumb');if(!f||!f.offsetWidth)return;
+  const K=[],N=14;for(let k=0;k<=N;k++){const a=k/N,amp=(1-a)*1;const w=(ph)=>Math.round(50+Math.sin(a*Math.PI*6+ph)*30*amp);
+    K.push({borderRadius:`${w(0)}% ${w(1.6)}% ${w(3.2)}% ${w(4.8)}% / ${w(.8)}% ${w(2.4)}% ${w(4)}% ${w(5.6)}%`,scale:`${1+Math.sin(a*Math.PI*5)*.12*amp} ${1-Math.sin(a*Math.PI*5)*.12*amp}`,
+      rotate:`${Math.sin(a*Math.PI*4)*4*amp}deg`})}
+  K[N]={borderRadius:'99px',scale:'1 1',rotate:'0deg'};
+  f.getAnimations().forEach(x=>{if(x.id==='wave')x.cancel()});const an=f.animate(K,{duration:1100,easing:'linear'});an.id='wave'},true);
+
+/* toucher une bulle : elle gonfle sur tout l'écran, puis on passe à la suite */
+{let SKIP=false;
+ const colorOf=t=>{if(t.classList.contains('sc')){const g=$('game');return getComputedStyle(g).getPropertyValue('--accent').trim()||'#ff5a1f'}
+   const sp=t.querySelector('span');return getComputedStyle(sp&&t.id==='go'||t.id==='drawGo'?sp:t).backgroundColor};
+ function inflate(t,cb){const r=t.getBoundingClientRect(),src=t.id==='go'||t.id==='drawGo'?t.querySelector('span'):t,rs=src.getBoundingClientRect(),br=getComputedStyle(src).borderRadius;
+   const o=document.createElement('div');o.className='inflate';o.style.background=colorOf(t);document.body.append(o);
+   const W=innerWidth,H=innerHeight,from={left:rs.left+'px',top:rs.top+'px',width:rs.width+'px',height:rs.height+'px',borderRadius:br},
+     to={left:'-40px',top:'-40px',width:(W+80)+'px',height:(H+80)+'px',borderRadius:'80px'};
+   Object.assign(o.style,from);haptic();
+   o.animate([from,to],{duration:420,easing:'cubic-bezier(.55,0,.25,1)',fill:'forwards'}).onfinish=()=>{cb();
+     o.animate([{opacity:1},{opacity:0}],{duration:280,easing:'ease-out',fill:'forwards'}).onfinish=()=>o.remove()}}
+ document.addEventListener('click',e=>{if(SKIP||!e.target.closest)return;
+   let t=e.target.closest('#hPlay,#hResume,#drawGo,#setup.p2 #go,#game.sk.p2 #scores>.sc.act');if(!t||e.target.closest('.pill.undo'))return;
+   if(t.id==='drawGo'&&$('drawGo').style.visibility==='hidden')return;
+   e.stopPropagation();e.preventDefault();inflate(t,()=>{SKIP=true;try{t.click()}finally{SKIP=false}})},true);
+}
+/* tirage au sort : la case validée prend la couleur du joueur */
+new MutationObserver(()=>{const box=$('slots');box.querySelectorAll('.slot.lock').forEach(sl=>{if(sl.dataset.c)return;
+  const nm=(box.classList.contains('nums')?sl.querySelector('b'):sl.querySelector('span')).textContent.trim(),c=pcol(nm);
+  const col=/^#[0-9a-f]{6}$/i.test(c||'')?c:getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();sl.style.setProperty('--pc',col);sl.dataset.c=1;
+  if(/^#[0-9a-f]{6}$/i.test(col)){const v=[1,3,5].map(k=>parseInt(col.slice(k,k+2),16));sl.classList.toggle('lt',(.299*v[0]+.587*v[1]+.114*v[2])/255>.62)}})})
+  .observe($('slots'),{subtree:true,attributes:true,attributeFilter:['class'],childList:true});
+$('drawGo').innerHTML='<span>'+$('drawGo').innerHTML+'</span>';
 /* démarrage : toujours l'accueil (« Reprendre la partie » si une partie est en cours) */
 goHome();
 
