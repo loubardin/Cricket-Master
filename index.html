@@ -3113,6 +3113,50 @@ html body :is(#win,#hist,#roster,#info,#knext,#icet) .big.acc{border-radius:99px
 html body :is(#win,#hist,#roster,#info,#knext,#icet) .big:is(.dark,.light){border-radius:99px!important;background:transparent!important;color:var(--ink)!important;border:0!important;
   box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong)!important;font-family:"Fun",sans-serif!important;font-weight:400!important}
 html body :is(#hist,#roster) {background:var(--m-home)}
+
+/* ===== v92 : homogénéisation — Victoire, Historique, Joueurs enregistrés, Statistiques =====
+   Une unité (--uu), une police de titre/switch (Fun), un trait fin noir, des bulles avec halo. */
+:root{--uu:min(1dvh,1.7vw)}
+:is(#win,#hist,#roster,#info,#ask,#draw,#knext){font-family:"Fun",sans-serif!important}
+:is(#win,#hist,#roster,#info,#ask,#draw,#knext) *{font-family:inherit!important}
+html body :is(#hist,#roster,#info,#win,#knext){background:var(--m-home)!important}
+/* titres et boutons ronds */
+:is(#hist,#roster,#info) .ovh h2{font-weight:400!important;font-size:calc(var(--uu)*4.2)!important;letter-spacing:.01em;color:var(--ink)}
+html body :is(#hist,#roster,#info) .circ{background:transparent!important;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong)!important;color:var(--ink)!important}
+/* tous les gros boutons : même hauteur, même typo */
+html body :is(#win,#hist,#roster,#info,#knext) .big{height:calc(var(--uu)*7)!important;min-height:0!important;padding:0 4vw!important;font-size:calc(var(--uu)*2.7)!important;font-weight:400!important;
+  display:grid!important;place-items:center;margin:0 0 calc(var(--uu)*1.8)!important;transition:transform .12s}
+html body :is(#win,#hist,#roster,#info,#knext) .big:active{transform:scale(.96)}
+/* victoire */
+#win#win .k{font-weight:400!important;font-size:calc(var(--uu)*2.6)!important;letter-spacing:.3em;color:var(--mute)!important}
+#win#win .w{font-weight:400!important;color:var(--wc,var(--ink))!important;font-size:calc(var(--uu)*11)!important;line-height:1;margin:calc(var(--uu)*1) 0 calc(var(--uu)*1.6)}
+#win#win .d{font-weight:400!important;font-size:calc(var(--uu)*2.4)!important;color:var(--ink);margin-bottom:calc(var(--uu)*4)!important}
+html body #win#win .big.acc{background:var(--wc,var(--accent))!important;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong),0 0 0 var(--bub-h) var(--wc,var(--accent))!important}
+/* historique : onglets en switchs, cartes en contour */
+html body #hist .seg.htabs{background:transparent!important;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong)!important;border:0!important;border-radius:99px!important;padding:0!important;
+  height:calc(var(--uu)*5.4);margin-bottom:calc(var(--uu)*1.8)!important;overflow:visible}
+html body #hist .seg.htabs button{font-weight:400!important;font-size:calc(var(--uu)*2.3)!important;color:var(--ink)!important;background:transparent!important;border-radius:99px!important;
+  box-shadow:none!important;height:100%;transition:color .15s,scale .2s cubic-bezier(.3,1.6,.5,1)}
+html body #hist .seg.htabs button.sel{background:var(--accent)!important;color:#fff!important;box-shadow:0 0 0 calc(var(--bub-h)*.8) var(--accent)!important;scale:1.04}
+html body #hist .hcard{background:transparent!important;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong)!important;border-radius:22px!important;border:0!important}
+html body #hist .hcard small{font-family:"UI",sans-serif!important;color:var(--mute)}
+html body #hist .hwin{font-weight:400!important;font-size:calc(var(--uu)*2.8)!important}
+html body #hist .hps b{font-weight:400}
+html body #hist .hbk{gap:3vw}
+html body #hist .hbk .big{font-size:calc(var(--uu)*2.2)!important}
+/* joueurs enregistrés : rangées en rails */
+html body #roster .note{font-family:"UI",sans-serif!important;color:var(--mute)!important}
+html body #roster .rrow{background:transparent!important;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong)!important;border-radius:99px!important;border:0!important;margin-bottom:calc(var(--uu)*1.4)!important;
+  height:calc(var(--uu)*6.4);padding:0 calc(var(--uu)*1.4)!important}
+html body #roster .rrow input{font-weight:400!important;font-size:calc(var(--uu)*3)!important;background:transparent!important}
+html body #roster .rdot{box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong)!important}
+/* statistiques : lignes un peu plus aérées */
+#info #stats{margin-top:calc(var(--uu)*1.5)}
+html body #hist .seg.htabs{display:flex!important;align-items:stretch}
+html body #hist .seg.htabs button{flex:1 1 0!important;padding:0!important;margin:0!important;min-width:0!important;display:grid!important;place-items:center;line-height:1!important;height:auto!important}
+html body #hist .seg.htabs .thumb{display:none!important}
+html body #hist .seg.htabs button,html body #hist .seg.htabs button.sel{height:calc(var(--uu)*5.4)!important;min-height:0!important;max-height:calc(var(--uu)*5.4)!important;padding-top:0!important;padding-bottom:0!important;transform:none!important}
+html body #hist .seg.htabs{height:calc(var(--uu)*5.4)!important;min-height:0!important}
 </style>
 </head>
 <body>
@@ -5691,6 +5735,10 @@ function decoStats(){const t=$('stats');if(!t)return;const rows=[...t.rows];if(!
 {const _a=renderStats;renderStats=function(){const r=_a.apply(this,arguments);try{decoStats()}catch(e){}return r}}
 {const _b=kStats;kStats=function(){const r=_b.apply(this,arguments);try{decoStats()}catch(e){}return r}}
 {const _c=xStats;xStats=function(){const r=_c.apply(this,arguments);try{decoStats()}catch(e){}return r}}
+/* victoire : nom et bouton à la couleur du gagnant */
+new MutationObserver(()=>{const w=$('win');if(!w.classList.contains('on'))return;const nm=$('wName').textContent.trim(),n0=nm.split(' & ')[0];let c=pcol(n0);
+  if(!/^#[0-9a-f]{6}$/i.test(c||'')){const pl=S.last==='x01'?XG:S.last==='killer'?KG:G;const i=pl?pl.players.findIndex(p=>p.name===nm):0;c=PFB[Math.max(0,i)%PFB.length]}
+  w.style.setProperty('--wc',c)}).observe($('win'),{attributes:true,attributeFilter:['class']});
 /* balle : chaque appui la propulse vers le bout du rail, elle rebondit contre le bord puis retombe à sa place */
 const BALLS=new Map();
 function kickBall(num,X){const row=num.parentElement;let B=BALLS.get(num);
