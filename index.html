@@ -3546,6 +3546,19 @@ html body.m2 :is(#game,#x01,#killer) footer .fthumb,html body.m2 #game#game.sk.p
 html body.m3 :is(#game,#x01,#killer) footer .fthumb,html body.m3 #game#game.sk.p2 footer .fthumb{box-shadow:0 0 0 var(--h,5px) #f6d97a!important}
 /* Cricket : noms plus haut dans la case */
 html body #game#game#game.sk.p2 #scores>.pc.sc{grid-template-rows:.4fr auto auto auto 1fr!important}
+
+/* ===== v115 ===== */
+/* bouton du bas : au double / triple, le halo est fait de la même matière que la bulle (plus de contour d'une autre couleur) */
+html body.m2 :is(#game,#x01,#killer) footer .fthumb,html body.m3 :is(#game,#x01,#killer) footer .fthumb,
+html body.m2 #game#game.sk.p2 footer .fthumb,html body.m3 #game#game.sk.p2 footer .fthumb{box-shadow:none!important;box-sizing:content-box!important;
+  border:var(--h,5px) solid transparent!important;background-origin:border-box!important;background-clip:border-box!important;
+  top:calc(var(--h,5px)*-1)!important;bottom:calc(var(--h,5px)*-1)!important;margin-left:calc(var(--h,5px)*-1)!important}
+/* Cricket à plusieurs : le bas du tableau n'est plus coupé (la zone qui défile laisse la place au halo) */
+html body #game#game.sk.p2.pn main{padding-bottom:calc(var(--h) + 3px)!important}
+html body #game#game.sk.p2.pn footer{margin-top:calc(var(--g) - var(--h) - 3px)!important}
+/* Killer : numéro (plus grand) + marque centrés entre les cœurs et l'historique */
+html body #killer#killer#killer #kplayers .kc .kno{font-size:min(36vw,15dvh,42cqh,56cqw)!important}
+html body #killer#killer#killer #kplayers .kc .kR>.kstat{transform:none!important;margin-top:calc(min(24vw,11dvh,30cqh)*-.45)!important}
 </style>
 </head>
 <body>
@@ -4760,7 +4773,7 @@ function renderSetup(){
     slot.style.setProperty('--pc',pcol(S.names[i])||'#cfc9be');
     {const bm=botMetal(S.names[i]);slot.classList.toggle('bot',!!bm);if(bm){slot.style.setProperty('--m1',bm[0]);slot.style.setProperty('--m2',bm[1])}}
     const del=el('button','pdel','✕');del.setAttribute('aria-label','Retirer');
-    del.addEventListener('click',()=>{{const t=normT();let k=0,j=0;while(j<t.length&&k+t[j]<=i){k+=t[j];j++}if(j<t.length)t[j]--;S.tsz=t.filter(x=>x>0)}{const nm=S.names[i];if(nm&&!isBot(nm)&&!/^J\d$/.test(nm)&&!ROSTER.some(r=>r.name===nm)){ROSTER.push({name:nm,color:pcol(nm)||PCOLS[ROSTER.length%PCOLS.length]});store.set(K_R,ROSTER)}}S.names.splice(i,1);S.n=S.names.length;store.set(K_S,S);haptic();SFX.back();renderSetup();if($('ppick').classList.contains('on')){openPick();$('ppick').classList.remove('pop')}});
+    del.addEventListener('click',()=>{{const t=normT();let k=0,j=0;while(j<t.length&&k+t[j]<=i){k+=t[j];j++}if(j<t.length)t[j]--;S.tsz=t.filter(x=>x>0)}{const nm=S.names[i];if(nm&&!isBot(nm)&&!/^J\d$/.test(nm)&&!ROSTER.some(r=>r.name===nm)){ROSTER.push({name:nm,color:pcol(nm)||PCOLS[ROSTER.length%PCOLS.length]});store.set(K_R,ROSTER)}}S.names.splice(i,1);S.n=S.names.length;store.set(K_S,S);haptic();SFX.back();renderSetup();if($('ppick').classList.contains('on')){openPick(1);$('ppick').classList.remove('pop')}});
     slot.append(el('b','',String(i+1)),cdot,nm,del);(teamsOn&&TB?TB:box).append(slot);
   }
   if(S.n<maxP()){const add=el('button','padd','+');add.setAttribute('aria-label','Ajouter un joueur');add.addEventListener('click',openPick);box.append(add)}
@@ -4779,8 +4792,8 @@ function groupsOf(names){const t=normT(),g=[];let k=0;for(const z of t){g.push(n
 const teamsOK=()=>S.n>=3&&normT().length>=2;   // équipes de 2 ; s'il y a un nombre impair, la dernière équipe est un joueur seul
 if(S.teams>1)S.teams=1;
 /* « + » : choisir un joueur enregistré (ou en créer un) */
-function openPick(){
-  haptic();SFX.ui();
+function openPick(silent){
+  if(!silent){haptic();SFX.ui()}
   const box=$('pList');box.innerHTML='';
   const used=new Set(S.names);
   ROSTER.filter(r=>r.name&&!used.has(r.name)).forEach(r=>{
@@ -4804,7 +4817,7 @@ function addPlayer(n){
   if(S.names.includes(n))return;
   if(!isBot(n)&&!ROSTER.some(r=>r.name===n)){ROSTER.push({name:n,color:PCOLS[ROSTER.length%PCOLS.length]});store.set(K_R,ROSTER)}
   S.names.push(n);S.n=S.names.length;store.set(K_S,S);SFX.ui();renderSetup();
-  if(S.n<maxP())requestAnimationFrame(()=>{openPick();$('ppick').classList.remove('pop')});else $('ppick').classList.remove('on');   // la fenêtre reste ouverte pour enchaîner
+  if(S.n<maxP())requestAnimationFrame(()=>{openPick(1);$('ppick').classList.remove('pop')});else $('ppick').classList.remove('on');   // la fenêtre reste ouverte pour enchaîner
   // équipes : on continue tant qu'il manque des joueurs
 }
 /* la fenêtre ne se ferme qu'avec sa croix */
@@ -6126,7 +6139,7 @@ function placeHead(){
 /* appui long sur un joueur (case du menu ou bulle de « Ajouter un joueur ») : petite fenêtre pour choisir sa couleur */
 {let LP=null,LPdone=0;
  const nameOf=e=>{const s=e.closest('.nslot:not(.ph)');if(s){const n=s.querySelector('.pname');return n?n.textContent.trim():''}const c=e.closest('.rchip');return c?c.textContent.trim():''};
- const refresh=()=>{if(typeof renderSetup==='function'&&$('setup').classList.contains('on'))renderSetup();if($('ppick').classList.contains('on')){openPick();$('ppick').classList.remove('pop')}};
+ const refresh=()=>{if(typeof renderSetup==='function'&&$('setup').classList.contains('on'))renderSetup();if($('ppick').classList.contains('on')){openPick(1);$('ppick').classList.remove('pop')}};
  function renamePlayer(old,nw){nw=(nw||'').trim().toUpperCase().slice(0,8);if(!nw||nw===old)return old;
    if(isBot(nw)||ROSTER.some(r=>r.name===nw)||S.names.includes(nw)){toast('NOM DÉJÀ PRIS','',true);SFX.err();return old}
    const r=ROSTER.find(q=>q.name===old);if(r)r.name=nw;else ROSTER.push({name:nw,color:PCOLS[0]});store.set(K_R,ROSTER);
