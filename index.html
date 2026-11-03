@@ -3502,6 +3502,19 @@ html body #killer#killer#killer #kplayers .kc .klives .h.gold.on{color:#e3b12a!i
 html body #game#game.sk.p2 #scores .sc>.nm .nmw{display:block;font-weight:inherit}
 html body #game#game.sk.p2 #scores .sc>.nm .nmm{display:block;font-size:.58em;opacity:.6;margin-top:.18em;letter-spacing:.04em}
 html body #game#game.sk.p2 #scores .sc>.nm:has(.nmm){text-box:none!important;line-height:1!important}
+
+/* ===== v112 ===== */
+/* coupe-gorge : l'effet glacé ne touche que les textes de la case joueur, pas la case */
+html body #game #scores .sc.ice::before{display:none!important}
+html body #game#game#game.sk.p2 #scores .sc>.nm,html body #game#game#game.sk.p2 #scores .sc>.pts,html body #game#game#game.sk.p2 #scores .sc>.mpr{transition:color .25s,text-shadow .25s}
+html body #game#game#game.sk.p2 #scores .sc.ice>.nm,html body #game#game#game.sk.p2 #scores .sc.ice>.pts,html body #game#game#game.sk.p2 #scores .sc.ice>.mpr{
+  color:#8fd3f0!important;text-shadow:0 0 6px rgba(190,235,252,.95),0 0 1px #3a9fd0!important}
+/* Cricket en équipe : coéquipier en tout petit au-dessus, celui qui lance en dessous ; hauteur fixe */
+html body #game#game.sk.p2 #scores .sc>.nm .nmm{display:block;font-size:.42em!important;opacity:.55;margin:0 0 .25em!important;letter-spacing:.05em;line-height:1}
+html body #game#game.sk.p2 #scores .sc>.nm .nmw{display:block;line-height:1}
+/* nom / score / MPR aux mêmes hauteurs, joueur en cours ou non : les fléchettes du joueur en attente sortent du flux */
+html body #game#game#game.sk.p2 #scores .sc:not(.act)>.pills{position:absolute!important;left:0!important;right:0!important;bottom:calc(var(--r)*-.06)!important;top:auto!important;margin:0!important;transform:none!important;justify-content:center!important}
+html body #game#game#game.sk.p2 #scores .sc:not(.act){grid-template-areas:"." "nm" "pts" "mpr" "."!important}
 </style>
 </head>
 <body>
@@ -4557,7 +4570,7 @@ function render(){
     const badge=i===lead?'hat':i===last?'snail':'';
     const who=thrower(p,i),mate=p.members?p.members.find(x=>x!==who)||'':'',key=who+'|'+mate;
     if(s.badge!==badge||s.nmTxt!==key){
-      s.nm.innerHTML=(mate?'<b class="nmw">'+esc(who)+' &amp;</b><small class="nmm">'+esc(mate)+'</small>':esc(who))+(badge==='hat'?CROWN:'')+(badge==='snail'?SNAIL:'')
+      s.nm.innerHTML=(mate?'<small class="nmm">'+esc(mate)+'</small><b class="nmw">'+esc(who)+'</b>':esc(who))+(badge==='hat'?CROWN:'')+(badge==='snail'?SNAIL:'')
       if(badge&&s.badge!==undefined&&s.badge!==badge){const e=s.nm.querySelector('.'+badge);if(e)e.classList.add('pop')}
       s.badge=badge;s.nmTxt=key;
     }
@@ -5964,7 +5977,6 @@ applyBStyle();
 function flashRow(t){
   if(skp2()){   // 1 contre 1 : la bulle elle-même file jusqu'au bord du rail et rebondit (pas de double)
     const num=R.num[t],tk=num&&num.parentElement.querySelector('.rtrack');if(!tk||dead(t)||!tk.offsetWidth)return;
-    if(t===25)try{bullFx(num)}catch(e){}
     const NL=num.offsetLeft,NW=num.offsetWidth,TL=tk.offsetLeft,TW=tk.offsetWidth;
     const X=(NL+NW/2)>(TL+TW/2)?TL-NL:(TL+TW-NW)-NL;if(Math.abs(X)<4)return;
     kickBall(num,X);return}
@@ -6015,7 +6027,10 @@ function fitSk(){
   const fit=(key,base)=>{const els=R.sc.map(s=>s[key]);let fs=base;
     els.forEach(e=>{e.style.setProperty('font-size',base+'px','important');const w=e.offsetWidth;if(w>avail)fs=Math.min(fs,base*avail/w)});
     els.forEach(e=>e.style.setProperty('font-size',fs.toFixed(2)+'px','important'))};
-  fit('nm',r*.37);fit('pts',r*1.08);
+  if(G.teams&&G.players.some(p=>p.members)){const all=G.players.flatMap(p=>p.members||[p.name]),cs=getComputedStyle(R.sc[0].nm);let fs=r*.37;
+    all.forEach(nm=>{const w=gmet(cs,nm,r*.37).w;if(w>avail)fs=Math.min(fs,r*.37*avail/w)});R.sc.forEach(s=>s.nm.style.setProperty('font-size',fs.toFixed(2)+'px','important'))}
+  else fit('nm',r*.37);
+  fit('pts',r*1.08);
 }
 {const _fh=fitHead;fitHead=function(){if(skp2())return fitSk();return _fh.apply(this,arguments)}}
 {const _eq=eqNames;eqNames=function(){if(skp2())return;return _eq.apply(this,arguments)}}
