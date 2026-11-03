@@ -3575,6 +3575,20 @@ html body #killer#killer#killer #kplayers .kc .kL{padding:0!important;gap:0!impo
 html body #killer#killer#killer #kplayers .kc .kno{margin-top:calc(var(--uu)*.2)!important}
 html body #killer#killer#killer #kplayers .kc .kR{margin:0!important;row-gap:0!important}
 html body #killer#killer#killer #kplayers .kc .kR>.kx{position:relative!important;bottom:auto!important;margin:calc(var(--uu)*-1.2) 0 0!important}
+
+/* ===== v117 ===== */
+#setup.g-killer .ordopt{display:none!important}
+/* bulle d'info au centre, à la couleur du joueur */
+.cbub{position:fixed;left:50%;top:44%;z-index:120;translate:-50% -50%;pointer-events:none;background:var(--c);color:#fff;border-radius:99px;padding:14px 26px;text-align:center;
+  box-shadow:inset 0 0 0 1.5px #111,0 0 0 6px var(--c),0 12px 30px rgba(0,0,0,.25);animation:cbub 1.9s cubic-bezier(.3,1.5,.5,1) forwards;max-width:86vw}
+.cbub b{display:block;font:400 min(6.4vw,3.2dvh)/1.05 "Fun",sans-serif;letter-spacing:.02em;white-space:nowrap}
+.cbub small{display:block;font:600 min(3.6vw,1.8dvh)/1.2 "UI",sans-serif;margin-top:4px;opacity:.92}
+.cbub i{font-style:normal}
+@keyframes cbub{0%{scale:.4;opacity:0}12%{scale:1.06;opacity:1}20%{scale:1}85%{scale:1;opacity:1}100%{scale:.9;opacity:0}}
+/* Cricket en équipe : le lanceur reste à la place du nom en solo, le coéquipier remonte au-dessus */
+html body #game#game.sk.p2 #scores .sc>.nm:has(.nmm){text-box:trim-both cap alphabetic!important}
+html body #game#game.sk.p2 #scores .sc>.nm .nmm{position:absolute!important;left:50%;bottom:calc(100% + .3em);translate:-50% 0;white-space:nowrap;margin:0!important;font-size:.42em!important}
+html body #game#game.sk.p2 #scores .sc>.nm:has(.nmm)>.hat{bottom:calc(100% + var(--r)*.12 + .9em)!important}
 </style>
 </head>
 <body>
@@ -5273,9 +5287,10 @@ function showKiller(){noFear();mountFooter('killer');show('killer');kRender()}
 $('kBack').addEventListener('click',()=>{haptic();goHome()});
 
 /* attribution des numéros */
+let KKEEP=0;
 function killerAssign(names){
-  if(S.knum==='throw')askNums(names,0,[]);
-  else runNumDraw(names);
+  if(S.knum==='throw'){KKEEP=1;askNums(shuffle(names),0,[])}
+  else{DRAWCB=o=>{KKEEP=1;runNumDraw(o)};runDraw(names)}
 }
 let NUMCB=null;   // que faire une fois les numéros choisis (null = nouvelle partie)
 const numsDone=(names,nums)=>{const cb=NUMCB;NUMCB=null;cb?cb(nums):startKiller(names,nums)};
@@ -5314,7 +5329,7 @@ function newKiller(names,nums,start,lives,wins,manche,bonusTo){
 }
 function startKiller(names,nums,start=0){
   S.last='killer';store.set(K_S,S);
-  const o=names.map((_,i)=>i).sort((a,b)=>nums[b]-nums[a]);   // le plus grand numéro commence
+  const o=KKEEP?names.map((_,i)=>i):names.map((_,i)=>i).sort((a,b)=>nums[b]-nums[a]);KKEEP=0;   // ordre tiré au sort (sinon le plus grand numéro commence)
   KG=newKiller(o.map(i=>names[i]),o.map(i=>nums[i]),0,S.klives,null,1,-1);
   KH=[];kSave();showKiller();SFX.start();
 }
@@ -6088,9 +6103,9 @@ function fitSk(){
   const fit=(key,base)=>{const els=R.sc.map(s=>s[key]);let fs=base;
     els.forEach(e=>{e.style.setProperty('font-size',base+'px','important');const w=e.offsetWidth;if(w>avail)fs=Math.min(fs,base*avail/w)});
     els.forEach(e=>e.style.setProperty('font-size',fs.toFixed(2)+'px','important'))};
-  if(G.teams&&G.players.some(p=>p.members)){const all=G.players.flatMap(p=>p.members||[p.name]),cs=getComputedStyle(R.sc[0].nm),B=r*.62;let fs=B;
+  if(G.teams&&G.players.some(p=>p.members)){const all=G.players.flatMap(p=>p.members||[p.name]),cs=getComputedStyle(R.sc[0].nm),B=r*(Math.max(...G.players.flatMap(p=>(p.members||[p.name]).map(x=>String(x).length)))<=4?.38:.47);let fs=B;
     all.forEach(nm=>{const w=gmet(cs,nm,B).w;if(w>avail)fs=Math.min(fs,B*avail/w)});R.sc.forEach(s=>s.nm.style.setProperty('font-size',fs.toFixed(2)+'px','important'))}
-  else fit('nm',r*.47);
+  else{const mx=Math.max(...G.players.map(p=>String(p.name).length));fit('nm',r*(mx<=4?.38:.47))}
   fit('pts',r*1.08);
 }
 {const _fh=fitHead;fitHead=function(){if(skp2())return fitSk();return _fh.apply(this,arguments)}}
@@ -6257,7 +6272,7 @@ document.querySelector('#setup .xcus').addEventListener('click',e=>{e.stopPropag
 /* Killer : son de chargeur (devenir Killer, ou tour d'un Killer) ; un spew = clic à vide */
 function gunReload(){if(!S.sound||!AC)return;[0,.17].forEach((t,i)=>{noise(.035,1,1600+i*900,t);tone(i?1400:950,.03,'square',.32,t);tone(i?140:95,.07,'sine',.6,t,50);noise(.012,.8,6000,t+.012)})}
 function dryClick(){if(!S.sound||!AC)return;noise(.018,.5,4200);tone(2300,.02,'square',.06);noise(.012,.35,5200,.06);tone(3100,.015,'square',.04,.06)}
-{const _sp=SFX.spew;SFX.spew=function(){if($('killer').classList.contains('on'))return dryClick();return _sp.apply(this,arguments)}}
+
 {let kz=null,kc=null;const _k=kRender;kRender=function(){const x=_k.apply(this,arguments);try{if(KG&&KG.winner===null){
    const z=KG.players.map(p=>!!p.killer),c=KHOLD?KHOLD.who:KG.cur,id=KG.id;
    if(kz&&kz.id===id&&z.some((v,i)=>v&&!kz.z[i]))setTimeout(gunReload,350);
@@ -6288,7 +6303,11 @@ if(![301,501,701].includes(S.xstart)){S.xstart=501}delete S.xcustom;
 /* plus aucun bandeau de texte pendant le jeu : on garde les effets (lueur, braises, tirs, confettis, sons) */
 {const _m=mkToast;mkToast=function(cls,html,ms){if(cls==='mini')return _m.apply(this,arguments);
    const e=_m.apply(this,arguments);e.style.visibility='hidden';return e}}
-{const _t=toast;toast=function(txt,sub,mini){if(!mini)return;return _t.apply(this,arguments)}}
+{const _t=toast;toast=function(txt,sub,mini){if(mini)return _t.apply(this,arguments);
+   if(!/SYNDICAL|DERNIÈRE|DROIT DE RÉPONSE|RÉPONDU|DÉFENSE/.test(String(txt)))return;
+   const sec=document.querySelector('#game.on,#x01.on,#killer.on');const col=sec?(getComputedStyle(sec).getPropertyValue(sec.id==='game'?'--accent':'--pc').trim()||'#ff5a1f'):'#ff5a1f';
+   document.querySelectorAll('.cbub').forEach(x=>x.remove());
+   const b=el('div','cbub','<b>'+String(txt).replace(/[👏👁️🛡🤝]/gu,'').trim()+'</b>'+(sub?'<small>'+sub+'</small>':''));b.style.setProperty('--c',col);document.body.append(b);setTimeout(()=>b.remove(),1900)}}
 /* balle : chaque appui la propulse vers le bout du rail, elle rebondit contre le bord puis retombe à sa place */
 const BALLS=new Map();
 function kickBall(num,X){const row=num.parentElement;let B=BALLS.get(num);
