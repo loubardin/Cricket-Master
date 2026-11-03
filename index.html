@@ -3238,18 +3238,6 @@ html body #setup.b2 .kpair>.opt.kl{margin:0!important}
 html body #setup.b2 .kpair{margin:0 0 calc(var(--u)*2.4)!important}
 html body #setup.b2 .opt.kl>span{padding:0!important;margin:0!important;line-height:1.1;align-self:end}
 html body #setup.b2 .opt.kl>.seg{width:100%!important;max-width:none!important;min-width:0!important;justify-self:stretch!important}
-/* Double / Triple : bulles des nombres en argent / or brillant, chiffres blancs plus gros qui tremblent peu */
-@keyframes metsh{0%{background-position:0% 50%}100%{background-position:200% 50%}}
-@keyframes numshk2{0%,100%{transform:translate(0,0) rotate(0)}25%{transform:translate(-.6px,.3px) rotate(-1deg)}50%{transform:translate(.6px,-.3px) rotate(.8deg)}75%{transform:translate(-.4px,-.3px) rotate(-.6deg)}}
-html body.m2 #game#game.sk.p2 #grid .num:not(.dead),html body.m2 #x01#x01 #xkeys button{
-  background:linear-gradient(110deg,#7d8792 0%,#c3cad2 20%,#f4f6f8 32%,#9aa3ad 46%,#dfe3e8 62%,#7d8792 80%,#c3cad2 100%)!important;background-size:200% 100%!important;animation:metsh 2.2s linear infinite}
-html body.m3 #game#game.sk.p2 #grid .num:not(.dead):not(.bull),html body.m3 #x01#x01 #xkeys button:not([data-n="25"]){
-  background:linear-gradient(110deg,#a8740a 0%,#f2c94c 20%,#fff1b0 32%,#d9a521 46%,#ffe27a 62%,#a8740a 80%,#f2c94c 100%)!important;background-size:200% 100%!important;animation:metsh 1.8s linear infinite}
-html body.m2 #game#game.sk.p2 #grid .num:not(.dead){box-shadow:0 0 0 var(--h) #a9b1ba!important}
-html body.m3 #game#game.sk.p2 #grid .num:not(.dead):not(.bull){box-shadow:0 0 0 var(--h) #e3b12a!important}
-html body.m2 #game#game.sk.p2 #grid .num:not(.dead) .lbl,html body.m3 #game#game.sk.p2 #grid .num:not(.dead):not(.bull) .lbl,
-html body.m2 #x01#x01 #xkeys button .lbl,html body.m3 #x01#x01 #xkeys button:not([data-n="25"]) .lbl{color:#fff!important;-webkit-text-fill-color:#fff!important;display:inline-block;
-  scale:1.18;text-shadow:0 1px 2px rgba(0,0,0,.35);animation:numshk2 .3s linear infinite!important}
 /* le bouton Double / Triple prend l'effet : bulle argent / or brillante */
 html body.m2 :is(#game,#x01,#killer) footer .fthumb,html body.m2 #game#game.sk.p2 footer .fthumb{
   background:linear-gradient(110deg,#7d8792 0%,#c3cad2 20%,#f4f6f8 32%,#9aa3ad 46%,#dfe3e8 62%,#7d8792 80%,#c3cad2 100%)!important;background-size:200% 100%!important;
@@ -3258,17 +3246,20 @@ html body.m3 :is(#game,#x01,#killer) footer .fthumb,html body.m3 #game#game.sk.p
   background:linear-gradient(110deg,#a8740a 0%,#f2c94c 20%,#fff1b0 32%,#d9a521 46%,#ffe27a 62%,#a8740a 80%,#f2c94c 100%)!important;background-size:200% 100%!important;
   animation:metsh 1.8s linear infinite;box-shadow:0 0 0 var(--h,5px) #e3b12a!important}
 html body.m2 :is(#game,#x01,#killer) footer #b2::after,html body.m3 :is(#game,#x01,#killer) footer #b3::after{color:#fff!important;text-shadow:0 1px 2px rgba(0,0,0,.35)}
-/* libellé du Spew : SPEW SPEW (double) / SPEW SPEW SPEW (triple), en bleu */
-html body.m2 :is(#game,#x01,#killer) footer #bS::after{content:"Spew\A spew"!important}
-html body.m3 :is(#game,#x01,#killer) footer #bS::after{content:"Spew spew\A spew"!important}
-html body:is(.m2,.m3) :is(#game,#x01,#killer) footer #bS::after{white-space:pre!important;text-align:center;line-height:.92!important;color:#009df4!important;font-size:2.1dvh!important;text-box:none!important}
-html body:is(.m2,.m3) #game#game.sk.p2 footer #bS::after{font-size:calc(var(--r)*.3)!important}
-html body.m2 #game#game.sk.p2 footer #bS::after{content:"Spew\A spew"!important}
-html body.m3 #game#game.sk.p2 footer #bS::after{content:"Spew spew\A spew"!important}
-html body:is(.m2,.m3) #game#game.sk.p2 footer #bS::after{white-space:pre!important;text-align:center;line-height:.92!important;color:#009df4!important;text-box:none!important;scale:1!important}
 html body #setup#setup.b2 .sect.s2>.opt.kl>.seg,html body #setup#setup.b2 .kpair>.opt.kl>.seg{width:100%!important;max-width:none!important;flex:1 1 auto!important}
 html body #setup#setup.b2 .sect.s2>.opt.kl,html body #setup#setup.b2 .sect.s2>.kpair{flex:0 0 100%!important;width:100%!important}
 html body.m2 #game#game.sk.p2 footer #b2::after,html body.m3 #game#game.sk.p2 footer #b3::after{scale:1.2!important}
+
+/* ===== v99 : Double / Triple — seul le bouton du bas a l'effet ; aucun effet sur les nombres ===== */
+html body.m2 #game#game.sk.p2 #grid .num:not(.zz):not(.zy) .lbl,html body.m3 #game#game.sk.p2 #grid .num:not(.zz):not(.zy) .lbl,html body.m2 #x01#x01 #xkeys button:not(.zz):not(.zy) .lbl,html body.m3 #x01#x01 #xkeys button:not(.zz):not(.zy) .lbl{animation:none!important;transform:none!important}
+/* historique des fléchettes visible pour tous les joueurs */
+html body #game#game.sk.p2.pn #scores .sc:not(.act)>.pills .pill{width:auto!important;min-width:calc(var(--r)*.36)!important;height:calc(var(--r)*.28)!important;border-radius:99px!important;
+  font-size:calc(var(--r)*.17)!important;color:var(--ink)!important;padding:0 .2em!important}
+html body #game#game.sk.p2.pn #scores .sc:not(.act)>.pills .pill>*{display:inline!important}
+html body #game#game.sk.p2.pn #scores .sc:not(.act)>.pills{display:flex!important}
+#xplayers.many .xc:not(.act) .xh,#xplayers .xc:not(.act) .xh{display:block!important}
+#kplayers.grid .kc:not(.act) .kx{display:block!important}
+#kplayers .kc:not(.act) .khist.old{opacity:.75}
 </style>
 </head>
 <body>
@@ -5221,7 +5212,7 @@ function kRender(){
     const lives=p.dead&&!isDef?'<span class="kvic">VICTIME 🥶</span>':Array.from({length:nh},(_,k)=>`<i class="h${k<p.lives?' on':''}${k>=KG.lives?' gold':''}${p.lives===1&&k===0?' last':''}">♥</i>`).join('');
     let hist='';
     if(act){const nd=isDef?DD.darts:3,ds=KHOLD?p.last:KG.turn;hist=`<div class="khist">${Array.from({length:nd},(_,k)=>kDart(ds[k])).join('')}</div>`}
-    else if(!GRID&&p.last&&p.last.length)hist=`<div class="khist old">${p.last.map(kDart).join('')}</div>`;
+    else if(p.last&&p.last.length)hist=`<div class="khist old">${p.last.map(kDart).join('')}</div>`;
     const wins='';   // pas de trophée dans la case
     const dim=KG.winner===null&&!act&&!tgt&&!(p.dead&&!isDef);
     return{i,cls:`kc${act?' act':''}${tgt?' tgt':''}${dim?' dim':''}${isDef?' def':''}${p.dead&&!isDef?' dead':''}${p.killer?' killer':''}`,
