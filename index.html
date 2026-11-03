@@ -3168,8 +3168,6 @@ footer{overflow:visible!important}
 #fbar2{position:absolute;left:0;right:0;top:calc(100% + var(--g2,3.5vw));height:100%;display:grid;grid-template-columns:1fr 1fr 1fr;z-index:3}
 #fbar2::after{content:"";position:absolute;inset:0;border:var(--bub-bw,1.5px) solid var(--m-strong);border-radius:99px;pointer-events:none;z-index:3}
 #game#game.sk.p2 #fbar2{grid-template-columns:var(--colw) var(--midw) var(--colw);--g2:var(--g)}
-#game#game.sk.p2 footer{margin-bottom:calc(max(var(--g),var(--sab,0px)) + var(--r) + var(--g))!important}
-:is(#x01,#killer) footer{margin-bottom:calc(max(1.6dvh,var(--sab)) + 7dvh + 1.6dvh)!important}
 :is(#x01,#killer) #fbar2{--g2:1.6dvh}
 #fbar2 .f2th{position:absolute;top:0;bottom:0;left:33.333%;width:33.333%;border-radius:99px;background:var(--spew,#009df4);box-shadow:0 0 0 var(--bub-h,5px) var(--spew,#009df4);z-index:1}
 #game#game.sk.p2 #fbar2 .f2th{left:var(--colw);width:var(--midw);box-shadow:0 0 0 var(--h) var(--spew)}
@@ -3181,6 +3179,24 @@ html body footer #fbar2 #fTS#fTS{color:#fff!important;line-height:.92!important;
 #game#game.sk.p2 footer #fbar2 #fTS#fTS{font-size:calc(var(--r)*.34)!important}
 html body footer #fbar2 :is(#fMenu,#fTS,#fUndo)::before,html body footer #fbar2 :is(#fMenu,#fTS,#fUndo)::after{content:none!important;display:none!important}
 html body footer #fbar2 :is(#fMenu,#fUndo):active{transform:scale(.92)}
+
+/* ===== v95 : barre du haut — Menu (maison) | mode de jeu | Annuler ===== */
+#fbar2{position:absolute!important;top:max(var(--sat,0px),calc(var(--uu)*1.2))!important;left:var(--g,3.5vw)!important;right:var(--g,3.5vw)!important;height:var(--tbh,6dvh)!important;z-index:6}
+#game#game.sk.p2 #fbar2{--tbh:calc(var(--r)*.82)}
+:is(#x01,#killer) #fbar2{--tbh:6dvh;left:3.5vw!important;right:3.5vw!important}
+#game#game.sk.p2 main{padding-top:calc(max(var(--sat,0px),calc(var(--uu)*1.2)) + var(--r)*.82)!important}
+#x01 #xmain,#killer #kmain{padding-top:calc(max(var(--sat,0px),calc(var(--uu)*1.2)) + 6dvh + 1.6dvh)!important}
+#fbar2 .f2th{background:var(--pc,var(--accent))!important;box-shadow:0 0 0 var(--bub-h,5px) var(--pc,var(--accent))!important}
+#game#game.sk.p2 #fbar2 .f2th{box-shadow:0 0 0 var(--h) var(--pc,var(--accent))!important}
+html body #fbar2 :is(#fMenu,#fMode,#fUndo){position:relative!important;inset:auto!important;translate:none!important;transform:none;width:auto!important;height:100%!important;min-width:0!important;
+  margin:0!important;padding:0!important;border:0!important;border-radius:99px!important;background:transparent!important;box-shadow:none!important;z-index:2!important;display:grid!important;place-items:center!important;
+  font-family:"Fun",sans-serif!important;font-weight:400!important;line-height:1!important;color:var(--ink)!important;opacity:1!important;transition:transform .12s}
+html body #fbar2 :is(#fMenu,#fUndo) svg{display:block;width:calc(var(--tbh)*.5);height:calc(var(--tbh)*.5);fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+html body #fbar2 :is(#fMenu,#fUndo):active{transform:scale(.86)}
+html body #fbar2 #fMode#fMode{color:#fff!important;align-content:center;gap:calc(var(--tbh)*.06);text-align:center}
+html body #fbar2 #fMode b{font-weight:400;font-size:calc(var(--tbh)*.42);line-height:1}
+html body #fbar2 #fMode small{font-size:calc(var(--tbh)*.2);line-height:1;opacity:.92;letter-spacing:.02em;white-space:nowrap}
+.lt #fbar2 #fMode#fMode,#game.lt #fbar2 #fMode#fMode{color:#111!important}
 </style>
 </head>
 <body>
@@ -3284,7 +3300,7 @@ html body footer #fbar2 :is(#fMenu,#fUndo):active{transform:scale(.92)}
     <button id="bS" aria-label="Spew">SPEW</button>
     <button id="b3" aria-label="Triple">TRIPLE</button>
     <i class="fthumb"></i>
-    <div id="fbar2"><i class="f2th"></i><button id="fMenu" aria-label="Menu principal">Menu</button><button id="fTS" aria-label="Triple spew">Triple<br>spew</button><button id="fUndo" aria-label="Annuler la dernière fléchette">Annuler</button></div>
+    <div id="fbar2"><i class="f2th"></i><button id="fMenu" aria-label="Menu principal"><svg viewBox="0 0 24 24"><path d="M4 11.5 12 4l8 7.5"/><path d="M6.5 9.5V20h11V9.5"/></svg></button><button id="fMode" aria-label="Infos partie"><b></b><small></small></button><button id="fUndo" aria-label="Annuler la dernière fléchette"><svg viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button></div>
   </footer>
 </section>
 
@@ -5631,8 +5647,9 @@ function placeTracks(){
 function layoutSk(){
   const g=$('game');if(!skp2())return;
   const gp=innerWidth*.035,hd=g.querySelector('header'),ft=g.querySelector('footer');
-  const rc=parseFloat(g.style.getPropertyValue('--rowh'))||58,gb=ft?(parseFloat(getComputedStyle(ft).marginBottom)||gp)-rc-gp:gp;   // marge du bas sans le 2e switch
-  const mt=parseFloat(getComputedStyle(g.querySelector('main')).paddingTop)||0;const r=Math.max(28,(g.clientHeight-hd.offsetHeight-mt-10*gp-gb)/11.44);
+  const rc=parseFloat(g.style.getPropertyValue('--rowh'))||58,gb=ft?parseFloat(getComputedStyle(ft).marginBottom)||gp:gp;
+  const mt=(parseFloat(getComputedStyle(g.querySelector('main')).paddingTop)||0)-rc*.82;   // marge du haut sans la barre
+  const r=Math.max(28,(g.clientHeight-hd.offsetHeight-mt-9*gp-gb)/11.26);
   g.style.setProperty('--rowh',r.toFixed(2)+'px');
 }
 /* nom et score : taille fixe (proportionnelle à la ligne), réduite seulement si ça ne tient pas dans la colonne ;
@@ -5886,9 +5903,19 @@ new MutationObserver(()=>{const box=$('slots');box.querySelectorAll('.slot.lock'
 /* 2e switch du bas : Menu | Triple spew | Annuler — la bulle reste sur Triple spew */
 function f2nudge(dir){const th=document.querySelector('#fbar2 .f2th');if(!th)return;const w=th.offsetWidth*.55*dir;
   th.animate([{transform:'none'},{transform:`translateX(${w}px)`,offset:.4},{transform:'none'}],{duration:380,easing:'cubic-bezier(.3,1.3,.5,1)'})}
-$('fTS').addEventListener('click',e=>{e.stopPropagation();haptic();
-  if($('x01').classList.contains('on')){if(!XG)return;if(XG.mult!==3)xSetMult(3)}else if($('killer').classList.contains('on')){if(!KG)return;if(KG.mult!==3)kSetMult(3)}else{if(!G)return;if(G.mult!==3)setMult(3)}
-  $('bS').click();const th=document.querySelector('#fbar2 .f2th');th.animate([{scale:'1 1'},{scale:'1.25 .7'},{scale:'.88 1.18'},{scale:'1 1'}],{duration:500,easing:'cubic-bezier(.3,1.5,.5,1)'})});
+$('fMode').addEventListener('click',e=>{e.stopPropagation();haptic();
+  if($('x01').classList.contains('on'))$('xInfo').click();else if($('killer').classList.contains('on'))$('kInfo').click();else if(G)openStats(shownCur())});
+function topBar(){const bar=$('fbar2'),sec=document.querySelector('#game.on,#x01.on,#killer.on')||(S.last==='x01'?$('x01'):S.last==='killer'?$('killer'):$('game'));
+  if(bar.parentElement!==sec)sec.prepend(bar);let a='',b='';
+  if(sec.id==='x01'&&XG){a=String(XG.start);b=['simple','double','master'][XG.outR]+' out · R'+XG.round}
+  else if(sec.id==='killer'&&KG){a='Killer';b='R'+KG.round}
+  else if(G){a='Cricket';b=(G.mode==='cut'?'coupe-gorge':'standard')+' · R'+G.round}
+  $('fMode').querySelector('b').textContent=a;$('fMode').querySelector('small').textContent=b}
+{const _r=render;render=function(){const x=_r.apply(this,arguments);try{topBar()}catch(e){}return x}}
+{const _x=xRender;xRender=function(){const x=_x.apply(this,arguments);try{topBar()}catch(e){}return x}}
+{const _k=kRender;kRender=function(){const x=_k.apply(this,arguments);try{topBar()}catch(e){}return x}}
+{const _m=mountFooter;mountFooter=function(){const x=_m.apply(this,arguments);try{topBar()}catch(e){}return x}}
+{const _sh=show;show=function(id){const r=_sh.apply(this,arguments);if(['game','x01','killer'].includes(id))try{topBar()}catch(e){}return r}}
 $('fMenu').addEventListener('click',e=>{e.stopPropagation();haptic();f2nudge(-1);
   if($('x01').classList.contains('on'))$('xBack').click();else if($('killer').classList.contains('on'))$('kBack').click();else $('bBack').click()});
 $('fUndo').addEventListener('click',e=>{e.stopPropagation();haptic();f2nudge(1);
