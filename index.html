@@ -3736,6 +3736,27 @@ html body #setup#setup.b2 .sect.sbet>.opt.betsl .bsl{grid-column:1 / -1}
 #bill .bsh i{width:37px}
 .bst .br{grid-template-columns:2em minmax(0,1fr) auto!important}
 #bill .btot .br.top .bn small{white-space:normal}
+/* pari v2 : page Joueurs, curseur en bulle */
+html body #setup#setup.b2:not(.p2) .grp.betgrp{display:none!important}
+html body #setup#setup.b2.p2 .grp.betgrp{display:block!important}
+html body #setup#setup.b2.p2 .grp.betgrp .glab{display:flex!important}
+#setup .bsl{position:relative!important;display:block!important;height:calc(var(--u,1dvh)*5.4);border-radius:99px;width:100%}
+#setup .bsl::after{content:"";position:absolute;inset:0;border-radius:99px;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong);pointer-events:none;z-index:3}
+#setup .bsl .bfill{position:absolute;left:0;top:0;bottom:0;width:calc(6.2em + (100% - 6.2em) * var(--p,0));border-radius:99px;background:var(--accent);
+  box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong),0 0 0 var(--bub-h) var(--accent);display:flex;align-items:center;justify-content:flex-end;padding:0 1em;z-index:2;font-size:calc(var(--u,1dvh)*2.4);pointer-events:none}
+#setup .bsl .bfill b{font-family:"Fun",sans-serif!important;font-weight:400!important;color:#fff!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0!important;max-width:none!important;font-size:1em!important;text-align:right}
+html body #setup #betV{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;z-index:4;cursor:pointer;background:none!important;box-shadow:none!important}
+#betV::-webkit-slider-thumb{width:44px;height:60px}
+.betpick{max-width:min(92vw,360px)}
+.betpick .bchips{grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:8px}
+.betpick .bchip{height:38px;padding:0 16px;border-radius:99px;border:0;background:transparent;box-shadow:inset 0 0 0 1.5px var(--m-strong,#111);font:400 17px "Fun",sans-serif;color:var(--ink)}
+.betpick .bchip.sel{background:var(--accent);color:#fff;box-shadow:inset 0 0 0 1.5px var(--m-strong,#111),0 0 0 4px var(--accent)}
+#setup .bsl .bfill{font-style:normal}
+html body #setup#setup.b2:not(.p2) .betrow{display:none!important}
+html body #setup#setup.b2 .sect.s1 .betrow .tshuf{display:none}
+html body #setup#setup.b2:not(.bet-on) .sect.s1 .betrow.betx{display:none!important}
+html body #setup#setup#setup.b2 .sect.s1 .opt.teamopt.betrow{grid-template-columns:minmax(0,1fr)!important;column-gap:0!important}
+html body #setup#setup.b2 .sect.s1 .betrow>.seg,html body #setup#setup.b2 .sect.s1 .betrow>.bsl{width:100%!important;grid-column:1 / -1!important;margin:0!important}
 </style>
 </head>
 <body>
@@ -3783,8 +3804,12 @@ html body #setup#setup.b2 .sect.sbet>.opt.betsl .bsl{grid-column:1 / -1}
       <div id="rchips"></div>
       <div class="opt kl knopt"><span>Numéros</span><div class="seg mini" id="segKn"><button data-v="draw">Tirage</button><button data-v="throw">1er lancer</button></div></div>
       <div class="opt ck xk ordopt"><span>Départ</span><div class="seg mini" id="segOrd"><button data-v="fixed">Ordre saisi</button><button data-v="draw">Tirage</button></div></div>
+      <div class="opt teamopt betrow"><span>Enjeu</span><div class="seg mini" id="segBet"><button data-v="0" id="betNo">Sans</button><button data-v="1" class="betcus">On joue…</button></div></div>
+      <div class="opt teamopt betrow betx betsl"><span>Combien&nbsp;?</span><div class="bsl"><i class="bfill"><b id="betVv"></b></i><input type="range" id="betV" min="1" max="100" step="1" aria-label="Combien ?"></div></div>
     </div>
   </div>
+
+ </div>
 
   <div class="grp">
     <div class="glab"><span>Règles</span></div>
@@ -3805,13 +3830,6 @@ html body #setup#setup.b2 .sect.sbet>.opt.betsl .bsl{grid-column:1 / -1}
     </div>
   </div>
 
-  <div class="grp betgrp">
-    <div class="glab"><span>Pari</span></div>
-    <div class="sect s2 sbet">
-      <div class="opt"><span>Pari</span><div class="seg mini" data-k="bet"><button data-v="0">Sans</button><button data-v="1">Avec</button></div></div>
-      <div class="opt betx"><span>Enjeu</span><div class="seg mini" data-k="betk"><button data-v="0">€€€</button><button data-v="1" class="betcus">Autre</button></div></div>
-      <div class="opt betx betsl"><span>Mise</span><div class="bsl"><input type="range" id="betV" min="1" max="100" step="1"><b id="betVv"></b></div></div>
-    </div>
   </div>
 
   <div class="gobar"><button id="go" class="big acc"><span>Suivant</span></button></div>
@@ -6594,19 +6612,26 @@ $('bSend').addEventListener('click',()=>{haptic();$('bill').querySelector('.bsw'
 /* écran de victoire : rappel du pari et de la note en cours */
 new MutationObserver(()=>{if($('win').classList.contains('on'))$('wBet').innerHTML=betWinHTML()}).observe($('win'),{attributes:true,attributeFilter:['class']});
 /* menu : pari */
-function betSync(){$('setup').classList.toggle('bet-on',!!S.bet);const r=$('betV');r.value=S.betv||5;$('betVv').textContent=S.betk?(S.betv||5)+' '+(S.betl||'gage'):(S.betv||5)+' €';
-  r.style.setProperty('--p',((S.betv||5)-1)/99*100+'%');const c=document.querySelector('#setup .betcus');if(c)c.textContent=S.betl?S.betl:'Autre'}
+function betSync(){$('setup').classList.toggle('bet-on',!!S.bet);const v=S.betv||5,r=$('betV');r.value=v;
+  $('betVv').textContent=S.betk?v+' '+(S.betl||'gage'):v+' €';document.querySelector('#setup .bsl').style.setProperty('--p',(v-1)/99);
+  const c=document.querySelector('#setup .betcus');if(c)c.textContent=S.bet?(S.betk?(S.betl||'gage'):'€€€'):'On joue…';
+  document.querySelectorAll('#segBet button').forEach(b=>b.classList.toggle('sel',+b.dataset.v===(S.bet?1:0)))}
 {const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{betSync()}catch(e){}return r}}
 $('betV').addEventListener('input',e=>{S.betv=+e.target.value;betSync();if(!betSync._t){SFX.tick&&SFX.tick();betSync._t=setTimeout(()=>betSync._t=0,60)}});
 $('betV').addEventListener('change',()=>{store.set(K_S,S);haptic()});
 document.querySelector('#setup .betcus').addEventListener('click',e=>{e.stopPropagation();e.preventDefault();haptic();
   const old=$('xpick');if(old)old.remove();const b=e.currentTarget,r0=b.getBoundingClientRect();
-  const p=el('div','',`<div class="xpt">Qu'est-ce qu'on parie ?</div><input class="xpn" type="text" maxlength="24" value="${esc(S.betl||'')}" placeholder="bière, pompes, vaisselle…"><button class="xpo">OK</button>`);p.id='xpick';document.body.append(p);
+  const H=(S.betH||[]).filter(x=>x&&x!=='€').slice(0,6);
+  const chips=['€€€',...H].map(x=>`<button class="bchip${(x==='€€€'?S.bet&&!S.betk:S.bet&&S.betk&&S.betl===x)?' sel':''}" data-c="${esc(x)}">${esc(x)}</button>`).join('');
+  const p=el('div','',`<div class="xpt">On joue…</div><div class="bchips">${chips}</div><input class="xpn" type="text" maxlength="24" placeholder="autre chose : bière, pompes…"><button class="xpo">OK</button>`);p.id='xpick';p.classList.add('betpick');document.body.append(p);
   const w=p.offsetWidth,h=p.offsetHeight;p.style.left=Math.max(12,Math.min(innerWidth-w-12,r0.left+r0.width/2-w/2))+'px';p.style.top=Math.max(12,r0.top-h-14)+'px';
-  const inp=p.querySelector('.xpn');setTimeout(()=>{inp.focus();inp.select()},30);
-  const ok=()=>{const v=inp.value.trim();if(!v){toast('ÉCRIS CE QUE VOUS PARIEZ','',true);return}S.betl=v;S.betk=1;store.set(K_S,S);p.remove();SFX.ui();renderSetup()};
+  const inp=p.querySelector('.xpn');
+  const pick=v=>{if(v==='€€€'){S.betk=0}else{S.betk=1;S.betl=v;S.betH=[v,...(S.betH||[]).filter(x=>x!==v)].slice(0,8)}S.bet=1;store.set(K_S,S);p.remove();SFX.ui();renderSetup()};
+  p.querySelector('.bchips').addEventListener('click',ev=>{const c=ev.target.closest('.bchip');if(c){haptic();pick(c.dataset.c)}});
+  const ok=()=>{const v=inp.value.trim();if(!v){toast('ÉCRIS CE QUE VOUS PARIEZ','',true);return}pick(v)};
   p.querySelector('.xpo').addEventListener('click',ok);inp.addEventListener('keydown',ev=>{if(ev.key==='Enter')ok()});
   setTimeout(()=>document.addEventListener('pointerdown',function f(ev){if(!ev.target.closest('#xpick')){p.remove();document.removeEventListener('pointerdown',f,true)}},true),0)},true);
+$('betNo').addEventListener('click',e=>{e.stopPropagation();haptic();S.bet=0;store.set(K_S,S);SFX.ui();renderSetup()},true);
 /* statistiques : onglet Paris (notes envoyées + soldes cumulés) */
 {const tb=$('hTabs');const bt=document.createElement('button');bt.dataset.v='bets';bt.textContent='Paris';tb.append(bt);
  const _h=renderHist;renderHist=function(){const r=_h.apply(this,arguments);try{$('hist').classList.toggle('tbets',HSEL.tab==='bets');if(HSEL.tab==='bets'){const b=$('hBody');$('hGame').style.display='none';
