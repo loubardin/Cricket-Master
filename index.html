@@ -3588,7 +3588,7 @@ html body #setup#setup.g-killer .sect .opt.ordopt,html body #setup#setup.g-kille
 /* Cricket en équipe : le lanceur reste à la place du nom en solo, le coéquipier remonte au-dessus */
 html body #game#game.sk.p2 #scores .sc>.nm:has(.nmm){text-box:trim-both cap alphabetic!important}
 html body #game#game.sk.p2 #scores .sc>.nm .nmm{position:absolute!important;left:50%;bottom:calc(100% + .3em);translate:-50% 0;white-space:nowrap;margin:0!important;font-size:.42em!important}
-html body #game#game.sk.p2 #scores .sc>.nm:has(.nmm)>.hat{bottom:calc(100% + var(--r)*.12 + .9em)!important}
+html body #game#game.sk.p2 #scores .sc>.nm:has(.nmm)>.hat{bottom:calc(100% + var(--r)*.12 + .3em)!important}
 #kthPad{display:none}
 #draw.kthrow #kthPad{display:grid;grid-template-columns:repeat(5,1fr);gap:calc(min(1dvh,1.7vw)*1.1);align-self:stretch;margin:0 0 3dvh}
 #draw.kthrow #kthPad.done{display:none}
@@ -3600,6 +3600,39 @@ html body #game#game.sk.p2 #scores .sc>.nm:has(.nmm)>.hat{bottom:calc(100% + var
 #draw.kthrow .slot{cursor:pointer}
 #draw.kthrow .slot.cur{box-shadow:inset 0 0 0 calc(var(--bub-bw)*2) var(--pc,var(--accent))!important}
 #draw.kthrow .slot.cur b{color:var(--ink)!important}
+/* switchs : le cadre noir reste visible à travers la bulle (comme le bouton du menu) */
+html body #home .hsw.two,html body #ask .asw,html body #draw .dsw{box-shadow:none!important}
+html body #home .hsw.two::after,html body #ask .asw::after,html body #draw .dsw::after{content:"";position:absolute;inset:0;border-radius:99px;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong);pointer-events:none;z-index:3}
+/* Killer en équipes : coéquipier en petit au-dessus du lanceur */
+#killer .kname .kmm{display:block;font-size:.42em;line-height:1.1;opacity:.6;letter-spacing:.04em}
+/* cricket 3+ joueurs : infos resserrées vers l'historique, historique des autres plus fin */
+html body #game#game.sk.p2.pn.curR #scores>.sc.act>:is(.nm,.pts,.mpr){translate:calc(var(--colw)*-.1) 0}
+html body #game#game.sk.p2.pn.curL #scores>.sc.act>:is(.nm,.pts,.mpr){translate:calc(var(--colw)*.1) 0}
+html body #game#game.sk.p2.pn #scores .sc:not(.act)>.pills{gap:calc(var(--r)*.04)!important}
+html body #game#game.sk.p2.pn #scores .sc:not(.act)>.pills .pill{min-width:calc(var(--r)*.3)!important;height:calc(var(--r)*.25)!important;font-size:calc(var(--r)*.15)!important;padding:0 .12em!important}
+/* statistiques : texte fin, seuls les tops ressortent */
+html body #hist #hBody,html body #hist #hBody *:not(.hdel){font-family:"Lbl",-apple-system,sans-serif!important;font-weight:500!important}
+html body #hist .hct b{font-weight:700!important}
+html body #hist .hct small,html body #hist .hrec em{font-weight:400!important;color:var(--mute)}
+html body #hist .hwin{font-weight:700!important;font-size:calc(var(--uu)*2.4)!important}
+html body #hist .hps span{color:var(--mute)!important}
+html body #hist .hps span.hw{color:var(--ink)!important;font-weight:700!important}
+html body #hist .hps b{font-weight:600!important}
+html body #hist .htab th{font-weight:600!important;color:var(--mute)!important;font-size:calc(var(--uu)*1.6)!important}
+html body #hist .htab td{font-weight:400!important}
+html body #hist .htab td:first-child{font-weight:600!important;color:var(--ink)!important}
+html body #hist .htab td.top{font-family:"Fun",sans-serif!important;font-weight:400!important;color:var(--accent)!important}
+html body #hist .hrec small{font-weight:500!important;color:var(--mute)!important}
+html body #hist .hrec b{font-weight:700!important}
+html body #hist .hrec>span{font-family:"Fun",sans-serif!important;font-weight:400!important}
+/* infos partie : chiffres fins, noms qui tiennent dans leur colonne, seul le top en couleur */
+html body #info #stats tr:not(:first-child) td:not(:first-child){font-family:"Lbl",-apple-system,sans-serif!important;font-weight:500!important;font-size:calc(var(--uu)*2.5)!important}
+html body #info #stats tr:not(:first-child) td.stb.stb{font-family:"Fun",sans-serif!important;font-weight:400!important;font-size:calc(var(--uu)*3.1)!important}
+html body #info #stats tr:first-child th.stn{font-family:"Lbl",-apple-system,sans-serif!important;font-weight:700!important;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+html body #info #stats.many tr:first-child th.stn{font-size:min(3vw,calc(var(--uu)*2))!important}
+html body #info #stats.many tr:not(:first-child) td:not(:first-child){font-size:calc(var(--uu)*2.1)!important}
+html body #info #stats.many tr:not(:first-child) td.stb.stb{font-size:calc(var(--uu)*2.6)!important}
+html body #info #stats.many tr:not(:first-child) td:first-child{width:26%!important}
 </style>
 </head>
 <body>
@@ -4322,8 +4355,7 @@ function spewFx(txt,sub,lvl,soft,box){
   }
   busy(Math.min(dur,1200));
   if(performance.now()-KSPW<60){KSPW=0;if(lvl>=3){noise(.08,.18,3500);SFX.loser(lvl)}return}   // Killer : le son de spew est déjà joué
-  if(soft){SFX.meh();return}
-  if(lvl<3){SFX.spew();return}
+  if(soft||lvl<3){SFX.spew();return}   // spew = son de spew, même après 3 marques
   noise(.08,.18,3500);
   SFX.loser(lvl);
 }
@@ -4991,6 +5023,10 @@ function launchNew(){
     if(S.order==='draw')runDraw(labels);else DRAWCB(labels);
     return;
   }
+  if(S.game==='killer'&&S.teams>0&&teamsOK()){
+    const T=groupsOf(names);KTEAMS=Object.fromEntries(T.map(t=>[t.join(' & '),t]));killerAssign(Object.keys(KTEAMS));return;
+  }
+  if(S.game==='killer')KTEAMS=null;
   if(S.game==='x01'){DRAWCB=o=>startX01(o);if(S.order==='draw')runDraw(names);else DRAWCB(names);return}
   DRAWCB=S.game==='killer'?killerAssign:o=>startGame(S.mode,o,0);
   if(S.order==='draw'&&S.game!=='killer')runDraw(names);
@@ -5187,7 +5223,7 @@ function recKiller(){
   if(KG.winner===null){histDel(KG.id);return}
   if(HIST.some(r=>r.id===KG.id&&r.w===KG.winner))return;
   histPut({id:KG.id,date:Date.now(),game:'killer',manche:KG.manche,rounds:KG.round,dur:KG.t0?Date.now()-KG.t0:0,w:KG.winner,
-    p:KG.players.map((p,i)=>({name:p.name,num:p.num,lives:p.dead?0:p.lives,kills:p.kills,darts:p.darts,hits:p.hits,turns:p.turns||0,spews:p.spews,triple:p.triple||0,selfhits:p.selfhits,killer:p.killer,win:i===KG.winner}))});
+    teams:!!KG.teams,p:KG.players.map((p,i)=>({name:p.name,members:p.members||null,num:p.num,lives:p.dead?0:p.lives,kills:p.kills,darts:p.darts,hits:p.hits,turns:p.turns||0,spews:p.spews,triple:p.triple||0,selfhits:p.selfhits,killer:p.killer,win:i===KG.winner}))});
 }
 /* ---- calculs ---- */
 const fdate=t=>{const d=new Date(t);return d.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'2-digit'})+' '+d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})};
@@ -5257,6 +5293,9 @@ function renderHist(){
     const R=records(list);
     b.innerHTML=R.length?R.map(x=>`<div class="hrec"><div><small>${x.label}</small><b>${dot(x.who)}${esc(x.who)}</b>${x.date?`<em>${fdate(x.date)}</em>`:''}</div><span>${x.value}</span></div>`).join(''):'<p class="hempty">Pas encore de record.</p>';
   }
+  b.querySelectorAll('table.htab').forEach(t=>{const R=[...t.rows].slice(1);if(R.length<2)return;const n=t.rows[0].cells.length;
+    for(let k=1;k<n;k++){const v=R.map(r=>{const x=r.cells[k]&&r.cells[k].textContent.replace(',','.').replace('%','');return /^[\d.]+$/.test(x)?+x:null});
+      const m=Math.max(...v.filter(x=>x!==null));if(!(m>0)||v.filter(x=>x===m).length*2>R.length)continue;R.forEach((r,j)=>{if(v[j]===m)r.cells[k].classList.add('top')})}});   // seuls les tops ressortent
   requestAnimationFrame(placeThumbs);
 }
 $('hStats').addEventListener('click',()=>{haptic();SFX.open();renderHist();$('hist').classList.add('on');requestAnimationFrame(placeThumbs)});
@@ -5304,7 +5343,9 @@ $('kBack').addEventListener('click',()=>{haptic();goHome()});
 function killerAssign(names){
   if(S.knum==='throw')runNumThrow(names);else runNumDraw(names);   // le plus gros numéro commencera
 }
-let NUMCB=null;   // que faire une fois les numéros choisis (null = nouvelle partie)
+let NUMCB=null,KTEAMS=null;   // Killer en équipes : « A & B » → [A,B]
+const kTeamsOn=tm=>{if(!tm||!KG)return;KG.teams=true;KG.players.forEach(p=>{const m=tm[p.name];if(m){p.members=m.slice();p.mi=p.mi!=null?p.mi:(m.length>1&&Math.random()<.5?1:0)}})};
+const kThr=p=>p.members?p.members[p.mi||0]:p.name;   // que faire une fois les numéros choisis (null = nouvelle partie)
 const numsDone=(names,nums)=>{const cb=NUMCB;NUMCB=null;cb?cb(nums):startKiller(names,nums)};
 async function runNumDraw(names){
   $('draw').classList.remove('kthrow');$('slots').onclick=null;
@@ -5366,7 +5407,7 @@ function newKiller(names,nums,start,lives,wins,manche,bonusTo){
 function startKiller(names,nums,start=0){
   S.last='killer';store.set(K_S,S);
   const o=names.map((_,i)=>i).sort((a,b)=>nums[b]-nums[a]);   // le plus gros numéro commence
-  KG=newKiller(o.map(i=>names[i]),o.map(i=>nums[i]),0,S.klives,null,1,-1);
+  KG=newKiller(o.map(i=>names[i]),o.map(i=>nums[i]),0,S.klives,null,1,-1);kTeamsOn(KTEAMS);
   KH=[];kSave();showKiller();SFX.start();
 }
 /* manche suivante : mêmes joueurs et numéros, le suivant commence, le vainqueur peut avoir +1 vie */
@@ -5381,8 +5422,8 @@ function kRank(){
   return[w,...rest];
 }
 function kNext(nums){
-  const P=KG.players,r=kRank(),w=0;
-  KG=newKiller(r.map(i=>P[i].name),nums||r.map(i=>P[i].num),0,KG.lives,r.map(i=>P[i].wins),KG.manche+1,0);
+  const P=KG.players,r=kRank(),w=0,tm=KG.teams?Object.fromEntries(P.map(p=>[p.name,p.members])):null;
+  KG=newKiller(r.map(i=>P[i].name),nums||r.map(i=>P[i].num),0,KG.lives,r.map(i=>P[i].wins),KG.manche+1,0);kTeamsOn(tm);
   KH=[];kSave();showKiller();SFX.start();
   if(KG.opt.carry&&w!==null){setTimeout(()=>{toast('+1 ♥ '+esc(KG.players[0].name));const h=R2(w)&&R2(w).querySelectorAll('.h');if(h&&h.length)anim(h[h.length-1],'gain',800)},300)}
 }
@@ -5438,13 +5479,13 @@ function kThrow(n,quiet){
 }
 function kClose(p){p.last=KG.turn;p.turns=(p.turns||0)+1;if(KG.turn.length===3&&KG.turn.every(x=>x.n===0))p.triple=(p.triple||0)+1}
 function kEndTurn(final){
-  const P=KG.players,me=P[KG.cur];kClose(me);KG.turn=[];
+  const P=KG.players,me=P[KG.cur];kClose(me);KG.turn=[];if(me.members)me.mi=((me.mi||0)+1)%me.members.length;   // équipe : le partenaire lance la prochaine fois
   if(final)return;
   let c=KG.cur;do{const prev=c;c=(c+1)%P.length;if(c<=prev)KG.round++}while(P[c].dead);
   KG.cur=c;KG.ts=P.map(p=>p.lives);
 }
 function kFx(d,me,who,over){
-  const P=KG.players;KSPW=0;if(d.n===0){SFX.spew();KSPW=performance.now()}   // Killer : tout spew fait le son de spew
+  const P=KG.players;KSPW=0;if(d.n===0&&!(over&&!me.killer&&!me.dead&&me.last.filter(x=>x.type==='mark').reduce((a,x)=>a+x.eff,0)===1&&!me.last.some(x=>x.type&&x.type.startsWith('d')))){SFX.spew();KSPW=performance.now()}   // Killer : tout spew fait le son de spew, sauf minimum syndical
   const hitSnd=()=>{d.m===3?SFX.triple():d.m===2?SFX.double():SFX.single()};
   const gain=i=>{const h=R2(i)&&R2(i).querySelectorAll('.h.on');if(h&&h.length)anim(h[h.length-1],'gain',800)};
   if(d.type==='mark'||d.type==='dmark'){hitSnd();anim(R2(who),'kmark',600);kRings(who,d.m)}
@@ -5591,7 +5632,7 @@ function kRender(){
     const wins='';   // pas de trophée dans la case
     const dim=KG.winner===null&&!act&&!tgt&&!(p.dead&&!isDef);
     return{i,cls:`kc${act?' act':''}${tgt?' tgt':''}${dim?' dim':''}${isDef?' def':''}${p.dead&&!isDef?' dead':''}${p.killer?' killer':''}`,
-      L:`<div class="kname">${esc(p.name)}${wins}</div><div class="klives" style="--nh:${nh}">${lives}</div>`,
+      L:`<div class="kname">${(()=>{if(!p.members||p.members.length<2)return esc(p.name);const L=p.members.length,j=((p.mi||0)+(!act&&p.last&&p.last.length?L-1:0))%L;return`<span class="kmm">${esc(p.members[(j+1)%L])}</span>${esc(p.members[j])}`})()}${wins}</div><div class="klives" style="--nh:${nh}">${lives}</div>`,
       S:prog,X:msg+hist,N:`${p.num}${act&&p.killer&&!isDef&&!GRID?CONE:''}`};
   });
   /* mise à jour en place : seules les parties qui changent sont redessinées,
@@ -6006,9 +6047,9 @@ setInterval(()=>{
     if(!XG||XG.winner!==null||XG.legW!==null)return;const me=XG.players[XG.cur],nm=me.members?me.members[me.mi]:me.name;if(!isBot(nm))return;
     BOTT=now;const[n,m]=botHit(...botX01(me),botLv(nm),nm);xThrow(n,n?m:1);
   }else if(onKiller()){
-    if(!KG||KG.winner!==null||KHOLD)return;const me=KG.players[KG.cur];if(!isBot(me.name))return;
+    if(!KG||KG.winner!==null||KHOLD)return;const me=KG.players[KG.cur],nm=kThr(me);if(!isBot(nm))return;
     if(now-BOTT<(KG.turn.length?1300:1700))return;
-    BOTT=now;const[n,m]=botHit(...botKiller(me),botLv(me.name),me.name);KG.mult=n&&n!==25?m:1;
+    BOTT=now;const[n,m]=botHit(...botKiller(me),botLv(nm),nm);KG.mult=n&&n!==25?m:1;
     const ti=n&&n!==25?KG.players.findIndex(p=>p.num===n&&!p.dead):-1,c=ti>=0&&R2(ti);   // on voit la case touchée, comme quand on tape
     if(c){c.classList.add('tap');setTimeout(()=>{const c2=R2(ti);c2&&c2.classList.remove('tap')},180)}
     kThrow(n===25?0:n);
