@@ -3215,6 +3215,10 @@ html body :is(#game,#x01,#killer) footer .fthumb{border-radius:46px!important}
 html body #game#game.sk.p2 footer #b2::after,html body #game#game.sk.p2 footer #bS::after,html body #game#game.sk.p2 footer #b3::after{font-size:calc(var(--r)*.42)!important}
 html body :is(#x01,#killer) footer #b2::after,html body :is(#x01,#killer) footer #bS::after,html body :is(#x01,#killer) footer #b3::after{font-size:3dvh!important}
 html body #fbar2 #fMode small{font-size:calc(var(--tbh)*.26)!important}
+/* switch du bas : marge plus large (côtés et bas), le halo reste à l'écran */
+html body #game#game.sk.p2 footer,html body #game#game.sk.p2.pn footer{--colw:calc((100vw - 28px - var(--midw))/2);margin:var(--g) 14px max(16px,calc(var(--sab,0px) - 8px))!important}
+html body :is(#x01,#killer) footer{margin:1.6dvh 14px max(16px,calc(var(--sab,0px) - 8px))!important}
+html body :is(#game,#x01,#killer) footer::after,html body :is(#game,#x01,#killer) footer .fthumb{border-radius:40px!important}
 </style>
 </head>
 <body>
