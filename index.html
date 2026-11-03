@@ -3850,6 +3850,16 @@ html body #killer#killer#killer#killer #kplayers .kc.bar .kpts{font-family:"Lbl"
 html body #killer#killer#killer#killer #kplayers .kc.bar .kpts b{font-family:"FunTxt",-apple-system,sans-serif;font-weight:900;font-size:1.45em;color:var(--ink)}
 html body #killer#killer#killer#killer #kplayers .kc.bar.act .kpts b{color:var(--pc)}
 html body #killer#killer#killer#killer #kplayers .kc.bar .kL{display:flex;flex-direction:column;align-items:center}
+#askSum{width:100%;border-radius:22px;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong);padding:1.6dvh 5vw;margin:0 0 3.4dvh;font-family:"Lbl",-apple-system,sans-serif;color:var(--ink);background:#fff;max-height:42dvh;overflow-y:auto}
+#askSum .ast{font-family:"Fun",sans-serif;font-size:min(5vw,2.5dvh);text-align:center;margin-bottom:1dvh}
+#askSum ul{list-style:none;margin:0;padding:0}
+#askSum li{display:flex;justify-content:space-between;gap:1em;padding:.45em 0;border-bottom:1.5px dashed rgba(0,0,0,.12);font-size:min(3.9vw,1.95dvh);font-weight:500}
+#askSum li:last-child{border-bottom:0}
+#askSum li b{font-weight:600;color:var(--mute);white-space:nowrap}
+#askSum li.cur span{font-weight:700}
+#askSum li.cur span::after{content:" · à lui de jouer";font-weight:500;color:var(--accent);font-size:.85em}
+#askSum .asb{margin-top:1dvh;text-align:center;font-weight:600;color:var(--accent);font-size:min(3.6vw,1.8dvh)}
+#ask .note{margin-bottom:2.4dvh!important}
 </style>
 </head>
 <body>
@@ -5338,7 +5348,7 @@ $('go').addEventListener('click',()=>{
   else launchNew();
 });
 let ASKFROM='go',ABAND=false;
-function openAsk(from){ASKFROM=from;const a=$('ask');a.querySelector('.asw').classList.remove('new');a.classList.add('on')}
+function openAsk(from){ASKFROM=from;const a=$('ask');try{askSummary()}catch(e){}a.querySelector('.asw').classList.remove('new');a.classList.add('on')}
 $('askYes').addEventListener('click',()=>{haptic();const w=$('ask').querySelector('.asw');w.classList.add('new');
   setTimeout(()=>{$('ask').classList.remove('on');if(ASKFROM==='home'){ABAND=true;renderSetup();show('setup')}else launchNew()},230)});
 $('askNo').addEventListener('click',()=>{haptic();$('ask').classList.remove('on');if(ASKFROM==='home'){if(S.last==='x01')showX01();else if(S.last==='killer')showKiller();else{mountFooter('game');build();render();show('game')}}});
@@ -6237,7 +6247,7 @@ function xBarFx(d,me,who,end,tsum){
   else if(d.type==='off'){SFX.dead&&SFX.dead();if(card)anim(card,'xno',450)}
   else{anim($('bS'),'shk',450);spewFx('','',1,false,card)}
   if(d.sh){setTimeout(()=>{toast('SHANGHAI !',d.bonus?'+'+d.bonus+' points':'');SFX.big(5);confetti(90)},120);if(!end||end!=='win')return}
-  if(d.again){setTimeout(()=>{toast('REJOUE !','MPR '+turn3(me)+' ce tour');SFX.ignite()},200)}
+  if(d.again){setTimeout(()=>{toast(esc(me.members?me.members[(me.mi+me.members.length-1)%me.members.length]:me.name)+' REJOUE !','MPR '+turn3(me)+' ce tour');SFX.ignite()},200)}
   if(d.halve){setTimeout(()=>{toast('÷ 2 !','−'+d.halve+' points');SFX.loser(2);if(card)anim(card,'khit',700)},250)}
   if(end==='win'){setTimeout(()=>{SFX.win();confetti(90)},150);return}
   if(d.extra)setTimeout(()=>{toast('ÉGALITÉ !','prolongation à la bulle');SFX.ignite()},200);
@@ -6936,7 +6946,7 @@ if(![301,501,701].includes(S.xstart)){S.xstart=501}delete S.xcustom;
 {const _m=mkToast;mkToast=function(cls,html,ms){if(cls==='mini')return _m.apply(this,arguments);
    const e=_m.apply(this,arguments);e.style.visibility='hidden';return e}}
 {const _t=toast;toast=function(txt,sub,mini){if(mini)return _t.apply(this,arguments);
-   if(!/SYNDICAL|DERNIÈRE|DROIT DE RÉPONSE|RÉPONDU|DÉFENSE/.test(String(txt)))return;
+   if(!/SYNDICAL|DERNIÈRE|DROIT DE RÉPONSE|RÉPONDU|DÉFENSE|REJOUE/.test(String(txt)))return;
    const sec=document.querySelector('#game.on,#x01.on,#killer.on');const col=sec?(getComputedStyle(sec).getPropertyValue(sec.id==='game'?'--accent':'--pc').trim()||'#ff5a1f'):'#ff5a1f';
    document.querySelectorAll('.cbub').forEach(x=>x.remove());
    const b=el('div','cbub','<b>'+String(txt).replace(/[👏👁️🛡🤝]/gu,'').trim()+'</b>'+(sub?'<small>'+sub+'</small>':''));b.style.setProperty('--c',col);document.body.append(b);setTimeout(()=>b.remove(),1900)}}
@@ -7187,6 +7197,24 @@ $('hiSeqB').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
 {const place=()=>{const b=$('kplayers');if(!b.classList.contains('kmany'))return;b.querySelectorAll('.kc').forEach(c=>{const n=c.querySelector('.kno'),st=c.querySelector('.kR>.kstat');if(n&&st)st.style.top=(n.offsetTop+n.offsetHeight*.5)+'px'})};
  const _k3=kRender;kRender=function(){const r=_k3.apply(this,arguments);try{$('kplayers').classList.toggle('kmany',!BARON&&!!KG&&KG.players.length>4);place();requestAnimationFrame(place)}catch(e){}return r};
  addEventListener('resize',()=>requestAnimationFrame(place))}
+
+/* confirmation « nouvelle partie » : résumé de la partie en cours */
+function askSummary(){
+  const a=$('ask');let box=$('askSum');if(!box){box=el('div','');box.id='askSum';a.insertBefore(box,a.querySelector('.asw'))}
+  const dot=n=>{const c=pcol(n);return c?`<i class="hdot" style="background:${c}"></i>`:''};
+  let title='',rows=[],cur=-1;
+  if(S.last==='x01'&&XG){const P=XG.players;cur=XG.cur;
+    title=XG.mode==='sh'?'Shanghai · tour '+Math.min(XG.round,XG.shr)+'/'+XG.shr:XG.mode==='clk'?'L\'horloge · tour '+XG.round:XG.mode==='hi'?'Halve-it · manche '+Math.min(XG.round,XG.hiseq.length)+'/'+XG.hiseq.length:XG.start+' · '+xOutTxt(XG)+' · tour '+XG.round;
+    rows=P.map(p=>[p.name,XG.mode==='clk'?'sur le '+clkLbl(p.tgt):XG.mode?p.rem+' points':p.rem+' restants'])}
+  else if(S.last==='killer'&&KG){const P=KG.players;cur=KG.cur;title='Killer'+(KG.manche>1?' · manche '+KG.manche:'')+' · tour '+KG.round;
+    rows=P.map(p=>[p.name,p.dead?'victime 🥶':'n°'+p.num+' · '+'♥'.repeat(Math.max(0,p.lives))])}
+  else if(G){const P=G.players;cur=G.cur;title='Cricket '+(G.mode==='cut'?'coupe-gorge':'standard')+' · tour '+G.round;
+    rows=P.map(p=>[p.name,p.score+' points'])}
+  let bet='';
+  if(BET.length){const R=betStand(BET);bet=`🧾 Note en cours · ${BET.length} partie${BET.length>1?'s':''} · 👑 ${esc(R[0]?R[0].n:'')} mène`}
+  else if(S.bet)bet=`Enjeu : ${betTxt(S.betv||5,S.betk?(S.betl||'gage'):'€')} par partie`;
+  box.innerHTML=`<div class="ast">${esc(title)}</div><ul>${rows.map((r,i)=>`<li class="${i===cur?'cur':''}"><span>${dot(r[0])}${esc(r[0])}</span><b>${r[1]}</b></li>`).join('')}</ul>${bet?`<div class="asb">${bet}</div>`:''}`;
+}
 </script>
 </body>
 </html>
