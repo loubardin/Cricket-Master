@@ -3559,6 +3559,22 @@ html body #game#game.sk.p2.pn footer{margin-top:calc(var(--g) - var(--h) - 3px)!
 /* Killer : numéro (plus grand) + marque centrés entre les cœurs et l'historique */
 html body #killer#killer#killer #kplayers .kc .kno{font-size:min(36vw,15dvh,42cqh,56cqw)!important}
 html body #killer#killer#killer #kplayers .kc .kR>.kstat{transform:none!important;margin-top:calc(min(24vw,11dvh,30cqh)*-.45)!important}
+
+/* ===== v116 ===== */
+.bosstag{transform:translate(-50%,0)!important;background:none!important;border:0!important;box-shadow:none!important;padding:0!important;color:#c99300!important;
+  font:400 10px/1 "Fun",sans-serif!important;letter-spacing:.12em!important;text-shadow:none!important}
+.tst:not(.mini){visibility:hidden!important}
+/* Cricket : infos de la case et historique de nouveau centrés dans la hauteur */
+html body #game#game#game.sk.p2 #scores>.pc.sc{grid-template-rows:1fr auto auto auto 1fr!important}
+/* Cricket : la bulle colorée de la 3e marque tremble gentiment derrière la croix */
+@keyframes discwob{0%,100%{translate:0 0}20%{translate:2.5px -1.5px}40%{translate:1px 2px}60%{translate:-2px 1px}80%{translate:-1px -2px}}
+html body #game#game.sk.p2 .mw svg .disc{transform-box:fill-box;transform-origin:center;animation:discwob 3.4s ease-in-out infinite!important}
+/* Killer : éléments resserrés et groupés au centre de la case */
+html body #killer#killer#killer #kplayers .kc{justify-content:center!important;padding:calc(var(--uu)*.8) calc(var(--uu)*.8)!important}
+html body #killer#killer#killer #kplayers .kc .kL{padding:0!important;gap:0!important}
+html body #killer#killer#killer #kplayers .kc .kno{margin-top:calc(var(--uu)*.2)!important}
+html body #killer#killer#killer #kplayers .kc .kR{margin:0!important;row-gap:0!important}
+html body #killer#killer#killer #kplayers .kc .kR>.kx{position:relative!important;bottom:auto!important;margin:calc(var(--uu)*-1.2) 0 0!important}
 </style>
 </head>
 <body>
@@ -4215,7 +4231,7 @@ function throwDart(t){
   // animation des points gagnés (standard) ou infligés (cut throat)
   P.forEach((p,i)=>{const dl=p.score-prev[i];if(dl>0){floatPts(i,'+'+dl,i!==who);countUp(i,prev[i]);if(G.mode==='cut'&&i!==who)anim(R.sc[i].c,'ice',1000)}});
   // coupe-gorge : le joueur vient de faire passer quelqu'un d'autre en tête
-  if(G.mode==='cut'){const l0=leader(prev),l1=leader(P.map(p=>p.score));if(l1>=0&&l1!==l0&&l1!==who)setTimeout(()=>{toast('SUCE À PERTE 💀');SFX.meh()},350)}
+  
   const leadAfter=leader(P.map(p=>p.score));
   let leadMsg=null;
   // « vous allume » seulement quand quelqu'un dépasse le meneur précédent (pas au tout premier point marqué)
@@ -4269,7 +4285,7 @@ function spewFx(txt,sub,lvl,soft,box){
     box.classList.add('frz',soft?'fzs':'fz'+lvl);
     setTimeout(()=>box.classList.remove('frz','fz1','fz2','fz3','fzs'),dur+60);
     const r=box.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
-    if(lvl>=2&&!soft){const t=el('div','spewtag',lvl===3?'TRIPLE SPEW':'DOUBLE SPEW');t.style.left=cx+'px';t.style.top=(r.top+6)+'px';document.body.append(t);setTimeout(()=>t.remove(),dur)}
+    
     for(let k=0;k<(soft?4:[0,6,14,26][lvl]);k++){
       const f=el('div','flake',k%3?'❄':'❅'),a=Math.random()*Math.PI*2,v=6+Math.random()*(lvl*6+6);
       f.style.left=(r.left+Math.random()*r.width)+'px';f.style.top=(r.top+Math.random()*r.height)+'px';f.style.fontSize=(9+Math.random()*12)+'px';
@@ -4343,17 +4359,18 @@ function mkToast(cls,html,ms){
 function bossFx(name){
   const scr=document.querySelector('#killer.on')||document.querySelector('#game.on');if(!scr){SFX.twinkle();return}
   const parts=String(name).split(' & ').map(x=>x.trim());
-  const els=[...scr.querySelectorAll('*')].filter(x=>!x.children.length&&parts.includes(x.textContent.trim())&&x.offsetParent);
+  let els=[];
+  if(scr.id==='game'&&G&&R){const i=G.players.findIndex(p=>p.name===name||(p.members&&p.members.some(m=>parts.includes(m))));if(i>=0&&R.sc[i])els=[R.sc[i].nm.querySelector('.nmw')||R.sc[i].nm]}
+  else if(scr.id==='killer'&&KG){const i=KG.players.findIndex(p=>p.name===name);const c=i>=0&&R2(i);if(c&&c.querySelector('.kname'))els=[c.querySelector('.kname')]}
   els.forEach((x,k)=>{
     anim(x,'bossname',1900);
     const r=x.getBoundingClientRect(),cx=r.left+r.width/2;
-    if(k===0||parts.length>1&&k<parts.length){const t=el('div','bosstag','BIG BOSS');t.style.left=cx+'px';t.style.top=r.top+'px';document.body.append(t);setTimeout(()=>t.remove(),1900)}
+    if(k===0||parts.length>1&&k<parts.length){const t=el('div','bosstag','BIG BOSS');t.style.left=cx+'px';t.style.top=(r.bottom+3)+'px';document.body.append(t);setTimeout(()=>t.remove(),1900)}
     for(let i=0;i<7;i++){const sp=el('div','bspark','✦');
       sp.style.left=(r.left-8+Math.random()*(r.width+16))+'px';sp.style.top=(r.top-6+Math.random()*(r.height+12))+'px';
       sp.style.fontSize=(8+Math.random()*10)+'px';sp.style.animationDelay=(i*.12+Math.random()*.1)+'s';
       document.body.append(sp);setTimeout(()=>sp.remove(),1900)}
   });
-  if(!els.length)mkToast('mini','<span>✨ BIG BOSS ✨</span>',1600);
   SFX.twinkle();
 }
 /* « … VOUS ALLUME » : bandeau encadré de deux pistolets qui reculent, rafales de balles et impacts, l'écran tremble */
@@ -6268,6 +6285,10 @@ SFX.bolt=()=>{if(!S.sound||!AC)return;const t0=AC.currentTime,o=AC.createOscilla
   o.connect(f).connect(g);send(g,.1);o.start(t0);o.stop(t0+.2);tone(523,.11,'sine',.05,.03);tone(784,.12,'sine',.035,.06)};
 /* 501 : score libre « Autre », de 2 à 1001 ; on repart de « Autre » à chaque lancement */
 if(![301,501,701].includes(S.xstart)){S.xstart=501}delete S.xcustom;
+/* plus aucun bandeau de texte pendant le jeu : on garde les effets (lueur, braises, tirs, confettis, sons) */
+{const _m=mkToast;mkToast=function(cls,html,ms){if(cls==='mini')return _m.apply(this,arguments);
+   const e=_m.apply(this,arguments);e.style.visibility='hidden';return e}}
+{const _t=toast;toast=function(txt,sub,mini){if(!mini)return;return _t.apply(this,arguments)}}
 /* balle : chaque appui la propulse vers le bout du rail, elle rebondit contre le bord puis retombe à sa place */
 const BALLS=new Map();
 function kickBall(num,X){const row=num.parentElement;let B=BALLS.get(num);
