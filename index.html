@@ -2794,10 +2794,10 @@ html body #game#game.sk.p2.vA.dk #scores .sc.act>.nm,html body #game#game.sk.p2.
 
 /* ===== v83 : version A seule ; double = argent, triple = or (les nombres tremblent) ; historique coloré ===== */
 #game.sk.p2 #bStyle{display:none!important}
-body.m2 #game#game.sk.p2 #grid .num:not(.dead),body.m2 html body #game#game.sk.p2 #scores>.pc.sc.act{background:linear-gradient(160deg,#eef1f4,#a9b1ba 55%,#808a95)!important}
-body.m3 #game#game.sk.p2 #grid .num:not(.dead),body.m3 html body #game#game.sk.p2 #scores>.pc.sc.act{background:linear-gradient(160deg,#ffe58a,#f2b705 50%,#c48a00)!important}
-html body.m2 #game#game.sk.p2 #scores>.pc.sc.act{background:linear-gradient(160deg,#eef1f4,#a9b1ba 55%,#808a95)!important}
-html body.m3 #game#game.sk.p2 #scores>.pc.sc.act{background:linear-gradient(160deg,#ffe58a,#f2b705 50%,#c48a00)!important}
+
+
+
+
 body.m3 #game#game.sk.p2 #grid .num.bull{background:var(--dead)!important;box-shadow:0 0 0 var(--h) var(--dead)!important}
 body.m2 #game#game.sk.p2 #grid .num:not(.dead) .lbl,body.m3 #game#game.sk.p2 #grid .num:not(.dead):not(.bull) .lbl{animation:numshake .28s linear infinite;display:inline-block}
 body.m3 #game#game.sk.p2 #grid .num:not(.dead):not(.bull) .lbl{animation-duration:.2s}
@@ -2841,8 +2841,8 @@ html.sang{--bub-bw:2px}
 #x01#x01 #xplayers .xc.act .xr,#killer#killer #kplayers .kc.act .kno{color:#fff!important}
 #x01#x01.dk #xplayers .xc.act .xn,#x01#x01.dk #xplayers .xc.act .xs,#killer#killer.dk #kplayers .kc.act .kname{color:#fff!important}
 #x01#x01 #xplayers .xc.act .xco,#x01#x01 #xplayers .xc.act .xco *{color:#111!important}
-body.m2 #x01#x01 #xplayers .xc.act,body.m2 #killer#killer #kplayers .kc.act{background:var(--silver)!important;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong),0 0 0 var(--bub-h) #a9b1ba!important}
-body.m3 #x01#x01 #xplayers .xc.act,body.m3 #killer#killer #kplayers .kc.act{background:var(--gold)!important;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong),0 0 0 var(--bub-h) #e8ab05!important}
+
+
 /* fléchettes du tour : pilules blanches à contour, spew bleu, double argent, triple or */
 #x01#x01 .khist .pill,#killer#killer .khist .pill{background:#fff!important;color:#111!important;border:var(--bub-bw) solid var(--m-strong)!important;opacity:1}
 #x01#x01 .khist .pill.e,#killer#killer .khist .pill.e{opacity:.4}
@@ -2920,7 +2920,7 @@ html body #setup#setup.b2.p2>.grp{margin-top:auto!important;margin-bottom:auto!i
 #game#game.pn #grid>.row>.num{flex:0 0 var(--midw)!important;position:relative!important;left:auto!important}
 #game#game.pn #nshadow,#game#game.pn #scores>.mid{display:none!important}
 html body #game#game.pn #scores{flex:0 0 auto!important}
-html body #game#game.sk.p2.lt #grid .num:not(.dead) .lbl,html body #game#game.sk.p2.lt #scores .sc.act>.pts{color:#111!important}
+html body #game#game.sk.p2.lt #scores .sc.act>.pts{color:#111!important}
 
 /* ===== v86 ===== */
 /* un seul cadre : celui du joueur en cours ; les joueurs en attente n'ont aucun cadre (tous les modes) */
@@ -3219,6 +3219,35 @@ html body #fbar2 #fMode small{font-size:calc(var(--tbh)*.26)!important}
 html body #game#game.sk.p2 footer,html body #game#game.sk.p2.pn footer{--colw:calc((100vw - 28px - var(--midw))/2);margin:var(--g) 14px max(16px,calc(var(--sab,0px) - 8px))!important}
 html body :is(#x01,#killer) footer{margin:1.6dvh 14px max(16px,calc(var(--sab,0px) - 8px))!important}
 html body :is(#game,#x01,#killer) footer::after,html body :is(#game,#x01,#killer) footer .fthumb{border-radius:40px!important}
+
+/* ===== v97 ===== */
+/* barre du haut : icônes aux mêmes marges que les boutons ronds des menus */
+html body #fbar2 #fMenu#fMenu,html body #fbar2 #fUndo#fUndo{place-items:center!important;width:calc(var(--tbh)*1.05)!important}
+/* 501 / Killer : mêmes marges latérales que le Cricket */
+#x01 #xmain,#killer #kmain{padding-left:3.5vw!important;padding-right:3.5vw!important}
+/* Double / Triple : la couleur du joueur ne change plus ; la bulle du switch se glace ;
+   les nombres passent en or (double) ou en essence irisée (triple) */
+html body.m2 :is(#game,#x01,#killer) footer .fthumb,html body.m3 :is(#game,#x01,#killer) footer .fthumb{
+  background:linear-gradient(160deg,#f6fdff 0%,#d3f1fc 38%,#a5dcf2 72%,#7fc8e8 100%)!important;
+  box-shadow:0 0 0 var(--h,5px) #c4eaf8,inset 0 0 0 1.5px rgba(255,255,255,.85),inset 0 -6px 14px rgba(70,150,190,.35),0 0 18px rgba(150,215,240,.6)!important}
+html body.m2 :is(#game,#x01,#killer) footer #b2::after,html body.m3 :is(#game,#x01,#killer) footer #b3::after{color:#0d5b80!important}
+@keyframes goldsh{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+@keyframes oilsh{0%{background-position:0% 50%}100%{background-position:300% 50%}}
+html body.m2 #game#game.sk.p2 #grid .num:not(.dead) .lbl,html body.m2 #x01#x01 #xkeys button .lbl{
+  background:linear-gradient(100deg,#7a5400 0%,#ffe58a 18%,#d4a017 32%,#fff6c7 46%,#b8860b 60%,#ffd75e 78%,#7a5400 100%)!important;background-size:200% 100%!important;
+  -webkit-background-clip:text!important;background-clip:text!important;color:transparent!important;-webkit-text-fill-color:transparent!important;
+  animation:numshake .28s linear infinite,goldsh 1.6s linear infinite!important;filter:drop-shadow(0 1px 0 rgba(0,0,0,.35))}
+html body.m3 #game#game.sk.p2 #grid .num:not(.dead):not(.bull) .lbl,html body.m3 #x01#x01 #xkeys button:not([data-n="25"]) .lbl{
+  background:linear-gradient(115deg,#1b1f3b 0%,#5b2a86 12%,#1fa2a8 24%,#e8c547 36%,#c2185b 48%,#2b5fd9 60%,#3ddc97 72%,#5b2a86 84%,#1b1f3b 100%)!important;background-size:300% 100%!important;
+  -webkit-background-clip:text!important;background-clip:text!important;color:transparent!important;-webkit-text-fill-color:transparent!important;
+  animation:numshake .2s linear infinite,oilsh 2.2s linear infinite!important;filter:drop-shadow(0 1px 0 rgba(0,0,0,.4))}
+/* Cricket : nombres toujours en blanc dans leurs bulles (hors double / triple) */
+html body:not(.m2):not(.m3) #game#game.sk.p2 #grid .num:not(.dead) .lbl{color:#fff!important}
+html body.m2 #game#game.sk.p2 footer .fthumb,html body.m3 #game#game.sk.p2 footer .fthumb{
+  background:linear-gradient(160deg,#f6fdff 0%,#d3f1fc 38%,#a5dcf2 72%,#7fc8e8 100%)!important;
+  box-shadow:0 0 0 var(--h,5px) #c4eaf8,inset 0 0 0 1.5px rgba(255,255,255,.85),inset 0 -6px 14px rgba(70,150,190,.35),0 0 18px rgba(150,215,240,.6)!important}
+html body.m2 #game#game.sk.p2 footer #b2::after,html body.m3 #game#game.sk.p2 footer #b3::after{color:#0d5b80!important}
+html body.m2 #game#game.sk.p2 footer #b2::after,html body.m3 #game#game.sk.p2 footer #b3::after{scale:1.22!important}
 </style>
 </head>
 <body>
@@ -4744,7 +4773,7 @@ applyTheme();
 /* ---- joueurs enregistrés : nom + couleur ---- */
 if(S.xlegs>10)S.xlegs=10;if(!S.xlegs)S.xlegs=1;if(!S.clegs)S.clegs=1;if(S.clegs>10)S.clegs=10;
 const K_R='cricket.roster.v1';
-const PCOLS=['#d62828','#f77f00','#2b9348','#1d4ed8','#7b2cbf','#0ea5e9','#c9184a','#8d5a2b','#0f8b8d','#111111','#ff5a1f','#fcc200','#f472b6','#84cc16','#6366f1','#a21caf','#64748b','#d4a373','#8ecae6','#2d6a4f'];
+const PCOLS=['#d62828','#f77f00','#2b9348','#1d4ed8','#7b2cbf','#0ea5e9','#c9184a','#8d5a2b','#0f8b8d','#111111','#ff5a1f','#fcc200','#f472b6','#84cc16','#6366f1','#a21caf','#64748b','#d4a373','#8ecae6','#2d6a4f','#ffb3c6','#bde0fe','#caffbf','#ffd6a5','#39ff14','#ff2bd6','#00f0ff','#fff01f','#b08d57','#2e1a47'];
 let ROSTER=store.get(K_R,null);
 if(!ROSTER){const seen=new Set();ROSTER=(S.names||[]).map(n=>(n||'').trim().toUpperCase()).filter(n=>n&&!/^J\d$/.test(n)&&!seen.has(n)&&seen.add(n)).map((n,i)=>({name:n,color:PCOLS[i%PCOLS.length]}));store.set(K_R,ROSTER)}
 // b = chance de toucher la bulle (25 ou 50) quand on la vise : c'est bien plus dur qu'un numéro
@@ -5716,7 +5745,7 @@ const PFB=['#ff5a1f','#1d4ed8','#fcc200','#2b9348','#7b2cbf','#0ea5e9','#c9184a'
 function pcolI(i){const p=G.players[i],c=p&&pcol(p.members?p.members[0]:p.name);return /^#[0-9a-f]{6}$/i.test(c||'')?c:PFB[i%PFB.length]}
 function skColors(){const g=$('game');
   if(!skp2()||!G||!R){g.style.removeProperty('--accent');g.style.removeProperty('--acc-rgb');g.classList.remove('dk');return}
-  const c=G.mult===2?'#a9b1ba':G.mult===3?'#e8ab05':pcolI(shownCur()),rgb=[1,3,5].map(k=>parseInt(c.slice(k,k+2),16));
+  const c=pcolI(shownCur()),rgb=[1,3,5].map(k=>parseInt(c.slice(k,k+2),16));
   g.style.setProperty('--accent',c);g.style.setProperty('--acc-rgb',rgb.join(','));
   g.classList.toggle('dk',(.299*rgb[0]+.587*rgb[1]+.114*rgb[2])/255<.5);g.classList.toggle('lt',(.299*rgb[0]+.587*rgb[1]+.114*rgb[2])/255>.62);
   TARGETS.forEach(t=>G.players.forEach((p,i)=>{const m=R.mk[t]&&R.mk[t][i];if(m)m.style.setProperty('--mc',pcolI(i))}));
