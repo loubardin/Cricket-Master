@@ -3347,6 +3347,24 @@ html body #setup .grules .rgoal{font-weight:700!important;color:var(--ink)!impor
 html body #setup .grules .rgoal i{font-weight:700!important;color:var(--accent)!important}
 html body #setup .grules .rp{font-weight:600!important;color:var(--mute)!important}
 html body #setup .grules .rp b{font-weight:700!important;color:var(--ink)!important}
+
+/* ===== v104 ===== */
+/* barre du haut des jeux : retour et annuler dans des ronds à contour noir, comme le retour des menus */
+html body #fbar2 #fMenu#fMenu,html body #fbar2 #fUndo#fUndo{width:calc(var(--uu)*5.6)!important;height:calc(var(--uu)*5.6)!important;align-self:center;border-radius:50%!important;
+  box-shadow:inset 0 0 0 var(--bub-bw,1.5px) var(--m-strong)!important;place-items:center!important;background:transparent!important}
+html body #fbar2 #fMenu#fMenu svg,html body #fbar2 #fUndo#fUndo svg{width:52%!important;height:52%!important;stroke-width:2.4!important}
+/* statistiques : sans bulles, la meilleure valeur de chaque ligne dans la couleur du joueur, toute la page */
+#info#info.on{display:flex!important;flex-direction:column!important}
+#info #stats{flex:1 1 auto;width:100%!important;border-collapse:collapse!important;border-spacing:0!important;margin-top:calc(var(--uu)*2)!important;table-layout:fixed}
+html body #info #stats tr:first-child th.stn{color:var(--sc)!important;font-size:calc(var(--uu)*2.8)!important;padding:0 2px calc(var(--uu)*1.4)!important;font-weight:400!important}
+html body #info #stats tr:first-child th.stn::before{display:none!important}
+html body #info #stats tr:not(:first-child) td,html body #info #stats tr:not(:first-child) td:first-child,html body #info #stats tr:not(:first-child) td:last-child{
+  box-shadow:none!important;border-radius:0!important;border-top:1px solid color-mix(in srgb,var(--m-strong) 14%,transparent)!important;padding:calc(var(--uu)*1.7) 2px!important}
+html body #info #stats tr:not(:first-child) td{font-size:calc(var(--uu)*3)!important;color:var(--ink)!important}
+html body #info #stats tr:not(:first-child) td:first-child{font-family:"UI",sans-serif!important;font-weight:600!important;font-size:calc(var(--uu)*1.9)!important;color:var(--mute)!important;width:34%}
+html body #info #stats td.stb{color:var(--sc)!important;font-size:calc(var(--uu)*3.4)!important}
+html body #info #stats td.stb::before{display:none!important}
+html body #info #stats tr:not(:first-child) td.stb.stb{color:var(--sc)!important;font-size:calc(var(--uu)*3.4)!important}
 </style>
 </head>
 <body>
@@ -3451,7 +3469,7 @@ html body #setup .grules .rp b{font-weight:700!important;color:var(--ink)!import
     <button id="bS" aria-label="Spew">SPEW</button>
     <button id="b3" aria-label="Triple">TRIPLE</button>
     <i class="fthumb"></i>
-    <div id="fbar2"><i class="f2th"></i><button id="fMenu" aria-label="Menu principal"><svg viewBox="0 0 24 24"><path d="M4 11.5 12 4l8 7.5"/><path d="M6.5 9.5V20h11V9.5"/></svg></button><button id="fMode" aria-label="Infos partie"><b></b><small></small></button><button id="fUndo" aria-label="Annuler la dernière fléchette"><svg viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button></div>
+    <div id="fbar2"><i class="f2th"></i><button id="fMenu" aria-label="Retour"><svg viewBox="0 0 24 24"><path d="M15 5 8 12l7 7"/></svg></button><button id="fMode" aria-label="Infos partie"><b></b><small></small></button><button id="fUndo" aria-label="Annuler la dernière fléchette"><svg viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button></div>
   </footer>
 </section>
 
@@ -4790,7 +4808,7 @@ let ASKFROM='go',ABAND=false;
 function openAsk(from){ASKFROM=from;const a=$('ask');a.querySelector('.asw').classList.remove('new');a.classList.add('on')}
 $('askYes').addEventListener('click',()=>{haptic();const w=$('ask').querySelector('.asw');w.classList.add('new');
   setTimeout(()=>{$('ask').classList.remove('on');if(ASKFROM==='home'){ABAND=true;renderSetup();show('setup')}else launchNew()},230)});
-$('askNo').addEventListener('click',()=>{haptic();$('ask').classList.remove('on');if(ASKFROM==='home')$('hResume').click()});
+$('askNo').addEventListener('click',()=>{haptic();$('ask').classList.remove('on');if(ASKFROM==='home'){if(S.last==='x01')showX01();else if(S.last==='killer')showKiller();else{mountFooter('game');build();render();show('game')}}});
 {const w=document.createElement('div');w.className='asw';w.innerHTML='<i class="hth"></i>';w.append($('askNo'),$('askYes'));$('ask').append(w);
  $('askNo').textContent='Reprendre';$('askYes').textContent='Nouvelle partie'}
 {const _l=launchNew;launchNew=function(){ABAND=false;return _l.apply(this,arguments)}}
