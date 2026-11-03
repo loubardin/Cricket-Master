@@ -3493,6 +3493,15 @@ html body #x01#x01 #xplayers:not(.two) .xc .xs{font-size:min(7cqw,1.6dvh)!import
 html body #x01#x01 #xplayers:not(.two) .xc .xb{min-height:2.6dvh!important;display:flex!important;justify-content:center;align-items:center}
 html body #x01#x01 #xplayers:not(.two) .xc .khist .pill{font-size:min(6cqw,1.5dvh)!important;min-width:min(15cqw,4.2dvh)!important}
 html body #x01#x01 #xplayers:not(.two) .xc .xmid{display:contents!important}
+
+/* ===== v111 ===== */
+/* Killer : cœurs rouges, seul le cœur en plus (bonus) reste doré */
+html body #killer#killer#killer #kplayers .kc.act .klives .h.on{color:#e4251a!important;filter:none!important}
+html body #killer#killer#killer #kplayers .kc .klives .h.gold.on{color:#e3b12a!important}
+/* Cricket en équipe : joueur qui lance en grand « Lou & », coéquipier en petit dessous */
+html body #game#game.sk.p2 #scores .sc>.nm .nmw{display:block;font-weight:inherit}
+html body #game#game.sk.p2 #scores .sc>.nm .nmm{display:block;font-size:.58em;opacity:.6;margin-top:.18em;letter-spacing:.04em}
+html body #game#game.sk.p2 #scores .sc>.nm:has(.nmm){text-box:none!important;line-height:1!important}
 </style>
 </head>
 <body>
@@ -3823,6 +3832,12 @@ function brass(fs,delay,dur,vol=.05){
     lp.connect(g);send(g,.5);
   });
 }
+function swoosh(){if(!S.sound||!AC)return;const t0=AC.currentTime,dur=.32,b=AC.createBuffer(1,Math.ceil(AC.sampleRate*dur),AC.sampleRate),d=b.getChannelData(0);
+  for(let i=0;i<d.length;i++){const k=i/d.length;d[i]=(Math.random()*2-1)*Math.sin(Math.PI*k)}
+  const src=AC.createBufferSource(),f=AC.createBiquadFilter(),g=AC.createGain();src.buffer=b;f.type='bandpass';f.Q.value=1.2;
+  f.frequency.setValueAtTime(500,t0);f.frequency.exponentialRampToValueAtTime(2600,t0+dur*.55);f.frequency.exponentialRampToValueAtTime(900,t0+dur);
+  g.gain.setValueAtTime(.0001,t0);g.gain.exponentialRampToValueAtTime(.11,t0+.09);g.gain.exponentialRampToValueAtTime(.0001,t0+dur);
+  src.connect(f).connect(g);send(g,.15);src.start(t0)}
 const SFX={
   hit:m=>[520,700,940].slice(0,m).forEach((f,i)=>tone(f,.09,'triangle',.18,i*.06)),
   // simple : l'ancien son du double (coup sourd + deux cloches claires)
@@ -4542,7 +4557,7 @@ function render(){
     const badge=i===lead?'hat':i===last?'snail':'';
     const who=thrower(p,i),mate=p.members?p.members.find(x=>x!==who)||'':'',key=who+'|'+mate;
     if(s.badge!==badge||s.nmTxt!==key){
-      s.nm.innerHTML=esc(who)+(badge==='hat'?CROWN:'')+(badge==='snail'?SNAIL:'')
+      s.nm.innerHTML=(mate?'<b class="nmw">'+esc(who)+' &amp;</b><small class="nmm">'+esc(mate)+'</small>':esc(who))+(badge==='hat'?CROWN:'')+(badge==='snail'?SNAIL:'')
       if(badge&&s.badge!==undefined&&s.badge!==badge){const e=s.nm.querySelector('.'+badge);if(e)e.classList.add('pop')}
       s.badge=badge;s.nmTxt=key;
     }
@@ -4783,7 +4798,7 @@ $('setup').addEventListener('click',e=>{
 let DRAG=null,PRE=null;
 $('names').addEventListener('pointerdown',e=>{
   const slot=e.target.closest('.nslot');if(!slot||e.target.closest('.pdel'))return;
-  PRE={slot,x0:e.clientX,y0:e.clientY};
+  PRE={slot,x0:e.clientX,y0:e.clientY,t0:performance.now()};
 });
 let DRAGGED=0;$('names').addEventListener('click',e=>{if(performance.now()-DRAGGED<400){e.stopPropagation();e.preventDefault()}},true);
 function flipNames(mutate){
@@ -4813,7 +4828,7 @@ function dropSpot(px,py){   // où la case atterrirait : [conteneur, élément a
   return[box,ref||(D.teams?null:box.querySelector(':scope>.padd'))];
 }
 $('names').addEventListener('pointermove',e=>{
-  if(PRE&&!DRAG){if(Math.hypot(e.clientX-PRE.x0,e.clientY-PRE.y0)>6)startDrag(e);else return}
+  if(PRE&&!DRAG){if(Math.hypot(e.clientX-PRE.x0,e.clientY-PRE.y0)>6){if(performance.now()-PRE.t0<220){PRE=null;return}startDrag(e)}else return}
   if(!DRAG)return;e.preventDefault();const D=DRAG;
   D.slot.style.left=(e.clientX-D.ox)+'px';D.slot.style.top=(e.clientY-D.oy)+'px';D.slot.style.transform='scale(1.06)';
   const sp=dropSpot(e.clientX,e.clientY);if(!sp)return;const [box,ref]=sp;
@@ -6157,6 +6172,11 @@ document.querySelector('#setup .xcus').addEventListener('click',e=>{e.stopPropag
   const ok=()=>{const v=Math.round(+inp.value);if(!(v>=101&&v<=9999)){toast('ENTRE UN SCORE ENTRE 101 ET 9999','',true);return}S.xcustom=v;S.xstart=v;store.set(K_S,S);p.remove();SFX.ui();renderSetup()};
   p.querySelector('.xpo').addEventListener('click',ok);inp.addEventListener('keydown',ev=>{if(ev.key==='Enter')ok()});
   setTimeout(()=>document.addEventListener('pointerdown',function f(ev){if(!ev.target.closest('#xpick')){p.remove();document.removeEventListener('pointerdown',f,true)}},true),0)},true);
+/* changement de joueur : petit swoosh (tous les jeux) */
+{const last={};const chk=(k,v)=>{if(last[k]!==undefined&&v!==undefined&&last[k]!==v)try{swoosh()}catch(e){}last[k]=v};
+ const _r=render;render=function(){const x=_r.apply(this,arguments);try{if(G&&G.winner===null)chk('c'+G.id,shownCur())}catch(e){}return x};
+ const _x=xRender;xRender=function(){const x=_x.apply(this,arguments);try{if(XG&&XG.winner===null)chk('x'+XG.t0,XG.cur)}catch(e){}return x};
+ const _k=kRender;kRender=function(){const x=_k.apply(this,arguments);try{if(KG&&KG.winner===null)chk('k'+KG.id,KHOLD?KHOLD.who:KG.cur)}catch(e){}return x}}
 /* balle : chaque appui la propulse vers le bout du rail, elle rebondit contre le bord puis retombe à sa place */
 const BALLS=new Map();
 function kickBall(num,X){const row=num.parentElement;let B=BALLS.get(num);
