@@ -3197,6 +3197,24 @@ html body #fbar2 #fMode#fMode{color:#fff!important;align-content:center;gap:calc
 html body #fbar2 #fMode b{font-weight:400;font-size:calc(var(--tbh)*.42);line-height:1}
 html body #fbar2 #fMode small{font-size:calc(var(--tbh)*.2);line-height:1;opacity:.92;letter-spacing:.02em;white-space:nowrap}
 .lt #fbar2 #fMode#fMode,#game.lt #fbar2 #fMode#fMode{color:#111!important}
+
+/* ===== v96 ===== */
+/* barre du haut : sans cadre ni bulle, icônes calées sur les marges, mode de jeu au centre */
+html body #fbar2{grid-template-columns:auto 1fr auto!important}
+html body #fbar2::after,html body #fbar2 .f2th{display:none!important}
+html body #fbar2 #fMenu#fMenu{justify-self:start;width:var(--tbh)!important;place-items:center start!important}
+html body #fbar2 #fUndo#fUndo{justify-self:end;width:var(--tbh)!important;place-items:center end!important}
+html body #fbar2 #fMode#fMode,.lt #fbar2 #fMode#fMode,#game.lt #fbar2 #fMode#fMode{color:var(--ink)!important}
+html body #fbar2 #fMode small{color:var(--mute)}
+/* switch du bas : plus grand, presque bord à bord, coins qui suivent ceux de l'écran */
+html body #game#game.sk.p2 footer,html body #game#game.sk.p2.pn footer{--colw:calc((100vw - 12px - var(--midw))/2);height:calc(var(--r)*1.25)!important;margin:var(--g) 6px 6px!important}
+html body #game#game.sk.p2.pn footer{--midw:33.333vw}
+html body :is(#x01,#killer) footer{height:9dvh!important;margin:1.6dvh 6px 6px!important}
+html body :is(#game,#x01,#killer) footer::after{border-radius:46px!important}
+html body :is(#game,#x01,#killer) footer .fthumb{border-radius:46px!important}
+html body #game#game.sk.p2 footer #b2::after,html body #game#game.sk.p2 footer #bS::after,html body #game#game.sk.p2 footer #b3::after{font-size:calc(var(--r)*.42)!important}
+html body :is(#x01,#killer) footer #b2::after,html body :is(#x01,#killer) footer #bS::after,html body :is(#x01,#killer) footer #b3::after{font-size:3dvh!important}
+html body #fbar2 #fMode small{font-size:calc(var(--tbh)*.26)!important}
 </style>
 </head>
 <body>
@@ -5649,7 +5667,7 @@ function layoutSk(){
   const gp=innerWidth*.035,hd=g.querySelector('header'),ft=g.querySelector('footer');
   const rc=parseFloat(g.style.getPropertyValue('--rowh'))||58,gb=ft?parseFloat(getComputedStyle(ft).marginBottom)||gp:gp;
   const mt=(parseFloat(getComputedStyle(g.querySelector('main')).paddingTop)||0)-rc*.82;   // marge du haut sans la barre
-  const r=Math.max(28,(g.clientHeight-hd.offsetHeight-mt-9*gp-gb)/11.26);
+  const r=Math.max(28,(g.clientHeight-hd.offsetHeight-mt-9*gp-gb)/11.51);
   g.style.setProperty('--rowh',r.toFixed(2)+'px');
 }
 /* nom et score : taille fixe (proportionnelle à la ligne), réduite seulement si ça ne tient pas dans la colonne ;
