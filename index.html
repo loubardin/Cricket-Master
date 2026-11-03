@@ -3471,6 +3471,28 @@ html body #game#game.sk.p2:not(.pn) .mw svg{stroke-width:5!important}
 html body #killer#killer#killer #kplayers .kc .kno{font-size:min(30vw,13dvh,36cqh)!important}
 html body #killer#killer#killer #kplayers .kc .khist .pill{font-size:min(3.6vw,1.9dvh,6cqh)!important;min-width:min(11vw,5.2dvh,15cqh)!important}
 html body #killer#killer#killer #kplayers .kc .kstat .kmk,html body #killer#killer#killer #kplayers .kc .kstat .kmk.none{width:min(16vw,7.5dvh,20cqh)!important;height:min(16vw,7.5dvh,20cqh)!important}
+
+/* ===== v110 ===== */
+/* Killer : numéro d'un joueur mort en gris ; cœurs dorés pour le joueur en cours ; bloc numéro + marque centré, fléchettes en bas */
+html body #killer#killer#killer #kplayers .kc.dead .kno{color:#b9b4aa!important}
+html body #killer#killer#killer #kplayers .kc.act .klives .h.on{color:#e3b12a!important;filter:drop-shadow(0 1px 0 rgba(0,0,0,.25))}
+html body #killer#killer#killer #kplayers .kc{position:relative!important}
+html body #killer#killer#killer #kplayers .kc .kno{margin-top:auto!important}
+html body #killer#killer#killer #kplayers .kc .kR{margin-bottom:auto!important;position:static!important}
+html body #killer#killer#killer #kplayers .kc .kR>.kx{position:absolute!important;left:0!important;right:0!important;bottom:calc(var(--uu)*1.4)!important;margin:0!important;display:flex!important;justify-content:center}
+html body #killer#killer#killer #kplayers .kc{padding-bottom:calc(var(--uu)*5)!important}
+/* Cricket : traits des marques aussi fins que les contours noirs, même croix avant et après la 3e marque */
+html body #game#game.sk.p2 .mw svg path,html body #game#game.sk.p2 .mw svg circle:not(.disc):not(.dot){vector-effect:non-scaling-stroke;stroke-width:calc(var(--bw)*1.4)!important}
+html body #game#game.sk.p2 .mw svg>:last-child{animation:none!important}
+html body #game#game.sk.p2 .mk .mw{animation:none!important}
+/* 501 à plusieurs : la case du joueur en cours garde les proportions des autres */
+html body #x01#x01 #xplayers:not(.two) .xc{display:grid!important;grid-template-rows:auto auto auto auto!important;align-content:center!important;row-gap:.5dvh!important;padding:1dvh 2vw!important}
+html body #x01#x01 #xplayers:not(.two) .xc .xn{font-size:min(13cqw,2.7dvh)!important}
+html body #x01#x01 #xplayers:not(.two) .xc .xr{font-size:min(38cqw,7.2dvh)!important}
+html body #x01#x01 #xplayers:not(.two) .xc .xs{font-size:min(7cqw,1.6dvh)!important}
+html body #x01#x01 #xplayers:not(.two) .xc .xb{min-height:2.6dvh!important;display:flex!important;justify-content:center;align-items:center}
+html body #x01#x01 #xplayers:not(.two) .xc .khist .pill{font-size:min(6cqw,1.5dvh)!important;min-width:min(15cqw,4.2dvh)!important}
+html body #x01#x01 #xplayers:not(.two) .xc .xmid{display:contents!important}
 </style>
 </head>
 <body>
