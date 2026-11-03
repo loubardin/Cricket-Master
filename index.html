@@ -3845,6 +3845,11 @@ html body #setup#setup.b2.g-hi .opt.ck:not(.xk){display:none!important}
 #hiPick .hpg button[data-n="25"]{grid-column:span 5}
 #hiPick .hpg button:active{background:var(--pc,var(--accent));color:#fff}
 html body #killer#killer#killer#killer #kplayers .kc.bar .kx{margin-top:min(5cqh,5cqw)!important}
+/* points sous le nom (Shanghai, Halve-it) */
+html body #killer#killer#killer#killer #kplayers .kc.bar .kpts{font-family:"Lbl",-apple-system,sans-serif;font-weight:600;font-size:min(7cqh,10cqw);line-height:1.1;color:var(--mute);white-space:nowrap}
+html body #killer#killer#killer#killer #kplayers .kc.bar .kpts b{font-family:"FunTxt",-apple-system,sans-serif;font-weight:900;font-size:1.45em;color:var(--ink)}
+html body #killer#killer#killer#killer #kplayers .kc.bar.act .kpts b{color:var(--pc)}
+html body #killer#killer#killer#killer #kplayers .kc.bar .kL{display:flex;flex-direction:column;align-items:center}
 </style>
 </head>
 <body>
@@ -3915,6 +3920,7 @@ html body #killer#killer#killer#killer #kplayers .kc.bar .kx{margin-top:min(5cqh
       <div class="opt sho"><span>Tours</span><div class="seg mini" data-k="shr"><button data-v="7">7</button><button data-v="10">10</button><button data-v="20">20</button></div></div>
       <div class="opt sho"><span>Shanghai =</span><div class="seg mini" id="segShw"><button data-v="1" id="shwWin">Victoire</button><button data-v="0" id="shwBon">Bonus</button></div></div>
       <div class="opt clo"><span>Double / triple</span><div class="seg mini" data-k="clkm"><button data-v="0">Avance de 1</button><button data-v="1">Saute 2 / 3</button></div></div>
+      <div class="opt clo"><span>Joueur rejoue</span><div class="seg mini" data-k="clkr"><button data-v="0">Non</button><button data-v="1">MPR &gt; 1</button><button data-v="2">MPR &gt; 2</button></div></div>
       <div class="opt clo"><span>Arrivée</span><div class="seg mini" data-k="clkb"><button data-v="0">Le 20</button><button data-v="1">La Bulle</button></div></div>
       <div class="opt hio wide"><span>Cibles</span><button class="hiseqb" id="hiSeqB"></button></div>
       <div class="opt hio"><span>Fléchettes</span><div class="seg mini" data-k="hid"><button data-v="3">3</button><button data-v="4">4</button><button data-v="5">5</button></div></div>
@@ -4096,7 +4102,7 @@ const store={
 const $=id=>document.getElementById(id);
 const el=(tag,cls,html)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e};
 
-let S=Object.assign({mode:'cut',n:2,names:['LOU','TONE','J3','J4','J5','J6'],sound:true,theme:'bar',game:'cricket',klives:3,kmarks:3,knum:'draw',kbonus:1,kdef:1,kcarry:1,seq:0,teams:0,kgrid:1,order:'fixed',last:'cricket',xstart:501,xin:0,xout:1,xlegs:1,xhint:1,xrep:1,clegs:1,bet:0,betk:0,betv:5,betl:'',shr:7,shw:1,shb:100,clkm:0,clkb:1,lastBar:'killer',hiseq:[15,16,'D',17,18,'T',19,20,'B'],hid:3,hip:1},store.get(K_S,{}));
+let S=Object.assign({mode:'cut',n:2,names:['LOU','TONE','J3','J4','J5','J6'],sound:true,theme:'bar',game:'cricket',klives:3,kmarks:3,knum:'draw',kbonus:1,kdef:1,kcarry:1,seq:0,teams:0,kgrid:1,order:'fixed',last:'cricket',xstart:501,xin:0,xout:1,xlegs:1,xhint:1,xrep:1,clegs:1,bet:0,betk:0,betv:5,betl:'',shr:7,shw:1,shb:100,clkm:0,clkb:1,clkr:0,lastBar:'killer',hiseq:[15,16,'D',17,18,'T',19,20,'B'],hid:3,hip:1},store.get(K_S,{}));
 S.theme='pure';   // un seul style
 /* style : « pure » = version de référence ; les autres styles sont des couches CSS par-dessus (body.theme-…) */
 const applyTheme=()=>{document.body.classList.add('theme-color')};
@@ -5967,7 +5973,7 @@ function startX01(names,starter=0,teams=null,mode){
     players:names.map(n=>({name:n,rem:st,open:inR===0,darts:0,pts:0,legs:0,turns:0,best:0,n180:0,n140:0,n100:0,co:0,busts:0,bestLeg:0,legDarts:0,last:[]})),
     cur:starter,starter,turn:[],ts:st,tso:inR===0,mult:1,round:1,leg:1,legW:null,winner:null};
   if(teams){XG.teams=true;XG.players.forEach((p,i)=>{p.members=teams[i].slice();p.mi=p.members.length>1&&Math.random()<.5?1:0})}   // qui commence dans l'équipe : au hasard
-  if(mode){XG.mode=mode;XG.legsTo=1;XG.shr=S.shr||7;XG.shw=S.shw!==0;XG.shb=S.shb||100;XG.clkm=!!S.clkm;XG.clkb=S.clkb!==0;XG.hiseq=(Array.isArray(S.hiseq)&&S.hiseq.length?S.hiseq:HI_CLASSIC).slice();XG.hid=S.hid||3;XG.hip=S.hip!==0;XG.players.forEach(p=>{p.rem=0;p.hits=0;p.tgt=1;p.sh=0;p.n3=0;p.halves=0;p.lost=0})}
+  if(mode){XG.mode=mode;XG.legsTo=1;XG.shr=S.shr||7;XG.shw=S.shw!==0;XG.shb=S.shb||100;XG.clkm=!!S.clkm;XG.clkb=S.clkb!==0;XG.clkr=S.clkr||0;XG.hiseq=(Array.isArray(S.hiseq)&&S.hiseq.length?S.hiseq:HI_CLASSIC).slice();XG.hid=S.hid||3;XG.hip=S.hip!==0;XG.players.forEach(p=>{p.rem=0;p.hits=0;p.tgt=1;p.sh=0;p.n3=0;p.halves=0;p.lost=0})}
   XH=[];S.last='x01';store.set(K_S,S);xSave();showX01();
 }
 function showX01(){if(XG&&XG.mode){showBar();return}BARON=false;mountFooter('x01');show('x01');xBuildKeys();xRender()}
@@ -6211,6 +6217,7 @@ function xBarThrow(n,m,quiet){
   if(end==='turn'&&XG.mode==='hi'&&XG.hip&&tsum===0&&me.rem>0){const b=me.rem;me.rem=Math.floor(me.rem/2);d.halve=b-me.rem;me.lost+=d.halve;me.halves++}   // pénalité : score divisé par deux
   if(end){me.turns++;me.last=turn;if(me.members)me.mi=(me.mi+1)%me.members.length;XG.turn=[];me.best=Math.max(me.best,tsum);
     if(end==='win'){XG.legW=who;XG.winner=who}
+    else if(XG.mode==='clk'&&XG.clkr&&turn.length>=3&&turn.filter(x=>x.type==='hit').reduce((a,x)=>a+x.m,0)>XG.clkr){d.again=1}   // MPR du tour > seuil : il rejoue
     else{const ord=i=>(i-XG.starter+N)%N;let c=who,wrap=false;
       do{const pc=c;c=(c+1)%N;if(ord(c)<=ord(pc))wrap=true}while(P[c].out&&c!==who);
       if(wrap)XG.round++;XG.cur=c;
@@ -6223,12 +6230,14 @@ function xBarThrow(n,m,quiet){
   xSave();xRender();
   if(!quiet||end)xBarFx(d,me,who,end,tsum);
 }
+const turn3=p=>(p.last||[]).filter(x=>x.type==='hit').reduce((a,x)=>a+x.m,0);
 function xBarFx(d,me,who,end,tsum){
   const card=R2(who);
   if(d.type==='hit'){d.m===3?SFX.triple():d.m===2?SFX.double():SFX.single();if(card){anim(card,'kmark',600);const no=card.querySelector('.kno');if(no)for(let j=0;j<d.m;j++)setTimeout(()=>{const r=el('div','ring');no.append(r);setTimeout(()=>r.remove(),700)},j*140)}}
   else if(d.type==='off'){SFX.dead&&SFX.dead();if(card)anim(card,'xno',450)}
   else{anim($('bS'),'shk',450);spewFx('','',1,false,card)}
   if(d.sh){setTimeout(()=>{toast('SHANGHAI !',d.bonus?'+'+d.bonus+' points':'');SFX.big(5);confetti(90)},120);if(!end||end!=='win')return}
+  if(d.again){setTimeout(()=>{toast('REJOUE !','MPR '+turn3(me)+' ce tour');SFX.ignite()},200)}
   if(d.halve){setTimeout(()=>{toast('÷ 2 !','−'+d.halve+' points');SFX.loser(2);if(card)anim(card,'khit',700)},250)}
   if(end==='win'){setTimeout(()=>{SFX.win();confetti(90)},150);return}
   if(d.extra)setTimeout(()=>{toast('ÉGALITÉ !','prolongation à la bulle');SFX.ignite()},200);
@@ -6682,7 +6691,8 @@ function showRules(){const e=$('gRules');if(!e)return;const g=S.game||'cricket',
   else if(g==='clock'){goal='Faire le tour de la cible le premier.';
     ps=['Touche le <b>1</b>, puis le <b>2</b>, le 3… dans l\'ordre jusqu\'au 20'+(S.clkb!==0?', puis <b>la Bulle</b>.':'.'),
       S.clkm?'Un double te fait <b>sauter de 2</b> cases, un triple <b>de 3</b>.':'Simple, double ou triple : chaque touche te fait <b>avancer d\'une case</b>.',
-      'Tant que tu n\'as pas touché ton numéro, tu restes dessus. Le premier arrivé gagne.']}
+      'Tant que tu n\'as pas touché ton numéro, tu restes dessus. Le premier arrivé gagne.',
+      ...(S.clkr?['<b>Rejoue</b> : si ton MPR du tour (marques en 3 fléchettes) dépasse '+S.clkr+', tu rejoues tout de suite.']:[])]}
   else{goal='Être le dernier en vie.';
     ps=['Chacun reçoit un numéro. Commence par toucher <b>le tien 3 fois</b> : tu deviens Killer.',
       'Ensuite, vise les numéros des autres : chaque touche leur <b>enlève une vie</b>.',
@@ -7111,10 +7121,10 @@ function bRender(){
     c.className='kc bar'+(act?' act tgt':'')+(won?' act':'')+(!act&&!won?' dim':'')+(p.out?' dead':'')+[...c.classList].filter(x=>keep.includes(x)).map(x=>' '+x).join('');
     const put=(sel,h)=>{const e=c.querySelector(sel);if(e.dataset.h!==h){e.innerHTML=h;e.dataset.h=h}};
     const L=p.members&&p.members.length>1?(()=>{const n=p.members.length,j=((p.mi||0)+(!act&&p.last&&p.last.length?n-1:0))%n;return`<span class="kmm">${esc(p.members[(j+1)%n])}</span>${esc(p.members[j])}`})():esc(p.name);
-    put('.kL',`<div class="kname">${L}</div>`);
+    put('.kL',`<div class="kname">${L}</div>`+(XG.mode==='clk'?'':`<div class="kpts"><b>${p.rem}</b> points</div>`));
     put('.kno',XG.mode==='hi'?hiLbl(t):XG.mode==='sh'?(t===25?'B':String(t)):(p.tgt===0?'✓':p.tgt===25?'B':String(p.tgt)));
     put('.kstat','');
-    const sc=XG.mode==='clk'?'':`<div class="bsc"><b>${p.rem}</b><small>${XG.mode==='hi'&&(t==='D'||t==='T'||t==='B')?hiName(t)+' · ':''}pts</small></div>`;
+    const sc=XG.mode==='hi'&&(t==='D'||t==='T'||t==='B')?`<div class="bsc"><small>${hiName(t)}</small></div>`:'';
     const ds=act?XG.turn:p.last;
     put('.kx',sc+(act||ds&&ds.length?`<div class="khist${act?'':' old'}">${Array.from({length:act?(XG.mode==='hi'?XG.hid:3):ds.length},(_,k)=>xDart(ds[k])).join('')}</div>`:''));
   });
