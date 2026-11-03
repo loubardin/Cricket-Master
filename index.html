@@ -3860,6 +3860,17 @@ html body #killer#killer#killer#killer #kplayers .kc.bar .kL{display:flex;flex-d
 #askSum li.cur span::after{content:" · à lui de jouer";font-weight:500;color:var(--accent);font-size:.85em}
 #askSum .asb{margin-top:1dvh;text-align:center;font-weight:600;color:var(--accent);font-size:min(3.6vw,1.8dvh)}
 #ask .note{margin-bottom:2.4dvh!important}
+/* cricket 1 contre 1 : historique de l'autre joueur en colonne, à cheval entre les deux cases */
+html body #game#game#game.sk.p2:not(.pn) #scores>.sc:not(.act){position:relative}
+html body #game#game#game.sk.p2:not(.pn) #scores>.sc:not(.act)>.pills{grid-area:auto!important;position:absolute!important;left:-13px!important;right:auto!important;bottom:auto!important;top:50%!important;transform:translateY(-50%)!important;display:flex!important;flex-direction:column!important;gap:calc(var(--r)*.06)!important;width:auto!important;margin:0!important;z-index:3}
+html body #game#game#game.sk.p2:not(.pn) #scores>.sc:not(.act)>.pills .pill{min-width:calc(var(--r)*.36)!important;height:calc(var(--r)*.34)!important;font-size:calc(var(--r)*.18)!important;padding:0 .2em!important}
+/* 4 joueurs et plus : la case en cours, score centré, historique dessous */
+html body #game#game#game.sk.p2.pn.pn4 #scores>.sc.act{grid-template-columns:100%!important;justify-items:center!important;position:relative}
+html body #game#game#game.sk.p2.pn.pn4 #scores>.sc.act>:is(.nm,.pts,.mpr){grid-column:1!important;translate:none!important}
+html body #game#game#game.sk.p2.pn.pn4 #scores>.sc.act>.pills{grid-area:auto!important;position:absolute!important;left:50%!important;right:auto!important;bottom:calc(var(--r)*.18)!important;top:auto!important;transform:translateX(-50%)!important;display:flex!important;flex-direction:row!important;gap:calc(var(--r)*.05)!important;width:auto!important;margin:0!important}
+html body #game#game#game.sk.p2.pn.pn4 #scores>.sc.act>.pills .pill{min-width:calc(var(--r)*.3)!important;width:auto!important;height:calc(var(--r)*.25)!important;font-size:calc(var(--r)*.15)!important;padding:0 .12em!important}
+html body #game#game#game.sk.p2.pn.pn4 #scores>.sc.act>.mpr{margin-bottom:calc(var(--r)*.4)!important}
+#fMode small{display:inline-block;transition:transform .2s}
 </style>
 </head>
 <body>
@@ -6545,8 +6556,13 @@ function fitSk(){
     els.forEach(e=>e.style.setProperty('font-size',fs.toFixed(2)+'px','important'))};
   if(G.teams&&G.players.some(p=>p.members)){const all=G.players.flatMap(p=>p.members||[p.name]),cs=getComputedStyle(R.sc[0].nm),B=r*(Math.max(...G.players.flatMap(p=>(p.members||[p.name]).map(x=>String(x).length)))<=4?.38:.47);let fs=B;
     all.forEach(nm=>{const w=gmet(cs,nm,B).w;if(w>avail)fs=Math.min(fs,B*avail/w)});R.sc.forEach(s=>s.nm.style.setProperty('font-size',fs.toFixed(2)+'px','important'))}
-  else{const mx=Math.max(...G.players.map(p=>String(p.name).length));fit('nm',r*(mx<=4?.38:.47))}
-  fit('pts',r*1.08);
+  else{const mx=Math.max(...G.players.map(p=>String(p.name).length));fit('nm',r*(mx<=4?.38:.47)*(G.players.length<=3?1.2:1))}
+  // scores : plus gros à 2-3 joueurs ; à 4 et plus, seul le joueur en cours grossit (sa case est plus large)
+  const n=G.players.length,ai=shownCur(),big=n<=3?1.38:1.08;
+  const fitG=(els,base,av)=>{let fs=base;els.forEach(e=>{e.style.setProperty('font-size',base+'px','important');const w=e.offsetWidth,a=av(e);if(w>a)fs=Math.min(fs,base*a/w)});els.forEach(e=>e.style.setProperty('font-size',fs.toFixed(2)+'px','important'))};
+  const act=R.sc[ai],oth=R.sc.filter((_,i)=>i!==ai);
+  fitG(oth.map(s=>s.pts),r*big,()=>avail);
+  if(act)fitG([act.pts],r*(n<=3?1.38:1.4),e=>{const c=act.c,pl=act.pills;return n>=4?c.clientWidth*.86:Math.max(40,c.clientWidth-pl.offsetWidth-28)});
 }
 {const _fh=fitHead;fitHead=function(){if(skp2())return fitSk();return _fh.apply(this,arguments)}}
 {const _eq=eqNames;eqNames=function(){if(skp2())return;return _eq.apply(this,arguments)}}
@@ -7215,6 +7231,29 @@ function askSummary(){
   else if(S.bet)bet=`Enjeu : ${betTxt(S.betv||5,S.betk?(S.betl||'gage'):'€')} par partie`;
   box.innerHTML=`<div class="ast">${esc(title)}</div><ul>${rows.map((r,i)=>`<li class="${i===cur?'cur':''}"><span>${dot(r[0])}${esc(r[0])}</span><b>${r[1]}</b></li>`).join('')}</ul>${bet?`<div class="asb">${bet}</div>`:''}`;
 }
+
+/* cricket : historique des autres collé sous le MPR (3+), en colonne à 1 contre 1 ; à 4+, l'historique du joueur en cours passe sous son score ;
+   couronne au-dessus du nom (encore plus haut en équipe), qui s'écarte des boutons du haut et pousse le petit texte du titre */
+function skDeco(){
+  if(!R||!G||!R.sc||!$('game').classList.contains('on'))return;const g=$('game'),n=G.players.length,ai=shownCur();
+  g.classList.toggle('pn4',g.classList.contains('pn')&&n>=4);
+  R.sc.forEach((s,i)=>{const pl=s.pills,m=s.c.querySelector('.mpr');if(!pl)return;
+    if(i!==ai&&g.classList.contains('pn')&&m)pl.style.setProperty('top',(m.offsetTop+m.offsetHeight+5)+'px','important');else pl.style.removeProperty('top')});
+  const sm=$('fMode')&&$('fMode').querySelector('small');if(sm)sm.style.transform='';
+  R.sc.forEach((s,i)=>{const h=s.nm.querySelector('.hat');if(!h)return;h.style.removeProperty('margin-left');
+    if(i===ai&&!g.classList.contains('pn')&&n<=2)return;                       // case en cours à 1 contre 1 : à cheval sur la bulle
+    if(i===ai&&g.classList.contains('pn'))return;
+    const mate=s.nm.querySelector('.nmm'),up=(mate?mate.offsetHeight+8:0)+6;
+    h.style.setProperty('bottom',`calc(100% + ${up}px)`,'important');
+    const r=h.getBoundingClientRect(),pad=10;
+    ['fMenu','fUndo'].forEach(id=>{const b=$(id);if(!b||!b.offsetParent)return;const q=b.getBoundingClientRect();
+      if(r.right>q.left-pad&&r.left<q.right+pad&&r.bottom>q.top&&r.top<q.bottom){const dx=q.left<innerWidth/2?(q.right+pad-r.left):(q.left-pad-r.right);h.style.setProperty('margin-left',dx+'px','important')}});
+    if(sm){const r2=h.getBoundingClientRect(),t=sm.getBoundingClientRect();
+      if(r2.right>t.left-4&&r2.left<t.right+4&&r2.bottom>t.top&&r2.top<t.bottom){const c=(r2.left+r2.right)/2;
+        sm.style.transform=`translateX(${c>=(t.left+t.right)/2?(r2.left-4-t.right):(r2.right+4-t.left)}px)`}}});
+}
+{const _r=render;render=function(){const x=_r.apply(this,arguments);try{skDeco();requestAnimationFrame(skDeco);clearTimeout(skDeco._t);skDeco._t=setTimeout(skDeco,150)}catch(e){}return x}}
+addEventListener('resize',()=>requestAnimationFrame(skDeco));
 </script>
 </body>
 </html>
