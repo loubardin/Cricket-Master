@@ -3615,7 +3615,7 @@ html body #killer#killer#killer #kplayers .kc .kR>.kstat{transform:none!importan
       <div class="opt ck"><span>Mode</span><div class="seg mini" id="segMode"><button data-v="standard">Standard</button><button data-v="cut">Coupe-gorge</button></div></div>
       <div class="opt ck legopt wide"><span>Manches gagnantes</span><div class="seg mini legs" data-k="clegs"><button data-v="1">1</button><button data-v="2">2</button><button data-v="3">3</button><button data-v="4">4</button><button data-v="5">5</button><button data-v="6">6</button><button data-v="7">7</button><button data-v="8">8</button><button data-v="9">9</button><button data-v="10">10</button></div></div>
       <div class="opt ck"><span>Fermeture</span><div class="seg mini" data-k="seq"><button data-v="0">Libre</button><button data-v="1">15 → Bulle</button></div></div>
-      <div class="opt xo"><span>Score</span><div class="seg mini" data-k="xstart"><button data-v="301">301</button><button data-v="501">501</button><button data-v="701">701</button><button data-v="0" class="xcus">x01</button></div></div>
+      <div class="opt xo"><span>Score</span><div class="seg mini" data-k="xstart"><button data-v="301">301</button><button data-v="501">501</button><button data-v="701">701</button><button data-v="0" class="xcus">Autre</button></div></div>
       <div class="opt xo"><span>Entrée</span><div class="seg mini" data-k="xin"><button data-v="0">Simple</button><button data-v="1">Double</button></div></div>
       <div class="opt xo"><span>Sortie</span><div class="seg mini" data-k="xout"><button data-v="0">Simple</button><button data-v="1">Double</button></div></div>
       <div class="opt xo legopt wide"><span>Manches gagnantes</span><div class="seg mini legs" data-k="xlegs"><button data-v="1">1</button><button data-v="2">2</button><button data-v="3">3</button><button data-v="4">4</button><button data-v="5">5</button><button data-v="6">6</button><button data-v="7">7</button><button data-v="8">8</button><button data-v="9">9</button><button data-v="10">10</button></div></div>
@@ -6145,6 +6145,7 @@ function placeHead(){
    const r=ROSTER.find(q=>q.name===old);if(r)r.name=nw;else ROSTER.push({name:nw,color:PCOLS[0]});store.set(K_R,ROSTER);
    S.names=S.names.map(n=>n===old?nw:n);store.set(K_S,S);return nw}
  const close=()=>{const p=$('cpick');if(!p)return;const inp=p.querySelector('.cpn');if(inp&&inp.value.trim().toUpperCase()!==p.dataset.n){renamePlayer(p.dataset.n,inp.value);p.remove();refresh();return}p.remove()};
+ window.openColorsFor=(n,a)=>openColors(n,a);
  function openColors(name,anchor){
    close();const r0=anchor.getBoundingClientRect(),cur=pcol(name);
    const p=el('div','',`<input class="cpn" maxlength="8" spellcheck="false" autocomplete="off" value="${esc(name)}">`);p.id='cpick';p.dataset.n=name;const g=el('div','cpg');
@@ -6160,7 +6161,7 @@ function placeHead(){
  }
  document.addEventListener('pointerdown',e=>{
    const pp=$('cpick');if(pp&&!e.target.closest('#cpick')){close()}
-   const t=e.target.closest&&e.target.closest('#names .nslot:not(.ph),#ppick .rchip');if(!t||e.target.closest('.pdel,.pcol,.rchipx'))return;
+   const t=e.target.closest&&e.target.closest('#ppick .rchip');if(!t||e.target.closest('.pdel,.pcol,.rchipx'))return;
    const name=nameOf(t);if(!name||isBot(name))return;
    LP={x:e.clientX,y:e.clientY,t:setTimeout(()=>{LP=null;LPdone=performance.now();if(typeof PRE!=='undefined')PRE=null;haptic();openColors(name,t)},480)}},true);
  document.addEventListener('pointermove',e=>{if(LP&&Math.hypot(e.clientX-LP.x,e.clientY-LP.y)>8){clearTimeout(LP.t);LP=null}},true);
@@ -6221,14 +6222,14 @@ function showRules(){const e=$('gRules');if(!e)return;const g=S.game||'cricket',
 /* 501 : score libre (x01) et plus de « Master » */
 if(S.xin===2)S.xin=1;if(S.xout===2)S.xout=1;
 function xcusSync(){const b=document.querySelector('#setup .xcus');if(!b)return;const std=[301,501,701].includes(S.xstart);
-  b.dataset.v=std?(S.xcustom||0):S.xstart;b.textContent=std?(S.xcustom||'x01'):String(S.xstart);b.classList.toggle('sel',!std)}
+  b.dataset.v=std?0:S.xstart;b.textContent=std?'Autre':String(S.xstart);b.classList.toggle('sel',!std)}
 {const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{xcusSync()}catch(e){}return r}}
 document.querySelector('#setup .xcus').addEventListener('click',e=>{e.stopPropagation();e.preventDefault();haptic();
   const old=$('xpick');if(old)old.remove();const b=e.currentTarget,r0=b.getBoundingClientRect();
-  const p=el('div','',`<div class="xpt">Score de départ</div><input class="xpn" type="number" inputmode="numeric" min="101" max="9999" value="${S.xcustom||1001}"><button class="xpo">OK</button>`);p.id='xpick';document.body.append(p);
+  const p=el('div','',`<div class="xpt">Score de départ</div><input class="xpn" type="number" inputmode="numeric" min="2" max="1001" value="${[301,501,701].includes(S.xstart)?'':S.xstart}" placeholder="2 à 1001"><button class="xpo">OK</button>`);p.id='xpick';document.body.append(p);
   const w=p.offsetWidth,h=p.offsetHeight;p.style.left=Math.max(12,Math.min(innerWidth-w-12,r0.left+r0.width/2-w/2))+'px';p.style.top=Math.max(12,r0.top-h-14)+'px';
   const inp=p.querySelector('.xpn');setTimeout(()=>{inp.focus();inp.select()},30);
-  const ok=()=>{const v=Math.round(+inp.value);if(!(v>=101&&v<=9999)){toast('ENTRE UN SCORE ENTRE 101 ET 9999','',true);return}S.xcustom=v;S.xstart=v;store.set(K_S,S);p.remove();SFX.ui();renderSetup()};
+  const ok=()=>{const v=Math.round(+inp.value);if(!(v>=2&&v<=1001)){toast('ENTRE UN SCORE ENTRE 2 ET 1001','',true);return}S.xstart=v;store.set(K_S,S);p.remove();SFX.ui();renderSetup()};
   p.querySelector('.xpo').addEventListener('click',ok);inp.addEventListener('keydown',ev=>{if(ev.key==='Enter')ok()});
   setTimeout(()=>document.addEventListener('pointerdown',function f(ev){if(!ev.target.closest('#xpick')){p.remove();document.removeEventListener('pointerdown',f,true)}},true),0)},true);
 /* changement de joueur : petit swoosh (tous les jeux) */
@@ -6246,6 +6247,27 @@ function dryClick(){if(!S.sound||!AC)return;noise(.018,.5,4200);tone(2300,.02,'s
    else if(kc&&kc.id===id&&kc.c!==c&&KG.players[c]&&KG.players[c].killer&&!KG.players[c].dead)setTimeout(gunReload,250);
    kz={id,z};kc={id,c}}}catch(e){}return x}}
 {const _k=kRender;kRender=function(){try{if(KG)KG.players.forEach(p=>{if(p.gold>0&&p._pl!==undefined&&p.lives<p._pl)p.gold=Math.max(0,p.gold-(p._pl-p.lives));if(p.gold>p.lives)p.gold=p.lives;p._pl=p.lives})}catch(e){}return _k.apply(this,arguments)}}
+/* liste des joueurs : appui simple = fenêtre du joueur ; appui tenu = le joueur « pop » et peut être déplacé */
+document.addEventListener('click',e=>{const sl=e.target.closest&&e.target.closest('#names .nslot:not(.ph):not(.drag)');if(!sl||e.target.closest('.pdel'))return;
+  if(typeof DRAGGED!=='undefined'&&performance.now()-DRAGGED<400)return;const nm=(sl.querySelector('.pname')||{}).textContent;if(!nm||isBot(nm.trim()))return;
+  e.stopPropagation();e.preventDefault();haptic();SFX.ui();openColorsFor(nm.trim(),sl)},true);
+document.addEventListener('pointerdown',e=>{const sl=e.target.closest&&e.target.closest('#names .nslot:not(.ph)');if(!sl||e.target.closest('.pdel'))return;
+  const x=e.clientX,y=e.clientY;let moved=false;const mv=ev=>{if(Math.hypot(ev.clientX-x,ev.clientY-y)>6)moved=true};
+  document.addEventListener('pointermove',mv,true);
+  const tm=setTimeout(()=>{if(!moved&&typeof PRE!=='undefined'&&PRE&&PRE.slot===sl){haptic();sl.animate([{transform:'scale(1)'},{transform:'scale(1.14)'},{transform:'scale(1.06)'}],{duration:260,easing:'cubic-bezier(.3,1.6,.5,1)',fill:'forwards'}).id='lift';sl.classList.add('lifted')}},220);
+  const end=()=>{clearTimeout(tm);document.removeEventListener('pointermove',mv,true);document.removeEventListener('pointerup',end,true);document.removeEventListener('pointercancel',end,true);
+    if(sl.classList.contains('lifted')){sl.classList.remove('lifted');sl.getAnimations().forEach(a=>{if(a.id==='lift')a.cancel()})}};
+  document.addEventListener('pointerup',end,true);document.addEventListener('pointercancel',end,true)},true);
+/* panneau « Ajouter un joueur » : se ferme quand on touche ailleurs (sauf la croix d'un joueur inscrit) */
+document.addEventListener('pointerdown',e=>{const pp=$('ppick');if(!pp.classList.contains('on')||!e.target.closest)return;
+  if(e.target.closest('#ppick,.padd,#names .pdel,#cpick'))return;pp.classList.remove('on')});
+/* son d'un nombre qui meurt : coup étouffé, court et discret */
+SFX.bolt=()=>{if(!S.sound||!AC)return;const t0=AC.currentTime,o=AC.createOscillator(),f=AC.createBiquadFilter(),g=AC.createGain();
+  o.type='triangle';o.frequency.setValueAtTime(180,t0);o.frequency.exponentialRampToValueAtTime(70,t0+.14);f.type='lowpass';f.frequency.value=700;
+  g.gain.setValueAtTime(.0001,t0);g.gain.exponentialRampToValueAtTime(.42,t0+.008);g.gain.exponentialRampToValueAtTime(.0001,t0+.17);
+  o.connect(f).connect(g);send(g,.1);o.start(t0);o.stop(t0+.2);tone(523,.11,'sine',.05,.03);tone(784,.12,'sine',.035,.06)};
+/* 501 : score libre « Autre », de 2 à 1001 ; on repart de « Autre » à chaque lancement */
+if(![301,501,701].includes(S.xstart)){S.xstart=501}delete S.xcustom;
 /* balle : chaque appui la propulse vers le bout du rail, elle rebondit contre le bord puis retombe à sa place */
 const BALLS=new Map();
 function kickBall(num,X){const row=num.parentElement;let B=BALLS.get(num);
