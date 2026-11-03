@@ -3260,6 +3260,27 @@ html body #game#game.sk.p2.pn #scores .sc:not(.act)>.pills{display:flex!importan
 #xplayers.many .xc:not(.act) .xh,#xplayers .xc:not(.act) .xh{display:block!important}
 #kplayers.grid .kc:not(.act) .kx{display:block!important}
 #kplayers .kc:not(.act) .khist.old{opacity:.75}
+
+/* ===== v100 ===== */
+/* Killer : viseur */
+.kmk svg .kdisc{fill:#ff5a1f;stroke:none}
+.kmk.kred svg .kdisc{fill:#e4251a}
+#kplayers.grid .kmk{width:min(15vw,6.4dvh)!important;height:min(15vw,6.4dvh)!important}
+.kmk svg{stroke-width:9!important;stroke-linecap:round}
+/* tirage : les boutons du switch restent transparents (même appuyés) */
+#draw#draw .dsw #drawGo,#draw#draw .dsw #drawAgain,#draw#draw .dsw #drawGo:active,#draw#draw .dsw #drawAgain:active{background:transparent!important;box-shadow:none!important;-webkit-tap-highlight-color:transparent}
+#draw .dsw .hth{z-index:0}
+#draw#draw .dsw #drawGo,#draw#draw .dsw #drawAgain{z-index:1}
+/* changement de joueur : les bulles des nombres changent de couleur au même rythme que la case du joueur */
+#game#game.sk.p2 #grid .num{transition:background-color .4s cubic-bezier(.3,.8,.3,1),box-shadow .4s cubic-bezier(.3,.8,.3,1)!important}
+/* Killer : le viseur est une grande marque derrière le numéro */
+#kplayers.grid .kc{position:relative}
+#kplayers.grid .kc .kstat{position:absolute!important;inset:0!important;display:grid!important;place-items:center!important;z-index:0!important;pointer-events:none;margin:0!important;padding:0!important;grid-area:auto!important}
+#kplayers.grid .kc .kstat .kmk{width:min(30vw,14dvh)!important;height:min(30vw,14dvh)!important;opacity:.28}
+#kplayers.grid .kc .kstat .kmk.kred{opacity:.9}
+#kplayers.grid .kc .kstat .kmk svg{stroke-width:7!important}
+#kplayers.grid .kc .kno{position:relative;z-index:1}
+#kplayers.grid .kc .kstat .kmk.none{display:none}
 </style>
 </head>
 <body>
@@ -5155,7 +5176,7 @@ function kDart(d){
 const CONE='<span class="kcone" aria-label="attention">⚠️</span>';
 /* marques du Killer : 3 traits qui forment un K ( | puis / puis \ ) ; K complet = killer, en rouge */
 const KPATH=['M32 14V86','M32 56 74 14','M47 42 76 86'];
-const KSVG=n=>`<svg viewBox="0 0 100 100">${KPATH.slice(0,n).map(d=>`<path d="${d}"/>`).join('')}</svg>`;
+const KSVG=n=>`<svg viewBox="0 0 100 100">${n>=3?'<circle class="kdisc" cx="50" cy="50" r="27"/>':''}${['M50 12V88','M12 50H88'].slice(0,Math.min(n,2)).map(d=>`<path d="${d}"/>`).join('')}</svg>`;
 function kMark(m,km){
   const lvl=Math.min(3,m);
   return lvl?`<div class="kmk">${KSVG(lvl)}</div>`:'<div class="kmk none"></div>';   // aucune marque : rien (la place reste réservée)
@@ -5671,7 +5692,7 @@ applyBStyle();
    tout ce qu'elle recouvre s'écrit en blanc */
 function flashRow(t){
   if(skp2()){   // 1 contre 1 : la bulle elle-même file jusqu'au bord du rail et rebondit (pas de double)
-    const num=R.num[t],tk=num&&num.parentElement.querySelector('.rtrack');if(!tk)return;
+    const num=R.num[t],tk=num&&num.parentElement.querySelector('.rtrack');if(!tk||dead(t)||!tk.offsetWidth)return;
     if(t===25)try{bullFx(num)}catch(e){}
     const NL=num.offsetLeft,NW=num.offsetWidth,TL=tk.offsetLeft,TW=tk.offsetWidth;
     const X=(NL+NW/2)>(TL+TW/2)?TL-NL:(TL+TW-NW)-NL;if(Math.abs(X)<4)return;
@@ -5821,7 +5842,7 @@ function placeHead(){
 function setPc(sec,p){const c0=p&&pcol(p.members?p.members[0]:p.name),pl=(sec.id==='x01'?XG:KG),ix=pl?pl.players.indexOf(p):0;const c=/^#[0-9a-f]{6}$/i.test(c0||'')?c0:PFB[Math.max(0,ix)%PFB.length];
   sec.style.setProperty('--pc',c);if(/^#[0-9a-f]{6}$/i.test(c)){const v=[1,3,5].map(k=>parseInt(c.slice(k,k+2),16));sec.classList.toggle('dk',(.299*v[0]+.587*v[1]+.114*v[2])/255<.5)}}
 {const _x=xRender;xRender=function(){const r=_x.apply(this,arguments);try{if(XG)setPc($('x01'),XG.players[XG.cur])}catch(e){}return r}}
-{const _k=kRender;kRender=function(){const r=_k.apply(this,arguments);try{if(KG)setPc($('killer'),KG.players[KG.cur])}catch(e){}return r}}
+{const _k=kRender;kRender=function(){const r=_k.apply(this,arguments);try{if(KG)setPc($('killer'),KG.players[KHOLD?KHOLD.who:KG.cur])}catch(e){}return r}}
 function bullFx(num){const r=num.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2,col=getComputedStyle($('game')).getPropertyValue('--accent').trim()||'#ff5a1f';
   const o=document.createElement('div');o.className='bullfx';o.style.background=col;document.body.append(o);
   const R0=r.height/2,R1=Math.hypot(Math.max(cx,innerWidth-cx),Math.max(cy,innerHeight-cy))+10;
