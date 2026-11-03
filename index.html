@@ -3401,13 +3401,6 @@ html body #setup#setup.b2 .sect.s2 .legopt{order:20!important}
 html body #setup#setup.g-x01 .sect.s2 .opt:has([data-k="xin"]),html body #setup#setup.g-x01 .sect.s2 .opt:has([data-k="xout"]){margin-top:0!important;align-self:start!important}
 
 /* ===== v107 ===== */
-/* --- Cricket : case du joueur en cours = contour de sa couleur + cadre noir (comme la maquette), fond clair ; nom et score à sa couleur --- */
-html body #game#game.sk.p2 #scores>.pc.sc.act{background:transparent!important;box-shadow:0 0 0 var(--h) var(--accent)!important}
-html body #game#game.sk.p2 #scores>.pc.sc.act::after{opacity:1!important;border-width:var(--bw)!important;border-color:var(--m-strong)!important}
-html body #game#game.sk.p2 #scores .sc.act>.nm,html body #game#game.sk.p2 #scores .sc.act>.pts,html body #game#game.sk.p2.lt #scores .sc.act>.pts,html body #game#game.sk.p2.dk #scores .sc.act>.pts{color:var(--accent)!important;-webkit-text-stroke:0!important}
-html body #game#game.sk.p2 #scores .sc.act>.mpr{color:var(--ink)!important}
-html body #game#game.sk.p2 #scores .sc.act>.pills .pill{background:#fff!important;color:var(--ink)!important}
-html body #game#game.sk.p2 #scores .sc.act>.pills .pill.e{opacity:.35!important}
 /* --- texte toujours blanc sur les couleurs --- */
 html body #game#game.sk.p2 #grid .num:not(.dead) .lbl{color:#fff!important}
 html body #x01#x01 #xplayers .xc.act .xn,html body #x01#x01 #xplayers .xc.act .xs,html body #x01#x01 #xplayers .xc.act .xr,html body #killer#killer #kplayers .kc.act .kname{color:#fff!important}
@@ -3438,8 +3431,8 @@ html body #x01#x01 #xkeys button[data-n="25"] .lbl{font-family:"Fun",sans-serif!
 /* --- Killer : la marque ne décale plus le numéro (place toujours réservée) ; la bulle derrière la croix bouge doucement --- */
 html body #killer#killer #kplayers .kc .kstat .kmk.none{display:block!important;visibility:hidden!important;width:min(16vw,7.5dvh)!important;height:min(16vw,7.5dvh)!important}
 .kmk svg .kdisc{transform-box:fill-box;transform-origin:center;animation:lmaim 4.2s ease-in-out infinite}
-html body #game#game#game.sk.p2 #scores .sc.act>.nm,html body #game#game#game.sk.p2 #scores .sc.act>.pts{color:var(--accent)!important;-webkit-text-stroke:0!important}
-html body #game#game#game.sk.p2 #scores .sc.act>.mpr{color:var(--ink)!important}
+/* Cricket : bulle colorée du joueur en cours, tout le texte en blanc */
+html body #game#game#game.sk.p2 #scores .sc.act>.nm,html body #game#game#game.sk.p2 #scores .sc.act>.pts,html body #game#game#game.sk.p2 #scores .sc.act>.mpr{color:#fff!important;-webkit-text-stroke:0!important}
 html body #x01#x01 #xplayers .xc .xn{display:flex!important;flex-direction:column!important;align-items:center!important;white-space:nowrap}
 html body #x01#x01 #xplayers .xc.act .xn .xm{color:#fff!important}
 </style>
