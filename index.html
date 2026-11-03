@@ -3771,6 +3771,11 @@ html body #betask .bsw:not(.new) #baSee,html body #betask .bsw.new #baPaid{color
 html body #betask #baGo{width:100%;height:7dvh!important;margin-top:2.6dvh!important;border-radius:99px!important;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong)!important}
 #setup .bsl{touch-action:none;cursor:pointer}
 html body #setup #betV{pointer-events:none}
+.betpick .bchip{display:inline-flex;align-items:center;gap:8px;padding:0 6px 0 16px!important;cursor:pointer}
+.betpick .bcx{width:24px;height:24px;border-radius:50%;border:0;background:rgba(0,0,0,.08);color:inherit;font:600 11px "Lbl",sans-serif;display:grid;place-items:center;padding:0}
+.betpick .bchip.sel .bcx{background:rgba(255,255,255,.25)}
+html body #setup .grules .rgoal{font-family:"Lbl",-apple-system,sans-serif!important;font-weight:600!important;font-size:1.16em!important;line-height:1.3}
+html body #setup .grules .rgoal i{font-family:inherit!important;font-weight:700!important}
 </style>
 </head>
 <body>
@@ -6581,8 +6586,8 @@ async function billPNG(list){
     const T=(t,x,yy,f,c,al)=>{if(!ctx)return;ctx.font=f;ctx.fillStyle=c;ctx.textAlign=al||'left';ctx.textBaseline='alphabetic';ctx.fillText(t,x,yy)};
     const RR=(x,yy,w,h,r,fill,stroke,lw)=>{if(!ctx)return;ctx.beginPath();ctx.roundRect(x,yy,w,h,r);if(fill){ctx.fillStyle=fill;ctx.fill()}if(stroke){ctx.lineWidth=lw||3;ctx.strokeStyle=stroke;ctx.stroke()}};
     // logo + titre
-    if(ctx){ctx.save();ctx.translate(W/2,y+60);ctx.fillStyle=ACC;ctx.beginPath();ctx.arc(0,0,44,0,7);ctx.fill();ctx.strokeStyle=INK;ctx.lineWidth=11;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(-42,-42);ctx.lineTo(42,42);ctx.moveTo(42,-42);ctx.lineTo(-42,42);ctx.stroke();ctx.restore()}
-    y+=150;T('LA NOTE',W/2,y+50,'400 96px Fun',INK,'center');y+=90;
+    if(ctx){ctx.save();ctx.translate(W/2,y+150);ctx.fillStyle=ACC;ctx.beginPath();ctx.arc(0,0,82,0,7);ctx.fill();ctx.strokeStyle=INK;ctx.lineWidth=20;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(-80,-80);ctx.lineTo(80,80);ctx.moveTo(80,-80);ctx.lineTo(-80,80);ctx.stroke();ctx.restore()}
+    y+=290;T('LA NOTE',W/2,y+50,'400 96px Fun',INK,'center');y+=90;
     T(d0.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).replace(/^./,c=>c.toUpperCase()),W/2,y+34,'500 34px Lbl',MUTE,'center');y+=80;
     // résumé
     const cells=[[String(list.length),'partie'+(list.length>1?'s':'')],...Object.entries(pot).map(([u,v])=>[betTxt(v,u),'en jeu'])];
@@ -6660,13 +6665,16 @@ $('betV').addEventListener('input',e=>{S.betv=+e.target.value;betSync();if(!betS
 $('betV').addEventListener('change',()=>{store.set(K_S,S);haptic()});
 document.querySelector('#setup .betcus').addEventListener('click',e=>{e.stopPropagation();e.preventDefault();haptic();
   const old=$('xpick');if(old)old.remove();const b=e.currentTarget,r0=b.getBoundingClientRect();
-  const H=(S.betH||[]).filter(x=>x&&x!=='€').slice(0,6);
-  const chips=['€€€',...H].map(x=>`<button class="bchip${(x==='€€€'?S.bet&&!S.betk:S.bet&&S.betk&&S.betl===x)?' sel':''}" data-c="${esc(x)}">${esc(x)}</button>`).join('');
-  const p=el('div','',`<div class="xpt">On joue…</div><div class="bchips">${chips}</div><input class="xpn" type="text" maxlength="24" placeholder="autre chose : bière, pompes…"><button class="xpo">OK</button>`);p.id='xpick';p.classList.add('betpick');document.body.append(p);
+  const isM=x=>/^(€+|euros?|argent)$/i.test(x);
+  const H=(S.betH||[]).filter(x=>x).slice(0,8);
+  const chips=H.map(x=>`<span class="bchip${(isM(x)?S.bet&&!S.betk:S.bet&&S.betk&&S.betl===x)?' sel':''}" data-c="${esc(x)}">${esc(x)}<button class="bcx" aria-label="Supprimer">✕</button></span>`).join('');
+  const p=el('div','',`<div class="xpt">On joue…</div>${chips?`<div class="bchips">${chips}</div>`:''}<input class="xpn" type="text" maxlength="24" placeholder="€€€, bière, pompes…"><button class="xpo">OK</button>`);p.id='xpick';p.classList.add('betpick');document.body.append(p);
   const w=p.offsetWidth,h=p.offsetHeight;p.style.left=Math.max(12,Math.min(innerWidth-w-12,r0.left+r0.width/2-w/2))+'px';p.style.top=Math.max(12,r0.top-h-14)+'px';
   const inp=p.querySelector('.xpn');
-  const pick=v=>{if(v==='€€€'){S.betk=0}else{S.betk=1;S.betl=v;S.betH=[v,...(S.betH||[]).filter(x=>x!==v)].slice(0,8)}S.bet=1;store.set(K_S,S);p.remove();SFX.ui();renderSetup()};
-  p.querySelector('.bchips').addEventListener('click',ev=>{const c=ev.target.closest('.bchip');if(c){haptic();pick(c.dataset.c)}});
+  const pick=v=>{if(isM(v)){S.betk=0}else{S.betk=1;S.betl=v}S.betH=[v,...(S.betH||[]).filter(x=>x!==v)].slice(0,8);S.bet=1;store.set(K_S,S);p.remove();SFX.ui();renderSetup()};
+  const bc=p.querySelector('.bchips');if(bc)bc.addEventListener('click',ev=>{const c=ev.target.closest('.bchip');if(!c)return;haptic();
+    if(ev.target.closest('.bcx')){const v=c.dataset.c;S.betH=(S.betH||[]).filter(x=>x!==v);if(S.betk&&S.betl===v||isM(v)&&!S.betk&&S.bet){S.bet=0}store.set(K_S,S);SFX.ui();c.remove();if(!bc.children.length)bc.remove();renderSetup();return}
+    pick(c.dataset.c)});
   const ok=()=>{const v=inp.value.trim();if(!v){toast('ÉCRIS CE QUE VOUS PARIEZ','',true);return}pick(v)};
   p.querySelector('.xpo').addEventListener('click',ok);inp.addEventListener('keydown',ev=>{if(ev.key==='Enter')ok()});
   setTimeout(()=>document.addEventListener('pointerdown',function f(ev){if(!ev.target.closest('#xpick')){p.remove();document.removeEventListener('pointerdown',f,true)}},true),0)},true);
