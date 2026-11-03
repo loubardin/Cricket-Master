@@ -3340,6 +3340,13 @@ html body #setup .grules .rgoal i::after{content:" :"}
 html body #setup .grules .rp,html body #setup .grules b{color:var(--mute)!important;opacity:1!important}
 html body #setup .grules b{font-weight:600}
 html body #setup .grules .rgoal{font-family:"UI",sans-serif!important;font-weight:600!important;font-size:calc(var(--u)*1.85)!important}
+/* règles : une seule police, une seule taille, un peu épaisse ; hiérarchie par la couleur */
+html body #setup .grules,html body #setup .grules *{font-family:"UI",sans-serif!important;font-size:calc(var(--u)*1.8)!important;line-height:1.4!important;letter-spacing:0!important}
+html body #setup .grules{font-weight:600!important;gap:calc(var(--u)*.7)!important}
+html body #setup .grules .rgoal{font-weight:700!important;color:var(--ink)!important}
+html body #setup .grules .rgoal i{font-weight:700!important;color:var(--accent)!important}
+html body #setup .grules .rp{font-weight:600!important;color:var(--mute)!important}
+html body #setup .grules .rp b{font-weight:700!important;color:var(--ink)!important}
 </style>
 </head>
 <body>
