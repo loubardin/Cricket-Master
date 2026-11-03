@@ -3716,6 +3716,26 @@ html body #setup#setup.b2 .sect.sbet>.opt.betsl .bsl{grid-column:1 / -1}
 .bst .bn small{white-space:nowrap}
 .bst .btag{white-space:nowrap}
 #bill .bpaper{padding-left:calc(5vw + 4px)!important;padding-right:calc(5vw + 4px)!important}
+/* la note v3 : partie par partie, total final */
+#bill .bg2{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:1.2dvh}
+#bill .gcard{border-radius:18px;box-shadow:inset 0 0 0 1.5px var(--m-strong);padding:.8em 1em;font-family:"Lbl",sans-serif}
+#bill .gh{display:grid;grid-template-columns:1.5em 1fr auto;align-items:baseline;gap:.4em;margin-bottom:.35em}
+#bill .gh .gk{font-family:"Fun",sans-serif;font-weight:400;color:var(--mute)}
+#bill .gh .gg{font-weight:700;font-size:min(4vw,2dvh)}
+#bill .gh .gg small{font-weight:500;color:var(--mute)}
+#bill .gh .gt{color:var(--mute);font-weight:500;font-size:min(3.2vw,1.6dvh)}
+#bill .gcard p{display:flex;justify-content:space-between;margin:0;padding:.28em 0 .28em 1.9em;font-size:min(3.9vw,1.95dvh);font-weight:500}
+#bill .gcard p b{font-weight:600}
+#bill .gcard .gpw span{color:var(--pc,var(--ink));font-weight:700}
+#bill .gcard .gpw b{color:#1f9d55}
+#bill .gcard .gpl{color:var(--mute)}
+#bill .gcard .gpl b{color:#e4251a}
+#bill .btot .br.top{padding:1.1em 1.1em}
+#bill .btot .br.top .bn{font-size:min(5.6vw,2.8dvh)}
+#bill .btot .br.top .bb{font-size:min(6.4vw,3.2dvh)}
+#bill .bsh i{width:37px}
+.bst .br{grid-template-columns:2em minmax(0,1fr) auto!important}
+#bill .btot .br.top .bn small{white-space:normal}
 </style>
 </head>
 <body>
@@ -3917,9 +3937,9 @@ html body #setup#setup.b2 .sect.sbet>.opt.betsl .bsl{grid-column:1 / -1}
 
 <!-- ===== LA NOTE (paris) ===== -->
 <div class="ov" id="bill">
-  <div class="bsh"><button class="circ" id="bBack" aria-label="Retour"><svg viewBox="0 0 24 24"><path d="M15 5 8 12l7 7"/></svg></button><h1>La note</h1><button class="circ" id="bShare" aria-label="Envoyer la note"><svg viewBox="0 0 24 24"><path d="M12 15V3M7 8l5-5 5 5"/><path d="M5 12v7h14v-7"/></svg></button></div>
+  <div class="bsh"><button class="circ" id="bBack" aria-label="Retour"><svg viewBox="0 0 24 24"><path d="M15 5 8 12l7 7"/></svg></button><h1>La note</h1><i></i></div>
   <div class="bpaper" id="bPaper"></div>
-  <div class="bsw"><i class="hth"></i><button class="big" id="bOk">Tout bon&nbsp;?</button><button class="big" id="bSend">Note réglée</button></div>
+  <div class="bsw"><i class="hth"></i><button class="big" id="bOk">Envoyer la note</button><button class="big" id="bSend">Note réglée</button></div>
 </div>
 
 <!-- ===== TIRAGE AU SORT ===== -->
@@ -6491,25 +6511,26 @@ function betBill(list){
   const per={};list.forEach(e=>{per[e.game]=(per[e.game]||0)+1});
   const pot={};list.forEach(e=>{const u=betUnit(e);pot[u]=(pot[u]||0)+e.v*e.L.length});
   const durT=dur>60000?(dur>=3600000?Math.floor(dur/3600000)+' h '+String(Math.round(dur%3600000/60000)).padStart(2,'0'):Math.round(dur/60000)+' min'):'';
-  const games=list.map((e,k)=>`<li><b class="gk">${k+1}</b><span class="gg">${GNAME[e.game]||e.game}${subOk(e)?` <small>${esc(e.sub)}</small>`:''}<small class="gt">${hm(e.t)} · ${e.L.length+e.w.length} joueurs</small></span><span class="gw" style="${pcol(e.w[0])?'--pc:'+pcol(e.w[0]):''}">🏆 ${esc(e.w.join(' & '))}</span><em>+${betTxt(e.v*e.L.length,betUnit(e))}</em></li>`).join('');
+  const games=list.map((e,k)=>{const u=betUnit(e),g=e.v*e.L.length/e.w.length;
+    const rows=e.w.map(n=>`<p class="gpw" style="${pcol(n)?'--pc:'+pcol(n):''}"><span>🏆 ${esc(n)}</span><b>+${betTxt(g,u)}</b></p>`).join('')+e.L.map(n=>`<p class="gpl"><span>${esc(n)}</span><b>−${betTxt(e.v,u)}</b></p>`).join('');
+    return`<li class="gcard"><div class="gh"><b class="gk">${k+1}</b><span class="gg">${GNAME[e.game]||e.game}${subOk(e)?` <small>${esc(e.sub)}</small>`:''}</span><small class="gt">${hm(e.t)}</small></div>${rows}</li>`}).join('');
   const debts=D.length?D.map(x=>`<li class="bd"><b>${esc(x.from)}</b><i>→</i><b>${esc(x.to)}</b><strong>${betTxt(x.v,x.u)}</strong></li>`).join(''):'<li class="bd">Personne ne doit rien.</li>';
   const html=`<div class="bsum"><div><b>${list.length}</b><small>partie${list.length>1?'s':''}</small></div>${Object.entries(pot).map(([u,v])=>`<div><b>${betTxt(v,u)}</b><small>en jeu</small></div>`).join('')}${durT?`<div><b>${durT}</b><small>de jeu</small></div>`:''}</div>
     <div class="bdate">${d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'})} · ${Object.entries(per).map(([g,n])=>`${n} ${GNAME[g]||g}`).join(' · ')}</div>
-    <div class="bt">Classement</div><ul class="bst">${betRows(R)}</ul>
-    <div class="bt">Qui doit quoi</div><ul class="bds">${debts}</ul>
-    <div class="bt">Historique des parties</div><ul class="bg">${games}</ul>`;
-  const txt='🧾 LA NOTE — Cricket Master\n'+d.toLocaleDateString('fr-FR')+' · '+list.length+' partie'+(list.length>1?'s':'')+(durT?' · '+durT:'')+'\n\nCLASSEMENT\n'+
+    <div class="bt">Partie par partie</div><ul class="bg2">${games}</ul>
+    <div class="bt">Total</div><ul class="bst btot">${betRows(R)}</ul>
+    <div class="bt">Qui doit quoi</div><ul class="bds">${debts}</ul>`;
+  const txt='🧾 LA NOTE — Cricket Master\n'+d.toLocaleDateString('fr-FR')+' · '+list.length+' partie'+(list.length>1?'s':'')+(durT?' · '+durT:'')+'\n\nTOTAL\n'+
     R.map((r,i)=>`${i+1}. ${r.n} — ${r.w}/${r.p} victoire${r.w>1?'s':''} — ${r.bal.filter(x=>Math.abs(x.v)>.004).map(x=>(x.v>0?'+':'−')+betTxt(Math.abs(x.v),x.u)).join(' ')||'0'}`).join('\n')+
     '\n\nQUI DOIT QUOI\n'+(D.length?D.map(x=>`• ${x.from} → ${x.to} : ${betTxt(x.v,x.u)}`).join('\n'):'Personne ne doit rien.')+
-    '\n\nPARTIES\n'+list.map((e,k)=>`${k+1}. ${GNAME[e.game]||e.game}${e.sub?' ('+e.sub+')':''} : ${e.w.join(' & ')} +${betTxt(e.v*e.L.length,betUnit(e))}`).join('\n');
+    '\n\nPARTIE PAR PARTIE\n'+list.map((e,k)=>{const u=betUnit(e),g=e.v*e.L.length/e.w.length;return`${k+1}. ${GNAME[e.game]||e.game}${subOk(e)?' ('+e.sub+')':''}\n`+e.w.map(n=>`   🏆 ${n} +${betTxt(g,u)}`).join('\n')+'\n'+e.L.map(n=>`   ${n} −${betTxt(e.v,u)}`).join('\n')}).join('\n');
   return{html,txt};
 }
 function openBill(){if(!BET.length)return;haptic();SFX.open();const b=betBill(BET);$('bPaper').innerHTML=b.html;$('bPaper').scrollTop=0;$('bill').dataset.txt=b.txt;$('bill').querySelector('.bsw').classList.remove('new');$('bill').classList.add('on')}
 document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('#bNote')){e.stopPropagation();openBill()}},true);
 $('bBack').addEventListener('click',()=>{haptic();SFX.ui();$('bill').classList.remove('on')});
-$('bOk').addEventListener('click',()=>{haptic();SFX.ui();$('bill').querySelector('.bsw').classList.remove('new')});
+$('bOk').addEventListener('click',()=>{haptic();SFX.ui();$('bill').querySelector('.bsw').classList.remove('new');billShare()});
 const billShare=async()=>{const txt=$('bill').dataset.txt||'';try{if(navigator.share){await navigator.share({title:'La note',text:txt});return}await navigator.clipboard.writeText(txt);toast('NOTE COPIÉE','',true)}catch(err){if(err&&err.name==='AbortError')return;try{await navigator.clipboard.writeText(txt);toast('NOTE COPIÉE','',true)}catch(e2){}}};
-$('bShare').addEventListener('click',()=>{haptic();billShare()});
 $('bSend').addEventListener('click',()=>{haptic();$('bill').querySelector('.bsw').classList.add('new');
   setTimeout(()=>{BETH.push({date:Date.now(),list:BET.slice()});BET=[];betSave();SFX.lead();confetti(40);toast('NOTE RÉGLÉE','',true);$('bill').classList.remove('on');$('wBet').innerHTML='';
     if($('hist').classList.contains('on'))renderHist()},420)});
