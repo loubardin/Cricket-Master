@@ -3589,6 +3589,16 @@ html body #killer#killer#killer #kplayers .kc .kR>.kx{position:relative!importan
 html body #game#game.sk.p2 #scores .sc>.nm:has(.nmm){text-box:trim-both cap alphabetic!important}
 html body #game#game.sk.p2 #scores .sc>.nm .nmm{position:absolute!important;left:50%;bottom:calc(100% + .3em);translate:-50% 0;white-space:nowrap;margin:0!important;font-size:.42em!important}
 html body #game#game.sk.p2 #scores .sc>.nm:has(.nmm)>.hat{bottom:calc(100% + var(--r)*.12 + .9em)!important}
+#kthPad{display:none}
+#draw.kthrow #kthPad{display:grid;grid-template-columns:repeat(5,1fr);gap:calc(min(1dvh,1.7vw)*1.1);align-self:stretch;margin:0 0 3dvh}
+#draw.kthrow #kthPad.done{display:none}
+#kthPad button{height:calc(min(1dvh,1.7vw)*6.4);background:transparent;border:0;border-radius:99px;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong);color:var(--ink);padding:0}
+#kthPad button .lbl{font-family:"FunTxt",-apple-system,sans-serif!important;font-weight:900;font-size:min(7.2vw,3.6dvh)}
+#kthPad button:active{background:var(--accent);color:#fff}
+#kthPad button:disabled{opacity:.18}
+#draw.kthrow #slots{margin-bottom:2.4dvh!important}
+#draw.kthrow .slot.cur{box-shadow:inset 0 0 0 calc(var(--bub-bw)*2) var(--pc,var(--accent))!important}
+#draw.kthrow .slot.cur b{color:var(--ink)!important}
 </style>
 </head>
 <body>
@@ -5007,6 +5017,7 @@ async function spinTo(slot,reel,pick,steps=26){
 }
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 async function runDraw(names){
+  $('draw').classList.remove('kthrow');
   DRAWAGAIN=()=>runDraw(drawOrder);$('drawT').textContent='TIRAGE AU SORT';
   const ov=$('draw'),box=$('slots');box.classList.remove('nums');
   $('drawGo').style.visibility=$('drawAgain').style.visibility='hidden';
@@ -5289,12 +5300,13 @@ $('kBack').addEventListener('click',()=>{haptic();goHome()});
 /* attribution des numéros */
 let KKEEP=0;
 function killerAssign(names){
-  if(S.knum==='throw'){KKEEP=1;askNums(shuffle(names),0,[])}
-  else{DRAWCB=o=>{KKEEP=1;runNumDraw(o)};runDraw(names)}
+  KKEEP=1;const o=shuffle(names);   // ordre aléatoire, sans écran de tirage
+  if(S.knum==='throw')runNumThrow(o);else runNumDraw(o);
 }
 let NUMCB=null;   // que faire une fois les numéros choisis (null = nouvelle partie)
 const numsDone=(names,nums)=>{const cb=NUMCB;NUMCB=null;cb?cb(nums):startKiller(names,nums)};
 async function runNumDraw(names){
+  $('draw').classList.remove('kthrow');
   const cb0=NUMCB;DRAWCB=o=>{NUMCB=cb0;numsDone(names,NUMS)};DRAWAGAIN=()=>{NUMCB=cb0;runNumDraw(names)};
   const ov=$('draw'),box=$('slots');$('drawT').textContent='NUMÉROS';
   $('drawGo').style.visibility=$('drawAgain').style.visibility='hidden';
@@ -5313,6 +5325,25 @@ async function runNumDraw(names){
   $('drawGo').style.visibility=$('drawAgain').style.visibility='visible';
 }
 let NUMS=[];
+/* 1er lancer : même écran que le tirage, on tape le numéro de chaque joueur au pavé 1-20 */
+function runNumThrow(names){
+  const cb0=NUMCB;DRAWCB=o=>{NUMCB=cb0;$('draw').classList.remove('nums','kthrow');numsDone(names,NUMS)};DRAWAGAIN=()=>{NUMCB=cb0;runNumThrow(names)};
+  const ov=$('draw'),box=$('slots');$('drawT').textContent='NUMÉROS';ov.classList.add('kthrow');
+  $('drawGo').style.visibility=$('drawAgain').style.visibility='hidden';
+  box.classList.toggle('many',names.length>=5);box.classList.add('nums');
+  box.innerHTML=names.map(n=>`<div class="slot"><b>${esc(n)}</b><span>?</span></div>`).join('');
+  [...box.children].forEach((sl,i)=>{const c=pcol(names[i]);if(c)sl.style.setProperty('--pc',c)});
+  let pad=$('kthPad');if(!pad){pad=el('div','');pad.id='kthPad';box.after(pad)}
+  pad.innerHTML=Array.from({length:20},(_,i)=>`<button data-n="${i+1}"><span class="lbl">${i+1}</span></button>`).join('');
+  const nums=[];
+  const cur=()=>{[...box.children].forEach((sl,i)=>sl.classList.toggle('cur',i===nums.length));
+    if(nums.length<names.length&&isBot(names[nums.length]))setTimeout(()=>{const f=[...pad.querySelectorAll('button:not([disabled])')];if(f.length&&ov.classList.contains('on'))pick(f[Math.floor(Math.random()*f.length)])},700)};
+  const pick=b=>{if(!b||b.disabled||nums.length>=names.length)return;haptic();const n=+b.dataset.n,sl=box.children[nums.length];
+    sl.querySelector('span').textContent=n;sl.classList.add('lock');SFX.lock();b.disabled=true;nums.push(n);cur();
+    if(nums.length===names.length){NUMS=nums;pad.classList.add('done');SFX.lead();confetti(30);$('drawGo').style.visibility=$('drawAgain').style.visibility='visible'}};
+  pad.classList.remove('done');pad.onclick=e=>pick(e.target.closest('button'));
+  ov.classList.add('on');cur();
+}
 function askNums(names,k,nums){
   if(k>=names.length){$('knum').classList.remove('on');numsDone(names,nums);return}
   $('knumT').textContent=names[k]+', lance une fléchette\u00a0!';
@@ -5602,7 +5633,7 @@ $('kplayers').addEventListener('click',e=>{
 const knClose=()=>$('knext').classList.remove('on');
 $('knKeep').addEventListener('click',()=>{knClose();$('win').classList.remove('on');kNext()});
 $('knDraw').addEventListener('click',()=>{knClose();$('win').classList.remove('on');NUMCB=nums=>kNext(nums);runNumDraw(kRank().map(i=>KG.players[i].name))});
-$('knThrow').addEventListener('click',()=>{knClose();$('win').classList.remove('on');NUMCB=nums=>kNext(nums);askNums(kRank().map(i=>KG.players[i].name),0,[])});
+$('knThrow').addEventListener('click',()=>{knClose();$('win').classList.remove('on');NUMCB=nums=>kNext(nums);runNumThrow(kRank().map(i=>KG.players[i].name))});
 $('knCancel').addEventListener('click',()=>{knClose();$('win').classList.add('on')});
 $('kUndo').addEventListener('click',()=>{if(KG&&KG.winner===null)kUndo()});
 $('kInfo').addEventListener('click',()=>{haptic();SFX.open();kStats();$('info').classList.add('on')});
