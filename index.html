@@ -3365,6 +3365,25 @@ html body #info #stats tr:not(:first-child) td:first-child{font-family:"UI",sans
 html body #info #stats td.stb{color:var(--sc)!important;font-size:calc(var(--uu)*3.4)!important}
 html body #info #stats td.stb::before{display:none!important}
 html body #info #stats tr:not(:first-child) td.stb.stb{color:var(--sc)!important;font-size:calc(var(--uu)*3.4)!important}
+
+/* ===== v105 ===== */
+/* règles alignées à gauche, aux mêmes marges que les switchs */
+html body #setup .grules{text-align:left!important;padding:0!important;margin-left:0!important;margin-right:0!important;align-self:stretch}
+/* « Numéros » seulement au Killer */
+html body #setup#setup.b2:not(.g-killer) .sect.s1>.knopt{display:none!important}
+/* intitulé « Joueurs » au-dessus des joueurs */
+#setup .nlab{display:block;font-family:"Lbl",sans-serif!important;font-weight:600;font-size:calc(var(--u)*2.15);color:var(--ink);margin:calc(var(--u)*2.6) 0 calc(var(--u)*1.2);line-height:1.1}
+/* Équipes : intitulé au-dessus du switch ; « Mélanger » = simple bouton à contour noir */
+html body #setup#setup.b2 .teamopt{display:grid!important;grid-template-columns:1fr auto!important;grid-template-areas:"l l" "s b"!important;row-gap:calc(var(--u)*1.2)!important;column-gap:3vw!important;align-items:center!important;padding:0!important}
+html body #setup#setup.b2 .teamopt>span{grid-area:l!important;padding:0!important;margin:0!important;line-height:1.1!important}
+html body #setup#setup.b2 .teamopt>.seg{grid-area:s!important;width:100%!important;max-width:none!important}
+html body #setup#setup.b2:not(.teams) .teamopt>.seg{grid-column:1 / -1!important}
+html body #setup#setup.b2 .teamopt>#tShuffle{grid-area:b!important;height:calc(var(--u)*4.9)!important;padding:0 calc(var(--u)*2.2)!important;border-radius:99px!important;background:transparent!important;
+  box-shadow:inset 0 0 0 var(--bub-bw,1.5px) var(--m-strong)!important;color:var(--ink)!important;font-family:"Fun",sans-serif!important;font-weight:400!important;font-size:calc(var(--u)*2.2)!important;
+  letter-spacing:.01em!important;text-transform:none!important;line-height:1!important;display:none}
+html body #setup#setup.b2.teams .teamopt>#tShuffle{display:grid!important;place-items:center}
+html body #setup#setup.b2 .teamopt>#tShuffle:active{transform:scale(.95)}
+html body #setup#setup.b2 .teamopt>#tShuffle{width:auto!important;min-width:max-content!important;max-width:none!important;white-space:nowrap!important;aspect-ratio:auto!important}
 </style>
 </head>
 <body>
@@ -3405,8 +3424,9 @@ html body #info #stats tr:not(:first-child) td.stb.stb{color:var(--sc)!important
   <div class="grp">
     <div class="glab"><span>Joueurs</span></div>
     <div class="sect s1">
-      <div class="opt ck xk teamopt"><span>Équipes</span><div class="seg mini" data-k="teams"><button data-v="0">Non</button><button data-v="1">Oui</button></div><button id="tShuffle" class="tshuf" aria-label="Mélanger les équipes">🔀</button></div>
+      <div class="opt ck xk teamopt"><span>Équipes</span><div class="seg mini" data-k="teams"><button data-v="0">Non</button><button data-v="1">Oui</button></div><button id="tShuffle" class="tshuf" aria-label="Mélanger les équipes">Mélanger</button></div>
       <div class="seg mini" id="segN"><button data-v="2">2</button><button data-v="3">3</button><button data-v="4">4</button><button data-v="5">5</button><button data-v="6">6</button></div>
+      <span class="nlab">Joueurs</span>
       <div id="names"></div>
       <div id="rchips"></div>
       <div class="opt kl knopt"><span>Numéros</span><div class="seg mini" id="segKn"><button data-v="draw">Tirage</button><button data-v="throw">1er lancer</button></div></div>
