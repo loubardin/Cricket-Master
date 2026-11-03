@@ -3304,6 +3304,15 @@ html body #killer#killer #kplayers .kc .kR{display:grid!important;grid-template-
 html body #killer#killer #kplayers .kc .kR>.kstat{grid-area:m!important;margin:0!important;transform:translateY(-38%)}
 html body #killer#killer #kplayers .kc .kR>.kx{grid-area:x!important;margin:calc(var(--uu)*-2) 0 0!important;position:relative!important;inset:auto!important;transform:none!important}
 html body #killer#killer #kplayers .kc .klives{font-size:calc(var(--uu)*4)!important}
+
+/* ===== v102 ===== */
+/* règles du jeu sous le choix du jeu */
+#setup .grules{margin:calc(var(--u)*1.6) calc(var(--u)*.6) 0;font-family:"UI",sans-serif!important;font-size:calc(var(--u)*1.95);line-height:1.38;color:var(--mute);text-align:center;text-wrap:pretty}
+#setup.p2 .grules{display:none}
+/* sous-menus un peu plus petits : intitulés et switchs */
+html body #setup#setup.b2 .opt>span{font-size:calc(var(--u)*2.15)!important}
+html body #setup#setup.b2 .seg.mini{height:calc(var(--u)*4.9)!important;min-height:0!important}
+html body #setup#setup.b2 .seg.mini button{font-size:calc(var(--u)*2.2)!important}
 </style>
 </head>
 <body>
@@ -3339,6 +3348,7 @@ html body #killer#killer #kplayers .kc .klives{font-size:calc(var(--uu)*4)!impor
   <div class="sh"><button class="circ" id="sBack" aria-label="Accueil"><svg viewBox="0 0 24 24"><path d="M15 5 8 12l7 7"/></svg></button><h1>Nouvelle partie</h1></div>
 
   <div class="seg gamepick" id="segGame"><button data-v="cricket">Cricket</button><button data-v="x01">501</button><button data-v="killer">Killer</button></div>
+  <p id="gRules" class="grules"></p>
 
   <div class="grp">
     <div class="glab"><span>Joueurs</span></div>
@@ -4510,7 +4520,7 @@ function renderSetup(){
     slot.style.setProperty('--pc',pcol(S.names[i])||'#cfc9be');
     {const bm=botMetal(S.names[i]);slot.classList.toggle('bot',!!bm);if(bm){slot.style.setProperty('--m1',bm[0]);slot.style.setProperty('--m2',bm[1])}}
     const del=el('button','pdel','✕');del.setAttribute('aria-label','Retirer');
-    del.addEventListener('click',()=>{{const t=normT();let k=0,j=0;while(j<t.length&&k+t[j]<=i){k+=t[j];j++}if(j<t.length)t[j]--;S.tsz=t.filter(x=>x>0)}S.names.splice(i,1);S.n=S.names.length;store.set(K_S,S);haptic();SFX.back();renderSetup();if($('ppick').classList.contains('on')){openPick();$('ppick').classList.remove('pop')}});
+    del.addEventListener('click',()=>{{const t=normT();let k=0,j=0;while(j<t.length&&k+t[j]<=i){k+=t[j];j++}if(j<t.length)t[j]--;S.tsz=t.filter(x=>x>0)}{const nm=S.names[i];if(nm&&!isBot(nm)&&!/^J\d$/.test(nm)&&!ROSTER.some(r=>r.name===nm)){ROSTER.push({name:nm,color:pcol(nm)||PCOLS[ROSTER.length%PCOLS.length]});store.set(K_R,ROSTER)}}S.names.splice(i,1);S.n=S.names.length;store.set(K_S,S);haptic();SFX.back();renderSetup();if($('ppick').classList.contains('on')){openPick();$('ppick').classList.remove('pop')}});
     slot.append(el('b','',String(i+1)),cdot,nm,del);(teamsOn&&TB?TB:box).append(slot);
   }
   if(S.n<maxP()){const add=el('button','padd','+');add.setAttribute('aria-label','Ajouter un joueur');add.addEventListener('click',openPick);box.append(add)}
@@ -5936,6 +5946,15 @@ new MutationObserver(()=>{const w=$('win');if(!w.classList.contains('on'))return
  document.addEventListener('pointermove',e=>{if(T&&e.target.closest&&e.target.closest('#xplayers,#kplayers')){}},true);
  ['pointerup','pointercancel'].forEach(ev=>document.addEventListener(ev,()=>{clearTimeout(T);T=null},true));
  document.addEventListener('click',e=>{if(performance.now()-done<600&&e.target.closest&&e.target.closest('#xplayers,#kplayers')){e.stopPropagation();e.preventDefault()}},true)}
+/* règles du jeu choisi (page Règles) */
+const RULES={
+  cricket:'Ferme le 15, 16, 17, 18, 19, 20 et la Bulle : 3 marques par numéro (simple = 1, double = 2, triple = 3). Une fois un numéro fermé, chaque marque en plus rapporte sa valeur tant qu\'un adversaire ne l\'a pas fermé.',
+  cricketstd:' Gagne celui qui a tout fermé avec le plus de points.',
+  cricketcut:' En coupe-gorge, ces points vont aux adversaires encore ouverts : gagne celui qui a tout fermé avec le moins de points.',
+  x01:'Chacun part du score choisi et retire le total de ses 3 fléchettes. Il faut tomber pile à 0, sur un double si la sortie est « Double ». Trop loin (ou 1 en sortie double) : bust, le tour ne compte pas.',
+  killer:'Chacun reçoit un numéro. Touche le tien 3 fois pour devenir Killer. Killer, vise les numéros des autres : chaque marque leur retire une vie, mais toucher le tien t\'en coûte une. Le dernier en vie gagne.'};
+function showRules(){const e=$('gRules');if(!e)return;const g=S.game||'cricket';e.textContent=g==='cricket'?RULES.cricket+(S.mode==='cut'?RULES.cricketcut:RULES.cricketstd):RULES[g]||''}
+{const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{showRules()}catch(e){}return r}}
 /* balle : chaque appui la propulse vers le bout du rail, elle rebondit contre le bord puis retombe à sa place */
 const BALLS=new Map();
 function kickBall(num,X){const row=num.parentElement;let B=BALLS.get(num);
