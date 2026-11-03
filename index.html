@@ -3776,6 +3776,18 @@ html body #setup #betV{pointer-events:none}
 .betpick .bchip.sel .bcx{background:rgba(255,255,255,.25)}
 html body #setup .grules .rgoal{font-family:"Lbl",-apple-system,sans-serif!important;font-weight:600!important;font-size:1.16em!important;line-height:1.3}
 html body #setup .grules .rgoal i{font-family:inherit!important;font-weight:700!important}
+/* jeux de bar : 2e switch + options */
+#setup:not(.g-bar) #segBar{display:none!important}
+html body #setup#setup.b2.p2 #segBar{display:none!important}
+#setup #segBar{margin-top:calc(var(--u,1dvh)*1.4)!important;animation:barin .32s cubic-bezier(.3,1.4,.5,1)}
+@keyframes barin{from{opacity:0;transform:translateY(-40%) scaleY(.6)}to{opacity:1;transform:none}}
+html body #setup#setup.b2:not(.g-sh) .opt.sho,html body #setup#setup.b2:not(.g-clk) .opt.clo{display:none!important}
+html body #setup#setup.b2.g-sh .opt.ck:not(.xk),html body #setup#setup.b2.g-clk .opt.ck:not(.xk){display:none!important}
+/* écran 501 en Shanghai / horloge : la cible en bulle couleur du joueur, les autres touches en retrait */
+html body #x01#x01.xbar #xkeys .xk.tgt{background:var(--pc)!important;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong),0 0 0 4px var(--pc)!important;z-index:1}
+html body #x01#x01.xbar #xkeys .xk.tgt .lbl{color:#fff!important}
+html body #x01#x01.xbar #xkeys .xk:not(.tgt) .lbl{opacity:.38!important}
+#x01 .xc.out{opacity:.35}
 </style>
 </head>
 <body>
@@ -3796,7 +3808,7 @@ html body #setup .grules .rgoal i{font-family:inherit!important;font-weight:700!
       <path d="M40 40 160 160M160 40 40 160" stroke="#111" stroke-width="15" stroke-linecap="round" fill="none"/>
     </svg>
     <h1 class="ht">CRICKET<br>MASTER</h1>
-    <div class="hs">cricket · 501 · killer</div>
+    <div class="hs">cricket · 501 · jeux de bar</div>
   </div>
   <div class="hbtns">
     <button id="hResume" class="big light">Reprendre la partie</button>
@@ -3810,7 +3822,8 @@ html body #setup .grules .rgoal i{font-family:inherit!important;font-weight:700!
 <section id="setup" class="screen b2">
   <div class="sh"><button class="circ" id="sBack" aria-label="Accueil"><svg viewBox="0 0 24 24"><path d="M15 5 8 12l7 7"/></svg></button><h1>Nouvelle partie</h1></div>
 
-  <div class="seg gamepick" id="segGame"><button data-v="cricket">Cricket</button><button data-v="x01">501</button><button data-v="killer">Killer</button></div>
+  <div class="seg gamepick" id="segGame"><button data-v="cricket">Cricket</button><button data-v="x01">501</button><button data-v="bar">Jeux de bar</button></div>
+  <div class="seg gamepick barpick" id="segBar"><button data-v="killer">Killer</button><button data-v="shanghai">Shanghai</button><button data-v="clock">L'horloge</button></div>
   <p id="gRules" class="grules"></p>
 
   <div class="grp">
@@ -3842,6 +3855,10 @@ html body #setup .grules .rgoal i{font-family:inherit!important;font-weight:700!
       <div class="opt xo legopt wide"><span>Manches gagnantes</span><div class="seg mini legs" data-k="xlegs"><button data-v="1">1</button><button data-v="2">2</button><button data-v="3">3</button><button data-v="4">4</button><button data-v="5">5</button><button data-v="6">6</button><button data-v="7">7</button><button data-v="8">8</button><button data-v="9">9</button><button data-v="10">10</button></div></div>
       <div class="opt xo"><span>Droit de réponse</span><div class="seg mini yn" data-k="xrep"><button data-v="1">Oui</button><button data-v="0">Non</button></div></div>
       <div class="opt xo"><span>Aide finish</span><div class="seg mini yn" data-k="xhint"><button data-v="1">Oui</button><button data-v="0">Non</button></div></div>
+      <div class="opt sho"><span>Tours</span><div class="seg mini" data-k="shr"><button data-v="7">7</button><button data-v="10">10</button><button data-v="20">20</button></div></div>
+      <div class="opt sho"><span>Shanghai = victoire</span><div class="seg mini yn" data-k="shw"><button data-v="1">Oui</button><button data-v="0">Non</button></div></div>
+      <div class="opt clo"><span>Double / triple</span><div class="seg mini" data-k="clkm"><button data-v="0">Avance de 1</button><button data-v="1">Saute 2 / 3</button></div></div>
+      <div class="opt clo"><span>Arrivée</span><div class="seg mini" data-k="clkb"><button data-v="0">Le 20</button><button data-v="1">La Bulle</button></div></div>
       <div class="opt kl"><span>Vies</span><div class="seg mini" id="segLives"><button data-v="3">3</button><button data-v="4">4</button><button data-v="5">5</button></div></div>
       <div class="kpair kl"><div class="opt kl"><span>Tuer = +1 ♥</span><div class="seg mini yn" data-k="kbonus"><button data-v="1">Oui</button><button data-v="0">Non</button></div></div>
       <div class="opt kl"><span>Vainqueur +1 ♥</span><div class="seg mini yn" data-k="kcarry"><button data-v="1">Oui</button><button data-v="0">Non</button></div></div></div>
@@ -3930,7 +3947,7 @@ html body #setup .grules .rgoal i{font-family:inherit!important;font-weight:700!
   <div class="ovh"><h2>Historique</h2>
     <button class="circ" id="hsClose" aria-label="Fermer"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
   <div class="seg mini htabs" id="hTabs"><button data-v="games" class="sel">Parties</button><button data-v="players">Joueurs</button><button data-v="teams">Équipes</button><button data-v="records">Records</button></div>
-  <div class="seg mini htabs" id="hGame"><button data-v="all" class="sel">Tout</button><button data-v="cricket">Cricket</button><button data-v="x01">501</button><button data-v="killer">Killer</button></div>
+  <div class="seg mini htabs" id="hGame"><button data-v="all" class="sel">Tout</button><button data-v="cricket">Cricket</button><button data-v="x01">501</button><button data-v="bar">Bar</button></div>
   <div id="hBody"></div>
   <div class="hbk"><button class="big dark" id="hExport">Exporter une sauvegarde</button><button class="big dark" id="hImport">Importer</button>
     <input type="file" id="hFile" accept="application/json,.json" hidden></div>
@@ -4019,7 +4036,7 @@ const store={
 const $=id=>document.getElementById(id);
 const el=(tag,cls,html)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e};
 
-let S=Object.assign({mode:'cut',n:2,names:['LOU','TONE','J3','J4','J5','J6'],sound:true,theme:'bar',game:'cricket',klives:3,kmarks:3,knum:'draw',kbonus:1,kdef:1,kcarry:1,seq:0,teams:0,kgrid:1,order:'fixed',last:'cricket',xstart:501,xin:0,xout:1,xlegs:1,xhint:1,xrep:1,clegs:1,bet:0,betk:0,betv:5,betl:''},store.get(K_S,{}));
+let S=Object.assign({mode:'cut',n:2,names:['LOU','TONE','J3','J4','J5','J6'],sound:true,theme:'bar',game:'cricket',klives:3,kmarks:3,knum:'draw',kbonus:1,kdef:1,kcarry:1,seq:0,teams:0,kgrid:1,order:'fixed',last:'cricket',xstart:501,xin:0,xout:1,xlegs:1,xhint:1,xrep:1,clegs:1,bet:0,betk:0,betv:5,betl:'',shr:7,shw:1,clkm:0,clkb:1,lastBar:'killer'},store.get(K_S,{}));
 S.theme='pure';   // un seul style
 /* style : « pure » = version de référence ; les autres styles sont des couches CSS par-dessus (body.theme-…) */
 const applyTheme=()=>{document.body.classList.add('theme-color')};
@@ -4989,8 +5006,10 @@ const cLegs=()=>G.legs?G.legs.map((v,i)=>v+(i===G.winner?1:0)):null;
 const cMatchOver=()=>!(G.legsTo>1)||G.winner===null||cLegs()[G.winner]>=G.legsTo;
 
 function renderSetup(){
-  $('segGame').querySelectorAll('button').forEach(b=>b.classList.toggle('sel',b.dataset.v===S.game));
+  $('segGame').querySelectorAll('button').forEach(b=>b.classList.toggle('sel',b.dataset.v===(BARG.includes(S.game)?'bar':S.game)));
+  $('segBar').querySelectorAll('button').forEach(b=>b.classList.toggle('sel',b.dataset.v===S.game));
   $('setup').classList.toggle('g-killer',S.game==='killer');$('setup').classList.toggle('g-x01',S.game==='x01');
+  $('setup').classList.toggle('g-bar',BARG.includes(S.game));$('setup').classList.toggle('g-sh',S.game==='shanghai');$('setup').classList.toggle('g-clk',S.game==='clock');
   $('segLives').querySelectorAll('button').forEach(b=>b.classList.toggle('sel',+b.dataset.v===S.klives));
   $('segKn').querySelectorAll('button').forEach(b=>b.classList.toggle('sel',b.dataset.v===S.knum));
   document.querySelectorAll('#setup .seg[data-k]').forEach(g=>g.querySelectorAll('button').forEach(b=>b.classList.toggle('sel',+b.dataset.v===S[g.dataset.k])));
@@ -4999,7 +5018,7 @@ function renderSetup(){
   $('segOrd').querySelectorAll('button').forEach(b=>b.classList.toggle('sel',b.dataset.v===(S.order||'fixed')));
   
   S.names=S.names.slice(0,S.n);S.n=S.names.length;
-  const teamsOn=(S.game==='cricket'||S.game==='x01')&&S.teams>0;
+  const teamsOn=S.teams>0;
   $('setup').classList.toggle('teams',teamsOn);
   $('segN').querySelectorAll('button').forEach(b=>b.classList.toggle('sel',+b.dataset.v===S.n));
   const box=$('names');box.innerHTML='';let TB=null;
@@ -5153,11 +5172,12 @@ const endDrag=()=>{
   setTimeout(renderSetup,190);
 };
 $('names').addEventListener('pointerup',endDrag);$('names').addEventListener('pointercancel',endDrag);
-const GAMES=['cricket','x01','killer'];
+const GAMES=['cricket','x01','killer','shanghai','clock'],BARG=['killer','shanghai','clock'],XGAME=g=>g==='x01'||g==='shanghai'||g==='clock';
 function noInertia(){const u=$('setup');u.classList.add('noth');clearTimeout(u._nt);u._nt=setTimeout(()=>u.classList.remove('noth'),650)}
-function setGame(v){if(!v||v===S.game)return;noInertia();const d=GAMES.indexOf(v)-GAMES.indexOf(S.game);S.game=v;store.set(K_S,S);renderSetup();
+function setGame(v){if(v==='bar')v=BARG.includes(S.game)?S.game:(S.lastBar||'killer');if(!v||v===S.game)return;if(BARG.includes(v))S.lastBar=v;noInertia();const d=GAMES.indexOf(v)-GAMES.indexOf(S.game);S.game=v;store.set(K_S,S);renderSetup();
   const g=document.querySelector('#setup .grp:has(.sect.s2)');if(g){g.classList.remove('gslideL','gslideR');void g.offsetWidth;g.classList.add(d>0?'gslideL':'gslideR')}}
 $('segGame').addEventListener('click',e=>{const v=e.target.dataset.v;if(v)setGame(v)});
+$('segBar').addEventListener('click',e=>{const v=e.target.dataset.v;if(v){haptic();SFX.ui();setGame(v)}});
 /* glisser le doigt vers la gauche / la droite sur la page des règles : jeu suivant / précédent */
 {let sx=null,sy=0,st=0;const SU0=$('setup');
  SU0.addEventListener('touchstart',e=>{if(SU0.classList.contains('p2')||e.touches.length>1){sx=null;return}const t=e.touches[0];sx=t.clientX;sy=t.clientY;st=performance.now()},{passive:true});
@@ -5181,7 +5201,7 @@ function launchNew(){
     if(S.order==='draw')runDraw(labels);else DRAWCB(labels);
     return;
   }
-  if(S.game==='x01'&&S.teams>0&&teamsOK()){
+  if(XGAME(S.game)&&S.teams>0&&teamsOK()){
     const T=groupsOf(names);
     const labels=T.map(t=>t.join(' & ')),map=Object.fromEntries(labels.map((l,k)=>[l,T[k]]));
     DRAWCB=o=>startX01(o,0,o.map(l=>map[l]));
@@ -5192,7 +5212,7 @@ function launchNew(){
     const T=groupsOf(names);KTEAMS=Object.fromEntries(T.map(t=>[t.join(' & '),t]));killerAssign(Object.keys(KTEAMS));return;
   }
   if(S.game==='killer')KTEAMS=null;
-  if(S.game==='x01'){DRAWCB=o=>startX01(o);if(S.order==='draw')runDraw(names);else DRAWCB(names);return}
+  if(XGAME(S.game)){DRAWCB=o=>startX01(o);if(S.order==='draw')runDraw(names);else DRAWCB(names);return}
   DRAWCB=S.game==='killer'?killerAssign:o=>startGame(S.mode,o,0);
   if(S.order==='draw'&&S.game!=='killer')runDraw(names);
   else DRAWCB(names);
@@ -5246,8 +5266,8 @@ let DRAWAGAIN=()=>runDraw(drawOrder);
 $('go').addEventListener('click',()=>{
   haptic();
   if(S.n<2){toast('AJOUTE AU MOINS 2 JOUEURS','',true);SFX.err();return}
-  if((S.game==='cricket'||S.game==='x01')&&S.teams>0&&!teamsOK()){toast('ÉQUIPES : AU MOINS 3 JOUEURS','',true);SFX.err();return}
-  const enCours=S.game==='x01'?(XG&&XG.winner===null&&XG.players.some(p=>p.darts>0)):S.game==='killer'?(KG&&KG.winner===null&&KG.players.some(p=>p.darts>0)):(G&&G.winner===null&&G.players.some(p=>p.darts>0));
+  if(S.teams>0&&!teamsOK()){toast('ÉQUIPES : AU MOINS 3 JOUEURS','',true);SFX.err();return}
+  const enCours=XGAME(S.game)?(XG&&XG.winner===null&&XG.players.some(p=>p.darts>0)):S.game==='killer'?(KG&&KG.winner===null&&KG.players.some(p=>p.darts>0)):(G&&G.winner===null&&G.players.some(p=>p.darts>0));
   if(enCours&&!ABAND)openAsk('go');
   else launchNew();
 });
@@ -5342,7 +5362,7 @@ const PCOLS=['#d62828','#f77f00','#2b9348','#1d4ed8','#7b2cbf','#0ea5e9','#c9184
 let ROSTER=store.get(K_R,null);
 if(!ROSTER){const seen=new Set();ROSTER=(S.names||[]).map(n=>(n||'').trim().toUpperCase()).filter(n=>n&&!/^J\d$/.test(n)&&!seen.has(n)&&seen.add(n)).map((n,i)=>({name:n,color:PCOLS[i%PCOLS.length]}));store.set(K_R,ROSTER)}
 // b = chance de toucher la bulle (25 ou 50) quand on la vise : c'est bien plus dur qu'un numéro
-const BOTLV={'SPEWTARD':{mpr:1,t:.028,s:.37,o:.35,b:1/12,d:.028},"P'TIT JEUNE":{mpr:1.4,t:.035,s:.44,o:.25,b:1/6,d:.059},'MEC CHAUD':{mpr:2,t:.058,s:.6,o:.15,b:.22,d:.079},'BIG BOSS':{mpr:2.5,t:.095,s:.70,o:.08,b:.30,d:.112},"L'ANCIEN":{mpr:4,t:.32,s:.55,o:.03,b:.75,d:.18}};
+const BOTLV={'SPEWTARD':{mpr:1,t:.025,s:.345,o:.4,b:.07,d:.02},"P'TIT JEUNE":{mpr:1.4,t:.036,s:.445,o:.3,b:.12,d:.035},'MEC CHAUD':{mpr:2,t:.065,s:.605,o:.18,b:.18,d:.055},'BIG BOSS':{mpr:2.5,t:.105,s:.685,o:.1,b:.25,d:.08},"L'ANCIEN":{mpr:4,t:.3,s:.433,o:.03,b:.6,d:.16}};   // réglé sur des parties simulées : MPR moyen en partie ≈ niveau affiché
 const botBase=n=>String(n||'').trim().toUpperCase().replace(/ \d+$/,'');
 const botLv=n=>BOTLV[botBase(n)]||null;
 const isBot=n=>!!botLv(n);
@@ -5393,15 +5413,16 @@ function recKiller(){
 /* ---- calculs ---- */
 const fdate=t=>{const d=new Date(t);return d.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'2-digit'})+' '+d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})};
 const mprOf=x=>x.darts?x.hits*3/x.darts:0;
-function histFilter(){const g=HSEL.game;return HIST.filter(r=>g==='all'||r.game===g).sort((a,b)=>b.date-a.date)}
+function histFilter(){const g=HSEL.game;return HIST.filter(r=>g==='all'||r.game===g||(g==='bar'&&BARG.includes(r.game))).sort((a,b)=>b.date-a.date)}
 function playerAgg(list){
-  const M={};const get=n0=>{const n=isBot(n0)?botBase(n0):n0;return M[n]||(M[n]={bot:isBot(n0),name:n,games:0,wins:0,c:0,cd:0,ch:0,bestMpr:0,pts:0,spews:0,triple:0,best:0,k:0,kills:0,kwins:0,streak:0,bestStreak:0,x:0,xd:0,xp:0,x180:0,xco:0})};
+  const M={};const get=n0=>{const n=isBot(n0)?botBase(n0):n0;return M[n]||(M[n]={bot:isBot(n0),name:n,games:0,wins:0,c:0,cd:0,ch:0,bestMpr:0,pts:0,spews:0,triple:0,best:0,k:0,kills:0,kwins:0,streak:0,bestStreak:0,x:0,xd:0,xp:0,x180:0,xco:0,md:0,mh:0})};
   list.slice().sort((a,b)=>a.date-b.date).forEach(r=>r.p.forEach(x=>{
     (x.members||[x.name]).forEach(n=>{const a=get(n);a.games++;if(x.win){a.wins++;a.streak++;a.bestStreak=Math.max(a.bestStreak,a.streak)}else a.streak=0;
       a.spews+=x.spews||0;a.triple+=x.triple||0;
+      if(r.game!=='x01'&&!x.members&&x.darts){a.md+=x.darts;a.mh+=x.hits||0}   // MPR : marques / 3 fléchettes, dans tous les jeux à marques
       if(r.game==='cricket'){a.c++;if(!x.members){a.cd+=x.darts;a.ch+=x.hits;if(x.darts>=9)a.bestMpr=Math.max(a.bestMpr,mprOf(x));a.best=Math.max(a.best,x.best||0)}a.pts+=x.score||0}
       else if(r.game==='x01'){a.x++;if(x.members)return;a.xd+=x.darts||0;a.xp+=x.pts||0;a.x180+=x.n180||0;a.xco=Math.max(a.xco,x.co||0)}
-      else{a.k++;a.kills+=x.kills||0;if(x.win)a.kwins++}});
+      else if(r.game==='killer'){a.k++;a.kills+=x.kills||0;if(x.win)a.kwins++}});
   }));
   return Object.values(M).sort((a,b)=>b.wins-a.wins||b.wins/b.games-a.wins/a.games);
 }
@@ -5441,13 +5462,13 @@ function renderHist(){
   if(!HIST.length){b.innerHTML='<p class="hempty">Aucune partie enregistrée pour l\'instant.<br>Chaque partie terminée s\'ajoute ici automatiquement.</p>';requestAnimationFrame(placeThumbs);return}
   if(HSEL.tab==='games'){
     b.innerHTML=list.map(r=>{const w=r.p[r.w]||{};
-      const sc=r.game==='x01'?r.p.map(x=>`<span class="${x.win?'hw':''}">${dot(x.name)}${esc(x.name)} <b>${r.legsTo>1?x.legs:(x.win?'🏆':x.rem)}</b></span>`).join(''):r.game==='cricket'?r.p.map(x=>`<span class="${x.win?'hw':''}">${dot(x.name)}${esc(x.name)} <b>${x.score}</b></span>`).join(''):r.p.map(x=>`<span class="${x.win?'hw':''}">${dot(x.name)}${esc(x.name)} <b>${x.win?'🏆':x.lives?x.lives+'♥':'🥶'}</b></span>`).join('');
-      return`<div class="hcard"><div class="hct"><b>${r.game==='x01'?r.start+' · '+['simple','double','master'][r.outR]+' out'+(r.inR?' · '+['','double','master'][r.inR]+' in':'')+(r.legsTo>1?' · '+r.legsTo+' manches':''):r.game==='cricket'?(r.mode==='cut'?'Cricket coupe-gorge':'Cricket')+(r.teams?' · équipes':''):'Killer'+(r.manche>1?' · manche '+r.manche:'')}</b><small>${fdate(r.date)} · ${r.rounds} tours</small></div>
+      const sc=r.game==='shanghai'?r.p.map(x=>`<span class="${x.win?'hw':''}">${dot(x.name)}${esc(x.name)} <b>${x.rem}</b></span>`).join(''):r.game==='clock'?r.p.map(x=>`<span class="${x.win?'hw':''}">${dot(x.name)}${esc(x.name)} <b>${x.win?'🏆':clkLbl(x.tgt)}</b></span>`).join(''):r.game==='x01'?r.p.map(x=>`<span class="${x.win?'hw':''}">${dot(x.name)}${esc(x.name)} <b>${r.legsTo>1?x.legs:(x.win?'🏆':x.rem)}</b></span>`).join(''):r.game==='cricket'?r.p.map(x=>`<span class="${x.win?'hw':''}">${dot(x.name)}${esc(x.name)} <b>${x.score}</b></span>`).join(''):r.p.map(x=>`<span class="${x.win?'hw':''}">${dot(x.name)}${esc(x.name)} <b>${x.win?'🏆':x.lives?x.lives+'♥':'🥶'}</b></span>`).join('');
+      return`<div class="hcard"><div class="hct"><b>${r.game==='shanghai'?'Shanghai · '+(r.shr||7)+' tours'+(r.teams?' · équipes':''):r.game==='clock'?'L\'horloge'+(r.teams?' · équipes':''):r.game==='x01'?r.start+' · '+['simple','double','master'][r.outR]+' out'+(r.inR?' · '+['','double','master'][r.inR]+' in':'')+(r.legsTo>1?' · '+r.legsTo+' manches':''):r.game==='cricket'?(r.mode==='cut'?'Cricket coupe-gorge':'Cricket')+(r.teams?' · équipes':''):'Killer'+(r.manche>1?' · manche '+r.manche:'')}</b><small>${fdate(r.date)} · ${r.rounds} tours</small></div>
         <div class="hwin">🏆 ${esc(w.name||'')}</div><div class="hps">${sc}</div>
         <button class="hdel" data-id="${r.id}" aria-label="Supprimer">✕</button></div>`}).join('')||'<p class="hempty">Aucune partie.</p>';
   }else if(HSEL.tab==='players'){
     const A=playerAgg(list),tab=X=>`<div class="hscroll"><table class="htab"><tr><th></th><th>Parties</th><th>Vict.</th><th>%</th><th>MPR</th><th>Top MPR</th><th>Spews</th><th>Vies prises</th><th>Moy. 301</th><th>180</th><th>Finish</th></tr>`+
-      X.map(a=>`<tr><td>${dot(a.name)}${esc(a.name)}</td><td>${a.games}</td><td>${a.wins}</td><td>${Math.round(a.wins*100/a.games)}%</td><td>${a.cd?fr(a.ch*3/a.cd):'–'}</td><td>${a.bestMpr?fr(a.bestMpr):'–'}</td><td>${a.spews}</td><td>${a.k?a.kills:'–'}</td><td>${a.xd?fr(a.xp*3/a.xd):'–'}</td><td>${a.x?a.x180:'–'}</td><td>${a.xco||'–'}</td></tr>`).join('')+'</table></div>';
+      X.map(a=>`<tr><td>${dot(a.name)}${esc(a.name)}</td><td>${a.games}</td><td>${a.wins}</td><td>${Math.round(a.wins*100/a.games)}%</td><td>${a.md?fr(a.mh*3/a.md):'–'}</td><td>${a.bestMpr?fr(a.bestMpr):'–'}</td><td>${a.spews}</td><td>${a.k?a.kills:'–'}</td><td>${a.xd?fr(a.xp*3/a.xd):'–'}</td><td>${a.x?a.x180:'–'}</td><td>${a.xco||'–'}</td></tr>`).join('')+'</table></div>';
     const H=A.filter(a=>!a.bot),B=A.filter(a=>a.bot);
     b.innerHTML=(H.length?tab(H):'')+(B.length?'<div class="hsub">🤖 Bots</div>'+tab(B):'')||'<p class="hempty">Aucune partie.</p>';
   }else if(HSEL.tab==='teams'){
@@ -5876,12 +5897,14 @@ const onX01=()=>$('x01').classList.contains('on');
 const xSave=()=>{store.set(K_XG,XG);store.set(K_XH,XH.slice(-250))};
 const XIO=['Simple','Double','Master'];
 const xOutTxt=g=>['simple out','double out','master out'][g.outR]+(g.inR?' · '+['','double in','master in'][g.inR]:'');
-function startX01(names,starter=0,teams=null){
-  const st=S.xstart||501,inR=S.xin||0;
+function startX01(names,starter=0,teams=null,mode){
+  if(mode===undefined)mode=S.game==='shanghai'?'sh':S.game==='clock'?'clk':null;
+  const st=mode?0:(S.xstart||501),inR=mode?0:(S.xin||0);
   XG={id:null,t0:Date.now(),start:st,inR,outR:S.xout==null?1:S.xout,legsTo:S.xlegs||1,hint:S.xhint!==0,reply:S.xrep!==0,rep:null,
     players:names.map(n=>({name:n,rem:st,open:inR===0,darts:0,pts:0,legs:0,turns:0,best:0,n180:0,n140:0,n100:0,co:0,busts:0,bestLeg:0,legDarts:0,last:[]})),
     cur:starter,starter,turn:[],ts:st,tso:inR===0,mult:1,round:1,leg:1,legW:null,winner:null};
   if(teams){XG.teams=true;XG.players.forEach((p,i)=>{p.members=teams[i].slice();p.mi=p.members.length>1&&Math.random()<.5?1:0})}   // qui commence dans l'équipe : au hasard
+  if(mode){XG.mode=mode;XG.legsTo=1;XG.shr=S.shr||7;XG.shw=S.shw!==0;XG.clkm=!!S.clkm;XG.clkb=S.clkb!==0;XG.players.forEach(p=>{p.rem=0;p.hits=0;p.tgt=1;p.sh=0;p.n3=0})}
   XH=[];S.last='x01';store.set(K_S,S);xSave();showX01();
 }
 function showX01(){mountFooter('x01');show('x01');xBuildKeys();xRender()}
@@ -5907,6 +5930,7 @@ function xThrow(n,m,quiet){
   m=m||1;if(!XG||XG.winner!==null||XG.legW!==null)return;
   if(n===25&&m===3){toast('DERNIÈRE <i class="eyes">FOIS 👁️👁️</i>');SFX.meh();anim($('xkeys').querySelector('.bull'),'xno',450);XG.mult=1;xRender();return}   // pas de triple bulle
   XH.push(JSON.stringify(XG));
+  if(XG.mode){xBarThrow(n,m||1,quiet);return}
   const P=XG.players,who=XG.cur,me=P[who],v=n*m,d={n,m,v,eff:0,type:'miss'};
   me.darts++;me.legDarts++;XG.mult=1;
   if(n>0){
@@ -5968,7 +5992,7 @@ function xRematch(){
     XG.leg++;XG.starter=(XG.starter+1)%P.length;XG.cur=XG.starter;XG.round=1;XG.legW=null;XG.turn=[];XG.mult=1;
     P.forEach(p=>{p.rem=XG.start;p.open=XG.inR===0;p.legDarts=0;p.last=[]});XG.ts=XG.start;XG.tso=XG.inR===0;
     xSave();$('win').classList.remove('on');xRender();return}
-  const names=P.map(p=>p.name);startX01(names,(XG.starter+1)%names.length,XG.teams?P.map(p=>p.members):null);$('win').classList.remove('on');
+  const names=P.map(p=>p.name);startX01(names,(XG.starter+1)%names.length,XG.teams?P.map(p=>p.members):null,XG.mode||null);$('win').classList.remove('on');
 }
 /* finish conseillé (goûts de Loubi) :
    1) le moins de fléchettes possible ce tour-ci ;
@@ -6010,15 +6034,15 @@ function xDart(d){
   if(!d)return'<div class="pill e">·</div>';
   if(d.n===0)return'<div class="pill s"><span>S</span></div>';
   const lab=d.n===25?(d.m===2?'DB':'25'):(d.m===3?'T':d.m===2?'D':'')+d.n;
-  return`<div class="pill${d.m===3?' t':d.m===2?' d':''}${d.type==='bust'||d.type==='closed'?' z':''}">${lab}</div>`;
+  return`<div class="pill${d.m===3?' t':d.m===2?' d':''}${d.type==='bust'||d.type==='closed'||d.type==='off'?' z':''}">${lab}</div>`;
 }
 const XC=i=>$('xplayers').querySelector(`.xc[data-i="${i}"]`);
 function recX01(){
   if(!XG)return;if(!XG.id){XG.id='x'+Date.now().toString(36);xSave()}
   if(XG.winner===null){histDel(XG.id);return}
   if(HIST.some(r=>r.id===XG.id&&r.w===XG.winner))return;
-  histPut({id:XG.id,date:Date.now(),game:'x01',start:XG.start,inR:XG.inR,outR:XG.outR,legsTo:XG.legsTo,rounds:XG.round,dur:XG.t0?Date.now()-XG.t0:0,w:XG.winner,
-    teams:!!XG.teams,p:XG.players.map((p,i)=>({name:p.name,members:p.members||null,rem:p.rem,legs:p.legs,darts:p.darts,pts:p.pts,best:p.best,n180:p.n180,n140:p.n140,n100:p.n100,co:p.co,busts:p.busts,bestLeg:p.bestLeg,win:i===XG.winner}))});
+  histPut({id:XG.id,date:Date.now(),game:XG.mode==='sh'?'shanghai':XG.mode==='clk'?'clock':'x01',shr:XG.shr,start:XG.start,inR:XG.inR,outR:XG.outR,legsTo:XG.legsTo,rounds:XG.round,dur:XG.t0?Date.now()-XG.t0:0,w:XG.winner,
+    teams:!!XG.teams,p:XG.players.map((p,i)=>({name:p.name,members:p.members||null,rem:p.rem,hits:p.hits||0,tgt:p.tgt,sh:p.sh||0,legs:p.legs,darts:p.darts,pts:p.pts,best:p.best,n180:p.n180,n140:p.n140,n100:p.n100,co:p.co,busts:p.busts,bestLeg:p.bestLeg,win:i===XG.winner}))});
 }
 const xAvg=p=>p.darts?p.pts*3/p.darts:0;
 let FEAR=null;
@@ -6026,7 +6050,9 @@ function xRender(){
   if(!XG)return;FEAR=null;
   recX01();
   const P=XG.players,n=P.length,cur=XG.cur,fin=XG.winner!==null||XG.legW!==null;
-  $('xTitle').innerHTML=`<b>${XG.start}</b>${XG.teams?' · équipes':''} · ${xOutTxt(XG)} · <b>R${XG.round}</b>${XG.legsTo>1?' · M'+XG.leg:''}`;
+  $('xTitle').innerHTML=XG.mode==='sh'?`<b>Shanghai</b>${XG.teams?' · équipes':''} · ${XG.round>XG.shr?'<b>prolongation · Bulle</b>':`<b>R${XG.round}</b>/${XG.shr} · vise le <b>${XG.round}</b>`}`
+    :XG.mode==='clk'?`<b>L'horloge</b>${XG.teams?' · équipes':''} · <b>R${XG.round}</b> · ${XG.clkb?'1 → Bulle':'1 → 20'}`
+    :`<b>${XG.start}</b>${XG.teams?' · équipes':''} · ${xOutTxt(XG)} · <b>R${XG.round}</b>${XG.legsTo>1?' · M'+XG.leg:''}`;
   const box=$('xplayers');box.style.setProperty('--rows',Math.ceil(n/2));box.className=n<=2?'two':n<=4?'four':'many';
   [...box.children].forEach(c=>{if(+c.dataset.i>=n)c.remove()});
   P.forEach((p,i)=>{
@@ -6034,21 +6060,24 @@ function xRender(){
     const act=i===cur&&!fin,won=fin&&i===XG.legW;
     const keep=['frz','fz1','fz2','fz3','fzs','xno'];
     const pend=XG.rep&&XG.rep.w===i;
-    c.className='xc'+(act?' act':'')+(won?' won':'')+(pend?' pend':'')+(act&&XG.rep?' reply':'')+(!p.open&&XG.inR?' shut':'')+[...c.classList].filter(x=>keep.includes(x)).map(x=>' '+x).join('');
+    c.className='xc'+(act?' act':'')+(won?' won':'')+(pend?' pend':'')+(p.out&&!won?' out':'')+(act&&XG.rep?' reply':'')+(!p.open&&XG.inR?' shut':'')+[...c.classList].filter(x=>keep.includes(x)).map(x=>' '+x).join('');
     const put=(sel,h)=>{const e=c.querySelector(sel);if(e.dataset.h!==h){e.innerHTML=h;e.dataset.h=h}};
     const legs0=XG.legsTo>1?`<span class="xl">${Array.from({length:XG.legsTo},(_,k)=>`<i class="${k<p.legs?'on':''}"></i>`).join('')}</span>`:'';
     put('.xn',p.members?`${esc(p.members[p.mi])}${p.members.length>1?`<small class="xm">&amp; ${esc(p.members[(p.mi+1)%p.members.length])}</small>`:''}`:esc(p.name));
-    put('.xr',String(p.rem));
-    put('.xs',pend?'fini · attend la réponse':act&&XG.rep?`droit de réponse : ${XG.rep.darts} fl.`:`moy. ${fr(xAvg(p))}${p.n180?` · 180×${p.n180}`:''}`);
+    put('.xr',XG.mode==='clk'?clkLbl(p.tgt):String(p.rem));
+    if(XG.mode){put('.xs',XG.mode==='sh'?`MPR ${fr(p.darts?p.hits*3/p.darts:0)}${p.sh?' · shanghai×'+p.sh:''}`:`${clkDone(p)}/${clkEnd()} · ${p.darts?Math.round(p.hits*100/p.darts):0}% de réussite`)}
+    else put('.xs',pend?'fini · attend la réponse':act&&XG.rep?`droit de réponse : ${XG.rep.darts} fl.`:`moy. ${fr(xAvg(p))}${p.n180?` · 180×${p.n180}`:''}`);
     const ds=act?XG.turn:p.last;
     put('.xh',act||ds.length?`<div class="khist">${Array.from({length:act?xLeft():Math.max(3,ds.length)},(_,k)=>xDart(ds[k])).join('')}</div>`:'');
     let co='';
-    if(act&&!p.open&&XG.inR)co=XG.inR===1?'double pour entrer':'double ou triple pour entrer';
+    if(XG.mode){if(act){const t=XG.mode==='sh'?shT():p.tgt;co=`vise ${t===25?'la':'le'} <span class="co1">${clkLbl(t)}</span>`}}
+    else if(act&&!p.open&&XG.inR)co=XG.inR===1?'double pour entrer':'double ou triple pour entrer';
     else if(act&&XG.hint&&p.rem<=(XG.outR===0?180:170)){const r=xCheckout(p.rem,xLeft()-XG.turn.length,XG.outR);if(r)co=r.map(d=>`<span class="co${d[1]}">${xLbl(d)}</span>`).join('<i> · </i>')}
     {const ce=c.querySelector('.xco'),chg=ce.dataset.h!==co;put('.xco',co);if(chg&&co)anim(ce,'coin',450)}
-    if(act)FEAR=co&&p.open&&XG.hint&&p.rem<=(XG.outR===0?180:170)?(xCheckout(p.rem,xLeft()-XG.turn.length,XG.outR)||[])[0]:null;
+    if(act&&!XG.mode)FEAR=co&&p.open&&XG.hint&&p.rem<=(XG.outR===0?180:170)?(xCheckout(p.rem,xLeft()-XG.turn.length,XG.outR)||[])[0]:null;
   });
   $('xkeys').querySelectorAll('.xk').forEach(k=>k.classList.toggle('fear',!fin&&!!FEAR&&+k.dataset.n===FEAR[0]));
+  {const tg=!fin&&XG.mode?(XG.mode==='sh'?shT():P[cur].tgt):null;$('x01').classList.toggle('xbar',!!XG.mode);$('xkeys').querySelectorAll('.xk').forEach(k=>k.classList.toggle('tgt',tg!=null&&+k.dataset.n===tg))}
   $('b2').classList.toggle('fear',!fin&&!!FEAR&&FEAR[1]===2&&XG.mult!==2);   // le double à viser : DOUBLE tremble aussi
   // touches : DOUBLE / TRIPLE armés comme au cricket
   const f=document.querySelector('footer');
@@ -6059,7 +6088,9 @@ function xRender(){
   if(fin){
     const w=P[XG.legW];$('wName').textContent=w.name;
     const tally=XG.legsTo>1?' · '+P.map(p=>esc(p.name)+' '+p.legs).join(' – '):'';
-    if(XG.winner!==null){$('wDet').textContent=`Moyenne ${fr(xAvg(w))} · finish ${w.co}${tally}`;$('bRematch').textContent='Revanche'}
+    if(XG.mode==='sh'){$('wDet').textContent=`${w.rem} pts · MPR ${fr(w.darts?w.hits*3/w.darts:0)}${w.sh&&XG.turn.length===0&&w.last.some(x=>x.sh)?' · SHANGHAI !':''}`;$('bRematch').textContent='Revanche'}
+    else if(XG.mode==='clk'){$('wDet').textContent=`${w.darts} fléchettes · ${w.darts?Math.round(w.hits*100/w.darts):0}% de réussite`;$('bRematch').textContent='Revanche'}
+    else if(XG.winner!==null){$('wDet').textContent=`Moyenne ${fr(xAvg(w))} · finish ${w.co}${tally}`;$('bRematch').textContent='Revanche'}
     else{$('wDet').textContent=`Manche ${XG.leg} · finish ${w.co}${tally}`;$('bRematch').textContent='Manche suivante'}
     $('win').classList.add('on');
   }else $('win').classList.remove('on');
@@ -6075,6 +6106,73 @@ function xStats(){
 }
 
 
+/* ======================= JEUX DE BAR : SHANGHAI & L'HORLOGE (écran du 501) =======================
+   Shanghai : au tour n, seul le numéro n compte (simple = n, double = 2n, triple = 3n). Le plus de points à la fin gagne.
+   Simple + double + triple du numéro dans le même tour = SHANGHAI : victoire immédiate (option). Égalité : prolongation à la bulle.
+   L'horloge : toucher 1, 2, 3… jusqu'au 20 (puis la bulle, en option), dans l'ordre. Le premier arrivé gagne.
+   Option : un double fait avancer de 2, un triple de 3. */
+const shT=()=>XG.round>XG.shr?25:XG.round;
+const clkEnd=()=>XG.clkb?21:20;                      // nombre de cases à parcourir (la bulle = 21e)
+const clkDone=p=>p.tgt===0?clkEnd():p.tgt===25?20:p.tgt-1;
+const clkLbl=t=>t===0?'✓':t===25?'Bulle':String(t);
+function xBarThrow(n,m,quiet){
+  const P=XG.players,N=P.length,who=XG.cur,me=P[who],d={n,m,v:n*m,eff:0,type:'miss'};let end=null;
+  me.darts++;me.legDarts++;XG.mult=1;
+  if(XG.mode==='sh'){const t=shT();d.t=t;
+    if(n===t){d.eff=t*m;d.type='hit';me.rem+=d.eff;me.pts+=d.eff;me.hits+=m;if(m===3)me.n3++}else if(n>0)d.type='off';
+    XG.turn.push(d);
+    if(t!==25&&XG.shw){const ms=new Set(XG.turn.filter(x=>x.type==='hit').map(x=>x.m));if(ms.has(1)&&ms.has(2)&&ms.has(3)){d.sh=1;me.sh++;end='win'}}
+  }else{const t=me.tgt;d.t=t;
+    if(n===t){const adv=XG.clkm&&t!==25?m:1;d.type='hit';d.eff=1;me.hits++;me.pts++;
+      if(t===25)me.tgt=0;else{const nt=t+adv;me.tgt=nt<=20?nt:(XG.clkb?25:0)}
+      if(me.tgt===0)end='win'}
+    else if(n>0)d.type='off';
+    XG.turn.push(d);
+  }
+  if(!end&&XG.turn.length>=3)end='turn';
+  const turn=XG.turn.slice(),tsum=turn.reduce((a,x)=>a+x.eff,0);
+  if(end){me.turns++;me.last=turn;if(me.members)me.mi=(me.mi+1)%me.members.length;XG.turn=[];me.best=Math.max(me.best,tsum);
+    if(end==='win'){XG.legW=who;XG.winner=who}
+    else{const ord=i=>(i-XG.starter+N)%N;let c=who,wrap=false;
+      do{const pc=c;c=(c+1)%N;if(ord(c)<=ord(pc))wrap=true}while(P[c].out&&c!==who);
+      if(wrap)XG.round++;XG.cur=c;
+      if(XG.mode==='sh'&&wrap&&XG.round>XG.shr){   // fin des tours (ou d'un tour de prolongation)
+        const A=P.map((p,i)=>i).filter(i=>!P[i].out),top=Math.max(...A.map(i=>P[i].rem)),L=A.filter(i=>P[i].rem===top);
+        if(L.length===1){XG.legW=L[0];XG.winner=L[0]}
+        else{A.forEach(i=>{if(!L.includes(i))P[i].out=true});XG.cur=L.slice().sort((a,b)=>ord(a)-ord(b))[0];d.extra=1}}
+    }
+  }
+  xSave();xRender();
+  if(!quiet||end)xBarFx(d,me,who,end,tsum);
+}
+function xBarFx(d,me,who,end,tsum){
+  const card=XC(who);
+  if(d.n>0){const key=$('xkeys').querySelector(`.xk[data-n="${d.n}"]`);if(key){anim(key,'flash',450);if(d.type==='hit')for(let j=0;j<d.m-1;j++)setTimeout(()=>{const r=el('div','ring');key.append(r);setTimeout(()=>r.remove(),700)},j*140)}}
+  if(d.type==='hit'){d.m===3?SFX.triple():d.m===2?SFX.double():SFX.single();if(card)anim(card.querySelector('.xr'),'xpop',450)}
+  else if(d.type==='off'){SFX.dead&&SFX.dead();if(card)anim(card,'xno',450)}
+  else{anim($('bS'),'shk',450);spewFx('','',1,false,card)}
+  if(d.sh){setTimeout(()=>{toast('SHANGHAI !');SFX.big(5);confetti(90)},120);return}
+  if(end==='win'){setTimeout(()=>{SFX.win();confetti(90)},150);return}
+  if(d.extra)setTimeout(()=>{toast('ÉGALITÉ !','prolongation à la bulle');SFX.ignite()},200);
+  else if(XG.mode==='sh'&&end==='turn'&&tsum>=d.t*6&&d.t!==25)setTimeout(()=>SFX.big(3),150);
+}
+function botBar(me){
+  if(XG.mode==='clk')return[me.tgt||20,1];                       // l'horloge : le simple, la plus grande surface
+  const t=shT();if(t===25)return[25,1];
+  if(XG.shw){const ms=new Set(XG.turn.filter(x=>x.type==='hit').map(x=>x.m)),miss=[3,2,1].filter(k=>!ms.has(k));
+    if(miss.length<=3-XG.turn.length&&miss.length<3)return[t,miss[0]]}  // shanghai encore possible : on vise ce qui manque
+  return[t,3];
+}
+function xBarStats(){
+  const P=XG.players,w=XG.winner,mp=p=>fr(p.darts?p.hits*3/p.darts:0);
+  const rows=XG.mode==='sh'?[['Points',p=>p.rem],['Marques',p=>p.hits],['MPR',mp],['Fléchettes',p=>p.darts],['Meilleur tour',p=>p.best||'–'],['Triples',p=>p.n3||0],['Shanghai',p=>p.sh||0]]
+    :[['Cible',p=>clkLbl(p.tgt)],['Avancée',p=>clkDone(p)+'/'+clkEnd()],['Fléchettes',p=>p.darts],['Réussite',p=>p.darts?Math.round(p.hits*100/p.darts)+'%':'–'],['MPR',mp],['Meilleur tour',p=>p.best||'–']];
+  $('stats').className=P.length>=5?'many':'';
+  $('stats').innerHTML='<tr><th></th>'+P.map((p,i)=>`<th>${esc(p.name)}${i===w?' 🏆':''}</th>`).join('')+'</tr>'+
+    rows.map(([l,f])=>`<tr><td>${l}</td>${P.map(p=>`<td>${f(p)}</td>`).join('')}</tr>`).join('');
+}
+{const _xs=xStats;xStats=function(){if(XG&&XG.mode)return xBarStats();return _xs.apply(this,arguments)}}
+
 /* ======================= L'ORDI =======================
    Un joueur dont le nom est un niveau d'ordi joue tout seul, une fléchette toutes les ~0,8 s.
    Chaque niveau est réglé pour tourner autour d'un MPR moyen au cricket :
@@ -6082,14 +6180,14 @@ function xStats(){
 const BOARD=[20,1,18,4,13,6,10,15,2,17,3,19,7,16,8,11,14,9,12,5];
 const BOTACC={};
 function botHit(n,m,L,who){
-  const acc=BOTACC[who]||0,k=Math.max(.7,Math.min(1.3,1-acc*.12));   // en avance sur sa moyenne : un peu moins précis, en retard : un peu plus
+  const acc=BOTACC[who]||0,k=Math.max(.88,Math.min(1.12,1-acc*.06));   // en avance sur sa moyenne : un peu moins précis, en retard : un peu plus
   // raté : hors cible (o = part des ratés hors cible, faible chez les bons) ou numéro voisin
   const r=Math.random(),side=()=>Math.random()<1-L.o?[BOARD[(BOARD.indexOf(n)+(Math.random()<.5?1:19))%20],1]:[0,1];
   // bulle : b = bulle touchée (25 ou 50), d = double bulle
   if(n===25){const pB=L.d,p25=L.b-pB;
     if(r<pB)return[25,2];if(r<pB+p25)return[25,1];return Math.random()<1-L.o?[1+Math.floor(Math.random()*20),1]:[0,1]}
   let pT,pS;
-  if(m===3){pT=L.t;pS=L.s}else if(m===2){pT=Math.min(.45,L.t*1.3+.03);pS=L.s*.9}else{pT=L.t*.5;pS=Math.min(.92,.35+L.s*.9)}
+  if(m===3){pT=L.t;pS=L.s}else if(m===2){pT=Math.min(.45,L.t*1.3+.03);pS=L.s*.9}else{pT=L.t*.5;pS=Math.min(.9,L.s+L.t*1.8)}   // visée simple : un peu plus large que le triple, sans miracle
   const e=m===1?pS:pT*m+pS;pT*=k;pS=Math.min(.97-pT,pS*k);
   let res;if(r<pT)res=m===1?[n,Math.random()<.5?3:2]:[n,m];else if(r<pT+pS)res=[n,1];else res=side();
   if(who){const got=res[0]===n?(m===1?1:res[1]):0;BOTACC[who]=acc*.85+(got-e)}
@@ -6210,7 +6308,7 @@ setInterval(()=>{
   if(now-BOTT<(BOTN?500:1000))return;BOTN++;
   if(onX01()){
     if(!XG||XG.winner!==null||XG.legW!==null)return;const me=XG.players[XG.cur],nm=me.members?me.members[me.mi]:me.name;if(!isBot(nm))return;
-    BOTT=now;const[n,m]=botHit(...botX01(me),botLv(nm),nm);xThrow(n,n?m:1);
+    BOTT=now;const[n,m]=botHit(...(XG.mode?botBar(me):botX01(me)),botLv(nm),nm);xThrow(n,n?m:1);
   }else if(onKiller()){
     if(!KG||KG.winner!==null||KHOLD)return;const me=KG.players[KG.cur],nm=kThr(me);if(!isBot(nm))return;
     if(now-BOTT<(KG.turn.length?1300:1700))return;
@@ -6479,19 +6577,32 @@ new MutationObserver(()=>{const w=$('win');if(!w.classList.contains('on'))return
 /* règles du jeu choisi (page Règles) */
 function showRules(){const e=$('gRules');if(!e)return;const g=S.game||'cricket',st=S.xstart||501;let goal='',ps=[];
   if(g==='cricket'){goal='Fermer le 15, 16, 17, 18, 19, 20 et la Bulle avant les autres.';
-    ps=['Pour fermer un numéro, il faut le toucher <b>3 fois</b> : un simple compte pour 1, un double pour 2, un triple pour 3.',
-      S.mode==='cut'?'Une fois ton numéro fermé, chaque touche en plus <b>donne des points</b> aux adversaires qui ne l\'ont pas encore fermé. Arrose les meilleurs !'
-                    :'Une fois ton numéro fermé, chaque touche en plus <b>te rapporte sa valeur</b>, tant qu\'un adversaire ne l\'a pas fermé lui aussi.',
-      S.mode==='cut'?'Tu gagnes quand tout est fermé et que tu as <b>le moins de points</b>.':'Tu gagnes quand tout est fermé et que tu as <b>le plus de points</b>.']}
+    const cut=S.mode==='cut';
+    ps=['Pour fermer un numéro, touche-le <b>3 fois</b> : simple = 1, double = 2, triple = 3.',
+      cut?'Une fois fermé chez toi, chaque touche en plus <b>donne des points</b> aux adversaires qui ne l\'ont pas fermé : la valeur du numéro × 1, 2 ou 3. Arrose les meilleurs !'
+         :'Une fois fermé chez toi, chaque touche en plus <b>te rapporte des points</b> : la valeur du numéro × 1, 2 ou 3 (triple 20 = 60). Bulle = 25, double Bulle = 50.',
+      'Ça ne marche que tant qu\'un adversaire ne l\'a pas fermé : fermé par tout le monde, un numéro ne rapporte plus rien.',
+      cut?'Tu gagnes quand tu as tout fermé avec <b>le moins de points</b>.':'Tu gagnes quand tu as tout fermé avec <b>au moins autant de points</b> que chacun des autres.']}
   else if(g==='x01'){goal='Descendre pile à zéro.';
     ps=['Chacun part de <b>'+st+'</b>. À ton tour, tu lances 3 fléchettes et on retire leur total.',
       S.xout===0?'Pour finir, il faut tomber <b>exactement sur 0</b>.':'Pour finir, il faut tomber <b>exactement sur 0</b>, avec un '+(S.xout===2?'double ou un triple':'double')+'.',
       'Si tu dépasses'+(S.xout===0?'':', ou s\'il te reste 1')+' : c\'est un <b>bust</b>, ton tour ne compte pas.']}
+  else if(g==='shanghai'){const n=S.shr||7;goal='Faire le plus de points en '+n+' tours.';
+    ps=['Au tour 1, seul le <b>1</b> compte ; au tour 2, le <b>2</b>… jusqu\'au '+n+'. Les autres numéros ne rapportent rien.',
+      'Un simple rapporte la valeur du numéro, un double 2 fois, un triple <b>3 fois</b>.',
+      ...(S.shw!==0?['<b>Shanghai</b> : un simple, un double et un triple du bon numéro dans le même tour, et tu gagnes tout de suite.']:[]),
+      'Égalité à la fin : prolongation à la Bulle entre les ex æquo.']}
+  else if(g==='clock'){goal='Faire le tour de la cible le premier.';
+    ps=['Touche le <b>1</b>, puis le <b>2</b>, le 3… dans l\'ordre jusqu\'au 20'+(S.clkb!==0?', puis <b>la Bulle</b>.':'.'),
+      S.clkm?'Un double te fait <b>sauter de 2</b> cases, un triple <b>de 3</b>.':'Simple, double ou triple : chaque touche te fait <b>avancer d\'une case</b>.',
+      'Tant que tu n\'as pas touché ton numéro, tu restes dessus. Le premier arrivé gagne.']}
   else{goal='Être le dernier en vie.';
     ps=['Chacun reçoit un numéro. Commence par toucher <b>le tien 3 fois</b> : tu deviens Killer.',
       'Ensuite, vise les numéros des autres : chaque touche leur <b>enlève une vie</b>.',
       'Attention : une fois Killer, toucher ton propre numéro te coûte une vie.']}
-  e.innerHTML='<span class="rgoal"><i>Le but</i>'+goal+'</span>'+ps.map(x=>'<span class="rp">'+x+'</span>').join('')}
+  // mise en page : un mot de moins de 4 lettres ne reste jamais seul en fin de ligne (espace insécable après)
+  const nb=t=>t.replace(/ ([:;!?=×])/g,'\u00a0$1').replace(/(^|[\s>(])([^\s<>]{1,3}) (?=\S)/g,'$1$2\u00a0').replace(/(^|[\s>(])([^\s<>]{1,3}) (?=\S)/g,'$1$2\u00a0');
+  e.innerHTML='<span class="rgoal"><i>Le but</i>'+nb(goal)+'</span>'+ps.map(x=>'<span class="rp">'+nb(x)+'</span>').join('')}
 {const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{showRules()}catch(e){}return r}}
 /* 501 : score libre (x01) et plus de « Master » */
 if(S.xin===2)S.xin=1;if(S.xout===2)S.xout=1;
@@ -6518,7 +6629,7 @@ const betUnit=e=>e.k?(e.l||'gage'):'€';
 const betTxt=(v,u)=>u==='€'?fr2(v)+' €':fr2(v)+' '+u;
 const fr2=v=>{const r=Math.round(v*100)/100;return String(r).replace('.',',')};
 const subOk=e=>e.sub&&e.sub!==(GNAME[e.game]||'');
-const GNAME={cricket:'Cricket',x01:'501',killer:'Killer'};
+const GNAME={cricket:'Cricket',x01:'501',killer:'Killer',shanghai:'Shanghai',clock:'L\'horloge'};
 function betAdd(rec){
   if(!S.bet||!rec||rec.w==null||!rec.p||!rec.p[rec.w])return;
   const ppl=x=>x.members&&x.members.length?x.members:String(x.name).split(' & ');
@@ -6852,7 +6963,9 @@ $('fMode').addEventListener('click',e=>{e.stopPropagation();haptic();
   if($('x01').classList.contains('on'))$('xInfo').click();else if($('killer').classList.contains('on'))$('kInfo').click();else if(G)openStats(shownCur())});
 function topBar(){const bar=$('fbar2'),sec=document.querySelector('#game.on,#x01.on,#killer.on')||(S.last==='x01'?$('x01'):S.last==='killer'?$('killer'):$('game'));
   if(bar.parentElement!==sec)sec.prepend(bar);let a='',b='';
-  if(sec.id==='x01'&&XG){a=String(XG.start);b=['simple','double','master'][XG.outR]+' out · R'+XG.round}
+  if(sec.id==='x01'&&XG&&XG.mode==='sh'){a='Shanghai';b=XG.round>XG.shr?'prolongation · Bulle':'R'+XG.round+'/'+XG.shr+' · vise le '+XG.round}
+  else if(sec.id==='x01'&&XG&&XG.mode==='clk'){a='L\'horloge';b=(XG.clkb?'1 → Bulle':'1 → 20')+' · R'+XG.round}
+  else if(sec.id==='x01'&&XG){a=String(XG.start);b=['simple','double','master'][XG.outR]+' out · R'+XG.round}
   else if(sec.id==='killer'&&KG){a='Killer';b='R'+KG.round}
   else if(G){a='Cricket';b=(G.mode==='cut'?'coupe-gorge':'standard')+' · R'+G.round}
   $('fMode').querySelector('b').textContent=a;$('fMode').querySelector('small').textContent=b}
