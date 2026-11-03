@@ -3757,6 +3757,20 @@ html body #setup#setup.b2 .sect.s1 .betrow .tshuf{display:none}
 html body #setup#setup.b2:not(.bet-on) .sect.s1 .betrow.betx{display:none!important}
 html body #setup#setup#setup.b2 .sect.s1 .opt.teamopt.betrow{grid-template-columns:minmax(0,1fr)!important;column-gap:0!important}
 html body #setup#setup.b2 .sect.s1 .betrow>.seg,html body #setup#setup.b2 .sect.s1 .betrow>.bsl{width:100%!important;grid-column:1 / -1!important;margin:0!important}
+/* note en cours : avertissement */
+#betask{background:var(--m-home,#f7f2e5)!important;justify-content:center;padding:0 6vw!important;gap:0!important;font-family:"Lbl",sans-serif}
+#betask .q{font-family:"Fun",sans-serif;font-weight:400;font-size:min(8vw,4dvh);color:var(--ink);margin-bottom:1.4dvh;text-align:center}
+#betask .note{color:var(--mute);font-weight:500;text-align:center;line-height:1.5;margin:0 0 4dvh!important;font-size:min(4vw,2dvh)}
+#betask .bsw{position:relative;display:grid;grid-template-columns:1fr 1fr;border-radius:99px;height:7dvh;width:100%}
+#betask .bsw::after{content:"";position:absolute;inset:0;border-radius:99px;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong);pointer-events:none;z-index:3}
+#betask .bsw .hth{position:absolute;top:0;bottom:0;left:0;width:50%;border-radius:99px;background:var(--accent);box-shadow:0 0 0 var(--bub-h) var(--accent);z-index:0;transition:transform .22s cubic-bezier(.3,1.4,.5,1)}
+#betask .bsw.new .hth{transform:translateX(100%)}
+html body #betask .big{position:relative;z-index:1;background:transparent!important;box-shadow:none!important;border:0!important;color:var(--ink)!important;margin:0!important;height:100%!important;padding:0!important;
+  font-family:"Fun",sans-serif!important;font-weight:400!important;font-size:min(4.6vw,2.3dvh)!important;transition:color .15s}
+html body #betask .bsw:not(.new) #baSee,html body #betask .bsw.new #baPaid{color:#fff!important}
+html body #betask #baGo{width:100%;height:7dvh!important;margin-top:2.6dvh!important;border-radius:99px!important;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong)!important}
+#setup .bsl{touch-action:none;cursor:pointer}
+html body #setup #betV{pointer-events:none}
 </style>
 </head>
 <body>
@@ -3951,6 +3965,14 @@ html body #setup#setup.b2 .sect.s1 .betrow>.seg,html body #setup#setup.b2 .sect.
   <button class="big dark" id="bWinInfo">Infos partie</button>
   <button class="big dark" id="bWinUndo">Annuler la dernière fléchette</button>
   <button class="big dark" id="bWinMenu">Accueil</button>
+</div>
+
+<!-- ===== NOTE EN COURS (avant une nouvelle partie) ===== -->
+<div class="ov" id="betask">
+  <div class="q">Une note est en cours</div>
+  <p class="note" id="baN"></p>
+  <div class="bsw"><i class="hth"></i><button class="big" id="baSee">Voir la note</button><button class="big" id="baPaid">Note réglée</button></div>
+  <button class="big" id="baGo">Continuer</button>
 </div>
 
 <!-- ===== LA NOTE (paris) ===== -->
@@ -6174,7 +6196,7 @@ function botX01(me){
   return[Math.max(1,Math.min(20,me.rem-32>0?me.rem-32:Math.floor(me.rem/2))),1];
 }
 let BOTT=0,BOTKEY='',BOTN=0;
-const ovOn=()=>['win','draw','knum','knext','info','ask','hist','roster','bill'].some(id=>$(id)&&$(id).classList.contains('on'));
+const ovOn=()=>['win','draw','knum','knext','info','ask','hist','roster','bill','betask'].some(id=>$(id)&&$(id).classList.contains('on'));
 setInterval(()=>{
   const now=performance.now();
   if(document.hidden||ovOn()||now<ANIM_END+150)return;
@@ -6606,9 +6628,26 @@ const billShare=async()=>{const list=BET.slice();if(!list.length)return;const ms
     const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='la-note.png';document.body.append(a);a.click();a.remove();
     try{await navigator.clipboard.writeText(msg)}catch(e){}toast('NOTE ENREGISTRÉE','',true)}
   catch(err){if(err&&err.name==='AbortError')return;try{await navigator.clipboard.writeText(msg);toast('NOTE COPIÉE','',true)}catch(e2){}}};
-$('bSend').addEventListener('click',()=>{haptic();$('bill').querySelector('.bsw').classList.add('new');
-  setTimeout(()=>{BETH.push({date:Date.now(),list:BET.slice()});BET=[];betSave();SFX.lead();confetti(40);toast('NOTE RÉGLÉE','',true);$('bill').classList.remove('on');$('wBet').innerHTML='';
-    if($('hist').classList.contains('on'))renderHist()},420)});
+function betSettle(){if(BET.length)BETH.push({date:Date.now(),list:BET.slice()});BET=[];betSave();SFX.lead();confetti(40);toast('NOTE RÉGLÉE','',true);$('bill').classList.remove('on');$('wBet').innerHTML='';
+  if($('hist').classList.contains('on'))renderHist();if($('betask').classList.contains('on'))betAskGo()}
+$('bSend').addEventListener('click',()=>{haptic();$('bill').querySelector('.bsw').classList.add('new');setTimeout(betSettle,420)});
+/* nouvelle partie alors qu'une note est en cours : on prévient */
+let BETPASS=0;
+function betAskGo(){$('betask').classList.remove('on');BETPASS=1;setTimeout(()=>{try{$('hPlay').dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true}))}finally{BETPASS=0}},60)}
+window.addEventListener('click',e=>{if(BETPASS||!BET.length||!e.target.closest||!e.target.closest('#hPlay'))return;
+  e.stopPropagation();e.preventDefault();haptic();SFX.open();const R=betStand(BET),D=betDebts(betNet(BET));
+  $('baN').innerHTML=`${BET.length} partie${BET.length>1?'s':''} · 👑 ${esc(R[0]?R[0].n:'')} mène`+(D.length?'<br>'+D.slice(0,3).map(x=>`${esc(x.from)} doit ${betTxt(x.v,x.u)} à ${esc(x.to)}`).join('<br>'):'');
+  $('betask').querySelector('.bsw').classList.remove('new');$('betask').classList.add('on')},true);
+$('baSee').addEventListener('click',()=>{$('betask').querySelector('.bsw').classList.remove('new');openBill()});
+$('baPaid').addEventListener('click',()=>{haptic();$('betask').querySelector('.bsw').classList.add('new');setTimeout(betSettle,420)});
+$('baGo').addEventListener('click',()=>{haptic();betAskGo()});
+/* curseur « Combien ? » : on le fait glisser au doigt n'importe où */
+{const sl=document.querySelector('#setup .bsl');let on=false;
+ const at=e=>{const r=sl.getBoundingClientRect(),k=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)),v=Math.max(1,Math.min(100,Math.round(1+k*99)));
+   if(v!==S.betv){S.betv=v;betSync();if(!betSync._t){SFX.tick&&SFX.tick();betSync._t=setTimeout(()=>betSync._t=0,50)}}};
+ sl.addEventListener('pointerdown',e=>{on=true;sl.setPointerCapture(e.pointerId);at(e);e.preventDefault()});
+ sl.addEventListener('pointermove',e=>{if(on)at(e)});
+ const end=()=>{if(!on)return;on=false;store.set(K_S,S);haptic()};sl.addEventListener('pointerup',end);sl.addEventListener('pointercancel',end)}
 /* écran de victoire : rappel du pari et de la note en cours */
 new MutationObserver(()=>{if($('win').classList.contains('on'))$('wBet').innerHTML=betWinHTML()}).observe($('win'),{attributes:true,attributeFilter:['class']});
 /* menu : pari */
