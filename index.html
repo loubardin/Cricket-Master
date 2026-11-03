@@ -3633,6 +3633,46 @@ html body #info #stats.many tr:first-child th.stn{font-size:min(3vw,calc(var(--u
 html body #info #stats.many tr:not(:first-child) td:not(:first-child){font-size:calc(var(--uu)*2.1)!important}
 html body #info #stats.many tr:not(:first-child) td.stb.stb{font-size:calc(var(--uu)*2.6)!important}
 html body #info #stats.many tr:not(:first-child) td:first-child{width:26%!important}
+/* ===== paris ===== */
+#setup:not(.bet-on) .betx{display:none!important}
+#setup .bsl{display:flex;align-items:center;gap:calc(var(--u,1dvh)*2);width:100%}
+#setup .bsl b{flex:0 0 auto;min-width:5.5em;text-align:right;font-family:"Fun",sans-serif;font-weight:400;font-size:calc(var(--u,1dvh)*2.6);color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:45%}
+#betV{-webkit-appearance:none;appearance:none;flex:1;min-width:0;height:calc(var(--u,1dvh)*4.4);border-radius:99px;margin:0;
+  background:linear-gradient(var(--accent),var(--accent)) 0/var(--p,5%) 100% no-repeat,transparent;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong)}
+#betV::-webkit-slider-thumb{-webkit-appearance:none;width:calc(var(--u,1dvh)*4.4);height:calc(var(--u,1dvh)*4.4);border-radius:50%;background:#fff;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong),0 1px 4px rgba(0,0,0,.2)}
+#betV::-moz-range-thumb{width:calc(var(--u,1dvh)*4.4);height:calc(var(--u,1dvh)*4.4);border-radius:50%;background:#fff;border:var(--bub-bw) solid var(--m-strong)}
+#setup .betcus{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#wBet{display:flex;flex-direction:column;align-items:center;gap:1.2dvh;margin:0 0 2dvh;width:100%}
+#wBet:empty{display:none}
+#wBet .wbt{font-family:"Fun",sans-serif;font-size:calc(var(--uu,1dvh)*3);color:var(--ink)}
+#wBet .wbs{display:flex;flex-wrap:wrap;justify-content:center;gap:.4em 1em;font-family:"Lbl",sans-serif;font-weight:500;font-size:calc(var(--uu,1dvh)*1.9);color:var(--mute)}
+#wBet .wbs small{flex:1 0 100%;text-align:center;font-weight:500}
+.bp{color:#1f9d55!important}.bm{color:#e4251a!important}
+html body #win #wBet #bNote,html body #hist #bNote{border-radius:99px!important;background:transparent!important;color:var(--ink)!important;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong)!important;font-family:"Fun",sans-serif!important;font-weight:400!important;height:calc(var(--uu,1dvh)*6)!important;width:100%;margin:0!important}
+#bill{background:var(--m-home,#f7f2e5)!important;justify-content:center;padding:4dvh 6vw!important;gap:3dvh!important}
+#bill .bpaper{width:100%;max-height:70dvh;overflow-y:auto;background:#fff;border-radius:22px;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong);padding:3dvh 6vw;font-family:"Lbl",sans-serif;color:var(--ink);
+  -webkit-mask:radial-gradient(circle 6px at 50% 100%,#0000 98%,#000) 50% 100%/16px 100% repeat-x}
+#bill .bh{font-family:"Fun",sans-serif;font-size:min(8vw,4dvh);text-align:center}
+#bill .bdate{text-align:center;color:var(--mute);font-weight:500;font-size:min(3.6vw,1.8dvh);margin:.3em 0 1.4em}
+#bill ul{list-style:none;margin:0;padding:0}
+#bill .bg li{display:grid;grid-template-columns:1fr auto auto;gap:.8em;align-items:baseline;padding:.55em 0;border-bottom:1.5px dashed rgba(0,0,0,.18);font-size:min(3.8vw,1.9dvh);font-weight:500}
+#bill .bg li span{color:var(--mute)}#bill .bg li b{font-weight:700}#bill .bg li em{font-style:normal;font-weight:600}
+#bill .bt{font-family:"Fun",sans-serif;font-size:min(5.4vw,2.7dvh);margin:1.4em 0 .5em}
+#bill .bds li{font-size:min(4.2vw,2.1dvh);font-weight:500;padding:.35em 0}
+#bill .bds strong{font-family:"Fun",sans-serif;font-weight:400;color:var(--accent);font-size:1.15em}
+#bill .bsw{position:relative;display:grid;grid-template-columns:1fr 1fr;border-radius:99px;height:7dvh;width:100%}
+#bill .bsw::after{content:"";position:absolute;inset:0;border-radius:99px;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong);pointer-events:none;z-index:3}
+#bill .bsw .hth{position:absolute;top:0;bottom:0;left:0;width:50%;border-radius:99px;background:var(--accent);box-shadow:0 0 0 var(--bub-h) var(--accent);z-index:0;transition:transform .22s cubic-bezier(.3,1.4,.5,1)}
+#bill .bsw.new .hth{transform:translateX(100%)}
+html body #bill .bsw .big{position:relative;z-index:1;background:transparent!important;box-shadow:none!important;border:0!important;color:var(--ink)!important;margin:0!important;height:100%!important;padding:0!important;
+  font-family:"Fun",sans-serif!important;font-weight:400!important;font-size:min(4.6vw,2.3dvh)!important;transition:color .15s}
+html body #bill .bsw:not(.new) #bBack,html body #bill .bsw.new #bSend{color:#fff!important}
+#hist .bbal p{display:flex;justify-content:space-between;margin:.35em 0;font-size:calc(var(--uu,1dvh)*2.1)}
+#hist .bbal>div{flex:1}
+html body #setup#setup.b2 .sect.sbet>.opt.betsl{flex:1 0 100%!important;width:100%!important;max-width:none!important;grid-template-columns:100%!important}
+html body #setup#setup.b2 .sect.sbet .bsl b{min-width:3.6em;max-width:45%;flex:0 0 auto}
+html body #setup#setup.b2 .sect.sbet>.opt.betsl .bsl{grid-column:1 / -1}
+#hist.tbets #hGame{display:none!important}
 </style>
 </head>
 <body>
@@ -3699,6 +3739,15 @@ html body #info #stats.many tr:not(:first-child) td:first-child{width:26%!import
       <div class="kpair kl"><div class="opt kl"><span>Tuer = +1 ♥</span><div class="seg mini yn" data-k="kbonus"><button data-v="1">Oui</button><button data-v="0">Non</button></div></div>
       <div class="opt kl"><span>Vainqueur +1 ♥</span><div class="seg mini yn" data-k="kcarry"><button data-v="1">Oui</button><button data-v="0">Non</button></div></div></div>
       <div class="opt kl"><span>Défense finale</span><div class="seg mini yn" data-k="kdef"><button data-v="1">Oui</button><button data-v="0">Non</button></div></div>
+    </div>
+  </div>
+
+  <div class="grp betgrp">
+    <div class="glab"><span>Pari</span></div>
+    <div class="sect s2 sbet">
+      <div class="opt"><span>Pari</span><div class="seg mini" data-k="bet"><button data-v="0">Sans</button><button data-v="1">Avec</button></div></div>
+      <div class="opt betx"><span>Enjeu</span><div class="seg mini" data-k="betk"><button data-v="0">€€€</button><button data-v="1" class="betcus">Autre</button></div></div>
+      <div class="opt betx betsl"><span>Mise</span><div class="bsl"><input type="range" id="betV" min="1" max="100" step="1"><b id="betVv"></b></div></div>
     </div>
   </div>
 
@@ -3816,10 +3865,17 @@ html body #info #stats.many tr:not(:first-child) td:first-child{width:26%!import
   <div class="k">VICTOIRE</div>
   <div class="w" id="wName"></div>
   <div class="d" id="wDet"></div>
+  <div id="wBet"></div>
   <button class="big acc" id="bRematch">Revanche</button>
   <button class="big dark" id="bWinInfo">Infos partie</button>
   <button class="big dark" id="bWinUndo">Annuler la dernière fléchette</button>
   <button class="big dark" id="bWinMenu">Accueil</button>
+</div>
+
+<!-- ===== LA NOTE (paris) ===== -->
+<div class="ov" id="bill">
+  <div class="bpaper" id="bPaper"></div>
+  <div class="bsw"><i class="hth"></i><button class="big" id="bBack">Retour</button><button class="big" id="bSend">Envoyer la note</button></div>
 </div>
 
 <!-- ===== TIRAGE AU SORT ===== -->
@@ -3854,7 +3910,7 @@ const store={
 const $=id=>document.getElementById(id);
 const el=(tag,cls,html)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e};
 
-let S=Object.assign({mode:'cut',n:2,names:['LOU','TONE','J3','J4','J5','J6'],sound:true,theme:'bar',game:'cricket',klives:3,kmarks:3,knum:'draw',kbonus:1,kdef:1,kcarry:1,seq:0,teams:0,kgrid:1,order:'fixed',last:'cricket',xstart:501,xin:0,xout:1,xlegs:1,xhint:1,xrep:1,clegs:1},store.get(K_S,{}));
+let S=Object.assign({mode:'cut',n:2,names:['LOU','TONE','J3','J4','J5','J6'],sound:true,theme:'bar',game:'cricket',klives:3,kmarks:3,knum:'draw',kbonus:1,kdef:1,kcarry:1,seq:0,teams:0,kgrid:1,order:'fixed',last:'cricket',xstart:501,xin:0,xout:1,xlegs:1,xhint:1,xrep:1,clegs:1,bet:0,betk:0,betv:5,betl:''},store.get(K_S,{}));
 S.theme='pure';   // un seul style
 /* style : « pure » = version de référence ; les autres styles sont des couches CSS par-dessus (body.theme-…) */
 const applyTheme=()=>{document.body.classList.add('theme-color')};
@@ -6036,7 +6092,7 @@ function botX01(me){
   return[Math.max(1,Math.min(20,me.rem-32>0?me.rem-32:Math.floor(me.rem/2))),1];
 }
 let BOTT=0,BOTKEY='',BOTN=0;
-const ovOn=()=>['win','draw','knum','knext','info','ask','hist','roster'].some(id=>$(id)&&$(id).classList.contains('on'));
+const ovOn=()=>['win','draw','knum','knext','info','ask','hist','roster','bill'].some(id=>$(id)&&$(id).classList.contains('on'));
 setInterval(()=>{
   const now=performance.now();
   if(document.hidden||ovOn()||now<ANIM_END+150)return;
@@ -6341,6 +6397,79 @@ document.querySelector('#setup .xcus').addEventListener('click',e=>{e.stopPropag
   const ok=()=>{const v=Math.round(+inp.value);if(!(v>=2&&v<=1001)){toast('ENTRE UN SCORE ENTRE 2 ET 1001','',true);return}S.xstart=v;store.set(K_S,S);p.remove();SFX.ui();renderSetup()};
   p.querySelector('.xpo').addEventListener('click',ok);inp.addEventListener('keydown',ev=>{if(ev.key==='Enter')ok()});
   setTimeout(()=>document.addEventListener('pointerdown',function f(ev){if(!ev.target.closest('#xpick')){p.remove();document.removeEventListener('pointerdown',f,true)}},true),0)},true);
+
+/* ================= PARIS =================
+   chaque partie (ou manche) gagnée avec « Pari : Avec » s'ajoute à la note en cours :
+   chaque perdant doit la mise au gagnant (partagée entre les membres d'une équipe gagnante).
+   « Envoyer la note » : facture finale (qui doit quoi à qui), partagée puis rangée dans les stats Paris. */
+const K_BET='darts.bets.v1',K_BETH='darts.bets.hist.v1';
+let BET=store.get(K_BET,[]),BETH=store.get(K_BETH,[]);
+const betSave=()=>{store.set(K_BET,BET);store.set(K_BETH,BETH)};
+const betUnit=e=>e.k?(e.l||'gage'):'€';
+const betTxt=(v,u)=>u==='€'?fr2(v)+' €':fr2(v)+' '+u;
+const fr2=v=>{const r=Math.round(v*100)/100;return String(r).replace('.',',')};
+const GNAME={cricket:'Cricket',x01:'501',killer:'Killer'};
+function betAdd(rec){
+  if(!S.bet||!rec||rec.w==null||!rec.p||!rec.p[rec.w])return;
+  const ppl=x=>x.members&&x.members.length?x.members:String(x.name).split(' & ');
+  const W=ppl(rec.p[rec.w]),L=rec.p.filter((_,i)=>i!==rec.w).flatMap(ppl);
+  const e={id:rec.id+'|'+(rec.manche||rec.leg||1),rid:rec.id,t:Date.now(),game:rec.game,w:W,L,k:S.betk?1:0,l:S.betk?(S.betl||'gage'):'',v:S.betv||1};
+  BET=BET.filter(x=>x.id!==e.id);BET.push(e);betSave();
+}
+{const _p=histPut;histPut=function(rec){const r=_p.apply(this,arguments);try{betAdd(rec)}catch(err){}return r}}
+{const _d=histDel;histDel=function(id){const r=_d.apply(this,arguments);try{const n=BET.length;BET=BET.filter(x=>x.rid!==id);if(BET.length!==n)betSave()}catch(err){}return r}}
+/* soldes : + reçoit, − doit (par unité : € ou le gage écrit) */
+function betNet(list){const N={};list.forEach(e=>{const u=betUnit(e),part=e.v/e.w.length;
+  e.L.forEach(l=>{e.w.forEach(w=>{(N[u]=N[u]||{});N[u][w]=(N[u][w]||0)+part;N[u][l]=(N[u][l]||0)-part})})});return N}
+function betDebts(N){const out=[];Object.entries(N).forEach(([u,m])=>{
+  const cr=Object.entries(m).filter(x=>x[1]>.004).sort((a,b)=>b[1]-a[1]).map(x=>[x[0],x[1]]),db=Object.entries(m).filter(x=>x[1]<-.004).sort((a,b)=>a[1]-b[1]).map(x=>[x[0],-x[1]]);
+  let i=0,j=0;while(i<db.length&&j<cr.length){const v=Math.min(db[i][1],cr[j][1]);out.push({from:db[i][0],to:cr[j][0],v,u});db[i][1]-=v;cr[j][1]-=v;if(db[i][1]<.004)i++;if(cr[j][1]<.004)j++}});return out}
+function betWinHTML(){
+  if(!BET.length)return'';const e=BET[BET.length-1],N=betNet(BET);
+  const tot=Object.entries(N).map(([u,m])=>Object.entries(m).filter(x=>Math.abs(x[1])>.004).sort((a,b)=>b[1]-a[1]).map(([n,v])=>`<span class="${v>0?'bp':'bm'}">${dot2(n)}${esc(n)} ${v>0?'+':'−'}${betTxt(Math.abs(v),u)}</span>`).join('')).join('');
+  return`<div class="wbt">${esc(e.w.join(' & '))} gagne ${betTxt(e.v*e.L.length,betUnit(e))}</div><div class="wbs"><small>Note en cours · ${BET.length} partie${BET.length>1?'s':''}</small>${tot}</div><button class="big" id="bNote">Envoyer la note 🧾</button>`;
+}
+const dot2=n=>{const c=pcol(n);return c?`<i class="hdot" style="background:${c}"></i>`:''};
+function betBill(list){
+  const D=betDebts(betNet(list)),d=new Date();
+  const games=list.map((e,k)=>`<li><span>${k+1}. ${GNAME[e.game]||e.game}</span><b>${esc(e.w.join(' & '))}</b><em>+${betTxt(e.v*e.L.length,betUnit(e))}</em></li>`).join('');
+  const debts=D.length?D.map(x=>`<li class="bd"><b>${esc(x.from)}</b> doit <strong>${betTxt(x.v,x.u)}</strong> à <b>${esc(x.to)}</b></li>`).join(''):'<li class="bd">Personne ne doit rien.</li>';
+  const txt='🧾 LA NOTE — Cricket Master\n'+d.toLocaleDateString('fr-FR')+' · '+list.length+' partie'+(list.length>1?'s':'')+'\n\n'+
+    list.map((e,k)=>`${k+1}. ${GNAME[e.game]||e.game} : ${e.w.join(' & ')} gagne ${betTxt(e.v*e.L.length,betUnit(e))}`).join('\n')+'\n\nQUI DOIT QUOI\n'+
+    (D.length?D.map(x=>`• ${x.from} doit ${betTxt(x.v,x.u)} à ${x.to}`).join('\n'):'Personne ne doit rien.');
+  return{html:`<div class="bh">🧾 LA NOTE</div><div class="bdate">${d.toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'})} · ${list.length} partie${list.length>1?'s':''}</div><ul class="bg">${games}</ul><div class="bt">Qui doit quoi</div><ul class="bds">${debts}</ul>`,txt};
+}
+function openBill(){if(!BET.length)return;haptic();SFX.open();const b=betBill(BET);$('bPaper').innerHTML=b.html;$('bill').dataset.txt=b.txt;$('bill').classList.add('on');$('bill').querySelector('.bsw').classList.add('new')}
+document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('#bNote')){e.stopPropagation();openBill()}},true);
+$('bBack').addEventListener('click',()=>{haptic();SFX.ui();$('bill').querySelector('.bsw').classList.remove('new');setTimeout(()=>$('bill').classList.remove('on'),220)});
+$('bSend').addEventListener('click',async()=>{haptic();const txt=$('bill').dataset.txt||'';
+  try{if(navigator.share)await navigator.share({title:'La note',text:txt});else{await navigator.clipboard.writeText(txt);toast('NOTE COPIÉE','',true)}}catch(err){if(err&&err.name==='AbortError')return;try{await navigator.clipboard.writeText(txt);toast('NOTE COPIÉE','',true)}catch(e2){}}
+  BETH.push({date:Date.now(),list:BET.slice()});BET=[];betSave();SFX.lead();confetti(40);$('bill').classList.remove('on');$('wBet').innerHTML=''});
+/* écran de victoire : rappel du pari et de la note en cours */
+new MutationObserver(()=>{if($('win').classList.contains('on'))$('wBet').innerHTML=betWinHTML()}).observe($('win'),{attributes:true,attributeFilter:['class']});
+/* menu : pari */
+function betSync(){$('setup').classList.toggle('bet-on',!!S.bet);const r=$('betV');r.value=S.betv||5;$('betVv').textContent=S.betk?(S.betv||5)+' '+(S.betl||'gage'):(S.betv||5)+' €';
+  r.style.setProperty('--p',((S.betv||5)-1)/99*100+'%');const c=document.querySelector('#setup .betcus');if(c)c.textContent=S.betl?S.betl:'Autre'}
+{const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{betSync()}catch(e){}return r}}
+$('betV').addEventListener('input',e=>{S.betv=+e.target.value;betSync();if(!betSync._t){SFX.tick&&SFX.tick();betSync._t=setTimeout(()=>betSync._t=0,60)}});
+$('betV').addEventListener('change',()=>{store.set(K_S,S);haptic()});
+document.querySelector('#setup .betcus').addEventListener('click',e=>{e.stopPropagation();e.preventDefault();haptic();
+  const old=$('xpick');if(old)old.remove();const b=e.currentTarget,r0=b.getBoundingClientRect();
+  const p=el('div','',`<div class="xpt">Qu'est-ce qu'on parie ?</div><input class="xpn" type="text" maxlength="24" value="${esc(S.betl||'')}" placeholder="bière, pompes, vaisselle…"><button class="xpo">OK</button>`);p.id='xpick';document.body.append(p);
+  const w=p.offsetWidth,h=p.offsetHeight;p.style.left=Math.max(12,Math.min(innerWidth-w-12,r0.left+r0.width/2-w/2))+'px';p.style.top=Math.max(12,r0.top-h-14)+'px';
+  const inp=p.querySelector('.xpn');setTimeout(()=>{inp.focus();inp.select()},30);
+  const ok=()=>{const v=inp.value.trim();if(!v){toast('ÉCRIS CE QUE VOUS PARIEZ','',true);return}S.betl=v;S.betk=1;store.set(K_S,S);p.remove();SFX.ui();renderSetup()};
+  p.querySelector('.xpo').addEventListener('click',ok);inp.addEventListener('keydown',ev=>{if(ev.key==='Enter')ok()});
+  setTimeout(()=>document.addEventListener('pointerdown',function f(ev){if(!ev.target.closest('#xpick')){p.remove();document.removeEventListener('pointerdown',f,true)}},true),0)},true);
+/* statistiques : onglet Paris (notes envoyées + soldes cumulés) */
+{const tb=$('hTabs');const bt=document.createElement('button');bt.dataset.v='bets';bt.textContent='Paris';tb.append(bt);
+ const _h=renderHist;renderHist=function(){const r=_h.apply(this,arguments);try{$('hist').classList.toggle('tbets',HSEL.tab==='bets');if(HSEL.tab==='bets'){const b=$('hBody');$('hGame').style.display='none';
+   const all=BETH.flatMap(n=>n.list),N=betNet(all);
+   const bal=Object.entries(N).map(([u,m])=>{const R=Object.entries(m).sort((a,b)=>b[1]-a[1]);return R.length?`<div class="hrec bbal"><div><small>Solde cumulé · ${esc(u==='€'?'argent':u)}</small>${R.map(([n,v])=>`<p><b>${dot2(n)}${esc(n)}</b><span class="${v>.004?'bp':v<-.004?'bm':''}">${v>.004?'+':v<-.004?'−':''}${betTxt(Math.abs(v),u)}</span></p>`).join('')}</div></div>`:''}).join('');
+   const notes=BETH.slice().reverse().map(n=>{const D=betDebts(betNet(n.list));return`<div class="hcard"><div class="hct"><b>🧾 Note · ${n.list.length} partie${n.list.length>1?'s':''}</b><small>${fdate(n.date)}</small></div><div class="hps">${D.length?D.map(x=>`<span>${esc(x.from)} → ${esc(x.to)} <b>${betTxt(x.v,x.u)}</b></span>`).join(''):'<span>Personne ne doit rien</span>'}</div></div>`}).join('');
+   const cur=BET.length?`<div class="hcard"><div class="hct"><b>Note en cours · ${BET.length} partie${BET.length>1?'s':''}</b><small>pas encore envoyée</small></div><button class="big" id="bNote">Voir la note 🧾</button></div>`:'';
+   b.innerHTML=(cur+bal+notes)||'<p class="hempty">Aucun pari pour l\'instant.<br>Active « Pari : Avec » dans le menu d\'une partie.</p>';
+   requestAnimationFrame(placeThumbs)}}catch(e){}return r}}
 /* changement de joueur : petit swoosh (tous les jeux) */
 {const last={};const chk=(k,v)=>{if(last[k]!==undefined&&v!==undefined&&last[k]!==v)try{swoosh()}catch(e){}last[k]=v};
  const _r=render;render=function(){const x=_r.apply(this,arguments);try{if(G&&G.winner===null)chk('c'+G.id,shownCur())}catch(e){}return x};
