@@ -3666,7 +3666,7 @@ html body #win #wBet #bNote,html body #hist #bNote{border-radius:99px!important;
 #bill .bsw.new .hth{transform:translateX(100%)}
 html body #bill .bsw .big{position:relative;z-index:1;background:transparent!important;box-shadow:none!important;border:0!important;color:var(--ink)!important;margin:0!important;height:100%!important;padding:0!important;
   font-family:"Fun",sans-serif!important;font-weight:400!important;font-size:min(4.6vw,2.3dvh)!important;transition:color .15s}
-html body #bill .bsw:not(.new) #bBack,html body #bill .bsw.new #bSend{color:#fff!important}
+html body #bill .bsw:not(.new) #bOk,html body #bill .bsw.new #bSend{color:#fff!important}
 #hist .bbal p{display:flex;justify-content:space-between;margin:.35em 0;font-size:calc(var(--uu,1dvh)*2.1)}
 #hist .bbal>div{flex:1}
 html body #setup#setup.b2 .sect.sbet>.opt.betsl{flex:1 0 100%!important;width:100%!important;max-width:none!important;grid-template-columns:100%!important}
@@ -3937,7 +3937,7 @@ html body #setup#setup.b2 .sect.sbet>.opt.betsl .bsl{grid-column:1 / -1}
 
 <!-- ===== LA NOTE (paris) ===== -->
 <div class="ov" id="bill">
-  <div class="bsh"><button class="circ" id="bBack" aria-label="Retour"><svg viewBox="0 0 24 24"><path d="M15 5 8 12l7 7"/></svg></button><h1>La note</h1><i></i></div>
+  <div class="bsh"><button class="circ" id="billBack" aria-label="Retour"><svg viewBox="0 0 24 24"><path d="M15 5 8 12l7 7"/></svg></button><h1>La note</h1><i></i></div>
   <div class="bpaper" id="bPaper"></div>
   <div class="bsw"><i class="hth"></i><button class="big" id="bOk">Envoyer la note</button><button class="big" id="bSend">Note réglée</button></div>
 </div>
@@ -6528,9 +6528,66 @@ function betBill(list){
 }
 function openBill(){if(!BET.length)return;haptic();SFX.open();const b=betBill(BET);$('bPaper').innerHTML=b.html;$('bPaper').scrollTop=0;$('bill').dataset.txt=b.txt;$('bill').querySelector('.bsw').classList.remove('new');$('bill').classList.add('on')}
 document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('#bNote')){e.stopPropagation();openBill()}},true);
-$('bBack').addEventListener('click',()=>{haptic();SFX.ui();$('bill').classList.remove('on')});
+$('billBack').addEventListener('click',()=>{haptic();SFX.back?SFX.back():SFX.ui();$('bill').classList.remove('on')});
 $('bOk').addEventListener('click',()=>{haptic();SFX.ui();$('bill').querySelector('.bsw').classList.remove('new');billShare()});
-const billShare=async()=>{const txt=$('bill').dataset.txt||'';try{if(navigator.share){await navigator.share({title:'La note',text:txt});return}await navigator.clipboard.writeText(txt);toast('NOTE COPIÉE','',true)}catch(err){if(err&&err.name==='AbortError')return;try{await navigator.clipboard.writeText(txt);toast('NOTE COPIÉE','',true)}catch(e2){}}};
+/* image de la note (PNG) dessinée dans la DA de l'appli */
+async function billPNG(list){
+  try{await Promise.all(['400 60px Fun','500 40px Lbl','700 40px Lbl'].map(f=>document.fonts.load(f)))}catch(e){}
+  const W=1080,P=64,cs=getComputedStyle(document.documentElement),V=(n,d)=>(cs.getPropertyValue(n).trim()||d);
+  const BG=V('--m-home','#f7f2e5'),INK='#141414',MUTE='#8a8378',ACC=V('--accent','#ff5a1f'),GR='#1f9d55',RD='#e4251a';
+  const D=betDebts(betNet(list)),R=betStand(list),d0=new Date(list[0].t);
+  const pot={};list.forEach(e=>{const u=betUnit(e);pot[u]=(pot[u]||0)+e.v*e.L.length});
+  const draw=(ctx)=>{let y=P;const X=P,CW=W-2*P;
+    const T=(t,x,yy,f,c,al)=>{if(!ctx)return;ctx.font=f;ctx.fillStyle=c;ctx.textAlign=al||'left';ctx.textBaseline='alphabetic';ctx.fillText(t,x,yy)};
+    const RR=(x,yy,w,h,r,fill,stroke,lw)=>{if(!ctx)return;ctx.beginPath();ctx.roundRect(x,yy,w,h,r);if(fill){ctx.fillStyle=fill;ctx.fill()}if(stroke){ctx.lineWidth=lw||3;ctx.strokeStyle=stroke;ctx.stroke()}};
+    // logo + titre
+    if(ctx){ctx.save();ctx.translate(W/2,y+60);ctx.fillStyle=ACC;ctx.beginPath();ctx.arc(0,0,44,0,7);ctx.fill();ctx.strokeStyle=INK;ctx.lineWidth=11;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(-42,-42);ctx.lineTo(42,42);ctx.moveTo(42,-42);ctx.lineTo(-42,42);ctx.stroke();ctx.restore()}
+    y+=150;T('LA NOTE',W/2,y+50,'400 96px Fun',INK,'center');y+=90;
+    T(d0.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).replace(/^./,c=>c.toUpperCase()),W/2,y+34,'500 34px Lbl',MUTE,'center');y+=80;
+    // résumé
+    const cells=[[String(list.length),'partie'+(list.length>1?'s':'')],...Object.entries(pot).map(([u,v])=>[betTxt(v,u),'en jeu'])];
+    cells.forEach((c,k)=>{const cx=X+CW*(k+.5)/cells.length;T(c[0],cx,y+60,'400 64px Fun',ACC,'center');T(c[1],cx,y+104,'500 30px Lbl',MUTE,'center')});y+=150;
+    // total
+    T('Total',X,y+50,'400 54px Fun',INK);y+=80;
+    R.forEach((r,i)=>{const top=i===0&&R.length>1,h=top?150:118,col=pcol(r.n)||ACC,bl=r.bal.filter(b=>Math.abs(b.v)>.004);
+      if(top)RR(X+6,y+6,CW-12,h-12,99,col,null);RR(X+(top?6:0),y+(top?6:0),CW-(top?12:0),h-(top?12:0),99,top?null:'#fff',INK,3);if(top&&ctx){ctx.lineWidth=12;ctx.strokeStyle=col;ctx.beginPath();ctx.roundRect(X,y,CW,h,99);ctx.stroke();ctx.lineWidth=3;ctx.strokeStyle=INK;ctx.beginPath();ctx.roundRect(X+6,y+6,CW-12,h-12,99);ctx.stroke()}
+      const tc=top?'#fff':INK;T(String(i+1),X+62,y+h/2+20,'400 56px Fun',tc,'center');
+      T(r.n+(top?'  👑':i===R.length-1&&r.bal.some(b=>b.v<-.004)?'  🥶':''),X+112,y+h/2-(top?4:2),(top?'700 50px':'700 42px')+' Lbl',tc);
+      T(`${r.w} victoire${r.w>1?'s':''} · ${r.p} partie${r.p>1?'s':''}`,X+112,y+h/2+(top?40:34),'500 28px Lbl',top?'rgba(255,255,255,.85)':MUTE);
+      const lines=bl.length?bl:[{v:0,u:'€'}];lines.forEach((b,k)=>{const yy=y+h/2+16+(k-(lines.length-1)/2)*(top?58:48);T((b.v>.004?'+':b.v<-.004?'−':'')+betTxt(Math.abs(b.v),b.u),X+CW-50,yy,(top?'400 56px':'400 46px')+' Fun',top?'#fff':b.v>0?GR:b.v<0?RD:MUTE,'right')});
+      y+=h+18});
+    y+=30;
+    // qui doit quoi
+    T('Qui doit quoi',X,y+50,'400 54px Fun',INK);y+=80;
+    RR(X,y,CW,Math.max(1,D.length)*78+30,36,'#fff',INK,3);y+=15;
+    (D.length?D:[null]).forEach(x=>{if(!x){T('Personne ne doit rien.',X+40,y+52,'500 36px Lbl',INK);y+=78;return}
+      T(x.from,X+40,y+52,'700 38px Lbl',INK);if(ctx){ctx.font='700 38px Lbl'}const w1=ctx?ctx.measureText(x.from).width:0;T('→',X+60+w1,y+52,'500 36px Lbl',MUTE);if(ctx)ctx.font='500 36px Lbl';const w2=ctx?ctx.measureText('→').width:0;
+      T(x.to,X+80+w1+w2,y+52,'700 38px Lbl',INK);T(betTxt(x.v,x.u),X+CW-40,y+54,'400 46px Fun',ACC,'right');y+=78});
+    y+=45;
+    // partie par partie
+    T('Partie par partie',X,y+50,'400 54px Fun',INK);y+=80;
+    list.forEach((e,k)=>{const u=betUnit(e),g=e.v*e.L.length/e.w.length,n=e.w.length+e.L.length,h=122+n*50;
+      RR(X,y,CW,h,32,'#fff',INK,3);
+      T(String(k+1),X+40,y+62,'400 40px Fun',MUTE);T((GNAME[e.game]||e.game)+(subOk(e)?'  ·  '+e.sub:''),X+90,y+62,'700 36px Lbl',INK);T(hm(e.t),X+CW-40,y+60,'500 28px Lbl',MUTE,'right');
+      let yy=y+82;e.w.forEach(nm=>{yy+=50;T('🏆 '+nm,X+90,yy,'700 34px Lbl',pcol(nm)||INK);T('+'+betTxt(g,u),X+CW-40,yy,'600 34px Lbl',GR,'right')});
+      e.L.forEach(nm=>{yy+=50;T(nm,X+90,yy,'500 34px Lbl',MUTE);T('−'+betTxt(e.v,u),X+CW-40,yy,'600 34px Lbl',RD,'right')});
+      y+=h+20});
+    y+=30;T('Cricket Master',W/2,y+40,'400 40px Fun',MUTE,'center');y+=40+P;
+    return y};
+  const H=Math.ceil(draw(null)),c=document.createElement('canvas');c.width=W;c.height=H;const ctx=c.getContext('2d');
+  ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);draw(ctx);
+  return new Promise(r=>c.toBlob(b=>r(b),'image/png'));
+}
+function billMsg(list){const D=betDebts(betNet(list)),R=betStand(list);
+  return'🧾 Vous avez une note à régler !\n\n'+(D.length?D.map(x=>`• ${x.from} doit ${betTxt(x.v,x.u)} à ${x.to}`).join('\n'):'Personne ne doit rien.')+
+    `\n\n👑 ${R[0]?R[0].n:''} mène après ${list.length} partie${list.length>1?'s':''}.\nLe détail est dans la note 👆`}
+const billShare=async()=>{const list=BET.slice();if(!list.length)return;const msg=billMsg(list);
+  try{const blob=await billPNG(list),f=new File([blob],'la-note.png',{type:'image/png'});
+    if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],text:msg,title:'La note'});return}
+    if(navigator.share){await navigator.share({title:'La note',text:msg});return}
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='la-note.png';document.body.append(a);a.click();a.remove();
+    try{await navigator.clipboard.writeText(msg)}catch(e){}toast('NOTE ENREGISTRÉE','',true)}
+  catch(err){if(err&&err.name==='AbortError')return;try{await navigator.clipboard.writeText(msg);toast('NOTE COPIÉE','',true)}catch(e2){}}};
 $('bSend').addEventListener('click',()=>{haptic();$('bill').querySelector('.bsw').classList.add('new');
   setTimeout(()=>{BETH.push({date:Date.now(),list:BET.slice()});BET=[];betSave();SFX.lead();confetti(40);toast('NOTE RÉGLÉE','',true);$('bill').classList.remove('on');$('wBet').innerHTML='';
     if($('hist').classList.contains('on'))renderHist()},420)});
