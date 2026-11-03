@@ -3399,6 +3399,49 @@ html body #setup#setup.b2 .sect.s2 .legopt{order:20!important}
 @keyframes lmaim{0%{transform:translate(0,0)}14%{transform:translate(5px,-3px)}29%{transform:translate(2px,4px)}43%{transform:translate(-4px,2px)}
   57%{transform:translate(-2px,-5px)}71%{transform:translate(4px,-1px)}86%{transform:translate(-3px,3px)}100%{transform:translate(0,0)}}
 html body #setup#setup.g-x01 .sect.s2 .opt:has([data-k="xin"]),html body #setup#setup.g-x01 .sect.s2 .opt:has([data-k="xout"]){margin-top:0!important;align-self:start!important}
+
+/* ===== v107 ===== */
+/* --- Cricket : case du joueur en cours = contour de sa couleur + cadre noir (comme la maquette), fond clair ; nom et score à sa couleur --- */
+html body #game#game.sk.p2 #scores>.pc.sc.act{background:transparent!important;box-shadow:0 0 0 var(--h) var(--accent)!important}
+html body #game#game.sk.p2 #scores>.pc.sc.act::after{opacity:1!important;border-width:var(--bw)!important;border-color:var(--m-strong)!important}
+html body #game#game.sk.p2 #scores .sc.act>.nm,html body #game#game.sk.p2 #scores .sc.act>.pts,html body #game#game.sk.p2.lt #scores .sc.act>.pts,html body #game#game.sk.p2.dk #scores .sc.act>.pts{color:var(--accent)!important;-webkit-text-stroke:0!important}
+html body #game#game.sk.p2 #scores .sc.act>.mpr{color:var(--ink)!important}
+html body #game#game.sk.p2 #scores .sc.act>.pills .pill{background:#fff!important;color:var(--ink)!important}
+html body #game#game.sk.p2 #scores .sc.act>.pills .pill.e{opacity:.35!important}
+/* --- texte toujours blanc sur les couleurs --- */
+html body #game#game.sk.p2 #grid .num:not(.dead) .lbl{color:#fff!important}
+html body #x01#x01 #xplayers .xc.act .xn,html body #x01#x01 #xplayers .xc.act .xs,html body #x01#x01 #xplayers .xc.act .xr,html body #killer#killer #kplayers .kc.act .kname{color:#fff!important}
+/* --- règles : toute la largeur, marges du menu --- */
+html body #setup .grules{width:100%!important;max-width:none!important;box-sizing:border-box!important;text-wrap:wrap!important}
+/* --- menus : un seul rythme d'espacement — intitulé → switch : 1,2u ; entre deux réglages : 2,8u --- */
+html body #setup#setup.b2 .sect.s2{row-gap:calc(var(--u)*2.8)!important;column-gap:4vw!important;padding:0!important}
+html body #setup#setup.b2 .sect.s2>.opt,html body #setup#setup.b2 .sect.s2>.kpair,html body #setup#setup.b2 .sect.s2>.kpair>.opt{row-gap:calc(var(--u)*1.2)!important;margin:0!important;padding:0!important}
+html body #setup#setup.b2 .sect.s2 .opt>span,html body #setup#setup.b2 .sect.s1 .opt>span,html body #setup .nlab{font-family:"Lbl",sans-serif!important;font-weight:600!important;font-size:calc(var(--u)*2.15)!important;line-height:1.1!important;margin:0!important;padding:0!important;color:var(--ink)!important}
+html body #setup#setup.b2 .sect.s1{display:flex!important;flex-direction:column!important;gap:calc(var(--u)*2.8)!important}
+html body #setup#setup.b2 .sect.s1>*{margin:0!important}
+html body #setup#setup.b2 .sect.s1>.opt{display:grid!important;row-gap:calc(var(--u)*1.2)!important;padding:0!important;border:0!important;box-shadow:none!important}
+html body #setup#setup.b2 .sect.s1>.nlab{margin-bottom:calc(var(--u)*-1.6)!important}
+html body #setup#setup.b2 .sect.s1>.ordopt{border-top:0!important;padding-top:0!important}
+html body #setup#setup.b2 .sect.s1>.ordopt::before{display:none!important}
+/* --- 501 : infos plus grandes dans les cases --- */
+#x01 #xplayers .xc{container-type:inline-size}
+html body #x01#x01 #xplayers .xc .xn{font-size:min(14cqw,4.4dvh)!important;line-height:1.05!important}
+html body #x01#x01 #xplayers .xc .xn .xm{display:block!important;font-size:.72em!important;margin:0!important;opacity:.85}
+html body #x01#x01 #xplayers .xc .xr{font-size:min(40cqw,12dvh)!important;line-height:1!important}
+html body #x01#x01 #xplayers .xc .xs{font-size:min(7.5cqw,2.3dvh)!important}
+html body #x01#x01 #xplayers .xc .khist .pill{font-size:min(7cqw,2.2dvh)!important;min-width:min(18cqw,6dvh)!important;padding:.25em .5em!important}
+/* --- 501 : pavé dans la DA — touches en pilules, chiffres plus gros --- */
+html body #x01#x01 #xkeys{gap:calc(var(--uu)*1.1)!important}
+html body #x01#x01 #xkeys button{border-radius:99px!important;font-family:"Fun",sans-serif!important;font-weight:400!important}
+html body #x01#x01 #xkeys button .lbl{font-size:min(7.2vw,3.6dvh)!important;font-family:"FunTxt",-apple-system,sans-serif!important;font-weight:900!important}
+html body #x01#x01 #xkeys button[data-n="25"] .lbl{font-family:"Fun",sans-serif!important;font-weight:400!important}
+/* --- Killer : la marque ne décale plus le numéro (place toujours réservée) ; la bulle derrière la croix bouge doucement --- */
+html body #killer#killer #kplayers .kc .kstat .kmk.none{display:block!important;visibility:hidden!important;width:min(16vw,7.5dvh)!important;height:min(16vw,7.5dvh)!important}
+.kmk svg .kdisc{transform-box:fill-box;transform-origin:center;animation:lmaim 4.2s ease-in-out infinite}
+html body #game#game#game.sk.p2 #scores .sc.act>.nm,html body #game#game#game.sk.p2 #scores .sc.act>.pts{color:var(--accent)!important;-webkit-text-stroke:0!important}
+html body #game#game#game.sk.p2 #scores .sc.act>.mpr{color:var(--ink)!important}
+html body #x01#x01 #xplayers .xc .xn{display:flex!important;flex-direction:column!important;align-items:center!important;white-space:nowrap}
+html body #x01#x01 #xplayers .xc.act .xn .xm{color:#fff!important}
 </style>
 </head>
 <body>
@@ -4926,7 +4969,7 @@ applyTheme();
 /* ---- joueurs enregistrés : nom + couleur ---- */
 if(S.xlegs>10)S.xlegs=10;if(!S.xlegs)S.xlegs=1;if(!S.clegs)S.clegs=1;if(S.clegs>10)S.clegs=10;
 const K_R='cricket.roster.v1';
-const PCOLS=['#d62828','#f77f00','#2b9348','#1d4ed8','#7b2cbf','#0ea5e9','#c9184a','#8d5a2b','#0f8b8d','#111111','#ff5a1f','#fcc200','#f472b6','#84cc16','#6366f1','#a21caf','#64748b','#d4a373','#8ecae6','#2d6a4f','#ffb3c6','#bde0fe','#caffbf','#ffd6a5','#39ff14','#ff2bd6','#00f0ff','#fff01f','#b08d57','#2e1a47'];
+const PCOLS=['#d62828','#f77f00','#2b9348','#1d4ed8','#7b2cbf','#0ea5e9','#c9184a','#8d5a2b','#0f8b8d','#111111','#e07a8f','#7aa6d6','#6fbf95','#e39a62','#a68bd6','#5fb3ad','#d48ab0','#97ad5e','#c99a52','#8a9bb5','#0f5e4a','#1b2a6b','#6b1238','#3d1f5c','#8a6a1e','#2f3640','#8a3b12','#0e4d64','#5c4636','#9c7a5b'];
 let ROSTER=store.get(K_R,null);
 if(!ROSTER){const seen=new Set();ROSTER=(S.names||[]).map(n=>(n||'').trim().toUpperCase()).filter(n=>n&&!/^J\d$/.test(n)&&!seen.has(n)&&seen.add(n)).map((n,i)=>({name:n,color:PCOLS[i%PCOLS.length]}));store.set(K_R,ROSTER)}
 // b = chance de toucher la bulle (25 ou 50) quand on la vise : c'est bien plus dur qu'un numéro
@@ -5942,7 +5985,7 @@ function skColors(){const g=$('game');
   if(!skp2()||!G||!R){g.style.removeProperty('--accent');g.style.removeProperty('--acc-rgb');g.classList.remove('dk');return}
   const c=pcolI(shownCur()),rgb=[1,3,5].map(k=>parseInt(c.slice(k,k+2),16));
   g.style.setProperty('--accent',c);g.style.setProperty('--acc-rgb',rgb.join(','));
-  g.classList.toggle('dk',(.299*rgb[0]+.587*rgb[1]+.114*rgb[2])/255<.5);g.classList.toggle('lt',(.299*rgb[0]+.587*rgb[1]+.114*rgb[2])/255>.62);
+  g.classList.toggle('dk',(.299*rgb[0]+.587*rgb[1]+.114*rgb[2])/255<.5);g.classList.toggle('lt',false&&(.299*rgb[0]+.587*rgb[1]+.114*rgb[2])/255>.62);
   TARGETS.forEach(t=>G.players.forEach((p,i)=>{const m=R.mk[t]&&R.mk[t][i];if(m)m.style.setProperty('--mc',pcolI(i))}));
 }
 {const _r=render;render=function(){const x=_r.apply(this,arguments);try{skColors()}catch(e){}return x}}
@@ -6141,7 +6184,7 @@ const bgOf=e=>{const c=getComputedStyle(e).backgroundColor;return c&&c!=='rgba(0
      setTimeout(()=>{pass(t);t.classList.remove('on2')},190);return}
    const sw=t.closest('.hsw');
    if(sw&&sw.classList.contains('two')){const th=sw.querySelector('.hth');
-     if(t.id==='hPlay'){sw.classList.add('new');setTimeout(()=>{openAsk('home');setTimeout(()=>sw.classList.remove('new'),300)},220)}else pass(t);return}
+     if(t.id==='hPlay'){SFX.open();sw.classList.add('new');setTimeout(()=>{openAsk('home');setTimeout(()=>sw.classList.remove('new'),300)},220)}else pass(t);return}
    pass(t)},true);
 }
 /* annuler : rond blanc centré au-dessus de l'historique du joueur en cours, à cheval sur sa case */
@@ -6169,7 +6212,7 @@ document.addEventListener('scroll',()=>placeUndo(),true);
 new MutationObserver(()=>{const box=$('slots');box.querySelectorAll('.slot.lock').forEach(sl=>{if(sl.dataset.c)return;
   const nm=(box.classList.contains('nums')?sl.querySelector('b'):sl.querySelector('span')).textContent.trim(),c=pcol(nm);
   const col=/^#[0-9a-f]{6}$/i.test(c||'')?c:getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();sl.style.setProperty('--pc',col);sl.dataset.c=1;
-  if(/^#[0-9a-f]{6}$/i.test(col)){const v=[1,3,5].map(k=>parseInt(col.slice(k,k+2),16));sl.classList.toggle('lt',(.299*v[0]+.587*v[1]+.114*v[2])/255>.62)}})})
+  if(/^#[0-9a-f]{6}$/i.test(col)){const v=[1,3,5].map(k=>parseInt(col.slice(k,k+2),16));sl.classList.toggle('lt',false&&(.299*v[0]+.587*v[1]+.114*v[2])/255>.62)}})})
   .observe($('slots'),{subtree:true,attributes:true,attributeFilter:['class'],childList:true});
 {const w=document.createElement('div');w.className='dsw';w.innerHTML='<i class="hth"></i>';$('drawGo').parentElement.insertBefore(w,$('drawGo'));w.append($('drawAgain'),$('drawGo'));
  $('drawAgain').textContent='Relancer';$('drawGo').textContent='C\'est parti !';
@@ -6197,7 +6240,7 @@ $('fMenu').addEventListener('click',e=>{e.stopPropagation();haptic();f2nudge(-1)
 $('fUndo').addEventListener('click',e=>{e.stopPropagation();haptic();f2nudge(1);
   if($('x01').classList.contains('on')){if(XG)xUndo()}else if($('killer').classList.contains('on')){if(KG&&KG.winner===null)kUndo()}else undo()});
 /* 301 / Killer : couleur claire → texte noir sur le rond */
-{const _s=setPc;setPc=function(sec,p){_s(sec,p);const c=getComputedStyle(sec).getPropertyValue('--pc').trim();if(/^#[0-9a-f]{6}$/i.test(c)){const v=[1,3,5].map(k=>parseInt(c.slice(k,k+2),16));sec.classList.toggle('lt',(.299*v[0]+.587*v[1]+.114*v[2])/255>.62)}}}
+{const _s=setPc;setPc=function(sec,p){_s(sec,p);const c=getComputedStyle(sec).getPropertyValue('--pc').trim();if(/^#[0-9a-f]{6}$/i.test(c)){const v=[1,3,5].map(k=>parseInt(c.slice(k,k+2),16));sec.classList.toggle('lt',false&&(.299*v[0]+.587*v[1]+.114*v[2])/255>.62)}}}
 /* démarrage : toujours l'accueil (« Reprendre la partie » si une partie est en cours) */
 goHome();
 
