@@ -3157,6 +3157,54 @@ html body #hist .seg.htabs button{flex:1 1 0!important;padding:0!important;margi
 html body #hist .seg.htabs .thumb{display:none!important}
 html body #hist .seg.htabs button,html body #hist .seg.htabs button.sel{height:calc(var(--uu)*5.4)!important;min-height:0!important;max-height:calc(var(--uu)*5.4)!important;padding-top:0!important;padding-bottom:0!important;transform:none!important}
 html body #hist .seg.htabs{height:calc(var(--uu)*5.4)!important;min-height:0!important}
+
+/* ===== v93 : plus d'en-tête dans les jeux ; barre du bas = Menu | Double · Spew · Triple | Annuler ===== */
+:is(#game,#x01,#killer)>header{display:none!important}
+#game#game.sk.p2 main,#x01 #xmain,#killer #kmain{padding-top:max(var(--sat,0px),calc(var(--uu)*1.2))!important}
+#game#game.sk.p2 #scores{margin-top:calc(var(--g)*1.4)!important}
+/* barre */
+footer{--fp:var(--fh,7dvh)}
+#game#game.sk.p2 footer{--fh:var(--r);padding:0 var(--fp)!important;grid-template-columns:calc(var(--colw) - var(--fp)) var(--midw) calc(var(--colw) - var(--fp))!important}
+:is(#x01,#killer) footer{--fh:7dvh;padding:0 var(--fp)!important}
+/* bulle : alignée sur la colonne des nombres au Cricket */
+#game#game.sk.p2 .fthumb,body.m2 #game#game.sk.p2 .fthumb,body.m3 #game#game.sk.p2 .fthumb{left:var(--fp)!important}
+#game#game.sk.p2 .fthumb{transform:translateX(calc(var(--colw) - var(--fp)))!important}
+body.m2 #game#game.sk.p2 .fthumb{transform:translateX(0)!important}
+body.m3 #game#game.sk.p2 .fthumb{transform:translateX(calc(var(--colw)*2 - var(--fp)*2))!important}
+body.m2 #game#game.sk.p2 footer #b2::after{translate:calc((var(--midw) - var(--colw) + var(--fp))/2) 0!important}
+body.m3 #game#game.sk.p2 footer #b3::after{translate:calc((var(--colw) - var(--midw) - var(--fp))/2) 0!important}
+#game#game.sk.p2 footer #b2::after,#game#game.sk.p2 footer #bS::after,#game#game.sk.p2 footer #b3::after{font-size:calc(var(--r)*.33)!important}
+:is(#x01,#killer) footer .fthumb{left:var(--fp)!important;width:calc((100% - var(--fp)*2)/3)!important}
+/* boutons ronds aux deux bouts, dans le rail */
+html body footer #fMenu#fMenu,html body footer #fUndo#fUndo{position:absolute!important;top:50%!important;bottom:auto!important;translate:0 -50%!important;left:auto;right:auto;
+  width:calc(var(--fh) - 12px)!important;height:calc(var(--fh) - 12px)!important;min-width:0!important;margin:0!important;padding:0!important;border-radius:50%!important;
+  background:transparent!important;border:0!important;box-shadow:inset 0 0 0 var(--bub-bw,1.5px) var(--m-strong)!important;color:var(--ink)!important;display:grid!important;place-items:center!important;
+  z-index:4!important;font-size:0!important;grid-area:auto!important;transform:none;transition:transform .12s,background-color .12s}
+html body footer #fMenu#fMenu{left:6px!important}
+html body footer #fUndo#fUndo{right:6px!important;left:auto!important}
+html body footer #fMenu#fMenu::before,html body footer #fMenu#fMenu::after{content:none!important;display:none!important}
+html body footer #fMenu#fMenu:active,html body footer #fUndo#fUndo:active{transform:scale(.86);background:var(--pc,var(--accent))!important;color:#fff!important}
+html body footer #fMenu#fMenu svg,html body footer #fUndo#fUndo svg{display:block!important;width:46%!important;height:46%!important;fill:none!important;stroke:currentColor!important;stroke-width:2.6!important;
+  stroke-linecap:round;stroke-linejoin:round}
+
+/* Cricket : même barre que 501 / Killer (trois cases égales entre les deux ronds) */
+html body #game#game.sk.p2 footer{grid-template-columns:1fr 1fr 1fr!important}
+html body #game#game.sk.p2 footer .fthumb,html body.m2 #game#game.sk.p2 footer .fthumb,html body.m3 #game#game.sk.p2 footer .fthumb{left:var(--fp)!important;width:calc((100% - var(--fp)*2)/3)!important}
+html body #game#game.sk.p2 footer .fthumb{transform:translateX(100%)!important}
+html body.m2 #game#game.sk.p2 footer .fthumb{transform:translateX(0)!important}
+html body.m3 #game#game.sk.p2 footer .fthumb{transform:translateX(200%)!important}
+html body.m2 #game#game.sk.p2 footer #b2::after,html body.m3 #game#game.sk.p2 footer #b3::after{translate:none!important}
+html body #game#game.sk.p2 footer #b2::after,html body #game#game.sk.p2 footer #bS::after,html body #game#game.sk.p2 footer #b3::after{font-size:min(calc(var(--r)*.36),2.6dvh)!important}
+html body:not(.m2):not(.m3) #game#game.sk.p2 footer #bS::after,html body.m2 #game#game.sk.p2 footer #b2::after,html body.m3 #game#game.sk.p2 footer #b3::after{scale:1.4!important}
+
+/* ronds Menu / Annuler : sans contour (pas de double trait avec le rail), juste l'icône */
+html body footer #fMenu#fMenu,html body footer #fUndo#fUndo{box-shadow:none!important}
+html body footer #fMenu#fMenu svg,html body footer #fUndo#fUndo svg{width:52%!important;height:52%!important;stroke-width:2.8!important}
+/* texte choisi : un peu plus gros, sans déborder de la bulle */
+html body:not(.m2):not(.m3) #game#game.sk.p2 footer #bS::after,html body.m2 #game#game.sk.p2 footer #b2::after,html body.m3 #game#game.sk.p2 footer #b3::after{scale:1.15!important}
+html body #game#game.sk.p2 footer #b2::after,html body #game#game.sk.p2 footer #bS::after,html body #game#game.sk.p2 footer #b3::after{font-size:min(calc(var(--r)*.34),2.5dvh)!important}
+html body:not(.m2):not(.m3) :is(#x01,#killer) footer #bS::after,html body.m2 :is(#x01,#killer) footer #b2::after,html body.m3 :is(#x01,#killer) footer #b3::after{scale:1.15!important}
+html body footer #fMenu#fMenu svg,html body footer #fUndo#fUndo svg{width:calc(var(--fh,7dvh)*.42)!important;height:calc(var(--fh,7dvh)*.42)!important;min-width:0!important}
 </style>
 </head>
 <body>
@@ -3260,6 +3308,7 @@ html body #hist .seg.htabs{height:calc(var(--uu)*5.4)!important;min-height:0!imp
     <button id="bS" aria-label="Spew">SPEW</button>
     <button id="b3" aria-label="Triple">TRIPLE</button>
     <i class="fthumb"></i>
+    <button id="fMenu" aria-label="Menu principal"><svg viewBox="0 0 24 24"><path d="M15 5 8 12l7 7"/></svg></button>
     <button id="fUndo" aria-label="Annuler la dernière fléchette"><svg viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button>
   </footer>
 </section>
@@ -4410,7 +4459,7 @@ function addPlayer(n){
   if(S.n<maxP())requestAnimationFrame(()=>{openPick();$('ppick').classList.remove('pop')});else $('ppick').classList.remove('on');   // la fenêtre reste ouverte pour enchaîner
   // équipes : on continue tant qu'il manque des joueurs
 }
-document.addEventListener('pointerdown',e=>{const pp=$('ppick');if(pp.classList.contains('on')&&!e.target.closest('#ppick')&&!e.target.closest('.padd'))pp.classList.remove('on')});
+/* la fenêtre ne se ferme qu'avec sa croix */
 $('pAdd').addEventListener('click',()=>addPlayer($('pNew').value));
 $('pNew').addEventListener('keydown',e=>{if(e.key==='Enter')addPlayer($('pNew').value)});
 $('pClose').addEventListener('click',()=>$('ppick').classList.remove('on'));
@@ -5608,7 +5657,7 @@ function layoutSk(){
   const g=$('game');if(!skp2())return;
   const gp=innerWidth*.035,hd=g.querySelector('header'),ft=g.querySelector('footer');
   const gb=ft?parseFloat(getComputedStyle(ft).marginBottom)||gp:gp;
-  const r=Math.max(28,(g.clientHeight-hd.offsetHeight-9*gp-gb)/10.44);
+  const mt=parseFloat(getComputedStyle(g.querySelector('main')).paddingTop)||0;const r=Math.max(28,(g.clientHeight-hd.offsetHeight-mt-9*gp-gb)/10.44);
   g.style.setProperty('--rowh',r.toFixed(2)+'px');
 }
 /* nom et score : taille fixe (proportionnelle à la ligne), réduite seulement si ça ne tient pas dans la colonne ;
@@ -5739,6 +5788,13 @@ function decoStats(){const t=$('stats');if(!t)return;const rows=[...t.rows];if(!
 new MutationObserver(()=>{const w=$('win');if(!w.classList.contains('on'))return;const nm=$('wName').textContent.trim(),n0=nm.split(' & ')[0];let c=pcol(n0);
   if(!/^#[0-9a-f]{6}$/i.test(c||'')){const pl=S.last==='x01'?XG:S.last==='killer'?KG:G;const i=pl?pl.players.findIndex(p=>p.name===nm):0;c=PFB[Math.max(0,i)%PFB.length]}
   w.style.setProperty('--wc',c)}).observe($('win'),{attributes:true,attributeFilter:['class']});
+{let T=null,done=0;
+ document.addEventListener('pointerdown',e=>{const c=e.target.closest&&e.target.closest('#xplayers .xc,#kplayers .kc');if(!c)return;const x=e.clientX,y=e.clientY;
+   clearTimeout(T);T=setTimeout(()=>{T=null;done=performance.now();haptic();if($('x01').classList.contains('on'))$('xInfo').click();else $('kInfo').click()},550);
+   c._lp=[x,y]},true);
+ document.addEventListener('pointermove',e=>{if(T&&e.target.closest&&e.target.closest('#xplayers,#kplayers')){}},true);
+ ['pointerup','pointercancel'].forEach(ev=>document.addEventListener(ev,()=>{clearTimeout(T);T=null},true));
+ document.addEventListener('click',e=>{if(performance.now()-done<600&&e.target.closest&&e.target.closest('#xplayers,#kplayers')){e.stopPropagation();e.preventDefault()}},true)}
 /* balle : chaque appui la propulse vers le bout du rail, elle rebondit contre le bord puis retombe à sa place */
 const BALLS=new Map();
 function kickBall(num,X){const row=num.parentElement;let B=BALLS.get(num);
@@ -5828,10 +5884,7 @@ function undoAnchor(){
   if($('killer').classList.contains('on')){const c=KG&&KG.winner===null&&document.querySelector('#kplayers .kc.act');if(!c)return null;const h=c.querySelector('.khist')||c,hr=h.getBoundingClientRect(),cr=c.getBoundingClientRect();return[hr.left+hr.width/2,cr.bottom]}
   if($('game').classList.contains('on')&&G&&R&&G.winner===null&&!$('win').classList.contains('on')){const s=R.sc[shownCur()];if(!s)return null;const pr=s.pills.getBoundingClientRect(),cr=s.c.getBoundingClientRect();return[pr.left+pr.width/2,cr.top]}
   return null}
-function placeUndo(){const fu=$('fUndo');if(fu.parentElement!==document.body)document.body.append(fu);
-  const t0=performance.now();cancelAnimationFrame(undoRaf);
-  const step=()=>{const a=undoAnchor();if(a){fu.style.display='';fu.style.left=a[0]+'px';fu.style.top=a[1]+'px'}else fu.style.display='none';
-    if(performance.now()-t0<700)undoRaf=requestAnimationFrame(step)};step()}
+function placeUndo(){const fu=$('fUndo'),f=document.querySelector('footer');if(f&&fu.parentElement!==f)f.append(fu);fu.style.display=''}
 addEventListener('resize',()=>placeUndo());
 document.addEventListener('scroll',()=>placeUndo(),true);
 {const _r=render;render=function(){const x=_r.apply(this,arguments);try{placeUndo()}catch(e){}return x}}
@@ -5855,6 +5908,8 @@ new MutationObserver(()=>{const box=$('slots');box.querySelectorAll('.slot.lock'
  $('drawAgain').addEventListener('click',e=>{if(w.dataset.k){delete w.dataset.k;return}e.stopImmediatePropagation();haptic();w.classList.add('again');
    setTimeout(()=>{w.dataset.k=1;$('drawAgain').click();setTimeout(()=>w.classList.remove('again'),350)},220)},true)}
 /* annuler (rond sous le spew) : selon le jeu en cours */
+$('fMenu').addEventListener('click',e=>{e.stopPropagation();haptic();
+  if($('x01').classList.contains('on'))$('xBack').click();else if($('killer').classList.contains('on'))$('kBack').click();else $('bBack').click()});
 $('fUndo').addEventListener('click',e=>{e.stopPropagation();haptic();
   if($('x01').classList.contains('on')){if(XG)xUndo()}else if($('killer').classList.contains('on')){if(KG&&KG.winner===null)kUndo()}else undo()});
 /* 301 / Killer : couleur claire → texte noir sur le rond */
