@@ -3673,6 +3673,49 @@ html body #setup#setup.b2 .sect.sbet>.opt.betsl{flex:1 0 100%!important;width:10
 html body #setup#setup.b2 .sect.sbet .bsl b{min-width:3.6em;max-width:45%;flex:0 0 auto}
 html body #setup#setup.b2 .sect.sbet>.opt.betsl .bsl{grid-column:1 / -1}
 #hist.tbets #hGame{display:none!important}
+/* la note v2 */
+#bill{justify-content:flex-start!important;padding:0 5vw calc(env(safe-area-inset-bottom) + 3dvh)!important;gap:2dvh!important}
+#bill .bsh{display:grid;grid-template-columns:40px 1fr 40px;align-items:center;width:100%;padding-top:calc(env(safe-area-inset-top) + 1.2dvh)}
+#bill .bsh h1{margin:0;text-align:center;font-family:"Fun",sans-serif;font-weight:400;font-size:min(6vw,3dvh);color:var(--ink)}
+#bill .circ{width:37px;height:37px;border-radius:50%;border:1.5px solid var(--m-strong);background:transparent;display:grid;place-items:center;padding:0}
+#bill .circ svg{width:18px;height:18px;fill:none;stroke:var(--ink);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+#bill .bpaper{flex:1 1 auto;max-height:none!important;min-height:0;padding:2.4dvh 5vw 4dvh!important}
+#bill .bsum{display:flex;justify-content:space-around;gap:2vw;text-align:center;padding-bottom:1.6dvh;border-bottom:1.5px dashed rgba(0,0,0,.18)}
+#bill .bsum b{display:block;font-family:"Fun",sans-serif;font-weight:400;font-size:min(7vw,3.4dvh);color:var(--accent);line-height:1.1}
+#bill .bsum small{font-weight:500;color:var(--mute);font-size:min(3.2vw,1.6dvh)}
+#bill .bdate{margin:1.2dvh 0 .6dvh!important;text-transform:none}
+#bill .bdate::first-letter{text-transform:uppercase}
+#bill .bt{font-family:"Fun",sans-serif;font-size:min(5.2vw,2.6dvh);margin:2.2dvh 0 1dvh!important}
+.bst{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.9dvh}
+.bst .br{display:grid;grid-template-columns:2em 1fr auto;align-items:center;gap:.6em;padding:.7em 1em;border-radius:99px;box-shadow:inset 0 0 0 1.5px var(--m-strong);font-family:"Lbl",sans-serif}
+.bst .br.top{background:var(--pc,var(--accent));color:#fff;box-shadow:inset 0 0 0 1.5px var(--m-strong),0 0 0 4px var(--pc,var(--accent))}
+.bst .brk{font-family:"Fun",sans-serif;font-weight:400;font-size:1.3em;text-align:center}
+.bst .bn{font-weight:700;font-size:min(4.4vw,2.2dvh);line-height:1.15;min-width:0}
+.bst .bn small{display:block;font-weight:500;font-size:.72em;opacity:.7}
+.bst .btag{font-style:normal;font-weight:600;font-size:.68em;margin-left:.5em;opacity:.9}
+.bst .bb{font-family:"Fun",sans-serif;font-weight:400;font-size:min(5vw,2.5dvh);text-align:right;white-space:nowrap}
+.bst .br.top .bb span{color:#fff!important}
+.bst .b0{color:var(--mute)}
+.bst.mini{width:100%;gap:.6dvh}
+.bst.mini .br{padding:.45em .9em}
+#bill .bds li{display:grid;grid-template-columns:auto auto 1fr auto;gap:.5em;align-items:baseline;padding:.5em 0;border-bottom:1.5px dashed rgba(0,0,0,.12)}
+#bill .bds i{font-style:normal;color:var(--mute)}
+#bill .bds strong{text-align:right}
+#bill .bg li{grid-template-columns:1.6em 1fr auto auto!important;align-items:center!important}
+#bill .bg .gk{font-family:"Fun",sans-serif;font-weight:400;color:var(--mute)}
+#bill .bg .gg{color:var(--ink)!important;font-weight:600}
+#bill .bg .gg small{color:var(--mute);font-weight:500}
+#bill .bg .gg small.gt{display:block;font-size:.82em}
+#bill .bg .gw{color:var(--pc,var(--ink))!important;font-weight:700}
+#bill .bg em{color:#1f9d55}
+#wBet .wbt b{color:var(--accent);font-weight:400}
+#wBet .wbn{font-family:"Lbl",sans-serif;font-weight:500;font-size:calc(var(--uu,1dvh)*1.7);color:var(--mute)}
+#win #wBet ~ .big{margin-top:0}
+.bst .bb{display:flex;flex-direction:column;align-items:flex-end;line-height:1.1}
+.bst .bn{text-align:left}
+.bst .bn small{white-space:nowrap}
+.bst .btag{white-space:nowrap}
+#bill .bpaper{padding-left:calc(5vw + 4px)!important;padding-right:calc(5vw + 4px)!important}
 </style>
 </head>
 <body>
@@ -3874,8 +3917,9 @@ html body #setup#setup.b2 .sect.sbet>.opt.betsl .bsl{grid-column:1 / -1}
 
 <!-- ===== LA NOTE (paris) ===== -->
 <div class="ov" id="bill">
+  <div class="bsh"><button class="circ" id="bBack" aria-label="Retour"><svg viewBox="0 0 24 24"><path d="M15 5 8 12l7 7"/></svg></button><h1>La note</h1><button class="circ" id="bShare" aria-label="Envoyer la note"><svg viewBox="0 0 24 24"><path d="M12 15V3M7 8l5-5 5 5"/><path d="M5 12v7h14v-7"/></svg></button></div>
   <div class="bpaper" id="bPaper"></div>
-  <div class="bsw"><i class="hth"></i><button class="big" id="bBack">Retour</button><button class="big" id="bSend">Envoyer la note</button></div>
+  <div class="bsw"><i class="hth"></i><button class="big" id="bOk">Tout bon&nbsp;?</button><button class="big" id="bSend">Note réglée</button></div>
 </div>
 
 <!-- ===== TIRAGE AU SORT ===== -->
@@ -6408,12 +6452,14 @@ const betSave=()=>{store.set(K_BET,BET);store.set(K_BETH,BETH)};
 const betUnit=e=>e.k?(e.l||'gage'):'€';
 const betTxt=(v,u)=>u==='€'?fr2(v)+' €':fr2(v)+' '+u;
 const fr2=v=>{const r=Math.round(v*100)/100;return String(r).replace('.',',')};
+const subOk=e=>e.sub&&e.sub!==(GNAME[e.game]||'');
 const GNAME={cricket:'Cricket',x01:'501',killer:'Killer'};
 function betAdd(rec){
   if(!S.bet||!rec||rec.w==null||!rec.p||!rec.p[rec.w])return;
   const ppl=x=>x.members&&x.members.length?x.members:String(x.name).split(' & ');
   const W=ppl(rec.p[rec.w]),L=rec.p.filter((_,i)=>i!==rec.w).flatMap(ppl);
-  const e={id:rec.id+'|'+(rec.manche||rec.leg||1),rid:rec.id,t:Date.now(),game:rec.game,w:W,L,k:S.betk?1:0,l:S.betk?(S.betl||'gage'):'',v:S.betv||1};
+  const sub=rec.game==='cricket'?(rec.mode==='cut'?'coupe-gorge':'')+(rec.teams?(rec.mode==='cut'?' · ':'')+'équipes':''):rec.game==='x01'?(rec.start&&rec.start!==501?String(rec.start):''):rec.manche>1?'manche '+rec.manche:'';
+  const e={id:rec.id+'|'+(rec.manche||rec.leg||1),rid:rec.id,t:Date.now(),game:rec.game,sub,w:W,L,k:S.betk?1:0,l:S.betk?(S.betl||'gage'):'',v:S.betv||1};
   BET=BET.filter(x=>x.id!==e.id);BET.push(e);betSave();
 }
 {const _p=histPut;histPut=function(rec){const r=_p.apply(this,arguments);try{betAdd(rec)}catch(err){}return r}}
@@ -6424,27 +6470,49 @@ function betNet(list){const N={};list.forEach(e=>{const u=betUnit(e),part=e.v/e.
 function betDebts(N){const out=[];Object.entries(N).forEach(([u,m])=>{
   const cr=Object.entries(m).filter(x=>x[1]>.004).sort((a,b)=>b[1]-a[1]).map(x=>[x[0],x[1]]),db=Object.entries(m).filter(x=>x[1]<-.004).sort((a,b)=>a[1]-b[1]).map(x=>[x[0],-x[1]]);
   let i=0,j=0;while(i<db.length&&j<cr.length){const v=Math.min(db[i][1],cr[j][1]);out.push({from:db[i][0],to:cr[j][0],v,u});db[i][1]-=v;cr[j][1]-=v;if(db[i][1]<.004)i++;if(cr[j][1]<.004)j++}});return out}
+/* classement de la note : victoires, parties jouées, solde (€ d'abord) */
+function betStand(list){const N=betNet(list),M={};
+  list.forEach(e=>{e.w.forEach(n=>{(M[n]=M[n]||{n,w:0,p:0}).w++;M[n].p++});e.L.forEach(n=>{(M[n]=M[n]||{n,w:0,p:0}).p++})});
+  const units=Object.keys(N).sort((a,b)=>(b==='€')-(a==='€'));
+  const R=Object.values(M).map(m=>({...m,bal:units.map(u=>({u,v:(N[u]||{})[m.n]||0}))}));
+  const key=r=>{const e=r.bal.find(b=>b.u==='€');return(e?e.v:0)*1000+r.bal.reduce((a,b)=>a+b.v,0)+r.w/100};
+  return R.sort((a,b)=>key(b)-key(a))}
+const balTxt=b=>b.filter(x=>Math.abs(x.v)>.004).map(x=>`<span class="${x.v>0?'bp':'bm'}">${x.v>0?'+':'−'}${betTxt(Math.abs(x.v),x.u)}</span>`).join(' ')||'<span class="b0">0</span>';
+function betRows(R,mini){const last=R.length-1;return R.map((r,i)=>{const c=pcol(r.n)||'';const tag=i===0&&R.length>1?'<em class="btag up">👑 mène</em>':i===last&&R.length>1&&r.bal.some(b=>b.v<-.004)?'<em class="btag dn">🥶 plombé</em>':'';
+  return`<li class="br${i===0?' top':''}" style="${c?'--pc:'+c:''}"><b class="brk">${i+1}</b><span class="bn">${esc(r.n)}${tag}<small>${r.w} victoire${r.w>1?'s':''} · ${r.p} partie${r.p>1?'s':''}</small></span><span class="bb">${balTxt(r.bal)}</span></li>`}).join('')}
 function betWinHTML(){
-  if(!BET.length)return'';const e=BET[BET.length-1],N=betNet(BET);
-  const tot=Object.entries(N).map(([u,m])=>Object.entries(m).filter(x=>Math.abs(x[1])>.004).sort((a,b)=>b[1]-a[1]).map(([n,v])=>`<span class="${v>0?'bp':'bm'}">${dot2(n)}${esc(n)} ${v>0?'+':'−'}${betTxt(Math.abs(v),u)}</span>`).join('')).join('');
-  return`<div class="wbt">${esc(e.w.join(' & '))} gagne ${betTxt(e.v*e.L.length,betUnit(e))}</div><div class="wbs"><small>Note en cours · ${BET.length} partie${BET.length>1?'s':''}</small>${tot}</div><button class="big" id="bNote">Envoyer la note 🧾</button>`;
+  if(!BET.length)return'';const e=BET[BET.length-1],R=betStand(BET);
+  return`<div class="wbt">${esc(e.w.join(' & '))} gagne <b>${betTxt(e.v*e.L.length,betUnit(e))}</b></div><ul class="bst mini">${betRows(R,1)}</ul><div class="wbn">Note en cours · ${BET.length} partie${BET.length>1?'s':''}</div><button class="big" id="bNote">Voir la note 🧾</button>`;
 }
 const dot2=n=>{const c=pcol(n);return c?`<i class="hdot" style="background:${c}"></i>`:''};
+const hm=t=>new Date(t).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
 function betBill(list){
-  const D=betDebts(betNet(list)),d=new Date();
-  const games=list.map((e,k)=>`<li><span>${k+1}. ${GNAME[e.game]||e.game}</span><b>${esc(e.w.join(' & '))}</b><em>+${betTxt(e.v*e.L.length,betUnit(e))}</em></li>`).join('');
-  const debts=D.length?D.map(x=>`<li class="bd"><b>${esc(x.from)}</b> doit <strong>${betTxt(x.v,x.u)}</strong> à <b>${esc(x.to)}</b></li>`).join(''):'<li class="bd">Personne ne doit rien.</li>';
-  const txt='🧾 LA NOTE — Cricket Master\n'+d.toLocaleDateString('fr-FR')+' · '+list.length+' partie'+(list.length>1?'s':'')+'\n\n'+
-    list.map((e,k)=>`${k+1}. ${GNAME[e.game]||e.game} : ${e.w.join(' & ')} gagne ${betTxt(e.v*e.L.length,betUnit(e))}`).join('\n')+'\n\nQUI DOIT QUOI\n'+
-    (D.length?D.map(x=>`• ${x.from} doit ${betTxt(x.v,x.u)} à ${x.to}`).join('\n'):'Personne ne doit rien.');
-  return{html:`<div class="bh">🧾 LA NOTE</div><div class="bdate">${d.toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'})} · ${list.length} partie${list.length>1?'s':''}</div><ul class="bg">${games}</ul><div class="bt">Qui doit quoi</div><ul class="bds">${debts}</ul>`,txt};
+  const D=betDebts(betNet(list)),R=betStand(list),d=new Date(list[0]?list[0].t:Date.now()),dur=list.length?list[list.length-1].t-list[0].t:0;
+  const per={};list.forEach(e=>{per[e.game]=(per[e.game]||0)+1});
+  const pot={};list.forEach(e=>{const u=betUnit(e);pot[u]=(pot[u]||0)+e.v*e.L.length});
+  const durT=dur>60000?(dur>=3600000?Math.floor(dur/3600000)+' h '+String(Math.round(dur%3600000/60000)).padStart(2,'0'):Math.round(dur/60000)+' min'):'';
+  const games=list.map((e,k)=>`<li><b class="gk">${k+1}</b><span class="gg">${GNAME[e.game]||e.game}${subOk(e)?` <small>${esc(e.sub)}</small>`:''}<small class="gt">${hm(e.t)} · ${e.L.length+e.w.length} joueurs</small></span><span class="gw" style="${pcol(e.w[0])?'--pc:'+pcol(e.w[0]):''}">🏆 ${esc(e.w.join(' & '))}</span><em>+${betTxt(e.v*e.L.length,betUnit(e))}</em></li>`).join('');
+  const debts=D.length?D.map(x=>`<li class="bd"><b>${esc(x.from)}</b><i>→</i><b>${esc(x.to)}</b><strong>${betTxt(x.v,x.u)}</strong></li>`).join(''):'<li class="bd">Personne ne doit rien.</li>';
+  const html=`<div class="bsum"><div><b>${list.length}</b><small>partie${list.length>1?'s':''}</small></div>${Object.entries(pot).map(([u,v])=>`<div><b>${betTxt(v,u)}</b><small>en jeu</small></div>`).join('')}${durT?`<div><b>${durT}</b><small>de jeu</small></div>`:''}</div>
+    <div class="bdate">${d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'})} · ${Object.entries(per).map(([g,n])=>`${n} ${GNAME[g]||g}`).join(' · ')}</div>
+    <div class="bt">Classement</div><ul class="bst">${betRows(R)}</ul>
+    <div class="bt">Qui doit quoi</div><ul class="bds">${debts}</ul>
+    <div class="bt">Historique des parties</div><ul class="bg">${games}</ul>`;
+  const txt='🧾 LA NOTE — Cricket Master\n'+d.toLocaleDateString('fr-FR')+' · '+list.length+' partie'+(list.length>1?'s':'')+(durT?' · '+durT:'')+'\n\nCLASSEMENT\n'+
+    R.map((r,i)=>`${i+1}. ${r.n} — ${r.w}/${r.p} victoire${r.w>1?'s':''} — ${r.bal.filter(x=>Math.abs(x.v)>.004).map(x=>(x.v>0?'+':'−')+betTxt(Math.abs(x.v),x.u)).join(' ')||'0'}`).join('\n')+
+    '\n\nQUI DOIT QUOI\n'+(D.length?D.map(x=>`• ${x.from} → ${x.to} : ${betTxt(x.v,x.u)}`).join('\n'):'Personne ne doit rien.')+
+    '\n\nPARTIES\n'+list.map((e,k)=>`${k+1}. ${GNAME[e.game]||e.game}${e.sub?' ('+e.sub+')':''} : ${e.w.join(' & ')} +${betTxt(e.v*e.L.length,betUnit(e))}`).join('\n');
+  return{html,txt};
 }
-function openBill(){if(!BET.length)return;haptic();SFX.open();const b=betBill(BET);$('bPaper').innerHTML=b.html;$('bill').dataset.txt=b.txt;$('bill').classList.add('on');$('bill').querySelector('.bsw').classList.add('new')}
+function openBill(){if(!BET.length)return;haptic();SFX.open();const b=betBill(BET);$('bPaper').innerHTML=b.html;$('bPaper').scrollTop=0;$('bill').dataset.txt=b.txt;$('bill').querySelector('.bsw').classList.remove('new');$('bill').classList.add('on')}
 document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('#bNote')){e.stopPropagation();openBill()}},true);
-$('bBack').addEventListener('click',()=>{haptic();SFX.ui();$('bill').querySelector('.bsw').classList.remove('new');setTimeout(()=>$('bill').classList.remove('on'),220)});
-$('bSend').addEventListener('click',async()=>{haptic();const txt=$('bill').dataset.txt||'';
-  try{if(navigator.share)await navigator.share({title:'La note',text:txt});else{await navigator.clipboard.writeText(txt);toast('NOTE COPIÉE','',true)}}catch(err){if(err&&err.name==='AbortError')return;try{await navigator.clipboard.writeText(txt);toast('NOTE COPIÉE','',true)}catch(e2){}}
-  BETH.push({date:Date.now(),list:BET.slice()});BET=[];betSave();SFX.lead();confetti(40);$('bill').classList.remove('on');$('wBet').innerHTML=''});
+$('bBack').addEventListener('click',()=>{haptic();SFX.ui();$('bill').classList.remove('on')});
+$('bOk').addEventListener('click',()=>{haptic();SFX.ui();$('bill').querySelector('.bsw').classList.remove('new')});
+const billShare=async()=>{const txt=$('bill').dataset.txt||'';try{if(navigator.share){await navigator.share({title:'La note',text:txt});return}await navigator.clipboard.writeText(txt);toast('NOTE COPIÉE','',true)}catch(err){if(err&&err.name==='AbortError')return;try{await navigator.clipboard.writeText(txt);toast('NOTE COPIÉE','',true)}catch(e2){}}};
+$('bShare').addEventListener('click',()=>{haptic();billShare()});
+$('bSend').addEventListener('click',()=>{haptic();$('bill').querySelector('.bsw').classList.add('new');
+  setTimeout(()=>{BETH.push({date:Date.now(),list:BET.slice()});BET=[];betSave();SFX.lead();confetti(40);toast('NOTE RÉGLÉE','',true);$('bill').classList.remove('on');$('wBet').innerHTML='';
+    if($('hist').classList.contains('on'))renderHist()},420)});
 /* écran de victoire : rappel du pari et de la note en cours */
 new MutationObserver(()=>{if($('win').classList.contains('on'))$('wBet').innerHTML=betWinHTML()}).observe($('win'),{attributes:true,attributeFilter:['class']});
 /* menu : pari */
