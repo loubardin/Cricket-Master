@@ -3225,29 +3225,50 @@ html body :is(#game,#x01,#killer) footer::after,html body :is(#game,#x01,#killer
 html body #fbar2 #fMenu#fMenu,html body #fbar2 #fUndo#fUndo{place-items:center!important;width:calc(var(--tbh)*1.05)!important}
 /* 501 / Killer : mêmes marges latérales que le Cricket */
 #x01 #xmain,#killer #kmain{padding-left:3.5vw!important;padding-right:3.5vw!important}
-/* Double / Triple : la couleur du joueur ne change plus ; la bulle du switch se glace ;
-   les nombres passent en or (double) ou en essence irisée (triple) */
-html body.m2 :is(#game,#x01,#killer) footer .fthumb,html body.m3 :is(#game,#x01,#killer) footer .fthumb{
-  background:linear-gradient(160deg,#f6fdff 0%,#d3f1fc 38%,#a5dcf2 72%,#7fc8e8 100%)!important;
-  box-shadow:0 0 0 var(--h,5px) #c4eaf8,inset 0 0 0 1.5px rgba(255,255,255,.85),inset 0 -6px 14px rgba(70,150,190,.35),0 0 18px rgba(150,215,240,.6)!important}
-html body.m2 :is(#game,#x01,#killer) footer #b2::after,html body.m3 :is(#game,#x01,#killer) footer #b3::after{color:#0d5b80!important}
-@keyframes goldsh{0%{background-position:0% 50%}100%{background-position:200% 50%}}
-@keyframes oilsh{0%{background-position:0% 50%}100%{background-position:300% 50%}}
-html body.m2 #game#game.sk.p2 #grid .num:not(.dead) .lbl,html body.m2 #x01#x01 #xkeys button .lbl{
-  background:linear-gradient(100deg,#7a5400 0%,#ffe58a 18%,#d4a017 32%,#fff6c7 46%,#b8860b 60%,#ffd75e 78%,#7a5400 100%)!important;background-size:200% 100%!important;
-  -webkit-background-clip:text!important;background-clip:text!important;color:transparent!important;-webkit-text-fill-color:transparent!important;
-  animation:numshake .28s linear infinite,goldsh 1.6s linear infinite!important;filter:drop-shadow(0 1px 0 rgba(0,0,0,.35))}
-html body.m3 #game#game.sk.p2 #grid .num:not(.dead):not(.bull) .lbl,html body.m3 #x01#x01 #xkeys button:not([data-n="25"]) .lbl{
-  background:linear-gradient(115deg,#1b1f3b 0%,#5b2a86 12%,#1fa2a8 24%,#e8c547 36%,#c2185b 48%,#2b5fd9 60%,#3ddc97 72%,#5b2a86 84%,#1b1f3b 100%)!important;background-size:300% 100%!important;
-  -webkit-background-clip:text!important;background-clip:text!important;color:transparent!important;-webkit-text-fill-color:transparent!important;
-  animation:numshake .2s linear infinite,oilsh 2.2s linear infinite!important;filter:drop-shadow(0 1px 0 rgba(0,0,0,.4))}
 /* Cricket : nombres toujours en blanc dans leurs bulles (hors double / triple) */
 html body:not(.m2):not(.m3) #game#game.sk.p2 #grid .num:not(.dead) .lbl{color:#fff!important}
-html body.m2 #game#game.sk.p2 footer .fthumb,html body.m3 #game#game.sk.p2 footer .fthumb{
-  background:linear-gradient(160deg,#f6fdff 0%,#d3f1fc 38%,#a5dcf2 72%,#7fc8e8 100%)!important;
-  box-shadow:0 0 0 var(--h,5px) #c4eaf8,inset 0 0 0 1.5px rgba(255,255,255,.85),inset 0 -6px 14px rgba(70,150,190,.35),0 0 18px rgba(150,215,240,.6)!important}
-html body.m2 #game#game.sk.p2 footer #b2::after,html body.m3 #game#game.sk.p2 footer #b3::after{color:#0d5b80!important}
-html body.m2 #game#game.sk.p2 footer #b2::after,html body.m3 #game#game.sk.p2 footer #b3::after{scale:1.22!important}
+
+/* ===== v98 ===== */
+/* Killer : réglages rangés — tout sur la largeur, deux demi-switchs alignés */
+html body #setup.b2 .sect.s2>.opt.kl,html body #setup.b2 .sect.s2>.kpair{width:100%!important;max-width:none!important;align-self:stretch!important;box-sizing:border-box}
+html body #setup.b2 .kpair{display:grid!important;grid-template-columns:1fr 1fr!important;column-gap:4vw!important;align-items:start!important}
+html body #setup.b2:not(.g-killer) .kpair{display:none!important}
+html body #setup.b2 .opt.kl{display:grid!important;grid-template-columns:100%!important;row-gap:calc(var(--u)*1.2)!important;align-items:start!important;padding:0!important;margin:0 0 calc(var(--u)*2.4)!important}
+html body #setup.b2 .kpair>.opt.kl{margin:0!important}
+html body #setup.b2 .kpair{margin:0 0 calc(var(--u)*2.4)!important}
+html body #setup.b2 .opt.kl>span{padding:0!important;margin:0!important;line-height:1.1;align-self:end}
+html body #setup.b2 .opt.kl>.seg{width:100%!important;max-width:none!important;min-width:0!important;justify-self:stretch!important}
+/* Double / Triple : bulles des nombres en argent / or brillant, chiffres blancs plus gros qui tremblent peu */
+@keyframes metsh{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+@keyframes numshk2{0%,100%{transform:translate(0,0) rotate(0)}25%{transform:translate(-.6px,.3px) rotate(-1deg)}50%{transform:translate(.6px,-.3px) rotate(.8deg)}75%{transform:translate(-.4px,-.3px) rotate(-.6deg)}}
+html body.m2 #game#game.sk.p2 #grid .num:not(.dead),html body.m2 #x01#x01 #xkeys button{
+  background:linear-gradient(110deg,#7d8792 0%,#c3cad2 20%,#f4f6f8 32%,#9aa3ad 46%,#dfe3e8 62%,#7d8792 80%,#c3cad2 100%)!important;background-size:200% 100%!important;animation:metsh 2.2s linear infinite}
+html body.m3 #game#game.sk.p2 #grid .num:not(.dead):not(.bull),html body.m3 #x01#x01 #xkeys button:not([data-n="25"]){
+  background:linear-gradient(110deg,#a8740a 0%,#f2c94c 20%,#fff1b0 32%,#d9a521 46%,#ffe27a 62%,#a8740a 80%,#f2c94c 100%)!important;background-size:200% 100%!important;animation:metsh 1.8s linear infinite}
+html body.m2 #game#game.sk.p2 #grid .num:not(.dead){box-shadow:0 0 0 var(--h) #a9b1ba!important}
+html body.m3 #game#game.sk.p2 #grid .num:not(.dead):not(.bull){box-shadow:0 0 0 var(--h) #e3b12a!important}
+html body.m2 #game#game.sk.p2 #grid .num:not(.dead) .lbl,html body.m3 #game#game.sk.p2 #grid .num:not(.dead):not(.bull) .lbl,
+html body.m2 #x01#x01 #xkeys button .lbl,html body.m3 #x01#x01 #xkeys button:not([data-n="25"]) .lbl{color:#fff!important;-webkit-text-fill-color:#fff!important;display:inline-block;
+  scale:1.18;text-shadow:0 1px 2px rgba(0,0,0,.35);animation:numshk2 .3s linear infinite!important}
+/* le bouton Double / Triple prend l'effet : bulle argent / or brillante */
+html body.m2 :is(#game,#x01,#killer) footer .fthumb,html body.m2 #game#game.sk.p2 footer .fthumb{
+  background:linear-gradient(110deg,#7d8792 0%,#c3cad2 20%,#f4f6f8 32%,#9aa3ad 46%,#dfe3e8 62%,#7d8792 80%,#c3cad2 100%)!important;background-size:200% 100%!important;
+  animation:metsh 2.2s linear infinite;box-shadow:0 0 0 var(--h,5px) #a9b1ba!important}
+html body.m3 :is(#game,#x01,#killer) footer .fthumb,html body.m3 #game#game.sk.p2 footer .fthumb{
+  background:linear-gradient(110deg,#a8740a 0%,#f2c94c 20%,#fff1b0 32%,#d9a521 46%,#ffe27a 62%,#a8740a 80%,#f2c94c 100%)!important;background-size:200% 100%!important;
+  animation:metsh 1.8s linear infinite;box-shadow:0 0 0 var(--h,5px) #e3b12a!important}
+html body.m2 :is(#game,#x01,#killer) footer #b2::after,html body.m3 :is(#game,#x01,#killer) footer #b3::after{color:#fff!important;text-shadow:0 1px 2px rgba(0,0,0,.35)}
+/* libellé du Spew : SPEW SPEW (double) / SPEW SPEW SPEW (triple), en bleu */
+html body.m2 :is(#game,#x01,#killer) footer #bS::after{content:"Spew\A spew"!important}
+html body.m3 :is(#game,#x01,#killer) footer #bS::after{content:"Spew spew\A spew"!important}
+html body:is(.m2,.m3) :is(#game,#x01,#killer) footer #bS::after{white-space:pre!important;text-align:center;line-height:.92!important;color:#009df4!important;font-size:2.1dvh!important;text-box:none!important}
+html body:is(.m2,.m3) #game#game.sk.p2 footer #bS::after{font-size:calc(var(--r)*.3)!important}
+html body.m2 #game#game.sk.p2 footer #bS::after{content:"Spew\A spew"!important}
+html body.m3 #game#game.sk.p2 footer #bS::after{content:"Spew spew\A spew"!important}
+html body:is(.m2,.m3) #game#game.sk.p2 footer #bS::after{white-space:pre!important;text-align:center;line-height:.92!important;color:#009df4!important;text-box:none!important;scale:1!important}
+html body #setup#setup.b2 .sect.s2>.opt.kl>.seg,html body #setup#setup.b2 .kpair>.opt.kl>.seg{width:100%!important;max-width:none!important;flex:1 1 auto!important}
+html body #setup#setup.b2 .sect.s2>.opt.kl,html body #setup#setup.b2 .sect.s2>.kpair{flex:0 0 100%!important;width:100%!important}
+html body.m2 #game#game.sk.p2 footer #b2::after,html body.m3 #game#game.sk.p2 footer #b3::after{scale:1.2!important}
 </style>
 </head>
 <body>
@@ -4454,7 +4475,7 @@ function renderSetup(){
     slot.style.setProperty('--pc',pcol(S.names[i])||'#cfc9be');
     {const bm=botMetal(S.names[i]);slot.classList.toggle('bot',!!bm);if(bm){slot.style.setProperty('--m1',bm[0]);slot.style.setProperty('--m2',bm[1])}}
     const del=el('button','pdel','✕');del.setAttribute('aria-label','Retirer');
-    del.addEventListener('click',()=>{{const t=normT();let k=0,j=0;while(j<t.length&&k+t[j]<=i){k+=t[j];j++}if(j<t.length)t[j]--;S.tsz=t.filter(x=>x>0)}S.names.splice(i,1);S.n=S.names.length;store.set(K_S,S);haptic();SFX.back();renderSetup()});
+    del.addEventListener('click',()=>{{const t=normT();let k=0,j=0;while(j<t.length&&k+t[j]<=i){k+=t[j];j++}if(j<t.length)t[j]--;S.tsz=t.filter(x=>x>0)}S.names.splice(i,1);S.n=S.names.length;store.set(K_S,S);haptic();SFX.back();renderSetup();if($('ppick').classList.contains('on')){openPick();$('ppick').classList.remove('pop')}});
     slot.append(el('b','',String(i+1)),cdot,nm,del);(teamsOn&&TB?TB:box).append(slot);
   }
   if(S.n<maxP()){const add=el('button','padd','+');add.setAttribute('aria-label','Ajouter un joueur');add.addEventListener('click',openPick);box.append(add)}
