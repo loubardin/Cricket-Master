@@ -3577,7 +3577,7 @@ html body #killer#killer#killer #kplayers .kc .kR{margin:0!important;row-gap:0!i
 html body #killer#killer#killer #kplayers .kc .kR>.kx{position:relative!important;bottom:auto!important;margin:calc(var(--uu)*-1.2) 0 0!important}
 
 /* ===== v117 ===== */
-#setup.g-killer .ordopt{display:none!important}
+html body #setup#setup.g-killer .sect .opt.ordopt,html body #setup#setup.g-killer .opt.ordopt{display:none!important}
 /* bulle d'info au centre, à la couleur du joueur */
 .cbub{position:fixed;left:50%;top:44%;z-index:120;translate:-50% -50%;pointer-events:none;background:var(--c);color:#fff;border-radius:99px;padding:14px 26px;text-align:center;
   box-shadow:inset 0 0 0 1.5px #111,0 0 0 6px var(--c),0 12px 30px rgba(0,0,0,.25);animation:cbub 1.9s cubic-bezier(.3,1.5,.5,1) forwards;max-width:86vw}
@@ -3597,6 +3597,7 @@ html body #game#game.sk.p2 #scores .sc>.nm:has(.nmm)>.hat{bottom:calc(100% + var
 #kthPad button:active{background:var(--accent);color:#fff}
 #kthPad button:disabled{opacity:.18}
 #draw.kthrow #slots{margin-bottom:2.4dvh!important}
+#draw.kthrow .slot{cursor:pointer}
 #draw.kthrow .slot.cur{box-shadow:inset 0 0 0 calc(var(--bub-bw)*2) var(--pc,var(--accent))!important}
 #draw.kthrow .slot.cur b{color:var(--ink)!important}
 </style>
@@ -4301,6 +4302,7 @@ function freezeCol(i){
 }
 let SPEWQ={k:1,i:0},iceT=null;
 /* SPEW : la case du joueur gèle et tremble (plus de message au milieu de l'écran) */
+let KSPW=0;
 function spewFx(txt,sub,lvl,soft,box){
   const dur=soft?1100:[0,1000,1400,1900][lvl];
   if(box){
@@ -4319,6 +4321,7 @@ function spewFx(txt,sub,lvl,soft,box){
     }
   }
   busy(Math.min(dur,1200));
+  if(performance.now()-KSPW<60){KSPW=0;if(lvl>=3){noise(.08,.18,3500);SFX.loser(lvl)}return}   // Killer : le son de spew est déjà joué
   if(soft){SFX.meh();return}
   if(lvl<3){SFX.spew();return}
   noise(.08,.18,3500);
@@ -5017,7 +5020,7 @@ async function spinTo(slot,reel,pick,steps=26){
 }
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 async function runDraw(names){
-  $('draw').classList.remove('kthrow');
+  $('draw').classList.remove('kthrow');$('slots').onclick=null;
   DRAWAGAIN=()=>runDraw(drawOrder);$('drawT').textContent='TIRAGE AU SORT';
   const ov=$('draw'),box=$('slots');box.classList.remove('nums');
   $('drawGo').style.visibility=$('drawAgain').style.visibility='hidden';
@@ -5298,15 +5301,13 @@ function showKiller(){noFear();mountFooter('killer');show('killer');kRender()}
 $('kBack').addEventListener('click',()=>{haptic();goHome()});
 
 /* attribution des numéros */
-let KKEEP=0;
 function killerAssign(names){
-  KKEEP=1;const o=shuffle(names);   // ordre aléatoire, sans écran de tirage
-  if(S.knum==='throw')runNumThrow(o);else runNumDraw(o);
+  if(S.knum==='throw')runNumThrow(names);else runNumDraw(names);   // le plus gros numéro commencera
 }
 let NUMCB=null;   // que faire une fois les numéros choisis (null = nouvelle partie)
 const numsDone=(names,nums)=>{const cb=NUMCB;NUMCB=null;cb?cb(nums):startKiller(names,nums)};
 async function runNumDraw(names){
-  $('draw').classList.remove('kthrow');
+  $('draw').classList.remove('kthrow');$('slots').onclick=null;
   const cb0=NUMCB;DRAWCB=o=>{NUMCB=cb0;numsDone(names,NUMS)};DRAWAGAIN=()=>{NUMCB=cb0;runNumDraw(names)};
   const ov=$('draw'),box=$('slots');$('drawT').textContent='NUMÉROS';
   $('drawGo').style.visibility=$('drawAgain').style.visibility='hidden';
@@ -5335,14 +5336,18 @@ function runNumThrow(names){
   [...box.children].forEach((sl,i)=>{const c=pcol(names[i]);if(c)sl.style.setProperty('--pc',c)});
   let pad=$('kthPad');if(!pad){pad=el('div','');pad.id='kthPad';box.after(pad)}
   pad.innerHTML=Array.from({length:20},(_,i)=>`<button data-n="${i+1}"><span class="lbl">${i+1}</span></button>`).join('');
-  const nums=[];
-  const cur=()=>{[...box.children].forEach((sl,i)=>sl.classList.toggle('cur',i===nums.length));
-    if(nums.length<names.length&&isBot(names[nums.length]))setTimeout(()=>{const f=[...pad.querySelectorAll('button:not([disabled])')];if(f.length&&ov.classList.contains('on'))pick(f[Math.floor(Math.random()*f.length)])},700)};
-  const pick=b=>{if(!b||b.disabled||nums.length>=names.length)return;haptic();const n=+b.dataset.n,sl=box.children[nums.length];
-    sl.querySelector('span').textContent=n;sl.classList.add('lock');SFX.lock();b.disabled=true;nums.push(n);cur();
-    if(nums.length===names.length){NUMS=nums;pad.classList.add('done');SFX.lead();confetti(30);$('drawGo').style.visibility=$('drawAgain').style.visibility='visible'}};
-  pad.classList.remove('done');pad.onclick=e=>pick(e.target.closest('button'));
-  ov.classList.add('on');cur();
+  const nums=names.map(()=>0);let sel=0;
+  const paint=()=>{[...box.children].forEach((sl,i)=>{sl.classList.toggle('cur',i===sel);sl.classList.toggle('lock',!!nums[i]);sl.querySelector('span').textContent=nums[i]||'?'});
+    pad.querySelectorAll('button').forEach(b=>b.disabled=nums.some((v,i)=>v===+b.dataset.n&&i!==sel));
+    const done=nums.every(v=>v);pad.classList.toggle('done',done&&sel<0);
+    $('drawGo').style.visibility=$('drawAgain').style.visibility=done&&sel<0?'visible':'hidden';
+    if(sel>=0&&isBot(names[sel]))setTimeout(()=>{if(sel<0||!isBot(names[sel])||!ov.classList.contains('on'))return;const f=[...pad.querySelectorAll('button:not([disabled])')];if(f.length)pick(f[Math.floor(Math.random()*f.length)])},700)};
+  const pick=b=>{if(!b||b.disabled||sel<0)return;haptic();nums[sel]=+b.dataset.n;SFX.lock();
+    const nx=nums.findIndex(v=>!v);sel=nx;paint();
+    if(sel<0){NUMS=nums.slice();SFX.lead();confetti(30)}};
+  box.onclick=e=>{const sl=e.target.closest('.slot');if(!sl||!ov.classList.contains('kthrow'))return;haptic();SFX.ui&&SFX.ui();sel=[...box.children].indexOf(sl);paint()};
+  pad.onclick=e=>pick(e.target.closest('button'));
+  ov.classList.add('on');paint();
 }
 function askNums(names,k,nums){
   if(k>=names.length){$('knum').classList.remove('on');numsDone(names,nums);return}
@@ -5360,7 +5365,7 @@ function newKiller(names,nums,start,lives,wins,manche,bonusTo){
 }
 function startKiller(names,nums,start=0){
   S.last='killer';store.set(K_S,S);
-  const o=KKEEP?names.map((_,i)=>i):names.map((_,i)=>i).sort((a,b)=>nums[b]-nums[a]);KKEEP=0;   // ordre tiré au sort (sinon le plus grand numéro commence)
+  const o=names.map((_,i)=>i).sort((a,b)=>nums[b]-nums[a]);   // le plus gros numéro commence
   KG=newKiller(o.map(i=>names[i]),o.map(i=>nums[i]),0,S.klives,null,1,-1);
   KH=[];kSave();showKiller();SFX.start();
 }
@@ -5439,7 +5444,7 @@ function kEndTurn(final){
   KG.cur=c;KG.ts=P.map(p=>p.lives);
 }
 function kFx(d,me,who,over){
-  const P=KG.players;
+  const P=KG.players;KSPW=0;if(d.n===0){SFX.spew();KSPW=performance.now()}   // Killer : tout spew fait le son de spew
   const hitSnd=()=>{d.m===3?SFX.triple():d.m===2?SFX.double():SFX.single()};
   const gain=i=>{const h=R2(i)&&R2(i).querySelectorAll('.h.on');if(h&&h.length)anim(h[h.length-1],'gain',800)};
   if(d.type==='mark'||d.type==='dmark'){hitSnd();anim(R2(who),'kmark',600);kRings(who,d.m)}
@@ -6443,7 +6448,7 @@ document.addEventListener('scroll',()=>placeUndo(),true);
     clearTimeout(show._t);show._t=setTimeout(()=>{cur.classList.remove('sout','sback');nw.classList.remove('sin','sback')},560)}return r}}
 /* tirage au sort : la case validée prend la couleur du joueur */
 new MutationObserver(()=>{const box=$('slots');box.querySelectorAll('.slot.lock').forEach(sl=>{if(sl.dataset.c)return;
-  const nm=(box.classList.contains('nums')?sl.querySelector('b'):sl.querySelector('span')).textContent.trim(),c=pcol(nm);
+  const nm=(box.classList.contains('nums')?sl.querySelector('b'):sl.querySelector('span')).textContent.trim(),c=pcol(nm.split(' & ')[0]);
   const col=/^#[0-9a-f]{6}$/i.test(c||'')?c:getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();sl.style.setProperty('--pc',col);sl.dataset.c=1;
   if(/^#[0-9a-f]{6}$/i.test(col)){const v=[1,3,5].map(k=>parseInt(col.slice(k,k+2),16));sl.classList.toggle('lt',false&&(.299*v[0]+.587*v[1]+.114*v[2])/255>.62)}})})
   .observe($('slots'),{subtree:true,attributes:true,attributeFilter:['class'],childList:true});
