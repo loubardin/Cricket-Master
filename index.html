@@ -3384,6 +3384,21 @@ html body #setup#setup.b2 .teamopt>#tShuffle{grid-area:b!important;height:calc(v
 html body #setup#setup.b2.teams .teamopt>#tShuffle{display:grid!important;place-items:center}
 html body #setup#setup.b2 .teamopt>#tShuffle:active{transform:scale(.95)}
 html body #setup#setup.b2 .teamopt>#tShuffle{width:auto!important;min-width:max-content!important;max-width:none!important;white-space:nowrap!important;aspect-ratio:auto!important}
+
+/* ===== v106 ===== */
+/* manches gagnantes en dernier (Cricket et 501) */
+html body #setup#setup.b2 .sect.s2 .legopt{order:20!important}
+/* score libre */
+#xpick{position:fixed;z-index:200;background:var(--m-home,#f7f2e5);border:1.5px solid var(--m-strong,#111);border-radius:24px;padding:12px 14px 14px;display:grid;grid-template-columns:1fr auto;gap:10px;
+  box-shadow:0 0 0 5px var(--accent),0 12px 30px rgba(0,0,0,.25);animation:cpin .28s cubic-bezier(.3,1.5,.5,1);width:min(78vw,300px);box-sizing:border-box}
+#xpick .xpt{grid-column:1 / -1;font:600 14px "Lbl",sans-serif;color:var(--ink)}
+#xpick .xpn{min-width:0;height:44px;padding:0 14px;border:1.5px solid var(--m-strong,#111);border-radius:99px;background:#fff;color:var(--ink);font:400 22px "Fun",sans-serif;outline:none}
+#xpick .xpo{height:44px;padding:0 18px;border-radius:99px;background:var(--accent);color:#fff;font:400 18px "Fun",sans-serif;box-shadow:inset 0 0 0 1.5px var(--m-strong)}
+/* logo : la cible bouge doucement, comme vue de loin dans le viseur */
+#home .board.lmark .lmd{animation:lmaim 4.2s ease-in-out infinite!important}
+@keyframes lmaim{0%{transform:translate(0,0)}14%{transform:translate(5px,-3px)}29%{transform:translate(2px,4px)}43%{transform:translate(-4px,2px)}
+  57%{transform:translate(-2px,-5px)}71%{transform:translate(4px,-1px)}86%{transform:translate(-3px,3px)}100%{transform:translate(0,0)}}
+html body #setup#setup.g-x01 .sect.s2 .opt:has([data-k="xin"]),html body #setup#setup.g-x01 .sect.s2 .opt:has([data-k="xout"]){margin-top:0!important;align-self:start!important}
 </style>
 </head>
 <body>
@@ -3440,9 +3455,9 @@ html body #setup#setup.b2 .teamopt>#tShuffle{width:auto!important;min-width:max-
       <div class="opt ck"><span>Mode</span><div class="seg mini" id="segMode"><button data-v="standard">Standard</button><button data-v="cut">Coupe-gorge</button></div></div>
       <div class="opt ck legopt wide"><span>Manches gagnantes</span><div class="seg mini legs" data-k="clegs"><button data-v="1">1</button><button data-v="2">2</button><button data-v="3">3</button><button data-v="4">4</button><button data-v="5">5</button><button data-v="6">6</button><button data-v="7">7</button><button data-v="8">8</button><button data-v="9">9</button><button data-v="10">10</button></div></div>
       <div class="opt ck"><span>Fermeture</span><div class="seg mini" data-k="seq"><button data-v="0">Libre</button><button data-v="1">15 → Bulle</button></div></div>
-      <div class="opt xo"><span>Score</span><div class="seg mini" data-k="xstart"><button data-v="301">301</button><button data-v="401">401</button><button data-v="501">501</button><button data-v="701">701</button></div></div>
-      <div class="opt xo"><span>Entrée</span><div class="seg mini" data-k="xin"><button data-v="0">Simple</button><button data-v="1">Double</button><button data-v="2">Master</button></div></div>
-      <div class="opt xo"><span>Sortie</span><div class="seg mini" data-k="xout"><button data-v="0">Simple</button><button data-v="1">Double</button><button data-v="2">Master</button></div></div>
+      <div class="opt xo"><span>Score</span><div class="seg mini" data-k="xstart"><button data-v="301">301</button><button data-v="501">501</button><button data-v="701">701</button><button data-v="0" class="xcus">x01</button></div></div>
+      <div class="opt xo"><span>Entrée</span><div class="seg mini" data-k="xin"><button data-v="0">Simple</button><button data-v="1">Double</button></div></div>
+      <div class="opt xo"><span>Sortie</span><div class="seg mini" data-k="xout"><button data-v="0">Simple</button><button data-v="1">Double</button></div></div>
       <div class="opt xo legopt wide"><span>Manches gagnantes</span><div class="seg mini legs" data-k="xlegs"><button data-v="1">1</button><button data-v="2">2</button><button data-v="3">3</button><button data-v="4">4</button><button data-v="5">5</button><button data-v="6">6</button><button data-v="7">7</button><button data-v="8">8</button><button data-v="9">9</button><button data-v="10">10</button></div></div>
       <div class="opt xo"><span>Droit de réponse</span><div class="seg mini yn" data-k="xrep"><button data-v="1">Oui</button><button data-v="0">Non</button></div></div>
       <div class="opt xo"><span>Aide finish</span><div class="seg mini yn" data-k="xhint"><button data-v="1">Oui</button><button data-v="0">Non</button></div></div>
@@ -6035,6 +6050,19 @@ function showRules(){const e=$('gRules');if(!e)return;const g=S.game||'cricket',
       'Attention : une fois Killer, toucher ton propre numéro te coûte une vie.']}
   e.innerHTML='<span class="rgoal"><i>Le but</i>'+goal+'</span>'+ps.map(x=>'<span class="rp">'+x+'</span>').join('')}
 {const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{showRules()}catch(e){}return r}}
+/* 501 : score libre (x01) et plus de « Master » */
+if(S.xin===2)S.xin=1;if(S.xout===2)S.xout=1;
+function xcusSync(){const b=document.querySelector('#setup .xcus');if(!b)return;const std=[301,501,701].includes(S.xstart);
+  b.dataset.v=std?(S.xcustom||0):S.xstart;b.textContent=std?(S.xcustom||'x01'):String(S.xstart);b.classList.toggle('sel',!std)}
+{const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{xcusSync()}catch(e){}return r}}
+document.querySelector('#setup .xcus').addEventListener('click',e=>{e.stopPropagation();e.preventDefault();haptic();
+  const old=$('xpick');if(old)old.remove();const b=e.currentTarget,r0=b.getBoundingClientRect();
+  const p=el('div','',`<div class="xpt">Score de départ</div><input class="xpn" type="number" inputmode="numeric" min="101" max="9999" value="${S.xcustom||1001}"><button class="xpo">OK</button>`);p.id='xpick';document.body.append(p);
+  const w=p.offsetWidth,h=p.offsetHeight;p.style.left=Math.max(12,Math.min(innerWidth-w-12,r0.left+r0.width/2-w/2))+'px';p.style.top=Math.max(12,r0.top-h-14)+'px';
+  const inp=p.querySelector('.xpn');setTimeout(()=>{inp.focus();inp.select()},30);
+  const ok=()=>{const v=Math.round(+inp.value);if(!(v>=101&&v<=9999)){toast('ENTRE UN SCORE ENTRE 101 ET 9999','',true);return}S.xcustom=v;S.xstart=v;store.set(K_S,S);p.remove();SFX.ui();renderSetup()};
+  p.querySelector('.xpo').addEventListener('click',ok);inp.addEventListener('keydown',ev=>{if(ev.key==='Enter')ok()});
+  setTimeout(()=>document.addEventListener('pointerdown',function f(ev){if(!ev.target.closest('#xpick')){p.remove();document.removeEventListener('pointerdown',f,true)}},true),0)},true);
 /* balle : chaque appui la propulse vers le bout du rail, elle rebondit contre le bord puis retombe à sa place */
 const BALLS=new Map();
 function kickBall(num,X){const row=num.parentElement;let B=BALLS.get(num);
