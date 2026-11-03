@@ -3523,6 +3523,29 @@ html body #killer#killer#killer #kplayers .kc .kR>.kstat{transform:translateY(-4
 /* Cricket en équipe : coéquipier encore plus petit, lanceur grand */
 html body #game#game.sk.p2 #scores .sc>.nm .nmm{font-size:.3em!important;margin:0 0 .18em!important}
 html body #game#game.sk.p2 #scores .sc>.pts{margin-top:calc(var(--r)*.1)!important}
+
+/* ===== v114 ===== */
+/* Killer : numéros visés qui tremblent moins */
+@keyframes fear2{0%{translate:0 0;rotate:0deg}25%{translate:-.6px .3px;rotate:-1deg}50%{translate:.5px -.4px;rotate:.8deg}75%{translate:-.4px .4px;rotate:-.7deg}100%{translate:.6px 0;rotate:1deg}}
+html body #killer #kplayers.grid.mekiller .kc.tgt:not(.act):not(.dead) .kno,html body #killer #kplayers.grid.aim .kc.act .kno{animation:fear2 .18s linear infinite!important}
+/* Killer : case resserrée en hauteur */
+html body #killer#killer#killer #kplayers .kc{padding-top:calc(var(--uu)*.6)!important;padding-bottom:calc(var(--uu)*4.4)!important}
+html body #killer#killer#killer #kplayers .kc .kL{padding:calc(var(--uu)*.4) 0 0!important;gap:calc(var(--uu)*.2)!important}
+html body #killer#killer#killer #kplayers .kc .kno{line-height:.86!important}
+/* Killer : quand on tire, seul un éclair rouge sur le contour et le numéro qui tremble */
+html body #killer#killer#killer #kplayers .kc.khit{animation:none!important}
+html body #killer#killer#killer #kplayers .kc.khit>*{animation:none!important}
+html body #killer#killer#killer #kplayers .kc.khit .kno{animation:shakeX .45s!important;background:none!important}
+html body #killer#killer#killer #kplayers .kc.khit::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 4px #e4251a;pointer-events:none;animation:kring .7s ease-out forwards}
+@keyframes kring{0%{opacity:1}100%{opacity:0}}
+/* Cricket : plus d'anciens effets sur les nombres au double / triple */
+html body.m2 #game#game.sk.p2 #grid .num,html body.m3 #game#game.sk.p2 #grid .num{animation:none!important}
+html body.m2 #game#game.sk.p2 #grid .num::before,html body.m3 #game#game.sk.p2 #grid .num::before,html body.m2 #game#game.sk.p2 #grid .num::after,html body.m3 #game#game.sk.p2 #grid .num::after{content:none!important;display:none!important}
+/* bouton du bas : halo argent / or assorti à la bulle */
+html body.m2 :is(#game,#x01,#killer) footer .fthumb,html body.m2 #game#game.sk.p2 footer .fthumb{box-shadow:0 0 0 var(--h,5px) #d5dbe1!important}
+html body.m3 :is(#game,#x01,#killer) footer .fthumb,html body.m3 #game#game.sk.p2 footer .fthumb{box-shadow:0 0 0 var(--h,5px) #f6d97a!important}
+/* Cricket : noms plus haut dans la case */
+html body #game#game#game.sk.p2 #scores>.pc.sc{grid-template-rows:.4fr auto auto auto 1fr!important}
 </style>
 </head>
 <body>
@@ -5255,8 +5278,8 @@ function askNums(names,k,nums){
 }
 function newKiller(names,nums,start,lives,wins,manche,bonusTo){
   const opt={bonus:!!S.kbonus,def:!!S.kdef,carry:!!S.kcarry};
-  const P=names.map((n,i)=>{const l=lives+(opt.carry&&i===bonusTo?1:0);
-    return{name:n,num:nums[i],lives:l,maxl:l,marks:0,killer:false,dead:false,darts:0,hits:0,kills:0,spews:0,selfhits:0,last:[],wins:wins?wins[i]:0}});
+  const P=names.map((n,i)=>{const l=lives+(opt.carry&&i===bonusTo?1:0),gd=opt.carry&&i===bonusTo?1:0;
+    return{name:n,num:nums[i],lives:l,gold:gd,maxl:l,marks:0,killer:false,dead:false,darts:0,hits:0,kills:0,spews:0,selfhits:0,last:[],wins:wins?wins[i]:0}});
   return{id:'k'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),t0:Date.now(),lives,km:3,opt,cur:start,start,round:1,turn:[],mult:1,winner:null,manche,def:null,out:[],ts:P.map(p=>p.lives),players:P};
 }
 function startKiller(names,nums,start=0){
@@ -5300,7 +5323,7 @@ function kThrow(n,quiet){
     let res=null;
     if(D.got>=D.need)res='ok';else if(D.used>=D.darts)res='ko';
     if(res==='ok'){KG.out=(KG.out||[]).filter(i=>i!==cur);me.dead=false;me.lives=D.lives;kClose(me);KG.turn=[];KG.def=null;KG.ts=P.map(p=>p.lives);d.type='defok'}
-    else if(res==='ko'){kClose(me);const a=P[D.a];if(KG.opt.bonus){a.lives++;a.maxl=Math.max(a.maxl,a.lives)}
+    else if(res==='ko'){kClose(me);const a=P[D.a];if(KG.opt.bonus){a.lives++;a.gold=(a.gold||0)+1;a.maxl=Math.max(a.maxl,a.lives)}
       KG.def=null;KG.winner=D.a;a.wins++;d.type='defko'}
     kSave();kRender();haptic();if(!quiet)kFx(d,me,cur,false);return;
   }
@@ -5324,7 +5347,7 @@ function kThrow(n,quiet){
     KG.def={a:cur,v:d.tgt,need,darts:KG.turn.length,got:0,used:0,lives:KG.ts[d.tgt]};
     kClose(me);KG.turn=[];KG.cur=d.tgt;d.type='defstart';over=true;
   }else{
-    if(d.type==='kill'&&KG.opt.bonus){me.lives++;me.maxl=Math.max(me.maxl,me.lives);d.bonus=1}
+    if(d.type==='kill'&&KG.opt.bonus){me.lives++;me.gold=(me.gold||0)+1;me.maxl=Math.max(me.maxl,me.lives);d.bonus=1}
     if(alive.length<=1){KG.winner=alive.length?P.indexOf(alive[0]):cur;P[KG.winner].wins++;kEndTurn(true)}
     else if(me.dead||KG.turn.length>=3){kEndTurn(false);over=true}
   }
@@ -5480,7 +5503,7 @@ function kRender(){
     if(act&&!isDef&&!GRID)msg=`<div class="kmsg">${p.killer?'vise les autres':'vise ton n°'}</div>`;
     if(isDef)msg=`<div class="kmsg">défense : ${DD.darts} fl.</div>`;
     const nh=Math.max(p.maxl,p.lives,3);
-    const lives=p.dead&&!isDef?'<span class="kvic">VICTIME 🥶</span>':Array.from({length:nh},(_,k)=>`<i class="h${k<p.lives?' on':''}${k>=KG.lives?' gold':''}${p.lives===1&&k===0?' last':''}">♥</i>`).join('');
+    const lives=p.dead&&!isDef?'<span class="kvic">VICTIME 🥶</span>':Array.from({length:nh},(_,k)=>`<i class="h${k<p.lives?' on':''}${k<p.lives&&k>=p.lives-(p.gold||0)?' gold':''}${p.lives===1&&k===0?' last':''}">♥</i>`).join('');
     let hist='';
     if(act){const nd=isDef?DD.darts:3,ds=KHOLD?p.last:KG.turn;hist=`<div class="khist">${Array.from({length:nd},(_,k)=>kDart(ds[k])).join('')}</div>`}
     else if(p.last&&p.last.length)hist=`<div class="khist old">${p.last.map(kDart).join('')}</div>`;
@@ -6035,9 +6058,9 @@ function fitSk(){
   const fit=(key,base)=>{const els=R.sc.map(s=>s[key]);let fs=base;
     els.forEach(e=>{e.style.setProperty('font-size',base+'px','important');const w=e.offsetWidth;if(w>avail)fs=Math.min(fs,base*avail/w)});
     els.forEach(e=>e.style.setProperty('font-size',fs.toFixed(2)+'px','important'))};
-  if(G.teams&&G.players.some(p=>p.members)){const all=G.players.flatMap(p=>p.members||[p.name]),cs=getComputedStyle(R.sc[0].nm),B=r*.56;let fs=B;
+  if(G.teams&&G.players.some(p=>p.members)){const all=G.players.flatMap(p=>p.members||[p.name]),cs=getComputedStyle(R.sc[0].nm),B=r*.62;let fs=B;
     all.forEach(nm=>{const w=gmet(cs,nm,B).w;if(w>avail)fs=Math.min(fs,B*avail/w)});R.sc.forEach(s=>s.nm.style.setProperty('font-size',fs.toFixed(2)+'px','important'))}
-  else fit('nm',r*.37);
+  else fit('nm',r*.47);
   fit('pts',r*1.08);
 }
 {const _fh=fitHead;fitHead=function(){if(skp2())return fitSk();return _fh.apply(this,arguments)}}
@@ -6201,7 +6224,7 @@ document.querySelector('#setup .xcus').addEventListener('click',e=>{e.stopPropag
  const _x=xRender;xRender=function(){const x=_x.apply(this,arguments);try{if(XG&&XG.winner===null)chk('x'+XG.t0,XG.cur)}catch(e){}return x};
  const _k=kRender;kRender=function(){const x=_k.apply(this,arguments);try{if(KG&&KG.winner===null)chk('k'+KG.id,KHOLD?KHOLD.who:KG.cur)}catch(e){}return x}}
 /* Killer : son de chargeur (devenir Killer, ou tour d'un Killer) ; un spew = clic à vide */
-function gunReload(){if(!S.sound||!AC)return;noise(.07,.32,1400);tone(300,.07,'square',.07,0,160);noise(.05,.45,2600,.17);tone(1300,.035,'square',.09,.17);tone(620,.05,'triangle',.08,.2)}
+function gunReload(){if(!S.sound||!AC)return;[0,.17].forEach((t,i)=>{noise(.035,1,1600+i*900,t);tone(i?1400:950,.03,'square',.32,t);tone(i?140:95,.07,'sine',.6,t,50);noise(.012,.8,6000,t+.012)})}
 function dryClick(){if(!S.sound||!AC)return;noise(.018,.5,4200);tone(2300,.02,'square',.06);noise(.012,.35,5200,.06);tone(3100,.015,'square',.04,.06)}
 {const _sp=SFX.spew;SFX.spew=function(){if($('killer').classList.contains('on'))return dryClick();return _sp.apply(this,arguments)}}
 {let kz=null,kc=null;const _k=kRender;kRender=function(){const x=_k.apply(this,arguments);try{if(KG&&KG.winner===null){
@@ -6209,6 +6232,7 @@ function dryClick(){if(!S.sound||!AC)return;noise(.018,.5,4200);tone(2300,.02,'s
    if(kz&&kz.id===id&&z.some((v,i)=>v&&!kz.z[i]))setTimeout(gunReload,350);
    else if(kc&&kc.id===id&&kc.c!==c&&KG.players[c]&&KG.players[c].killer&&!KG.players[c].dead)setTimeout(gunReload,250);
    kz={id,z};kc={id,c}}}catch(e){}return x}}
+{const _k=kRender;kRender=function(){try{if(KG)KG.players.forEach(p=>{if(p.gold>0&&p._pl!==undefined&&p.lives<p._pl)p.gold=Math.max(0,p.gold-(p._pl-p.lives));if(p.gold>p.lives)p.gold=p.lives;p._pl=p.lives})}catch(e){}return _k.apply(this,arguments)}}
 /* balle : chaque appui la propulse vers le bout du rail, elle rebondit contre le bord puis retombe à sa place */
 const BALLS=new Map();
 function kickBall(num,X){const row=num.parentElement;let B=BALLS.get(num);
