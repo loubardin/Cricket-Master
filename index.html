@@ -3793,6 +3793,18 @@ html body #x01#x01.xbar #xkeys .xk:not(.tgt) .lbl{opacity:.38!important}
 #kplayers .kc.bar .bsc b{font-family:"FunTxt",-apple-system,sans-serif;font-weight:900;font-size:calc(var(--kno-fs,9vw)*.42);font-size:min(9vw,5dvh);color:inherit}
 #kplayers .kc.bar .bsc b i{font-style:normal;font-size:.55em;opacity:.6}
 #kplayers .kc.bar .bsc small{font-family:"Lbl",sans-serif;font-weight:600;font-size:min(3vw,1.5dvh);opacity:.7;margin-top:.2em}
+/* tableau killer / shanghai / horloge : tout grandit avec la case, quel que soit le nombre de joueurs */
+html body #killer #kplayers.grid.k1col{grid-template-columns:1fr!important}
+html body #killer#killer#killer#killer #kplayers .kc .kno{font-size:min(46cqh,58cqw)!important}
+html body #killer#killer#killer#killer #kplayers .kc .kname{font-size:min(12cqh,17cqw)!important}
+html body #killer#killer#killer#killer #kplayers .kc .kname .kmm{font-size:.5em!important}
+html body #killer#killer#killer#killer #kplayers .kc .klives{font-size:min(9.5cqh,12.5cqw)!important}
+html body #killer#killer#killer#killer #kplayers .kc .khist .pill{font-size:min(6.4cqh,9.5cqw)!important;min-width:min(17cqh,27cqw)!important;height:auto!important;padding:.22em .4em!important}
+html body #killer#killer#killer#killer #kplayers .kc .kstat .kmk,html body #killer#killer#killer#killer #kplayers .kc .kstat .kmk.none{width:min(34cqh,40cqw)!important;height:min(34cqh,40cqw)!important}
+html body #killer#killer#killer#killer #kplayers .kc.bar .kno{font-size:min(40cqh,56cqw)!important}
+html body #killer#killer#killer#killer #kplayers .kc.bar .bsc b{font-size:min(19cqh,28cqw)!important}
+html body #killer#killer#killer#killer #kplayers .kc.bar .bsc small{font-size:min(4.8cqh,6.5cqw)!important}
+html body #killer#killer#killer#killer #kplayers .kc.bar .kstat{display:none!important}
 </style>
 </head>
 <body>
@@ -7038,6 +7050,9 @@ function bRender(){
   kFitNames();try{setPc($('killer'),P[cur])}catch(e){}
 }
 {const _xr=xRender;xRender=function(){const r=_xr.apply(this,arguments);try{bRender()}catch(e){}return r}}
+{const kcol=()=>{const b=$('kplayers'),n=BARON&&XG?XG.players.length:KG?KG.players.length:0;b.classList.toggle('k1col',n>0&&n<=3);b.style.setProperty('--rows',n<=3?n:Math.ceil(n/2))};
+ const _k2=kRender;kRender=function(){const r=_k2.apply(this,arguments);try{kcol();kFitNames()}catch(e){}return r};
+ const _b2=bRender;bRender=function(){const r=_b2.apply(this,arguments);try{kcol();kFitNames()}catch(e){}return r}}
 {const _kr=kRender;kRender=function(){if(BARON)return bRender();return _kr.apply(this,arguments)}}
 /* taper la case du joueur en cours = toucher le numéro à viser */
 $('kplayers').addEventListener('click',e=>{if(!BARON)return;e.stopImmediatePropagation();
