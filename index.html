@@ -3273,14 +3273,37 @@ html body #game#game.sk.p2.pn #scores .sc:not(.act)>.pills{display:flex!importan
 #draw#draw .dsw #drawGo,#draw#draw .dsw #drawAgain{z-index:1}
 /* changement de joueur : les bulles des nombres changent de couleur au même rythme que la case du joueur */
 #game#game.sk.p2 #grid .num{transition:background-color .4s cubic-bezier(.3,.8,.3,1),box-shadow .4s cubic-bezier(.3,.8,.3,1)!important}
-/* Killer : le viseur est une grande marque derrière le numéro */
-#kplayers.grid .kc{position:relative}
-#kplayers.grid .kc .kstat{position:absolute!important;inset:0!important;display:grid!important;place-items:center!important;z-index:0!important;pointer-events:none;margin:0!important;padding:0!important;grid-area:auto!important}
-#kplayers.grid .kc .kstat .kmk{width:min(30vw,14dvh)!important;height:min(30vw,14dvh)!important;opacity:.28}
-#kplayers.grid .kc .kstat .kmk.kred{opacity:.9}
-#kplayers.grid .kc .kstat .kmk svg{stroke-width:7!important}
-#kplayers.grid .kc .kno{position:relative;z-index:1}
-#kplayers.grid .kc .kstat .kmk.none{display:none}
+
+/* ===== v101 ===== */
+/* Cricket : plus de voile blanc sur les cases quand on marque */
+#game.sk .fl{display:none!important}
+/* Killer : croix noire sur rond rouge */
+.kmk svg path{stroke:#111!important}
+.kmk svg .kdisc{fill:#e4251a!important}
+.kmk.kred svg{filter:none!important}
+/* Killer : case du joueur — bulle de couleur seulement sous le nom et les cœurs, le reste en blanc ; infos resserrées */
+html body #killer#killer #kplayers .kc{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:0!important;
+  padding:calc(var(--uu)*1) calc(var(--uu)*1) calc(var(--uu)*1.6)!important;grid-template-areas:none!important}
+html body #killer#killer #kplayers .kc>*{grid-area:auto!important;position:relative!important;inset:auto!important;margin:0!important}
+html body #killer#killer #kplayers .kc.act{background:#fff!important;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong)!important}
+html body #killer#killer #kplayers .kc .kL{display:flex!important;flex-direction:column;align-items:center;gap:calc(var(--uu)*.4);padding:calc(var(--uu)*1.2) calc(var(--uu)*2.4) calc(var(--uu)*1);border-radius:22px;width:100%;box-sizing:border-box;order:0}
+html body #killer#killer #kplayers .kc.act .kL{background:var(--pc);box-shadow:0 0 0 var(--bub-h) var(--pc)}
+html body #killer#killer #kplayers .kc.act .kname{color:#fff!important}
+html body #killer#killer.lt #kplayers .kc.act .kname{color:#111!important}
+html body #killer#killer #kplayers .kc .klives{font-size:calc(var(--uu)*3.4)!important;gap:calc(var(--uu)*.3)!important;line-height:1}
+html body #killer#killer #kplayers .kc .klives i{font-size:inherit!important}
+html body #killer#killer #kplayers .kc.act .kno{color:var(--ink)!important}
+html body #killer#killer #kplayers .kc .kno{order:1;line-height:.95!important;margin-top:calc(var(--uu)*.8)!important;z-index:1}
+html body #killer#killer #kplayers .kc .kR{display:flex!important;flex-direction:column;align-items:center;order:2;gap:calc(var(--uu)*.6)}
+html body #killer#killer #kplayers .kc .kstat{position:relative!important;display:block!important;margin-top:calc(var(--uu)*-2.2)!important;z-index:2;pointer-events:none}
+html body #killer#killer #kplayers .kc .kstat .kmk{width:min(16vw,7.5dvh)!important;height:min(16vw,7.5dvh)!important;opacity:1!important}
+html body #killer#killer #kplayers .kc .kstat .kmk.none{display:block;visibility:hidden;height:calc(var(--uu)*2)!important}
+html body #killer#killer #kplayers .kc .kstat .kmk svg{stroke-width:9!important}
+html body #killer#killer #kplayers .kc .kx{display:block!important}
+html body #killer#killer #kplayers .kc .kR{display:grid!important;grid-template-columns:100%!important;grid-template-rows:auto auto!important;grid-template-areas:"m" "x"!important;justify-items:center!important;row-gap:calc(var(--uu)*.4)!important;padding:0!important;height:auto!important}
+html body #killer#killer #kplayers .kc .kR>.kstat{grid-area:m!important;margin:0!important;transform:translateY(-38%)}
+html body #killer#killer #kplayers .kc .kR>.kx{grid-area:x!important;margin:calc(var(--uu)*-2) 0 0!important;position:relative!important;inset:auto!important;transform:none!important}
+html body #killer#killer #kplayers .kc .klives{font-size:calc(var(--uu)*4)!important}
 </style>
 </head>
 <body>
