@@ -3891,6 +3891,17 @@ html[data-skin] .kmk svg .kdisc{fill:var(--accent)}
 html body #home#home .sndt.skint{left:auto!important;right:5vw!important}
 html[data-skin] :is(#game,#x01,#killer,#home,#setup,#hist,footer,#fbar2),html[data-skin] #game#game#game,html[data-skin] #game#game#game.sk.p2,html[data-skin] #game#game#game.sk.p2.vC{--spew:var(--sk-spew)!important}
 html[data-skin] body #setup .grules .rgoal i{color:var(--accent)!important}
+/* éditeur des cibles du halve-it : grille régulière */
+.hipick .hseq{display:grid!important;grid-template-columns:repeat(5,1fr);gap:7px!important}
+.hipick .hch{justify-content:space-between;height:38px!important;padding:0 4px 0 10px!important}
+.hipick .htok{display:grid!important;grid-template-columns:repeat(5,1fr);gap:7px!important}
+.hipick .htok button{min-width:0!important;width:100%;height:38px!important;padding:0!important}
+html body #xpick.hipick{grid-template-columns:minmax(0,1fr)!important;width:min(92vw,380px)!important;box-sizing:border-box}
+html body #xpick.hipick>*{min-width:0;width:100%}
+.hipick .hseq,.hipick .htok{grid-template-columns:repeat(5,minmax(0,1fr))!important}
+.hipick .hch{min-width:0;font-size:15px!important;gap:2px!important;padding:0 3px 0 8px!important}
+.hipick .hch .bcx{width:18px!important;height:18px!important;flex:0 0 auto}
+.hipick .hact{width:100%}
 </style>
 </head>
 <body>
@@ -3964,7 +3975,7 @@ html[data-skin] body #setup .grules .rgoal i{color:var(--accent)!important}
       <div class="opt clo"><span>Double / triple</span><div class="seg mini" data-k="clkm"><button data-v="0">Avance de 1</button><button data-v="1">Saute 2 / 3</button></div></div>
       <div class="opt clo"><span>Joueur rejoue</span><div class="seg mini" data-k="clkr"><button data-v="0">Non</button><button data-v="1">MPR &gt; 1</button><button data-v="2">MPR &gt; 2</button></div></div>
       <div class="opt clo"><span>Arrivée</span><div class="seg mini" data-k="clkb"><button data-v="0">Le 20</button><button data-v="1">La Bulle</button></div></div>
-      <div class="opt hio wide"><span>Cibles</span><button class="hiseqb" id="hiSeqB"></button></div>
+      <div class="opt hio"><span>Cibles</span><div class="seg mini" id="segHiSeq"><button data-v="0" id="hiSeqC">Classique</button><button data-v="1" id="hiSeqB">Perso</button></div></div>
       <div class="opt hio"><span>Fléchettes</span><div class="seg mini" data-k="hid"><button data-v="3">3</button><button data-v="4">4</button><button data-v="5">5</button></div></div>
       <div class="opt hio"><span>Pénalité ÷ 2</span><div class="seg mini yn" data-k="hip"><button data-v="1">Oui</button><button data-v="0">Non</button></div></div>
       <div class="opt kl"><span>Vies</span><div class="seg mini" id="segLives"><button data-v="3">3</button><button data-v="4">4</button><button data-v="5">5</button></div></div>
@@ -6663,7 +6674,8 @@ function placeHead(){
        p.dataset.n=nm;inp.value=nm;p.remove();refresh()});
      g.append(b)});
    p.append(g);document.body.append(p);
-   const w=p.offsetWidth,h=p.offsetHeight,top=r0.top-h-12>8?r0.top-h-12:r0.bottom+12;
+   const mh=innerHeight-24;if(p.offsetHeight>mh){p.style.maxHeight=mh+'px';p.style.overflowY='auto'}
+   const w=p.offsetWidth,h=p.offsetHeight,top=Math.max(12,Math.min(innerHeight-h-12,r0.top-h-12>8?r0.top-h-12:r0.bottom+12));
    p.style.left=Math.max(12,Math.min(innerWidth-w-12,r0.left+r0.width/2-w/2))+'px';p.style.top=top+'px';
  }
  document.addEventListener('pointerdown',e=>{
@@ -7216,7 +7228,9 @@ $('shwBon').addEventListener('click',e=>{e.stopPropagation();e.preventDefault();
   setTimeout(()=>document.addEventListener('pointerdown',function f(ev){if(!ev.target.closest('#xpick')){p.remove();document.removeEventListener('pointerdown',f,true)}},true),0)},true);
 /* menu Halve-it : séquence des cibles (ajouter, remplacer, retirer, revenir au classique) */
 const hiSeq=()=>Array.isArray(S.hiseq)&&S.hiseq.length?S.hiseq:HI_CLASSIC.slice();
-function hiSync(){const b=$('hiSeqB');if(b)b.innerHTML=`<span>${hiSeq().map(hiLbl).join(' · ')}</span><small>${hiSeq().length} manches · modifier</small>`}
+const hiIsClassic=()=>JSON.stringify(hiSeq())===JSON.stringify(HI_CLASSIC);
+function hiSync(){const b=$('hiSeqB'),c=$('hiSeqC');if(!b)return;const cl=hiIsClassic();c.classList.toggle('sel',cl);b.classList.toggle('sel',!cl);b.textContent=cl?'Perso':'Perso · '+hiSeq().length}
+$('hiSeqC').addEventListener('click',e=>{e.stopPropagation();haptic();S.hiseq=HI_CLASSIC.slice();store.set(K_S,S);SFX.ui();renderSetup()},true);
 $('hiSeqB').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();let q=hiSeq().slice(),sel=-1;
   const p=el('div','');p.id='xpick';p.classList.add('hipick');document.body.append(p);
