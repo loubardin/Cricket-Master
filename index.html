@@ -3860,7 +3860,6 @@ html body #killer#killer#killer#killer #kplayers .kc.bar .kL{display:flex;flex-d
 #askSum li.cur span::after{content:" · à lui de jouer";font-weight:500;color:var(--accent);font-size:.85em}
 #askSum .asb{margin-top:1dvh;text-align:center;font-weight:600;color:var(--accent);font-size:min(3.6vw,1.8dvh)}
 #ask .note{margin-bottom:2.4dvh!important}
-#fMode small{display:inline-block;transition:transform .2s}
 /* Shanghai / horloge sur le tableau du cricket */
 #game .mk .bcv{font-family:"FunTxt",-apple-system,sans-serif;font-weight:900;font-size:calc(var(--r,58px)*.42);color:var(--ink)}
 #game .mk .bcv.z{color:var(--mute);opacity:.5}
@@ -7234,26 +7233,7 @@ function askSummary(){
   box.innerHTML=`<div class="ast">${esc(title)}</div><ul>${rows.map((r,i)=>`<li class="${i===cur?'cur':''}"><span>${dot(r[0])}${esc(r[0])}</span><b>${r[1]}</b></li>`).join('')}</ul>${bet?`<div class="asb">${bet}</div>`:''}`;
 }
 
-/* cricket : historique des autres collé sous le MPR (3+), en colonne à 1 contre 1 ; à 4+, l'historique du joueur en cours passe sous son score ;
-   couronne au-dessus du nom (encore plus haut en équipe), qui s'écarte des boutons du haut et pousse le petit texte du titre */
-function skDeco(){
-  if(!R||!G||!R.sc||!$('game').classList.contains('on'))return;const g=$('game'),n=G.players.length,ai=shownCur();
-  g.classList.remove('pn4');
-  const sm=$('fMode')&&$('fMode').querySelector('small');if(sm)sm.style.transform='';
-  R.sc.forEach((s,i)=>{const h=s.nm.querySelector('.hat');if(!h)return;h.style.removeProperty('margin-left');
-    if(i===ai&&!g.classList.contains('pn')&&n<=2)return;                       // case en cours à 1 contre 1 : à cheval sur la bulle
-    if(i===ai&&g.classList.contains('pn'))return;
-    const mate=s.nm.querySelector('.nmm'),up=mate?mate.offsetHeight+1:6;
-    h.style.setProperty('bottom',`calc(100% + ${up}px)`,'important');
-    const r=h.getBoundingClientRect(),pad=10;
-    ['fMenu','fUndo'].forEach(id=>{const b=$(id);if(!b||!b.offsetParent)return;const q=b.getBoundingClientRect();
-      if(r.right>q.left-pad&&r.left<q.right+pad&&r.bottom>q.top&&r.top<q.bottom){const dx=q.left<innerWidth/2?(q.right+pad-r.left):(q.left-pad-r.right);h.style.setProperty('margin-left',dx+'px','important')}});
-    if(sm){const r2=h.getBoundingClientRect(),t=sm.getBoundingClientRect();
-      if(r2.right>t.left-4&&r2.left<t.right+4&&r2.bottom>t.top&&r2.top<t.bottom){const c=(r2.left+r2.right)/2;
-        sm.style.transform=`translateX(${c>=(t.left+t.right)/2?(r2.left-4-t.right):(r2.right+4-t.left)}px)`}}});
-}
-{const _r=render;render=function(){const x=_r.apply(this,arguments);try{skDeco();requestAnimationFrame(skDeco);clearTimeout(skDeco._t);skDeco._t=setTimeout(skDeco,150)}catch(e){}return x}}
-addEventListener('resize',()=>requestAnimationFrame(skDeco));
+
 
 /* ===== Shanghai / horloge sur le tableau du cricket =====
    le tableau du cricket est réutilisé tel quel (7 bulles) ; ses 7 lignes montrent une fenêtre des cibles du jeu
