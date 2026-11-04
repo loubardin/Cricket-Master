@@ -3872,10 +3872,10 @@ html body #killer#killer#killer#killer #kplayers .kc.bar .kL{display:flex;flex-d
 #game .mk:has(.bch){flex-direction:column}
 #game.bcg .num .lbl{white-space:nowrap}
 html body #game#game#game.bcg .num.bclong .lbl{font-size:calc(var(--r,58px)*.27)!important;letter-spacing:0!important}
-html[data-skin="sunny"]{--accent:#d87659;--acc-rgb:216,118,89;--m-home:#fbf4e4;--ui-bg:#fbf4e4;--page:#fbf4e4;--m-cell:#f1e4c6;--ink:#2e4652;--m-ink:#2e4652;--m-strong:#2e4652;--mute:#6b7c80;--m-sub:#6b7c80;--spew:#4f9b8f;--sk-spew:#4f9b8f}
-html[data-skin="watermelon"]{--accent:#dd5470;--acc-rgb:221,84,112;--m-home:#fdf8ec;--ui-bg:#fdf8ec;--page:#fdf8ec;--m-cell:#f5ead2;--ink:#193a4b;--m-ink:#193a4b;--m-strong:#193a4b;--mute:#5f7079;--m-sub:#5f7079;--spew:#3f89ae;--sk-spew:#3f89ae}
-html[data-skin="fiery"]{--accent:#b12b28;--acc-rgb:177,43,40;--m-home:#fbf1d8;--ui-bg:#fbf1d8;--page:#fbf1d8;--m-cell:#f0e1c0;--ink:#102e46;--m-ink:#102e46;--m-strong:#102e46;--mute:#68717d;--m-sub:#68717d;--spew:#729bb9;--sk-spew:#729bb9}
-html[data-skin="gold"]{--accent:#f0a73e;--acc-rgb:240,167,62;--m-home:#f7f7f5;--ui-bg:#f7f7f5;--page:#f7f7f5;--m-cell:#e7e7e5;--ink:#000000;--m-ink:#000000;--m-strong:#000000;--mute:#6e6e6e;--m-sub:#6e6e6e;--spew:#17213c;--sk-spew:#17213c}
+html[data-skin="sunny"]{--accent:#d87659;--acc-rgb:216,118,89;--m-home:#fae6cc;--ui-bg:#fae6cc;--page:#fae6cc;--m-cell:#f0d4ad;--ink:#2e4652;--m-ink:#2e4652;--m-strong:#2e4652;--mute:#6b7c80;--m-sub:#6b7c80;--spew:#4f9b8f;--sk-spew:#4f9b8f}
+html[data-skin="watermelon"]{--accent:#dd5470;--acc-rgb:221,84,112;--m-home:#e2f5ea;--ui-bg:#e2f5ea;--page:#e2f5ea;--m-cell:#c9ead8;--ink:#193a4b;--m-ink:#193a4b;--m-strong:#193a4b;--mute:#5f7079;--m-sub:#5f7079;--spew:#3f89ae;--sk-spew:#3f89ae}
+html[data-skin="fiery"]{--accent:#b12b28;--acc-rgb:177,43,40;--m-home:#e3ecf3;--ui-bg:#e3ecf3;--page:#e3ecf3;--m-cell:#ccdbe7;--ink:#102e46;--m-ink:#102e46;--m-strong:#102e46;--mute:#68717d;--m-sub:#68717d;--spew:#729bb9;--sk-spew:#729bb9}
+html[data-skin="gold"]{--accent:#f0a73e;--acc-rgb:240,167,62;--m-home:#ffffff;--ui-bg:#ffffff;--page:#ffffff;--m-cell:#ececea;--ink:#000000;--m-ink:#000000;--m-strong:#000000;--mute:#6e6e6e;--m-sub:#6e6e6e;--spew:#17213c;--sk-spew:#17213c}
 html[data-skin]:not(.night) body,html[data-skin]:not(.night) #home,html[data-skin]:not(.night) #setup.b2,html[data-skin]:not(.night) #hist,html[data-skin]:not(.night) #draw,html[data-skin] .screen{background:var(--m-home)!important}
 html[data-skin] .kmk svg .kdisc{fill:var(--accent)}
 .skint{left:auto!important;right:5vw;display:flex!important;align-items:center;justify-content:center;gap:2px;padding:0!important}
@@ -5466,7 +5466,7 @@ applyTheme();
 /* ---- joueurs enregistrés : nom + couleur ---- */
 if(S.xlegs>10)S.xlegs=10;if(!S.xlegs)S.xlegs=1;if(!S.clegs)S.clegs=1;if(S.clegs>10)S.clegs=10;
 const K_R='cricket.roster.v1';
-const PCOLS=['#d4494c','#dd5470','#b12b28','#a02f1f','#8f2d2c','#6d130a','#ae4f4d','#d87659','#ad481e','#bc6c27','#e8a66c','#e29f37','#f0a73e','#749858','#436544','#62d3a5','#4f9b8f','#429195','#265d71','#729bb9','#527b9b','#3f89ae','#2e4652','#193a4b','#102e46','#213454','#17213c','#000000'];   // couleurs des joueurs : palettes Watermelon Sorbet, Black & Gold, Sunny Beach Day, Ocean Sunset, Summer Ocean Breeze, Fiery Ocean, Fresh Greens
+const PCOLS=['#d4494c','#b12b28','#8f2d2c','#6d130a','#dd5470','#e07aa5','#b8457f','#d87659','#e8a66c','#ad481e','#bc6c27','#e29f37','#f0a73e','#d4a72c','#8fb33f','#749858','#436544','#3fb98a','#62d3a5','#4f9b8f','#429195','#265d71','#2aa7c9','#5a9fe0','#729bb9','#527b9b','#3f89ae','#2e4652','#193a4b','#213454','#17213c','#102e46','#9b7fc0','#6a4c9c','#7a4b2a','#a0785a','#6e7b85','#000000'];   // couleurs des joueurs : palettes Watermelon Sorbet, Black & Gold, Sunny Beach Day, Ocean Sunset, Summer Ocean Breeze, Fiery Ocean, Fresh Greens
 let ROSTER=store.get(K_R,null);
 if(!ROSTER){const seen=new Set();ROSTER=(S.names||[]).map(n=>(n||'').trim().toUpperCase()).filter(n=>n&&!/^J\d$/.test(n)&&!seen.has(n)&&seen.add(n)).map((n,i)=>({name:n,color:PCOLS[i%PCOLS.length]}));store.set(K_R,ROSTER)}
 // b = chance de toucher la bulle (25 ou 50) quand on la vise : c'est bien plus dur qu'un numéro
@@ -7331,10 +7331,10 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème général (fond clair) : 5 styles ===== */
 const SKINS={
   classic:{name:'Cricket Master',c:['#f7f2e5','#ff5a1f','#141414','#009df4','#f2c230']},
-  sunny:{name:'Sunny Beach Day',c:['#fbf4e4','#d87659','#2e4652','#4f9b8f','#e2c577']},
-  watermelon:{name:'Watermelon Sorbet',c:['#fdf8ec','#dd5470','#193a4b','#3f89ae','#62d3a5']},
-  fiery:{name:'Fiery Ocean',c:['#fbf1d8','#b12b28','#102e46','#729bb9','#6d130a']},
-  gold:{name:'Black & Gold',c:['#f7f7f5','#f0a73e','#000000','#17213c','#e5e5e5']}};
+  sunny:{name:'Sunny Beach Day',c:['#fae6cc','#d87659','#2e4652','#4f9b8f','#e2c577']},
+  watermelon:{name:'Watermelon Sorbet',c:['#e2f5ea','#dd5470','#193a4b','#3f89ae','#62d3a5']},
+  fiery:{name:'Fiery Ocean',c:['#e3ecf3','#b12b28','#102e46','#729bb9','#6d130a']},
+  gold:{name:'Black & Gold',c:['#ffffff','#f0a73e','#000000','#17213c','#e5e5e5']}};
 function applySkin(){const k=SKINS[S.skin]?S.skin:'classic';const h=document.documentElement;if(k==='classic')h.removeAttribute('data-skin');else h.setAttribute('data-skin',k);
   try{const m=document.querySelector('meta[name=theme-color]');if(m)m.content=SKINS[k].c[0]}catch(e){}}
 applySkin();
