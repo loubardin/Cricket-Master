@@ -3872,24 +3872,19 @@ html body #killer#killer#killer#killer #kplayers .kc.bar .kL{display:flex;flex-d
 #game .mk:has(.bch){flex-direction:column}
 #game.bcg .num .lbl{white-space:nowrap}
 html body #game#game#game.bcg .num.bclong .lbl{font-size:calc(var(--r,58px)*.27)!important;letter-spacing:0!important}
-html[data-skin="sunny"]{--accent:#d87659;--acc-rgb:216,118,89;--m-home:#fae6cc;--ui-bg:#fae6cc;--page:#fae6cc;--m-cell:#f0d4ad;--ink:#2e4652;--m-ink:#2e4652;--m-strong:#2e4652;--mute:#6b7c80;--m-sub:#6b7c80;--spew:#4f9b8f;--sk-spew:#4f9b8f}
-html[data-skin="watermelon"]{--accent:#dd5470;--acc-rgb:221,84,112;--m-home:#e2f5ea;--ui-bg:#e2f5ea;--page:#e2f5ea;--m-cell:#c9ead8;--ink:#193a4b;--m-ink:#193a4b;--m-strong:#193a4b;--mute:#5f7079;--m-sub:#5f7079;--spew:#3f89ae;--sk-spew:#3f89ae}
-html[data-skin="fiery"]{--accent:#b12b28;--acc-rgb:177,43,40;--m-home:#e3ecf3;--ui-bg:#e3ecf3;--page:#e3ecf3;--m-cell:#ccdbe7;--ink:#102e46;--m-ink:#102e46;--m-strong:#102e46;--mute:#68717d;--m-sub:#68717d;--spew:#729bb9;--sk-spew:#729bb9}
-html[data-skin="gold"]{--accent:#f0a73e;--acc-rgb:240,167,62;--m-home:#ffffff;--ui-bg:#ffffff;--page:#ffffff;--m-cell:#ececea;--ink:#000000;--m-ink:#000000;--m-strong:#000000;--mute:#6e6e6e;--m-sub:#6e6e6e;--spew:#17213c;--sk-spew:#17213c}
 html[data-skin]:not(.night) body,html[data-skin]:not(.night) #home,html[data-skin]:not(.night) #setup.b2,html[data-skin]:not(.night) #hist,html[data-skin]:not(.night) #draw,html[data-skin] .screen{background:var(--m-home)!important}
 html[data-skin] .kmk svg .kdisc{fill:var(--accent)}
 .skint{left:auto!important;right:5vw;display:flex!important;align-items:center;justify-content:center;gap:2px;padding:0!important}
 .skint i{width:22%;height:46%;border-radius:99px;background:var(--accent)}
 .skint i:nth-child(2){background:var(--spew)}
 .skint i:nth-child(3){background:var(--m-strong)}
-.skinpick{width:min(88vw,330px);grid-template-columns:1fr!important}
+.skinpick{width:min(92vw,370px);grid-template-columns:minmax(0,1fr)!important;max-height:calc(100dvh - 24px);overflow-y:auto}
 .skinpick .skl{display:flex;flex-direction:column;gap:8px}
 .skinpick .skb{display:flex;align-items:center;justify-content:space-between;gap:10px;height:46px;padding:0 8px 0 16px;border-radius:99px;border:0;background:transparent;box-shadow:inset 0 0 0 1.5px var(--m-strong);font:600 15px "Lbl",sans-serif;color:var(--ink)}
 .skinpick .skb.sel{box-shadow:inset 0 0 0 1.5px var(--m-strong),0 0 0 4px var(--accent)}
 .skinpick .skb i{display:flex;border-radius:99px;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(0,0,0,.15)}
 .skinpick .skb b{width:20px;height:28px}
 html body #home#home .sndt.skint{left:auto!important;right:5vw!important}
-html[data-skin] :is(#game,#x01,#killer,#home,#setup,#hist,footer,#fbar2),html[data-skin] #game#game#game,html[data-skin] #game#game#game.sk.p2,html[data-skin] #game#game#game.sk.p2.vC{--spew:var(--sk-spew)!important}
 html[data-skin] body #setup .grules .rgoal i{color:var(--accent)!important}
 /* éditeur des cibles du halve-it : grille régulière */
 .hipick .hseq{display:grid!important;grid-template-columns:repeat(5,1fr);gap:7px!important}
@@ -3902,6 +3897,13 @@ html body #xpick.hipick>*{min-width:0;width:100%}
 .hipick .hch{min-width:0;font-size:15px!important;gap:2px!important;padding:0 3px 0 8px!important}
 .hipick .hch .bcx{width:18px!important;height:18px!important;flex:0 0 auto}
 .hipick .hact{width:100%}
+.skinpick .sks{display:flex;flex-direction:column;gap:6px}
+.skinpick .skt{font:600 13px "Lbl",sans-serif;color:var(--mute)}
+.skinpick .skg{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px}
+.skinpick .skc{aspect-ratio:1;border-radius:50%;border:0;padding:0;background:var(--c);box-shadow:inset 0 0 0 1px rgba(0,0,0,.18)}
+.skinpick .skc.on{box-shadow:0 0 0 3px var(--m-home),0 0 0 5px var(--m-strong)}
+.skinpick .skr{justify-self:start;height:40px;padding:0 18px;border-radius:99px;border:0;background:transparent;box-shadow:inset 0 0 0 1.5px var(--m-strong);font:400 16px "Fun",sans-serif;color:var(--ink)}
+html[data-skin] body #setup .grules .rgoal i{color:var(--accent)!important}
 </style>
 </head>
 <body>
@@ -5477,7 +5479,7 @@ applyTheme();
 /* ---- joueurs enregistrés : nom + couleur ---- */
 if(S.xlegs>10)S.xlegs=10;if(!S.xlegs)S.xlegs=1;if(!S.clegs)S.clegs=1;if(S.clegs>10)S.clegs=10;
 const K_R='cricket.roster.v1';
-const PCOLS=['#d4494c','#b12b28','#8f2d2c','#6d130a','#dd5470','#e07aa5','#b8457f','#d87659','#e8a66c','#ad481e','#bc6c27','#e29f37','#f0a73e','#d4a72c','#8fb33f','#749858','#436544','#3fb98a','#62d3a5','#4f9b8f','#429195','#265d71','#2aa7c9','#5a9fe0','#729bb9','#527b9b','#3f89ae','#2e4652','#193a4b','#213454','#17213c','#102e46','#9b7fc0','#6a4c9c','#7a4b2a','#a0785a','#6e7b85','#000000'];   // couleurs des joueurs : palettes Watermelon Sorbet, Black & Gold, Sunny Beach Day, Ocean Sunset, Summer Ocean Breeze, Fiery Ocean, Fresh Greens
+const PCOLS=['#d4494c','#b12b28','#8f2d2c','#6d130a','#dd5470','#e07aa5','#b8457f','#d87659','#e8a66c','#ad481e','#bc6c27','#e29f37','#f0a73e','#d4a72c','#8fb33f','#749858','#436544','#3fb98a','#62d3a5','#4f9b8f','#429195','#265d71','#2aa7c9','#5a9fe0','#729bb9','#527b9b','#3f89ae','#2e4652','#193a4b','#213454','#17213c','#102e46','#9b7fc0','#6a4c9c','#7a4b2a','#a0785a','#6e7b85','#000000','#f72585','#7209b7','#3a0ca3','#4361ee','#00b4d8','#06d6a0','#8ac926','#fb5607','#ff006e','#ffbe0b'];   // couleurs des joueurs : palettes Watermelon Sorbet, Black & Gold, Sunny Beach Day, Ocean Sunset, Summer Ocean Breeze, Fiery Ocean, Fresh Greens
 let ROSTER=store.get(K_R,null);
 if(!ROSTER){const seen=new Set();ROSTER=(S.names||[]).map(n=>(n||'').trim().toUpperCase()).filter(n=>n&&!/^J\d$/.test(n)&&!seen.has(n)&&seen.add(n)).map((n,i)=>({name:n,color:PCOLS[i%PCOLS.length]}));store.set(K_R,ROSTER)}
 // b = chance de toucher la bulle (25 ou 50) quand on la vise : c'est bien plus dur qu'un numéro
@@ -7342,22 +7344,29 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 {const _sk=showKiller;showKiller=function(){if(BARC){BARC=false;G=GREAL;R=null}return _sk.apply(this,arguments)}}
 {const _sg=startGame;startGame=function(){if(BARC){BARC=false;G=GREAL;R=null}$('game').classList.remove('bcg');return _sg.apply(this,arguments)}}
 
-/* ===== thème général (fond clair) : 5 styles ===== */
-const SKINS={
-  classic:{name:'Cricket Master',c:['#f7f2e5','#ff5a1f','#141414','#009df4','#f2c230']},
-  sunny:{name:'Sunny Beach Day',c:['#fae6cc','#d87659','#2e4652','#4f9b8f','#e2c577']},
-  watermelon:{name:'Watermelon Sorbet',c:['#e2f5ea','#dd5470','#193a4b','#3f89ae','#62d3a5']},
-  fiery:{name:'Fiery Ocean',c:['#e3ecf3','#b12b28','#102e46','#729bb9','#6d130a']},
-  gold:{name:'Black & Gold',c:['#ffffff','#f0a73e','#000000','#17213c','#e5e5e5']}};
-function applySkin(){const k=SKINS[S.skin]?S.skin:'classic';const h=document.documentElement;if(k==='classic')h.removeAttribute('data-skin');else h.setAttribute('data-skin',k);
-  try{const m=document.querySelector('meta[name=theme-color]');if(m)m.content=SKINS[k].c[0]}catch(e){}}
+/* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
+const TH={
+  bg:{t:'Fond',def:'#f7f2e5',c:['#f7f2e5','#ffffff','#f4f4f2','#e6e8e5','#fdf0d5','#fae6cc','#fff3c4','#e9f5c9','#d8f3dc','#e2f5ea','#caf0f8','#d6ecfa','#bde0fe','#8ecae6','#ece4f7','#cdb4db','#ffe5ec','#fadde1','#ffc8dd','#f1e3d3']},
+  ink:{t:'Contours et textes',def:'#141414',c:['#141414','#000000','#2e4652','#023047','#003049','#102a41','#17213c','#213454','#03045e','#390099','#3a0ca3','#560bad','#3e1f47','#5b0e23','#780000','#432818','#0b3d2e','#346d64','#4a4e69']},
+  acc:{t:'Bulles',def:'#ff5a1f',c:['#ff5a1f','#ff5400','#f17105','#fb8500','#ffa200','#ffb703','#f5bd42','#e6c229','#ff0000','#c1121f','#cd3d3d','#780000','#ff0054','#ef476f','#ff477e','#f72585','#ec0868','#d11149','#9e0059','#b5179e','#c200fb','#7209b7','#6610f2','#3f37c9','#4361ee','#147df5','#219ebc','#118ab2','#5286c0','#06d6a0','#2a9d8f','#346d64','#8ac926','#000000']}};
+const hx2=c=>[1,3,5].map(k=>parseInt(c.slice(k,k+2),16));
+const mixc=(a,b,t)=>{const A=hx2(a),B=hx2(b);return'#'+A.map((v,i)=>Math.round(v+(B[i]-v)*t).toString(16).padStart(2,'0')).join('')};
+function applySkin(){const h=document.documentElement,T=S.th||{},bg=T.bg||TH.bg.def,ink=T.ink||TH.ink.def,acc=T.acc||TH.acc.def;
+  const P=['--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'];
+  if(!T.bg&&!T.ink&&!T.acc){P.forEach(k=>h.style.removeProperty(k));h.removeAttribute('data-skin')}
+  else{h.setAttribute('data-skin','custom');const set=(k,v)=>h.style.setProperty(k,v);
+    set('--accent',acc);set('--acc-rgb',hx2(acc).join(','));set('--m-home',bg);set('--ui-bg',bg);set('--page',bg);set('--m-cell',mixc(bg,ink,.09));
+    set('--ink',ink);set('--m-ink',ink);set('--m-strong',ink);set('--mute',mixc(ink,bg,.42));set('--m-sub',mixc(ink,bg,.42))}
+  try{const m=document.querySelector('meta[name=theme-color]');if(m)m.content=bg}catch(e){}}
 applySkin();
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
-  const p=el('div','',`<div class="xpt">Thème</div><div class="skl">${Object.entries(SKINS).map(([k,v])=>`<button class="skb${(S.skin||'classic')===k?' sel':''}" data-k="${k}"><span>${v.name}</span><i>${v.c.map(c=>`<b style="background:${c}"></b>`).join('')}</i></button>`).join('')}</div>`);
-  p.id='xpick';p.classList.add('skinpick');document.body.append(p);
-  const r0=e.currentTarget.getBoundingClientRect();p.style.left=Math.max(12,Math.min(innerWidth-p.offsetWidth-12,r0.right-p.offsetWidth))+'px';p.style.top=(r0.bottom+10)+'px';
-  p.addEventListener('click',ev=>{const b=ev.target.closest('.skb');if(!b)return;ev.stopPropagation();haptic();S.skin=b.dataset.k;store.set(K_S,S);applySkin();SFX.lock();p.querySelectorAll('.skb').forEach(x=>x.classList.toggle('sel',x===b))});
+  const p=el('div','');p.id='xpick';p.classList.add('skinpick');document.body.append(p);
+  const draw=()=>{const T=S.th||{};p.innerHTML=`<div class="xpt">Thème</div>`+Object.entries(TH).map(([k,v])=>`<div class="sks"><div class="skt">${v.t}</div><div class="skg">${v.c.map(c=>`<button class="skc${(T[k]||v.def)===c?' on':''}" data-k="${k}" data-c="${c}" style="--c:${c}" aria-label="${v.t}"></button>`).join('')}</div></div>`).join('')+`<button class="skr">Par défaut</button>`};
+  draw();p.style.left=Math.max(12,(innerWidth-p.offsetWidth)/2)+'px';p.style.top=Math.max(12,Math.min(innerHeight-p.offsetHeight-12,e.currentTarget.getBoundingClientRect().bottom+10))+'px';
+  p.addEventListener('click',ev=>{ev.stopPropagation();const b=ev.target.closest('.skc');
+    if(b){haptic();S.th=Object.assign({},S.th||{},{[b.dataset.k]:b.dataset.c});store.set(K_S,S);applySkin();SFX.lock&&SFX.lock();draw();return}
+    if(ev.target.closest('.skr')){haptic();S.th={};store.set(K_S,S);applySkin();SFX.ui();draw()}});
   setTimeout(()=>document.addEventListener('pointerdown',function f(ev){if(!ev.target.closest('#xpick')){p.remove();document.removeEventListener('pointerdown',f,true)}},true),0)},true);
 /* anciennes couleurs des joueurs : remplacées par la plus proche de la nouvelle palette */
 {const hx=c=>[1,3,5].map(k=>parseInt(c.slice(k,k+2),16)),d=(a,b)=>a.reduce((s,v,i)=>s+(v-b[i])**2,0);let ch=false;
