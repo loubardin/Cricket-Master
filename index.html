@@ -3904,6 +3904,15 @@ html body #xpick.hipick>*{min-width:0;width:100%}
 .skinpick .skc.on{box-shadow:0 0 0 3px var(--m-home),0 0 0 5px var(--m-strong)}
 .skinpick .skr{justify-self:start;height:40px;padding:0 18px;border-radius:99px;border:0;background:transparent;box-shadow:inset 0 0 0 1.5px var(--m-strong);font:400 16px "Fun",sans-serif;color:var(--ink)}
 html[data-skin] body #setup .grules .rgoal i{color:var(--accent)!important}
+.skinpick .skg{grid-template-columns:repeat(15,minmax(0,1fr))!important;gap:3px!important}
+.skinpick .skc{border-radius:6px!important;aspect-ratio:1}
+.skinpick .skc.on{box-shadow:0 0 0 2px var(--m-home),0 0 0 4px var(--m-strong)!important;z-index:1;position:relative}
+.skinpick .skd{grid-column:1 / -1;aspect-ratio:auto!important;height:22px;border-radius:99px!important}
+.skinpick .skd::after{content:"par défaut";font:600 11px "Lbl",sans-serif;color:#fff;mix-blend-mode:difference}
+.skinpick .skp{display:flex;align-items:center;justify-content:space-between;gap:10px;font:600 14px "Lbl",sans-serif;color:var(--ink)}
+.skinpick .sksw{display:flex;border-radius:99px;box-shadow:inset 0 0 0 1.5px var(--m-strong);overflow:hidden}
+.skinpick .sksw button{border:0;background:transparent;color:var(--ink);font:400 15px "Fun",sans-serif;padding:8px 16px}
+.skinpick .sksw button.on{background:var(--accent);color:#fff}
 </style>
 </head>
 <body>
@@ -5491,7 +5500,7 @@ const isBot=n=>!!botLv(n);
 const BOTMETAL={'SPEWTARD':['#5f6b3a','#a3ae74'],"P'TIT JEUNE":['#9a5a2a','#d9945b'],'MEC CHAUD':['#8d959e','#e3e7eb'],'BIG BOSS':['#b8860b','#ffe27a'],"L'ANCIEN":['#4fb3cc','#d8f6ff']};
 const botMetal=n=>BOTMETAL[botBase(n)]||null;
 ROSTER=ROSTER.filter(r=>!isBot(r.name));
-const pcol=n=>{const bm=botMetal(n);if(bm)return bm[0];const r=ROSTER.find(x=>x.name===String(n||'').trim().toUpperCase());return r?r.color:''};
+const pcol=n=>{if(S.pcolOff){const a=(S.th&&S.th.acc)||'#ff5a1f';return a}const bm=botMetal(n);if(bm)return bm[0];const r=ROSTER.find(x=>x.name===String(n||'').trim().toUpperCase());return r?r.color:''};
 function renderRoster(){
   const box=$('rList');box.innerHTML='';
   ROSTER.forEach((r,i)=>{
@@ -7345,10 +7354,11 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 {const _sg=startGame;startGame=function(){if(BARC){BARC=false;G=GREAL;R=null}$('game').classList.remove('bcg');return _sg.apply(this,arguments)}}
 
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
-const TH={
-  bg:{t:'Fond',def:'#f7f2e5',c:['#f7f2e5','#ffffff','#f4f4f2','#e6e8e5','#fdf0d5','#fae6cc','#fff3c4','#e9f5c9','#d8f3dc','#e2f5ea','#caf0f8','#d6ecfa','#bde0fe','#8ecae6','#ece4f7','#cdb4db','#ffe5ec','#fadde1','#ffc8dd','#f1e3d3']},
-  ink:{t:'Contours et textes',def:'#141414',c:['#141414','#000000','#2e4652','#023047','#003049','#102a41','#17213c','#213454','#03045e','#390099','#3a0ca3','#560bad','#3e1f47','#5b0e23','#780000','#432818','#0b3d2e','#346d64','#4a4e69']},
-  acc:{t:'Bulles',def:'#ff5a1f',c:['#ff5a1f','#ff5400','#f17105','#fb8500','#ffa200','#ffb703','#f5bd42','#e6c229','#ff0000','#c1121f','#cd3d3d','#780000','#ff0054','#ef476f','#ff477e','#f72585','#ec0868','#d11149','#9e0059','#b5179e','#c200fb','#7209b7','#6610f2','#3f37c9','#4361ee','#147df5','#219ebc','#118ab2','#5286c0','#06d6a0','#2a9d8f','#346d64','#8ac926','#000000']}};
+/* nuancier commun : une colonne par teinte (de gauche à droite), du plus clair (en haut) au plus foncé (en bas), + une colonne de gris */
+const hsl2hex=(h,sa,l)=>{sa/=100;l/=100;const k=n=>(n+h/30)%12,a=sa*Math.min(l,1-l),f=n=>l-a*Math.max(-1,Math.min(k(n)-3,9-k(n),1));return'#'+[f(0),f(8),f(4)].map(x=>Math.round(x*255).toString(16).padStart(2,'0')).join('')};
+const SWH=[0,18,32,45,58,85,130,165,190,210,232,262,290,325],SWL=[96,88,78,66,54,43,33,24,15];
+const SWATCH=SWL.flatMap(l=>[...SWH.map(h=>hsl2hex(h,l>=88?80:l<=24?55:78,l)),hsl2hex(0,0,l>=96?100:l<=15?3:l)]);
+const TH={bg:{t:'Fond',def:'#f7f2e5'},ink:{t:'Contours et textes',def:'#141414'},acc:{t:'Bulles',def:'#ff5a1f'}};
 const hx2=c=>[1,3,5].map(k=>parseInt(c.slice(k,k+2),16));
 const mixc=(a,b,t)=>{const A=hx2(a),B=hx2(b);return'#'+A.map((v,i)=>Math.round(v+(B[i]-v)*t).toString(16).padStart(2,'0')).join('')};
 function applySkin(){const h=document.documentElement,T=S.th||{},bg=T.bg||TH.bg.def,ink=T.ink||TH.ink.def,acc=T.acc||TH.acc.def;
@@ -7362,11 +7372,12 @@ applySkin();
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
   const p=el('div','');p.id='xpick';p.classList.add('skinpick');document.body.append(p);
-  const draw=()=>{const T=S.th||{};p.innerHTML=`<div class="xpt">Thème</div>`+Object.entries(TH).map(([k,v])=>`<div class="sks"><div class="skt">${v.t}</div><div class="skg">${v.c.map(c=>`<button class="skc${(T[k]||v.def)===c?' on':''}" data-k="${k}" data-c="${c}" style="--c:${c}" aria-label="${v.t}"></button>`).join('')}</div></div>`).join('')+`<button class="skr">Par défaut</button>`};
+  const draw=()=>{const T=S.th||{};p.innerHTML=`<div class="xpt">Thème</div>`+Object.entries(TH).map(([k,v])=>`<div class="sks"><div class="skt">${v.t}</div><div class="skg">${[v.def,...SWATCH.filter(c=>c!==v.def)].slice(0,1).concat(SWATCH).map((c,ix)=>ix===0?`<button class="skc skd${(T[k]||v.def)===c?' on':''}" data-k="${k}" data-c="${c}" style="--c:${c}" aria-label="Par défaut"></button>`:'').join('')}${SWATCH.map(c=>`<button class="skc${(T[k]||v.def)===c?' on':''}" data-k="${k}" data-c="${c}" style="--c:${c}" aria-label="${v.t}"></button>`).join('')}</div></div>`).join('')+`<div class="skp"><span>Couleurs des joueurs</span><div class="sksw"><button data-p="1" class="${S.pcolOff?'':'on'}">Oui</button><button data-p="0" class="${S.pcolOff?'on':''}">Non</button></div></div><button class="skr">Par défaut</button>`};
   draw();p.style.left=Math.max(12,(innerWidth-p.offsetWidth)/2)+'px';p.style.top=Math.max(12,Math.min(innerHeight-p.offsetHeight-12,e.currentTarget.getBoundingClientRect().bottom+10))+'px';
   p.addEventListener('click',ev=>{ev.stopPropagation();const b=ev.target.closest('.skc');
     if(b){haptic();S.th=Object.assign({},S.th||{},{[b.dataset.k]:b.dataset.c});store.set(K_S,S);applySkin();SFX.lock&&SFX.lock();draw();return}
-    if(ev.target.closest('.skr')){haptic();S.th={};store.set(K_S,S);applySkin();SFX.ui();draw()}});
+    const pb=ev.target.closest('.sksw button');if(pb){haptic();S.pcolOff=pb.dataset.p==='0';store.set(K_S,S);SFX.ui();draw();try{renderSetup()}catch(e){}return}
+    if(ev.target.closest('.skr')){haptic();S.th={};S.pcolOff=false;store.set(K_S,S);applySkin();SFX.ui();draw()}});
   setTimeout(()=>document.addEventListener('pointerdown',function f(ev){if(!ev.target.closest('#xpick')){p.remove();document.removeEventListener('pointerdown',f,true)}},true),0)},true);
 /* anciennes couleurs des joueurs : remplacées par la plus proche de la nouvelle palette */
 {const hx=c=>[1,3,5].map(k=>parseInt(c.slice(k,k+2),16)),d=(a,b)=>a.reduce((s,v,i)=>s+(v-b[i])**2,0);let ch=false;
