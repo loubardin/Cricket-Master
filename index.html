@@ -3860,10 +3860,6 @@ html body #killer#killer#killer#killer #kplayers .kc.bar .kL{display:flex;flex-d
 #askSum li.cur span::after{content:" · à lui de jouer";font-weight:500;color:var(--accent);font-size:.85em}
 #askSum .asb{margin-top:1dvh;text-align:center;font-weight:600;color:var(--accent);font-size:min(3.6vw,1.8dvh)}
 #ask .note{margin-bottom:2.4dvh!important}
-/* cricket 1 contre 1 : historique de l'autre joueur en colonne, à cheval entre les deux cases */
-html body #game#game#game.sk.p2:not(.pn) #scores>.sc:not(.act){position:relative}
-html body #game#game#game.sk.p2:not(.pn) #scores>.sc:not(.act)>.pills{grid-area:auto!important;position:absolute!important;left:-13px!important;right:auto!important;bottom:auto!important;top:50%!important;transform:translateY(-50%)!important;display:flex!important;flex-direction:column!important;gap:calc(var(--r)*.06)!important;width:auto!important;margin:0!important;z-index:3}
-html body #game#game#game.sk.p2:not(.pn) #scores>.sc:not(.act)>.pills .pill{min-width:calc(var(--r)*.36)!important;height:calc(var(--r)*.34)!important;font-size:calc(var(--r)*.18)!important;padding:0 .2em!important}
 /* 4 joueurs et plus : la case en cours, score centré, historique dessous */
 html body #game#game#game.sk.p2.pn.pn4 #scores>.sc.act{grid-template-columns:100%!important;justify-items:center!important;position:relative}
 html body #game#game#game.sk.p2.pn.pn4 #scores>.sc.act>:is(.nm,.pts,.mpr){grid-column:1!important;translate:none!important}
