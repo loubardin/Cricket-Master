@@ -3860,12 +3860,6 @@ html body #killer#killer#killer#killer #kplayers .kc.bar .kL{display:flex;flex-d
 #askSum li.cur span::after{content:" · à lui de jouer";font-weight:500;color:var(--accent);font-size:.85em}
 #askSum .asb{margin-top:1dvh;text-align:center;font-weight:600;color:var(--accent);font-size:min(3.6vw,1.8dvh)}
 #ask .note{margin-bottom:2.4dvh!important}
-/* 4 joueurs et plus : la case en cours, score centré, historique dessous */
-html body #game#game#game.sk.p2.pn.pn4 #scores>.sc.act{grid-template-columns:100%!important;justify-items:center!important;position:relative}
-html body #game#game#game.sk.p2.pn.pn4 #scores>.sc.act>:is(.nm,.pts,.mpr){grid-column:1!important;translate:none!important}
-html body #game#game#game.sk.p2.pn.pn4 #scores>.sc.act>.pills{grid-area:auto!important;position:absolute!important;left:50%!important;right:auto!important;bottom:calc(var(--r)*.18)!important;top:auto!important;transform:translateX(-50%)!important;display:flex!important;flex-direction:row!important;gap:calc(var(--r)*.05)!important;width:auto!important;margin:0!important}
-html body #game#game#game.sk.p2.pn.pn4 #scores>.sc.act>.pills .pill{min-width:calc(var(--r)*.3)!important;width:auto!important;height:calc(var(--r)*.25)!important;font-size:calc(var(--r)*.15)!important;padding:0 .12em!important}
-html body #game#game#game.sk.p2.pn.pn4 #scores>.sc.act>.mpr{margin-bottom:calc(var(--r)*.4)!important}
 #fMode small{display:inline-block;transition:transform .2s}
 /* Shanghai / horloge sur le tableau du cricket */
 #game .mk .bcv{font-family:"FunTxt",-apple-system,sans-serif;font-weight:900;font-size:calc(var(--r,58px)*.42);color:var(--ink)}
@@ -4244,7 +4238,7 @@ function swoosh(){if(!S.sound||!AC)return;const t0=AC.currentTime,dur=.32,b=AC.c
   for(let i=0;i<d.length;i++){const k=i/d.length;d[i]=(Math.random()*2-1)*Math.sin(Math.PI*k)}
   const src=AC.createBufferSource(),f=AC.createBiquadFilter(),g=AC.createGain();src.buffer=b;f.type='bandpass';f.Q.value=1.2;
   f.frequency.setValueAtTime(500,t0);f.frequency.exponentialRampToValueAtTime(2600,t0+dur*.55);f.frequency.exponentialRampToValueAtTime(900,t0+dur);
-  g.gain.setValueAtTime(.0001,t0);g.gain.exponentialRampToValueAtTime(.11,t0+.09);g.gain.exponentialRampToValueAtTime(.0001,t0+dur);
+  g.gain.setValueAtTime(.0001,t0);g.gain.exponentialRampToValueAtTime(.24,t0+.09);g.gain.exponentialRampToValueAtTime(.0001,t0+dur);
   src.connect(f).connect(g);send(g,.15);src.start(t0)}
 const SFX={
   hit:m=>[520,700,940].slice(0,m).forEach((f,i)=>tone(f,.09,'triangle',.18,i*.06)),
@@ -6567,13 +6561,8 @@ function fitSk(){
     els.forEach(e=>e.style.setProperty('font-size',fs.toFixed(2)+'px','important'))};
   if(G.teams&&G.players.some(p=>p.members)){const all=G.players.flatMap(p=>p.members||[p.name]),cs=getComputedStyle(R.sc[0].nm),B=r*(Math.max(...G.players.flatMap(p=>(p.members||[p.name]).map(x=>String(x).length)))<=4?.38:.47);let fs=B;
     all.forEach(nm=>{const w=gmet(cs,nm,B).w;if(w>avail)fs=Math.min(fs,B*avail/w)});R.sc.forEach(s=>s.nm.style.setProperty('font-size',fs.toFixed(2)+'px','important'))}
-  else{const mx=Math.max(...G.players.map(p=>String(p.name).length));fit('nm',r*(mx<=4?.38:.47)*(G.players.length<=3?1.2:1))}
-  // scores : plus gros à 2-3 joueurs ; à 4 et plus, seul le joueur en cours grossit (sa case est plus large)
-  const n=G.players.length,ai=shownCur(),big=n<=3?1.38:1.08;
-  const fitG=(els,base,av)=>{let fs=base;els.forEach(e=>{e.style.setProperty('font-size',base+'px','important');const w=e.offsetWidth,a=av(e);if(w>a)fs=Math.min(fs,base*a/w)});els.forEach(e=>e.style.setProperty('font-size',fs.toFixed(2)+'px','important'))};
-  const act=R.sc[ai],oth=R.sc.filter((_,i)=>i!==ai);
-  fitG(oth.map(s=>s.pts),r*big,()=>avail);
-  if(act)fitG([act.pts],r*(n<=3?1.38:1.4),e=>{const c=act.c,pl=act.pills;return n>=4?c.clientWidth*.86:Math.max(40,c.clientWidth-pl.offsetWidth-28)});
+  else{const mx=Math.max(...G.players.map(p=>String(p.name).length));fit('nm',r*(mx<=4?.38:.47))}
+  fit('pts',r*1.08);
 }
 {const _fh=fitHead;fitHead=function(){if(skp2())return fitSk();return _fh.apply(this,arguments)}}
 {const _eq=eqNames;eqNames=function(){if(skp2())return;return _eq.apply(this,arguments)}}
@@ -6810,10 +6799,10 @@ function betBill(list){
     <div class="bt">Partie par partie</div><ul class="bg2">${games}</ul>
     <div class="bt">Total</div><ul class="bst btot">${betRows(R)}</ul>
     <div class="bt">Qui doit quoi</div><ul class="bds">${debts}</ul>`;
-  const txt='🧾 LA NOTE — Cricket Master\n'+d.toLocaleDateString('fr-FR')+' · '+list.length+' partie'+(list.length>1?'s':'')+(durT?' · '+durT:'')+'\n\nTOTAL\n'+
+  const txt='🧾 LA NOTE — Cricket Master\n'+d.toLocaleDateString('fr-FR')+' · '+list.length+' partie'+(list.length>1?'s':'')+(durT?' · '+durT:'')+
+    '\n\nPARTIE PAR PARTIE\n'+list.map((e,k)=>{const u=betUnit(e),g=e.v*e.L.length/e.w.length;return`${k+1}. ${GNAME[e.game]||e.game}${subOk(e)?' ('+e.sub+')':''}\n`+e.w.map(n=>`   🏆 ${n} +${betTxt(g,u)}`).join('\n')+'\n'+e.L.map(n=>`   ${n} −${betTxt(e.v,u)}`).join('\n')}).join('\n')+'\n\nTOTAL\n'+
     R.map((r,i)=>`${i+1}. ${r.n} — ${r.w}/${r.p} victoire${r.w>1?'s':''} — ${r.bal.filter(x=>Math.abs(x.v)>.004).map(x=>(x.v>0?'+':'−')+betTxt(Math.abs(x.v),x.u)).join(' ')||'0'}`).join('\n')+
-    '\n\nQUI DOIT QUOI\n'+(D.length?D.map(x=>`• ${x.from} → ${x.to} : ${betTxt(x.v,x.u)}`).join('\n'):'Personne ne doit rien.')+
-    '\n\nPARTIE PAR PARTIE\n'+list.map((e,k)=>{const u=betUnit(e),g=e.v*e.L.length/e.w.length;return`${k+1}. ${GNAME[e.game]||e.game}${subOk(e)?' ('+e.sub+')':''}\n`+e.w.map(n=>`   🏆 ${n} +${betTxt(g,u)}`).join('\n')+'\n'+e.L.map(n=>`   ${n} −${betTxt(e.v,u)}`).join('\n')}).join('\n');
+    '\n\nQUI DOIT QUOI\n'+(D.length?D.map(x=>`• ${x.from} → ${x.to} : ${betTxt(x.v,x.u)}`).join('\n'):'Personne ne doit rien.');
   return{html,txt};
 }
 function openBill(){if(!BET.length)return;haptic();SFX.open();const b=betBill(BET);$('bPaper').innerHTML=b.html;$('bPaper').scrollTop=0;$('bill').dataset.txt=b.txt;$('bill').querySelector('.bsw').classList.remove('new');$('bill').classList.add('on')}
@@ -6831,12 +6820,21 @@ async function billPNG(list){
     const T=(t,x,yy,f,c,al)=>{if(!ctx)return;ctx.font=f;ctx.fillStyle=c;ctx.textAlign=al||'left';ctx.textBaseline='alphabetic';ctx.fillText(t,x,yy)};
     const RR=(x,yy,w,h,r,fill,stroke,lw)=>{if(!ctx)return;ctx.beginPath();ctx.roundRect(x,yy,w,h,r);if(fill){ctx.fillStyle=fill;ctx.fill()}if(stroke){ctx.lineWidth=lw||3;ctx.strokeStyle=stroke;ctx.stroke()}};
     // logo + titre
-    if(ctx){ctx.save();ctx.translate(W/2,y+150);ctx.fillStyle=ACC;ctx.beginPath();ctx.arc(0,0,82,0,7);ctx.fill();ctx.strokeStyle=INK;ctx.lineWidth=20;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(-80,-80);ctx.lineTo(80,80);ctx.moveTo(80,-80);ctx.lineTo(-80,80);ctx.stroke();ctx.restore()}
-    y+=290;T('LA NOTE',W/2,y+50,'400 96px Fun',INK,'center');y+=90;
+    if(ctx){ctx.save();ctx.translate(W/2,y+270);ctx.fillStyle=ACC;ctx.beginPath();ctx.arc(0,0,82,0,7);ctx.fill();ctx.strokeStyle=INK;ctx.lineWidth=20;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(-80,-80);ctx.lineTo(80,80);ctx.moveTo(80,-80);ctx.lineTo(-80,80);ctx.stroke();ctx.restore()}
+    y+=410;T('LA NOTE',W/2,y+50,'400 96px Fun',INK,'center');y+=90;
     T(d0.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).replace(/^./,c=>c.toUpperCase()),W/2,y+34,'500 34px Lbl',MUTE,'center');y+=80;
     // résumé
     const cells=[[String(list.length),'partie'+(list.length>1?'s':'')],...Object.entries(pot).map(([u,v])=>[betTxt(v,u),'en jeu'])];
     cells.forEach((c,k)=>{const cx=X+CW*(k+.5)/cells.length;T(c[0],cx,y+60,'400 64px Fun',ACC,'center');T(c[1],cx,y+104,'500 30px Lbl',MUTE,'center')});y+=150;
+    // partie par partie
+    T('Partie par partie',X,y+50,'400 54px Fun',INK);y+=80;
+    list.forEach((e,k)=>{const u=betUnit(e),g=e.v*e.L.length/e.w.length,n=e.w.length+e.L.length,h=122+n*50;
+      RR(X,y,CW,h,32,'#fff',INK,3);
+      T(String(k+1),X+40,y+62,'400 40px Fun',MUTE);T((GNAME[e.game]||e.game)+(subOk(e)?'  ·  '+e.sub:''),X+90,y+62,'700 36px Lbl',INK);T(hm(e.t),X+CW-40,y+60,'500 28px Lbl',MUTE,'right');
+      let yy=y+82;e.w.forEach(nm=>{yy+=50;T('🏆 '+nm,X+90,yy,'700 34px Lbl',pcol(nm)||INK);T('+'+betTxt(g,u),X+CW-40,yy,'600 34px Lbl',GR,'right')});
+      e.L.forEach(nm=>{yy+=50;T(nm,X+90,yy,'500 34px Lbl',MUTE);T('−'+betTxt(e.v,u),X+CW-40,yy,'600 34px Lbl',RD,'right')});
+      y+=h+20});
+    y+=30;
     // total
     T('Total',X,y+50,'400 54px Fun',INK);y+=80;
     R.forEach((r,i)=>{const top=i===0&&R.length>1,h=top?150:118,col=pcol(r.n)||ACC,bl=r.bal.filter(b=>Math.abs(b.v)>.004);
@@ -6854,14 +6852,6 @@ async function billPNG(list){
       T(x.from,X+40,y+52,'700 38px Lbl',INK);if(ctx){ctx.font='700 38px Lbl'}const w1=ctx?ctx.measureText(x.from).width:0;T('→',X+60+w1,y+52,'500 36px Lbl',MUTE);if(ctx)ctx.font='500 36px Lbl';const w2=ctx?ctx.measureText('→').width:0;
       T(x.to,X+80+w1+w2,y+52,'700 38px Lbl',INK);T(betTxt(x.v,x.u),X+CW-40,y+54,'400 46px Fun',ACC,'right');y+=78});
     y+=45;
-    // partie par partie
-    T('Partie par partie',X,y+50,'400 54px Fun',INK);y+=80;
-    list.forEach((e,k)=>{const u=betUnit(e),g=e.v*e.L.length/e.w.length,n=e.w.length+e.L.length,h=122+n*50;
-      RR(X,y,CW,h,32,'#fff',INK,3);
-      T(String(k+1),X+40,y+62,'400 40px Fun',MUTE);T((GNAME[e.game]||e.game)+(subOk(e)?'  ·  '+e.sub:''),X+90,y+62,'700 36px Lbl',INK);T(hm(e.t),X+CW-40,y+60,'500 28px Lbl',MUTE,'right');
-      let yy=y+82;e.w.forEach(nm=>{yy+=50;T('🏆 '+nm,X+90,yy,'700 34px Lbl',pcol(nm)||INK);T('+'+betTxt(g,u),X+CW-40,yy,'600 34px Lbl',GR,'right')});
-      e.L.forEach(nm=>{yy+=50;T(nm,X+90,yy,'500 34px Lbl',MUTE);T('−'+betTxt(e.v,u),X+CW-40,yy,'600 34px Lbl',RD,'right')});
-      y+=h+20});
     y+=30;T('Cricket Master',W/2,y+40,'400 40px Fun',MUTE,'center');y+=40+P;
     return y};
   const H=Math.ceil(draw(null)),c=document.createElement('canvas');c.width=W;c.height=H;const ctx=c.getContext('2d');
@@ -6935,7 +6925,7 @@ $('betNo').addEventListener('click',e=>{e.stopPropagation();haptic();S.bet=0;sto
    requestAnimationFrame(placeThumbs)}}catch(e){}return r}}
 /* changement de joueur : petit swoosh (tous les jeux) */
 {const last={};const chk=(k,v)=>{if(last[k]!==undefined&&v!==undefined&&last[k]!==v)try{swoosh()}catch(e){}last[k]=v};
- const _r=render;render=function(){const x=_r.apply(this,arguments);try{if(G&&G.winner===null)chk('c'+G.id,shownCur())}catch(e){}return x};
+ const _r=render;render=function(){const x=_r.apply(this,arguments);try{if(G&&G.winner===null&&!BARC)chk('c'+G.id,shownCur())}catch(e){}return x};
  const _x=xRender;xRender=function(){const x=_x.apply(this,arguments);try{if(XG&&XG.winner===null)chk('x'+XG.t0,XG.cur)}catch(e){}return x};
  const _k=kRender;kRender=function(){const x=_k.apply(this,arguments);try{if(KG&&KG.winner===null)chk('k'+KG.id,KHOLD?KHOLD.who:KG.cur)}catch(e){}return x}}
 /* Killer : son de chargeur (devenir Killer, ou tour d'un Killer) ; un spew = clic à vide */
@@ -7248,9 +7238,7 @@ function askSummary(){
    couronne au-dessus du nom (encore plus haut en équipe), qui s'écarte des boutons du haut et pousse le petit texte du titre */
 function skDeco(){
   if(!R||!G||!R.sc||!$('game').classList.contains('on'))return;const g=$('game'),n=G.players.length,ai=shownCur();
-  g.classList.toggle('pn4',g.classList.contains('pn')&&n>=4);
-  R.sc.forEach((s,i)=>{const pl=s.pills,m=s.c.querySelector('.mpr');if(!pl)return;
-    if(i!==ai&&g.classList.contains('pn')&&m)pl.style.setProperty('top',(m.offsetTop+m.offsetHeight+5)+'px','important');else pl.style.removeProperty('top')});
+  g.classList.remove('pn4');
   const sm=$('fMode')&&$('fMode').querySelector('small');if(sm)sm.style.transform='';
   R.sc.forEach((s,i)=>{const h=s.nm.querySelector('.hat');if(!h)return;h.style.removeProperty('margin-left');
     if(i===ai&&!g.classList.contains('pn')&&n<=2)return;                       // case en cours à 1 contre 1 : à cheval sur la bulle
@@ -7296,7 +7284,7 @@ function bcRender(){
   TARGETS.forEach((T,k)=>{const idx=start+k,lab=rows[idx],num=R.num[T],row=num.parentElement;
     row.style.visibility=lab===undefined?'hidden':'';if(lab===undefined)return;
     const L=num.querySelector('.lbl');const txt=bcLbl(lab);if(L.textContent!==txt)L.textContent=txt;num.classList.toggle('bull',lab===25||lab==='B');num.classList.toggle('bclong',txt.length>3);
-    const past=bcRound()?idx!==XG.round-1||XG.winner!==null:idx<minPos;num.classList.toggle('dead',past);   // Shanghai / halve-it : seule la ligne du tour sert
+    const past=bcRound()?idx!==XG.round-1||XG.winner!==null:(XG.winner!==null||lab!==bcTgt(me));num.classList.toggle('dead',past);   // Shanghai / halve-it : seule la ligne du tour sert
     num.classList.toggle('bctg',XG.winner===null&&lab===bcTgt(me));
     P.forEach((p,i)=>{const c=R.mk[T][i];let h='';
       if(bcRound()){const v=p.rp&&p.rp[idx],hv=p.hv&&p.hv[idx];const played=idx<XG.round-1||(idx===XG.round-1&&(v!==undefined));h=played?`<span class="bcv${v?'':' z'}">${v||0}</span>${hv?`<small class="bch">÷2</small>`:''}`:''}
