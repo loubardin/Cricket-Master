@@ -6723,7 +6723,13 @@ function showRules(){const e=$('gRules');if(!e)return;const g=S.game||'cricket',
       'Ensuite, vise les numéros des autres : chaque touche leur <b>enlève une vie</b>.',
       'Attention : une fois Killer, toucher ton propre numéro te coûte une vie.']}
   // mise en page : un mot de moins de 4 lettres ne reste jamais seul en fin de ligne (espace insécable après)
-  const nb=t=>t.replace(/ ([:;!?=×])/g,'\u00a0$1').replace(/(^|[\s>(])([^\s<>]{1,3}) (?=\S)/g,'$1$2\u00a0').replace(/(^|[\s>(])([^\s<>]{1,3}) (?=\S)/g,'$1$2\u00a0');
+  // mise en page : un petit mot (1 à 3 lettres) ne reste pas seul en bout de ligne : il passe à la ligne avec le mot qui suit.
+  // une seule liaison à la fois (pas de chaîne de mots collés), et jamais sur les chiffres ou les signes
+  const nb=t=>{t=t.replace(/ ([:;!?])/g,' $1');const P=t.split(' ');let out=P[0]||'';
+    for(let i=1;i<P.length;i++){const prev=P[i-1].replace(/<[^>]*>/g,''),w=prev.replace(/[^A-Za-zÀ-ÿ']/g,'');
+      const sm=w.length>0&&w.length<=3&&/^[A-Za-zÀ-ÿ']+[,]?$/.test(prev)&&!/[,.]$/.test(prev)&&!(P[i-2]!==undefined&&out.slice(-(P[i-1].length+1)).startsWith(' '));
+      out+=(sm?' ':' ')+P[i]}
+    return out};
   e.innerHTML='<span class="rgoal"><i>Le but</i>'+nb(goal)+'</span>'+ps.map(x=>'<span class="rp">'+nb(x)+'</span>').join('')}
 {const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{showRules()}catch(e){}return r}}
 /* 501 : score libre (x01) et plus de « Master » */
