@@ -2693,11 +2693,11 @@ body.m2 #game#game.sk.p2 footer #b2::after{translate:calc((var(--midw) - var(--c
 body.m3 #game#game.sk.p2 footer #b3::after{translate:calc((var(--colw) - var(--midw))/2) 0}
 #game#game.sk.p2 .fthumb,body.m2 #game#game.sk.p2 .fthumb,body.m3 #game#game.sk.p2 .fthumb{left:0!important;top:0!important;bottom:0!important;width:var(--midw)!important;height:auto!important;
   translate:none!important;border-radius:99px!important;transition:transform .35s var(--ease),background-color .2s,box-shadow .2s!important}
-#game#game.sk.p2 .fthumb{transform:translateX(var(--colw));background:var(--spew)!important;box-shadow:0 0 0 var(--h) var(--spew)!important}
+#game#game.sk.p2 .fthumb{transform:translateX(var(--colw));background:var(--spw,var(--spew))!important;box-shadow:0 0 0 var(--h) var(--spw,var(--spew))!important}
 body.m2 #game#game.sk.p2 .fthumb{transform:translateX(0);background:var(--accent)!important;box-shadow:0 0 0 var(--h) var(--accent)!important}
 body.m3 #game#game.sk.p2 .fthumb{transform:translateX(calc(var(--colw)*2))!important;background:var(--accent)!important;box-shadow:0 0 0 var(--h) var(--accent)!important}
 #game#game.sk.p2 footer.spewfx .fthumb{animation:spewjelly2 .7s cubic-bezier(.3,1.6,.5,1)!important}
-@keyframes spewjelly2{0%{scale:1 1}15%{scale:1.3 .66;box-shadow:0 0 0 calc(var(--h)*2.4) var(--spew),0 0 30px rgba(0,157,244,.7)}40%{scale:.85 1.2}65%{scale:1.06 .95}100%{scale:1 1}}
+@keyframes spewjelly2{0%{scale:1 1}15%{scale:1.3 .66;box-shadow:0 0 0 calc(var(--h)*2.4) var(--spw,var(--spew)),0 0 30px color-mix(in srgb,var(--spw,#009df4) 70%,transparent)}40%{scale:.85 1.2}65%{scale:1.06 .95}100%{scale:1 1}}
 
 /* ===== v80 : Cricket 1 contre 1 — barres de progression =====
    Chaque ligne : la bulle du nombre s'allonge vers le joueur en cours à chaque marque (1/3, 2/3, tout le rail)
@@ -2873,7 +2873,7 @@ body.m3 #x01#x01 #xkeys button .lbl{animation-duration:.2s}
 :is(#x01,#killer) footer #b3::after{content:"Triple"!important}
 body:not(.m2):not(.m3) :is(#x01,#killer) footer #bS::after,body.m2 :is(#x01,#killer) footer #b2::after,body.m3 :is(#x01,#killer) footer #b3::after{color:var(--btx,#fff);scale:1.4}
 :is(#x01,#killer) footer .fthumb{display:block!important;position:absolute!important;top:0!important;bottom:0!important;left:0!important;width:33.333%!important;height:auto!important;border-radius:99px!important;
-  translate:100% 0!important;transform:none!important;background:var(--spew)!important;box-shadow:0 0 0 var(--bub-h) var(--spew)!important;z-index:1;transition:translate .35s cubic-bezier(.3,1.4,.5,1),background .2s,box-shadow .2s!important}
+  translate:100% 0!important;transform:none!important;background:var(--spw,var(--spew))!important;box-shadow:0 0 0 var(--bub-h) var(--spw,var(--spew))!important;z-index:1;transition:translate .35s cubic-bezier(.3,1.4,.5,1),background .2s,box-shadow .2s!important}
 body.m2 :is(#x01,#killer) footer .fthumb{translate:0 0!important;background:var(--silver)!important;box-shadow:0 0 0 var(--bub-h) #a9b1ba!important}
 body.m3 :is(#x01,#killer) footer .fthumb{translate:200% 0!important;background:var(--gold)!important;box-shadow:0 0 0 var(--bub-h) #e8ab05!important}
 #killer#killer #kplayers .kc.act .klives .h.on{color:var(--btx,#fff)!important}
@@ -3169,8 +3169,8 @@ footer{overflow:visible!important}
 #fbar2::after{content:"";position:absolute;inset:0;border:var(--bub-bw,1.5px) solid var(--m-strong);border-radius:99px;pointer-events:none;z-index:3}
 #game#game.sk.p2 #fbar2{grid-template-columns:var(--colw) var(--midw) var(--colw);--g2:var(--g)}
 :is(#x01,#killer) #fbar2{--g2:1.6dvh}
-#fbar2 .f2th{position:absolute;top:0;bottom:0;left:33.333%;width:33.333%;border-radius:99px;background:var(--spew,#009df4);box-shadow:0 0 0 var(--bub-h,5px) var(--spew,#009df4);z-index:1}
-#game#game.sk.p2 #fbar2 .f2th{left:var(--colw);width:var(--midw);box-shadow:0 0 0 var(--h) var(--spew)}
+#fbar2 .f2th{position:absolute;top:0;bottom:0;left:33.333%;width:33.333%;border-radius:99px;background:var(--spw,#009df4);box-shadow:0 0 0 var(--bub-h,5px) var(--spw,#009df4);z-index:1}
+#game#game.sk.p2 #fbar2 .f2th{left:var(--colw);width:var(--midw);box-shadow:0 0 0 var(--h) var(--spw,var(--spew))}
 html body footer #fbar2 :is(#fMenu,#fTS,#fUndo){position:relative!important;inset:auto!important;translate:none!important;transform:none;width:auto!important;height:100%!important;min-width:0!important;
   margin:0!important;padding:0!important;border:0!important;border-radius:99px!important;background:transparent!important;box-shadow:none!important;z-index:2!important;display:grid!important;place-items:center!important;
   font-family:"Fun",sans-serif!important;font-weight:400!important;font-size:2.6dvh!important;line-height:1!important;color:var(--ink)!important;grid-area:auto!important;opacity:1!important;transition:transform .12s}
@@ -3918,6 +3918,11 @@ html[data-skin] body #setup .grules .rgoal i{color:var(--accent)!important}
 .skinpick .skpr i{width:70%;height:18px;border-radius:99px;background:var(--a);box-shadow:inset 0 0 0 1.5px var(--i);display:block}
 .skinpick .skpr span{font:400 12px "Fun",sans-serif;color:var(--i);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .skinpick .skpr.on{box-shadow:inset 0 0 0 1.5px var(--i),0 0 0 3px var(--m-home),0 0 0 5px var(--m-strong)}
+
+/* règles du jeu : glissement comme l'interrupteur */
+#gRules{position:relative}
+#setup{overflow-x:hidden!important}
+#gRules .rold{position:absolute;inset:0;pointer-events:none}
 </style>
 </head>
 <body>
@@ -3936,7 +3941,7 @@ html[data-skin] body #setup .grules .rgoal i{color:var(--accent)!important}
   <div class="hb">
     <svg class="board lmark" viewBox="0 0 200 200" aria-hidden="true">
       <circle class="lmd" cx="100" cy="100" r="62" fill="#ff5a1f" style="fill:var(--accent)"/>
-      <path d="M40 40 160 160M160 40 40 160" stroke="#111" stroke-width="15" stroke-linecap="round" fill="none"/>
+      <path d="M40 40 160 160M160 40 40 160" stroke="#111" style="stroke:var(--m-ink,#111)" stroke-width="15" stroke-linecap="round" fill="none"/>
     </svg>
     <h1 class="ht">CRICKET<br>MASTER</h1>
     <div class="hs">cricket · 501 · jeux de bar</div>
@@ -7370,17 +7375,20 @@ const THP=[
   {n:'Ardoise',bg:'#080808',ink:'#6e6e6e',acc:'#3d3d3d',btx:'#ffffff'},
   {n:'Pin & paille',bg:'#f9f7c8',ink:'#1c3d5f',acc:'#1c5f4e',btx:'#ffffff'},
   {n:'Citron vert',bg:'#f9f7c8',ink:'#080808',acc:'#18c335',btx:'#ffffff'},
-  {n:'Néon',bg:'#080808',ink:'#ffffff',acc:'#e52e99',btx:'#ffffff'},
-  {n:'Billard',bg:'#1c5f4e',ink:'#080808',acc:'#5f1c1c',btx:'#ffffff'},
+  {n:'XXX',bg:'#080808',ink:'#ffffff',acc:'#e52e99',btx:'#ffffff'},
+  {n:'Pub',bg:'#1c5f4e',ink:'#080808',acc:'#5f1c1c',btx:'#ffffff'},
   {n:'Pêche',bg:'#f3b59b',ink:'#965913',acc:'#2e8ae5',btx:'#ffffff'},
-  {n:'Lagon',bg:'#11343b',ink:'#65ecca',acc:'#138096',btx:'#ffffff'}];
+  {n:'Lagon',bg:'#11343b',ink:'#65ecca',acc:'#138096',btx:'#ffffff'},
+  {n:'Myrtille',bg:'#f9edc8',ink:'#3d3d3d',acc:'#6577ec',btx:'#ffffff'},
+  {n:'Soleil',bg:'#ece765',ink:'#132496',acc:'#e5902e',btx:'#ffffff'},
+  {n:'Océan',bg:'#186ec3',ink:'#9be4f3',acc:'#65a8ec',btx:'#135496'}];
 const hx2=c=>[1,3,5].map(k=>parseInt(c.slice(k,k+2),16));
 const mixc=(a,b,t)=>{const A=hx2(a),B=hx2(b);return'#'+A.map((v,i)=>Math.round(v+(B[i]-v)*t).toString(16).padStart(2,'0')).join('')};
 function applySkin(){const h=document.documentElement,T=S.th||{},bg=T.bg||TH.bg.def,ink=T.ink||TH.ink.def,acc=T.acc||TH.acc.def,btx=T.btx||TH.btx.def;
-  const P=['--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'];
+  const P=['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'];
   if(!T.bg&&!T.ink&&!T.acc&&!T.btx){P.forEach(k=>h.style.removeProperty(k));h.removeAttribute('data-skin')}
   else{h.setAttribute('data-skin','custom');const set=(k,v)=>h.style.setProperty(k,v);
-    set('--accent',acc);set('--btx',btx);set('--acc-rgb',hx2(acc).join(','));set('--m-home',bg);set('--ui-bg',bg);set('--page',bg);set('--m-cell',mixc(bg,ink,.09));
+    set('--accent',acc);set('--btx',btx);set('--m-bg',bg);set('--m-card',bg);set('--m-line',mixc(bg,ink,.14));set('--m-strongtx',bg);set('--acc-rgb',hx2(acc).join(','));set('--m-home',bg);set('--ui-bg',bg);set('--page',bg);set('--m-cell',mixc(bg,ink,.09));
     set('--ink',ink);set('--m-ink',ink);set('--m-strong',ink);set('--mute',mixc(ink,bg,.42));set('--m-sub',mixc(ink,bg,.42))}
   try{const m=document.querySelector('meta[name=theme-color]');if(m)m.content=bg}catch(e){}}
 applySkin();
@@ -7388,7 +7396,7 @@ $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
   const p=el('div','');p.id='xpick';p.classList.add('skinpick');document.body.append(p);
   const cur=()=>{const T=S.th||{};return k=>(T[k]||TH[k].def)};
-  const draw=()=>{const T=S.th||{},c=cur();p.innerHTML=`<div class="xpt">Thème</div><div class="skps">${THP.map((t,i)=>`<button class="skpr${['bg','ink','acc','btx'].every(k=>c(k)===t[k])?' on':''}" data-i="${i}" style="--b:${t.bg};--i:${t.ink};--a:${t.acc};--t:${t.btx}"><i></i><span>${esc(t.n)}</span></button>`).join('')}</div>`+Object.entries(TH).map(([k,v])=>`<div class="sks"><div class="skt">${v.t}</div><div class="skg">${[v.def,...SWATCH.filter(c=>c!==v.def)].slice(0,1).concat(SWATCH).map((c,ix)=>ix===0?`<button class="skc skd${(T[k]||v.def)===c?' on':''}" data-k="${k}" data-c="${c}" style="--c:${c}" aria-label="Par défaut"></button>`:'').join('')}${SWATCH.map(c=>`<button class="skc${(T[k]||v.def)===c?' on':''}" data-k="${k}" data-c="${c}" style="--c:${c}" aria-label="${v.t}"></button>`).join('')}</div></div>`).join('')+`<div class="skp"><span>Couleurs des joueurs</span><div class="sksw"><button data-p="1" class="${S.pcolOff?'':'on'}">Oui</button><button data-p="0" class="${S.pcolOff?'on':''}">Non</button></div></div><button class="skr">Par défaut</button>`};
+  const draw=()=>{const T=S.th||{},c=cur();p.innerHTML=`<div class="xpt">Thème</div><div class="skps">${THP.map((t,i)=>`<button class="skpr${['bg','ink','acc','btx'].every(k=>c(k)===t[k])?' on':''}" data-i="${i}" style="--b:${t.bg};--i:${t.ink};--a:${t.acc};--t:${t.btx}"><i></i><span>${esc(t.n)}</span></button>`).join('')}</div>`+`<div class="skp"><span>Couleurs des joueurs</span><div class="sksw"><button data-p="1" class="${S.pcolOff?'':'on'}">Oui</button><button data-p="0" class="${S.pcolOff?'on':''}">Non</button></div></div>`};
   draw();p.style.left=Math.max(12,(innerWidth-p.offsetWidth)/2)+'px';p.style.top=Math.max(12,Math.min(innerHeight-p.offsetHeight-12,e.currentTarget.getBoundingClientRect().bottom+10))+'px';
   p.addEventListener('click',ev=>{ev.stopPropagation();const b=ev.target.closest('.skc');
     if(b){haptic();S.th=Object.assign({},S.th||{},{[b.dataset.k]:b.dataset.c});store.set(K_S,S);applySkin();SFX.lock&&SFX.lock();draw();return}
@@ -7400,6 +7408,24 @@ $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
 {const hx=c=>[1,3,5].map(k=>parseInt(c.slice(k,k+2),16)),d=(a,b)=>a.reduce((s,v,i)=>s+(v-b[i])**2,0);let ch=false;
  (ROSTER||[]).forEach(r=>{if(r&&/^#[0-9a-f]{6}$/i.test(r.color||'')&&!PCOLS.includes(r.color)){const c=hx(r.color);r.color=PCOLS.slice().sort((x,y)=>d(hx(x),c)-d(hx(y),c))[0];ch=true}});
  if(ch)store.set(K_R,ROSTER)}
+
+/* spew : couleur du joueur en cours, ou du thème si couleurs joueurs désactivées */
+function spwSet(p,i){let c='';try{if(S.pcolOff)c=(S.th&&S.th.acc)||'#ff5a1f';else if(p){const n=p.members?(p.members[0].name||p.members[0]):p.name;c=pcol(n)}}catch(e){}
+  if(!/^#[0-9a-f]{6}$/i.test(c||''))c=PFB[(i||0)%PFB.length];document.documentElement.style.setProperty('--spw',c)}
+{const _r=render;render=function(){const r=_r.apply(this,arguments);try{if(G&&G.players)spwSet(G.players[G.cur],G.cur)}catch(e){}return r}}
+{const _r=bcRender;bcRender=function(){const r=_r.apply(this,arguments);try{if(G&&G.players)spwSet(G.players[G.cur],G.cur)}catch(e){}return r}}
+{const _r=xRender;xRender=function(){const r=_r.apply(this,arguments);try{if(XG)spwSet(XG.players[XG.cur],XG.cur)}catch(e){}return r}}
+{const _r=kRender;kRender=function(){const r=_r.apply(this,arguments);try{if(KG)spwSet(KG.players[KG.cur],KG.cur)}catch(e){}return r}}
+/* règles : l'ancien texte glisse dehors, le nouveau arrive du côté du jeu choisi */
+{const GO=['cricket','x01','killer','shanghai','clock','halveit'];let lastG=null;const _sr=showRules;
+  showRules=function(){const e=$('gRules');const g=S.game||'cricket',old=e?e.innerHTML:'';const r=_sr.apply(this,arguments);
+    try{if(e&&lastG!==null&&lastG!==g&&old&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+      const d=GO.indexOf(g)>GO.indexOf(lastG)?1:-1,E='cubic-bezier(.3,1.25,.45,1)';
+      e.querySelectorAll('.rold').forEach(x=>x.remove());
+      const o=el('div','rold');o.innerHTML=old;e.prepend(o);
+      o.animate([{translate:'0 0',opacity:1},{translate:(-d*100)+'% 0',opacity:0}],{duration:320,easing:'cubic-bezier(.4,0,.6,1)',fill:'forwards'}).onfinish=()=>o.remove();
+      [...e.children].filter(x=>x!==o).forEach(x=>x.animate([{translate:(d*100)+'% 0',opacity:0},{translate:'0 0',opacity:1}],{duration:750,easing:E,fill:'backwards'}))}}catch(err){}
+    lastG=g;return r}}
 </script>
 </body>
 </html>
