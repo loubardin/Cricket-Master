@@ -7239,7 +7239,7 @@ function skDeco(){
   R.sc.forEach((s,i)=>{const h=s.nm.querySelector('.hat');if(!h)return;h.style.removeProperty('margin-left');
     if(i===ai&&!g.classList.contains('pn')&&n<=2)return;                       // case en cours à 1 contre 1 : à cheval sur la bulle
     if(i===ai&&g.classList.contains('pn'))return;
-    const mate=s.nm.querySelector('.nmm'),up=(mate?mate.offsetHeight+8:0)+6;
+    const mate=s.nm.querySelector('.nmm'),up=mate?mate.offsetHeight+1:6;
     h.style.setProperty('bottom',`calc(100% + ${up}px)`,'important');
     const r=h.getBoundingClientRect(),pad=10;
     ['fMenu','fUndo'].forEach(id=>{const b=$(id);if(!b||!b.offsetParent)return;const q=b.getBoundingClientRect();
