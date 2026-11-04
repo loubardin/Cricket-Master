@@ -3872,6 +3872,25 @@ html body #killer#killer#killer#killer #kplayers .kc.bar .kL{display:flex;flex-d
 #game .mk:has(.bch){flex-direction:column}
 #game.bcg .num .lbl{white-space:nowrap}
 html body #game#game#game.bcg .num.bclong .lbl{font-size:calc(var(--r,58px)*.27)!important;letter-spacing:0!important}
+html[data-skin="sunny"]{--accent:#d87659;--acc-rgb:216,118,89;--m-home:#fbf4e4;--ui-bg:#fbf4e4;--page:#fbf4e4;--m-cell:#f1e4c6;--ink:#2e4652;--m-ink:#2e4652;--m-strong:#2e4652;--mute:#6b7c80;--m-sub:#6b7c80;--spew:#4f9b8f;--sk-spew:#4f9b8f}
+html[data-skin="watermelon"]{--accent:#dd5470;--acc-rgb:221,84,112;--m-home:#fdf8ec;--ui-bg:#fdf8ec;--page:#fdf8ec;--m-cell:#f5ead2;--ink:#193a4b;--m-ink:#193a4b;--m-strong:#193a4b;--mute:#5f7079;--m-sub:#5f7079;--spew:#3f89ae;--sk-spew:#3f89ae}
+html[data-skin="fiery"]{--accent:#b12b28;--acc-rgb:177,43,40;--m-home:#fbf1d8;--ui-bg:#fbf1d8;--page:#fbf1d8;--m-cell:#f0e1c0;--ink:#102e46;--m-ink:#102e46;--m-strong:#102e46;--mute:#68717d;--m-sub:#68717d;--spew:#729bb9;--sk-spew:#729bb9}
+html[data-skin="gold"]{--accent:#f0a73e;--acc-rgb:240,167,62;--m-home:#f7f7f5;--ui-bg:#f7f7f5;--page:#f7f7f5;--m-cell:#e7e7e5;--ink:#000000;--m-ink:#000000;--m-strong:#000000;--mute:#6e6e6e;--m-sub:#6e6e6e;--spew:#17213c;--sk-spew:#17213c}
+html[data-skin]:not(.night) body,html[data-skin]:not(.night) #home,html[data-skin]:not(.night) #setup.b2,html[data-skin]:not(.night) #hist,html[data-skin]:not(.night) #draw,html[data-skin] .screen{background:var(--m-home)!important}
+html[data-skin] .kmk svg .kdisc{fill:var(--accent)}
+.skint{left:auto!important;right:5vw;display:flex!important;align-items:center;justify-content:center;gap:2px;padding:0!important}
+.skint i{width:22%;height:46%;border-radius:99px;background:var(--accent)}
+.skint i:nth-child(2){background:var(--spew)}
+.skint i:nth-child(3){background:var(--m-strong)}
+.skinpick{width:min(88vw,330px);grid-template-columns:1fr!important}
+.skinpick .skl{display:flex;flex-direction:column;gap:8px}
+.skinpick .skb{display:flex;align-items:center;justify-content:space-between;gap:10px;height:46px;padding:0 8px 0 16px;border-radius:99px;border:0;background:transparent;box-shadow:inset 0 0 0 1.5px var(--m-strong);font:600 15px "Lbl",sans-serif;color:var(--ink)}
+.skinpick .skb.sel{box-shadow:inset 0 0 0 1.5px var(--m-strong),0 0 0 4px var(--accent)}
+.skinpick .skb i{display:flex;border-radius:99px;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(0,0,0,.15)}
+.skinpick .skb b{width:20px;height:28px}
+html body #home#home .sndt.skint{left:auto!important;right:5vw!important}
+html[data-skin] :is(#game,#x01,#killer,#home,#setup,#hist,footer,#fbar2),html[data-skin] #game#game#game,html[data-skin] #game#game#game.sk.p2,html[data-skin] #game#game#game.sk.p2.vC{--spew:var(--sk-spew)!important}
+html[data-skin] body #setup .grules .rgoal i{color:var(--accent)!important}
 </style>
 </head>
 <body>
@@ -3885,10 +3904,11 @@ html body #game#game#game.bcg .num.bclong .lbl{font-size:calc(var(--r,58px)*.27)
 <!-- ===== MENU ===== -->
 <section id="home" class="screen on simple">
   <button id="sndT" class="sndt" aria-label="Son">🔊</button>
+  <button id="skinT" class="sndt skint" aria-label="Thème"><i></i><i></i><i></i></button>
   <button id="themeT" class="thsw" aria-label="Mode nuit"><span class="d">☀️</span><span class="n">🌙</span><i></i></button>
   <div class="hb">
     <svg class="board lmark" viewBox="0 0 200 200" aria-hidden="true">
-      <circle class="lmd" cx="100" cy="100" r="62" fill="#ff5a1f"/>
+      <circle class="lmd" cx="100" cy="100" r="62" fill="#ff5a1f" style="fill:var(--accent)"/>
       <path d="M40 40 160 160M160 40 40 160" stroke="#111" stroke-width="15" stroke-linecap="round" fill="none"/>
     </svg>
     <h1 class="ht">CRICKET<br>MASTER</h1>
@@ -5446,7 +5466,7 @@ applyTheme();
 /* ---- joueurs enregistrés : nom + couleur ---- */
 if(S.xlegs>10)S.xlegs=10;if(!S.xlegs)S.xlegs=1;if(!S.clegs)S.clegs=1;if(S.clegs>10)S.clegs=10;
 const K_R='cricket.roster.v1';
-const PCOLS=['#d62828','#f77f00','#2b9348','#1d4ed8','#7b2cbf','#0ea5e9','#c9184a','#8d5a2b','#0f8b8d','#111111','#e07a8f','#7aa6d6','#6fbf95','#e39a62','#a68bd6','#5fb3ad','#d48ab0','#97ad5e','#c99a52','#8a9bb5','#0f5e4a','#1b2a6b','#6b1238','#3d1f5c','#8a6a1e','#2f3640','#8a3b12','#0e4d64','#5c4636','#9c7a5b'];
+const PCOLS=['#d4494c','#dd5470','#b12b28','#a02f1f','#8f2d2c','#6d130a','#ae4f4d','#d87659','#ad481e','#bc6c27','#e8a66c','#e29f37','#f0a73e','#749858','#436544','#62d3a5','#4f9b8f','#429195','#265d71','#729bb9','#527b9b','#3f89ae','#2e4652','#193a4b','#102e46','#213454','#17213c','#000000'];   // couleurs des joueurs : palettes Watermelon Sorbet, Black & Gold, Sunny Beach Day, Ocean Sunset, Summer Ocean Breeze, Fiery Ocean, Fresh Greens
 let ROSTER=store.get(K_R,null);
 if(!ROSTER){const seen=new Set();ROSTER=(S.names||[]).map(n=>(n||'').trim().toUpperCase()).filter(n=>n&&!/^J\d$/.test(n)&&!seen.has(n)&&seen.add(n)).map((n,i)=>({name:n,color:PCOLS[i%PCOLS.length]}));store.set(K_R,ROSTER)}
 // b = chance de toucher la bulle (25 ou 50) quand on la vise : c'est bien plus dur qu'un numéro
@@ -6591,7 +6611,7 @@ function drawBars(){
   });
 }
 /* couleur des joueurs : bulle / rail du joueur en cours, disques des marques de chaque colonne */
-const PFB=['#ff5a1f','#1d4ed8','#fcc200','#2b9348','#7b2cbf','#0ea5e9','#c9184a','#84cc16','#8d5a2b','#64748b'];
+const PFB=['#dd5470','#3f89ae','#f0a73e','#4f9b8f','#b12b28','#213454','#749858','#d87659','#527b9b','#000000'];
 function pcolI(i){const p=G.players[i],c=p&&pcol(p.members?p.members[0]:p.name);return /^#[0-9a-f]{6}$/i.test(c||'')?c:PFB[i%PFB.length]}
 function skColors(){const g=$('game');
   if(!skp2()||!G||!R){g.style.removeProperty('--accent');g.style.removeProperty('--acc-rgb');g.classList.remove('dk');return}
@@ -7307,6 +7327,28 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 {const _g=goHome;goHome=function(){if(BARC){BARC=false;G=GREAL;R=null;$('game').classList.remove('bcg')}return _g.apply(this,arguments)}}
 {const _sk=showKiller;showKiller=function(){if(BARC){BARC=false;G=GREAL;R=null}return _sk.apply(this,arguments)}}
 {const _sg=startGame;startGame=function(){if(BARC){BARC=false;G=GREAL;R=null}$('game').classList.remove('bcg');return _sg.apply(this,arguments)}}
+
+/* ===== thème général (fond clair) : 5 styles ===== */
+const SKINS={
+  classic:{name:'Cricket Master',c:['#f7f2e5','#ff5a1f','#141414','#009df4','#f2c230']},
+  sunny:{name:'Sunny Beach Day',c:['#fbf4e4','#d87659','#2e4652','#4f9b8f','#e2c577']},
+  watermelon:{name:'Watermelon Sorbet',c:['#fdf8ec','#dd5470','#193a4b','#3f89ae','#62d3a5']},
+  fiery:{name:'Fiery Ocean',c:['#fbf1d8','#b12b28','#102e46','#729bb9','#6d130a']},
+  gold:{name:'Black & Gold',c:['#f7f7f5','#f0a73e','#000000','#17213c','#e5e5e5']}};
+function applySkin(){const k=SKINS[S.skin]?S.skin:'classic';const h=document.documentElement;if(k==='classic')h.removeAttribute('data-skin');else h.setAttribute('data-skin',k);
+  try{const m=document.querySelector('meta[name=theme-color]');if(m)m.content=SKINS[k].c[0]}catch(e){}}
+applySkin();
+$('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
+  const old=$('xpick');if(old)old.remove();
+  const p=el('div','',`<div class="xpt">Thème</div><div class="skl">${Object.entries(SKINS).map(([k,v])=>`<button class="skb${(S.skin||'classic')===k?' sel':''}" data-k="${k}"><span>${v.name}</span><i>${v.c.map(c=>`<b style="background:${c}"></b>`).join('')}</i></button>`).join('')}</div>`);
+  p.id='xpick';p.classList.add('skinpick');document.body.append(p);
+  const r0=e.currentTarget.getBoundingClientRect();p.style.left=Math.max(12,Math.min(innerWidth-p.offsetWidth-12,r0.right-p.offsetWidth))+'px';p.style.top=(r0.bottom+10)+'px';
+  p.addEventListener('click',ev=>{const b=ev.target.closest('.skb');if(!b)return;ev.stopPropagation();haptic();S.skin=b.dataset.k;store.set(K_S,S);applySkin();SFX.lock();p.querySelectorAll('.skb').forEach(x=>x.classList.toggle('sel',x===b))});
+  setTimeout(()=>document.addEventListener('pointerdown',function f(ev){if(!ev.target.closest('#xpick')){p.remove();document.removeEventListener('pointerdown',f,true)}},true),0)},true);
+/* anciennes couleurs des joueurs : remplacées par la plus proche de la nouvelle palette */
+{const hx=c=>[1,3,5].map(k=>parseInt(c.slice(k,k+2),16)),d=(a,b)=>a.reduce((s,v,i)=>s+(v-b[i])**2,0);let ch=false;
+ (ROSTER||[]).forEach(r=>{if(r&&/^#[0-9a-f]{6}$/i.test(r.color||'')&&!PCOLS.includes(r.color)){const c=hx(r.color);r.color=PCOLS.slice().sort((x,y)=>d(hx(x),c)-d(hx(y),c))[0];ch=true}});
+ if(ch)store.set(K_R,ROSTER)}
 </script>
 </body>
 </html>
