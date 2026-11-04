@@ -3874,6 +3874,11 @@ html body #game#game#game.sk.p2.pn.pn4 #scores>.sc.act>.mpr{margin-bottom:calc(v
 #game .num.bctg{animation:bctg 1.4s ease-in-out infinite}
 @keyframes bctg{50%{transform:scale(1.06)}}
 @media (prefers-reduced-motion:reduce){#game .num.bctg{animation:none}}
+#game.bcg #grid{touch-action:none}
+#game .mk .bch{display:block;font-family:"Lbl",sans-serif;font-weight:700;font-size:calc(var(--r,58px)*.18);color:#e4251a;line-height:1;margin-top:-.1em}
+#game .mk:has(.bch){flex-direction:column}
+#game.bcg .num .lbl{white-space:nowrap}
+html body #game#game#game.bcg .num.bclong .lbl{font-size:calc(var(--r,58px)*.27)!important;letter-spacing:0!important}
 </style>
 </head>
 <body>
@@ -6001,7 +6006,7 @@ function startX01(names,starter=0,teams=null,mode){
   if(mode){XG.mode=mode;XG.legsTo=1;XG.shr=S.shr||7;XG.shw=S.shw!==0;XG.shb=S.shb||100;XG.clkm=!!S.clkm;XG.clkb=S.clkb!==0;XG.clkr=S.clkr||0;XG.hiseq=(Array.isArray(S.hiseq)&&S.hiseq.length?S.hiseq:HI_CLASSIC).slice();XG.hid=S.hid||3;XG.hip=S.hip!==0;XG.players.forEach(p=>{p.rem=0;p.hits=0;p.tgt=1;p.sh=0;p.n3=0;p.halves=0;p.lost=0})}
   XH=[];S.last='x01';store.set(K_S,S);xSave();showX01();
 }
-function showX01(){if(XG&&XG.mode){showBar();return}if(BARC){BARC=false;G=GREAL;R=null}BARON=false;mountFooter('x01');show('x01');xBuildKeys();xRender()}
+function showX01(){if(XG&&XG.mode){showBar();return}if(BARC){BARC=false;G=GREAL;R=null;$('game').classList.remove('bcg')}BARON=false;mountFooter('x01');show('x01');xBuildKeys();xRender()}
 $('xBack').addEventListener('click',()=>{haptic();goHome()});
 $('xUndo').addEventListener('click',()=>{if(XG)xUndo()});
 $('xInfo').addEventListener('click',()=>{haptic();SFX.open();xStats();$('info').classList.add('on')});
@@ -6229,6 +6234,7 @@ function xBarThrow(n,m,quiet){
       if(ms.has(1)&&ms.has(2)&&ms.has(3)&&!XG.turn.some(x=>x.sh)){d.sh=1;me.sh++;if(XG.shw)end='win';else{d.bonus=XG.shb;d.eff+=XG.shb;me.rem+=XG.shb;me.pts+=XG.shb;me.rp[XG.round-1]+=XG.shb}}}
   }else if(XG.mode==='hi'){const t=hiT(),v=hiVal(t,n,m);d.t=t;
     if(v>0){d.eff=v;d.type='hit';me.rem+=v;me.pts+=v;me.hits+=t==='D'||t==='T'||t==='B'?1:m}else if(n>0)d.type='off';
+    me.rp=me.rp||[];me.rp[XG.round-1]=(me.rp[XG.round-1]||0)+d.eff;
     XG.turn.push(d);
   }else{const t=me.tgt;d.t=t;
     if(n===t){const adv=XG.clkm&&t!==25?m:1;d.type='hit';d.eff=1;me.hits++;me.pts++;
@@ -6240,7 +6246,7 @@ function xBarThrow(n,m,quiet){
   const nd=XG.mode==='hi'?XG.hid:3;
   if(!end&&XG.turn.length>=nd)end='turn';
   const turn=XG.turn.slice(),tsum=turn.reduce((a,x)=>a+x.eff,0);
-  if(end==='turn'&&XG.mode==='hi'&&XG.hip&&tsum===0&&me.rem>0){const b=me.rem;me.rem=Math.floor(me.rem/2);d.halve=b-me.rem;me.lost+=d.halve;me.halves++}   // pénalité : score divisé par deux
+  if(end==='turn'&&XG.mode==='hi'&&XG.hip&&tsum===0&&me.rem>0){const b=me.rem;me.rem=Math.floor(me.rem/2);d.halve=b-me.rem;me.lost+=d.halve;me.halves++;me.hv=me.hv||[];me.hv[XG.round-1]=d.halve}   // pénalité : score divisé par deux
   if(end){me.turns++;me.last=turn;if(me.members)me.mi=(me.mi+1)%me.members.length;XG.turn=[];me.best=Math.max(me.best,tsum);
     if(end==='win'){XG.legW=who;XG.winner=who}
     else if(XG.mode==='clk'&&XG.clkr&&turn.length>=3&&turn.filter(x=>x.type==='hit').reduce((a,x)=>a+x.m,0)>XG.clkr){d.again=1}   // MPR du tour > seuil : il rejoue
@@ -7093,7 +7099,7 @@ $('fMode').addEventListener('click',e=>{e.stopPropagation();haptic();
 function topBar(){const bar=$('fbar2'),sec=document.querySelector('#game.on,#x01.on,#killer.on')||(S.last==='x01'?$('x01'):S.last==='killer'?$('killer'):$('game'));
   if(bar.parentElement!==sec)sec.prepend(bar);let a='',b='';
   if((sec.id==='x01'||BARON&&sec.id==='killer'||BARC&&sec.id==='game')&&XG&&XG.mode==='sh'){a='Shanghai';b=XG.round>XG.shr?'prolongation · Bulle':'R'+XG.round+'/'+XG.shr+' · vise le '+XG.round}
-  else if((sec.id==='x01'||BARON&&sec.id==='killer')&&XG&&XG.mode==='hi'){a='Halve-it';b=XG.round>XG.hiseq.length?'prolongation · Bulle':'M'+XG.round+'/'+XG.hiseq.length+' · '+hiName(hiT())}
+  else if((sec.id==='x01'||BARON&&sec.id==='killer'||BARC&&sec.id==='game')&&XG&&XG.mode==='hi'){a='Halve-it';b=XG.round>XG.hiseq.length?'prolongation · Bulle':'M'+XG.round+'/'+XG.hiseq.length+' · '+hiName(hiT())}
   else if((sec.id==='x01'||BARON&&sec.id==='killer'||BARC&&sec.id==='game')&&XG&&XG.mode==='clk'){a='L\'horloge';b=(XG.clkb?'1 → Bulle':'1 → 20')+' · R'+XG.round}
   else if(sec.id==='x01'&&XG){a=String(XG.start);b=['simple','double','master'][XG.outR]+' out · R'+XG.round}
   else if(sec.id==='killer'&&KG){a='Killer';b='R'+KG.round}
@@ -7139,7 +7145,7 @@ if('serviceWorker' in navigator&&location.protocol==='https:'){
  }).catch(()=>{})})}
 
 /* ===== Shanghai / horloge sur le tableau du killer : une case par joueur, le numéro à viser en grand ===== */
-function showBar(){if(XG&&(XG.mode==='sh'||XG.mode==='clk')){showBarC();return}if(BARC){BARC=false;G=GREAL;R=null}BARON=true;noFear();mountFooter('killer');show('killer');xRender()}
+function showBar(){if(XG&&(XG.mode==='sh'||XG.mode==='clk'||XG.mode==='hi')){showBarC();return}if(BARC){BARC=false;G=GREAL;R=null}BARON=true;noFear();mountFooter('killer');show('killer');xRender()}
 function bRender(){
   if(!BARON||!XG||!XG.mode)return;
   const P=XG.players,fin=XG.winner!==null,cur=fin?XG.winner:XG.cur,box=$('kplayers');
@@ -7264,53 +7270,69 @@ addEventListener('resize',()=>requestAnimationFrame(skDeco));
 /* ===== Shanghai / horloge sur le tableau du cricket =====
    le tableau du cricket est réutilisé tel quel (7 bulles) ; ses 7 lignes montrent une fenêtre des cibles du jeu
    (tours 1→7… au Shanghai, 1→20 puis la Bulle à l'horloge) qui descend avec la partie. */
-const bcRows=()=>XG.mode==='sh'?[...Array.from({length:XG.shr},(_,i)=>i+1),...(XG.round>XG.shr?[25]:[])]:[...Array.from({length:20},(_,i)=>i+1),...(XG.clkb?[25]:[])];
-const bcTgt=p=>XG.mode==='sh'?shT():p.tgt;
+const bcRows=()=>XG.mode==='hi'?[...XG.hiseq,...(XG.round>XG.hiseq.length?['B']:[])]:XG.mode==='sh'?[...Array.from({length:XG.shr},(_,i)=>i+1),...(XG.round>XG.shr?[25]:[])]:[...Array.from({length:20},(_,i)=>i+1),...(XG.clkb?[25]:[])];
+const bcTgt=p=>XG.mode==='sh'?shT():XG.mode==='hi'?hiT():p.tgt;
+const bcRound=()=>XG.mode==='sh'||XG.mode==='hi';
+const bcLbl=t=>t===25||t==='B'?'Bulle':t==='D'?'Double':t==='T'?'Triple':String(t);
+let BCM=null,BCDRAG=0;   // fenêtre déplacée au doigt (jusqu'au tour suivant)
+const bcKey=()=>XG.cur+'|'+XG.round+'|'+XG.t0;
+function bcStart(){const rows=bcRows(),me=XG.players[XG.winner!==null?XG.winner:XG.cur],t=bcTgt(me),f=t===0?rows.length:rows.indexOf(t),auto=Math.max(0,Math.min(rows.length-7,f-2));
+  return BCM&&BCM.key===bcKey()?Math.max(0,Math.min(Math.max(0,rows.length-7),BCM.start)):auto}
 let BCWIN=0;
 function showBarC(){if(!BARC){GREAL=G&&!G._bar?G:GREAL}BARC=true;BARON=false;noFear();mountFooter('game');R=null;show('game');xRender()}
 function bcFake(){const P=XG.players;
   return{_bar:1,id:'bar',mode:'standard',teams:!!XG.teams,legsTo:1,legs:P.map(()=>0),leg:1,seq:0,round:XG.round,cur:XG.cur,winner:null,turn:[],mult:XG.mult,
-    players:P.map(p=>({name:p.name,members:p.members,mi:p.mi,score:XG.mode==='sh'?p.rem:(p.tgt===0?99:clkDone(p)),marks:{15:0,16:0,17:0,18:0,19:0,20:0,25:0},extra:{},darts:p.darts,hits:p.hits,last:[],turns:p.turns||0,spews:0,triple:0}))}}
+    players:P.map(p=>({name:p.name,members:p.members,mi:p.mi,score:XG.mode==='clk'?(p.tgt===0?99:clkDone(p)):p.rem,marks:{15:0,16:0,17:0,18:0,19:0,20:0,25:0},extra:{},darts:p.darts,hits:p.hits,last:[],turns:p.turns||0,spews:0,triple:0}))}}
 function bcRender(){
   if(!BARC||!XG||!XG.mode||!$('game').classList.contains('on'))return;
   const P=XG.players,n=P.length,F=bcFake();
-  if(!R||!G||!G._bar||G.players.length!==n||R._barId!==XG.t0){G=F;build();R._barId=XG.t0}
+  if(!R||!G||!G._bar||G.players.length!==n||R._barId!==XG.t0){G=F;BCIN=true;try{build()}finally{BCIN=false}R._barId=XG.t0}
   const wn=$('wName').textContent,wd=$('wDet').textContent,br=$('bRematch').textContent;
-  G=Object.assign(G,F);render();
+  G=Object.assign(G,F);BCIN=true;try{render()}finally{BCIN=false}
   if(XG.winner!==null){$('wName').textContent=wn;$('wDet').textContent=wd;$('bRematch').textContent=br;$('win').classList.add('on')}
   const rows=bcRows(),cur=XG.winner!==null?XG.winner:XG.cur,me=P[cur],ti=t=>rows.indexOf(t),pos=p=>{const t=bcTgt(p);return t===0?rows.length:ti(t)};
-  const focus=pos(me),start=Math.max(0,Math.min(rows.length-7,focus-2));
+  const start=bcStart();
   const minPos=Math.min(...P.map(pos));
   TARGETS.forEach((T,k)=>{const idx=start+k,lab=rows[idx],num=R.num[T],row=num.parentElement;
     row.style.visibility=lab===undefined?'hidden':'';if(lab===undefined)return;
-    const L=num.querySelector('.lbl');const txt=lab===25?'Bulle':String(lab);if(L.textContent!==txt)L.textContent=txt;num.classList.toggle('bull',lab===25);
-    const past=XG.mode==='sh'?idx<XG.round-1:idx<minPos;num.classList.toggle('dead',past);
+    const L=num.querySelector('.lbl');const txt=bcLbl(lab);if(L.textContent!==txt)L.textContent=txt;num.classList.toggle('bull',lab===25||lab==='B');num.classList.toggle('bclong',txt.length>3);
+    const past=bcRound()?idx!==XG.round-1||XG.winner!==null:idx<minPos;num.classList.toggle('dead',past);   // Shanghai / halve-it : seule la ligne du tour sert
     num.classList.toggle('bctg',XG.winner===null&&lab===bcTgt(me));
     P.forEach((p,i)=>{const c=R.mk[T][i];let h='';
-      if(XG.mode==='sh'){const v=p.rp&&p.rp[idx];const played=idx<XG.round-1||(idx===XG.round-1&&(v!==undefined));h=played?`<span class="bcv${v?'':' z'}">${v||0}</span>`:''}
+      if(bcRound()){const v=p.rp&&p.rp[idx],hv=p.hv&&p.hv[idx];const played=idx<XG.round-1||(idx===XG.round-1&&(v!==undefined));h=played?`<span class="bcv${v?'':' z'}">${v||0}</span>${hv?`<small class="bch">÷2</small>`:''}`:''}
       else if(pos(p)>idx)h=markHTML(3,0);
-      else if(pos(p)===idx&&XG.winner===null)h='<span class="bcv cur">●</span>';
       if(c.dataset.k!=='b'+h){c.dataset.k='b'+h;c.innerHTML=h}c.classList.toggle('dead',past)})});
   P.forEach((p,i)=>{const s=R.sc[i];const ds=i===XG.cur&&XG.winner===null?XG.turn:(p.last||[]);
     s.pills.innerHTML=[0,1,2].map(k=>xDart(ds[k])).join('')+(i===cur&&XG.winner===null&&n===2?UNDO_PILL:'');
     if(XG.mode==='clk'){const t=clkLbl(p.tgt);if(s.pts.textContent!==t)s.pts.textContent=t}});
-  $('title').innerHTML=XG.mode==='sh'?`<b>Shanghai</b> · tour ${Math.min(XG.round,XG.shr)}/${XG.shr}`:`<b>L'horloge</b> · ${n} ${XG.teams?'équipes':'joueurs'}`;if(R.rd)R.rd.textContent='R'+XG.round;
+  $('game').classList.add('bcg');
+  $('title').innerHTML=XG.mode==='hi'?`<b>Halve-it</b> · manche ${Math.min(XG.round,XG.hiseq.length)}/${XG.hiseq.length}`:XG.mode==='sh'?`<b>Shanghai</b> · tour ${Math.min(XG.round,XG.shr)}/${XG.shr}`:`<b>L'horloge</b> · ${n} ${XG.teams?'équipes':'joueurs'}`;if(R.rd)R.rd.textContent='R'+XG.round;
   [...R.dots.children].forEach((d,k)=>d.classList.toggle('on',k<XG.turn.length));
   try{fitSk()}catch(e){}
   if(XG.winner!==null)xRender._win=1;
 }
 {const _xr=xRender;xRender=function(){const r=_xr.apply(this,arguments);try{bcRender()}catch(e){console.error(e)}return r}}
-{const _r0=render;render=function(){if(BARC&&(!G||!G._bar)){bcRender();return}return _r0.apply(this,arguments)}}
+let BCIN=false;
+{const _r0=render;render=function(){if(BARC&&!BCIN){bcRender();return}return _r0.apply(this,arguments)}}
 /* toucher la ligne de la cible du joueur en cours (bulle ou sa case) = la toucher */
 $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagation();e.preventDefault();
+  if(performance.now()-BCDRAG<350)return;
   const row=e.target.closest('.row');if(!row||!XG||XG.winner!==null)return;const k=[...$('grid').children].indexOf(row);
-  const rows=bcRows(),me=XG.players[XG.cur],pos=p=>{const t=bcTgt(p);return t===0?rows.length:rows.indexOf(t)},start=Math.max(0,Math.min(rows.length-7,pos(me)-2)),lab=rows[start+k];
+  const rows=bcRows(),me=XG.players[XG.cur],lab=rows[bcStart()+k];
   if(lab===undefined)return;
-  if(lab!==bcTgt(me)){haptic();anim(row.querySelector('.num'),'shake',400);return}
-  anim(row.querySelector('.num'),'flash',450);xThrow(lab,lab===25?Math.min(2,XG.mult):XG.mult)},true);
-{const _g=goHome;goHome=function(){if(BARC){BARC=false;G=GREAL;R=null}return _g.apply(this,arguments)}}
+  if(lab!==bcTgt(me)){haptic();anim(row.querySelector('.num'),'shake',400);xMiss();return}   // un numéro qui ne sert à rien = spew
+  anim(row.querySelector('.num'),'flash',450);
+  if(XG.mode==='hi'){if(lab==='D'||lab==='T'){hiPick(lab);return}if(lab==='B'){xThrow(25,Math.min(2,XG.mult));return}}
+  xThrow(lab,lab===25?Math.min(2,XG.mult):XG.mult)},true);
+/* faire défiler les lignes au doigt (haut / bas) */
+{let y0=null,s0=0,moved=false;const g=$('grid');
+ g.addEventListener('pointerdown',e=>{if(!BARC||!XG)return;y0=e.clientY;s0=bcStart();moved=false},true);
+ g.addEventListener('pointermove',e=>{if(!BARC||y0===null)return;const rh=(g.children[0]&&g.children[0].offsetHeight)||50,dy=e.clientY-y0;
+   if(Math.abs(dy)>12)moved=true;if(!moved)return;const ns=s0-Math.round(dy/rh);const cur=bcStart();if(ns!==cur){BCM={key:bcKey(),start:ns};bcRender();SFX.tick&&SFX.tick()}},true);
+ const end=()=>{if(moved)BCDRAG=performance.now();y0=null;moved=false};g.addEventListener('pointerup',end,true);g.addEventListener('pointercancel',end,true)}
+{const _g=goHome;goHome=function(){if(BARC){BARC=false;G=GREAL;R=null;$('game').classList.remove('bcg')}return _g.apply(this,arguments)}}
 {const _sk=showKiller;showKiller=function(){if(BARC){BARC=false;G=GREAL;R=null}return _sk.apply(this,arguments)}}
-{const _sg=startGame;startGame=function(){if(BARC){BARC=false;G=GREAL;R=null}return _sg.apply(this,arguments)}}
+{const _sg=startGame;startGame=function(){if(BARC){BARC=false;G=GREAL;R=null}$('game').classList.remove('bcg');return _sg.apply(this,arguments)}}
 </script>
 </body>
 </html>
