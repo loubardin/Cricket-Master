@@ -4007,7 +4007,7 @@ html body #home#home .hbtns .hsw.two{width:82vw!important}
 html body #setup#setup .seg>.thumb,html body #setup#setup .seg>.gth{display:none!important}
 html body #setup#setup .seg button,html body #setup#setup .seg button.sel{position:relative;color:var(--ink)!important;background:transparent!important;scale:1!important;transform:none!important;box-shadow:none!important;opacity:1!important;z-index:1;isolation:isolate}
 html body #setup#setup .seg button:not(.sel){color:color-mix(in srgb,var(--ink) 55%,transparent)!important}
-html body #setup#setup .seg button.sel{text-shadow:0 0 3px var(--m-home,#f7f2e5),0 0 2px var(--m-home,#f7f2e5),0 0 1px var(--m-home,#f7f2e5)}
+html body #setup#setup .seg button.sel{text-shadow:none}
 .dmk{position:absolute;z-index:-1;pointer-events:none;width:var(--ms);height:var(--ms);left:var(--mx);top:var(--my);translate:-50% -50%;rotate:var(--mr,0deg)}
 .dmk svg,.dfly svg{display:block;width:100%;height:100%;overflow:visible}
 .dmk path,.dfly path{stroke:var(--m-strong,#141414);stroke-width:19;stroke-linecap:round;fill:none}
@@ -4023,6 +4023,12 @@ html body #setup#setup #go{background:transparent!important;box-shadow:none!impo
 html body #setup#setup #go em{position:absolute;inset:0;display:grid!important;place-items:center;width:auto!important;left:0!important;right:0!important;translate:none!important;transform:none!important;color:var(--ink)!important;scale:1!important}
 html body #home#home .hsw:not(.two)>.hth{display:none!important}
 html body #home#home .hsw:not(.two) #hPlay{background:transparent!important;color:var(--ink)!important;box-shadow:inset 0 0 0 var(--bub-bw,1.5px) var(--m-strong)!important}
+
+.dmk .dc,.dfly .dc{fill:var(--accent);transform-box:fill-box;transform-origin:center}
+.dfly .dc{opacity:0}
+.dmk.new .dc{animation:dpop .3s cubic-bezier(.3,1.6,.5,1)}
+@keyframes dpop{0%{transform:scale(0)}60%{transform:scale(1.18)}100%{transform:scale(1)}}
+.dfly{z-index:400}
 </style>
 </head>
 <body>
@@ -7657,7 +7663,7 @@ renderHist=function(){const h=$('hist'),b=$('hBody');
 
 /* ================= DA « FLÈCHES » ================= */
 const DMK_K='darts.fl.marks.v1';let DMK=store.get(DMK_K,{});
-const CROSS='<svg viewBox="30 30 140 140"><path d="M40 40 160 160M160 40 40 160"/></svg>';
+const CROSS='<svg viewBox="30 30 140 140"><circle class="dc" cx="100" cy="100" r="62"/><path d="M40 40 160 160M160 40 40 160"/></svg>';
 const segKey=g=>g.id||(g.dataset.k?'k:'+g.dataset.k:'i'+[...document.querySelectorAll('#setup .seg')].indexOf(g));
 const optKey=b=>{const g=b.closest('.seg');return g?segKey(g)+'='+(b.dataset.v!==undefined?b.dataset.v:b.textContent.trim()):null};
 const hsh=t=>{let h=7;for(const c of t)h=(h*31+c.charCodeAt(0))>>>0;return h};
@@ -7666,13 +7672,13 @@ function paintMarks(){document.querySelectorAll('#setup .seg button').forEach(b=
   if(!b.classList.contains('sel')){if(m)m.remove();return}
   const k=optKey(b),p=dmkPos(k),h=b.offsetHeight||36;
   if(!m){m=el('i','dmk',CROSS);b.append(m)}
-  m.style.setProperty('--mx',p.x+'%');m.style.setProperty('--my',p.y+'%');m.style.setProperty('--mr',p.r+'deg');m.style.setProperty('--ms',Math.round(Math.min(h*1.3,Math.max(b.offsetWidth,h)*1.2))+'px')})}
+  m.style.setProperty('--mx',p.x+'%');m.style.setProperty('--my',p.y+'%');m.style.setProperty('--mr',p.r+'deg');m.style.setProperty('--ms',Math.round(Math.min(h*1.2,Math.max(b.offsetWidth,h)*1.15))+'px')})}
 {let raf=0;new MutationObserver(()=>{if(!raf)raf=requestAnimationFrame(()=>{raf=0;paintMarks()})}).observe($('setup'),{subtree:true,attributes:true,attributeFilter:['class']})}
 /* une fléchette arrive et se plante au point touché ; à côté = spew (elle retombe) */
 function dartFly(x,y,size,hit){const f=el('div','dfly',CROSS);f.style.left=x+'px';f.style.top=y+'px';f.style.width=f.style.height=size+'px';document.body.append(f);
   const r=(Math.random()*20-10);
   const a=f.animate([{transform:`translateY(-18px) scale(2.2) rotate(${r-14}deg)`,opacity:0},{transform:`scale(.9) rotate(${r}deg)`,opacity:1,offset:.7},{transform:`scale(1) rotate(${r}deg)`,opacity:1}],{duration:190,easing:'cubic-bezier(.5,0,.9,.6)',fill:'forwards'});
-  a.onfinish=()=>{if(hit){f.animate([{opacity:1},{opacity:0}],{duration:120,delay:hit==='keep'?0:260,fill:'forwards'}).onfinish=()=>f.remove()}
+  a.onfinish=()=>{if(hit){const c=f.querySelector('.dc');c.style.opacity=1;c.animate([{transform:'scale(0)'},{transform:'scale(1.18)',offset:.6},{transform:'scale(1)'}],{duration:280,easing:'cubic-bezier(.3,1.6,.5,1)'});f.animate([{opacity:1},{opacity:0}],{duration:120,delay:hit==='keep'?260:420,fill:'forwards'}).onfinish=()=>f.remove()}
     else f.animate([{transform:`scale(1) rotate(${r}deg)`,opacity:1},{transform:`scale(1) rotate(${r+5}deg)`,opacity:1,offset:.25},{transform:`translateY(70px) scale(1) rotate(${r+30}deg)`,opacity:0}],{duration:650,delay:120,easing:'cubic-bezier(.5,0,.9,.5)',fill:'forwards'}).onfinish=()=>f.remove()};
   return r}
 window.addEventListener('click',e=>{
@@ -7684,7 +7690,7 @@ window.addEventListener('click',e=>{
     e.stopImmediatePropagation();try{audioInit()}catch(err){}haptic();dartFly(e.clientX,e.clientY,46,false);setTimeout(()=>SFX.spew(),170);return}
   e.stopImmediatePropagation();e.preventDefault();try{audioInit()}catch(err){}
   const R=b.getBoundingClientRect(),k=optKey(b),seg=!!k&&!b.closest('.seg').classList.contains('noflmk');
-  const sz=Math.round(Math.min(R.height*1.3,Math.max(R.width,R.height)*1.2));
+  const sz=Math.round(Math.min(R.height*1.2,Math.max(R.width,R.height)*1.15));
   const rot=dartFly(e.clientX,e.clientY,sz,seg?'keep':true);
   if(seg)DMK[k]={x:Math.max(8,Math.min(92,(e.clientX-R.left)/R.width*100)),y:Math.max(15,Math.min(85,(e.clientY-R.top)/R.height*100)),r:Math.round(rot)};
   setTimeout(()=>{haptic();SFX.single();b.classList.remove('dhit');void b.offsetWidth;b.classList.add('dhit');
