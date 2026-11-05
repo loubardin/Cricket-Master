@@ -3966,6 +3966,14 @@ html body #hist #hBody .hg .hgp span.w i{color:var(--btx,#fff);opacity:.85}
 html body #hist #hBody .hg .hdel{position:absolute;top:12px;right:12px;width:30px;height:30px;border-radius:50%;border:0;background:transparent;box-shadow:inset 0 0 0 var(--bub-bw,1.5px) var(--m-strong);color:var(--ink);font-size:13px;display:grid;place-items:center;padding:0}
 html body #hist #hBody .hg.note .hgp span{font-size:15px}
 html body #hist #hBody .hg.note .hgp span b{font-family:"FunTxt","Fun",sans-serif!important;font-weight:400!important}
+
+/* 501 équipes : coéquipier toujours centré sous le nom */
+html body #x01#x01 #xplayers .xc .xn,html body #x01#x01 #xplayers .xc .xn .xm{text-align:center!important}
+html body #x01#x01 #xplayers .xc .xn .xm{align-self:center!important;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+/* menu : Statistiques / Historique discrets, au-dessus du bouton principal */
+html body #home#home .hbtns .hrow2{gap:2.4vw;margin-bottom:.6dvh}
+html body #home#home .hbtns .hrow2>.big{height:calc(min(1dvh,1.7vw)*5.2)!important;min-height:0!important;padding:0!important;font-size:calc(min(1dvh,1.7vw)*2.2)!important;
+  box-shadow:inset 0 0 0 var(--bub-bw) color-mix(in srgb,var(--m-strong) 35%,transparent)!important;color:color-mix(in srgb,var(--ink) 75%,transparent)!important;background:transparent!important}
 </style>
 </head>
 <body>
@@ -7567,6 +7575,8 @@ renderHist=function(){const h=$('hist'),b=$('hBody');
   else{const team=HSEL.tab==='teams';
     b.innerHTML=stScope(HSEL.game).map(g=>stGame(g,team)).join('')||`<p class="hempty">${team?'Aucune partie en équipes pour l\'instant.':'Aucune partie.'}</p>`}
   requestAnimationFrame(placeThumbs)};
+
+{const hb=document.querySelector('#home .hbtns'),r2=hb.querySelector('.hrow2'),sw=hb.querySelector('.hsw');if(r2&&sw)hb.insertBefore(r2,sw)}
 </script>
 </body>
 </html>
