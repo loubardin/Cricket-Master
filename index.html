@@ -3974,6 +3974,12 @@ html body #x01#x01 #xplayers .xc .xn .xm{align-self:center!important;max-width:1
 html body #home#home .hbtns .hrow2{gap:2.4vw;margin-bottom:.6dvh}
 html body #home#home .hbtns .hrow2>.big{height:calc(min(1dvh,1.7vw)*5.2)!important;min-height:0!important;padding:0!important;font-size:calc(min(1dvh,1.7vw)*2.2)!important;
   box-shadow:inset 0 0 0 var(--bub-bw) color-mix(in srgb,var(--m-strong) 35%,transparent)!important;color:color-mix(in srgb,var(--ink) 75%,transparent)!important;background:transparent!important}
+
+/* menu : un seul picto Réglages (thème, son, stats, historique) */
+html body #home#home #sndT,html body #home#home .hbtns .hrow2{display:none!important}
+html body #home#home .skint svg{width:60%;height:60%;fill:none;stroke:var(--ink);stroke-width:1.7;stroke-linejoin:round}
+#xpick.skinpick .skn{display:grid;grid-template-columns:1fr 1fr;gap:8px;grid-column:1/-1}
+#xpick.skinpick .skgo{height:40px;border-radius:99px;border:0;background:var(--accent);color:var(--btx,#fff);box-shadow:inset 0 0 0 var(--bub-bw,1.5px) var(--m-strong);font:400 16px "Fun",sans-serif}
 </style>
 </head>
 <body>
@@ -3987,7 +3993,7 @@ html body #home#home .hbtns .hrow2>.big{height:calc(min(1dvh,1.7vw)*5.2)!importa
 <!-- ===== MENU ===== -->
 <section id="home" class="screen on simple">
   <button id="sndT" class="sndt" aria-label="Son">🔊</button>
-  <button id="skinT" class="sndt skint" aria-label="Thème"><i></i><i></i><i></i></button>
+  <button id="skinT" class="sndt skint" aria-label="Réglages"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z"/><path d="M19.4 13.5a7.6 7.6 0 0 0 0-3l2-1.6-2-3.4-2.4 1a7.4 7.4 0 0 0-2.6-1.5L14 2.5h-4l-.4 2.5A7.4 7.4 0 0 0 7 6.5l-2.4-1-2 3.4 2 1.6a7.6 7.6 0 0 0 0 3l-2 1.6 2 3.4 2.4-1a7.4 7.4 0 0 0 2.6 1.5l.4 2.5h4l.4-2.5a7.4 7.4 0 0 0 2.6-1.5l2.4 1 2-3.4Z"/></svg></button>
   <button id="themeT" class="thsw" aria-label="Mode nuit"><span class="d">☀️</span><span class="n">🌙</span><i></i></button>
   <div class="hb">
     <svg class="board lmark" viewBox="0 0 200 200" aria-hidden="true">
@@ -7449,9 +7455,11 @@ $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
   const p=el('div','');p.id='xpick';p.classList.add('skinpick');document.body.append(p);
   const cur=()=>{const T=S.th||{};return k=>(T[k]||TH[k].def)};
-  const draw=()=>{const T=S.th||{},c=cur();p.innerHTML=`<div class="xpt">Thème</div><div class="skps">${THP.map((t,i)=>`<button class="skpr${['bg','ink','acc','btx'].every(k=>c(k)===t[k])?' on':''}" data-i="${i}" style="--b:${t.bg};--i:${t.ink};--a:${t.acc};--t:${t.btx}"><i></i><span>${esc(t.n)}</span></button>`).join('')}</div>`+`<div class="skp"><span>Couleurs des joueurs</span><div class="sksw"><button data-p="1" class="${S.pcolOff?'':'on'}">Oui</button><button data-p="0" class="${S.pcolOff?'on':''}">Non</button></div></div>`};
+  const draw=()=>{const T=S.th||{},c=cur();p.innerHTML=`<div class="skn"><button class="skgo" data-go="hStats">Statistiques</button><button class="skgo" data-go="hHist">Historique</button></div><div class="skp"><span>Son</span><div class="sksw sksnd"><button data-s="1" class="${S.sound?'on':''}">Oui</button><button data-s="0" class="${S.sound?'':'on'}">Non</button></div></div><div class="xpt">Thème</div><div class="skps">${THP.map((t,i)=>`<button class="skpr${['bg','ink','acc','btx'].every(k=>c(k)===t[k])?' on':''}" data-i="${i}" style="--b:${t.bg};--i:${t.ink};--a:${t.acc};--t:${t.btx}"><i></i><span>${esc(t.n)}</span></button>`).join('')}</div>`+`<div class="skp"><span>Couleurs des joueurs</span><div class="sksw"><button data-p="1" class="${S.pcolOff?'':'on'}">Oui</button><button data-p="0" class="${S.pcolOff?'on':''}">Non</button></div></div>`};
   draw();p.style.left=Math.max(12,(innerWidth-p.offsetWidth)/2)+'px';p.style.top=Math.max(12,Math.min(innerHeight-p.offsetHeight-12,e.currentTarget.getBoundingClientRect().bottom+10))+'px';
-  p.addEventListener('click',ev=>{ev.stopPropagation();const b=ev.target.closest('.skc');
+  p.addEventListener('click',ev=>{ev.stopPropagation();const go=ev.target.closest('.skgo');if(go){p.remove();$(go.dataset.go).dispatchEvent(new MouseEvent('click',{bubbles:true}));return}
+    const sn=ev.target.closest('.sksnd button');if(sn){if((sn.dataset.s==='1')!==!!S.sound)$('sndT').dispatchEvent(new MouseEvent('click',{bubbles:true}));draw();return}
+    const b=ev.target.closest('.skc');
     if(b){haptic();S.th=Object.assign({},S.th||{},{[b.dataset.k]:b.dataset.c});store.set(K_S,S);applySkin();SFX.lock&&SFX.lock();draw();return}
     const pr=ev.target.closest('.skpr');if(pr){haptic();const t=THP[+pr.dataset.i];S.th={bg:t.bg,ink:t.ink,acc:t.acc,btx:t.btx};store.set(K_S,S);applySkin();SFX.lock&&SFX.lock();draw();return}
     const pb=ev.target.closest('.sksw button');if(pb){haptic();S.pcolOff=pb.dataset.p==='0';store.set(K_S,S);SFX.ui();draw();try{renderSetup()}catch(e){}return}
