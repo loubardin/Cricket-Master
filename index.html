@@ -4105,6 +4105,11 @@ html body #killer#killer #kplayers#kplayers.kbub>.kc.dead{opacity:.3!important;f
 
 /* Cricket : Bulle en haut, 15 en bas */
 html body #game#game:not(.bcg) #grid{flex-direction:column-reverse!important}
+
+/* Cricket à 3+ joueurs : historique des fléchettes en petites bulles rondes */
+html body #game#game.sk.p2.pn #scores#scores .sc.act>.pills{width:calc(min(6.4vw,3dvh) + 1.6vw)!important;align-items:center!important;justify-content:center!important}
+html body #game#game.sk.p2.pn #scores#scores .sc.act>.pills .pill{width:min(6.4vw,3dvh)!important;min-width:0!important;height:min(6.4vw,3dvh)!important;padding:0!important;border-radius:50%!important;
+  display:grid!important;place-items:center!important;font-size:min(2.6vw,1.25dvh)!important;line-height:1!important;letter-spacing:-.02em;overflow:hidden}
 </style>
 </head>
 <body>
