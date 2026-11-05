@@ -3994,7 +3994,7 @@ html[data-skin] body #setup .grules .rgoal i{color:var(--accent)!important}
       <div class="opt sho"><span>Tours</span><div class="seg mini" data-k="shr"><button data-v="7">7</button><button data-v="10">10</button><button data-v="20">20</button></div></div>
       <div class="opt sho"><span>Shanghai =</span><div class="seg mini" id="segShw"><button data-v="1" id="shwWin">Victoire</button><button data-v="0" id="shwBon">Bonus</button></div></div>
       <div class="opt clo"><span>Double / triple</span><div class="seg mini" data-k="clkm"><button data-v="0">Avance de 1</button><button data-v="1">Saute 2 / 3</button></div></div>
-      <div class="opt clo"><span>Joueur rejoue</span><div class="seg mini" data-k="clkr"><button data-v="0">Non</button><button data-v="1">MPR &gt; 1</button><button data-v="2">MPR &gt; 2</button></div></div>
+      <div class="opt clo"><span>Joueur rejoue</span><div class="seg mini" data-k="clkr"><button data-v="0">Non</button><button data-v="2">MPR ≥ 2</button><button data-v="3">MPR ≥ 3</button></div></div>
       <div class="opt clo"><span>Arrivée</span><div class="seg mini" data-k="clkb"><button data-v="0">Le 20</button><button data-v="1">La Bulle</button></div></div>
       <div class="opt hio"><span>Cibles</span><div class="seg mini" id="segHiSeq"><button data-v="0" id="hiSeqC">Classique</button><button data-v="1" id="hiSeqB">Perso</button></div></div>
       <div class="opt hio"><span>Fléchettes</span><div class="seg mini" data-k="hid"><button data-v="3">3</button><button data-v="4">4</button><button data-v="5">5</button></div></div>
@@ -6048,7 +6048,7 @@ function startX01(names,starter=0,teams=null,mode){
     players:names.map(n=>({name:n,rem:st,open:inR===0,darts:0,pts:0,legs:0,turns:0,best:0,n180:0,n140:0,n100:0,co:0,busts:0,bestLeg:0,legDarts:0,last:[]})),
     cur:starter,starter,turn:[],ts:st,tso:inR===0,mult:1,round:1,leg:1,legW:null,winner:null};
   if(teams){XG.teams=true;XG.players.forEach((p,i)=>{p.members=teams[i].slice();p.mi=p.members.length>1&&Math.random()<.5?1:0})}   // qui commence dans l'équipe : au hasard
-  if(mode){XG.mode=mode;XG.legsTo=1;XG.shr=S.shr||7;XG.shw=S.shw!==0;XG.shb=S.shb||100;XG.clkm=!!S.clkm;XG.clkb=S.clkb!==0;XG.clkr=S.clkr||0;XG.hiseq=(Array.isArray(S.hiseq)&&S.hiseq.length?S.hiseq:HI_CLASSIC).slice();XG.hid=S.hid||3;XG.hip=S.hip!==0;XG.players.forEach(p=>{p.rem=0;p.hits=0;p.tgt=1;p.sh=0;p.n3=0;p.halves=0;p.lost=0})}
+  if(mode){XG.mode=mode;XG.legsTo=1;XG.shr=S.shr||7;XG.shw=S.shw!==0;XG.shb=S.shb||100;XG.clkm=!!S.clkm;XG.clkb=S.clkb!==0;XG.clkr=S.clkr||0;XG.clkrv2=1;XG.hiseq=(Array.isArray(S.hiseq)&&S.hiseq.length?S.hiseq:HI_CLASSIC).slice();XG.hid=S.hid||3;XG.hip=S.hip!==0;XG.players.forEach(p=>{p.rem=0;p.hits=0;p.tgt=1;p.sh=0;p.n3=0;p.halves=0;p.lost=0})}
   XH=[];S.last='x01';store.set(K_S,S);xSave();showX01();
 }
 function showX01(){if(XG&&XG.mode){showBar();return}if(BARC){BARC=false;G=GREAL;R=null;$('game').classList.remove('bcg')}BARON=false;mountFooter('x01');show('x01');xBuildKeys();xRender()}
@@ -6294,7 +6294,7 @@ function xBarThrow(n,m,quiet){
   if(end==='turn'&&XG.mode==='hi'&&XG.hip&&tsum===0&&me.rem>0){const b=me.rem;me.rem=Math.floor(me.rem/2);d.halve=b-me.rem;me.lost+=d.halve;me.halves++;me.hv=me.hv||[];me.hv[XG.round-1]=d.halve}   // pénalité : score divisé par deux
   if(end){me.turns++;me.last=turn;if(me.members)me.mi=(me.mi+1)%me.members.length;XG.turn=[];me.best=Math.max(me.best,tsum);
     if(end==='win'){XG.legW=who;XG.winner=who}
-    else if(XG.mode==='clk'&&XG.clkr&&turn.length>=3&&turn.filter(x=>x.type==='hit').reduce((a,x)=>a+x.m,0)>XG.clkr){d.again=1}   // MPR du tour > seuil : il rejoue
+    else if(XG.mode==='clk'&&XG.clkr&&turn.length>=3&&turn.filter(x=>x.type==='hit').reduce((a,x)=>a+x.m,0)>=XG.clkr){d.again=1}   // MPR du tour ≥ seuil : il rejoue
     else{const ord=i=>(i-XG.starter+N)%N;let c=who,wrap=false;
       do{const pc=c;c=(c+1)%N;if(ord(c)<=ord(pc))wrap=true}while(P[c].out&&c!==who);
       if(wrap)XG.round++;XG.cur=c;
@@ -6770,7 +6770,7 @@ function showRules(){const e=$('gRules');if(!e)return;const g=S.game||'cricket',
     ps=['Touche le <b>1</b>, puis le <b>2</b>, le 3… dans l\'ordre jusqu\'au 20'+(S.clkb!==0?', puis <b>la Bulle</b>.':'.'),
       S.clkm?'Un double te fait <b>sauter de 2</b> cases, un triple <b>de 3</b>.':'Simple, double ou triple : chaque touche te fait <b>avancer d\'une case</b>.',
       'Tant que tu n\'as pas touché ton numéro, tu restes dessus. Le premier arrivé gagne.',
-      ...(S.clkr?['<b>Rejoue</b> : si ton MPR du tour (marques en 3 fléchettes) dépasse '+S.clkr+', tu rejoues tout de suite.']:[])]}
+      ...(S.clkr?['<b>Rejoue</b> : si ton MPR du tour (marques en 3 fléchettes) est d\'au moins '+S.clkr+', tu rejoues tout de suite.']:[])]}
   else{goal='Être le dernier en vie.';
     ps=['Chacun reçoit un numéro. Commence par toucher <b>le tien 3 fois</b> : tu deviens Killer.',
       'Ensuite, vise les numéros des autres : chaque touche leur <b>enlève une vie</b>.',
@@ -7435,6 +7435,10 @@ function spwSet(p,i){let c='';try{if(S.pcolOff)c=(S.th&&S.th.acc)||'#ff5a1f';els
  document.addEventListener('pointermove',e=>{if(P0&&!P0.mv&&Math.hypot(e.clientX-P0.x,e.clientY-P0.y)>12)P0.mv=true},true);
  const kill=e=>{if(P0&&P0.mv&&e.target.closest&&e.target.closest(Z)){e.stopImmediatePropagation();e.preventDefault()}};
  window.addEventListener('click',kill,true)}
+
+/* horloge : « rejoue » passe de « > 1 / > 2 » à « ≥ 2 / ≥ 3 » (même seuil réel) */
+if(!S.clkrv2){if(S.clkr)S.clkr=Math.min(3,S.clkr+1);S.clkrv2=1;store.set(K_S,S)}
+if(XG&&XG.mode==='clk'&&!XG.clkrv2){if(XG.clkr)XG.clkr++;XG.clkrv2=1}
 </script>
 </body>
 </html>
