@@ -4002,28 +4002,39 @@ html body #home#home .hbtns .hsw.two{width:82vw!important}
   60%{transform:translate(2px,-.8px) rotate(.9deg)}80%{transform:translate(-.8px,-1.6px) rotate(-.4deg)}100%{transform:translate(0,0) rotate(0)}}
 @media (prefers-reduced-motion:reduce){#home .board.lmark path{animation:none}}
 
-/* ===== Killer : le joueur en cours dans une grosse bulle à sa couleur, croix du logo, au premier plan ===== */
-html body #killer#killer #kplayers#kplayers.kbub{grid-template-columns:repeat(var(--kc,2),minmax(0,1fr))!important;grid-template-rows:auto!important;grid-auto-rows:var(--koh,160px)!important;align-content:center!important;row-gap:1.4dvh!important}
-html body #killer#killer #kplayers#kplayers.kbub>.kc.act{grid-column:1/-1!important;grid-row:1!important;justify-self:center!important;align-self:center!important;
-  width:var(--kbs)!important;height:var(--kbs)!important;max-width:none!important;aspect-ratio:1!important;border-radius:50%!important;
-  background:var(--pc)!important;box-shadow:none!important;border:0!important;outline:0!important;margin:calc(var(--kbs)*.12) 0!important;animation:kbdrift 4.2s ease-in-out infinite!important;
-  display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:.4dvh!important;padding:0 14%!important;position:relative!important;isolation:isolate;overflow:visible!important;z-index:3}
-html body #killer#killer #kplayers#kplayers.kbub>.kc.act>*{position:relative!important;z-index:1;grid-area:auto!important;inset:auto!important;transform:none!important}
-html body #killer#killer #kplayers#kplayers.kbub>.kc.act .kL{display:flex!important;flex-direction:column!important;align-items:center!important;padding:0!important}
-html body #killer#killer #kplayers#kplayers.kbub>.kc.act .kR{display:flex!important;flex-direction:column-reverse!important;align-items:center!important;gap:.6dvh!important}
-html body #killer#killer #kplayers#kplayers.kbub>.kc.act .kname{color:var(--btx,#fff)!important;text-align:center!important;align-self:center!important;font-size:min(8vw,4dvh)!important}
-html body #killer#killer #kplayers#kplayers.kbub>.kc.act .kno{color:var(--btx,#fff)!important;background:transparent!important;font-size:calc(var(--kbs)*.36)!important;line-height:.9!important;text-shadow:none!important}
-html body #killer#killer #kplayers#kplayers.kbub>.kc.act .klives .h{color:var(--btx,#fff)!important}
-html body #killer#killer #kplayers#kplayers.kbub>.kc.act .klives .h:not(.on){opacity:.35}
-html body #killer#killer #kplayers#kplayers.kbub>.kc.act .khist .pill{background:color-mix(in srgb,var(--btx,#fff) 22%,transparent)!important;border-color:color-mix(in srgb,var(--btx,#fff) 55%,transparent)!important;color:var(--btx,#fff)!important}
-html body #killer#killer #kplayers#kplayers.kbub>.kc.act .kmk{filter:none}
-html body #killer#killer #kplayers#kplayers.kbub>.kc.act>.kxx{position:absolute!important;inset:-14%!important;z-index:0!important;pointer-events:none;animation:kbdriftx 5.6s ease-in-out infinite!important}
-#kplayers .kc:not(.act)>.kxx{display:none}
+/* ===== Killer « bulles » : chaque joueur est une bulle ; celui qui joue est en grand en haut, avec les animations du logo =====
+   0 marque : contour noir, nom et numéro à sa couleur · 1re marque : une barre derrière · 2e : la croix · 3e (killer) : bulle remplie, contour épais */
+html body #killer#killer #kplayers#kplayers.kbub{grid-template-columns:repeat(var(--kc,2),minmax(0,1fr))!important;grid-template-rows:auto!important;grid-auto-rows:var(--koh,160px)!important;align-content:center!important;row-gap:1.2dvh!important;column-gap:0!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc{--bs:var(--kos);justify-self:center!important;align-self:center!important;width:var(--bs)!important;height:var(--bs)!important;min-height:0!important;max-width:none!important;aspect-ratio:1!important;
+  border-radius:50%!important;background:transparent!important;box-shadow:inset 0 0 0 max(1.5px,calc(var(--bs)*.012)) var(--m-strong)!important;border:0!important;outline:0!important;
+  display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:calc(var(--bs)*.01)!important;padding:0 12%!important;position:relative!important;isolation:isolate;overflow:visible!important;animation:none!important;opacity:1}
+html body #killer#killer #kplayers#kplayers.kbub>.kc.act{--bs:var(--kbs);grid-column:1/-1!important;grid-row:1!important;margin:calc(var(--kbs)*.06) 0!important;animation:kbdrift 4.2s ease-in-out infinite!important;z-index:3}
+html body #killer#killer #kplayers#kplayers.kbub>.kc.kfull{background:var(--pc)!important;box-shadow:inset 0 0 0 max(4px,calc(var(--bs)*.035)) var(--m-strong)!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc>*{position:relative!important;z-index:1;grid-area:auto!important;inset:auto!important;transform:none!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc .kL{display:flex!important;flex-direction:column!important;align-items:center!important;padding:0!important;gap:0!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc .kR{display:flex!important;flex-direction:column-reverse!important;align-items:center!important;gap:calc(var(--bs)*.02)!important;padding:0!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc .kname{color:var(--pc)!important;text-align:center!important;align-self:center!important;font-size:calc(var(--bs)*.12)!important;line-height:1!important;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+html body #killer#killer #kplayers#kplayers.kbub>.kc .kno{color:var(--pc)!important;background:transparent!important;font-size:calc(var(--bs)*.36)!important;line-height:.9!important;text-shadow:none!important;box-shadow:none!important;border:0!important;width:auto!important;height:auto!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc .klives{font-size:calc(var(--bs)*.09)!important;justify-content:center!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc.kfull .kname,html body #killer#killer #kplayers#kplayers.kbub>.kc.kfull .kno{color:var(--btx,#fff)!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc .kmk,html body #killer#killer #kplayers#kplayers.kbub>.kc .kstat{display:none!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc:not(.act) .kx{display:none!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc .khist .pill{font-size:calc(var(--bs)*.05)!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc.kfull .khist .pill{background:color-mix(in srgb,var(--btx,#fff) 22%,transparent)!important;border-color:color-mix(in srgb,var(--btx,#fff) 55%,transparent)!important;color:var(--btx,#fff)!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc.dead{opacity:.35!important;filter:grayscale(1)}
+html body #killer#killer #kplayers#kplayers.kbub>.kc>.kxx{position:absolute!important;inset:-7%!important;z-index:0!important;pointer-events:none}
+html body #killer#killer #kplayers#kplayers.kbub>.kc.act>.kxx{animation:kbdriftx 5.6s ease-in-out infinite!important}
+#kplayers .kc:not(.kbc)>.kxx{display:none}
 .kxx svg{width:100%;height:100%;display:block;overflow:visible}
-.kxx path{stroke:var(--m-strong,#141414);stroke-width:15;stroke-linecap:round;fill:none}
+.kxx path{stroke:var(--m-strong,#141414);stroke-width:11;stroke-linecap:round;fill:none;opacity:0}
+.kxx.m1 .b1,.kxx.m2 path{opacity:1}
+.kxx.mnew path{animation:kxin .3s cubic-bezier(.3,1.5,.5,1)}
+@keyframes kxin{0%{stroke-dasharray:0 200}100%{stroke-dasharray:200 0}}
 @keyframes kbdrift{0%{translate:0 0}14%{translate:5px -3px}29%{translate:2px 4px}43%{translate:-4px 2px}57%{translate:-2px -5px}71%{translate:4px -1px}86%{translate:-3px 3px}100%{translate:0 0}}
 @keyframes kbdriftx{0%{translate:0 0;rotate:0deg}20%{translate:-2px 1.5px;rotate:-.8deg}40%{translate:1.5px 2.2px;rotate:.5deg}60%{translate:2.5px -1px;rotate:.9deg}80%{translate:-1px -2px;rotate:-.4deg}100%{translate:0 0;rotate:0deg}}
 @media (prefers-reduced-motion:reduce){html body #killer#killer #kplayers#kplayers.kbub>.kc.act,html body #killer#killer #kplayers#kplayers.kbub>.kc.act>.kxx{animation:none!important}}
+
+html body #killer#killer #kplayers#kplayers.kbub>.kc.kfull .klives .h.on{filter:drop-shadow(0 0 1px var(--btx,#fff)) drop-shadow(0 0 1px var(--btx,#fff))!important}
 </style>
 </head>
 <body>
@@ -7656,16 +7667,21 @@ renderHist=function(){const h=$('hist'),b=$('hBody');
         cx.getAnimations().forEach(a=>{if(!(window.CSSAnimation&&a instanceof CSSAnimation))a.cancel()});
         cx.animate(hit?[{transform:T(0,0,1),opacity:1},{transform:'translate(0,0) scale(1)',opacity:1}]:[{transform:'translate(0,0) scale(1.4)',opacity:0},{transform:'translate(0,0) scale(1)',opacity:1}],{duration:hit?420:300,easing:'cubic-bezier(.3,1.3,.5,1)'})},hit?1300:1100)},200)},true)}}
 
-/* Killer : bulle du joueur en cours (couleur du joueur), croix du logo derrière ses infos */
+/* Killer « bulles » : taille selon le nombre de joueurs (6 visibles sans défiler), marques en barre / croix / bulle remplie */
 function kBubble(){const box=$('kplayers');if(!box||!KG)return;const n=KG.players.length,o=n-1;
-  box.classList.add('kbub');box.style.setProperty('--kc',o<=1?1:o===2||o===4?2:3);
-  const kc=o<=1?1:o===2||o===4?2:3,rows=Math.ceil(o/kc),H=box.clientHeight||500,W=box.clientWidth||360,gap=H*.014;
-  const kbs=Math.round(Math.min(W*.74,H*(rows===1?.5:.4)));box.style.setProperty('--kbs',kbs+'px');
-  box.style.setProperty('--koh',Math.round(Math.min(H*.3,(H-kbs*1.24-gap*(rows+1))/rows))+'px');
-  box.querySelectorAll(':scope>.kc').forEach(c=>{const act=c.classList.contains('act');let x=c.querySelector(':scope>.kxx');
-    if(act&&!x){x=el('i','kxx','<svg viewBox="30 30 140 140"><path d="M40 40 160 160M160 40 40 160"/></svg>');c.prepend(x)}
-    if(act){const i=+c.dataset.i,p=KG.players[i];let col='';try{col=S.pcolOff?((S.th&&S.th.acc)||'#ff5a1f'):pcol(p.members?p.members[0]:p.name)}catch(e){}
-      c.style.setProperty('--pc',/^#[0-9a-f]{6}$/i.test(col||'')?col:PFB[i%PFB.length])}})}
+  box.classList.add('kbub');const kc=o<=1?1:o<=4?2:3;box.style.setProperty('--kc',kc);
+  const rows=Math.ceil(o/kc),H=box.clientHeight||500,W=box.clientWidth||360,gap=H*.012;
+  const kbs=Math.round(Math.min(W*.72,H*(rows===1?.5:.42)));box.style.setProperty('--kbs',kbs+'px');
+  const koh=Math.max(60,Math.round(Math.min(H*.3,(H-kbs*1.12-gap*(rows+1))/rows)));box.style.setProperty('--koh',koh+'px');
+  box.style.setProperty('--kos',Math.round(Math.min(koh*.94,W/kc*.84))+'px');
+  box.querySelectorAll(':scope>.kc').forEach(c=>{const i=+c.dataset.i,p=KG.players[i];if(!p)return;c.classList.add('kbc');
+    let x=c.querySelector(':scope>.kxx');if(!x){x=el('i','kxx','<svg viewBox="30 30 140 140"><path class="b1" d="M160 40 40 160"/><path class="b2" d="M40 40 160 160"/></svg>');c.prepend(x)}
+    const full=!!p.killer,m=full?2:Math.min(2,p.marks||0),was=+(x.dataset.m||0);
+    x.classList.toggle('m1',m>=1);x.classList.toggle('m2',m>=2);
+    if(m>was){x.classList.remove('mnew');void x.offsetWidth;x.classList.add('mnew')}x.dataset.m=m;
+    c.classList.toggle('kfull',full);
+    let col='';try{col=S.pcolOff?((S.th&&S.th.acc)||'#ff5a1f'):pcol(p.members?p.members[0]:p.name)}catch(e){}
+    c.style.setProperty('--pc',/^#[0-9a-f]{6}$/i.test(col||'')?col:PFB[i%PFB.length])})}
 {const _r=kRender;kRender=function(){const r=_r.apply(this,arguments);try{if(!BARON)kBubble();else $('kplayers').classList.remove('kbub')}catch(e){console.error(e)}return r}}
 </script>
 </body>
