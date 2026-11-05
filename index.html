@@ -4065,7 +4065,7 @@ html body #killer#killer #kplayers#kplayers.kbub>.kc.act>.kbg{box-shadow:inset 0
 html body #killer#killer #kplayers#kplayers.kbub>.kc.kfull{--kbg:#d8261c}
 html body #killer#killer #kplayers#kplayers.kbub>.kc.kfull>.kbg{box-shadow:inset 0 0 0 max(2px,calc(var(--bs)*.022)) #d8261c}
 html body #killer#killer #kplayers#kplayers.kbub>.kc.kfull.act>.kbg{box-shadow:inset 0 0 0 max(2px,calc(var(--bs)*.022)) #d8261c,0 calc(var(--bs)*.05) calc(var(--bs)*.12) rgba(0,0,0,.18)}
-html body #killer#killer #kplayers#kplayers.kbub>.kc>.kxx{display:block!important;position:absolute!important;inset:-9%!important;z-index:-1!important;pointer-events:none}
+html body #killer#killer #kplayers#kplayers.kbub>.kc>.kxx{display:block!important;position:absolute!important;inset:-1%!important;z-index:-1!important;pointer-events:none}
 html body #killer#killer #kplayers#kplayers.kbub>.kc .kxx path{stroke-width:5.5!important}
 html body #killer#killer #kplayers#kplayers.kbub>.kc .kk{display:none!important}
 html body #killer#killer #kplayers#kplayers.kbub>.kc .kno{font-size:calc(var(--bs)*.46)!important;margin:calc(var(--bs)*.005) 0 calc(var(--bs)*.02)!important;text-shadow:none!important}
@@ -4094,6 +4094,14 @@ html body #killer#killer #kplayers#kplayers.kbub>.kc .kx .khist .pill{position:a
 html body #killer#killer #kplayers#kplayers.kbub>.kc .kname{font-size:calc(var(--bs)*.145)!important;margin:0!important;line-height:.95!important}
 html body #killer#killer #kplayers#kplayers.kbub>.kc .kno{font-size:calc(var(--bs)*.5)!important;margin:calc(var(--bs)*-.01) 0 0!important;line-height:.82!important}
 html body #killer#killer #kplayers#kplayers.kbub>.kc{gap:0!important;padding-top:calc(var(--bs)*.04)!important}
+
+/* v4 : joueur en cours à sa couleur ; les autres en noir comme au cricket ; victimes grisées et pâles */
+html body #killer#killer #kplayers#kplayers.kbub>.kc .kno{font-size:calc(var(--bs)*.56)!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc .kname{margin-bottom:calc(var(--bs)*.035)!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc:not(.act):not(.kfull):not(.dead){--kbg:var(--m-home,#f7f2e5)}
+html body #killer#killer #kplayers#kplayers.kbub>.kc:not(.act):not(.kfull):not(.dead)>.kbg{box-shadow:inset 0 0 0 max(1.5px,calc(var(--bs)*.014)) var(--m-strong,#141414)!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc:not(.act):not(.kfull):not(.dead) .kname,html body #killer#killer #kplayers#kplayers.kbub>.kc:not(.act):not(.kfull):not(.dead) .kno{color:var(--m-strong,#141414)!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc.dead{opacity:.3!important;filter:grayscale(1)!important}
 </style>
 </head>
 <body>
