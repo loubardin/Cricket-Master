@@ -4008,7 +4008,7 @@ html body #killer#killer #kplayers#kplayers.kbub{grid-template-columns:repeat(va
 html body #killer#killer #kplayers#kplayers.kbub>.kc{--bs:var(--kos);justify-self:center!important;align-self:center!important;width:var(--bs)!important;height:var(--bs)!important;min-height:0!important;max-width:none!important;aspect-ratio:1!important;
   --kbg:color-mix(in srgb,var(--pc) 9%,var(--m-home,#f7f2e5));border-radius:50%!important;background:var(--kbg)!important;box-shadow:inset 0 0 0 max(2px,calc(var(--bs)*.022)) var(--pc)!important;border:0!important;outline:0!important;
   display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:calc(var(--bs)*.01)!important;padding:0 12%!important;position:relative!important;isolation:isolate;overflow:visible!important;animation:none!important;opacity:1}
-html body #killer#killer #kplayers#kplayers.kbub>.kc.act{scale:1.15;animation:kbdrift 4.2s ease-in-out infinite!important;z-index:3}
+html body #killer#killer #kplayers#kplayers.kbub>.kc.act{scale:1.28;animation:kbdrift 4.2s ease-in-out infinite!important;z-index:3}
 html body #killer#killer #kplayers#kplayers.kbub>.kc.kfull{--kbg:var(--pc);background:var(--pc)!important}
 html body #killer#killer #kplayers#kplayers.kbub>.kc>*{position:relative!important;z-index:1;grid-area:auto!important;inset:auto!important;transform:none!important}
 html body #killer#killer #kplayers#kplayers.kbub>.kc .kL,html body #killer#killer #kplayers#kplayers.kbub>.kc .kR{display:contents!important}
@@ -4054,6 +4054,9 @@ html body #killer#killer #kplayers#kplayers.kbub>.kc .kk{z-index:4!important}
 html body #killer#killer #kplayers#kplayers.kbub>.kc .kno{text-shadow:none!important}
 html body #killer#killer #kplayers#kplayers.kbub>.kc .kk path{stroke:var(--m-strong,#141414)!important;stroke-width:4.5!important}
 html body #killer#killer #kplayers#kplayers.kbub>.kc .kk path.g{opacity:.12!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc.tgt:not(.act):not(.dead){animation:kbtrem .16s linear infinite!important}
+@keyframes kbtrem{0%{translate:0 0}25%{translate:1.2px -.8px}50%{translate:-1px .9px}75%{translate:.8px 1px}100%{translate:0 0}}
+@media (prefers-reduced-motion:reduce){html body #killer#killer #kplayers#kplayers.kbub>.kc.tgt:not(.act){animation:none!important}}
 </style>
 </head>
 <body>
@@ -7690,7 +7693,7 @@ renderHist=function(){const h=$('hist'),b=$('hBody');
 function kBubble(){const box=$('kplayers');if(!box||!KG)return;const n=KG.players.length,o=n-1;
   box.classList.add('kbub');const kc=n<=2?1:2,kr=Math.ceil(n/kc);box.style.setProperty('--kc',kc);box.style.setProperty('--kr',kr);
   const H=box.clientHeight||500,W=box.clientWidth||360;
-  const gap=Math.round(W*.065),kos=Math.round(Math.min((H-gap*(kr+1))/kr,(W-gap*(kc+1))/kc,n<=2?H*.38:9999));box.style.setProperty('--kos',kos+'px');box.style.setProperty('--kgap',gap+'px');
+  const gap=Math.round(W*.065),kos=Math.round(Math.min((H-gap*(kr+1))/kr,(W-gap*(kc+1))/kc,n<=2?H*.31:9999))*(n>2?.9:1);box.style.setProperty('--kos',kos+'px');box.style.setProperty('--kgap',gap+'px');
   box.querySelectorAll(':scope>.kc').forEach(c=>{const i=+c.dataset.i,p=KG.players[i];if(!p)return;c.classList.add('kbc');
     const ox=c.querySelector(':scope>.kxx');if(ox)ox.remove();
     let x=c.querySelector(':scope>.kk');if(!x){x=el('i','kk','<svg viewBox="0 0 40 50"><path class="g" d="M11 6V44M30 6 12 26M17 21 31 44"/><path class="s1" d="M11 6V44"/><path class="s2" d="M30 6 12 26"/><path class="s3" d="M17 21 31 44"/></svg>');c.append(x)}
