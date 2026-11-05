@@ -4084,6 +4084,16 @@ html body #killer#killer #kplayers#kplayers.kbub>.kc.tgt:not(.act):not(.dead){an
 @keyframes kbtrem2{0%{translate:0 0}25%{translate:.5px -.4px}50%{translate:-.5px .4px}75%{translate:.4px .5px}100%{translate:0 0}}
 html body #killer#killer #kplayers#kplayers.kbub>.kc .kname,html body #killer#killer #kplayers#kplayers.kbub>.kc .klives,html body #killer#killer #kplayers#kplayers.kbub>.kc .kno,html body #killer#killer #kplayers#kplayers.kbub>.kc .kx{position:relative!important;z-index:2!important}
 html body #killer#killer #kplayers#kplayers.kbub>.kc.dead>.kbg{background:#e9e6e0!important;box-shadow:inset 0 0 0 max(2px,calc(var(--bs)*.022)) #c2bdb4!important}
+
+/* ===== Killer bulles v3 : cœurs sur l'arrondi haut, fléchettes sur l'arrondi bas, nom + numéro serrés au centre ===== */
+html body #killer#killer #kplayers#kplayers.kbub>.kc .klives{position:absolute!important;left:0!important;right:0!important;top:7%!important;height:auto!important;display:block!important;text-align:center;z-index:2!important;pointer-events:none;font-size:calc(var(--bs)*.1)!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc .klives .h{position:absolute!important;left:50%;top:0;margin:0!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc .kx{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;max-height:none!important;z-index:2!important;pointer-events:none;align-self:auto!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc .kx .khist{position:absolute!important;inset:0!important;display:block!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc .kx .khist .pill{position:absolute!important;left:50%;top:50%;margin:0!important;font-size:calc(var(--bs)*.072)!important;min-width:calc(var(--bs)*.16)!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc .kname{font-size:calc(var(--bs)*.145)!important;margin:0!important;line-height:.95!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc .kno{font-size:calc(var(--bs)*.5)!important;margin:calc(var(--bs)*-.01) 0 0!important;line-height:.82!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc{gap:0!important;padding-top:calc(var(--bs)*.04)!important}
 </style>
 </head>
 <body>
@@ -7720,7 +7730,7 @@ renderHist=function(){const h=$('hist'),b=$('hBody');
 function kBubble(){const box=$('kplayers');if(!box||!KG)return;const n=KG.players.length,o=n-1;
   box.classList.add('kbub');box.style.setProperty('--kact',n<=2?1.22:1.14);const kc=n<=2?1:2,kr=Math.ceil(n/kc);box.style.setProperty('--kc',kc);box.style.setProperty('--kr',kr);
   const H=box.clientHeight||500,W=box.clientWidth||360;
-  const gap=Math.round(W*.035),kos=Math.round(Math.min((H-gap*(kr+1))/kr,(W-gap*(kc+1))/kc,n<=2?H*.3:9999)*(n>2?.95:1));box.style.setProperty('--kos',kos+'px');box.style.setProperty('--kgap',gap+'px');
+  const gap=Math.round(W*(n<=2?.14:.035)),kos=Math.round(Math.min((H-gap*(kr+1))/kr,(W-gap*(kc+1))/kc,n<=2?H*.3:9999)*(n>2?.95:1));box.style.setProperty('--kos',kos+'px');box.style.setProperty('--kgap',gap+'px');
   box.querySelectorAll(':scope>.kc').forEach(c=>{const i=+c.dataset.i,p=KG.players[i];if(!p)return;c.classList.add('kbc');
     const ok=c.querySelector(':scope>.kk');if(ok)ok.remove();
     if(!c.querySelector(':scope>.kbg'))c.prepend(el('i','kbg'));
@@ -7732,6 +7742,19 @@ function kBubble(){const box=$('kplayers');if(!box||!KG)return;const n=KG.player
     let col='';try{col=S.pcolOff?((S.th&&S.th.acc)||'#ff5a1f'):pcol(p.members?p.members[0]:p.name)}catch(e){}
     c.style.setProperty('--pc',/^#[0-9a-f]{6}$/i.test(col||'')?col:PFB[i%PFB.length])})}
 {const _r=kRender;kRender=function(){const r=_r.apply(this,arguments);try{if(!BARON)kBubble();else $('kplayers').classList.remove('kbub')}catch(e){console.error(e)}return r}}
+
+/* Killer bulles : place les cœurs (arrondi haut) et les fléchettes (arrondi bas) le long du cercle */
+function kArc(){document.querySelectorAll('#kplayers.kbub>.kc').forEach(c=>{const B=c.offsetWidth;if(!B)return;const r=B/2;
+  const L=c.querySelector('.klives'),hs=[...c.querySelectorAll('.klives .h')];
+  if(L&&hs.length){const lt=L.offsetTop,hh=hs[0].offsetHeight||B*.1,hw=hs[0].offsetWidth||hh,R=r-hh*1.15,st=Math.min(90/hs.length,(hw*1.3/R)*180/Math.PI);
+    hs.forEach((h,i)=>{const a=(i-(hs.length-1)/2)*st,rad=a*Math.PI/180,x=R*Math.sin(rad),y=r-R*Math.cos(rad)-lt;
+      h.style.translate=`${(x-h.offsetWidth/2).toFixed(1)}px ${(y-h.offsetHeight/2).toFixed(1)}px`;h.style.rotate=a.toFixed(1)+'deg'})}
+  const ps=[...c.querySelectorAll('.kx .khist .pill')];
+  if(ps.length){const ph=ps[0].offsetHeight||B*.09,R=r-ph*.95,pw=ps[0].offsetWidth||B*.16,st=Math.min(24,(pw*1.15/R)*180/Math.PI);
+    ps.forEach((p,i)=>{const a=((ps.length-1)/2-i)*st,rad=a*Math.PI/180,x=-R*Math.sin(rad),y=R*Math.cos(rad);
+      p.style.translate=`${(x-p.offsetWidth/2).toFixed(1)}px ${(y-p.offsetHeight/2).toFixed(1)}px`;p.style.rotate=a.toFixed(1)+'deg'})}})}
+{const _r=kRender;kRender=function(){const r=_r.apply(this,arguments);try{if(!BARON)kArc()}catch(e){console.error(e)}return r}}
+addEventListener('resize',()=>{try{kArc()}catch(e){}});
 </script>
 </body>
 </html>
