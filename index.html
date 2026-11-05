@@ -7194,7 +7194,7 @@ if('serviceWorker' in navigator&&location.protocol==='https:'){
  }).catch(()=>{})})}
 
 /* ===== Shanghai / horloge sur le tableau du killer : une case par joueur, le numéro à viser en grand ===== */
-function showBar(){if(XG&&(XG.mode==='sh'||XG.mode==='clk'||XG.mode==='hi')){showBarC();return}if(BARC){BARC=false;G=GREAL;R=null}BARON=true;noFear();mountFooter('killer');show('killer');xRender()}
+function showBar(){if(XG&&(XG.mode==='sh'||XG.mode==='hi')){showBarC();return}if(BARC){BARC=false;G=GREAL;R=null}BARON=true;noFear();mountFooter('killer');show('killer');xRender()}
 function bRender(){
   if(!BARON||!XG||!XG.mode)return;
   const P=XG.players,fin=XG.winner!==null,cur=fin?XG.winner:XG.cur,box=$('kplayers');
