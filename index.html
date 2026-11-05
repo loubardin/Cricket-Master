@@ -5501,7 +5501,7 @@ $('segBar').addEventListener('click',e=>{const v=e.target.dataset.v;if(v){haptic
 {let sx=null,sy=0,st=0;const SU0=$('setup');
  SU0.addEventListener('touchstart',e=>{if(SU0.classList.contains('p2')||e.touches.length>1){sx=null;return}const t=e.touches[0];sx=t.clientX;sy=t.clientY;st=performance.now()},{passive:true});
  SU0.addEventListener('touchend',e=>{if(sx==null)return;const t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;sx=null;
-   if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.6&&performance.now()-st<700){const TOP=['cricket','x01','bar'],i=TOP.indexOf(BARG.includes(S.game)?'bar':S.game)+(dx<0?1:-1);if(i>=0&&i<TOP.length){haptic();SFX.ui();setGame(TOP[i])}}},{passive:true});}
+   if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.6&&performance.now()-st<700){const i=GAMES.indexOf(S.game)+(dx<0?1:-1);if(i>=0&&i<GAMES.length){haptic();SFX.ui();setGame(GAMES[i])}}},{passive:true});}
 $('segLives').addEventListener('click',e=>{const v=e.target.dataset.v;if(v){S.klives=+v;store.set(K_S,S);renderSetup()}});
 document.querySelectorAll('#setup .seg[data-k]').forEach(g=>g.addEventListener('click',e=>{const v=e.target.dataset.v;if(v!==undefined){S[g.dataset.k]=+v;store.set(K_S,S);renderSetup();
   if(g.dataset.k==='teams'&&S.teams&&!teamsOK())setTimeout(openPick,200)}}));
