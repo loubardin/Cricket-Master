@@ -4008,11 +4008,11 @@ html body #killer#killer #kplayers#kplayers.kbub{grid-template-columns:repeat(va
 html body #killer#killer #kplayers#kplayers.kbub>.kc{--bs:var(--kos);justify-self:center!important;align-self:center!important;width:var(--bs)!important;height:var(--bs)!important;min-height:0!important;max-width:none!important;aspect-ratio:1!important;
   border-radius:50%!important;background:color-mix(in srgb,var(--pc) 9%,var(--m-home,#f7f2e5))!important;box-shadow:inset 0 0 0 max(2px,calc(var(--bs)*.022)) var(--pc)!important;border:0!important;outline:0!important;
   display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:calc(var(--bs)*.01)!important;padding:0 12%!important;position:relative!important;isolation:isolate;overflow:visible!important;animation:none!important;opacity:1}
-html body #killer#killer #kplayers#kplayers.kbub>.kc.act{scale:1.06;animation:kbdrift 4.2s ease-in-out infinite!important;z-index:3}
-html body #killer#killer #kplayers#kplayers.kbub>.kc.kfull{background:radial-gradient(circle at 35% 30%,#b3241d,#7a120e 70%)!important;box-shadow:inset 0 0 0 max(4px,calc(var(--bs)*.04)) var(--m-strong)!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc.act{scale:1.15;animation:kbdrift 4.2s ease-in-out infinite!important;z-index:3}
+html body #killer#killer #kplayers#kplayers.kbub>.kc.kfull{background:var(--pc)!important}
 html body #killer#killer #kplayers#kplayers.kbub>.kc>*{position:relative!important;z-index:1;grid-area:auto!important;inset:auto!important;transform:none!important}
 html body #killer#killer #kplayers#kplayers.kbub>.kc .kL,html body #killer#killer #kplayers#kplayers.kbub>.kc .kR{display:contents!important}
-html body #killer#killer #kplayers#kplayers.kbub>.kc .kname{order:1}html body #killer#killer #kplayers#kplayers.kbub>.kc .kno{order:2}html body #killer#killer #kplayers#kplayers.kbub>.kc .klives{order:3}html body #killer#killer #kplayers#kplayers.kbub>.kc .kx{order:4;margin-top:calc(var(--bs)*.02)}
+html body #killer#killer #kplayers#kplayers.kbub>.kc .kname{order:1;margin-top:calc(var(--bs)*-.03)!important}html body #killer#killer #kplayers#kplayers.kbub>.kc .klives{order:2}html body #killer#killer #kplayers#kplayers.kbub>.kc .kno{order:3}html body #killer#killer #kplayers#kplayers.kbub>.kc .kx{order:4;margin-top:calc(var(--bs)*.02)}
 html body #killer#killer #kplayers#kplayers.kbub>.kc .kname{color:var(--pc)!important;text-align:center!important;align-self:center!important;font-size:calc(var(--bs)*.11)!important;letter-spacing:.02em;line-height:1!important;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 html body #killer#killer #kplayers#kplayers.kbub>.kc .kno{color:var(--pc)!important;background:transparent!important;font-size:calc(var(--bs)*.4)!important;line-height:.86!important;margin:calc(var(--bs)*.01) 0!important;text-shadow:none!important;box-shadow:none!important;border:0!important;width:auto!important;height:auto!important}
 html body #killer#killer #kplayers#kplayers.kbub>.kc .klives{font-size:calc(var(--bs)*.085)!important;justify-content:center!important;gap:calc(var(--bs)*.012)!important}
@@ -4026,7 +4026,7 @@ html body #killer#killer #kplayers#kplayers.kbub>.kc>.kxx{position:absolute!impo
 html body #killer#killer #kplayers#kplayers.kbub>.kc.act>.kxx{animation:kbdriftx 5.6s ease-in-out infinite!important}
 #kplayers .kc:not(.kbc)>.kxx{display:none}
 .kxx svg{width:100%;height:100%;display:block;overflow:visible}
-.kxx path{stroke:var(--m-strong,#141414);stroke-width:9;stroke-linecap:round;fill:none;opacity:0}
+.kxx path{stroke:var(--m-strong,#141414);stroke-width:4.5;stroke-linecap:round;fill:none;opacity:0}
 .kxx.m1 .b1,.kxx.m2 path{opacity:1}
 .kxx.mnew path{animation:kxin .3s cubic-bezier(.3,1.5,.5,1)}
 @keyframes kxin{0%{stroke-dasharray:0 200}100%{stroke-dasharray:200 0}}
@@ -7671,7 +7671,7 @@ renderHist=function(){const h=$('hist'),b=$('hBody');
 function kBubble(){const box=$('kplayers');if(!box||!KG)return;const n=KG.players.length,o=n-1;
   box.classList.add('kbub');const kc=n<=2?1:2,kr=Math.ceil(n/kc);box.style.setProperty('--kc',kc);box.style.setProperty('--kr',kr);
   const H=box.clientHeight||500,W=box.clientWidth||360;
-  const gap=Math.round(W*.065),kos=Math.round(Math.min((H-gap*(kr+1))/kr,(W-gap*(kc+1))/kc,n<=2?H*.42:9999));box.style.setProperty('--kos',kos+'px');box.style.setProperty('--kgap',gap+'px');
+  const gap=Math.round(W*.065),kos=Math.round(Math.min((H-gap*(kr+1))/kr,(W-gap*(kc+1))/kc,n<=2?H*.38:9999));box.style.setProperty('--kos',kos+'px');box.style.setProperty('--kgap',gap+'px');
   box.querySelectorAll(':scope>.kc').forEach(c=>{const i=+c.dataset.i,p=KG.players[i];if(!p)return;c.classList.add('kbc');
     let x=c.querySelector(':scope>.kxx');if(!x){x=el('i','kxx','<svg viewBox="30 30 140 140"><path class="b1" d="M160 40 40 160"/><path class="b2" d="M40 40 160 160"/></svg>');c.prepend(x)}
     const full=!!p.killer,m=full?2:Math.min(2,p.marks||0),was=+(x.dataset.m||0);
