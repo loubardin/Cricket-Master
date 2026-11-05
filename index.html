@@ -3080,11 +3080,11 @@ html body #game#game.sk.p2.pn #scores .sc:not(.act)>.pills{gap:calc(var(--r)*.08
 #draw .dsw{position:relative;display:grid;grid-template-columns:1fr 1fr;border-radius:99px;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong);height:calc(min(1dvh,1.7vw)*7);align-self:stretch}
 #draw .dsw:has(#drawGo[style*="hidden"]){visibility:hidden}
 #draw .dsw .hth{position:absolute;top:0;bottom:0;left:50%;width:50%;border-radius:99px;background:var(--accent);box-shadow:0 0 0 var(--bub-h) var(--accent);transition:transform .22s cubic-bezier(.3,1.4,.5,1)}
-#draw .dsw.again .hth{transform:translateX(-100%)}
+#draw .dsw:not(.go) .hth{transform:translateX(-100%)}
 #draw#draw .dsw #drawGo,#draw#draw .dsw #drawAgain{position:relative;z-index:1;height:100%!important;margin:0!important;padding:0!important;background:transparent!important;box-shadow:none!important;border:0!important;
   color:var(--ink)!important;font-family:"Fun",sans-serif!important;font-weight:400!important;font-size:calc(min(1dvh,1.7vw)*2.5)!important;display:grid!important;place-items:center;transition:color .15s,scale .2s cubic-bezier(.3,1.6,.5,1)}
 #draw#draw .dsw #drawGo::after{display:none}
-#draw#draw .dsw:not(.again) #drawGo,#draw#draw .dsw.again #drawAgain{color:var(--btx,#fff)!important;scale:1.35}
+#draw#draw .dsw.go #drawGo,#draw#draw .dsw:not(.go) #drawAgain{color:var(--btx,#fff)!important;scale:1.35}
 /* --- Cricket : cases mortes atténuées --- */
 #game#game.sk.p2 #grid>.row:has(.num.dead){opacity:.38!important}
 .bullfx{position:fixed;inset:0;z-index:300;pointer-events:none}
@@ -3944,7 +3944,7 @@ html[data-skin] body #setup .grules .rgoal i{color:var(--accent)!important}
       <path d="M40 40 160 160M160 40 40 160" stroke="#111" style="stroke:var(--m-ink,#111)" stroke-width="15" stroke-linecap="round" fill="none"/>
     </svg>
     <h1 class="ht">CRICKET<br>MASTER</h1>
-    <div class="hs">cricket · 501 · jeux de bar</div>
+    <div class="hs">cricket · 501 · mini jeux</div>
   </div>
   <div class="hbtns">
     <button id="hResume" class="big light">Reprendre la partie</button>
@@ -3958,8 +3958,8 @@ html[data-skin] body #setup .grules .rgoal i{color:var(--accent)!important}
 <section id="setup" class="screen b2">
   <div class="sh"><button class="circ" id="sBack" aria-label="Accueil"><svg viewBox="0 0 24 24"><path d="M15 5 8 12l7 7"/></svg></button><h1>Nouvelle partie</h1></div>
 
-  <div class="seg gamepick" id="segGame"><button data-v="cricket">Cricket</button><button data-v="x01">501</button><button data-v="bar">Jeux de bar</button></div>
-  <div class="seg gamepick barpick" id="segBar"><button data-v="killer">Killer</button><button data-v="shanghai">Shanghai</button><button data-v="clock">L'horloge</button><button data-v="halveit">Halve-it</button></div>
+  <div class="seg gamepick" id="segGame"><button data-v="cricket">Cricket</button><button data-v="x01">501</button><button data-v="bar">Mini jeux</button></div>
+  <div class="seg gamepick barpick" id="segBar"><button data-v="killer">Killer</button><button data-v="clock">L'horloge</button><button data-v="shanghai">Shanghai</button><button data-v="halveit">Halve-it</button></div>
   <p id="gRules" class="grules"></p>
 
   <div class="grp">
@@ -4087,7 +4087,7 @@ html[data-skin] body #setup .grules .rgoal i{color:var(--accent)!important}
   <div class="ovh"><h2>Historique</h2>
     <button class="circ" id="hsClose" aria-label="Fermer"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
   <div class="seg mini htabs" id="hTabs"><button data-v="games" class="sel">Parties</button><button data-v="players">Joueurs</button><button data-v="teams">Équipes</button><button data-v="records">Records</button></div>
-  <div class="seg mini htabs" id="hGame"><button data-v="all" class="sel">Tout</button><button data-v="cricket">Cricket</button><button data-v="x01">501</button><button data-v="bar">Bar</button></div>
+  <div class="seg mini htabs" id="hGame"><button data-v="all" class="sel">Tout</button><button data-v="cricket">Cricket</button><button data-v="x01">501</button><button data-v="bar">Mini jeux</button></div>
   <div id="hBody"></div>
   <div class="hbk"><button class="big dark" id="hExport">Exporter une sauvegarde</button><button class="big dark" id="hImport">Importer</button>
     <input type="file" id="hFile" accept="application/json,.json" hidden></div>
@@ -7092,7 +7092,7 @@ const bgOf=e=>{const c=getComputedStyle(e).backgroundColor;return c&&c!=='rgba(0
 /* menu : bouton du bas = faux switch « Tout bon ? » → « Suivant → » */
 {const _sp=setupPage;setupPage=function(n,anim){const r=_sp.apply(this,arguments);
    $('go').innerHTML='<i class="gth"></i><b class="ga">Tout bon ?</b><em>'+(n===2?'C\'est parti':'Suivant')+' →</em>';
-   if(n===2){const h=SU.querySelector('.sh h1'),gn={cricket:'Cricket',x01:'501',killer:'Killer'}[S.game]||'';h.innerHTML='Joueurs <span class="gtag">'+gn+'</span>'}return r}}
+   if(n===2){const h=SU.querySelector('.sh h1'),gn={cricket:'Cricket',x01:String(S.xstart||501),killer:'Killer',clock:'L\'horloge',shanghai:'Shanghai',halveit:'Halve-it'}[S.game]||'';h.innerHTML='Joueurs <span class="gtag">'+gn+'</span>'}return r}}
 {let SKIP=false;const pass=t=>{SKIP=true;try{t.click()}finally{SKIP=false}};
  document.addEventListener('click',e=>{if(SKIP||!e.target.closest)return;const t=e.target.closest('#hPlay,#hResume,#drawGo,#go');if(!t)return;
    if(t.id==='drawGo'&&t.style.visibility==='hidden')return;
@@ -7135,8 +7135,9 @@ new MutationObserver(()=>{const box=$('slots');box.querySelectorAll('.slot.lock'
   .observe($('slots'),{subtree:true,attributes:true,attributeFilter:['class'],childList:true});
 {const w=document.createElement('div');w.className='dsw';w.innerHTML='<i class="hth"></i>';$('drawGo').parentElement.insertBefore(w,$('drawGo'));w.append($('drawAgain'),$('drawGo'));
  $('drawAgain').textContent='Relancer';$('drawGo').textContent='C\'est parti !';
- $('drawAgain').addEventListener('click',e=>{if(w.dataset.k){delete w.dataset.k;return}e.stopImmediatePropagation();haptic();w.classList.add('again');
-   setTimeout(()=>{w.dataset.k=1;$('drawAgain').click();setTimeout(()=>w.classList.remove('again'),350)},220)},true)}
+ $('drawAgain').addEventListener('click',()=>{haptic()},true);
+ $('drawGo').addEventListener('click',e=>{if(w.dataset.k){delete w.dataset.k;return}e.stopImmediatePropagation();haptic();w.classList.add('go');
+   setTimeout(()=>{w.dataset.k=1;$('drawGo').dispatchEvent(new MouseEvent('click',{bubbles:true}));setTimeout(()=>w.classList.remove('go'),450)},300)},true)}
 /* annuler (rond sous le spew) : selon le jeu en cours */
 /* 2e switch du bas : Menu | Triple spew | Annuler — la bulle reste sur Triple spew */
 function f2nudge(dir){const th=document.querySelector('#fbar2 .f2th');if(!th)return;const w=th.offsetWidth*.55*dir;
@@ -7349,6 +7350,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
   const row=e.target.closest('.row');if(!row||!XG||XG.winner!==null)return;const k=[...$('grid').children].indexOf(row);
   const rows=bcRows(),me=XG.players[XG.cur],lab=rows[bcStart()+k];
   if(lab===undefined)return;
+  {const T=TARGETS[k],mine=R.mk[T]&&R.mk[T][XG.cur];if(!e.target.closest('.num')&&!(mine&&mine.contains(e.target)))return}
   if(lab!==bcTgt(me)){haptic();anim(row.querySelector('.num'),'shake',400);xMiss();return}   // un numéro qui ne sert à rien = spew
   anim(row.querySelector('.num'),'flash',450);
   if(XG.mode==='hi'){if(lab==='D'||lab==='T'){hiPick(lab);return}if(lab==='B'){xThrow(25,Math.min(2,XG.mult));return}}
@@ -7412,12 +7414,12 @@ $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
 /* spew : couleur du joueur en cours, ou du thème si couleurs joueurs désactivées */
 function spwSet(p,i){let c='';try{if(S.pcolOff)c=(S.th&&S.th.acc)||'#ff5a1f';else if(p){const n=p.members?(p.members[0].name||p.members[0]):p.name;c=pcol(n)}}catch(e){}
   if(!/^#[0-9a-f]{6}$/i.test(c||''))c=PFB[(i||0)%PFB.length];document.documentElement.style.setProperty('--spw',c)}
-{const _r=render;render=function(){const r=_r.apply(this,arguments);try{if(G&&G.players)spwSet(G.players[G.cur],G.cur)}catch(e){}return r}}
-{const _r=bcRender;bcRender=function(){const r=_r.apply(this,arguments);try{if(G&&G.players)spwSet(G.players[G.cur],G.cur)}catch(e){}return r}}
+{const _r=render;render=function(){const r=_r.apply(this,arguments);try{if(G&&G.players){const i=shownCur();spwSet(G.players[i],i)}}catch(e){}return r}}
+{const _r=bcRender;bcRender=function(){const r=_r.apply(this,arguments);try{if(G&&G.players){const i=shownCur();spwSet(G.players[i],i)}}catch(e){}return r}}
 {const _r=xRender;xRender=function(){const r=_r.apply(this,arguments);try{if(XG)spwSet(XG.players[XG.cur],XG.cur)}catch(e){}return r}}
-{const _r=kRender;kRender=function(){const r=_r.apply(this,arguments);try{if(KG)spwSet(KG.players[KG.cur],KG.cur)}catch(e){}return r}}
+{const _r=kRender;kRender=function(){const r=_r.apply(this,arguments);try{if(KG){const i=KG.winner!==null?KG.winner:(KHOLD?KHOLD.who:KG.cur);spwSet(KG.players[i],i)}}catch(e){}return r}}
 /* règles : l'ancien texte glisse dehors, le nouveau arrive du côté du jeu choisi */
-{const GO=['cricket','x01','killer','shanghai','clock','halveit'];let lastG=null;const _sr=showRules;
+{const GO=['cricket','x01','killer','clock','shanghai','halveit'];let lastG=null;const _sr=showRules;
   showRules=function(){const e=$('gRules');const g=S.game||'cricket',old=e?e.innerHTML:'';const r=_sr.apply(this,arguments);
     try{if(e&&lastG!==null&&lastG!==g&&old&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
       const d=GO.indexOf(g)>GO.indexOf(lastG)?1:-1,E='cubic-bezier(.3,1.25,.45,1)';
@@ -7426,6 +7428,13 @@ function spwSet(p,i){let c='';try{if(S.pcolOff)c=(S.th&&S.th.acc)||'#ff5a1f';els
       o.animate([{translate:'0 0',opacity:1},{translate:(-d*100)+'% 0',opacity:0}],{duration:320,easing:'cubic-bezier(.4,0,.6,1)',fill:'forwards'}).onfinish=()=>o.remove();
       [...e.children].filter(x=>x!==o).forEach(x=>x.animate([{translate:(d*100)+'% 0',opacity:0},{translate:'0 0',opacity:1}],{duration:750,easing:E,fill:'backwards'}))}}catch(err){}
     lastG=g;return r}}
+
+/* plateaux de jeu : un doigt qui glisse (défilement, geste) ne compte jamais comme une fléchette */
+{let P0=null;const Z='#grid,#scores,#xkeys,#xplayers,#kplayers';
+ document.addEventListener('pointerdown',e=>{P0={x:e.clientX,y:e.clientY,mv:false}},true);
+ document.addEventListener('pointermove',e=>{if(P0&&!P0.mv&&Math.hypot(e.clientX-P0.x,e.clientY-P0.y)>12)P0.mv=true},true);
+ const kill=e=>{if(P0&&P0.mv&&e.target.closest&&e.target.closest(Z)){e.stopImmediatePropagation();e.preventDefault()}};
+ window.addEventListener('click',kill,true)}
 </script>
 </body>
 </html>
