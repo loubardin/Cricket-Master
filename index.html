@@ -3923,6 +3923,25 @@ html[data-skin] body #setup .grules .rgoal i{color:var(--accent)!important}
 #gRules{position:relative}
 #setup{overflow-x:hidden!important}
 #gRules .rold{position:absolute;inset:0;pointer-events:none}
+
+/* stats joueurs : même tableau que le cricket à x joueurs */
+html body #hist #hBody .cbd{display:grid;grid-template-columns:var(--lw) repeat(var(--n),var(--cw));overflow-x:auto;overflow-y:visible;padding:8px 0 14px;flex:0 0 auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+html body #hist #hBody .cbd::-webkit-scrollbar{display:none}
+html body #hist #hBody .cbd *{font-family:"FunTxt","Fun",sans-serif!important;font-weight:400!important}
+html body #hist #hBody .cbd .cl0,html body #hist #hBody .cbd .cl{position:sticky;left:0;z-index:2;background:var(--m-home,var(--page));display:grid;place-items:center}
+html body #hist #hBody .cbd .ch{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:calc(var(--cw)*.04);height:calc(var(--cw)*1.75);max-height:148px;min-height:118px;border-radius:23px;color:var(--ink);margin:0 2px 12px;text-align:center}
+html body #hist #hBody .cbd .ch.top{background:var(--pc);color:var(--btx,#fff);box-shadow:0 0 0 5.75px var(--pc);margin-inline:6px}
+html body #hist #hBody .cbd .ch .cn{font-size:min(23px,calc(var(--cw)*.27));line-height:1;text-transform:uppercase;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 4px}
+html body #hist #hBody .cbd .ch .cw{font-size:min(65px,calc(var(--cw)*.78));line-height:.82}
+html body #hist #hBody .cbd .ch .cs{font-size:min(11px,calc(var(--cw)*.14));letter-spacing:.02em;text-transform:uppercase;opacity:.9}
+html body #hist #hBody .cbd .ch .cd{display:inline-block;width:.6em;height:.6em;border-radius:50%;background:var(--pc);margin-right:.25em;vertical-align:.08em}
+html body #hist #hBody .cbd .ch.top .cd{display:none}
+html body #hist #hBody .cbd .cl b{display:grid;place-items:center;width:calc(var(--lw) - 12px);height:52px;border-radius:99px;background:var(--accent);box-shadow:0 0 0 5.75px var(--accent);color:var(--btx,#fff);font-size:min(17px,4.4vw);line-height:1;text-align:center;padding:0 4px;box-sizing:border-box}
+html body #hist #hBody .cbd .cl,html body #hist #hBody .cbd .cv{height:61px;margin-bottom:13px}
+html body #hist #hBody .cbd .cv{display:grid;place-items:center;font-size:min(30px,calc(var(--cw)*.36));color:var(--ink);line-height:1}
+html body #hist #hBody .cbd .cv span{display:grid;place-items:center;min-width:1.9em;height:1.9em;padding:0 .35em;border-radius:99px;box-sizing:border-box}
+html body #hist #hBody .cbd .cv.best span{background:var(--pc);color:var(--btx,#fff)}
+html body #hist #hBody .cbd .cv.nil{color:var(--mute);opacity:.6}
 </style>
 </head>
 <body>
@@ -5612,8 +5631,8 @@ function renderHist(){
   }else if(HSEL.tab==='players'){
     const A=playerAgg(list),tab=X=>`<div class="hscroll"><table class="htab"><tr><th></th><th>Parties</th><th>Vict.</th><th>%</th><th>MPR</th><th>Top MPR</th><th>Spews</th><th>Vies prises</th><th>Moy. 301</th><th>180</th><th>Finish</th></tr>`+
       X.map(a=>`<tr><td>${dot(a.name)}${esc(a.name)}</td><td>${a.games}</td><td>${a.wins}</td><td>${Math.round(a.wins*100/a.games)}%</td><td>${a.md?fr(a.mh*3/a.md):'–'}</td><td>${a.bestMpr?fr(a.bestMpr):'–'}</td><td>${a.spews}</td><td>${a.k?a.kills:'–'}</td><td>${a.xd?fr(a.xp*3/a.xd):'–'}</td><td>${a.x?a.x180:'–'}</td><td>${a.xco||'–'}</td></tr>`).join('')+'</table></div>';
-    const H=A.filter(a=>!a.bot),B=A.filter(a=>a.bot);
-    b.innerHTML=(H.length?tab(H):'')+(B.length?'<div class="hsub">🤖 Bots</div>'+tab(B):'')||'<p class="hempty">Aucune partie.</p>';
+    const H=A.filter(a=>!a.bot);
+    b.innerHTML=H.length?statBoard(H):'<p class="hempty">Aucune partie.</p>';
   }else if(HSEL.tab==='teams'){
     const T=teamAgg(HIST);
     b.innerHTML=T.length?`<table class="htab"><tr><th>Équipe</th><th>Parties</th><th>Vict.</th><th>%</th><th>MPR</th></tr>`+
@@ -6294,7 +6313,7 @@ function xBarThrow(n,m,quiet){
   if(end==='turn'&&XG.mode==='hi'&&XG.hip&&tsum===0&&me.rem>0){const b=me.rem;me.rem=Math.floor(me.rem/2);d.halve=b-me.rem;me.lost+=d.halve;me.halves++;me.hv=me.hv||[];me.hv[XG.round-1]=d.halve}   // pénalité : score divisé par deux
   if(end){me.turns++;me.last=turn;if(me.members)me.mi=(me.mi+1)%me.members.length;XG.turn=[];me.best=Math.max(me.best,tsum);
     if(end==='win'){XG.legW=who;XG.winner=who}
-    else if(XG.mode==='clk'&&XG.clkr&&turn.length>=3&&turn.filter(x=>x.type==='hit').reduce((a,x)=>a+x.m,0)>=XG.clkr){d.again=1}   // MPR du tour ≥ seuil : il rejoue
+    else if(XG.mode==='clk'&&XG.clkr&&turn.length>=3&&turn.filter(x=>x.type==='hit').reduce((a,x)=>a+x.m,0)>=XG.clkr){d.again=1;if(me.members)me.mi=(me.mi+me.members.length-1)%me.members.length}   // MPR du tour ≥ seuil : il rejoue
     else{const ord=i=>(i-XG.starter+N)%N;let c=who,wrap=false;
       do{const pc=c;c=(c+1)%N;if(ord(c)<=ord(pc))wrap=true}while(P[c].out&&c!==who);
       if(wrap)XG.round++;XG.cur=c;
@@ -6314,7 +6333,7 @@ function xBarFx(d,me,who,end,tsum){
   else if(d.type==='off'){SFX.dead&&SFX.dead();if(card)anim(card,'xno',450)}
   else{anim($('bS'),'shk',450);spewFx('','',1,false,card)}
   if(d.sh){setTimeout(()=>{toast('SHANGHAI !',d.bonus?'+'+d.bonus+' points':'');SFX.big(5);confetti(90)},120);if(!end||end!=='win')return}
-  if(d.again){setTimeout(()=>{toast(esc(me.members?me.members[(me.mi+me.members.length-1)%me.members.length]:me.name)+' REJOUE !','MPR '+turn3(me)+' ce tour');SFX.ignite()},200)}
+  if(d.again){setTimeout(()=>{toast(esc(me.members?me.members[me.mi]:me.name)+' REJOUE !','MPR '+turn3(me)+' ce tour');SFX.ignite()},200)}
   if(d.halve){setTimeout(()=>{toast('÷ 2 !','−'+d.halve+' points');SFX.loser(2);if(card)anim(card,'khit',700)},250)}
   if(end==='win'){setTimeout(()=>{SFX.win();confetti(90)},150);return}
   if(d.extra)setTimeout(()=>{toast('ÉGALITÉ !','prolongation à la bulle');SFX.ignite()},200);
@@ -7439,6 +7458,21 @@ function spwSet(p,i){let c='';try{if(S.pcolOff)c=(S.th&&S.th.acc)||'#ff5a1f';els
 /* horloge : « rejoue » passe de « > 1 / > 2 » à « ≥ 2 / ≥ 3 » (même seuil réel) */
 if(!S.clkrv2){if(S.clkr)S.clkr=Math.min(3,S.clkr+1);S.clkrv2=1;store.set(K_S,S)}
 if(XG&&XG.mode==='clk'&&!XG.clkrv2){if(XG.clkr)XG.clkr++;XG.clkrv2=1}
+
+/* stats joueurs : tableau façon cricket (colonnes = joueurs, bulles = stats, meilleure valeur dans la couleur du joueur) */
+function statBoard(H){
+  const n=H.length,bw=$('hBody').clientWidth,W=(bw>200?bw:Math.min(innerWidth,520)-40),lw=Math.round(Math.max(74,W*.215)),cw=Math.max(64,Math.floor((W-lw)/Math.min(n,4)));
+  const col=(a,i)=>{const c=pcol(a.name);return /^#[0-9a-f]{6}$/i.test(c||'')?c:PFB[i%PFB.length]};
+  const RW=[['Parties',a=>a.games,0],['%',a=>a.games?Math.round(a.wins*100/a.games):null,0,'%'],['MPR',a=>a.md?a.mh*3/a.md:null,2],['Top MPR',a=>a.bestMpr||null,2],
+    ['Spews',a=>a.spews,0],['Vies prises',a=>a.k?a.kills:null,0],['Moy. 501',a=>a.xd?a.xp*3/a.xd:null,2],['180',a=>a.x?a.x180:null,0],['Finish',a=>a.xco||null,0]]
+    .filter(r=>H.some(a=>r[1](a)!==null));
+  const maxW=Math.max(...H.map(a=>a.wins));
+  let h=`<div class="cbd" style="--n:${n};--lw:${lw}px;--cw:${cw}px"><div class="cl0"></div>`;
+  H.forEach((a,i)=>{h+=`<div class="ch${a.wins===maxW&&maxW>0?' top':''}" style="--pc:${col(a,i)}"><span class="cn">${esc(a.name)}</span><span class="cw">${a.wins}</span><span class="cs">victoire${a.wins>1?'s':''}</span></div>`});
+  RW.forEach(([lab,f,dec,suf])=>{const v=H.map(f),nums=v.filter(x=>x!==null),best=nums.length>1?Math.max(...nums):null,uniq=nums.filter(x=>x===best).length===1;
+    h+=`<div class="cl"><b>${lab}</b></div>`;
+    v.forEach((x,i)=>{h+=x===null?`<div class="cv nil">–</div>`:`<div class="cv${best!==null&&uniq&&x===best&&x>0?' best':''}" style="--pc:${col(H[i],i)}"><span>${dec?fr(x):x}${suf||''}</span></div>`})});
+  return h+'</div>'}
 </script>
 </body>
 </html>
