@@ -4114,7 +4114,8 @@ html body #game#game.sk.p2.pn #scores#scores .sc.act>.pills .pill{width:min(6.4v
 html body #game#game.sk.p2.pn #scores#scores>.sc.act{grid-template-columns:1fr var(--colw)!important;grid-template-areas:". ." "pills nm" "pills pts" "pills mpr" ". ."!important}
 html body #game#game.sk.p2.pn.curL #scores#scores>.sc.act{grid-template-columns:var(--colw) 1fr!important;grid-template-areas:". ." "nm pills" "pts pills" "mpr pills" ". ."!important}
 html body #game#game.sk.p2.pn #scores#scores .sc.act>.pills{justify-self:center!important;align-items:center!important}
-html body #game#game.sk.p2.pn #scores#scores>.sc.act>:is(.nm,.pts,.mpr){translate:none!important}
+html body #game#game.sk.p2.pn #scores#scores>.sc.act>:is(.nm,.pts,.mpr){translate:calc(var(--colw)*-.08) 0!important}
+html body #game#game.sk.p2.pn #scores#scores>.sc{transition:left .45s cubic-bezier(.3,1.25,.5,1),width .45s cubic-bezier(.3,1.25,.5,1)!important}
 html body #game#game.sk.p2.pn #scores#scores .sc.act>.pills{width:auto!important}
 </style>
 </head>
@@ -7245,14 +7246,15 @@ function pnOrder(){const g=$('game');if(!g.classList.contains('pn')||!R||!G)retu
   const prev=R.pnCur,turned=prev!==undefined&&prev!==cur;
   const all=[...TARGETS.map(t=>R.num[t]),...G.players.flatMap((p,i)=>TARGETS.map(t=>R.mk[t][i]))],old=turned?all.map(c=>c.offsetLeft):null;
   g.classList.add('curR');g.classList.remove('curL','rot');
-  G.players.forEach((p,i)=>{R.sc[i].c.dataset.o=i;R.sc[i].c.style.order=i*2;TARGETS.forEach(t=>{R.mk[t][i].style.order=i*2})});
-  TARGETS.forEach(t=>{R.num[t].style.order=cur*2-1});
+  const pos=i=>(i-cur+n)%n;   // carrousel : colonne des numéros toujours à gauche, joueur en cours juste à côté, puis l'ordre de jeu
+  G.players.forEach((p,i)=>{R.sc[i].c.dataset.o=pos(i);R.sc[i].c.style.order=pos(i)*2;TARGETS.forEach(t=>{R.mk[t][i].style.order=pos(i)*2})});
+  TARGETS.forEach(t=>{R.num[t].style.order=-1});
   if(turned)all.forEach((c,k)=>{const dx=old[k]-c.offsetLeft;if(Math.abs(dx)>1)c.animate([{transform:'translateX('+dx+'px)'},{transform:'none'}],{duration:450,easing:'cubic-bezier(.3,1.25,.5,1)'})});
-  if(R.pnCur!==cur){R.pnCur=cur;const m=g.querySelector('main'),x=R.num[15].offsetLeft;m.scrollTo({left:Math.max(0,x),behavior:turned?'smooth':'auto'})}
+  if(R.pnCur!==cur){R.pnCur=cur;const m=g.querySelector('main');m.scrollTo({left:0,behavior:turned?'smooth':'auto'})}
 }
 function pnPlace(){const g=$('game');if(!g.classList.contains('pn')||!R||!G)return;
   const W=innerWidth,n=G.players.length,mid=W*.15,colw=Math.max(W*.20,(W*.93-mid)/n),cur=shownCur();g.style.setProperty('--colw',colw+'px');
-  R.sc.forEach((sc,i)=>{const L=i*colw+(i>cur?mid:0),w=i===cur?colw+mid:colw;
+  R.sc.forEach((sc,i)=>{const k=(i-cur+n)%n,L=k===0?0:mid+k*colw,w=k===0?colw+mid:colw;
     sc.c.style.setProperty('left',L+'px','important');sc.c.style.setProperty('width',w+'px','important')});
   $('scores').style.setProperty('width',(colw*n+mid)+'px','important');
 }
