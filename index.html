@@ -4110,6 +4110,10 @@ html body #game#game:not(.bcg) #grid{flex-direction:column-reverse!important}
 html body #game#game.sk.p2.pn #scores#scores .sc.act>.pills{width:calc(min(6.4vw,3dvh) + 1.6vw)!important;align-items:center!important;justify-content:center!important}
 html body #game#game.sk.p2.pn #scores#scores .sc.act>.pills .pill{width:min(6.4vw,3dvh)!important;min-width:0!important;height:min(6.4vw,3dvh)!important;padding:0!important;border-radius:50%!important;
   display:grid!important;place-items:center!important;font-size:min(2.6vw,1.25dvh)!important;line-height:1!important;letter-spacing:-.02em;overflow:hidden}
+
+html body #game#game.sk.p2.pn #scores#scores>.sc.act{grid-template-columns:2.4vw min(6.4vw,3dvh) 1fr 2.4vw!important}
+html body #game#game.sk.p2.pn #scores#scores>.sc.act>:is(.nm,.pts,.mpr){translate:none!important}
+html body #game#game.sk.p2.pn #scores#scores .sc.act>.pills{width:auto!important}
 </style>
 </head>
 <body>
@@ -7245,7 +7249,7 @@ function pnOrder(){const g=$('game');if(!g.classList.contains('pn')||!R||!G)retu
   if(R.pnCur!==cur){R.pnCur=cur;const m=g.querySelector('main'),x=R.num[15].offsetLeft;m.scrollTo({left:Math.max(0,x),behavior:turned?'smooth':'auto'})}
 }
 function pnPlace(){const g=$('game');if(!g.classList.contains('pn')||!R||!G)return;
-  const W=innerWidth,n=G.players.length,mid=W*.15,colw=Math.max(W*.20,(W*.93-mid)/n),cur=shownCur();g.style.setProperty('--colw',colw+'px');
+  const W=innerWidth,n=G.players.length,mid=W*.1,colw=Math.max(W*.20,(W*.93-mid)/n),cur=shownCur();g.style.setProperty('--colw',colw+'px');
   R.sc.forEach((sc,i)=>{const L=i*colw+(i>cur?mid:0),w=i===cur?colw+mid:colw;
     sc.c.style.setProperty('left',L+'px','important');sc.c.style.setProperty('width',w+'px','important')});
   $('scores').style.setProperty('width',(colw*n+mid)+'px','important');
