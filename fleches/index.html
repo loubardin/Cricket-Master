@@ -4005,12 +4005,13 @@ html body #home#home .hbtns .hsw.two{width:82vw!important}
 /* ================= DA « FLÈCHES » : on vise les menus avec des fléchettes ================= */
 /* plus de bulles qui glissent dans les menus : l'option choisie porte une marque (croix) plantée là où on a touché */
 html body #setup#setup .seg>.thumb,html body #setup#setup .seg>.gth{display:none!important}
-html body #setup#setup .seg button,html body #setup#setup .seg button.sel{position:relative;color:var(--ink)!important;background:transparent!important;scale:1!important;transform:none!important;box-shadow:none!important;opacity:1!important;z-index:1;isolation:isolate}
-html body #setup#setup .seg button:not(.sel){color:color-mix(in srgb,var(--ink) 55%,transparent)!important}
+html body #setup#setup .seg button{position:relative;color:var(--ink)!important;background:transparent!important;scale:1!important;transform:none!important;box-shadow:none!important;opacity:1!important;z-index:1;isolation:isolate}
+html body #setup#setup .seg button:not(.sel){color:var(--ink)!important}
+html body #setup#setup .seg button.sel{background:var(--accent)!important;color:var(--btx,#fff)!important;border-radius:99px!important;box-shadow:0 0 0 var(--bub-h,5px) var(--accent)!important;z-index:2}
 html body #setup#setup .seg button.sel{text-shadow:none}
 .dmk{position:absolute;z-index:-1;pointer-events:none;width:var(--ms);height:var(--ms);left:var(--mx);top:var(--my);translate:-50% -50%;rotate:var(--mr,0deg)}
 .dmk svg,.dfly svg{display:block;width:100%;height:100%;overflow:visible}
-.dmk path,.dfly path{stroke:var(--m-strong,#141414);stroke-width:19;stroke-linecap:round;fill:none}
+.dmk path,.dfly path{stroke:var(--m-strong,#141414);stroke-width:10;stroke-linecap:round;fill:none}
 .dfly{position:fixed;z-index:400;pointer-events:none;translate:-50% -50%}
 .dmk.new{animation:dmkin .32s cubic-bezier(.3,1.6,.5,1)}
 @keyframes dmkin{0%{scale:1.25}100%{scale:1}}
@@ -4024,7 +4025,7 @@ html body #setup#setup #go em{position:absolute;inset:0;display:grid!important;p
 html body #home#home .hsw:not(.two)>.hth{display:none!important}
 html body #home#home .hsw:not(.two) #hPlay{background:transparent!important;color:var(--ink)!important;box-shadow:inset 0 0 0 var(--bub-bw,1.5px) var(--m-strong)!important}
 
-.dmk .dc,.dfly .dc{fill:var(--accent);transform-box:fill-box;transform-origin:center}
+.dmk .dc{display:none}.dfly .dc{fill:var(--accent);transform-box:fill-box;transform-origin:center}
 .dfly .dc{opacity:0}
 .dmk.new .dc{animation:dpop .3s cubic-bezier(.3,1.6,.5,1)}
 @keyframes dpop{0%{transform:scale(0)}60%{transform:scale(1.18)}100%{transform:scale(1)}}
@@ -7678,7 +7679,7 @@ function paintMarks(){document.querySelectorAll('#setup .seg button').forEach(b=
 function dartFly(x,y,size,hit){const f=el('div','dfly',CROSS);f.style.left=x+'px';f.style.top=y+'px';f.style.width=f.style.height=size+'px';document.body.append(f);
   const r=(Math.random()*20-10);
   const a=f.animate([{transform:`translateY(-18px) scale(2.2) rotate(${r-14}deg)`,opacity:0},{transform:`scale(.9) rotate(${r}deg)`,opacity:1,offset:.7},{transform:`scale(1) rotate(${r}deg)`,opacity:1}],{duration:190,easing:'cubic-bezier(.5,0,.9,.6)',fill:'forwards'});
-  a.onfinish=()=>{if(hit){const c=f.querySelector('.dc');c.style.opacity=1;c.animate([{transform:'scale(0)'},{transform:'scale(1.18)',offset:.6},{transform:'scale(1)'}],{duration:280,easing:'cubic-bezier(.3,1.6,.5,1)'});f.animate([{opacity:1},{opacity:0}],{duration:120,delay:hit==='keep'?260:420,fill:'forwards'}).onfinish=()=>f.remove()}
+  a.onfinish=()=>{if(hit){const c=f.querySelector('.dc');if(hit!=='keep')c.style.opacity=1;c.animate([{transform:'scale(0)'},{transform:'scale(1.18)',offset:.6},{transform:'scale(1)'}],{duration:280,easing:'cubic-bezier(.3,1.6,.5,1)'});f.animate([{opacity:1},{opacity:0}],{duration:120,delay:hit==='keep'?260:420,fill:'forwards'}).onfinish=()=>f.remove()}
     else f.animate([{transform:`scale(1) rotate(${r}deg)`,opacity:1},{transform:`scale(1) rotate(${r+5}deg)`,opacity:1,offset:.25},{transform:`translateY(70px) scale(1) rotate(${r+30}deg)`,opacity:0}],{duration:650,delay:120,easing:'cubic-bezier(.5,0,.9,.5)',fill:'forwards'}).onfinish=()=>f.remove()};
   return r}
 window.addEventListener('click',e=>{
@@ -7696,7 +7697,9 @@ window.addEventListener('click',e=>{
   setTimeout(()=>{haptic();SFX.single();b.classList.remove('dhit');void b.offsetWidth;b.classList.add('dhit');
     if(seg){store.set(DMK_K,DMK)}
     const ev=new MouseEvent('click',{bubbles:true,cancelable:true,clientX:e.clientX,clientY:e.clientY});ev.__dart=1;b.dispatchEvent(ev);
-    if(seg)requestAnimationFrame(()=>{paintMarks();const m=b.querySelector(':scope>.dmk');if(m){m.classList.remove('new');void m.offsetWidth;m.classList.add('new')}})},180)},true);
+    if(seg)requestAnimationFrame(()=>{paintMarks();const m=b.querySelector(':scope>.dmk');if(m){m.classList.remove('new');void m.offsetWidth;m.classList.add('new')}
+      const q=b.getBoundingClientRect(),X=e.clientX-q.left,Y=e.clientY-q.top,Rm=Math.hypot(Math.max(X,q.width-X),Math.max(Y,q.height-Y))+12;
+      b.animate([{clipPath:`circle(0px at ${X}px ${Y}px)`},{clipPath:`circle(${Rm}px at ${X}px ${Y}px)`}],{duration:260,easing:'cubic-bezier(.2,.8,.3,1)'})})},180)},true);
 </script>
 </body>
 </html>
