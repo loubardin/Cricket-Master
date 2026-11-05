@@ -3938,10 +3938,34 @@ html body #hist #hBody .cbd .ch .cd{display:inline-block;width:.6em;height:.6em;
 html body #hist #hBody .cbd .ch.top .cd{display:none}
 html body #hist #hBody .cbd .cl b{display:grid;place-items:center;width:calc(var(--lw) - 12px);height:52px;border-radius:99px;background:var(--accent);box-shadow:0 0 0 5.75px var(--accent);color:var(--btx,#fff);font-size:min(17px,4.4vw);line-height:1;text-align:center;padding:0 4px;box-sizing:border-box}
 html body #hist #hBody .cbd .cl,html body #hist #hBody .cbd .cv{height:61px;margin-bottom:13px}
-html body #hist #hBody .cbd .cv{display:grid;place-items:center;font-size:min(30px,calc(var(--cw)*.36));color:var(--ink);line-height:1}
-html body #hist #hBody .cbd .cv span{display:grid;place-items:center;min-width:1.9em;height:1.9em;padding:0 .35em;border-radius:99px;box-sizing:border-box}
+html body #hist #hBody .cbd .cv{display:grid;place-items:center;font-size:min(30px,calc(var(--cw)*.31));letter-spacing:-.02em;color:var(--ink);line-height:1}
+html body #hist #hBody .cbd .cv span{display:grid;place-items:center;min-width:1.9em;height:1.9em;padding:0 .3em;max-width:calc(var(--cw) - 4px);border-radius:99px;box-sizing:border-box}
 html body #hist #hBody .cbd .cv.best span{background:var(--pc);color:var(--btx,#fff)}
 html body #hist #hBody .cbd .cv.nil{color:var(--mute);opacity:.6}
+
+/* menu : Statistiques + Historique côte à côte */
+#home .hrow2{display:grid;grid-template-columns:1fr 1fr;gap:3vw;width:100%}
+#home .hrow2>.big{width:100%!important;margin:0!important}
+/* stats / historique */
+#hist.hm-games #hTabs{display:none!important}
+#hist.hm-stats .hbk{display:none!important}
+html body #hist #hBody .cbt{display:flex;align-items:baseline;justify-content:space-between;margin:14px 2px 2px;font-family:"FunTxt","Fun",sans-serif!important;font-weight:400!important;font-size:24px;color:var(--ink);line-height:1}
+html body #hist #hBody .cbt small{font-family:"Lbl",sans-serif!important;font-weight:500!important;font-size:13px;color:var(--mute)}
+html body #hist #hBody .cbt:first-child{margin-top:2px}
+/* cartes de partie dans la DA */
+html body #hist #hBody .hg{position:relative;flex:0 0 auto;border-radius:23px;box-shadow:inset 0 0 0 var(--bub-bw,1.5px) var(--m-strong);padding:14px 16px 14px;display:flex;flex-direction:column;gap:10px}
+html body #hist #hBody .hg .hgt{display:flex;align-items:baseline;gap:8px;padding-right:34px;flex-wrap:wrap}
+html body #hist #hBody .hg .hgt b{font-family:"FunTxt","Fun",sans-serif!important;font-weight:400!important;font-size:22px;line-height:1;color:var(--ink)}
+html body #hist #hBody .hg .hgt em{font-family:"Lbl",sans-serif!important;font-style:normal;font-weight:600!important;font-size:14px;color:var(--ink)}
+html body #hist #hBody .hg .hgm{font-family:"Lbl",sans-serif!important;font-weight:500!important;font-size:12.5px;color:var(--mute);margin-top:-6px}
+html body #hist #hBody .hg .hgp{display:flex;flex-wrap:wrap;gap:8px 6px;align-items:center}
+html body #hist #hBody .hg .hgp span{display:inline-flex;align-items:baseline;gap:6px;height:34px;align-items:center;padding:0 12px;border-radius:99px;font-family:"FunTxt","Fun",sans-serif!important;font-weight:400!important;font-size:17px;color:var(--ink);box-shadow:inset 0 0 0 var(--bub-bw,1.5px) color-mix(in srgb,var(--m-strong) 22%,transparent)}
+html body #hist #hBody .hg .hgp span i{font-family:"Lbl",sans-serif!important;font-style:normal;font-weight:500!important;font-size:14px;color:var(--mute)}
+html body #hist #hBody .hg .hgp span.w{background:var(--pc);color:var(--btx,#fff);box-shadow:0 0 0 4px var(--pc);margin:0 4px}
+html body #hist #hBody .hg .hgp span.w i{color:var(--btx,#fff);opacity:.85}
+html body #hist #hBody .hg .hdel{position:absolute;top:12px;right:12px;width:30px;height:30px;border-radius:50%;border:0;background:transparent;box-shadow:inset 0 0 0 var(--bub-bw,1.5px) var(--m-strong);color:var(--ink);font-size:13px;display:grid;place-items:center;padding:0}
+html body #hist #hBody .hg.note .hgp span{font-size:15px}
+html body #hist #hBody .hg.note .hgp span b{font-family:"FunTxt","Fun",sans-serif!important;font-weight:400!important}
 </style>
 </head>
 <body>
@@ -3968,7 +3992,7 @@ html body #hist #hBody .cbd .cv.nil{color:var(--mute);opacity:.6}
   <div class="hbtns">
     <button id="hResume" class="big light">Reprendre la partie</button>
     <button id="hPlay" class="big acc">Jouer</button>
-    <button id="hStats" class="big dark">Statistiques</button>
+    <div class="hrow2"><button id="hStats" class="big dark">Statistiques</button><button id="hHist" class="big dark">Historique</button></div>
     <div class="hduo" hidden><button id="hCricket" class="big acc">Cricket</button><button id="hKiller" class="big acc">Killer</button></div>
     <button id="hRoster" hidden></button>
   </div>
@@ -7473,6 +7497,76 @@ function statBoard(H){
     h+=`<div class="cl"><b>${lab}</b></div>`;
     v.forEach((x,i)=>{h+=x===null?`<div class="cv nil">–</div>`:`<div class="cv${best!==null&&uniq&&x===best&&x>0?' best':''}" style="--pc:${col(H[i],i)}"><span>${dec?fr(x):x}${suf||''}</span></div>`})});
   return h+'</div>'}
+
+/* ===== Statistiques (joueurs / équipes, par jeu) et Historique (parties, notes) ===== */
+let HMODE='stats';
+$('hTabs').innerHTML='<button data-v="players" class="sel">Joueurs</button><button data-v="teams">Équipes</button>';
+$('hStats').addEventListener('click',()=>{HMODE='stats';if(!['players','teams'].includes(HSEL.tab))HSEL.tab='players'},true);
+$('hHist').addEventListener('click',()=>{haptic();SFX.open();HMODE='games';renderHist();$('hist').classList.add('on');requestAnimationFrame(placeThumbs)});
+const STG=['cricket','x01','killer','clock','shanghai','halveit'];
+const stScope=g=>g==='all'?STG:g==='bar'?STG.slice(2):[g];
+const tKey=x=>(x.members||[x.name]).slice().sort().join(' & ');
+function stEnts(r,team){const out=[];
+  if(team){if(!r.teams)return out;r.p.forEach(x=>{if(x.members&&x.members.length>1)out.push([tKey(x),x,true])})}
+  else r.p.forEach(x=>(x.members||[x.name]).forEach(n=>{if(!isBot(n))out.push([n,x,!x.members])}));return out}
+function stBets(game,team){const E=BETH.flatMap(n=>n.list).concat(BET).filter(e=>e.game===game),U={};
+  E.forEach(e=>{const N=betNet([e]),u=betUnit(e),m=N[u]||{};let map=null;
+    if(team){const r=HIST.find(r=>r.id===e.rid);if(!r||!r.teams)return;map={};r.p.forEach(x=>(x.members||[]).forEach(n=>map[n]=tKey(x)))}
+    Object.entries(m).forEach(([n,v])=>{const k=team?map[n]:n;if(!k)return;(U[u]=U[u]||{});U[u][k]=(U[u][k]||0)+v})});return U}
+const sgn=(v,d)=>(v>.004?'+':v<-.004?'−':'')+(d?fr(Math.abs(v)):fr2(Math.abs(v)));
+function stGame(game,team){
+  const L=HIST.filter(r=>r.game===game),M={};
+  L.forEach(r=>stEnts(r,team).forEach(([k,x,solo])=>{const a=M[k]||(M[k]={name:k,first:k.split(' & ')[0],wins:0,g:0,d:0,h:0,top:0,sp:0,xd:0,xp:0,n180:0,co:0,k:0,best:0,sh:0,hv:0});
+    a.g++;if(x.win)a.wins++;a.sp+=x.spews||0;
+    if(solo&&x.darts){a.d+=x.darts;a.h+=x.hits||0;if(x.darts>=9)a.top=Math.max(a.top,mprOf(x))}
+    if(game==='x01'&&solo){a.xd+=x.darts||0;a.xp+=x.pts||0;a.n180+=x.n180||0;a.co=Math.max(a.co,x.co||0)}
+    if(game==='killer')a.k+=x.kills||0;
+    if(game==='shanghai'||game==='halveit'){a.best=Math.max(a.best,x.rem||0);a.sh+=x.sh||0;a.hv+=x.halves||0}}));
+  const E=Object.values(M).sort((a,b)=>b.wins-a.wins||b.wins/b.g-a.wins/a.g);if(!E.length)return'';
+  const mpr=a=>a.d?a.h*3/a.d:null,P=['Parties',a=>a.g],PC=['%',a=>Math.round(a.wins*100/a.g),x=>x+'%'];
+  const R={cricket:[P,PC,['MPR',mpr,fr],['Top MPR',a=>a.top||null,fr],['Spews',a=>a.sp]],
+    x01:[P,PC,['Moy.',a=>a.xd?a.xp*3/a.xd:null,fr],['180',a=>a.n180],['Finish',a=>a.co||null]],
+    killer:[P,PC,['Vies prises',a=>a.k],['MPR',mpr,fr],['Spews',a=>a.sp]],
+    clock:[P,PC,['Réussite',a=>a.d?Math.round(a.h*100/a.d):null,x=>x+'%']],
+    shanghai:[P,PC,['MPR',mpr,fr],['Record',a=>a.best||null],['Shanghai',a=>a.sh]],
+    halveit:[P,PC,['Record',a=>a.best||null],['÷ 2',a=>a.hv,null,1]]}[game].slice();
+  const B=stBets(game,team);Object.keys(B).sort((a,b)=>(b==='€')-(a==='€')).forEach(u=>R.push([u==='€'?'Paris €':'Paris · '+u,a=>B[u][a.name]!==undefined?B[u][a.name]:null,v=>sgn(v)]));
+  return`<div class="cbt">${GNAME[game]}<small>${(c=>c+' partie'+(c>1?'s':''))(L.filter(r=>!team||r.teams).length)}</small></div>`+sBoard(E,R)}
+function sBoard(E,RW){
+  const n=E.length,bw=$('hBody').clientWidth,W=(bw>200?bw:Math.min(innerWidth,520)-40),lw=Math.round(Math.max(74,W*.215)),cw=Math.max(64,Math.floor((W-lw)/Math.min(n,4)));
+  const col=(a,i)=>{const c=pcol(a.first);return /^#[0-9a-f]{6}$/i.test(c||'')?c:PFB[i%PFB.length]};
+  const RR=RW.filter(r=>E.some(a=>r[1](a)!==null)),maxW=Math.max(...E.map(a=>a.wins)),topN=E.filter(a=>a.wins===maxW).length;
+  let h=`<div class="cbd" style="--n:${n};--lw:${lw}px;--cw:${cw}px"><div class="cl0"></div>`;
+  E.forEach((a,i)=>{h+=`<div class="ch${a.wins===maxW&&maxW>0&&topN===1?' top':''}" style="--pc:${col(a,i)}"><span class="cn">${esc(a.name.replace(/ & /g,'&'))}</span><span class="cw">${a.wins}</span><span class="cs">victoire${a.wins>1?'s':''}</span></div>`});
+  RR.forEach(([lab,f,fmt,low])=>{const v=E.map(f),nums=v.filter(x=>x!==null),best=nums.length>1?(low?Math.min(...nums):Math.max(...nums)):null,uniq=nums.filter(x=>x===best).length===1;
+    h+=`<div class="cl"><b>${esc(lab)}</b></div>`;
+    v.forEach((x,i)=>{h+=x===null?`<div class="cv nil">–</div>`:`<div class="cv${best!==null&&uniq&&x===best&&(low||x>0)?' best':''}" style="--pc:${col(E[i],i)}"><span>${fmt?fmt(x):x}</span></div>`})});
+  return h+'</div>'}
+function hgCard(r){const P=r.p,w=P[r.w]||{};
+  const sub=r.game==='cricket'?(r.mode==='cut'?'coupe-gorge':'standard'):r.game==='x01'?(r.start||501)+' · '+(['simple','double','master'][r.outR]||'double')+' out':r.game==='shanghai'?(r.shr||7)+' tours':r.game==='halveit'?((r.hiseq||HI_CLASSIC).length)+' manches':r.game==='killer'&&r.manche>1?'manche '+r.manche:'';
+  const val=x=>r.game==='cricket'?x.score:r.game==='x01'?(r.legsTo>1?(x.legs||0)+' m.':(x.win?0:(x.rem!==undefined?x.rem:''))):r.game==='killer'?(x.lives?x.lives+' ♥':'💀'):r.game==='clock'?clkLbl(x.tgt):x.rem;
+  const c=x=>{const k=pcol((x.members||[x.name])[0]);return /^#[0-9a-f]{6}$/i.test(k||'')?k:'var(--accent)'};
+  const meta=[fdate(r.date),r.rounds?r.rounds+' tours':'',r.dur>60000?Math.round(r.dur/60000)+' min':''].filter(Boolean).join(' · ');
+  const ord=P.map((x,i)=>i).sort((a,b)=>(b===r.w)-(a===r.w));
+  return`<div class="hg"><div class="hgt"><b>${GNAME[r.game]||r.game}</b>${sub?`<em>${sub}</em>`:''}${r.teams?'<em>· équipes</em>':''}</div><div class="hgm">${meta}</div>
+    <div class="hgp">${ord.map(i=>{const x=P[i],v=val(x);return`<span class="${i===r.w?'w':''}" style="--pc:${c(x)}">${i===r.w?'🏆 ':''}${esc(x.name)}${v!==undefined&&v!==''?` <i>${esc(String(v))}</i>`:''}</span>`}).join('')}</div>
+    <button class="hdel" data-id="${r.id}" aria-label="Supprimer">✕</button></div>`}
+function noteCard(n,cur){const D=betDebts(betNet(n.list));
+  return`<div class="hg note"><div class="hgt"><b>🧾 ${cur?'Note en cours':'Note réglée'}</b><em>${n.list.length} partie${n.list.length>1?'s':''}</em></div><div class="hgm">${cur?'pas encore envoyée':fdate(n.date)}</div>
+    <div class="hgp">${D.length?D.map(x=>`<span>${esc(x.from)} → ${esc(x.to)} <i>${betTxt(x.v,x.u)}</i></span>`).join(''):'<span>Personne ne doit rien</span>'}</div>${cur?'<button class="big" id="bNote">Voir la note 🧾</button>':''}</div>`}
+renderHist=function(){const h=$('hist'),b=$('hBody');
+  h.classList.toggle('hm-games',HMODE==='games');h.classList.toggle('hm-stats',HMODE==='stats');h.classList.remove('tbets');
+  h.querySelector('.ovh h2').textContent=HMODE==='games'?'Historique':'Statistiques';
+  document.querySelectorAll('#hTabs button').forEach(x=>x.classList.toggle('sel',x.dataset.v===HSEL.tab));
+  document.querySelectorAll('#hGame button').forEach(x=>x.classList.toggle('sel',x.dataset.v===HSEL.game));$('hGame').style.display='';
+  if(HMODE==='games'){
+    const L=histFilter().map(r=>({t:r.date,h:hgCard(r)}));
+    if(HSEL.game==='all')BETH.forEach(n=>L.push({t:n.date,h:noteCard(n,false)}));
+    L.sort((a,b)=>b.t-a.t);
+    b.innerHTML=(BET.length&&HSEL.game==='all'?noteCard({list:BET},true):'')+L.map(x=>x.h).join('')||'<p class="hempty">Aucune partie enregistrée pour l\'instant.<br>Chaque partie terminée s\'ajoute ici automatiquement.</p>'}
+  else{const team=HSEL.tab==='teams';
+    b.innerHTML=stScope(HSEL.game).map(g=>stGame(g,team)).join('')||`<p class="hempty">${team?'Aucune partie en équipes pour l\'instant.':'Aucune partie.'}</p>`}
+  requestAnimationFrame(placeThumbs)};
 </script>
 </body>
 </html>
