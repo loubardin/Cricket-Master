@@ -4008,7 +4008,7 @@ html body #killer#killer #kplayers#kplayers.kbub{grid-template-columns:repeat(va
 html body #killer#killer #kplayers#kplayers.kbub>.kc{--bs:var(--kos);justify-self:center!important;align-self:center!important;width:var(--bs)!important;height:var(--bs)!important;min-height:0!important;max-width:none!important;aspect-ratio:1!important;
   --kbg:color-mix(in srgb,var(--pc) 9%,var(--m-home,#f7f2e5));border-radius:50%!important;background:var(--kbg)!important;box-shadow:inset 0 0 0 max(2px,calc(var(--bs)*.022)) var(--pc)!important;border:0!important;outline:0!important;
   display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:calc(var(--bs)*.01)!important;padding:0 12%!important;position:relative!important;isolation:isolate;overflow:visible!important;animation:none!important;opacity:1}
-html body #killer#killer #kplayers#kplayers.kbub>.kc.act{scale:1.28;animation:kbdrift 4.2s ease-in-out infinite!important;z-index:3}
+html body #killer#killer #kplayers#kplayers.kbub>.kc.act{scale:var(--kact,1.2);animation:kbdrift 4.2s ease-in-out infinite!important;z-index:3}
 html body #killer#killer #kplayers#kplayers.kbub>.kc.kfull{--kbg:var(--pc);background:var(--pc)!important}
 html body #killer#killer #kplayers#kplayers.kbub>.kc>*{position:relative!important;z-index:1;grid-area:auto!important;inset:auto!important;transform:none!important}
 html body #killer#killer #kplayers#kplayers.kbub>.kc .kL,html body #killer#killer #kplayers#kplayers.kbub>.kc .kR{display:contents!important}
@@ -4057,6 +4057,33 @@ html body #killer#killer #kplayers#kplayers.kbub>.kc .kk path.g{opacity:.12!impo
 html body #killer#killer #kplayers#kplayers.kbub>.kc.tgt:not(.act):not(.dead){animation:kbtrem .16s linear infinite!important}
 @keyframes kbtrem{0%{translate:0 0}25%{translate:1.2px -.8px}50%{translate:-1px .9px}75%{translate:.8px 1px}100%{translate:0 0}}
 @media (prefers-reduced-motion:reduce){html body #killer#killer #kplayers#kplayers.kbub>.kc.tgt:not(.act){animation:none!important}}
+
+/* ===== Killer bulles v2 : marques derrière la bulle, killer en rouge, fléchettes sous le numéro ===== */
+html body #killer#killer #kplayers#kplayers.kbub>.kc,html body #killer#killer #kplayers#kplayers.kbub>.kc.kfull{background:transparent!important;box-shadow:none!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc>.kbg{position:absolute!important;inset:0!important;z-index:0!important;border-radius:50%;background:var(--kbg);box-shadow:inset 0 0 0 max(2px,calc(var(--bs)*.022)) var(--pc);pointer-events:none}
+html body #killer#killer #kplayers#kplayers.kbub>.kc.act>.kbg{box-shadow:inset 0 0 0 max(2.5px,calc(var(--bs)*.026)) var(--pc),0 calc(var(--bs)*.05) calc(var(--bs)*.12) rgba(0,0,0,.16)}
+html body #killer#killer #kplayers#kplayers.kbub>.kc.kfull{--kbg:#d8261c}
+html body #killer#killer #kplayers#kplayers.kbub>.kc.kfull>.kbg{box-shadow:inset 0 0 0 max(2px,calc(var(--bs)*.022)) #d8261c}
+html body #killer#killer #kplayers#kplayers.kbub>.kc.kfull.act>.kbg{box-shadow:inset 0 0 0 max(2px,calc(var(--bs)*.022)) #d8261c,0 calc(var(--bs)*.05) calc(var(--bs)*.12) rgba(0,0,0,.18)}
+html body #killer#killer #kplayers#kplayers.kbub>.kc>.kxx{display:block!important;position:absolute!important;inset:-9%!important;z-index:-1!important;pointer-events:none}
+html body #killer#killer #kplayers#kplayers.kbub>.kc .kxx path{stroke-width:5.5!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc .kk{display:none!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc .kno{font-size:calc(var(--bs)*.46)!important;margin:calc(var(--bs)*.005) 0 calc(var(--bs)*.02)!important;text-shadow:none!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc .kx{position:relative!important;right:auto!important;top:auto!important;translate:none!important;order:4;margin:0!important;z-index:1!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc .kx .khist{flex-direction:row!important;gap:calc(var(--bs)*.02)!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc .kx .khist .pill,html body #killer#killer #kplayers#kplayers.kbub>.kc.kfull .kx .khist .pill{background:#fff!important;color:#141414!important;border:0!important;box-shadow:inset 0 0 0 1.5px #141414!important;font-family:"Fun",sans-serif!important;font-weight:400!important;
+  font-size:calc(var(--bs)*.068)!important;min-width:calc(var(--bs)*.15)!important;padding:calc(var(--bs)*.008) calc(var(--bs)*.02)!important;border-radius:99px!important;opacity:1!important;line-height:1.15!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc .kx .khist .pill.e{color:#c4beb4!important}
+/* victimes : grisées */
+html body #killer#killer #kplayers#kplayers.kbub>.kc.dead{opacity:1!important;filter:none!important;--pc:#b9b4ab;--kbg:#e9e6e0}
+html body #killer#killer #kplayers#kplayers.kbub>.kc.dead .kname,html body #killer#killer #kplayers#kplayers.kbub>.kc.dead .kno{color:#a8a39a!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc.dead .klives .h{color:#c9c4bb!important;filter:none!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc.dead .kxx path{stroke:#c9c4bb!important}
+/* visables : tremblement léger */
+html body #killer#killer #kplayers#kplayers.kbub>.kc.tgt:not(.act):not(.dead){animation:kbtrem2 .22s linear infinite!important}
+@keyframes kbtrem2{0%{translate:0 0}25%{translate:.5px -.4px}50%{translate:-.5px .4px}75%{translate:.4px .5px}100%{translate:0 0}}
+html body #killer#killer #kplayers#kplayers.kbub>.kc .kname,html body #killer#killer #kplayers#kplayers.kbub>.kc .klives,html body #killer#killer #kplayers#kplayers.kbub>.kc .kno,html body #killer#killer #kplayers#kplayers.kbub>.kc .kx{position:relative!important;z-index:2!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc.dead>.kbg{background:#e9e6e0!important;box-shadow:inset 0 0 0 max(2px,calc(var(--bs)*.022)) #c2bdb4!important}
 </style>
 </head>
 <body>
@@ -7691,15 +7718,16 @@ renderHist=function(){const h=$('hist'),b=$('hBody');
 
 /* Killer « bulles » : taille selon le nombre de joueurs (6 visibles sans défiler), marques en barre / croix / bulle remplie */
 function kBubble(){const box=$('kplayers');if(!box||!KG)return;const n=KG.players.length,o=n-1;
-  box.classList.add('kbub');const kc=n<=2?1:2,kr=Math.ceil(n/kc);box.style.setProperty('--kc',kc);box.style.setProperty('--kr',kr);
+  box.classList.add('kbub');box.style.setProperty('--kact',n<=2?1.22:1.14);const kc=n<=2?1:2,kr=Math.ceil(n/kc);box.style.setProperty('--kc',kc);box.style.setProperty('--kr',kr);
   const H=box.clientHeight||500,W=box.clientWidth||360;
-  const gap=Math.round(W*.065),kos=Math.round(Math.min((H-gap*(kr+1))/kr,(W-gap*(kc+1))/kc,n<=2?H*.31:9999))*(n>2?.9:1);box.style.setProperty('--kos',kos+'px');box.style.setProperty('--kgap',gap+'px');
+  const gap=Math.round(W*.035),kos=Math.round(Math.min((H-gap*(kr+1))/kr,(W-gap*(kc+1))/kc,n<=2?H*.3:9999)*(n>2?.95:1));box.style.setProperty('--kos',kos+'px');box.style.setProperty('--kgap',gap+'px');
   box.querySelectorAll(':scope>.kc').forEach(c=>{const i=+c.dataset.i,p=KG.players[i];if(!p)return;c.classList.add('kbc');
-    const ox=c.querySelector(':scope>.kxx');if(ox)ox.remove();
-    let x=c.querySelector(':scope>.kk');if(!x){x=el('i','kk','<svg viewBox="0 0 40 50"><path class="g" d="M11 6V44M30 6 12 26M17 21 31 44"/><path class="s1" d="M11 6V44"/><path class="s2" d="M30 6 12 26"/><path class="s3" d="M17 21 31 44"/></svg>');c.append(x)}
-    const full=!!p.killer,m=full?3:Math.min(2,Math.floor((p.marks||0)*3/(KG.km||3))),was=+(x.dataset.m||0);
-    [1,2,3].forEach(k=>x.classList.toggle('m'+k,m>=k));
-    if(m>was){x.querySelectorAll('.s'+m).forEach(pa=>{pa.style.animation='none';void pa.getBBox;pa.style.animation=''});x.classList.remove('mnew');void x.offsetWidth;x.classList.add('mnew');x.dataset.n=m}x.dataset.m=m;
+    const ok=c.querySelector(':scope>.kk');if(ok)ok.remove();
+    if(!c.querySelector(':scope>.kbg'))c.prepend(el('i','kbg'));
+    let x=c.querySelector(':scope>.kxx');if(!x){x=el('i','kxx','<svg viewBox="30 30 140 140"><path class="b1" d="M160 40 40 160"/><path class="b2" d="M40 40 160 160"/></svg>');c.prepend(x)}
+    const full=!!p.killer,m=full?2:Math.min(2,Math.floor((p.marks||0)*2/Math.max(1,(KG.km||3)-1))),was=+(x.dataset.m||0);
+    x.classList.toggle('m1',m>=1);x.classList.toggle('m2',m>=2);
+    if(m>was){x.classList.remove('mnew');void x.offsetWidth;x.classList.add('mnew')}x.dataset.m=m;
     c.classList.toggle('kfull',full);
     let col='';try{col=S.pcolOff?((S.th&&S.th.acc)||'#ff5a1f'):pcol(p.members?p.members[0]:p.name)}catch(e){}
     c.style.setProperty('--pc',/^#[0-9a-f]{6}$/i.test(col||'')?col:PFB[i%PFB.length])})}
