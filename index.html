@@ -4012,7 +4012,7 @@ html body #killer#killer #kplayers#kplayers.kbub>.kc.act{scale:1.15;animation:kb
 html body #killer#killer #kplayers#kplayers.kbub>.kc.kfull{background:var(--pc)!important}
 html body #killer#killer #kplayers#kplayers.kbub>.kc>*{position:relative!important;z-index:1;grid-area:auto!important;inset:auto!important;transform:none!important}
 html body #killer#killer #kplayers#kplayers.kbub>.kc .kL,html body #killer#killer #kplayers#kplayers.kbub>.kc .kR{display:contents!important}
-html body #killer#killer #kplayers#kplayers.kbub>.kc .kname{order:1;margin-top:calc(var(--bs)*-.03)!important}html body #killer#killer #kplayers#kplayers.kbub>.kc .klives{order:2}html body #killer#killer #kplayers#kplayers.kbub>.kc .kno{order:3}html body #killer#killer #kplayers#kplayers.kbub>.kc .kx{order:4;margin-top:calc(var(--bs)*.02)}
+html body #killer#killer #kplayers#kplayers.kbub>.kc .kname{order:1;margin-top:calc(var(--bs)*-.03)!important}html body #killer#killer #kplayers#kplayers.kbub>.kc .klives{order:2}html body #killer#killer #kplayers#kplayers.kbub>.kc .kno{order:3}html body #killer#killer #kplayers#kplayers.kbub>.kc .kx{order:5;margin-top:calc(var(--bs)*.02)}
 html body #killer#killer #kplayers#kplayers.kbub>.kc .kname{color:var(--pc)!important;text-align:center!important;align-self:center!important;font-size:calc(var(--bs)*.11)!important;letter-spacing:.02em;line-height:1!important;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 html body #killer#killer #kplayers#kplayers.kbub>.kc .kno{color:var(--pc)!important;background:transparent!important;font-size:calc(var(--bs)*.4)!important;line-height:.86!important;margin:calc(var(--bs)*.01) 0!important;text-shadow:none!important;box-shadow:none!important;border:0!important;width:auto!important;height:auto!important}
 html body #killer#killer #kplayers#kplayers.kbub>.kc .klives{font-size:calc(var(--bs)*.085)!important;justify-content:center!important;gap:calc(var(--bs)*.012)!important}
@@ -4035,6 +4035,15 @@ html body #killer#killer #kplayers#kplayers.kbub>.kc.act>.kxx{animation:kbdriftx
 @media (prefers-reduced-motion:reduce){html body #killer#killer #kplayers#kplayers.kbub>.kc.act,html body #killer#killer #kplayers#kplayers.kbub>.kc.act>.kxx{animation:none!important}}
 
 html body #killer#killer #kplayers#kplayers.kbub>.kc.kfull .klives .h.on{filter:drop-shadow(0 0 1px var(--btx,#fff)) drop-shadow(0 0 1px var(--btx,#fff))!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc .kk{order:4;display:block;position:relative;z-index:1;width:calc(var(--bs)*.13);height:calc(var(--bs)*.16);margin-top:calc(var(--bs)*.015)}
+.kk svg{width:100%;height:100%;display:block;overflow:visible}
+.kk path{fill:none;stroke:var(--pc);stroke-width:7.5;stroke-linecap:round;stroke-linejoin:round;opacity:0}
+.kk path.g{opacity:.18}
+.kk.m1 .s1,.kk.m2 .s2,.kk.m3 .s3{opacity:1}
+html body #killer#killer #kplayers#kplayers.kbub>.kc.kfull .kk path{stroke:var(--btx,#fff)}
+html body #killer#killer #kplayers#kplayers.kbub>.kc.kfull .kk path.g{opacity:0}
+.kk.mnew[data-n="1"] .s1,.kk.mnew[data-n="2"] .s2,.kk.mnew[data-n="3"] .s3{stroke-dasharray:60;animation:kkdraw .35s ease-out}
+@keyframes kkdraw{from{stroke-dashoffset:60}to{stroke-dashoffset:0}}
 </style>
 </head>
 <body>
@@ -7673,10 +7682,11 @@ function kBubble(){const box=$('kplayers');if(!box||!KG)return;const n=KG.player
   const H=box.clientHeight||500,W=box.clientWidth||360;
   const gap=Math.round(W*.065),kos=Math.round(Math.min((H-gap*(kr+1))/kr,(W-gap*(kc+1))/kc,n<=2?H*.38:9999));box.style.setProperty('--kos',kos+'px');box.style.setProperty('--kgap',gap+'px');
   box.querySelectorAll(':scope>.kc').forEach(c=>{const i=+c.dataset.i,p=KG.players[i];if(!p)return;c.classList.add('kbc');
-    let x=c.querySelector(':scope>.kxx');if(!x){x=el('i','kxx','<svg viewBox="30 30 140 140"><path class="b1" d="M160 40 40 160"/><path class="b2" d="M40 40 160 160"/></svg>');c.prepend(x)}
-    const full=!!p.killer,m=full?2:Math.min(2,p.marks||0),was=+(x.dataset.m||0);
-    x.classList.toggle('m1',m>=1);x.classList.toggle('m2',m>=2);
-    if(m>was){x.classList.remove('mnew');void x.offsetWidth;x.classList.add('mnew')}x.dataset.m=m;
+    const ox=c.querySelector(':scope>.kxx');if(ox)ox.remove();
+    let x=c.querySelector(':scope>.kk');if(!x){x=el('i','kk','<svg viewBox="0 0 40 50"><path class="g" d="M11 6V44M30 6 12 26M17 21 31 44"/><path class="s1" d="M11 6V44"/><path class="s2" d="M30 6 12 26"/><path class="s3" d="M17 21 31 44"/></svg>');c.append(x)}
+    const full=!!p.killer,m=full?3:Math.min(2,Math.floor((p.marks||0)*3/(KG.km||3))),was=+(x.dataset.m||0);
+    [1,2,3].forEach(k=>x.classList.toggle('m'+k,m>=k));
+    if(m>was){x.querySelectorAll('.s'+m).forEach(pa=>{pa.style.animation='none';void pa.getBBox;pa.style.animation=''});x.classList.remove('mnew');void x.offsetWidth;x.classList.add('mnew');x.dataset.n=m}x.dataset.m=m;
     c.classList.toggle('kfull',full);
     let col='';try{col=S.pcolOff?((S.th&&S.th.acc)||'#ff5a1f'):pcol(p.members?p.members[0]:p.name)}catch(e){}
     c.style.setProperty('--pc',/^#[0-9a-f]{6}$/i.test(col||'')?col:PFB[i%PFB.length])})}
