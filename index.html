@@ -3990,6 +3990,9 @@ html body #home#home .skint svg{width:60%;height:60%;fill:none;stroke:var(--ink)
 /* menu : bouton principal à la place et à la taille du bandeau Double / Spew / Triple */
 html body #home#home .hbtns .hsw{height:9dvh!important;margin:0 calc(14px - 6vw) calc(max(16px,calc(var(--sab,0px) - 8px)) - var(--sab,0px) - 4dvh)!important}
 html body #home#home .hbtns .hsw>.big{height:100%!important;min-height:0!important;padding:0!important;font-size:3dvh!important}
+
+/* logo du menu plus grand */
+html body #home#home.simple .board.lmark{width:min(84vw,44dvh)!important;overflow:visible!important}
 </style>
 </head>
 <body>
@@ -7610,14 +7613,13 @@ renderHist=function(){const h=$('hist'),b=$('hBody');
     const T=(ox,oy,sc)=>`translate(${dx+ox}px,${dy+oy}px) scale(${sc})`;
     cx.animate([{transform:T(0,-14,1.9)+' rotate(-12deg)',opacity:0},{transform:T(0,0,.9),opacity:1,offset:.65},{transform:T(0,0,1),opacity:1}],{duration:210,easing:'cubic-bezier(.5,0,.9,.6)',fill:'forwards'});
     setTimeout(()=>{if(my!==tok)return;haptic();
-      if(hit){streak++;bull?SFX.triple():SFX.single();
+      if(hit){SFX.single();
         const ux=d>1?(bx-x)/d:0,uy=d>1?(by-y)/d:-1,a=bull?5:5+9*d/rad,W=[[0,0,1,1],[ux*a,uy*a,1.1,.9],[-ux*a*.45,-uy*a*.45,.95,1.05],[ux*a*.18,uy*a*.18,1.02,.98],[0,0,1,1]];
         g.style.transformOrigin=bx+'px '+by+'px';
         g.animate(W.map(([wx,wy,sx,sy])=>({transform:`translate(${wx}px,${wy}px) scale(${sx},${sy})`})),{duration:650,easing:'ease-out'});
         cx.animate(W.map(([wx,wy])=>({transform:T(wx,wy,1),opacity:1})),{duration:650,easing:'ease-out',fill:'forwards'});
-        if(bull){pop(e.clientX,e.clientY-10,streak>1?'Bulle ! ×'+streak:'Bulle !');try{confetti(24)}catch(err){}}
-        else if(streak>1)pop(e.clientX,e.clientY-10,'×'+streak)}
-      else{streak=0;SFX.dead&&SFX.dead();
+}
+      else{SFX.spew();
         cx.animate([{transform:T(0,0,1),opacity:1},{transform:T(0,0,1)+' rotate(4deg)',opacity:1,offset:.3},{transform:T(0,60,1)+' rotate(25deg)',opacity:0}],{duration:700,delay:250,easing:'cubic-bezier(.5,0,.9,.5)',fill:'forwards'})}
       setTimeout(()=>{if(my!==tok)return;
         cx.getAnimations().forEach(a=>a.cancel());
