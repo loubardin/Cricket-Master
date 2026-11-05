@@ -4006,10 +4006,10 @@ html body #home#home .hbtns .hsw.two{width:82vw!important}
    0 marque : contour noir, nom et numéro à sa couleur · 1re marque : une barre derrière · 2e : la croix · 3e (killer) : bulle remplie, contour épais */
 html body #killer#killer #kplayers#kplayers.kbub{grid-template-columns:repeat(var(--kc,2),var(--kos))!important;grid-template-rows:repeat(var(--kr,2),var(--kos))!important;grid-auto-rows:var(--kos)!important;align-content:center!important;justify-content:center!important;row-gap:var(--kgap)!important;column-gap:var(--kgap)!important}
 html body #killer#killer #kplayers#kplayers.kbub>.kc{--bs:var(--kos);justify-self:center!important;align-self:center!important;width:var(--bs)!important;height:var(--bs)!important;min-height:0!important;max-width:none!important;aspect-ratio:1!important;
-  border-radius:50%!important;background:color-mix(in srgb,var(--pc) 9%,var(--m-home,#f7f2e5))!important;box-shadow:inset 0 0 0 max(2px,calc(var(--bs)*.022)) var(--pc)!important;border:0!important;outline:0!important;
+  --kbg:color-mix(in srgb,var(--pc) 9%,var(--m-home,#f7f2e5));border-radius:50%!important;background:var(--kbg)!important;box-shadow:inset 0 0 0 max(2px,calc(var(--bs)*.022)) var(--pc)!important;border:0!important;outline:0!important;
   display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:calc(var(--bs)*.01)!important;padding:0 12%!important;position:relative!important;isolation:isolate;overflow:visible!important;animation:none!important;opacity:1}
 html body #killer#killer #kplayers#kplayers.kbub>.kc.act{scale:1.15;animation:kbdrift 4.2s ease-in-out infinite!important;z-index:3}
-html body #killer#killer #kplayers#kplayers.kbub>.kc.kfull{background:var(--pc)!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc.kfull{--kbg:var(--pc);background:var(--pc)!important}
 html body #killer#killer #kplayers#kplayers.kbub>.kc>*{position:relative!important;z-index:1;grid-area:auto!important;inset:auto!important;transform:none!important}
 html body #killer#killer #kplayers#kplayers.kbub>.kc .kL,html body #killer#killer #kplayers#kplayers.kbub>.kc .kR{display:contents!important}
 html body #killer#killer #kplayers#kplayers.kbub>.kc .kname{order:1;margin-top:calc(var(--bs)*-.03)!important}html body #killer#killer #kplayers#kplayers.kbub>.kc .klives{order:2}html body #killer#killer #kplayers#kplayers.kbub>.kc .kno{order:3}html body #killer#killer #kplayers#kplayers.kbub>.kc .kx{order:5;margin-top:calc(var(--bs)*.02)}
@@ -4044,6 +4044,12 @@ html body #killer#killer #kplayers#kplayers.kbub>.kc.kfull .kk path{stroke:var(-
 html body #killer#killer #kplayers#kplayers.kbub>.kc.kfull .kk path.g{opacity:0}
 .kk.mnew[data-n="1"] .s1,.kk.mnew[data-n="2"] .s2,.kk.mnew[data-n="3"] .s3{stroke-dasharray:60;animation:kkdraw .35s ease-out}
 @keyframes kkdraw{from{stroke-dashoffset:60}to{stroke-dashoffset:0}}
+html body #killer#killer #kplayers#kplayers.kbub>.kc .kk{position:absolute!important;left:50%!important;bottom:7%!important;top:auto!important;translate:-50% 0;width:calc(var(--bs)*.26)!important;height:calc(var(--bs)*.32)!important;margin:0!important;z-index:2!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc .kx{position:absolute!important;right:4.5%!important;top:50%!important;left:auto!important;bottom:auto!important;translate:0 -50%;margin:0!important;z-index:2!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc .kx .khist{display:flex!important;flex-direction:column!important;gap:calc(var(--bs)*.02)!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc .kx .khist .pill{font-size:calc(var(--bs)*.045)!important;min-width:calc(var(--bs)*.12)!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc .kno{margin-bottom:calc(var(--bs)*.12)!important}
+html body #killer#killer #kplayers#kplayers.kbub>.kc .kno{position:relative;z-index:3!important;text-shadow:3px 0 0 var(--kbg),-3px 0 0 var(--kbg),0 3px 0 var(--kbg),0 -3px 0 var(--kbg),2px 2px 0 var(--kbg),-2px -2px 0 var(--kbg),2px -2px 0 var(--kbg),-2px 2px 0 var(--kbg)!important}
 </style>
 </head>
 <body>
