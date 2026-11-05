@@ -3980,6 +3980,12 @@ html body #home#home #sndT,html body #home#home .hbtns .hrow2{display:none!impor
 html body #home#home .skint svg{width:60%;height:60%;fill:none;stroke:var(--ink);stroke-width:1.7;stroke-linejoin:round}
 #xpick.skinpick .skn{display:grid;grid-template-columns:1fr 1fr;gap:8px;grid-column:1/-1}
 #xpick.skinpick .skgo{height:40px;border-radius:99px;border:0;background:var(--accent);color:var(--btx,#fff);box-shadow:inset 0 0 0 var(--bub-bw,1.5px) var(--m-strong);font:400 16px "Fun",sans-serif}
+
+/* logo : mini jeu, planter la croix dans la bulle */
+#home .board.lmark{pointer-events:auto!important;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+#home .board.lmark path{transform-box:view-box;transform-origin:100px 100px}
+#home .board.lmark .lmg{transform-box:view-box}
+.lmpop{position:fixed;z-index:50;pointer-events:none;translate:-50% -100%;font:400 26px "Fun",sans-serif;color:var(--ink);white-space:nowrap;text-shadow:0 0 6px var(--m-home,#fff),0 0 2px var(--m-home,#fff)}
 </style>
 </head>
 <body>
@@ -7585,6 +7591,33 @@ renderHist=function(){const h=$('hist'),b=$('hBody');
   requestAnimationFrame(placeThumbs)};
 
 {const hb=document.querySelector('#home .hbtns'),r2=hb.querySelector('.hrow2'),sw=hb.querySelector('.hsw');if(r2&&sw)hb.insertBefore(r2,sw)}
+
+/* logo du menu : toucher = planter la croix ; dans la bulle elle encaisse et bouge, au centre : Bulle ! */
+{const sv=document.querySelector('#home .board.lmark'),ci=sv&&sv.querySelector('.lmd'),cx=sv&&sv.querySelector('path');
+ if(sv&&ci&&cx){const NS='http://www.w3.org/2000/svg',g=document.createElementNS(NS,'g');g.setAttribute('class','lmg');ci.parentNode.insertBefore(g,ci);g.append(ci);
+  let tok=0,streak=0;
+  const pop=(x,y,t)=>{const p=el('div','lmpop',t);p.style.left=x+'px';p.style.top=y+'px';document.body.append(p);
+    p.animate([{transform:'translateY(6px) scale(.6)',opacity:0},{transform:'translateY(-10px) scale(1.1)',opacity:1,offset:.25},{transform:'translateY(-34px) scale(1)',opacity:0}],{duration:900,easing:'ease-out'}).onfinish=()=>p.remove()};
+  sv.addEventListener('pointerdown',e=>{e.preventDefault();const my=++tok;try{audioInit()}catch(err){}
+    const r=sv.getBoundingClientRect(),k=200/r.width,x=(e.clientX-r.left)*k,y=(e.clientY-r.top)*k;
+    const cr=ci.getBoundingClientRect(),bx=(cr.left+cr.width/2-r.left)*k,by=(cr.top+cr.height/2-r.top)*k,rad=cr.width/2*k;
+    const dx=x-100,dy=y-100,d=Math.hypot(x-bx,y-by),hit=d<=rad,bull=d<=rad*.24;
+    cx.getAnimations().forEach(a=>a.cancel());g.getAnimations().forEach(a=>a.cancel());
+    const T=(ox,oy,sc)=>`translate(${dx+ox}px,${dy+oy}px) scale(${sc})`;
+    cx.animate([{transform:T(0,-14,1.9)+' rotate(-12deg)',opacity:0},{transform:T(0,0,.9),opacity:1,offset:.65},{transform:T(0,0,1),opacity:1}],{duration:210,easing:'cubic-bezier(.5,0,.9,.6)',fill:'forwards'});
+    setTimeout(()=>{if(my!==tok)return;haptic();
+      if(hit){streak++;bull?SFX.triple():SFX.single();
+        const ux=d>1?(bx-x)/d:0,uy=d>1?(by-y)/d:-1,a=bull?5:5+9*d/rad,W=[[0,0,1,1],[ux*a,uy*a,1.1,.9],[-ux*a*.45,-uy*a*.45,.95,1.05],[ux*a*.18,uy*a*.18,1.02,.98],[0,0,1,1]];
+        g.style.transformOrigin=bx+'px '+by+'px';
+        g.animate(W.map(([wx,wy,sx,sy])=>({transform:`translate(${wx}px,${wy}px) scale(${sx},${sy})`})),{duration:650,easing:'ease-out'});
+        cx.animate(W.map(([wx,wy])=>({transform:T(wx,wy,1),opacity:1})),{duration:650,easing:'ease-out',fill:'forwards'});
+        if(bull){pop(e.clientX,e.clientY-10,streak>1?'Bulle ! ×'+streak:'Bulle !');try{confetti(24)}catch(err){}}
+        else if(streak>1)pop(e.clientX,e.clientY-10,'×'+streak)}
+      else{streak=0;SFX.dead&&SFX.dead();
+        cx.animate([{transform:T(0,0,1),opacity:1},{transform:T(0,0,1)+' rotate(4deg)',opacity:1,offset:.3},{transform:T(0,60,1)+' rotate(25deg)',opacity:0}],{duration:700,delay:250,easing:'cubic-bezier(.5,0,.9,.5)',fill:'forwards'})}
+      setTimeout(()=>{if(my!==tok)return;
+        cx.getAnimations().forEach(a=>a.cancel());
+        cx.animate(hit?[{transform:T(0,0,1),opacity:1},{transform:'translate(0,0) scale(1)',opacity:1}]:[{transform:'translate(0,0) scale(1.4)',opacity:0},{transform:'translate(0,0) scale(1)',opacity:1}],{duration:hit?420:300,easing:'cubic-bezier(.3,1.3,.5,1)'})},hit?1300:1100)},200)},{passive:false})}}
 </script>
 </body>
 </html>
