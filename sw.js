@@ -9,6 +9,7 @@ self.addEventListener('install',e=>{e.waitUntil(caches.open(VERSION)
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==VERSION).map(x=>caches.delete(x)))).then(()=>self.clients.claim()))});
 self.addEventListener('fetch',e=>{
   const q=e.request;if(q.method!=='GET')return;
+  if(new URL(q.url).pathname.includes('/fleches/'))return;   // l'essai « flèches » a son propre service worker
   const page=q.mode==='navigate'||/\/(index\.html)?$/.test(new URL(q.url).pathname);
   e.respondWith(caches.open(VERSION).then(async c=>{
     if(page){
