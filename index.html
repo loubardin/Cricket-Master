@@ -4117,6 +4117,89 @@ html body #game#game.sk.p2.pn #scores#scores .sc.act>.pills{justify-self:center!
 html body #game#game.sk.p2.pn #scores#scores>.sc.act>:is(.nm,.pts,.mpr){translate:calc(var(--colw)*-.08) 0!important}
 html body #game#game.sk.p2.pn #scores#scores>.sc{transition:left .45s cubic-bezier(.3,1.25,.5,1),width .45s cubic-bezier(.3,1.25,.5,1)!important}
 html body #game#game.sk.p2.pn #scores#scores .sc.act>.pills{width:auto!important}
+
+/* ===================== STYLE « CARTOON » (essai) — Cricket à 2 côtés ===================== */
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg){background:radial-gradient(120% 80% at 50% 0%,#fff7e3 0%,#f6ead0 60%,#efdfbf 100%)!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg)::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg)::after{display:none!important}
+/* en-tête : enseigne + étoiles, boutons ronds */
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) header{height:14dvh!important;min-height:0!important;align-items:center!important;padding:0 2vw!important;position:relative}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #title{position:relative;flex:1;height:100%;overflow:visible!important;color:transparent!important;font-size:0!important;
+  background:url(art/cartoon/star_l.png) left 0% center/auto 52% no-repeat,url(art/cartoon/star_s.png) right 0% center/auto 46% no-repeat,url(art/cartoon/marquee.png) center/auto 96% no-repeat}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #title>*{display:none!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #title::after{content:attr(data-sub);position:absolute;left:50%;bottom:10%;translate:-50% 0;white-space:nowrap;background:#1c1c1e;color:#fff6e2;border-radius:99px;
+  font:400 min(3.4vw,1.7dvh) "Fun",sans-serif!important;letter-spacing:.02em;padding:.25em .9em;box-shadow:0 0 0 2px #000,0 2px 0 2px rgba(0,0,0,.25)}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) header .circ{width:min(13vw,6.4dvh)!important;height:min(13vw,6.4dvh)!important;border:0!important;box-shadow:none!important;background:url(art/cartoon/back.png) center/contain no-repeat!important;color:#fff!important;position:relative}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) header .circ svg{opacity:0}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) header #bUndo2::before{content:"";position:absolute;inset:22%;border-radius:50%;background:radial-gradient(circle at 40% 35%,#3aa0f5,#0d63c7 75%)}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) header #bUndo2 svg{opacity:1;position:relative;z-index:1;width:46%;height:46%;stroke:#fff;stroke-width:3.2;filter:drop-shadow(0 0 1px #000) drop-shadow(0 0 1px #000)}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) header #bStyle{display:none!important}
+/* cases des joueurs */
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc{background:none!important;box-shadow:none!important;outline:0!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc::after{display:none!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act{border:0 solid transparent!important;border-image:url(art/cartoon/panel_blue.png) 40 fill / 24px / 6px stretch!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act:last-child{border-image:url(art/cartoon/panel_pink.png) 40 fill / 24px / 6px stretch!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc .nm,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc .pts,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc .mpr{color:#13243b!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act .nm,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act .pts,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act .mpr,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act .mpr b{color:#fff8e6!important;
+  text-shadow:2px 0 0 #0b1626,-2px 0 0 #0b1626,0 2px 0 #0b1626,0 -2px 0 #0b1626,1.5px 1.5px 0 #0b1626,-1.5px -1.5px 0 #0b1626,1.5px -1.5px 0 #0b1626,-1.5px 1.5px 0 #0b1626,0 4px 0 rgba(0,0,0,.35)!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act .pts{text-shadow:3.5px 0 0 #0b1626,-3.5px 0 0 #0b1626,0 3.5px 0 #0b1626,0 -3.5px 0 #0b1626,2.5px 2.5px 0 #0b1626,-2.5px -2.5px 0 #0b1626,2.5px -2.5px 0 #0b1626,-2.5px 2.5px 0 #0b1626,0 6px 0 rgba(0,0,0,.35)!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc .pills{background:none!important;box-shadow:none!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc .pill{background:linear-gradient(#fff3d6,#f3d9a4)!important;color:#13243b!important;border:0!important;box-shadow:inset 0 0 0 2px #13243b,inset 0 3px 0 rgba(255,255,255,.7)!important;font-family:"Fun",sans-serif!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act .pill{background:radial-gradient(circle at 14% 50%,#e9f6ff 0 2.5px,#5a8bb0 2.6px 3.5px,transparent 3.6px),radial-gradient(circle at 86% 50%,#e9f6ff 0 2.5px,#5a8bb0 2.6px 3.5px,transparent 3.6px),linear-gradient(#d4efff,#8ccbf0)!important;
+  box-shadow:inset 0 0 0 2.5px #0b1626,inset 0 4px 0 rgba(255,255,255,.55),0 2px 0 rgba(0,0,0,.25)!important;color:#0b1626!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act:last-child .pill{background:radial-gradient(circle at 14% 50%,#fff0f7 0 2.5px,#b5577f 2.6px 3.5px,transparent 3.6px),radial-gradient(circle at 86% 50%,#fff0f7 0 2.5px,#b5577f 2.6px 3.5px,transparent 3.6px),linear-gradient(#ffd6ea,#f593c1)!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act .pill.e{color:transparent!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act .pill.e::after{content:"–";color:#0b1626}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) .nm .hat{width:2.2em!important;height:auto!important;aspect-ratio:200/158;background:url(art/cartoon/crown.png) center/contain no-repeat;filter:drop-shadow(0 2px 0 rgba(0,0,0,.25))}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) .nm .hat path{opacity:0}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores .mid{opacity:0}
+/* lignes : barre crème + gélule numérotée */
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .rtrack{background:none!important;box-shadow:none!important;border:0 solid transparent!important;border-image:url(art/cartoon/track.png) 0 4 0 34 fill / 0 4px 0 calc(var(--rowh,60px)*.5) / 0 stretch!important;outline:0!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .rtrack::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .rtrack::after,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .rtrackb{display:none!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg).curR #grid .rtrack{transform:scaleX(-1)}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num{background:var(--nb) center/contain no-repeat!important;box-shadow:none!important;border:0!important;color:transparent!important;filter:drop-shadow(0 3px 0 rgba(0,0,0,.18))}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg).curR #grid .num{background-image:var(--np)!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num::after{display:none!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num>*{opacity:0!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num.dead{filter:grayscale(1) opacity(.45)!important}
+/* marques : traits noirs épais, cercle plein à la couleur de l'équipe */
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) .mw svg path,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) .mw svg circle:not(.disc):not(.dot){stroke:#111!important;stroke-width:calc(var(--bw,2px)*2.4)!important;stroke-linecap:round}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .row>div.pc.mk:first-of-type .mw svg .disc{fill:#1c86e8!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .row>div.pc.mk:last-of-type .mw svg .disc{fill:#f2268b!important}
+/* bas : Double / Spew / Triple en boutons illustrés */
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer{background:none!important;box-shadow:none!important;border:0!important;overflow:visible!important;gap:0!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer::after,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer .fthumb{display:none!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>button{background:center/contain no-repeat!important;color:transparent!important;box-shadow:none!important;border:0!important;font-size:0!important;transition:scale .2s cubic-bezier(.3,1.6,.5,1),filter .2s;scale:.92}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>button>*{display:none!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer #b2{background-image:url(art/cartoon/b_double.png)!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer #bS{background-image:url(art/cartoon/b_spew.png)!important;scale:1.08;z-index:1}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer #b3{background-image:url(art/cartoon/b_triple.png)!important}
+html.cartoon body.m2 #game#game.sk.p2:not(.pn):not(.bcg) footer #b2,html.cartoon body.m3 #game#game.sk.p2:not(.pn):not(.bcg) footer #b3{scale:1.12;filter:drop-shadow(0 0 10px rgba(255,170,40,.9));z-index:2}
+html.cartoon body:is(.m2,.m3) #game#game.sk.p2:not(.pn):not(.bcg) footer #bS{scale:.9;filter:saturate(.6)}
+
+/* cartoon : barre du haut (#fbar2) */
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fbar2{background:none!important;box-shadow:none!important;border:0!important;overflow:visible!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fbar2 .f2th{display:none!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMode{position:relative;background:none!important;box-shadow:none!important;color:transparent!important;overflow:visible!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMode>b{opacity:0}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMode::before{content:"";position:absolute;left:-4%;right:-4%;top:-14%;height:calc(100% + 4.2dvh);pointer-events:none;
+  background:url(art/cartoon/star_l.png) left 0% center/auto 50% no-repeat,url(art/cartoon/star_s.png) right 0% center/auto 44% no-repeat,url(art/cartoon/marquee.png) center/contain no-repeat}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMode>small{position:absolute;left:50%;top:calc(100% + 4.2dvh - 14% - 3.3dvh);translate:-50% 0;z-index:1;white-space:nowrap;background:#1c1c1e!important;color:#fff6e2!important;border-radius:99px;
+  font:400 min(3.3vw,1.6dvh) "Fun",sans-serif!important;letter-spacing:.02em;padding:.2em .85em!important;box-shadow:0 0 0 2px #000!important;opacity:1!important;margin:0!important;line-height:1.2!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMenu,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fUndo{width:min(13vw,6.2dvh)!important;height:min(13vw,6.2dvh)!important;border:0!important;box-shadow:none!important;background:url(art/cartoon/back.png) center/contain no-repeat!important;position:relative;margin-top:.6dvh}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMenu svg{opacity:0}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fUndo::before{content:"";position:absolute;inset:21%;border-radius:50%;background:radial-gradient(circle at 40% 35%,#3aa0f5,#0d63c7 75%)}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fUndo svg{position:relative;z-index:1;width:46%!important;height:46%!important;stroke:#fff!important;stroke-width:3.2!important;filter:drop-shadow(0 0 1px #000) drop-shadow(0 0 1px #000);color:#fff!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores{margin-top:4dvh!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num{background-size:auto 100%!important;background-position:right center!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg).curR #grid .num{background-position:left center!important}
+
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>button{-webkit-text-fill-color:transparent!important;text-shadow:none!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>button::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>button::after{display:none!important;content:none!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMode>small{padding:.2em 1.3em!important;min-width:44%}
+
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num:not(.dead){filter:drop-shadow(0 3px 0 rgba(0,0,0,.18))!important;animation:none!important}
+
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .rtrack{clip-path:inset(0 14px 0 0)}
 </style>
 </head>
 <body>
@@ -7593,9 +7676,10 @@ $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
   const p=el('div','');p.id='xpick';p.classList.add('skinpick');document.body.append(p);
   const cur=()=>{const T=S.th||{};return k=>(T[k]||TH[k].def)};
-  const draw=()=>{const T=S.th||{},c=cur();p.innerHTML=`<div class="skn"><button class="skgo" data-go="hStats">Statistiques</button><button class="skgo" data-go="hHist">Historique</button></div><div class="skp"><span>Son</span><div class="sksw sksnd"><button data-s="1" class="${S.sound?'on':''}">Oui</button><button data-s="0" class="${S.sound?'':'on'}">Non</button></div></div><div class="xpt">Thème</div><div class="skps">${THP.map((t,i)=>`<button class="skpr${['bg','ink','acc','btx'].every(k=>c(k)===t[k])?' on':''}" data-i="${i}" style="--b:${t.bg};--i:${t.ink};--a:${t.acc};--t:${t.btx}"><i></i><span>${esc(t.n)}</span></button>`).join('')}</div>`+`<div class="skp"><span>Couleurs des joueurs</span><div class="sksw"><button data-p="1" class="${S.pcolOff?'':'on'}">Oui</button><button data-p="0" class="${S.pcolOff?'on':''}">Non</button></div></div>`};
+  const draw=()=>{const T=S.th||{},c=cur();p.innerHTML=`<div class="skn"><button class="skgo" data-go="hStats">Statistiques</button><button class="skgo" data-go="hHist">Historique</button></div><div class="skp"><span>Son</span><div class="sksw sksnd"><button data-s="1" class="${S.sound?'on':''}">Oui</button><button data-s="0" class="${S.sound?'':'on'}">Non</button></div></div><div class="skp"><span>Style des jeux</span><div class="sksw skart"><button data-a="" class="${S.art!=='cartoon'?'on':''}">Bulle</button><button data-a="cartoon" class="${S.art==='cartoon'?'on':''}">Cartoon</button></div></div><div class="xpt">Thème</div><div class="skps">${THP.map((t,i)=>`<button class="skpr${['bg','ink','acc','btx'].every(k=>c(k)===t[k])?' on':''}" data-i="${i}" style="--b:${t.bg};--i:${t.ink};--a:${t.acc};--t:${t.btx}"><i></i><span>${esc(t.n)}</span></button>`).join('')}</div>`+`<div class="skp"><span>Couleurs des joueurs</span><div class="sksw"><button data-p="1" class="${S.pcolOff?'':'on'}">Oui</button><button data-p="0" class="${S.pcolOff?'on':''}">Non</button></div></div>`};
   draw();p.style.left=Math.max(12,(innerWidth-p.offsetWidth)/2)+'px';p.style.top=Math.max(12,Math.min(innerHeight-p.offsetHeight-12,e.currentTarget.getBoundingClientRect().bottom+10))+'px';
   p.addEventListener('click',ev=>{ev.stopPropagation();const go=ev.target.closest('.skgo');if(go){p.remove();$(go.dataset.go).dispatchEvent(new MouseEvent('click',{bubbles:true}));return}
+    const ar=ev.target.closest('.skart button');if(ar){S.art=ar.dataset.a;store.set(K_S,S);artApply();try{artPaint()}catch(err){}draw();return}
     const sn=ev.target.closest('.sksnd button');if(sn){if((sn.dataset.s==='1')!==!!S.sound)$('sndT').dispatchEvent(new MouseEvent('click',{bubbles:true}));draw();return}
     const b=ev.target.closest('.skc');
     if(b){haptic();S.th=Object.assign({},S.th||{},{[b.dataset.k]:b.dataset.c});store.set(K_S,S);applySkin();SFX.lock&&SFX.lock();draw();return}
@@ -7779,6 +7863,16 @@ function kArc(){document.querySelectorAll('#kplayers.kbub>.kc').forEach(c=>{cons
       p.style.translate=`${(x-p.offsetWidth/2).toFixed(1)}px ${(y-p.offsetHeight/2).toFixed(1)}px`;p.style.rotate=a.toFixed(1)+'deg'})}})}
 {const _r=kRender;kRender=function(){const r=_r.apply(this,arguments);try{if(!BARON)kArc()}catch(e){console.error(e)}return r}}
 addEventListener('resize',()=>{try{kArc()}catch(e){}});
+
+/* STYLE « CARTOON » (essai) : réglage, sous-titre de l'enseigne, gélules numérotées */
+if(S.art===undefined){S.art='cartoon';try{store.set(K_S,S)}catch(e){}}   // essai : activé par défaut, réglable dans Réglages
+function artApply(){document.documentElement.classList.toggle('cartoon',S.art==='cartoon')}
+artApply();
+function artPaint(){if(S.art!=='cartoon'||!R||!R.num)return;
+  const t=$('title');if(t)t.dataset.sub=t.textContent.replace(/\s*·\s*\d+\s*(joueurs|équipes)\s*/,' · ').replace(/\s+/g,' ').trim();
+  TARGETS.forEach(n=>{const b=R.num[n];if(!b||b.dataset.art)return;const k=n===25?'bulle':n;b.dataset.art=1;
+    b.style.setProperty('--nb',`url(art/cartoon/num_blue_${k}.png)`);b.style.setProperty('--np',`url(art/cartoon/num_pink_${k}.png)`)})}
+{const _r=render;render=function(){const x=_r.apply(this,arguments);try{artPaint()}catch(e){}return x}}
 </script>
 </body>
 </html>
