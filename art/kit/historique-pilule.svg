@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 48" width="132" height="48" preserveAspectRatio="xMidYMid meet"><defs>
+<linearGradient id="metal" x2="0" y2="1"><stop stop-color="#25c7ec"/><stop offset=".12" stop-color="#056c99"/><stop offset=".65" stop-color="#007da6"/><stop offset="1" stop-color="#014868"/></linearGradient>
+<linearGradient id="edge" x2="0" y2="1"><stop stop-color="#e0faff"/><stop offset=".4" stop-color="#33a7ca"/><stop offset="1" stop-color="#052b41"/></linearGradient>
+<radialGradient id="rivet" cx=".3" cy=".25"><stop stop-color="#d8f7ff"/><stop offset=".4" stop-color="#629ab0"/><stop offset="1" stop-color="#092330"/></radialGradient>
+<linearGradient id="gold" x2="0" y2="1"><stop stop-color="#fff4a3"/><stop offset=".5" stop-color="#ffe52e"/><stop offset="1" stop-color="#e88d00"/></linearGradient>
+<linearGradient id="red" x2="0" y2="1"><stop stop-color="#ff4c3b"/><stop offset=".5" stop-color="#f51c27"/><stop offset="1" stop-color="#a70c20"/></linearGradient>
+<linearGradient id="ice" x2="0" y2="1"><stop stop-color="#fffef0"/><stop offset=".45" stop-color="#a4f8ff"/><stop offset="1" stop-color="#00acd9"/></linearGradient>
+</defs><rect x="3" y="5" width="126" height="40" rx="22" fill="#00334b"/><rect x="2" y="2" width="128" height="42" rx="22" fill="#8cbfc5" stroke="#071f29" stroke-width="2.5"/><path d="M20 5 H112" stroke="#d2e8d7" opacity=".6"/><circle cx="10" cy="23" r="2.3" fill="url(#rivet)" stroke="#163940"/><circle cx="122" cy="23" r="2.3" fill="url(#rivet)" stroke="#163940"/></svg>

@@ -4118,6 +4118,58 @@ html body #game#game.sk.p2.pn #scores#scores .sc.act>.pills{justify-self:center!
 html body #game#game.sk.p2.pn #scores#scores>.sc.act>:is(.nm,.pts,.mpr){translate:calc(var(--colw)*-.08) 0!important}
 html body #game#game.sk.p2.pn #scores#scores>.sc{transition:left .45s cubic-bezier(.3,1.25,.5,1),width .45s cubic-bezier(.3,1.25,.5,1)!important}
 html body #game#game.sk.p2.pn #scores#scores .sc.act>.pills{width:auto!important}
+
+/* ===================== STYLE « CARTOON » (kit vectoriel) — Cricket à 2 côtés, géométrie Bulle inchangée ===================== */
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg){background:radial-gradient(120% 80% at 50% 0%,#fff7e0 0%,#fdeec8 60%,#f6e2b6 100%)!important}
+/* barre du haut : enseigne + étoiles, boutons ronds */
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fbar2{background:none!important;box-shadow:none!important;border:0!important;overflow:visible!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fbar2 .f2th{display:none!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMode{position:relative;background:url(art/kit/etoile.svg) calc(50% - 31vw) 40%/auto 62% no-repeat,url(art/kit/etoile.svg) calc(50% + 31vw) 40%/auto 62% no-repeat!important;box-shadow:none!important;overflow:visible!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMode::before{content:"";position:absolute;left:0;right:0;top:-8%;height:96%;background:url(art/kit/enseigne-header.svg) center/contain no-repeat;pointer-events:none;z-index:0}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMode>b{position:relative;z-index:1;color:#fff0c4!important;font-style:italic;text-shadow:1.6px 0px 0 #071e29,-1.6px 0px 0 #071e29,0px 1.6px 0 #071e29,0px -1.6px 0 #071e29,1.1199999999999999px 1.1199999999999999px 0 #071e29,-1.1199999999999999px -1.1199999999999999px 0 #071e29,1.1199999999999999px -1.1199999999999999px 0 #071e29,-1.1199999999999999px 1.1199999999999999px 0 #071e29,0 3px 0 #071e29!important;translate:0 -12%}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMode>small{position:relative;z-index:1;background:#14181c!important;color:#fff0c4!important;border-radius:99px;padding:.1em .9em!important;box-shadow:0 0 0 1.5px #000!important;opacity:1!important;translate:0 -30%}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMenu,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fUndo{border:0!important;box-shadow:none!important;background:url(art/kit/navigation-retour.svg) center/contain no-repeat!important;color:transparent!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fUndo{background-image:url(art/kit/navigation-annuler.svg)!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMenu svg,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fUndo svg{opacity:0!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMenu::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMenu::after,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fUndo::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fUndo::after{display:none!important}
+/* cases des joueurs */
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc{background:none!important;box-shadow:none!important;outline:0!important;border:0!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc::after{display:none!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act{background:url(art/kit/panneau-joueur.svg) center/100% 100% no-repeat!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act:last-child{background-image:url(art/kit/panneau-joueur-m.svg)!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc .nm,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc .pts,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc .mpr,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc .mpr b{color:#071e29!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act .nm,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act .pts,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act .mpr,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act .mpr b{color:#fff0c4!important;text-shadow:1.6px 0px 0 #071e29,-1.6px 0px 0 #071e29,0px 1.6px 0 #071e29,0px -1.6px 0 #071e29,1.1199999999999999px 1.1199999999999999px 0 #071e29,-1.1199999999999999px -1.1199999999999999px 0 #071e29,1.1199999999999999px -1.1199999999999999px 0 #071e29,-1.1199999999999999px 1.1199999999999999px 0 #071e29,0 3px 0 rgba(0,0,0,.35)!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act .pts{text-shadow:3px 0px 0 #071e29,-3px 0px 0 #071e29,0px 3px 0 #071e29,0px -3px 0 #071e29,2.0999999999999996px 2.0999999999999996px 0 #071e29,-2.0999999999999996px -2.0999999999999996px 0 #071e29,2.0999999999999996px -2.0999999999999996px 0 #071e29,-2.0999999999999996px 2.0999999999999996px 0 #071e29,0 5px 0 rgba(0,0,0,.35)!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc .pills{background:none!important;box-shadow:none!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc .pill{background:linear-gradient(#fff6d8,#f6dca6)!important;color:#071e29!important;border:0!important;box-shadow:inset 0 0 0 2px #071e29,0 2px 0 rgba(152,93,48,.5)!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act .pill{background:url(art/kit/historique-pilule.svg) center/100% 100% no-repeat!important;box-shadow:none!important;color:#071e29!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act:last-child .pill{background-image:url(art/kit/historique-pilule-m.svg)!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) .nm .hat{background:url(art/kit/couronne.svg) center/contain no-repeat!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) .nm .hat *{opacity:0!important}
+/* lignes : capsule claire + plaque numérotée */
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .rtrack{background:url(art/kit/case-gauche.svg) center/100% 100% no-repeat!important;box-shadow:none!important;border:0!important;outline:0!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .rtrack::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .rtrack::after,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .rtrackb{display:none!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num{background:url(art/kit/plaque-score.svg) center/contain no-repeat!important;box-shadow:none!important;border:0!important;outline:0!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg).curR #grid .num{background-image:url(art/kit/plaque-score-m.svg)!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num::after{display:none!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num *{color:#fff0c4!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num .lbl{text-shadow:2.4px 0px 0 #071e29,-2.4px 0px 0 #071e29,0px 2.4px 0 #071e29,0px -2.4px 0 #071e29,1.68px 1.68px 0 #071e29,-1.68px -1.68px 0 #071e29,1.68px -1.68px 0 #071e29,-1.68px 1.68px 0 #071e29,0 4px 0 rgba(2,19,28,.6)!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num.dead{filter:grayscale(1) opacity(.5)!important}
+/* marques : croix encre, disque bleu (gauche) ou magenta (droite) */
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) .mw svg path,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) .mw svg line{stroke:#071e29!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .row>div.pc.mk:first-of-type .mw svg .disc{fill:#007fa8!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .row>div.pc.mk:last-of-type .mw svg .disc{fill:#ed008b!important}
+/* bas : barre rouge, Spew glacé au centre, flammes sur Triple */
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer{background:url(art/kit/bouton-rouge.svg) center/100% 100% no-repeat!important;box-shadow:none!important;border:0!important;outline:0!important;overflow:visible!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer .fthumb{display:none!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer::after{content:""!important;display:block!important;position:absolute!important;left:auto!important;right:1%!important;top:-46%!important;bottom:auto!important;width:28%!important;height:70%!important;background:url(art/kit/flammes.svg) center/contain no-repeat!important;z-index:1;pointer-events:none;box-shadow:none!important;border:0!important;opacity:1!important;transform:none!important;translate:none!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>button{background:none!important;box-shadow:none!important;border:0!important;position:relative;color:#fff0c4!important;font-style:italic;text-shadow:1.8px 0px 0 #071e29,-1.8px 0px 0 #071e29,0px 1.8px 0 #071e29,0px -1.8px 0 #071e29,1.26px 1.26px 0 #071e29,-1.26px -1.26px 0 #071e29,1.26px -1.26px 0 #071e29,-1.26px 1.26px 0 #071e29,0 3px 0 #071e29!important;transition:scale .2s cubic-bezier(.3,1.6,.5,1)}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>button::before{display:none!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>button::after{color:#fff0c4!important;-webkit-text-fill-color:#fff0c4!important;font-style:italic;text-shadow:1.8px 0px 0 #071e29,-1.8px 0px 0 #071e29,0px 1.8px 0 #071e29,0px -1.8px 0 #071e29,1.26px 1.26px 0 #071e29,-1.26px -1.26px 0 #071e29,1.26px -1.26px 0 #071e29,-1.26px 1.26px 0 #071e29,0 3px 0 #071e29!important;position:relative;z-index:3}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer #bS{z-index:2;isolation:isolate}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>button{font-size:0!important;-webkit-text-fill-color:transparent}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer #bS::before{content:""!important;display:block!important;position:absolute;left:-6%;right:-6%;top:-18%;bottom:-18%;background:url(art/kit/bouton-spew.svg) center/100% 100% no-repeat;z-index:-1}
+html.cartoon body.m2 #game#game.sk.p2:not(.pn):not(.bcg) footer #b2::after,html.cartoon body.m3 #game#game.sk.p2:not(.pn):not(.bcg) footer #b3::after{color:#ffe52e!important;-webkit-text-fill-color:#ffe52e!important}
 </style>
 </head>
 <body>
@@ -7595,9 +7647,10 @@ $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
   const p=el('div','');p.id='xpick';p.classList.add('skinpick');document.body.append(p);
   const cur=()=>{const T=S.th||{};return k=>(T[k]||TH[k].def)};
-  const draw=()=>{const T=S.th||{},c=cur();p.innerHTML=`<div class="skn"><button class="skgo" data-go="hStats">Statistiques</button><button class="skgo" data-go="hHist">Historique</button></div><div class="skp"><span>Son</span><div class="sksw sksnd"><button data-s="1" class="${S.sound?'on':''}">Oui</button><button data-s="0" class="${S.sound?'':'on'}">Non</button></div></div><div class="xpt">Thème</div><div class="skps">${THP.map((t,i)=>`<button class="skpr${['bg','ink','acc','btx'].every(k=>c(k)===t[k])?' on':''}" data-i="${i}" style="--b:${t.bg};--i:${t.ink};--a:${t.acc};--t:${t.btx}"><i></i><span>${esc(t.n)}</span></button>`).join('')}</div>`+`<div class="skp"><span>Couleurs des joueurs</span><div class="sksw"><button data-p="1" class="${S.pcolOff?'':'on'}">Oui</button><button data-p="0" class="${S.pcolOff?'on':''}">Non</button></div></div>`};
+  const draw=()=>{const T=S.th||{},c=cur();p.innerHTML=`<div class="skn"><button class="skgo" data-go="hStats">Statistiques</button><button class="skgo" data-go="hHist">Historique</button></div><div class="skp"><span>Son</span><div class="sksw sksnd"><button data-s="1" class="${S.sound?'on':''}">Oui</button><button data-s="0" class="${S.sound?'':'on'}">Non</button></div></div><div class="skp"><span>Style des jeux</span><div class="sksw skart"><button data-a="" class="${S.art2!=='cartoon'?'on':''}">Bulle</button><button data-a="cartoon" class="${S.art2==='cartoon'?'on':''}">Cartoon</button></div></div><div class="xpt">Thème</div><div class="skps">${THP.map((t,i)=>`<button class="skpr${['bg','ink','acc','btx'].every(k=>c(k)===t[k])?' on':''}" data-i="${i}" style="--b:${t.bg};--i:${t.ink};--a:${t.acc};--t:${t.btx}"><i></i><span>${esc(t.n)}</span></button>`).join('')}</div>`+`<div class="skp"><span>Couleurs des joueurs</span><div class="sksw"><button data-p="1" class="${S.pcolOff?'':'on'}">Oui</button><button data-p="0" class="${S.pcolOff?'on':''}">Non</button></div></div>`};
   draw();p.style.left=Math.max(12,(innerWidth-p.offsetWidth)/2)+'px';p.style.top=Math.max(12,Math.min(innerHeight-p.offsetHeight-12,e.currentTarget.getBoundingClientRect().bottom+10))+'px';
   p.addEventListener('click',ev=>{ev.stopPropagation();const go=ev.target.closest('.skgo');if(go){p.remove();$(go.dataset.go).dispatchEvent(new MouseEvent('click',{bubbles:true}));return}
+    const ar=ev.target.closest('.skart button');if(ar){S.art2=ar.dataset.a;store.set(K_S,S);artApply();draw();return}
     const sn=ev.target.closest('.sksnd button');if(sn){if((sn.dataset.s==='1')!==!!S.sound)$('sndT').dispatchEvent(new MouseEvent('click',{bubbles:true}));draw();return}
     const b=ev.target.closest('.skc');
     if(b){haptic();S.th=Object.assign({},S.th||{},{[b.dataset.k]:b.dataset.c});store.set(K_S,S);applySkin();SFX.lock&&SFX.lock();draw();return}
@@ -7781,6 +7834,11 @@ function kArc(){document.querySelectorAll('#kplayers.kbub>.kc').forEach(c=>{cons
       p.style.translate=`${(x-p.offsetWidth/2).toFixed(1)}px ${(y-p.offsetHeight/2).toFixed(1)}px`;p.style.rotate=a.toFixed(1)+'deg'})}})}
 {const _r=kRender;kRender=function(){const r=_r.apply(this,arguments);try{if(!BARON)kArc()}catch(e){console.error(e)}return r}}
 addEventListener('resize',()=>{try{kArc()}catch(e){}});
+
+/* STYLE « CARTOON » (kit vectoriel) : réglage Bulle / Cartoon */
+if(S.art2===undefined){S.art2='cartoon';try{store.set(K_S,S)}catch(e){}}
+function artApply(){document.documentElement.classList.toggle('cartoon',S.art2==='cartoon')}
+artApply();
 </script>
 </body>
 </html>
