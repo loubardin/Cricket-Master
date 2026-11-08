@@ -4118,68 +4118,69 @@ html body #game#game.sk.p2.pn #scores#scores>.sc.act>:is(.nm,.pts,.mpr){translat
 html body #game#game.sk.p2.pn #scores#scores>.sc{transition:left .45s cubic-bezier(.3,1.25,.5,1),width .45s cubic-bezier(.3,1.25,.5,1)!important}
 html body #game#game.sk.p2.pn #scores#scores .sc.act>.pills{width:auto!important}
 
-/* ===================== STYLE « CARTOON » (kit vectoriel) — Cricket à 2 côtés, géométrie Bulle inchangée ===================== */
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg){background:radial-gradient(120% 80% at 50% 0%,#fff7e0 0%,#fdeec8 60%,#f6e2b6 100%)!important}
-/* barre du haut : enseigne + étoiles, boutons ronds */
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fbar2{background:none!important;box-shadow:none!important;border:0!important;overflow:visible!important}
+/* ===================== STYLE « CARTOON » (kit PNG) — Cricket à 2 côtés, proportions de la maquette ===================== */
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg){background:#fbeccb url(art/k2/fond.webp) center/cover no-repeat!important}
+/* en-tête : enseigne + étoiles, boutons ronds */
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fbar2{margin-top:4.2dvh!important;height:9.6dvh!important;align-items:center!important;background:none!important;box-shadow:none!important;border:0!important;overflow:visible!important}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fbar2 .f2th{display:none!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMode{position:relative;background:url(art/kit/etoile.svg) calc(50% - 31vw) 40%/auto 62% no-repeat,url(art/kit/etoile.svg) calc(50% + 31vw) 40%/auto 62% no-repeat!important;box-shadow:none!important;overflow:visible!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMode::before{content:"";position:absolute;left:0;right:0;top:-8%;height:96%;background:url(art/kit/enseigne-header.svg) center/contain no-repeat;pointer-events:none;z-index:0}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMode>b{position:relative;z-index:1;color:#fff0c4!important;font-style:italic;text-shadow:1.6px 0px 0 #071e29,-1.6px 0px 0 #071e29,0px 1.6px 0 #071e29,0px -1.6px 0 #071e29,1.1199999999999999px 1.1199999999999999px 0 #071e29,-1.1199999999999999px -1.1199999999999999px 0 #071e29,1.1199999999999999px -1.1199999999999999px 0 #071e29,-1.1199999999999999px 1.1199999999999999px 0 #071e29,0 3px 0 #071e29!important;translate:0 -12%}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMode>small{position:relative;z-index:1;background:#14181c!important;color:#fff0c4!important;border-radius:99px;padding:.1em .9em!important;box-shadow:0 0 0 1.5px #000!important;opacity:1!important;translate:0 -30%}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMenu,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fUndo{border:0!important;box-shadow:none!important;background:url(art/kit/navigation-retour.svg) center/contain no-repeat!important;color:transparent!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fUndo{background-image:url(art/kit/navigation-annuler.svg)!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMode{position:relative;height:100%!important;background:url(art/k2/sign.webp) center 30%/contain no-repeat!important;box-shadow:none!important;overflow:visible!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMode::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMode::after{display:none!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMode>b{position:relative;z-index:1;font-size:4.1dvh!important;line-height:1!important;color:#fff0c4!important;font-style:italic;text-shadow:1.8px 0px 0 #0b1a24,-1.8px 0px 0 #0b1a24,0px 1.8px 0 #0b1a24,0px -1.8px 0 #0b1a24,1.26px 1.26px 0 #0b1a24,-1.26px -1.26px 0 #0b1a24,1.26px -1.26px 0 #0b1a24,-1.26px 1.26px 0 #0b1a24,0 3px 0 #0b1a24!important;translate:0 -18%}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMode>small{position:relative;z-index:1;font-size:1.6dvh!important;background:#14181c!important;color:#fff0c4!important;border-radius:99px;padding:.12em .9em!important;box-shadow:0 0 0 1.5px #000!important;opacity:1!important;translate:0 -10%}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMenu,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fUndo{width:min(14vw,6.6dvh)!important;height:min(14vw,6.6dvh)!important;border:0!important;box-shadow:none!important;background:url(art/k2/back.webp) center/contain no-repeat!important;color:transparent!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fUndo{background-image:url(art/k2/undo.webp)!important}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMenu svg,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fUndo svg{opacity:0!important}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMenu::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMenu::after,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fUndo::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fUndo::after{display:none!important}
-/* cases des joueurs */
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc{background:none!important;box-shadow:none!important;outline:0!important;border:0!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc::after{display:none!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act{background:url(art/kit/panneau-joueur.svg) center/100% 100% no-repeat!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act:last-child{background-image:url(art/kit/panneau-joueur-m.svg)!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc .nm,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc .pts,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc .mpr,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc .mpr b{color:#071e29!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act .nm,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act .pts,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act .mpr,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act .mpr b{color:#fff0c4!important;text-shadow:1.6px 0px 0 #071e29,-1.6px 0px 0 #071e29,0px 1.6px 0 #071e29,0px -1.6px 0 #071e29,1.1199999999999999px 1.1199999999999999px 0 #071e29,-1.1199999999999999px -1.1199999999999999px 0 #071e29,1.1199999999999999px -1.1199999999999999px 0 #071e29,-1.1199999999999999px 1.1199999999999999px 0 #071e29,0 3px 0 rgba(0,0,0,.35)!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act .pts{text-shadow:3px 0px 0 #071e29,-3px 0px 0 #071e29,0px 3px 0 #071e29,0px -3px 0 #071e29,2.0999999999999996px 2.0999999999999996px 0 #071e29,-2.0999999999999996px -2.0999999999999996px 0 #071e29,2.0999999999999996px -2.0999999999999996px 0 #071e29,-2.0999999999999996px 2.0999999999999996px 0 #071e29,0 5px 0 rgba(0,0,0,.35)!important}
+/* cases des joueurs : la case active prend les proportions du panneau (corps 1,954:1), couronne et pilules comprises */
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores{margin-top:6.4dvh!important;height:calc((var(--colw) + var(--midw)) / 1.954)!important;min-height:0!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc{background:none!important;box-shadow:none!important;outline:0!important;border:0!important;overflow:visible!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc::after{display:none!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc::before{display:none!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act::before{content:""!important;display:block!important;position:absolute!important;left:0!important;right:0!important;top:-21.5%!important;height:124.5%!important;bottom:auto!important;
+  background:url(art/k2/panel_r.webp) center/100% 100% no-repeat!important;z-index:0!important;pointer-events:none;box-shadow:none!important;border:0!important;opacity:1!important;transform:none!important;translate:none!important;border-radius:0!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act:last-child::before{background-image:url(art/k2/panel_l_p.webp)!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act>*{position:relative;z-index:1}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) .nm .hat{display:none!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc .nm,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc .pts,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc .mpr,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc .mpr b{color:#0b1a24!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act .nm,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act .pts,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act .mpr,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act .mpr b{color:#fff0c4!important;text-shadow:1.6px 0px 0 #0b1a24,-1.6px 0px 0 #0b1a24,0px 1.6px 0 #0b1a24,0px -1.6px 0 #0b1a24,1.1199999999999999px 1.1199999999999999px 0 #0b1a24,-1.1199999999999999px -1.1199999999999999px 0 #0b1a24,1.1199999999999999px -1.1199999999999999px 0 #0b1a24,-1.1199999999999999px 1.1199999999999999px 0 #0b1a24,0 3px 0 rgba(0,0,0,.35)!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act .pts{text-shadow:3px 0px 0 #0b1a24,-3px 0px 0 #0b1a24,0px 3px 0 #0b1a24,0px -3px 0 #0b1a24,2.0999999999999996px 2.0999999999999996px 0 #0b1a24,-2.0999999999999996px -2.0999999999999996px 0 #0b1a24,2.0999999999999996px -2.0999999999999996px 0 #0b1a24,-2.0999999999999996px 2.0999999999999996px 0 #0b1a24,0 5px 0 rgba(0,0,0,.35)!important}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc .pills{background:none!important;box-shadow:none!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc .pill{background:linear-gradient(#fff6d8,#f6dca6)!important;color:#071e29!important;border:0!important;box-shadow:inset 0 0 0 2px #071e29,0 2px 0 rgba(152,93,48,.5)!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act .pill{background:url(art/kit/historique-pilule.svg) center/100% 100% no-repeat!important;box-shadow:none!important;color:#071e29!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act:last-child .pill{background-image:url(art/kit/historique-pilule-m.svg)!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) .nm .hat{background:url(art/kit/couronne.svg) center/contain no-repeat!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) .nm .hat *{opacity:0!important}
-/* lignes : capsule claire + plaque numérotée */
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .rtrack{background:url(art/kit/case-gauche.svg) center/100% 100% no-repeat!important;box-shadow:none!important;border:0!important;outline:0!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .rtrack::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .rtrack::after,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .rtrackb{display:none!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num{background:url(art/kit/plaque-score.svg) center/contain no-repeat!important;box-shadow:none!important;border:0!important;outline:0!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg).curR #grid .num{background-image:url(art/kit/plaque-score-m.svg)!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num::after{display:none!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num *{color:#fff0c4!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num .lbl{text-shadow:2.4px 0px 0 #071e29,-2.4px 0px 0 #071e29,0px 2.4px 0 #071e29,0px -2.4px 0 #071e29,1.68px 1.68px 0 #071e29,-1.68px -1.68px 0 #071e29,1.68px -1.68px 0 #071e29,-1.68px 1.68px 0 #071e29,0 4px 0 rgba(2,19,28,.6)!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num.dead{filter:grayscale(1) opacity(.5)!important}
-/* marques : croix encre, disque bleu (gauche) ou magenta (droite) */
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) .mw svg path,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) .mw svg line{stroke:#071e29!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .row>div.pc.mk:first-of-type .mw svg .disc{fill:#007fa8!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .row>div.pc.mk:last-of-type .mw svg .disc{fill:#ed008b!important}
-/* bas : barre rouge, Spew glacé au centre, flammes sur Triple */
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer{background:url(art/kit/bouton-rouge.svg) center/100% 100% no-repeat!important;box-shadow:none!important;border:0!important;outline:0!important;overflow:visible!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer .fthumb{display:none!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer::after{content:""!important;display:block!important;position:absolute!important;left:auto!important;right:1%!important;top:-46%!important;bottom:auto!important;width:28%!important;height:70%!important;background:url(art/kit/flammes.svg) center/contain no-repeat!important;z-index:1;pointer-events:none;box-shadow:none!important;border:0!important;opacity:1!important;transform:none!important;translate:none!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>button{background:none!important;box-shadow:none!important;border:0!important;position:relative;color:#fff0c4!important;font-style:italic;text-shadow:1.8px 0px 0 #071e29,-1.8px 0px 0 #071e29,0px 1.8px 0 #071e29,0px -1.8px 0 #071e29,1.26px 1.26px 0 #071e29,-1.26px -1.26px 0 #071e29,1.26px -1.26px 0 #071e29,-1.26px 1.26px 0 #071e29,0 3px 0 #071e29!important;transition:scale .2s cubic-bezier(.3,1.6,.5,1)}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>button::before{display:none!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>button::after{color:#fff0c4!important;-webkit-text-fill-color:#fff0c4!important;font-style:italic;text-shadow:1.8px 0px 0 #071e29,-1.8px 0px 0 #071e29,0px 1.8px 0 #071e29,0px -1.8px 0 #071e29,1.26px 1.26px 0 #071e29,-1.26px -1.26px 0 #071e29,1.26px -1.26px 0 #071e29,-1.26px 1.26px 0 #071e29,0 3px 0 #071e29!important;position:relative;z-index:3}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer #bS{z-index:2;isolation:isolate}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>button{font-size:0!important;-webkit-text-fill-color:transparent}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer #bS::before{content:""!important;display:block!important;position:absolute;left:-6%;right:-6%;top:-18%;bottom:-18%;background:url(art/kit/bouton-spew.svg) center/100% 100% no-repeat;z-index:-1}
-html.cartoon body.m2 #game#game.sk.p2:not(.pn):not(.bcg) footer #b2::after,html.cartoon body.m3 #game#game.sk.p2:not(.pn):not(.bcg) footer #b3::after{color:#ffe52e!important;-webkit-text-fill-color:#ffe52e!important}
-
-/* cartoon : proportions de la maquette (en % de la hauteur d'écran) — enseigne 5→16 %, case 14,5→32 %, 7 lignes de 7 % (écart 0,85 %), bas 89→98 % */
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fbar2{margin-top:4.2dvh!important;height:9.6dvh!important;align-items:center!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMode{height:100%!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMode::before{top:0!important;height:82%!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMode>b{font-size:4.3dvh!important;line-height:1!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMode>small{font-size:1.65dvh!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMenu,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fUndo{width:min(14vw,6.6dvh)!important;height:min(14vw,6.6dvh)!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores{margin-top:6.2dvh!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc:not(.act) .pill{background:linear-gradient(#fff6d8,#f6dca6)!important;color:#0b1a24!important;border:0!important;box-shadow:inset 0 0 0 2px #0b1a24,0 2px 0 rgba(152,93,48,.5)!important}
+/* pilules de la case active : posées sur celles dessinées dans le panneau */
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act>.pills{position:absolute!important;left:57%!important;width:31%!important;right:auto!important;top:19.8%!important;height:62%!important;bottom:auto!important;margin:0!important;padding:0!important;
+  display:flex!important;flex-direction:column!important;justify-content:space-between!important;align-items:stretch!important;gap:0!important;transform:none!important;translate:none!important;grid-area:auto!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act:last-child>.pills{left:12%!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act .pill{background:none!important;box-shadow:none!important;border:0!important;height:26.8%!important;min-height:0!important;width:100%!important;min-width:0!important;margin:0!important;padding:0!important;display:grid!important;place-items:center!important;color:#0b1a24!important;font-size:min(4.2vw,2dvh)!important;opacity:1!important}
+/* lignes : piste crème + plaque numérotée (bleue / rose selon qui joue) */
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid{gap:.85dvh!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid>.row{flex:0 0 7dvh!important;height:7dvh!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid>.row{flex:0 0 7.3dvh!important;height:7.3dvh!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .rtrack{background:none!important;box-shadow:none!important;outline:0!important;border:0 solid transparent!important;border-image:url(art/k2/track.webp) 0 4 0 100 fill / 0 2px 0 3.5dvh / 0 stretch!important;clip-path:inset(0 34px 0 0)}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .rtrack::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .rtrack::after,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .rtrackb{display:none!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg).curR #grid .rtrack{transform:scaleX(-1)}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num{background:var(--nb) right center/auto 100% no-repeat!important;box-shadow:none!important;border:0!important;outline:0!important;color:transparent!important;animation:none!important;filter:none!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg).curR #grid .num{background-image:var(--np)!important;background-position:left center!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num::after{display:none!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num>*{opacity:0!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num.dead{filter:grayscale(1) opacity(.5)!important}
+/* marques du kit : barre, croix, croix sur disque bleu (gauche) / rose (droite) */
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) .mw svg{opacity:0!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) .mw{background:center/68% no-repeat}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) .mw.k1{background-image:url(art/k2/mk1.webp)}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) .mw.k2{background-image:url(art/k2/mk2.webp)}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .row>div.pc.mk:first-of-type .mw.k3{background-image:url(art/k2/mk3b.webp)}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .row>div.pc.mk:last-of-type .mw.k3{background-image:url(art/k2/mk3p.webp)}
+/* bas : Double (résistance), Spew (glace), Triple (flammes) */
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer{background:none!important;box-shadow:none!important;border:0!important;outline:0!important;overflow:visible!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer::after,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer .fthumb{display:none!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>button{background:center/contain no-repeat!important;box-shadow:none!important;border:0!important;position:relative;font-size:0!important;-webkit-text-fill-color:transparent;transition:scale .2s cubic-bezier(.3,1.6,.5,1)}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>button::before{display:none!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>button::after{color:#fff0c4!important;-webkit-text-fill-color:#fff0c4!important;font-style:italic;text-shadow:1.8px 0px 0 #0b1a24,-1.8px 0px 0 #0b1a24,0px 1.8px 0 #0b1a24,0px -1.8px 0 #0b1a24,1.26px 1.26px 0 #0b1a24,-1.26px -1.26px 0 #0b1a24,1.26px -1.26px 0 #0b1a24,-1.26px 1.26px 0 #0b1a24,0 3px 0 #0b1a24!important;position:relative;z-index:3}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer #b2{background-image:url(art/k2/double.webp)!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer #b3{background-image:url(art/k2/triple.webp)!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer #bS{background-image:url(art/k2/spew.webp)!important;scale:1.12;z-index:2}
+html.cartoon body.m2 #game#game.sk.p2:not(.pn):not(.bcg) footer #b2,html.cartoon body.m3 #game#game.sk.p2:not(.pn):not(.bcg) footer #b3{scale:1.12;z-index:3}
+html.cartoon body.m2 #game#game.sk.p2:not(.pn):not(.bcg) footer #b2::after,html.cartoon body.m3 #game#game.sk.p2:not(.pn):not(.bcg) footer #b3::after{color:#ffe52e!important;-webkit-text-fill-color:#ffe52e!important}
+html.cartoon body:is(.m2,.m3) #game#game.sk.p2:not(.pn):not(.bcg) footer #bS{scale:.96}
 </style>
 </head>
 <body>
@@ -5081,7 +5082,7 @@ const mpr5=p=>{const a=p.turnMarks.slice(-5);return a.length?a.reduce((x,y)=>x+y
 /* case : marques de fermeture, puis bâtons pour chaque marque qui a marqué des points */
 function markHTML(k,e){
   if(!k)return'';
-  return`<div class="mw${e?' has':''}">${(bmode()==='A'?SVGA:bmode()==='B'?SVGB:SVG)[k]}${e?`<span class="tn">${e}</span>`:''}</div>`;
+  return`<div class="mw k${k}${e?' has':''}">${(bmode()==='A'?SVGA:bmode()==='B'?SVGB:SVG)[k]}${e?`<span class="tn">${e}</span>`:''}</div>`;
 }
 /* même cadre 100×100 pour les trois marques : le X va de 29 à 71, le cercle l'entoure (r=40) */
 const SVG=['',   // marques : 1 = point central, 2 = + cercle intérieur, 3 = + grand cercle
@@ -7848,6 +7849,12 @@ addEventListener('resize',()=>{try{kArc()}catch(e){}});
 if(S.art2===undefined){S.art2='cartoon';try{store.set(K_S,S)}catch(e){}}
 function artApply(){document.documentElement.classList.toggle('cartoon',S.art2==='cartoon')}
 artApply();
+
+/* cartoon (kit PNG) : plaques numérotées selon la ligne */
+function artPaint(){if(S.art2!=='cartoon'||!R||!R.num)return;
+  TARGETS.forEach(n=>{const b=R.num[n];if(!b||b.dataset.art)return;const k=n===25?'bulle':n;b.dataset.art=1;
+    b.style.setProperty('--nb',`url(art/k2/pl_${k}.webp)`);b.style.setProperty('--np',`url(art/k2/pl_${k}_p.webp)`)})}
+{const _r=render;render=function(){const x=_r.apply(this,arguments);try{artPaint()}catch(e){}return x}}
 </script>
 </body>
 </html>

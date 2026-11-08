@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 90" width="90" height="90" preserveAspectRatio="xMidYMid meet"><defs>
-<linearGradient id="metal" x2="0" y2="1"><stop stop-color="#25c7ec"/><stop offset=".12" stop-color="#056c99"/><stop offset=".65" stop-color="#007da6"/><stop offset="1" stop-color="#014868"/></linearGradient>
-<linearGradient id="edge" x2="0" y2="1"><stop stop-color="#e0faff"/><stop offset=".4" stop-color="#33a7ca"/><stop offset="1" stop-color="#052b41"/></linearGradient>
-<radialGradient id="rivet" cx=".3" cy=".25"><stop stop-color="#d8f7ff"/><stop offset=".4" stop-color="#629ab0"/><stop offset="1" stop-color="#092330"/></radialGradient>
-<linearGradient id="gold" x2="0" y2="1"><stop stop-color="#fff4a3"/><stop offset=".5" stop-color="#ffe52e"/><stop offset="1" stop-color="#e88d00"/></linearGradient>
-<linearGradient id="red" x2="0" y2="1"><stop stop-color="#ff4c3b"/><stop offset=".5" stop-color="#f51c27"/><stop offset="1" stop-color="#a70c20"/></linearGradient>
-<linearGradient id="ice" x2="0" y2="1"><stop stop-color="#fffef0"/><stop offset=".45" stop-color="#a4f8ff"/><stop offset="1" stop-color="#00acd9"/></linearGradient>
-</defs><circle cx="45" cy="45" r="40" fill="#ed008b"/><path d="M15 15 L75 75 M75 15 L15 75" fill="none" stroke="#071e29" stroke-width="6" stroke-linecap="round"/></svg>
