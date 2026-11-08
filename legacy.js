@@ -9,6 +9,15 @@
 (function(){
   'use strict';
   document.documentElement.classList.add('legacy');
+  /* diagnostic : toute erreur s'affiche en bas de l'écran (vieil iPad seulement) pour pouvoir l'envoyer en capture */
+  var ERR=[];
+  function showErr(m){ERR.push(m);if(ERR.length>4)ERR.shift();var b=document.getElementById('lgErr');
+    if(!b){if(!document.body){document.addEventListener('DOMContentLoaded',function(){showErr(ERR.pop())});return}
+      b=document.createElement('div');b.id='lgErr';b.setAttribute('style','position:fixed;left:6px;right:6px;bottom:6px;z-index:99999;background:#b00;color:#fff;font:12px/1.35 -apple-system,sans-serif;padding:8px 10px;border-radius:8px;white-space:pre-wrap;word-break:break-all');
+      b.addEventListener('click',function(){b.remove()});document.body.appendChild(b)}
+    b.textContent='Erreur (touche pour fermer) :\n'+ERR.join('\n')}
+  window.addEventListener('error',function(e){showErr((e.message||'?')+' @'+(e.lineno||'?')+':'+(e.colno||'?')+(e.filename?' '+String(e.filename).split('/').pop():''))});
+  window.addEventListener('unhandledrejection',function(e){showErr('promesse : '+(e.reason&&e.reason.message||e.reason))});
 
   /* ---------- 1. Pointer Events à partir du tactile ---------- */
   if(!window.PointerEvent){
@@ -24,7 +33,7 @@
         var t=src.changedTouches[i],id=t.identifier+1,tgt=cap[id]||t.target;
         if(tgt&&tgt.nodeType===3)tgt=tgt.parentNode;
         var ev=mk(type,t,src,tgt);tgt.dispatchEvent(ev);
-        if(ev.defaultPrevented&&src.cancelable&&type!=='pointerdown')src.preventDefault();
+        if(ev.defaultPrevented&&src.cancelable&&type==='pointermove')src.preventDefault();   // jamais sur touchend : ça annulerait le clic
         if(type==='pointerup'||type==='pointercancel')delete cap[id];
       }};
     var o={passive:false,capture:true};
