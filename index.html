@@ -4155,6 +4155,39 @@ html body #game#game.sk.p2 #scores{margin-bottom:0!important}
 html body #game#game.sk.p2 #grid{margin-top:var(--G)!important;margin-bottom:0!important}
 html body #game#game.sk.p2 main,html body #game#game.sk.p2.pn main{padding-bottom:0!important}
 html body #game#game.sk.p2 footer,html body #game#game.sk.p2.pn footer{height:var(--r)!important;margin-top:var(--G)!important}
+
+/* ===================== STYLE « RÉTRO » : habillage de la version Bulle (proportions inchangées) =====================
+   Police type Cooper (Fraunces Black, souple), contours noirs, cases à la couleur du joueur, texte noir. */
+@font-face{font-family:"Coop";font-display:block;src:url(art/k6/coop.woff) format("woff")}
+@font-face{font-family:"CoopI";font-display:block;src:url(art/k6/coop_i.woff) format("woff")}
+html.retro{--rk:#0b0b0b;--rbw:2.6px;--rpill:#fff}
+html.retro body #game#game#game.sk.p2 :is(.nm,.pts,.mpr,.mpr b,.pill,.lbl),html.retro body footer :is(#b2,#bS,#b3)::after,html.retro body footer #fbar3 #fMode :is(b,small){font-family:"Coop",serif!important;font-weight:400!important}
+/* case du joueur en cours : couleur du joueur, double contour noir / blanc */
+html.retro body #game#game#game.sk.p2 #scores .sc.act{box-shadow:inset 0 0 0 var(--rbw) var(--rk),0 0 0 calc(var(--h)*1.1) #fff,0 0 0 calc(var(--h)*1.1 + var(--rbw)) var(--rk)!important}
+html.retro body #game#game#game.sk.p2 #pframe{display:none!important}
+html.retro body #game#game#game.sk.p2 #scores .sc :is(.nm,.pts,.mpr,.mpr b){color:var(--rk)!important;text-shadow:none!important}
+html.retro body #game#game#game.sk.p2 #scores .pts{letter-spacing:-.03em}
+html.retro body #game#game#game.sk.p2 #scores .pill:not(.undo){opacity:1!important;background:var(--rpill)!important;border:var(--rbw) solid var(--rk)!important;color:var(--rk)!important}
+/* rails blancs à contour noir, sous la case du nombre */
+html.retro body #game#game#game.sk.p2 #grid .rtrack{background:#fff!important}
+html.retro body #game#game#game.sk.p2 #grid .rtrackb{border:var(--rbw) solid var(--rk)!important;z-index:1!important}
+html.retro body #game#game#game.sk.p2 #grid .num:not(.dead){outline:var(--rbw) solid var(--rk)!important;outline-offset:var(--h)!important}
+html.retro body #game#game#game.sk.p2 #grid .num .lbl{font-family:"CoopI",serif!important;color:var(--rk)!important;text-shadow:none!important;font-size:.98em!important}
+html.retro body #game#game#game.sk.p2 #grid .num.bull .lbl{font-size:.84em!important}
+/* ligne fermée par tous : numéro gris droit, sans case */
+html.retro body #game#game#game.sk.p2 #grid>.row:has(.num.dead){opacity:1!important}
+html.retro body #game#game#game.sk.p2 #grid .num.dead{background:transparent!important;box-shadow:none!important;outline:0!important}
+html.retro body #game#game#game.sk.p2 #grid .num.dead .lbl{font-family:"Coop",serif!important;color:#8a8784!important}
+html.retro body #game#game#game.sk.p2 #grid .pc.mk.dead{opacity:.5!important;color:var(--rk)!important}
+/* marques : traits noirs, fermé = croix sur un disque à la couleur du joueur */
+html.retro body #game#game#game.sk.p2 .mw{color:var(--rk)!important}
+html.retro body #game#game#game.sk.p2 .mw svg path{stroke:var(--rk)!important;stroke-width:3px!important;stroke-linecap:round!important}
+html.retro body #game#game#game.sk.p2 .mw svg .disc{animation:none!important;transform:scale(1.3)!important;fill:var(--mc,var(--accent))!important}
+/* bas d'écran */
+html.retro body footer::after,html.retro body #fbar3::after{border:var(--rbw) solid var(--rk)!important}
+html.retro body footer .fthumb{outline:var(--rbw) solid var(--rk)!important;outline-offset:var(--h,4px)!important}
+html.retro body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) footer :is(#b2,#bS,#b3)::after{color:var(--rk)!important;text-shadow:none!important}
+html.retro body #fbar3 .f3b{outline:var(--rbw) solid var(--rk);outline-offset:var(--h,4px)}
 </style>
 </head>
 <body>
@@ -7632,13 +7665,14 @@ $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
   const p=el('div','');p.id='xpick';p.classList.add('skinpick');document.body.append(p);
   const cur=()=>{const T=S.th||{};return k=>(T[k]||TH[k].def)};
-  const draw=()=>{const T=S.th||{},c=cur();p.innerHTML=`<div class="skn"><button class="skgo" data-go="hStats">Statistiques</button><button class="skgo" data-go="hHist">Historique</button></div><div class="skp"><span>Son</span><div class="sksw sksnd"><button data-s="1" class="${S.sound?'on':''}">Oui</button><button data-s="0" class="${S.sound?'':'on'}">Non</button></div></div><div class="xpt">Thème</div><div class="skps">${THP.map((t,i)=>`<button class="skpr${['bg','ink','acc','btx'].every(k=>c(k)===t[k])?' on':''}" data-i="${i}" style="--b:${t.bg};--i:${t.ink};--a:${t.acc};--t:${t.btx}"><i></i><span>${esc(t.n)}</span></button>`).join('')}</div>`+`<div class="skp"><span>Couleurs des joueurs</span><div class="sksw"><button data-p="1" class="${S.pcolOff?'':'on'}">Oui</button><button data-p="0" class="${S.pcolOff?'on':''}">Non</button></div></div>`};
+  const draw=()=>{const T=S.th||{},c=cur();p.innerHTML=`<div class="skn"><button class="skgo" data-go="hStats">Statistiques</button><button class="skgo" data-go="hHist">Historique</button></div><div class="skp"><span>Style</span><div class="sksw skst"><button data-st="" class="${S.style!=='retro'?'on':''}">Bulle</button><button data-st="retro" class="${S.style==='retro'?'on':''}">Rétro</button></div></div><div class="skp"><span>Son</span><div class="sksw sksnd"><button data-s="1" class="${S.sound?'on':''}">Oui</button><button data-s="0" class="${S.sound?'':'on'}">Non</button></div></div><div class="xpt">Thème</div><div class="skps">${THP.map((t,i)=>`<button class="skpr${['bg','ink','acc','btx'].every(k=>c(k)===t[k])?' on':''}" data-i="${i}" style="--b:${t.bg};--i:${t.ink};--a:${t.acc};--t:${t.btx}"><i></i><span>${esc(t.n)}</span></button>`).join('')}</div>`+`<div class="skp"><span>Couleurs des joueurs</span><div class="sksw"><button data-p="1" class="${S.pcolOff?'':'on'}">Oui</button><button data-p="0" class="${S.pcolOff?'on':''}">Non</button></div></div>`};
   draw();p.style.left=Math.max(12,(innerWidth-p.offsetWidth)/2)+'px';p.style.top=Math.max(12,Math.min(innerHeight-p.offsetHeight-12,e.currentTarget.getBoundingClientRect().bottom+10))+'px';
   p.addEventListener('click',ev=>{ev.stopPropagation();const go=ev.target.closest('.skgo');if(go){p.remove();$(go.dataset.go).dispatchEvent(new MouseEvent('click',{bubbles:true}));return}
     const sn=ev.target.closest('.sksnd button');if(sn){if((sn.dataset.s==='1')!==!!S.sound)$('sndT').dispatchEvent(new MouseEvent('click',{bubbles:true}));draw();return}
     const b=ev.target.closest('.skc');
     if(b){haptic();S.th=Object.assign({},S.th||{},{[b.dataset.k]:b.dataset.c});store.set(K_S,S);applySkin();SFX.lock&&SFX.lock();draw();return}
     const pr=ev.target.closest('.skpr');if(pr){haptic();const t=THP[+pr.dataset.i];S.th={bg:t.bg,ink:t.ink,acc:t.acc,btx:t.btx};store.set(K_S,S);applySkin();SFX.lock&&SFX.lock();draw();return}
+    const stb=ev.target.closest('.skst button');if(stb){haptic();S.style=stb.dataset.st;store.set(K_S,S);styleApply();SFX.ui();draw();return}
     const pb=ev.target.closest('.sksw button');if(pb){haptic();S.pcolOff=pb.dataset.p==='0';store.set(K_S,S);SFX.ui();draw();try{renderSetup()}catch(e){}return}
     if(ev.target.closest('.skr')){haptic();S.th={};S.pcolOff=false;store.set(K_S,S);applySkin();SFX.ui();draw()}});
   setTimeout(()=>document.addEventListener('pointerdown',function f(ev){if(!ev.target.closest('#xpick')){p.remove();document.removeEventListener('pointerdown',f,true)}},true),0)},true);
@@ -7829,6 +7863,10 @@ addEventListener('resize',()=>{try{kArc()}catch(e){}});
     th.animate([{transform:'translateX(0)',easing:E},{transform:`translateX(${dx}px)`,offset:.4},{transform:`translateX(${dx}px)`,offset:.6,easing:E},{transform:'translateX(0)'}],{duration:760});
     const md=$('fMode');btn.classList.add('f3on');md.classList.add('f3off');clearTimeout(btn._f3);btn._f3=setTimeout(()=>{btn.classList.remove('f3on');md.classList.remove('f3off')},470)};
   [$('fMenu'),$('fUndo')].forEach(b=>b.addEventListener('pointerdown',()=>go(b)))}}
+
+/* style d'habillage : Bulle (base) ou Rétro — mêmes proportions, seul l'habillage change */
+function styleApply(){document.documentElement.classList.toggle('retro',S.style==='retro');try{if(typeof layoutSk==='function')layoutSk();if(typeof fitSk==='function')fitSk()}catch(e){}}
+styleApply();
 /* fin de tour : on ne peut plus marquer pendant un court instant (le temps de passer la main) */
 const TURNLOCK_MS=1200;let TURNLOCK=0;
 const turnLocked=()=>performance.now()<TURNLOCK||!!HOLD||!!KHOLD||(typeof XHOLD!=='undefined'&&!!XHOLD);   // tant que le joueur n'a pas changé à l'écran
