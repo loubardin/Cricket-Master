@@ -4118,120 +4118,68 @@ html body #game#game.sk.p2.pn #scores#scores>.sc.act>:is(.nm,.pts,.mpr){translat
 html body #game#game.sk.p2.pn #scores#scores>.sc{transition:left .45s cubic-bezier(.3,1.25,.5,1),width .45s cubic-bezier(.3,1.25,.5,1)!important}
 html body #game#game.sk.p2.pn #scores#scores .sc.act>.pills{width:auto!important}
 
-/* ===================== STYLE « CARTOON » (découpes natives 852×1846) — Cricket à 2 côtés =====================
-   Tout est placé aux coordonnées de la maquette, à l'échelle --s (1 px maquette = --s), centré horizontalement. */
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg){--s:calc(min(100vw,(100dvh - var(--sat,0px) - 6px) * 852 / 1752) / 852);--oy:calc(var(--sat,0px) + 2px - 84 * var(--s));--ox:calc((100vw - 852 * var(--s)) / 2);background:#f9eccb url(art/k5/fond.webp?v2) center/cover no-repeat!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) main{position:static!important;padding:0!important}
-/* en-tête : titre « Cricket » + bandeau (mode · manche) */
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fbar2{position:absolute!important;left:calc(var(--ox) + calc(329*var(--s)))!important;right:auto!important;top:calc(var(--oy) + 92*var(--s))!important;width:calc(220*var(--s))!important;height:calc(92*var(--s))!important;margin:0!important;
-  background:url(art/k5/title.webp) center/100% 100% no-repeat!important;box-shadow:none!important;border:0!important;overflow:visible!important;display:block!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fbar2 .f2th,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMenu,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fUndo{display:none!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMode{position:absolute!important;left:0!important;right:0!important;top:0!important;bottom:0!important;width:100%!important;height:100%!important;background:none!important;box-shadow:none!important;border:0!important;padding:0!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMode::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMode::after,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMode>b{display:none!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMode>small{position:absolute!important;left:18%!important;right:18%!important;top:71%!important;height:20%!important;display:grid!important;place-items:center!important;margin:0!important;padding:0!important;
-  background:none!important;box-shadow:none!important;color:#fff3d6!important;opacity:1!important;font:400 calc(19*var(--s))/1 "Fun",sans-serif!important;letter-spacing:.02em;white-space:nowrap;translate:none!important;transform:none!important}
-/* cases des joueurs */
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores{position:absolute!important;left:var(--ox)!important;top:calc(var(--oy) + 200*var(--s))!important;width:calc(852*var(--s))!important;height:calc(254*var(--s))!important;margin:0!important;padding:0!important;display:block!important;overflow:visible!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.mid{display:none!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc{position:absolute!important;display:block!important;top:0!important;height:100%!important;margin:0!important;padding:0!important;background:none!important;box-shadow:none!important;outline:0!important;border:0!important;overflow:visible!important;transform:none!important;translate:none!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc::after{display:none!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act{left:calc(33*var(--s))!important;width:calc(563*var(--s))!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc:not(.act){left:calc(594*var(--s))!important;width:calc(210*var(--s))!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg).curR #scores>.sc.act{left:calc(256*var(--s))!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg).curR #scores>.sc:not(.act){left:calc(48*var(--s))!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act::before{content:""!important;display:block!important;position:absolute!important;left:0!important;top:0!important;width:100%!important;height:100%!important;background:url(art/k5/panel.webp) center/100% 100% no-repeat!important;z-index:0!important;transform:none!important;border-radius:0!important;box-shadow:none!important;opacity:1!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act:last-child::before{background-image:url(art/k5/panel_p.webp)!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg).curR #scores>.sc.act::before{transform:scaleX(-1)!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.kcrown::after{content:""!important;display:block!important;position:absolute!important;left:calc(100*var(--s))!important;top:calc(-55*var(--s))!important;width:calc(121*var(--s))!important;height:calc(83*var(--s))!important;background:url(art/k5/crown.webp) center/contain no-repeat!important;z-index:3!important;transform:none!important;opacity:1!important;box-shadow:none!important;border:0!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg).curR #scores>.sc.act.kcrown::after{left:calc(342*var(--s))!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc:not(.act).kcrown::after{left:calc(55*var(--s))!important;top:calc(-58*var(--s))!important;width:calc(100*var(--s))!important;height:calc(69*var(--s))!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores .nm .hat{display:none!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc>:is(.nm,.pts,.mpr){position:absolute!important;display:block!important;margin:0!important;padding:0!important;text-align:center!important;white-space:nowrap!important;line-height:1!important;z-index:2!important;transform:none!important;translate:none!important;grid-area:auto!important;overflow:visible!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act>:is(.nm,.pts,.mpr){left:calc(15*var(--s))!important;width:calc(280*var(--s))!important;color:#fff3d6!important;text-shadow:calc(3*var(--s)) calc(0*var(--s)) 0 #0b1220,calc(-3*var(--s)) calc(0*var(--s)) 0 #0b1220,calc(0*var(--s)) calc(3*var(--s)) 0 #0b1220,calc(0*var(--s)) calc(-3*var(--s)) 0 #0b1220,calc(2.0999999999999996*var(--s)) calc(2.0999999999999996*var(--s)) 0 #0b1220,calc(-2.0999999999999996*var(--s)) calc(-2.0999999999999996*var(--s)) 0 #0b1220,calc(2.0999999999999996*var(--s)) calc(-2.0999999999999996*var(--s)) 0 #0b1220,calc(-2.0999999999999996*var(--s)) calc(2.0999999999999996*var(--s)) 0 #0b1220,0 calc(5*var(--s)) 0 rgba(0,0,0,.35)!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg).curR #scores>.sc.act>:is(.nm,.pts,.mpr){left:calc(268*var(--s))!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act>.nm{top:calc(32*var(--s))!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act>.pts{top:calc(88*var(--s))!important;text-shadow:calc(5*var(--s)) calc(0*var(--s)) 0 #0b1220,calc(-5*var(--s)) calc(0*var(--s)) 0 #0b1220,calc(0*var(--s)) calc(5*var(--s)) 0 #0b1220,calc(0*var(--s)) calc(-5*var(--s)) 0 #0b1220,calc(3.5*var(--s)) calc(3.5*var(--s)) 0 #0b1220,calc(-3.5*var(--s)) calc(-3.5*var(--s)) 0 #0b1220,calc(3.5*var(--s)) calc(-3.5*var(--s)) 0 #0b1220,calc(-3.5*var(--s)) calc(3.5*var(--s)) 0 #0b1220,0 calc(7*var(--s)) 0 rgba(0,0,0,.35)!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act>.mpr{top:calc(184*var(--s))!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc:not(.act)>:is(.nm,.pts,.mpr){left:0!important;width:100%!important;color:#13213a!important;text-shadow:none!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc:not(.act)>.nm{top:calc(14*var(--s))!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc:not(.act)>.pts{top:calc(70*var(--s))!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc:not(.act)>.mpr{top:calc(166*var(--s))!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc .mpr,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc .mpr b{font:400 calc(25*var(--s))/1 "Fun",sans-serif!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act .mpr b{color:#fff3d6!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc .nm small{display:block!important;font-size:.5em!important;opacity:.85}
-/* historique des fléchettes */
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc>.pills{position:absolute!important;display:flex!important;flex-direction:column!important;gap:calc(5*var(--s))!important;margin:0!important;padding:0!important;background:none!important;box-shadow:none!important;transform:none!important;translate:none!important;grid-area:auto!important;z-index:2!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act>.pills{left:calc(305*var(--s))!important;top:calc(43*var(--s))!important;width:calc(203*var(--s))!important;height:auto!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg).curR #scores>.sc.act>.pills{left:calc(55*var(--s))!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc:not(.act)>.pills{flex-direction:row!important;left:calc(3*var(--s))!important;top:calc(199*var(--s))!important;width:calc(204*var(--s))!important;gap:calc(6*var(--s))!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc .pill{flex:none!important;margin:0!important;padding:0!important;border:0!important;box-shadow:none!important;opacity:1!important;display:grid!important;place-items:center!important;min-width:0!important;min-height:0!important;transform:none!important;scale:1!important;
-  font:400 calc(38*var(--s))/1 "Fun",sans-serif!important;color:#0b1220!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act .pill{width:calc(190*var(--s))!important;height:calc(50*var(--s))!important;margin-left:calc(6*var(--s))!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc:not(.act) .pill{width:calc(66*var(--s))!important;height:calc(44*var(--s))!important;font-size:calc(25*var(--s))!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc .pill.undo{display:none!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc .pill.e{color:transparent!important}
-/* lignes : rail beige fixe + case bleue numérotée */
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid{position:absolute!important;left:var(--ox)!important;top:calc(var(--oy) + 460*var(--s))!important;width:calc(852*var(--s))!important;height:auto!important;margin:0!important;padding:0!important;display:flex!important;flex-direction:column-reverse!important;gap:calc(3.8*var(--s))!important;overflow:visible!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid>.row{position:relative!important;display:grid!important;grid-template-columns:calc(258.5*var(--s)) calc(335*var(--s)) calc(258.5*var(--s))!important;height:calc(142*var(--s))!important;min-height:0!important;max-height:none!important;flex:none!important;margin:0!important;padding:0!important;gap:0!important;background:none!important;box-shadow:none!important;border:0!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .rtrack{display:block!important;position:absolute!important;top:0!important;bottom:0!important;height:auto!important;left:calc(28*var(--s))!important;width:calc(565.5*var(--s))!important;background:url(art/k5/rail.webp) center/100% 100% no-repeat!important;box-shadow:none!important;border:0!important;outline:0!important;border-radius:0!important;transform:none!important;z-index:0!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg).curR #grid .rtrack{left:calc(258.5*var(--s))!important;transform:scaleX(-1)!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .rtrack::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .rtrack::after,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .rtrackb{display:none!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid>.row:has(.num.dead)>.rtrack{display:none!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num{position:relative;z-index:2;width:calc(335*var(--s))!important;height:calc(142*var(--s))!important;min-width:0!important;margin:0!important;padding:0!important;align-self:center!important;justify-self:center!important;
-  background:var(--nb) center/100% 100% no-repeat!important;box-shadow:none!important;border:0!important;outline:0!important;border-radius:0!important;color:transparent!important;animation:none!important;filter:none!important;scale:1!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg).curR #grid .num{background-image:var(--np)!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num::after{display:none!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num>*{opacity:0!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num.dead{filter:grayscale(.85) opacity(.4)!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num.bnc:not(.nghost){background:none!important}
-/* marques : barre, croix, croix sur disque (bleu à gauche, rose à droite) */
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .row>.pc.mk{position:relative!important;display:grid!important;place-items:center!important;height:100%!important;background:none!important;box-shadow:none!important;border:0!important;z-index:1}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .row>.pc.mk:first-of-type{padding-left:calc(54*var(--s))!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .row>.pc.mk:last-of-type{padding-right:calc(52*var(--s))!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .mw{position:relative!important;left:auto!important;top:auto!important;width:calc(100*var(--s))!important;height:calc(100*var(--s))!important;background:center/contain no-repeat;transform:none!important;translate:none!important;inset:auto!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .mw svg,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .mw .tn{display:none!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .mw.k1{background-image:url(art/k5/mk1.webp)}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .mw.k2{background-image:url(art/k5/mk2.webp)}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .row>.pc.mk:first-of-type .mw.k3{background-image:url(art/k5/mk3b.webp)}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .row>.pc.mk:last-of-type .mw.k3{background-image:url(art/k5/mk3p.webp)}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid>.row:has(.num.dead) .mw{opacity:.4;filter:grayscale(.3)}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc:not(.act) .pill{font-size:calc(31*var(--s))!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act .pill{text-shadow:0 1px 0 rgba(255,255,255,.55)}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc .pill{background:#fffaf0!important;border-radius:99px!important;box-shadow:inset 0 0 0 calc(4*var(--s)) #0b1220,0 calc(4*var(--s)) 0 rgba(0,0,0,.25)!important;color:#0b1220!important;
-  text-align:center!important;justify-content:center!important;align-items:center!important;letter-spacing:0!important;text-indent:0!important;animation:none!important;translate:none!important;overflow:hidden;white-space:nowrap}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc .pill.d{background:linear-gradient(160deg,#eef1f4 0%,#c3cad2 45%,#8f99a4 100%)!important;color:#0b1220!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc .pill.t{background:linear-gradient(160deg,#ffe58a 0%,#f2bd1a 50%,#c48a00 100%)!important;color:#2b1d00!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc .pill.e{color:transparent!important}
-/* double / triple : les 3 versions de la case sont toujours affichées (calques), seule leur opacité change — pas de trou au chargement */
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num.num::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num.num::after{content:""!important;display:block!important;position:absolute!important;left:0!important;top:0!important;right:0!important;bottom:0!important;
-  background:var(--nb2) center/100% 100% no-repeat!important;opacity:.002;z-index:0!important;pointer-events:none;border:0!important;box-shadow:none!important;border-radius:0!important;transform:none!important;animation:none!important;transition:none!important;width:auto!important;height:auto!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num.num::after{background-image:var(--nb3)!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg).curR #grid .num.num::before{background-image:var(--np2)!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg).curR #grid .num.num::after{background-image:var(--np3)!important}
-html.cartoon body #game#game.km2.sk.p2:not(.pn):not(.bcg) #grid .num.num:not(.dead)::before,html.cartoon body #game#game.km3.sk.p2:not(.pn):not(.bcg) #grid .num.num:not(.dead)::after{opacity:1}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num.num.bnc:not(.nghost)::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num.num.bnc:not(.nghost)::after{display:none!important}
-/* boutons du bas : aucune animation / ombre héritée (Safari applique les animations malgré !important) */
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>button,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>button.armed{animation:none!important;-webkit-animation:none!important;text-shadow:none!important;-webkit-text-stroke:0!important;box-shadow:none!important;filter:none!important;outline:0!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>button::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>button::after{animation:none!important;transition:none!important;content:none!important;display:none!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>.kft{position:absolute!important;left:0;top:0;width:100%;height:100%;display:block!important;pointer-events:none;opacity:0;z-index:0;user-select:none;-webkit-user-drag:none}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>.kft.n{opacity:1}
-html.cartoon body #game#game.km2.sk.p2:not(.pn):not(.bcg) footer>.kft.d,html.cartoon body #game#game.km3.sk.p2:not(.pn):not(.bcg) footer>.kft.t,
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer.kspew>.kft.s,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer.kmenuP>.kft.m,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer.kundoP>.kft.u{opacity:1;z-index:1}
-#game footer>.kft{display:none}
-/* bas : une planche de 6 états (normal, double, triple, spew, menu, annuler) — un seul affiché, même place et même taille */
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer{position:absolute!important;left:calc(var(--ox) + calc(16*var(--s)))!important;right:auto!important;top:calc(var(--oy) + 1478*var(--s))!important;bottom:auto!important;width:calc(820*var(--s))!important;height:calc(354*var(--s))!important;margin:0!important;padding:0!important;
-  display:block!important;background:none!important;box-shadow:none!important;border:0!important;outline:0!important;border-radius:0!important;overflow:visible!important;transform:none!important;translate:none!important;aspect-ratio:auto!important;filter:none!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer::after,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer .fthumb{display:none!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>button{position:absolute!important;display:block!important;margin:0!important;padding:0!important;font-size:0!important;color:transparent!important;-webkit-text-fill-color:transparent!important;text-shadow:none!important;
-  background:none!important;box-shadow:none!important;border:0!important;border-radius:0!important;opacity:1!important;filter:none!important;transform:none!important;scale:1!important;grid-area:auto!important;-webkit-tap-highlight-color:transparent;z-index:1}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>button::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>button::after,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>button>*{display:none!important;content:none!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer #b2{left:1.99%!important;top:9.87%!important;width:29.55%!important;height:41.45%!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer #b3{left:68.47%!important;top:9.87%!important;width:29.83%!important;height:41.45%!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer .kmenu{left:1.99%!important;top:51.32%!important;width:29.55%!important;height:42.11%!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer .kundo{left:68.47%!important;top:51.32%!important;width:29.83%!important;height:42.11%!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer #bS{left:29.40%!important;top:2.63%!important;width:41.48%!important;height:94.74%!important;border-radius:50%!important;z-index:2}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer .kmenu,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer .kundo{display:block!important}
-#game footer .kmenu,#game footer .kundo{display:none}
+/* ===================== STYLE « CARTOON » : calque indépendant (#kc) pour le Cricket à 2 côtés =====================
+   Le tableau Bulle reste dessous, invisible : aucune de ses animations ne touche ce calque. Coordonnées de la maquette 852 px, échelle --s. */
+#kc{display:none}
+#game#game>#kc,#game#game>#kc *{font-family:"Fun",sans-serif!important;font-synthesis:none}
+html.kart body>:is(.bhole,.bosstag,.bspark,.bullet,.ember,.fireglow,.flake,.bullfx,.inflate,.ring){display:none!important}
+#game.kart>main,#game.kart>footer,#game.kart #fbar2,#game.kart header{visibility:hidden!important}
+#game.kart>#kc{display:block;position:absolute;inset:0;z-index:20;overflow:hidden;contain:strict;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;
+  --s:calc(min(100vw,(100dvh - var(--sat,0px) - 6px) * 852 / 1752) / 852);--oy:calc(var(--sat,0px) + 2px - 84 * var(--s));--ox:calc((100vw - 852 * var(--s)) / 2);
+  background:#f9eccb url(art/k5/fond.webp) center/cover no-repeat}
+#kc img{position:absolute;display:block;pointer-events:none;-webkit-user-drag:none}
+#kc .a{position:absolute;left:calc(var(--ox) + var(--x) * var(--s));top:calc(var(--oy) + var(--y) * var(--s));width:calc(var(--w) * var(--s));height:calc(var(--h) * var(--s))}
+#kc .a>img{left:0;top:0;width:100%;height:100%}
+#kc .t{position:absolute;left:0;right:0;text-align:center;white-space:nowrap;line-height:1;font-family:"Fun",sans-serif;font-weight:400;pointer-events:none}
+/* en-tête */
+#kc .qsub{left:18%;right:18%;top:71%;height:20%;display:grid;place-items:center;color:#fff3d6;font-size:calc(19*var(--s));letter-spacing:.02em}
+/* panneau du joueur en cours */
+#kc .qpan>img.pb,#kc .qpan>img.pp{opacity:0}
+#kc.sl .qpan>img.pb,#kc.sr .qpan>img.pp{opacity:1}
+#kc.sr .qpan>img.pp{transform:scaleX(-1)}
+#kc .qpan .qtx{position:absolute;left:calc(15*var(--s));width:calc(280*var(--s));top:0;height:100%}
+#kc.sr .qpan .qtx{left:calc(268*var(--s))}
+#kc .qtx .nm{top:auto;bottom:calc(166*var(--s));color:#fff3d6;text-shadow:calc(3*var(--s)) calc(0*var(--s)) 0 #0b1220,calc(-3*var(--s)) calc(0*var(--s)) 0 #0b1220,calc(0*var(--s)) calc(3*var(--s)) 0 #0b1220,calc(0*var(--s)) calc(-3*var(--s)) 0 #0b1220,calc(2.0999999999999996*var(--s)) calc(2.0999999999999996*var(--s)) 0 #0b1220,calc(-2.0999999999999996*var(--s)) calc(-2.0999999999999996*var(--s)) 0 #0b1220,calc(2.0999999999999996*var(--s)) calc(-2.0999999999999996*var(--s)) 0 #0b1220,calc(-2.0999999999999996*var(--s)) calc(2.0999999999999996*var(--s)) 0 #0b1220,0 calc(5*var(--s)) 0 rgba(0,0,0,.35)}
+#kc .qtx .nm small{font-size:.5em}
+#kc .qtx .pt{top:calc(88*var(--s));color:#fff3d6;text-shadow:calc(5*var(--s)) calc(0*var(--s)) 0 #0b1220,calc(-5*var(--s)) calc(0*var(--s)) 0 #0b1220,calc(0*var(--s)) calc(5*var(--s)) 0 #0b1220,calc(0*var(--s)) calc(-5*var(--s)) 0 #0b1220,calc(3.5*var(--s)) calc(3.5*var(--s)) 0 #0b1220,calc(-3.5*var(--s)) calc(-3.5*var(--s)) 0 #0b1220,calc(3.5*var(--s)) calc(-3.5*var(--s)) 0 #0b1220,calc(-3.5*var(--s)) calc(3.5*var(--s)) 0 #0b1220,0 calc(7*var(--s)) 0 rgba(0,0,0,.35)}
+#kc .qtx .mp{top:calc(184*var(--s));color:#fff3d6;font-size:calc(25*var(--s));text-shadow:calc(2.4*var(--s)) calc(0*var(--s)) 0 #0b1220,calc(-2.4*var(--s)) calc(0*var(--s)) 0 #0b1220,calc(0*var(--s)) calc(2.4*var(--s)) 0 #0b1220,calc(0*var(--s)) calc(-2.4*var(--s)) 0 #0b1220,calc(1.68*var(--s)) calc(1.68*var(--s)) 0 #0b1220,calc(-1.68*var(--s)) calc(-1.68*var(--s)) 0 #0b1220,calc(1.68*var(--s)) calc(-1.68*var(--s)) 0 #0b1220,calc(-1.68*var(--s)) calc(1.68*var(--s)) 0 #0b1220}
+#kc .qpan .qhist{position:absolute;left:calc(311*var(--s));top:calc(45*var(--s));width:calc(190*var(--s))}
+#kc.sr .qpan .qhist{left:calc(61*var(--s))}
+#kc .qpan .qhist i{display:grid;place-items:center;width:100%;height:calc(50*var(--s));margin-bottom:calc(8*var(--s));font-size:calc(38*var(--s))}
+/* adversaire */
+#kc .qop .qtx .nm,#kc .qop .qtx .pt,#kc .qop .qtx .mp{color:#0b1220;text-shadow:none}
+#kc .qop .qtx{position:absolute;inset:0}
+#kc .qop .qtx .nm{top:auto;bottom:calc(186*var(--s))}
+#kc .qop .qtx .pt{top:calc(70*var(--s))}
+#kc .qop .qtx .mp{top:calc(166*var(--s))}
+#kc .qop .qhist{position:absolute;left:calc(3*var(--s));top:calc(200*var(--s));display:flex;gap:calc(6*var(--s))}
+#kc .qop .qhist i{display:grid;place-items:center;width:calc(64*var(--s));height:calc(44*var(--s));font-size:calc(25*var(--s))}
+#kc .qhist i{font-style:normal;font-family:"Fun",sans-serif;line-height:1;color:#0b1220;background:#fffaf0;border-radius:99px;box-shadow:inset 0 0 0 calc(4*var(--s)) #0b1220,0 calc(4*var(--s)) 0 rgba(0,0,0,.25);white-space:nowrap}
+#kc .qhist i.d{background:linear-gradient(160deg,#eef1f4 0%,#c3cad2 45%,#8f99a4 100%)}
+#kc .qhist i.t{background:linear-gradient(160deg,#ffe58a 0%,#f2bd1a 50%,#c48a00 100%);color:#2b1d00}
+#kc .qhist i.e{color:transparent}
+#kc .qcrown{position:absolute;display:none;width:calc(121*var(--s));height:calc(83*var(--s))}
+#kc .qcrown.on{display:block}
+/* lignes */
+#kc .qrow{pointer-events:auto}
+#kc .qrow .qrail{left:calc(28*var(--s));width:calc(565.5*var(--s));top:0;height:100%}
+#kc.sr .qrow .qrail{left:calc(258.5*var(--s));transform:scaleX(-1)}
+#kc .qrow .qpl{position:absolute;left:calc(258.5*var(--s));top:0;width:calc(335*var(--s));height:100%;will-change:transform}
+#kc .qrow .qpl img{left:0;top:0;width:100%;height:100%;opacity:0}
+#kc.sl .qrow .qpl img.b0,#kc.sr .qrow .qpl img.p0{opacity:1}
+#kc.sl.m2 .qrow:not(.qdead) .qpl img.b2,#kc.sr.m2 .qrow:not(.qdead) .qpl img.p2,#kc.sl.m3 .qrow:not(.qdead) .qpl img.b3,#kc.sr.m3 .qrow:not(.qdead) .qpl img.p3{opacity:1}
+#kc .qrow .qmk{width:calc(100*var(--s));height:calc(100*var(--s));top:calc(21*var(--s));opacity:0}
+#kc .qrow .qmk.on{opacity:1}
+#kc .qrow .qmk.ql{left:calc(106*var(--s))}
+#kc .qrow .qmk.qr{left:calc(647*var(--s))}
+#kc .qrow.qdead .qrail{opacity:0}
+#kc .qrow.qdead .qpl,#kc .qrow.qdead .qmk{opacity:.38}
+/* bas */
+#kc .qft>img{opacity:0}
+#kc .qft>img.n{opacity:1}
+#kc.m2 .qft>img.d,#kc.m3 .qft>img.t,#kc .qft.ps>img.s,#kc .qft.pm>img.m,#kc .qft.pu>img.u{opacity:1}
+#kc .qft b{position:absolute;display:block;pointer-events:auto;cursor:pointer}
+#kc .qft b.s{border-radius:50%}
 
 </style>
 </head>
@@ -7337,7 +7285,7 @@ if(![301,501,701].includes(S.xstart)){S.xstart=501}delete S.xcustom;
    const b=el('div','cbub','<b>'+String(txt).replace(/[👏👁️🛡🤝]/gu,'').trim()+'</b>'+(sub?'<small>'+sub+'</small>':''));b.style.setProperty('--c',col);document.body.append(b);setTimeout(()=>b.remove(),1900)}}
 /* balle : chaque appui la propulse vers le bout du rail, elle rebondit contre le bord puis retombe à sa place */
 const BALLS=new Map();
-function kickBall(num,X){if(typeof artOn==='function'&&artOn())return kickBallArt(num,X);const row=num.parentElement;let B=BALLS.get(num);
+function kickBall(num,X){if(typeof artOn==='function'&&artOn())return;const row=num.parentElement;let B=BALLS.get(num);
   if(!B||!B.gh.isConnected){const gh=num.cloneNode(true);gh.classList.add('nghost');gh.classList.remove('pressed','pgrey','away','bnc');
     Object.entries({position:'absolute',left:num.offsetLeft+'px',top:num.offsetTop+'px',width:num.offsetWidth+'px',height:num.offsetHeight+'px',margin:'0','pointer-events':'none','z-index':'3',flex:'none',order:'0'}).forEach(([k,v])=>gh.style.setProperty(k,v,'important'));
     row.append(gh);B={gh,x:0,v:0,X,t:0};BALLS.set(num,B)}
@@ -7899,32 +7847,63 @@ addEventListener('resize',()=>{try{kArc()}catch(e){}});
 
 /* STYLE « CARTOON » (kit vectoriel) : réglage Bulle / Cartoon */
 if(S.art2===undefined){S.art2='cartoon';try{store.set(K_S,S)}catch(e){}}
-function artApply(){document.documentElement.classList.toggle('cartoon',S.art2==='cartoon')}
+function artApply(){document.documentElement.classList.toggle('cartoon',S.art2==='cartoon');try{if(typeof kcSync==='function'&&G&&R)kcSync()}catch(e){}}
 artApply();
 
-/* cartoon (découpes natives) : cases numérotées, couronne, tailles de texte, boutons Menu / Annuler du bas */
-function artOn(){return S.art2==='cartoon'&&$('game').classList.contains('sk')&&$('game').classList.contains('p2')&&!$('game').classList.contains('pn')&&!$('game').classList.contains('bcg')}
-function artPaint(){if(S.art2!=='cartoon'||!R||!R.num)return;
-  TARGETS.forEach(n=>{const b=R.num[n];if(!b||b.dataset.art==='6')return;const k=n===25?'bulle':n;b.dataset.art='6';
-    b.style.setProperty('--nb',`url(art/k5/case_${k}.webp)`);b.style.setProperty('--np',`url(art/k5/case_${k}_p.webp)`);
-    ['d','t'].forEach((x,j)=>{b.style.setProperty('--nb'+(j+2),`url(art/k5/case_${k}_${x}.webp)`);b.style.setProperty('--np'+(j+2),`url(art/k5/case_${k}_${x}_p.webp)`)})});
-  if(!artPaint._pre){artPaint._pre=1;['15','16','17','18','19','20','bulle'].forEach(k=>['d','t','d_p','t_p'].forEach(x=>{const i=new Image();i.src=`art/k5/case_${k}_${x}.webp`}))}
-  R.sc.forEach(sc=>{if(sc&&sc.c)sc.c.classList.toggle('kcrown',!!(sc.nm&&sc.nm.querySelector('.hat')))});
-  const f=document.querySelector('#game footer');
-  if(f&&!f.querySelector('.kft')){['n','d','t','s','m','u'].forEach(k=>{const i=document.createElement('img');i.className='kft '+k;i.src='art/k5/ft_'+k+'.webp';i.alt='';i.decoding='sync';f.prepend(i)})}
-  if(f&&!f.querySelector('.kmenu')){const m=el('button','kmenu'),u=el('button','kundo');m.setAttribute('aria-label','Menu');u.setAttribute('aria-label','Annuler');
-    m.addEventListener('click',e=>{e.stopPropagation();$('fMenu').click()});u.addEventListener('click',e=>{e.stopPropagation();$('fUndo').click()});f.append(m,u)}
-  if(artOn())artFit()}
-/* textes des cases : tailles de la maquette, réduites seulement si le nom ou le score est trop long */
-function artFit(){const s=Math.min(innerWidth,(innerHeight-(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--sat'))||0)-6)*852/1752)/852;
-  R.sc.forEach(sc=>{if(!sc||!sc.c)return;const act=sc.c.classList.contains('act'),W=(act?270:205)*s;
-    [[sc.nm,act?56:58],[sc.pts,act?112:122]].forEach(([e,base])=>{if(!e)return;const key=act+'|'+e.textContent+'|'+s;if(e._fk===key)return;e._fk=key;let fs=base*s;e.style.setProperty('font-size',fs+'px','important');
-      const rg=document.createRange();rg.selectNodeContents(e);let n=0;while(rg.getBoundingClientRect().width>W&&fs>8&&n++<40){fs*=.94;e.style.setProperty('font-size',fs+'px','important')}})})}
-{const _r=render;render=function(){const x=_r.apply(this,arguments);try{artPaint()}catch(e){console.error(e)}return x}}
-{const _f=fitSk;fitSk=function(){if(artOn()){try{artFit()}catch(e){}return}return _f.apply(this,arguments)}}
-addEventListener('resize',()=>{try{if(artOn())artFit()}catch(e){}});
-document.addEventListener('pointerdown',e=>{if(S.art2!=='cartoon'||!e.target.closest)return;const t=e.target.closest('#game footer #bS,#game footer .kmenu,#game footer .kundo');if(!t)return;
-  const f=t.parentElement,c=t.id==='bS'?'kspew':t.classList.contains('kmenu')?'kmenuP':'kundoP';f.classList.remove('kspew','kmenuP','kundoP');f.classList.add(c);clearTimeout(f._ks);f._ks=setTimeout(()=>f.classList.remove(c),380)},true);
+/* ===== STYLE « CARTOON » : calque indépendant, synchronisé sur l'état du Cricket (aucune dépendance au rendu Bulle) ===== */
+const KC_HTML="<div id=\"kc\" class=\"sl\"><div class=\"a\" style=\"--x:329;--y:92;--w:220;--h:92\"><img src=\"art/k5/title.webp\" alt=\"\"><div class=\"t qsub\"></div></div><div class=\"a qpan\" style=\"--x:33;--y:200;--w:563;--h:254\"><img class=\"pb\" src=\"art/k5/panel.webp\" alt=\"\"><img class=\"pp\" src=\"art/k5/panel_p.webp\" alt=\"\"><div class=\"qtx\"><div class=\"t nm\"></div><div class=\"t pt\"></div><div class=\"t mp\"></div></div><div class=\"qhist\"><i></i><i></i><i></i></div></div><div class=\"a qop\" style=\"--x:594;--y:200;--w:210;--h:254\"><div class=\"qtx\"><div class=\"t nm\"></div><div class=\"t pt\"></div><div class=\"t mp\"></div></div><div class=\"qhist\"><i></i><i></i><i></i></div></div><img class=\"qcrown\" src=\"art/k5/crown.webp\" alt=\"\"><div class=\"a qrow\" data-t=\"25\" style=\"--x:0;--y:460.0;--w:852;--h:142\"><img class=\"qrail\" src=\"art/k5/rail.webp\" alt=\"\"><img class=\"qmk ql\" alt=\"\"><img class=\"qmk qr\" alt=\"\"><div class=\"qpl\"><img class=\"b0\" src=\"art/k5/case_bulle.webp\" alt=\"\"><img class=\"b2\" src=\"art/k5/case_bulle_d.webp\" alt=\"\"><img class=\"b3\" src=\"art/k5/case_bulle_t.webp\" alt=\"\"><img class=\"p0\" src=\"art/k5/case_bulle_p.webp\" alt=\"\"><img class=\"p2\" src=\"art/k5/case_bulle_d_p.webp\" alt=\"\"><img class=\"p3\" src=\"art/k5/case_bulle_t_p.webp\" alt=\"\"></div></div><div class=\"a qrow\" data-t=\"20\" style=\"--x:0;--y:605.8;--w:852;--h:142\"><img class=\"qrail\" src=\"art/k5/rail.webp\" alt=\"\"><img class=\"qmk ql\" alt=\"\"><img class=\"qmk qr\" alt=\"\"><div class=\"qpl\"><img class=\"b0\" src=\"art/k5/case_20.webp\" alt=\"\"><img class=\"b2\" src=\"art/k5/case_20_d.webp\" alt=\"\"><img class=\"b3\" src=\"art/k5/case_20_t.webp\" alt=\"\"><img class=\"p0\" src=\"art/k5/case_20_p.webp\" alt=\"\"><img class=\"p2\" src=\"art/k5/case_20_d_p.webp\" alt=\"\"><img class=\"p3\" src=\"art/k5/case_20_t_p.webp\" alt=\"\"></div></div><div class=\"a qrow\" data-t=\"19\" style=\"--x:0;--y:751.6;--w:852;--h:142\"><img class=\"qrail\" src=\"art/k5/rail.webp\" alt=\"\"><img class=\"qmk ql\" alt=\"\"><img class=\"qmk qr\" alt=\"\"><div class=\"qpl\"><img class=\"b0\" src=\"art/k5/case_19.webp\" alt=\"\"><img class=\"b2\" src=\"art/k5/case_19_d.webp\" alt=\"\"><img class=\"b3\" src=\"art/k5/case_19_t.webp\" alt=\"\"><img class=\"p0\" src=\"art/k5/case_19_p.webp\" alt=\"\"><img class=\"p2\" src=\"art/k5/case_19_d_p.webp\" alt=\"\"><img class=\"p3\" src=\"art/k5/case_19_t_p.webp\" alt=\"\"></div></div><div class=\"a qrow\" data-t=\"18\" style=\"--x:0;--y:897.4;--w:852;--h:142\"><img class=\"qrail\" src=\"art/k5/rail.webp\" alt=\"\"><img class=\"qmk ql\" alt=\"\"><img class=\"qmk qr\" alt=\"\"><div class=\"qpl\"><img class=\"b0\" src=\"art/k5/case_18.webp\" alt=\"\"><img class=\"b2\" src=\"art/k5/case_18_d.webp\" alt=\"\"><img class=\"b3\" src=\"art/k5/case_18_t.webp\" alt=\"\"><img class=\"p0\" src=\"art/k5/case_18_p.webp\" alt=\"\"><img class=\"p2\" src=\"art/k5/case_18_d_p.webp\" alt=\"\"><img class=\"p3\" src=\"art/k5/case_18_t_p.webp\" alt=\"\"></div></div><div class=\"a qrow\" data-t=\"17\" style=\"--x:0;--y:1043.2;--w:852;--h:142\"><img class=\"qrail\" src=\"art/k5/rail.webp\" alt=\"\"><img class=\"qmk ql\" alt=\"\"><img class=\"qmk qr\" alt=\"\"><div class=\"qpl\"><img class=\"b0\" src=\"art/k5/case_17.webp\" alt=\"\"><img class=\"b2\" src=\"art/k5/case_17_d.webp\" alt=\"\"><img class=\"b3\" src=\"art/k5/case_17_t.webp\" alt=\"\"><img class=\"p0\" src=\"art/k5/case_17_p.webp\" alt=\"\"><img class=\"p2\" src=\"art/k5/case_17_d_p.webp\" alt=\"\"><img class=\"p3\" src=\"art/k5/case_17_t_p.webp\" alt=\"\"></div></div><div class=\"a qrow\" data-t=\"16\" style=\"--x:0;--y:1189.0;--w:852;--h:142\"><img class=\"qrail\" src=\"art/k5/rail.webp\" alt=\"\"><img class=\"qmk ql\" alt=\"\"><img class=\"qmk qr\" alt=\"\"><div class=\"qpl\"><img class=\"b0\" src=\"art/k5/case_16.webp\" alt=\"\"><img class=\"b2\" src=\"art/k5/case_16_d.webp\" alt=\"\"><img class=\"b3\" src=\"art/k5/case_16_t.webp\" alt=\"\"><img class=\"p0\" src=\"art/k5/case_16_p.webp\" alt=\"\"><img class=\"p2\" src=\"art/k5/case_16_d_p.webp\" alt=\"\"><img class=\"p3\" src=\"art/k5/case_16_t_p.webp\" alt=\"\"></div></div><div class=\"a qrow\" data-t=\"15\" style=\"--x:0;--y:1334.8;--w:852;--h:142\"><img class=\"qrail\" src=\"art/k5/rail.webp\" alt=\"\"><img class=\"qmk ql\" alt=\"\"><img class=\"qmk qr\" alt=\"\"><div class=\"qpl\"><img class=\"b0\" src=\"art/k5/case_15.webp\" alt=\"\"><img class=\"b2\" src=\"art/k5/case_15_d.webp\" alt=\"\"><img class=\"b3\" src=\"art/k5/case_15_t.webp\" alt=\"\"><img class=\"p0\" src=\"art/k5/case_15_p.webp\" alt=\"\"><img class=\"p2\" src=\"art/k5/case_15_d_p.webp\" alt=\"\"><img class=\"p3\" src=\"art/k5/case_15_t_p.webp\" alt=\"\"></div></div><div class=\"a qft\" style=\"--x:16;--y:1478;--w:820;--h:354\"><img class=\"n\" src=\"art/k5/ft_n.webp\" alt=\"\"><img class=\"d\" src=\"art/k5/ft_d.webp\" alt=\"\"><img class=\"t\" src=\"art/k5/ft_t.webp\" alt=\"\"><img class=\"s\" src=\"art/k5/ft_s.webp\" alt=\"\"><img class=\"m\" src=\"art/k5/ft_m.webp\" alt=\"\"><img class=\"u\" src=\"art/k5/ft_u.webp\" alt=\"\"><b class=\"b2\" style=\"left:1.99%;top:9.87%;width:29.55%;height:41.45%\"></b><b class=\"b3\" style=\"left:68.47%;top:9.87%;width:29.83%;height:41.45%\"></b><b class=\"bm\" style=\"left:1.99%;top:51.32%;width:29.55%;height:42.11%\"></b><b class=\"bu\" style=\"left:68.47%;top:51.32%;width:29.83%;height:42.11%\"></b><b class=\"s\" style=\"left:29.40%;top:2.63%;width:41.48%;height:94.74%\"></b></div></div>";
+function artOn(){return S.art2==='cartoon'&&!!G&&!!G.players&&G.players.length===2&&!BARC&&!G._bar}
+let KC=null;
+function kcBuild(){const g=$('game');let k=$('kc');if(!k){g.insertAdjacentHTML('beforeend',KC_HTML);k=$('kc')}
+  const q=(sel,el)=>(el||k).querySelector(sel);
+  KC={k,sub:q('.qsub'),pan:q('.qpan'),op:q('.qop'),crown:q('.qcrown'),rows:{},foot:q('.qft'),last:{}};
+  k.querySelectorAll('.qrow').forEach(r=>{const t=+r.dataset.t;KC.rows[t]={r,pl:q('.qpl',r),ml:q('.qmk.ql',r),mr:q('.qmk.qr',r),mk:[-1,-1],dead:null}});
+  // touches : la ligne entière vise ce numéro ; boutons du bas = boutons réels (sons, verrous, règles inchangés)
+  k.addEventListener('click',e=>{const r=e.target.closest('.qrow');if(r){throwDart(+r.dataset.t);return}
+    const b=e.target.closest('.qft b');if(!b)return;
+    const id={b2:'b2',b3:'b3',s:'bS',bm:'fMenu',bu:'fUndo'}[b.className];if(id&&$(id))$(id).click()});
+  k.addEventListener('pointerdown',e=>{const b=e.target.closest('.qft b');if(!b)return;const c={s:'ps',bm:'pm',bu:'pu'}[b.className];if(!c)return;
+    const f=KC.foot;f.classList.remove('ps','pm','pu');f.classList.add(c);clearTimeout(f._t);f._t=setTimeout(()=>f.classList.remove(c),360)});
+}
+const kcSet=(el,key,v,fn)=>{if(el['_'+key]===v)return false;el['_'+key]=v;fn(v);return true};
+function kcText(el,html,base,maxW){if(el._h===html&&el._b===base)return;el._h=html;el._b=base;el.innerHTML=html;
+  const s=parseFloat(getComputedStyle(KC.k).getPropertyValue('--s'))||Math.min(innerWidth,(innerHeight-6)*852/1752)/852;let fs=base*s;el.style.fontSize=fs+'px';
+  const W=maxW*s,rg=document.createRange();rg.selectNodeContents(el);let n=0;while(rg.getBoundingClientRect().width>W&&fs>6&&n++<30){fs*=.93;el.style.fontSize=fs+'px'}}
+function kcFill(box,i,act){const sc=R.sc[i],tx=box.querySelector('.qtx'),nm=tx.children[0],pt=tx.children[1],mp=tx.children[2];
+  const w=sc.nm.querySelector('.nmw'),mate=sc.nm.querySelector('.nmm');
+  const name=w?`<small>${esc(mate?mate.textContent:'')}</small><br>${esc(w.textContent)}`:esc((sc.nm.firstChild&&sc.nm.firstChild.nodeType===3?sc.nm.firstChild.textContent:sc.nm.textContent).trim());
+  kcText(nm,name,w?(act?41:42):(act?56:58),act?270:205);kcText(pt,esc(sc.pts.textContent),act?112:104,act?270:205);
+  const b=sc.m&&sc.m.querySelector('b');kcText(mp,'MPR '+esc(b?b.textContent:''),25,260);
+  const ps=[...sc.pills.children].filter(x=>!x.classList.contains('undo')).slice(0,3),hs=box.querySelectorAll('.qhist i');
+  hs.forEach((h,k)=>{const p=ps[k],cls=p?(p.classList.contains('t')?'t':p.classList.contains('d')?'d':p.classList.contains('e')?'e':''):'e',txt=p?p.textContent.trim():'';
+    if(h._c!==cls){h._c=cls;h.className=cls}if(h._x!==txt){h._x=txt;h.textContent=txt}})}
+function kcSync(){const g=$('game'),on=artOn()&&g.classList.contains('on');g.classList.toggle('kart',on);document.documentElement.classList.toggle('kart',on);if(!on||!R||!R.sc||!R.sc[1])return;
+  if(!KC||!KC.k.isConnected)kcBuild();const k=KC.k,cur=shownCur(),side=cur===1?'sr':'sl',m=G.winner===null?G.mult:1;
+  k.classList.toggle('sl',side==='sl');k.classList.toggle('sr',side==='sr');k.classList.toggle('m2',m===2);k.classList.toggle('m3',m===3);
+  const st=$('fMode')&&$('fMode').querySelector('small');kcSet(KC.sub,'t',st?st.textContent:'',v=>KC.sub.textContent=v);
+  // panneau : joueur en cours ; à côté : l'autre
+  const op=1-cur;KC.op.style.setProperty('--x',side==='sl'?594:48);KC.pan.style.setProperty('--x',side==='sl'?33:256);
+  kcFill(KC.pan,cur,true);kcFill(KC.op,op,false);
+  // couronne : sur la case du meneur
+  const lead=[0,1].find(i=>R.sc[i].nm.querySelector('.hat'));const cr=KC.crown;
+  if(lead===undefined)cr.classList.remove('on');else{cr.classList.add('on');const s=getComputedStyle(k);
+    const X=lead===cur?(side==='sl'?133:598):(side==='sl'?649:103),Y=lead===cur?145:142;
+    cr.style.left=`calc(var(--ox) + ${X}*var(--s))`;cr.style.top=`calc(var(--oy) + ${Y}*var(--s))`;cr.style.width=`calc(${lead===cur?121:100}*var(--s))`;cr.style.height=`calc(${lead===cur?83:69}*var(--s))`}
+  // lignes : marques + lignes fermées par tout le monde
+  TARGETS.forEach(t=>{const o=KC.rows[t];if(!o)return;const d=dead(t);if(o.dead!==d){o.dead=d;o.r.classList.toggle('qdead',d)}
+    [0,1].forEach(i=>{const n=Math.min(3,G.players[i].marks[t]||0),img=i?o.mr:o.ml;if(o.mk[i]===n)return;const up=o.mk[i]>=0&&n>o.mk[i];o.mk[i]=n;
+      if(n){img.src=`art/k5/${n===3?(i?'mk3p':'mk3b'):'mk'+n}.webp`;img.classList.add('on');if(up)img.animate([{transform:'scale(1.45)'},{transform:'scale(.92)',offset:.6},{transform:'scale(1)'}],{duration:280,easing:'ease-out'})}
+      else img.classList.remove('on')})})}
+/* quand on marque : la case file jusqu'au bout du rail et revient en rebondissant (animation GPU, une seule) */
+function kcBounce(t){if(!KC||!KC.rows[t])return;const o=KC.rows[t];if(o.dead)return;const s=parseFloat(getComputedStyle(KC.k).getPropertyValue('--s'))||.45;
+  const X=(KC.k.classList.contains('sr')?230.5:-230.5)*s,pl=o.pl;pl.getAnimations().forEach(a=>a.cancel());
+  const K=[[0,0,'cubic-bezier(.1,.75,.3,1)'],[.27,X,'cubic-bezier(.5,0,.85,.45)'],[.66,0,'cubic-bezier(.2,.7,.4,1)'],[.79,X*.13,'cubic-bezier(.5,0,.85,.45)'],[.89,0,'cubic-bezier(.2,.7,.4,1)'],[.95,X*.035,'ease-in'],[1,0,'linear']];
+  pl.animate(K.map(([of,x,e])=>({offset:of,transform:`translate3d(${x}px,0,0)`,easing:e})),{duration:1000})}
+{const _r=render;render=function(){const x=_r.apply(this,arguments);try{kcSync()}catch(e){console.error(e)}return x}}
+{const _t=throwDart;throwDart=function(t){const before=G&&t?G.players.map(p=>p.marks[t]+'|'+p.score).join():'';const r=_t.apply(this,arguments);
+  try{if(t&&G&&artOn()&&G.players.map(p=>p.marks[t]+'|'+p.score).join()!==before)kcBounce(t)}catch(e){}return r}}
+{const _s=show;show=function(){const r=_s.apply(this,arguments);try{if(!$('game').classList.contains('on')){$('game').classList.remove('kart');document.documentElement.classList.remove('kart')}else kcSync()}catch(e){}return r}}
+addEventListener('resize',()=>{if(KC){KC.k.querySelectorAll('.t').forEach(e=>{e._h=null});try{kcSync()}catch(e){}}});
 
 /* fin de tour : on ne peut plus marquer pendant un court instant (le temps de passer la main) */
 const TURNLOCK_MS=1200;let TURNLOCK=0;
@@ -7941,26 +7920,7 @@ let XHOLD=null;
   try{return _r.apply(this,arguments)}finally{XG.cur=c;XG.turn=t}}}
 {const _s=setMult;setMult=function(){if(turnLocked())return;return _s.apply(this,arguments)}}
 
-/* cartoon : on n'utilise pas les classes d'effets du style Bulle (lueurs animées qui font des ombres sur iPhone) ;
-   le multiplicateur est porté par #game.km2 / .km3 */
-function artFx(){const g=$('game'),on=artOn();const m=on&&G?G.mult:1;g.classList.toggle('km2',on&&m===2);g.classList.toggle('km3',on&&m===3);
-  if(!on)return;document.body.classList.remove('m2','m3');const f=document.querySelector('#game footer');
-  if(f)f.classList.remove('armed2','armed3');['b2','b3','bS'].forEach(id=>{const b=$(id);b&&b.classList.remove('armed','fear')})}
-{const _r=render;render=function(){const x=_r.apply(this,arguments);try{artFx()}catch(e){}return x}}
 
-/* cartoon : la case elle-même file et rebondit (pas de copie à créer → rien ne disparaît sur iPhone) */
-function kickBallArt(num,X){let B=BALLS.get(num);
-  if(!B||B.gh!==num){B={gh:num,x:0,v:0,X,t:0};BALLS.set(num,B)}
-  B.X=X;const A=Math.abs(X),g=A*26,dir=Math.sign(X);B.v=dir*Math.max(Math.sqrt(2*g*A*1.25),Math.abs(B.v));
-  if(B.run)return;B.run=true;let last=performance.now();
-  const step=now=>{const dt=Math.min(.032,(now-last)/1000);last=now;const d=Math.sign(B.X),A=Math.abs(B.X),g=A*26;
-    B.v-=d*g*dt;B.x+=B.v*dt;
-    if(d*B.x>=A){B.x=d*A;B.v=-B.v*.5}
-    if(d*B.x<=0){B.x=0;if(Math.abs(B.v)<A*1.6){B.v=0}else B.v=-B.v*.32}
-    num.style.transform=B.x?`translate3d(${B.x}px,0,0)`:'';
-    if(B.x===0&&B.v===0){B.run=false;num.style.transform='';BALLS.delete(num);return}
-    requestAnimationFrame(step)};
-  requestAnimationFrame(step)}
 </script>
 </body>
 </html>
