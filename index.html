@@ -7926,6 +7926,15 @@ function artFit(){const s=Math.min(innerWidth,(innerHeight-(parseFloat(getComput
 addEventListener('resize',()=>{try{if(artOn())artFit()}catch(e){}});
 document.addEventListener('pointerdown',e=>{if(S.art2!=='cartoon'||!e.target.closest)return;const t=e.target.closest('#game footer #bS,#game footer .kmenu,#game footer .kundo');if(!t)return;
   const f=t.parentElement,c=t.id==='bS'?'kspew':t.classList.contains('kmenu')?'kmenuP':'kundoP';f.classList.remove('kspew','kmenuP','kundoP');f.classList.add(c);clearTimeout(f._ks);f._ks=setTimeout(()=>f.classList.remove(c),380)},true);
+
+/* fin de tour : on ne peut plus marquer pendant un court instant (le temps de passer la main) */
+const TURNLOCK_MS=750;let TURNLOCK=0;
+const turnLocked=()=>performance.now()<TURNLOCK;
+{const _t=throwDart;throwDart=function(){if(turnLocked())return;const h=HOLD;const r=_t.apply(this,arguments);if(HOLD&&HOLD!==h)TURNLOCK=performance.now()+TURNLOCK_MS;return r}}
+{const _k=kThrow;kThrow=function(n,quiet){if(!quiet&&turnLocked())return;const h=KHOLD;const r=_k.apply(this,arguments);if(KHOLD&&KHOLD!==h)TURNLOCK=performance.now()+TURNLOCK_MS;return r}}
+{const _x=xThrow;xThrow=function(n,m,quiet){if(!quiet&&turnLocked())return;const c=XG&&XG.cur,len=XG?XG.turn.length:0;const r=_x.apply(this,arguments);
+  if(XG&&XG.winner===null&&(XG.cur!==c||(XG.turn.length===0&&len>0)))TURNLOCK=performance.now()+TURNLOCK_MS;return r}}
+{const _s=setMult;setMult=function(){if(turnLocked())return;return _s.apply(this,arguments)}}
 </script>
 </body>
 </html>
