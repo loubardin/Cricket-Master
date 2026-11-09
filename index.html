@@ -4120,10 +4120,10 @@ html body #game#game.sk.p2.pn #scores#scores .sc.act>.pills{width:auto!important
 
 /* ===================== STYLE « CARTOON » (découpes natives 852×1846) — Cricket à 2 côtés =====================
    Tout est placé aux coordonnées de la maquette, à l'échelle --s (1 px maquette = --s), centré horizontalement. */
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg){--s:calc(min(100vw,100dvh * 852 / 1846) / 852);--ox:calc((100vw - 852 * var(--s)) / 2);background:#f9eccb url(art/k5/fond.webp?v2) center/cover no-repeat!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg){--s:calc(min(100vw,(100dvh - var(--sat,0px) - 6px) * 852 / 1752) / 852);--oy:calc(var(--sat,0px) + 2px - 84 * var(--s));--ox:calc((100vw - 852 * var(--s)) / 2);background:#f9eccb url(art/k5/fond.webp?v2) center/cover no-repeat!important}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) main{position:static!important;padding:0!important}
 /* en-tête : titre « Cricket » + bandeau (mode · manche) */
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fbar2{position:absolute!important;left:calc(var(--ox) + calc(329*var(--s)))!important;right:auto!important;top:calc(92*var(--s))!important;width:calc(220*var(--s))!important;height:calc(92*var(--s))!important;margin:0!important;
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fbar2{position:absolute!important;left:calc(var(--ox) + calc(329*var(--s)))!important;right:auto!important;top:calc(var(--oy) + 92*var(--s))!important;width:calc(220*var(--s))!important;height:calc(92*var(--s))!important;margin:0!important;
   background:url(art/k5/title.webp) center/100% 100% no-repeat!important;box-shadow:none!important;border:0!important;overflow:visible!important;display:block!important}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fbar2 .f2th,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMenu,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fUndo{display:none!important}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMode{position:absolute!important;left:0!important;right:0!important;top:0!important;bottom:0!important;width:100%!important;height:100%!important;background:none!important;box-shadow:none!important;border:0!important;padding:0!important}
@@ -4131,7 +4131,7 @@ html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMode::before,html.cartoo
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMode>small{position:absolute!important;left:18%!important;right:18%!important;top:71%!important;height:20%!important;display:grid!important;place-items:center!important;margin:0!important;padding:0!important;
   background:none!important;box-shadow:none!important;color:#fff3d6!important;opacity:1!important;font:400 calc(19*var(--s))/1 "Fun",sans-serif!important;letter-spacing:.02em;white-space:nowrap;translate:none!important;transform:none!important}
 /* cases des joueurs */
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores{position:absolute!important;left:var(--ox)!important;top:calc(200*var(--s))!important;width:calc(852*var(--s))!important;height:calc(254*var(--s))!important;margin:0!important;padding:0!important;display:block!important;overflow:visible!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores{position:absolute!important;left:var(--ox)!important;top:calc(var(--oy) + 200*var(--s))!important;width:calc(852*var(--s))!important;height:calc(254*var(--s))!important;margin:0!important;padding:0!important;display:block!important;overflow:visible!important}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.mid{display:none!important}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc{position:absolute!important;display:block!important;top:0!important;height:100%!important;margin:0!important;padding:0!important;background:none!important;box-shadow:none!important;outline:0!important;border:0!important;overflow:visible!important;transform:none!important;translate:none!important}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc::after{display:none!important}
@@ -4172,7 +4172,7 @@ html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc:not(.act) .pil
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc .pill.undo{display:none!important}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc .pill.e{color:transparent!important}
 /* lignes : rail beige fixe + case bleue numérotée */
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid{position:absolute!important;left:var(--ox)!important;top:calc(460*var(--s))!important;width:calc(852*var(--s))!important;height:auto!important;margin:0!important;padding:0!important;display:flex!important;flex-direction:column-reverse!important;gap:calc(3.8*var(--s))!important;overflow:visible!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid{position:absolute!important;left:var(--ox)!important;top:calc(var(--oy) + 460*var(--s))!important;width:calc(852*var(--s))!important;height:auto!important;margin:0!important;padding:0!important;display:flex!important;flex-direction:column-reverse!important;gap:calc(3.8*var(--s))!important;overflow:visible!important}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid>.row{position:relative!important;display:grid!important;grid-template-columns:calc(258.5*var(--s)) calc(335*var(--s)) calc(258.5*var(--s))!important;height:calc(142*var(--s))!important;min-height:0!important;max-height:none!important;flex:none!important;margin:0!important;padding:0!important;gap:0!important;background:none!important;box-shadow:none!important;border:0!important}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .rtrack{display:block!important;position:absolute!important;top:0!important;bottom:0!important;height:auto!important;left:calc(28*var(--s))!important;width:calc(565.5*var(--s))!important;background:url(art/k5/rail.webp) center/100% 100% no-repeat!important;box-shadow:none!important;border:0!important;outline:0!important;border-radius:0!important;transform:none!important;z-index:0!important}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg).curR #grid .rtrack{left:calc(258.5*var(--s))!important;transform:scaleX(-1)!important}
@@ -4199,7 +4199,7 @@ html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid>.row:has(.num.dead) 
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc:not(.act) .pill{font-size:calc(31*var(--s))!important}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act .pill{text-shadow:0 1px 0 rgba(255,255,255,.55)}
 /* bas : une planche de 6 états (normal, double, triple, spew, menu, annuler) — un seul affiché, même place et même taille */
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer{position:absolute!important;left:calc(var(--ox) + calc(16*var(--s)))!important;right:auto!important;top:calc(1478*var(--s))!important;bottom:auto!important;width:calc(820*var(--s))!important;height:calc(354*var(--s))!important;margin:0!important;padding:0!important;
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer{position:absolute!important;left:calc(var(--ox) + calc(16*var(--s)))!important;right:auto!important;top:calc(var(--oy) + 1478*var(--s))!important;bottom:auto!important;width:calc(820*var(--s))!important;height:calc(354*var(--s))!important;margin:0!important;padding:0!important;
   display:block!important;background:url(art/k5/footer6.webp) 0 0/100% 600% no-repeat!important;box-shadow:none!important;border:0!important;outline:0!important;border-radius:0!important;overflow:visible!important;transform:none!important;translate:none!important;aspect-ratio:auto!important;filter:none!important}
 html.cartoon body.m2 #game#game.sk.p2:not(.pn):not(.bcg) footer{background-position:0 20%!important}
 html.cartoon body.m3 #game#game.sk.p2:not(.pn):not(.bcg) footer{background-position:0 40%!important}
@@ -7898,7 +7898,7 @@ function artPaint(){if(S.art2!=='cartoon'||!R||!R.num)return;
     m.addEventListener('click',e=>{e.stopPropagation();$('fMenu').click()});u.addEventListener('click',e=>{e.stopPropagation();$('fUndo').click()});f.append(m,u)}
   if(artOn())artFit()}
 /* textes des cases : tailles de la maquette, réduites seulement si le nom ou le score est trop long */
-function artFit(){const s=Math.min(innerWidth,innerHeight*852/1846)/852;
+function artFit(){const s=Math.min(innerWidth,(innerHeight-(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--sat'))||0)-6)*852/1752)/852;
   R.sc.forEach(sc=>{if(!sc||!sc.c)return;const act=sc.c.classList.contains('act'),W=(act?270:205)*s;
     [[sc.nm,act?56:58],[sc.pts,act?112:122]].forEach(([e,base])=>{if(!e)return;let fs=base*s;e.style.setProperty('font-size',fs+'px','important');
       const rg=document.createRange();rg.selectNodeContents(e);let n=0;while(rg.getBoundingClientRect().width>W&&fs>8&&n++<40){fs*=.94;e.style.setProperty('font-size',fs+'px','important')}})})}
