@@ -4124,8 +4124,8 @@ html body #game#game.sk.p2.pn #scores#scores .sc.act>.pills{width:auto!important
 html body #fbar2#fbar2{display:none!important}
 #game#game.sk.p2 main{padding-top:max(var(--sat,0px),calc(var(--uu)*1.2))!important}
 #x01 #xmain,#killer #kmain{padding-top:max(var(--sat,0px),calc(var(--uu)*1.2))!important}
-html body footer{--f3h:var(--r,7dvh);--f3g:var(--g,3.5vw);--f3b:max(calc(var(--g,3.5vw)*1.6),var(--sab,0px));--fmb:calc(var(--f3g) + var(--f3h) + var(--f3b))}
-html body :is(#x01,#killer) footer{--f3h:9dvh;--f3g:1.6dvh;--f3b:max(2.4dvh,var(--sab,0px))}
+html body footer{--f3h:var(--r,7dvh);--f3g:var(--g,3.5vw);--f3b:max(calc(var(--g,3.5vw)*.8),calc(var(--sab,0px) - 16px));--fmb:calc(var(--f3g) + var(--f3h) + var(--f3b))}
+html body :is(#x01,#killer) footer{--f3h:9dvh;--f3g:1.6dvh;--f3b:max(1.4dvh,calc(var(--sab,0px) - 16px))}
 html body #game#game.sk.p2 footer,html body #game#game.sk.p2.pn footer,html body :is(#x01,#killer) footer{margin-bottom:var(--fmb)!important}
 #fbar3{position:absolute;left:0;right:0;top:calc(100% + var(--fmb) - var(--f3h) - var(--f3b));height:var(--f3h);display:grid;grid-template-columns:1fr 1fr 1fr}
 #game#game.sk.p2 #fbar3{grid-template-columns:var(--colw) var(--midw) var(--colw)}
@@ -4150,7 +4150,7 @@ html body footer #fbar3 #fMode{transition:transform .12s ease,color .15s ease}
 html body footer #fbar3 #fMode.f3off{color:var(--ink)!important}
 /* 1 contre 1 : même hauteur (1 ligne) pour les 7 nombres et les 2 switchs du bas, même écart g entre eux,
    même écart G entre la case joueur, le groupe des nombres et le groupe des switchs, marge B tout en bas */
-html body #game#game.sk.p2{--G:calc(var(--g)*1.6)}
+html body #game#game.sk.p2{--G:calc(var(--g)*1.8)}
 html body #game#game.sk.p2 #scores{margin-bottom:0!important}
 html body #game#game.sk.p2 #grid{margin-top:var(--G)!important;margin-bottom:0!important}
 html body #game#game.sk.p2 main,html body #game#game.sk.p2.pn main{padding-bottom:0!important}
@@ -6825,13 +6825,13 @@ function placeTracks(){
     tk.style.left=tb.style.left=L+'px';tk.style.width=tb.style.width=(Rr-L)+'px';
     row.querySelectorAll('.pc.mk').forEach(m=>m.classList.toggle('intk',m.offsetLeft>=L-1&&m.offsetLeft+m.offsetWidth<=Rr+1))});
 }
-/* 1 contre 1 : une seule unité de hauteur (--rowh = une ligne), g = 3,5 % de la largeur, G = 1,6 g.
+/* 1 contre 1 : une seule unité de hauteur (--rowh = une ligne), g = 3,5 % de la largeur, G = 1,8 g.
    De haut en bas : case joueur (2,44 lignes), G, 7 lignes séparées par g, G, switch (1 ligne), g, switch (1 ligne), marge B. */
 function layoutSk(){
   const g=$('game');if(!skp2())return;
-  const gp=innerWidth*.035,G=gp*1.6;
+  const gp=innerWidth*.035,G=gp*1.8;
   let pb=$('sabProbe');if(!pb){pb=document.createElement('i');pb.id='sabProbe';pb.style.cssText='position:fixed;left:0;top:0;width:0;height:var(--sab,0px);visibility:hidden;pointer-events:none';document.body.append(pb)}
-  const B=Math.max(G,pb.offsetHeight),top=$('scores').getBoundingClientRect().top-g.getBoundingClientRect().top;
+  const B=Math.max(gp*.8,pb.offsetHeight-16),top=$('scores').getBoundingClientRect().top-g.getBoundingClientRect().top;
   const r=Math.max(28,(g.clientHeight-top-2*G-7*gp-B)/11.44);
   g.style.setProperty('--rowh',r.toFixed(2)+'px');
 }
