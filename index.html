@@ -7880,8 +7880,9 @@ function kcText(el,html,base,maxW){if(el._h===html&&el._b===base)return;el._h=ht
 function kcFill(box,i,act){const sc=R.sc[i],tx=box.querySelector('.qtx'),nm=tx.children[0],pt=tx.children[1],mp=tx.children[2];
   const w=sc.nm.querySelector('.nmw'),mate=sc.nm.querySelector('.nmm');
   const name=w?`<small>${esc(mate?mate.textContent:'')}</small><br>${esc(w.textContent)}`:esc((sc.nm.firstChild&&sc.nm.firstChild.nodeType===3?sc.nm.firstChild.textContent:sc.nm.textContent).trim());
-  kcText(nm,name,w?(act?41:42):(act?56:58),act?270:205);{const nv=sc.pts.textContent.trim(),ov=pt._v;kcText(pt,esc(nv),act?112:104,act?270:205);
-    if(ov!==undefined&&ov!==nv&&/^\d+$/.test(ov)&&/^\d+$/.test(nv)&&+nv>+ov)kcCount(pt,+ov,+nv);pt._v=nv}
+  kcText(nm,name,w?(act?41:42):(act?56:58),act?270:205);{const nv=sc.pts.textContent.trim(),same=pt._who===i,ov=pt._v;pt._who=i;if(!same){cancelAnimationFrame(pt._raf);pt._h=null}
+    kcText(pt,esc(nv),act?112:104,act?270:205);
+    if(same&&ov!==undefined&&ov!==nv&&/^\d+$/.test(ov)&&/^\d+$/.test(nv)&&+nv>+ov)kcCount(pt,+ov,+nv);pt._v=nv}
   const b=sc.m&&sc.m.querySelector('b');kcText(mp,'MPR '+esc(b?b.textContent:''),25,260);
   const ps=[...sc.pills.children].filter(x=>!x.classList.contains('undo')).slice(0,3),hs=box.querySelectorAll('.qhist i');
   hs.forEach((h,k)=>{const p=ps[k],cls=p?(p.classList.contains('t')?'qT':p.classList.contains('d')?'qD':p.classList.contains('e')?'qE':''):'qE',txt=p?p.textContent.trim():'';
