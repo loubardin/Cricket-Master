@@ -4124,11 +4124,11 @@ html body #game#game.sk.p2.pn #scores#scores .sc.act>.pills{width:auto!important
 html body #fbar2#fbar2{display:none!important}
 #game#game.sk.p2 main{padding-top:max(var(--sat,0px),calc(var(--uu)*1.2))!important}
 #x01 #xmain,#killer #kmain{padding-top:max(var(--sat,0px),calc(var(--uu)*1.2))!important}
-html body footer{--f3h:calc(var(--r,7dvh)*.54);--f3g:calc(var(--g,3.5vw)*1.6)}
+html body footer{--f3h:calc(var(--r,7dvh)*.54);--f3g:calc(var(--g,3.5vw)*1.6);--f3b:10px;--fmb:calc(max(16px,calc(var(--sab,0px) - 8px)) + var(--f3g) + var(--f3h))}
 html body :is(#x01,#killer) footer{--f3h:4.4dvh;--f3g:2.6dvh}
-html body #game#game.sk.p2 footer,html body #game#game.sk.p2.pn footer,html body :is(#x01,#killer) footer{margin-bottom:calc(max(16px,calc(var(--sab,0px) - 8px)) + var(--f3g) + var(--f3h))!important}
-#fbar3{position:absolute;left:0;right:0;top:calc(100% + var(--f3g));height:var(--f3h);display:grid;grid-template-columns:1fr 1fr 1fr}
-#game#game.sk.p2 #fbar3{grid-template-columns:var(--colw) var(--midw) var(--colw)}
+html body #game#game.sk.p2 footer,html body #game#game.sk.p2.pn footer,html body :is(#x01,#killer) footer{margin-bottom:var(--fmb)!important}
+#fbar3{position:absolute;left:18%;right:18%;top:calc(100% + var(--fmb) - var(--f3h) - var(--f3b));height:var(--f3h);display:grid;grid-template-columns:1fr 1fr 1fr}
+#game#game.sk.p2 #fbar3{grid-template-columns:1fr var(--midw) 1fr}
 #fbar3::after{content:"";position:absolute;inset:0;border:var(--bub-bw,1.5px) solid var(--m-strong);border-radius:40px;pointer-events:none;z-index:3}
 #fbar3 .f3b{grid-column:2;grid-row:1;border-radius:40px;z-index:1;pointer-events:none;
   --f3c:color-mix(in srgb,var(--mute,#8d8a85) 80%,#fff);background:var(--f3c);box-shadow:0 0 0 var(--h,var(--bub-h,4px)) var(--f3c);will-change:transform}
