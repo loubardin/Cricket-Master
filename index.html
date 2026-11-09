@@ -4179,6 +4179,11 @@ html.kart body>:is(.bhole,.bosstag,.bspark,.bullet,.ember,.fireglow,.flake,.bull
 #kc .qft>img{opacity:0}
 #kc .qft>img.n{opacity:1}
 #kc.m2 .qft>img.d,#kc.m3 .qft>img.t,#kc .qft.ps>img.s,#kc .qft.pm>img.m,#kc .qft.pu>img.u{opacity:1}
+#kc .qsp{position:absolute;left:29.12%;top:1.97%;width:42.05%;height:96.05%;z-index:1;pointer-events:none;will-change:transform}
+#kc .qsp>img{left:0;top:0;width:100%;height:100%;opacity:0}
+#kc .qsp>img.n{opacity:1}
+#kc.m2 .qsp>img.d,#kc.m3 .qsp>img.t,#kc .qft.ps .qsp>img.s{opacity:1}
+#kc .qft b{z-index:2}
 #kc .qft b{position:absolute;display:block;pointer-events:auto;cursor:pointer}
 #kc .qft b.s{border-radius:50%}
 
@@ -7858,13 +7863,15 @@ let KC=null;
 function kcBuild(){const g=$('game');let k=$('kc');if(!k){g.insertAdjacentHTML('beforeend',KC_HTML);k=$('kc')}
   const q=(sel,el)=>(el||k).querySelector(sel);
   KC={k,sub:q('.qsub'),pan:q('.qpan'),op:q('.qop'),crown:q('.qcrown'),rows:{},foot:q('.qft'),last:{}};
+  {const sp=document.createElement('div');sp.className='qsp';sp.innerHTML='ndts'.split('').map(x=>`<img class="${x}" src="art/k5/sp_${x}.webp" alt="">`).join('');KC.foot.insertBefore(sp,KC.foot.querySelector('b'));KC.sp=sp}
   k.querySelectorAll('.qrow').forEach(r=>{const t=+r.dataset.t;KC.rows[t]={r,pl:q('.qpl',r),ml:q('.qmk.ql',r),mr:q('.qmk.qr',r),mk:[-1,-1],dead:null}});
   // touches : la ligne entière vise ce numéro ; boutons du bas = boutons réels (sons, verrous, règles inchangés)
   k.addEventListener('click',e=>{const r=e.target.closest('.qrow');if(r){throwDart(+r.dataset.t);return}
     const b=e.target.closest('.qft b');if(!b)return;
     const id={b2:'b2',b3:'b3',s:'bS',bm:'fMenu',bu:'fUndo'}[b.className];if(id&&$(id))$(id).click()});
   k.addEventListener('pointerdown',e=>{const b=e.target.closest('.qft b');if(!b)return;const c={s:'ps',bm:'pm',bu:'pu'}[b.className];if(!c)return;
-    const f=KC.foot;f.classList.remove('ps','pm','pu');f.classList.add(c);clearTimeout(f._t);f._t=setTimeout(()=>f.classList.remove(c),360)});
+    const f=KC.foot;f.classList.remove('ps','pm','pu');f.classList.add(c);clearTimeout(f._t);f._t=setTimeout(()=>f.classList.remove(c),c==='ps'?520:360);
+    if(c==='ps'&&KC.sp){KC.sp.getAnimations().forEach(a=>a.cancel());KC.sp.animate([{transform:'scale(1)'},{transform:'scale(1.22)',offset:.35},{transform:'scale(.95)',offset:.7},{transform:'scale(1)'}],{duration:480,easing:'ease-out'})}});
 }
 const kcSet=(el,key,v,fn)=>{if(el['_'+key]===v)return false;el['_'+key]=v;fn(v);return true};
 function kcText(el,html,base,maxW){if(el._h===html&&el._b===base)return;el._h=html;el._b=base;el.innerHTML=html;
@@ -7873,7 +7880,8 @@ function kcText(el,html,base,maxW){if(el._h===html&&el._b===base)return;el._h=ht
 function kcFill(box,i,act){const sc=R.sc[i],tx=box.querySelector('.qtx'),nm=tx.children[0],pt=tx.children[1],mp=tx.children[2];
   const w=sc.nm.querySelector('.nmw'),mate=sc.nm.querySelector('.nmm');
   const name=w?`<small>${esc(mate?mate.textContent:'')}</small><br>${esc(w.textContent)}`:esc((sc.nm.firstChild&&sc.nm.firstChild.nodeType===3?sc.nm.firstChild.textContent:sc.nm.textContent).trim());
-  kcText(nm,name,w?(act?41:42):(act?56:58),act?270:205);kcText(pt,esc(sc.pts.textContent),act?112:104,act?270:205);
+  kcText(nm,name,w?(act?41:42):(act?56:58),act?270:205);{const nv=sc.pts.textContent.trim(),ov=pt._v;kcText(pt,esc(nv),act?112:104,act?270:205);
+    if(ov!==undefined&&ov!==nv&&/^\d+$/.test(ov)&&/^\d+$/.test(nv)&&+nv>+ov)kcCount(pt,+ov,+nv);pt._v=nv}
   const b=sc.m&&sc.m.querySelector('b');kcText(mp,'MPR '+esc(b?b.textContent:''),25,260);
   const ps=[...sc.pills.children].filter(x=>!x.classList.contains('undo')).slice(0,3),hs=box.querySelectorAll('.qhist i');
   hs.forEach((h,k)=>{const p=ps[k],cls=p?(p.classList.contains('t')?'t':p.classList.contains('d')?'d':p.classList.contains('e')?'e':''):'e',txt=p?p.textContent.trim():'';
@@ -7898,6 +7906,12 @@ function kcSync(){const g=$('game'),on=artOn()&&g.classList.contains('on');g.cla
       if(n){img.src=`art/k5/${n===3?(i?'mk3p':'mk3b'):'mk'+n}.webp`;img.classList.add('on');if(up)img.animate([{transform:'scale(1.45)'},{transform:'scale(.92)',offset:.6},{transform:'scale(1)'}],{duration:280,easing:'ease-out'})}
       else img.classList.remove('on')})})}
 
+
+/* le score monte jusqu'à sa nouvelle valeur, avec un petit rebond */
+function kcCount(el,a,b){cancelAnimationFrame(el._raf);const t0=performance.now(),D=Math.min(900,350+(b-a)*8);
+  el.getAnimations().forEach(x=>x.cancel());el.animate([{transform:'scale(1)'},{transform:'scale(1.18)',offset:.3},{transform:'scale(1)'}],{duration:D+150,easing:'ease-out'});
+  const step=now=>{const k=Math.min(1,(now-t0)/D),v=Math.round(a+(b-a)*(1-Math.pow(1-k,3)));el.textContent=String(v);if(k<1)el._raf=requestAnimationFrame(step);else el.textContent=String(b)};
+  el._raf=requestAnimationFrame(step)}
 /* changement de joueur : le panneau et les rails glissent vers l'autre côté, les couleurs passent en fondu */
 function kcSwap(side){if(!KC)return;const s=parseFloat(getComputedStyle(KC.k).getPropertyValue('--s'))||.45,dir=side==='sr'?-1:1,E='cubic-bezier(.3,1.2,.45,1)';
   const mv=(el,dx,extra,delay)=>{if(!el)return;el.getAnimations().forEach(a=>a.cancel());
