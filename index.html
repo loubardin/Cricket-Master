@@ -7337,7 +7337,7 @@ if(![301,501,701].includes(S.xstart)){S.xstart=501}delete S.xcustom;
    const b=el('div','cbub','<b>'+String(txt).replace(/[👏👁️🛡🤝]/gu,'').trim()+'</b>'+(sub?'<small>'+sub+'</small>':''));b.style.setProperty('--c',col);document.body.append(b);setTimeout(()=>b.remove(),1900)}}
 /* balle : chaque appui la propulse vers le bout du rail, elle rebondit contre le bord puis retombe à sa place */
 const BALLS=new Map();
-function kickBall(num,X){const row=num.parentElement;let B=BALLS.get(num);
+function kickBall(num,X){if(typeof artOn==='function'&&artOn())return kickBallArt(num,X);const row=num.parentElement;let B=BALLS.get(num);
   if(!B||!B.gh.isConnected){const gh=num.cloneNode(true);gh.classList.add('nghost');gh.classList.remove('pressed','pgrey','away','bnc');
     Object.entries({position:'absolute',left:num.offsetLeft+'px',top:num.offsetTop+'px',width:num.offsetWidth+'px',height:num.offsetHeight+'px',margin:'0','pointer-events':'none','z-index':'3',flex:'none',order:'0'}).forEach(([k,v])=>gh.style.setProperty(k,v,'important'));
     row.append(gh);B={gh,x:0,v:0,X,t:0};BALLS.set(num,B)}
@@ -7947,6 +7947,20 @@ function artFx(){const g=$('game'),on=artOn();const m=on&&G?G.mult:1;g.classList
   if(!on)return;document.body.classList.remove('m2','m3');const f=document.querySelector('#game footer');
   if(f)f.classList.remove('armed2','armed3');['b2','b3','bS'].forEach(id=>{const b=$(id);b&&b.classList.remove('armed','fear')})}
 {const _r=render;render=function(){const x=_r.apply(this,arguments);try{artFx()}catch(e){}return x}}
+
+/* cartoon : la case elle-même file et rebondit (pas de copie à créer → rien ne disparaît sur iPhone) */
+function kickBallArt(num,X){let B=BALLS.get(num);
+  if(!B||B.gh!==num){B={gh:num,x:0,v:0,X,t:0};BALLS.set(num,B)}
+  B.X=X;const A=Math.abs(X),g=A*26,dir=Math.sign(X);B.v=dir*Math.max(Math.sqrt(2*g*A*1.25),Math.abs(B.v));
+  if(B.run)return;B.run=true;let last=performance.now();
+  const step=now=>{const dt=Math.min(.032,(now-last)/1000);last=now;const d=Math.sign(B.X),A=Math.abs(B.X),g=A*26;
+    B.v-=d*g*dt;B.x+=B.v*dt;
+    if(d*B.x>=A){B.x=d*A;B.v=-B.v*.5}
+    if(d*B.x<=0){B.x=0;if(Math.abs(B.v)<A*1.6){B.v=0}else B.v=-B.v*.32}
+    num.style.transform=B.x?`translate3d(${B.x}px,0,0)`:'';
+    if(B.x===0&&B.v===0){B.run=false;num.style.transform='';BALLS.delete(num);return}
+    requestAnimationFrame(step)};
+  requestAnimationFrame(step)}
 </script>
 </body>
 </html>
