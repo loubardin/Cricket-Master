@@ -4163,7 +4163,7 @@ html body #game#game.sk.p2 footer,html body #game#game.sk.p2.pn footer{height:va
 html.retro{--rk:#0b0b0b;--rbw:2.6px;--rpill:#fff}
 html.retro body #game#game#game.sk.p2 :is(.nm,.pts,.mpr,.mpr b,.pill,.lbl),html.retro body footer :is(#b2,#bS,#b3)::after,html.retro body footer #fbar3 #fMode :is(b,small){font-family:"Coop",serif!important;font-weight:400!important}
 /* case du joueur en cours : couleur du joueur, double contour noir / blanc */
-html.retro body #game#game#game.sk.p2 #scores .sc.act{box-shadow:inset 0 0 0 var(--rbw) var(--rk),0 0 0 calc(var(--h)*1.1) #fff,0 0 0 calc(var(--h)*1.1 + var(--rbw)) var(--rk)!important}
+html.retro body #game#game#game.sk.p2 #scores .sc.act{box-shadow:inset 0 0 0 var(--rbw) var(--rk),0 0 0 calc(var(--h) - var(--rbw)) #fff,0 0 0 var(--h) var(--rk)!important}
 html.retro body #game#game#game.sk.p2 #pframe{display:none!important}
 html.retro body #game#game#game.sk.p2 #scores .nm svg.hat{background:url(art/k6/crown.webp) center bottom/contain no-repeat;overflow:visible;scale:1.25;transform-origin:50% 100%}
 html.retro body #game#game#game.sk.p2 #scores .nm svg.hat path{display:none}
@@ -4171,10 +4171,10 @@ html.retro body #game#game#game.sk.p2 #scores .sc :is(.nm,.pts,.mpr,.mpr b){colo
 html.retro body #game#game#game.sk.p2 #scores .pts{letter-spacing:-.03em}
 html.retro body #game#game#game.sk.p2 #scores .pill:not(.undo){opacity:1!important;background:var(--rpill)!important;border:var(--rbw) solid var(--rk)!important;color:var(--rk)!important}
 /* rails blancs à contour noir, sous la case du nombre */
-html.retro body #game#game#game.sk.p2 #grid :is(.rtrack,.rtrackb){top:10%!important;bottom:10%!important;height:auto!important}
 html.retro body #game#game#game.sk.p2 #grid .rtrack{background:#fff!important}
 html.retro body #game#game#game.sk.p2 #grid .rtrackb{border:var(--rbw) solid var(--rk)!important;z-index:1!important}
-html.retro body #game#game#game.sk.p2 #grid .num:not(.dead){box-shadow:inset 0 0 0 var(--rbw) var(--rk)!important;outline:0!important}
+html.retro body #game#game#game.sk.p2 #grid .num:not(.dead){outline:0!important;overflow:visible!important}
+html.retro body #game#game#game.sk.p2 #grid .num:not(.dead)::after{content:""!important;display:block!important;position:absolute!important;inset:calc(-1*var(--h))!important;border:var(--rbw) solid var(--rk)!important;border-radius:99px!important;background:none!important;box-shadow:none!important;pointer-events:none;animation:none!important;opacity:1!important;transform:none!important}
 html.retro body #game#game#game.sk.p2 #grid .num .lbl{font-family:"CoopI",serif!important;color:var(--rk)!important;text-shadow:none!important;font-size:1.06em!important}
 html.retro body #game#game#game.sk.p2 #grid .num.bull .lbl{font-size:.84em!important}
 /* ligne fermée par tous : numéro gris droit, sans case */
@@ -4186,11 +4186,11 @@ html.retro body #game#game#game.sk.p2 #grid .pc.mk.dead{opacity:.5!important;col
 html.retro body #game#game#game.sk.p2 .mw{color:var(--rk)!important}
 html.retro body #game#game#game.sk.p2 .mw svg path{stroke:var(--rk)!important;stroke-width:3px!important;stroke-linecap:round!important}
 html.retro body #game#game#game.sk.p2 .mw svg .disc{animation:none!important;transform:scale(1.3)!important;fill:var(--mc,var(--accent))!important}
-/* bas d'écran : même logique que les lignes (rail plus fin que la bulle), contours pleins, sans halo */
-html.retro body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) footer::after,html.retro body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) #fbar3::after{border:var(--rbw) solid var(--rk)!important;top:10%!important;bottom:10%!important;left:0!important;right:0!important;background:#fff;z-index:0!important}
-html.retro body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) footer .fthumb{box-shadow:inset 0 0 0 var(--rbw) var(--rk)!important;outline:0!important;border:0!important;top:0!important;bottom:0!important;margin-left:0!important;box-sizing:border-box!important}
+/* bas d'écran : mêmes empreintes que la Bulle ; contour noir au bord du halo des bulles */
+html.retro body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) footer::after,html.retro body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) #fbar3::after{border:var(--rbw) solid var(--rk)!important;background:#fff;z-index:0!important}
+html.retro body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) :is(footer .fthumb,#fbar3 .f3b)::after{content:""!important;display:block!important;position:absolute!important;inset:calc(-1*var(--h,5px))!important;border:var(--rbw) solid var(--rk)!important;border-radius:inherit!important;background:none!important;box-shadow:none!important;pointer-events:none;animation:none!important}
+html.retro body.m2 :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) footer .fthumb::after,html.retro body.m3 :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) footer .fthumb::after{inset:calc(-1*var(--h,5px))!important}
 html.retro body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) footer :is(#b2,#bS,#b3)::after{color:var(--rk)!important;text-shadow:none!important}
-html.retro body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) #fbar3 .f3b{box-shadow:inset 0 0 0 var(--rbw) var(--rk)!important;outline:0!important}
 </style>
 </head>
 <body>
