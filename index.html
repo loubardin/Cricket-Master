@@ -4127,8 +4127,8 @@ html body #fbar2#fbar2{display:none!important}
 html body footer{--f3h:var(--r,7dvh);--f3g:var(--g,3.5vw);--f3b:max(calc(var(--g,3.5vw)*1.6),var(--sab,0px));--fmb:calc(var(--f3g) + var(--f3h) + var(--f3b))}
 html body :is(#x01,#killer) footer{--f3h:9dvh;--f3g:1.6dvh;--f3b:max(2.4dvh,var(--sab,0px))}
 html body #game#game.sk.p2 footer,html body #game#game.sk.p2.pn footer,html body :is(#x01,#killer) footer{margin-bottom:var(--fmb)!important}
-#fbar3{position:absolute;left:18%;right:18%;top:calc(100% + var(--fmb) - var(--f3h) - var(--f3b));height:var(--f3h);display:grid;grid-template-columns:1fr 1fr 1fr}
-#game#game.sk.p2 #fbar3{grid-template-columns:1fr var(--midw) 1fr}
+#fbar3{position:absolute;left:0;right:0;top:calc(100% + var(--fmb) - var(--f3h) - var(--f3b));height:var(--f3h);display:grid;grid-template-columns:1fr 1fr 1fr}
+#game#game.sk.p2 #fbar3{grid-template-columns:var(--colw) var(--midw) var(--colw)}
 #fbar3::after{content:"";position:absolute;inset:0;border:var(--bub-bw,1.5px) solid var(--m-strong);border-radius:40px;pointer-events:none;z-index:3}
 #fbar3 .f3b{grid-column:2;grid-row:1;border-radius:40px;z-index:1;pointer-events:none;
   --f3c:color-mix(in srgb,var(--mute,#8d8a85) 80%,#fff);background:var(--f3c);box-shadow:0 0 0 var(--h,var(--bub-h,4px)) var(--f3c);will-change:transform}
