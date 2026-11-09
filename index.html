@@ -4198,21 +4198,23 @@ html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .row>.pc.mk:last-of-
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid>.row:has(.num.dead) .mw{opacity:.4;filter:grayscale(.3)}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc:not(.act) .pill{font-size:calc(31*var(--s))!important}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act .pill{text-shadow:0 1px 0 rgba(255,255,255,.55)}
-/* bas : Double, Spew (rond), Triple, Menu, Annuler */
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer{position:absolute!important;left:calc(var(--ox) + calc(17*var(--s)))!important;right:auto!important;top:calc(1476*var(--s))!important;bottom:auto!important;width:calc(820*var(--s))!important;height:calc(356*var(--s))!important;margin:0!important;padding:0!important;
-  display:block!important;background:url(art/k5/footer.webp) center/100% 100% no-repeat!important;box-shadow:none!important;border:0!important;outline:0!important;border-radius:0!important;overflow:visible!important;transform:none!important;translate:none!important;aspect-ratio:auto!important}
+/* bas : une planche de 6 états (normal, double, triple, spew, menu, annuler) — un seul affiché, même place et même taille */
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer{position:absolute!important;left:calc(var(--ox) + calc(16*var(--s)))!important;right:auto!important;top:calc(1478*var(--s))!important;bottom:auto!important;width:calc(820*var(--s))!important;height:calc(354*var(--s))!important;margin:0!important;padding:0!important;
+  display:block!important;background:url(art/k5/footer6.webp) 0 0/100% 600% no-repeat!important;box-shadow:none!important;border:0!important;outline:0!important;border-radius:0!important;overflow:visible!important;transform:none!important;translate:none!important;aspect-ratio:auto!important;filter:none!important}
+html.cartoon body.m2 #game#game.sk.p2:not(.pn):not(.bcg) footer{background-position:0 20%!important}
+html.cartoon body.m3 #game#game.sk.p2:not(.pn):not(.bcg) footer{background-position:0 40%!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer.kspew{background-position:0 60%!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer.kmenuP{background-position:0 80%!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer.kundoP{background-position:0 100%!important}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer::after,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer .fthumb{display:none!important}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>button{position:absolute!important;display:block!important;margin:0!important;padding:0!important;font-size:0!important;color:transparent!important;-webkit-text-fill-color:transparent!important;text-shadow:none!important;
-  background:center/100% 100% no-repeat!important;box-shadow:none!important;border:0!important;border-radius:0!important;opacity:1!important;filter:none;transform:none!important;scale:1;transition:scale .18s cubic-bezier(.3,1.6,.5,1),filter .18s!important;grid-area:auto!important;-webkit-tap-highlight-color:transparent}
+  background:none!important;box-shadow:none!important;border:0!important;border-radius:0!important;opacity:1!important;filter:none!important;transform:none!important;scale:1!important;grid-area:auto!important;-webkit-tap-highlight-color:transparent;z-index:1}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>button::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>button::after,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>button>*{display:none!important;content:none!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer #b2{left:calc(1*var(--s))!important;top:calc(30*var(--s))!important;width:calc(308*var(--s))!important;height:calc(156*var(--s))!important;background-image:url(art/k5/f_double.webp)!important;z-index:1}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer #b3{left:calc(498*var(--s))!important;top:calc(25*var(--s))!important;width:calc(315*var(--s))!important;height:calc(161*var(--s))!important;background-image:url(art/k5/f_triple.webp)!important;z-index:1}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer .kmenu{left:calc(1*var(--s))!important;top:calc(186*var(--s))!important;width:calc(409*var(--s))!important;height:calc(169*var(--s))!important;background-image:url(art/k5/f_menu.webp)!important;z-index:1}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer .kundo{left:calc(410*var(--s))!important;top:calc(186*var(--s))!important;width:calc(403*var(--s))!important;height:calc(169*var(--s))!important;background-image:url(art/k5/f_annuler.webp)!important;z-index:1}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer #bS{left:calc(226*var(--s))!important;top:calc(1*var(--s))!important;width:calc(363*var(--s))!important;height:calc(350*var(--s))!important;background-image:url(art/k5/f_spew.webp)!important;z-index:3;clip-path:ellipse(50% 50% at 50% 50%)}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>button:active{scale:.95}
-html.cartoon body.m2 #game#game.sk.p2:not(.pn):not(.bcg) footer #b2,html.cartoon body.m3 #game#game.sk.p2:not(.pn):not(.bcg) footer #b3{scale:1.07;filter:brightness(1.25) saturate(1.2) drop-shadow(0 0 calc(14*var(--s)) rgba(255,200,40,.95))!important;z-index:2!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer.kspew #bS{scale:1.08;filter:brightness(1.2) drop-shadow(0 0 calc(18*var(--s)) rgba(120,220,255,.95))!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer #b2{left:1.99%!important;top:9.87%!important;width:29.55%!important;height:41.45%!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer #b3{left:68.47%!important;top:9.87%!important;width:29.83%!important;height:41.45%!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer .kmenu{left:1.99%!important;top:51.32%!important;width:29.55%!important;height:42.11%!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer .kundo{left:68.47%!important;top:51.32%!important;width:29.83%!important;height:42.11%!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer #bS{left:29.40%!important;top:2.63%!important;width:41.48%!important;height:94.74%!important;border-radius:50%!important;z-index:2}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer .kmenu,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer .kundo{display:block!important}
 #game footer .kmenu,#game footer .kundo{display:none}
 
@@ -7903,7 +7905,8 @@ function artFit(){const s=Math.min(innerWidth,innerHeight*852/1846)/852;
 {const _r=render;render=function(){const x=_r.apply(this,arguments);try{artPaint()}catch(e){console.error(e)}return x}}
 {const _f=fitSk;fitSk=function(){if(artOn()){try{artFit()}catch(e){}return}return _f.apply(this,arguments)}}
 addEventListener('resize',()=>{try{if(artOn())artFit()}catch(e){}});
-document.addEventListener('pointerdown',e=>{if(S.art2!=='cartoon'||!e.target.closest||!e.target.closest('#game footer #bS'))return;const f=document.querySelector('#game footer');f.classList.add('kspew');clearTimeout(f._ks);f._ks=setTimeout(()=>f.classList.remove('kspew'),380)},true);
+document.addEventListener('pointerdown',e=>{if(S.art2!=='cartoon'||!e.target.closest)return;const t=e.target.closest('#game footer #bS,#game footer .kmenu,#game footer .kundo');if(!t)return;
+  const f=t.parentElement,c=t.id==='bS'?'kspew':t.classList.contains('kmenu')?'kmenuP':'kundoP';f.classList.remove('kspew','kmenuP','kundoP');f.classList.add(c);clearTimeout(f._ks);f._ks=setTimeout(()=>f.classList.remove(c),380)},true);
 </script>
 </body>
 </html>
