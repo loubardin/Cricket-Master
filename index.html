@@ -4124,8 +4124,8 @@ html body #game#game.sk.p2.pn #scores#scores .sc.act>.pills{width:auto!important
 html body #fbar2#fbar2{display:none!important}
 #game#game.sk.p2 main{padding-top:max(var(--sat,0px),calc(var(--uu)*1.2))!important}
 #x01 #xmain,#killer #kmain{padding-top:max(var(--sat,0px),calc(var(--uu)*1.2))!important}
-html body footer{--f3h:calc(var(--r,7dvh)*.66);--f3g:var(--g,3.5vw)}
-html body :is(#x01,#killer) footer{--f3h:5.4dvh;--f3g:1.6dvh}
+html body footer{--f3h:calc(var(--r,7dvh)*.54);--f3g:calc(var(--g,3.5vw)*1.6)}
+html body :is(#x01,#killer) footer{--f3h:4.4dvh;--f3g:2.6dvh}
 html body #game#game.sk.p2 footer,html body #game#game.sk.p2.pn footer,html body :is(#x01,#killer) footer{margin-bottom:calc(max(16px,calc(var(--sab,0px) - 8px)) + var(--f3g) + var(--f3h))!important}
 #fbar3{position:absolute;left:0;right:0;top:calc(100% + var(--f3g));height:var(--f3h);display:grid;grid-template-columns:1fr 1fr 1fr}
 #game#game.sk.p2 #fbar3{grid-template-columns:var(--colw) var(--midw) var(--colw)}
@@ -4140,8 +4140,8 @@ html body footer #fbar3 #fMenu{grid-column:1}
 html body footer #fbar3 #fMode{grid-column:2;align-content:center;gap:calc(var(--f3h)*.05);color:var(--btx,#fff)!important;text-align:center;overflow:visible}
 html body footer #fbar3 #fUndo{grid-column:3}
 html body footer #fbar3 #fMode :is(b,small){font-family:"Fun",sans-serif!important}
-html body footer #fbar3 #fMode b{font-weight:400;font-size:calc(var(--f3h)*.4);line-height:1;white-space:nowrap}
-html body footer #fbar3 #fMode small{font-size:calc(var(--f3h)*.26);line-height:1;opacity:.92;letter-spacing:.02em;white-space:nowrap}
+html body footer #fbar3 #fMode b{font-weight:400;font-size:calc(var(--f3h)*.44);line-height:1;white-space:nowrap}
+html body footer #fbar3 #fMode small{font-size:calc(var(--f3h)*.3);line-height:1;opacity:.92;letter-spacing:.02em;white-space:nowrap}
 html body footer #fbar3 :is(#fMenu,#fUndo) svg{display:block!important;width:calc(var(--f3h)*.5)!important;height:calc(var(--f3h)*.5)!important;min-width:0!important;fill:none!important;stroke:currentColor!important;stroke-width:2.3!important;stroke-linecap:round!important;stroke-linejoin:round!important}
 html body footer #fbar3 :is(#fMenu,#fUndo,#fMode):active{transform:scale(.88)}
 html body footer #fbar3 :is(#fMenu,#fUndo){transition:transform .12s ease,color .15s ease}
@@ -6820,13 +6820,13 @@ function placeTracks(){
 }
 /* 1 contre 1 : une seule unité de hauteur (--rowh = une ligne) et une seule marge (--g = 3,5 % de la largeur).
    De haut en bas : g, carte (2,44 lignes), g, 7 lignes séparées par g, g, switch (1 ligne), marge du bas. */
-const F3H=.66;   // hauteur de la barre du bas, en lignes (= --f3h)
+const F3H=.54;   // hauteur de la barre du bas, en lignes (= --f3h)
 function layoutSk(){
   const g=$('game');if(!skp2())return;
   const gp=innerWidth*.035,hd=g.querySelector('header'),ft=g.querySelector('footer');
-  const b3=ft&&ft.querySelector('#fbar3'),gb=(ft?parseFloat(getComputedStyle(ft).marginBottom)||gp:gp)-(b3?b3.offsetHeight+gp:0);   // marge du bas sans la barre
+  const b3=ft&&ft.querySelector('#fbar3'),g3=b3?b3.offsetTop-ft.clientHeight:0,gb=(ft?parseFloat(getComputedStyle(ft).marginBottom)||gp:gp)-(b3?b3.offsetHeight+g3:0);   // marge du bas sans la barre
   const mt=parseFloat(getComputedStyle(g.querySelector('main')).paddingTop)||0;
-  const r=Math.max(28,(g.clientHeight-hd.offsetHeight-mt-10*gp-gb)/(10.69+F3H));
+  const r=Math.max(28,(g.clientHeight-hd.offsetHeight-mt-9*gp-g3-gb)/(10.69+F3H));
   g.style.setProperty('--rowh',r.toFixed(2)+'px');
 }
 /* nom et score : taille fixe (proportionnelle à la ligne), réduite seulement si ça ne tient pas dans la colonne ;
