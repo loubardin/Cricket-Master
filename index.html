@@ -4121,7 +4121,7 @@ html body #game#game.sk.p2.pn #scores#scores .sc.act>.pills{width:auto!important
 /* ===================== STYLE « CARTOON » (kit PNG v4) — Cricket à 2 côtés, proportions de la maquette ===================== */
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg){background:#fbeccb url(art/k4/fond.webp) center/cover no-repeat!important}
 /* en-tête : enseigne + étoiles, boutons ronds */
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fbar2{margin-top:4.2dvh!important;height:9.6dvh!important;align-items:center!important;background:none!important;box-shadow:none!important;border:0!important;overflow:visible!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fbar2{margin-top:max(0px,calc(4.2dvh - var(--sat,0px)))!important;height:9.6dvh!important;align-items:center!important;background:none!important;box-shadow:none!important;border:0!important;overflow:visible!important}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fbar2 .f2th{display:none!important}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMode{position:relative;height:100%!important;background:none!important;box-shadow:none!important;overflow:visible!important}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMode::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMode::after{display:none!important}
@@ -4132,7 +4132,7 @@ html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fUndo{background-image:ur
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMenu svg,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fUndo svg{opacity:0!important}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMenu::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fMenu::after,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fUndo::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #fUndo::after{display:none!important}
 /* cases des joueurs : la case active prend les proportions du panneau (corps 1,954:1), couronne et pilules comprises */
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores{margin-top:6.4dvh!important;height:calc((var(--colw) + var(--midw)) / 1.954)!important;min-height:0!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores{margin-top:calc(max(0px,calc(4.2dvh - var(--sat,0px))) + 9.6dvh - max(var(--sat,0px),calc(var(--uu)*1.2)) + max(var(--sat,0px),calc(var(--uu)*1.2)) + 3.2dvh - 6.2dvh)!important;flex:none!important;height:calc((var(--colw) + var(--midw)) / 1.954)!important;min-height:0!important}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc{background:none!important;box-shadow:none!important;outline:0!important;border:0!important;overflow:visible!important}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc::after{display:none!important}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc::before{display:none!important}
@@ -4154,8 +4154,8 @@ html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act>.pills{pos
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act:last-child>.pills{left:12%!important}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act .pill{background:none!important;box-shadow:none!important;border:0!important;height:26.8%!important;min-height:0!important;width:100%!important;min-width:0!important;margin:0!important;padding:0!important;display:grid!important;place-items:center!important;color:#0b1a24!important;font-size:min(4.2vw,2dvh)!important;opacity:1!important}
 /* lignes : piste crème + plaque numérotée (bleue / rose selon qui joue) */
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid{gap:.85dvh!important}
-html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid>.row{flex:0 0 7.3dvh!important;height:7.3dvh!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid{gap:.85dvh!important;flex:1 1 0!important;min-height:0!important;height:auto!important;justify-content:center!important}
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid>.row{flex:0 1 7.3dvh!important;height:auto!important;max-height:7.3dvh!important;min-height:0!important}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .rtrack{background:none!important;box-shadow:none!important;outline:0!important;border:0 solid transparent!important;border-image:url(art/k4/rail.webp) 0 100 fill / 0 3.65dvh / 0 stretch!important}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .rtrack::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .rtrack::after,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .rtrackb{display:none!important}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num{background:var(--nb) right center/auto 100% no-repeat!important;box-shadow:none!important;border:0!important;outline:0!important;color:transparent!important;animation:none!important;filter:none!important}
@@ -4187,6 +4187,11 @@ html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer#game footer>button:
 
 /* cartoon : pendant le rebond, la place d'origine laisse voir le rail (pas une 2e pastille) */
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num.bnc:not(.nghost){background:none!important}
+
+/* footer : largeur et hauteur explicites (iOS ignorait aspect-ratio) */
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer{width:calc(100vw - 28px)!important;max-width:none!important;height:calc((100vw - 28px) * 296 / 1585)!important;aspect-ratio:auto!important;margin:1.2dvh 14px max(10px,var(--sab,0px))!important;flex:none!important;align-self:flex-start!important;left:auto!important;right:auto!important;transform:none!important;translate:none!important}
+/* pilules du panneau : 3 fléchettes seulement (l'annuler est déjà en haut) */
+html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc.act .pill.undo{display:none!important}
 </style>
 </head>
 <body>
