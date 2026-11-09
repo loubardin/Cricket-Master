@@ -4208,14 +4208,14 @@ html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num.num::before,htm
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num.num::after{background-image:var(--nb3)!important}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg).curR #grid .num.num::before{background-image:var(--np2)!important}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg).curR #grid .num.num::after{background-image:var(--np3)!important}
-html.cartoon body.m2 #game#game.sk.p2:not(.pn):not(.bcg) #grid .num.num:not(.dead)::before,html.cartoon body.m3 #game#game.sk.p2:not(.pn):not(.bcg) #grid .num.num:not(.dead)::after{opacity:1}
+html.cartoon body #game#game.km2.sk.p2:not(.pn):not(.bcg) #grid .num.num:not(.dead)::before,html.cartoon body #game#game.km3.sk.p2:not(.pn):not(.bcg) #grid .num.num:not(.dead)::after{opacity:1}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num.num.bnc:not(.nghost)::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid .num.num.bnc:not(.nghost)::after{display:none!important}
 /* boutons du bas : aucune animation / ombre héritée (Safari applique les animations malgré !important) */
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>button,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>button.armed{animation:none!important;-webkit-animation:none!important;text-shadow:none!important;-webkit-text-stroke:0!important;box-shadow:none!important;filter:none!important;outline:0!important}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>button::before,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>button::after{animation:none!important;transition:none!important;content:none!important;display:none!important}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>.kft{position:absolute!important;left:0;top:0;width:100%;height:100%;display:block!important;pointer-events:none;opacity:0;z-index:0;user-select:none;-webkit-user-drag:none}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer>.kft.n{opacity:1}
-html.cartoon body.m2 #game#game.sk.p2:not(.pn):not(.bcg) footer>.kft.d,html.cartoon body.m3 #game#game.sk.p2:not(.pn):not(.bcg) footer>.kft.t,
+html.cartoon body #game#game.km2.sk.p2:not(.pn):not(.bcg) footer>.kft.d,html.cartoon body #game#game.km3.sk.p2:not(.pn):not(.bcg) footer>.kft.t,
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer.kspew>.kft.s,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer.kmenuP>.kft.m,html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer.kundoP>.kft.u{opacity:1;z-index:1}
 #game footer>.kft{display:none}
 /* bas : une planche de 6 états (normal, double, triple, spew, menu, annuler) — un seul affiché, même place et même taille */
@@ -7940,6 +7940,13 @@ let XHOLD=null;
   const c=XG.cur,t=XG.turn,p=XG.players[XHOLD.who];XG.cur=XHOLD.who;XG.turn=(p&&p.last)||[];
   try{return _r.apply(this,arguments)}finally{XG.cur=c;XG.turn=t}}}
 {const _s=setMult;setMult=function(){if(turnLocked())return;return _s.apply(this,arguments)}}
+
+/* cartoon : on n'utilise pas les classes d'effets du style Bulle (lueurs animées qui font des ombres sur iPhone) ;
+   le multiplicateur est porté par #game.km2 / .km3 */
+function artFx(){const g=$('game'),on=artOn();const m=on&&G?G.mult:1;g.classList.toggle('km2',on&&m===2);g.classList.toggle('km3',on&&m===3);
+  if(!on)return;document.body.classList.remove('m2','m3');const f=document.querySelector('#game footer');
+  if(f)f.classList.remove('armed2','armed3');['b2','b3','bS'].forEach(id=>{const b=$(id);b&&b.classList.remove('armed','fear')})}
+{const _r=render;render=function(){const x=_r.apply(this,arguments);try{artFx()}catch(e){}return x}}
 </script>
 </body>
 </html>
