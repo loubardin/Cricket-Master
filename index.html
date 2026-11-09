@@ -4277,7 +4277,8 @@ html[data-sk] body:not(.m2):not(.m3) :is(#game#game#game,#x01#x01#x01,#killer#ki
 html[data-sk] body:not(.m2):not(.m3) :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) #fbar3 .f3b{background:transparent!important;box-shadow:none!important}
 html[data-sk] body:not(.m2):not(.m3) :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) #fbar3 .f3b::before,html[data-sk] body:not(.m2):not(.m3) :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) #fbar3 .f3b::after{content:none!important}
 /* au repos : « Spew » plus gros, un peu plus bas, au centre du gros bouton */
-html[data-sk] body:not(.m2):not(.m3) :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) footer #bS::after{translate:0 calc(var(--f3h)*.12)}
+html[data-sk] body:not(.m2):not(.m3) :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) footer #bS::after{translate:0 calc((var(--f3g) + var(--f3h))*.5 - var(--ke)*.5)!important;scale:1.25!important}
+html[data-sk] body:not(.m2):not(.m3) :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) footer #fbar3 #fMode{opacity:0!important}
 </style>
 </head>
 <body>
@@ -7500,6 +7501,7 @@ new MutationObserver(()=>{const box=$('slots');box.querySelectorAll('.slot.lock'
 function f2nudge(dir){const th=document.querySelector('#fbar2 .f2th');if(!th)return;const w=th.offsetWidth*.55*dir;
   th.animate([{transform:'none'},{transform:`translateX(${w}px)`,offset:.4},{transform:'none'}],{duration:380,easing:'cubic-bezier(.3,1.3,.5,1)'})}
 $('fMode').addEventListener('click',e=>{e.stopPropagation();haptic();
+  if(document.documentElement.dataset.sk&&!document.body.classList.contains('m2')&&!document.body.classList.contains('m3')){$('bS').click();return}
   if(BARC&&$('game').classList.contains('on')){SFX.open();xStats();$('info').classList.add('on');return}
   if($('x01').classList.contains('on'))$('xInfo').click();else if($('killer').classList.contains('on'))$('kInfo').click();else if(G)openStats(shownCur())});
 function topBar(){const bar=$('fbar2'),sec=document.querySelector('#game.on,#x01.on,#killer.on')||(S.last==='x01'?$('x01'):S.last==='killer'?$('killer'):$('game'));
