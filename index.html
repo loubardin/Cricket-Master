@@ -3900,13 +3900,13 @@ html body #xpick.hipick>*{min-width:0;width:100%}
 .skinpick .sks{display:flex;flex-direction:column;gap:6px}
 .skinpick .skt{font:600 13px "Lbl",sans-serif;color:var(--mute)}
 .skinpick .skg{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px}
-.skinpick .skc{aspect-ratio:1;border-radius:50%;border:0;padding:0;background:var(--c);box-shadow:inset 0 0 0 1px rgba(0,0,0,.18)}
-.skinpick .skc.on{box-shadow:0 0 0 3px var(--m-home),0 0 0 5px var(--m-strong)}
+.skinpick .stc{aspect-ratio:1;border-radius:50%;border:0;padding:0;background:var(--c);box-shadow:inset 0 0 0 1px rgba(0,0,0,.18)}
+.skinpick .stc.on{box-shadow:0 0 0 3px var(--m-home),0 0 0 5px var(--m-strong)}
 .skinpick .skr{justify-self:start;height:40px;padding:0 18px;border-radius:99px;border:0;background:transparent;box-shadow:inset 0 0 0 1.5px var(--m-strong);font:400 16px "Fun",sans-serif;color:var(--ink)}
 html[data-skin] body #setup .grules .rgoal i{color:var(--accent)!important}
 .skinpick .skg{grid-template-columns:repeat(15,minmax(0,1fr))!important;gap:3px!important}
-.skinpick .skc{border-radius:6px!important;aspect-ratio:1}
-.skinpick .skc.on{box-shadow:0 0 0 2px var(--m-home),0 0 0 4px var(--m-strong)!important;z-index:1;position:relative}
+.skinpick .stc{border-radius:6px!important;aspect-ratio:1}
+.skinpick .stc.on{box-shadow:0 0 0 2px var(--m-home),0 0 0 4px var(--m-strong)!important;z-index:1;position:relative}
 .skinpick .skd{grid-column:1 / -1;aspect-ratio:auto!important;height:22px;border-radius:99px!important}
 .skinpick .skd::after{content:"par défaut";font:600 11px "Lbl",sans-serif;color:var(--btx,#fff);mix-blend-mode:difference}
 .skinpick .skp{display:flex;align-items:center;justify-content:space-between;gap:10px;font:600 14px "Lbl",sans-serif;color:var(--ink)}
@@ -4156,58 +4156,106 @@ html body #game#game.sk.p2 #grid{margin-top:var(--G)!important;margin-bottom:0!i
 html body #game#game.sk.p2 main,html body #game#game.sk.p2.pn main{padding-bottom:0!important}
 html body #game#game.sk.p2 footer,html body #game#game.sk.p2.pn footer{height:var(--r)!important;margin-top:var(--G)!important}
 
-/* ===================== STYLE « RÉTRO » =====================
-   Simple habillage de la version Bulle : mêmes tailles, mêmes écarts, mêmes animations.
-   Règle unique pour les bulles : chacune garde son empreinte Bulle (case + halo --h) et reçoit UN contour noir,
-   tracé au bord du halo par son ::after. Une case masquée pendant son animation (.bnc) ou morte n'en a pas. */
-@font-face{font-family:"Coop";font-display:block;src:url(art/k6/coop.woff) format("woff")}
-html.retro{--rk:#0b0b0b;--rbw:3.6px;--rdead:#8a8784}
+/* ===================== STYLES D'HABILLAGE (base Bulle) =====================
+   Un style = des variables (--k-*) posées sur <html data-sk="nom">. Les règles ci-dessous sont communes à tous :
+   mêmes tailles, mêmes écarts, mêmes animations que la Bulle ; seul l'habillage change.
+   Bulles : chacune garde son empreinte Bulle (case + halo --h) ; contour unique tracé au bord du halo par ::after,
+   reflet par ::before. Une case masquée pendant son animation (.bnc) ou morte n'a ni l'un ni l'autre. */
+@font-face{font-family:"K-retro";font-display:block;src:url(art/fonts/retro.woff) format("woff")}
+@font-face{font-family:"K-gothique";font-display:block;src:url(art/fonts/gothique.woff) format("woff")}
+@font-face{font-family:"K-pirate";font-display:block;src:url(art/fonts/pirate.woff) format("woff")}
+@font-face{font-family:"K-souk";font-display:block;src:url(art/fonts/souk.woff) format("woff")}
+@font-face{font-family:"K-magazine";font-display:block;src:url(art/fonts/magazine.woff) format("woff")}
+@font-face{font-family:"K-western";font-display:block;src:url(art/fonts/western.woff) format("woff")}
+@font-face{font-family:"K-arcade";font-display:block;src:url(art/fonts/arcade.woff) format("woff")}
+@font-face{font-family:"K-graffiti";font-display:block;src:url(art/fonts/graffiti.woff) format("woff")}
+@font-face{font-family:"K-foraine";font-display:block;src:url(art/fonts/foraine.woff) format("woff")}
+@font-face{font-family:"K-bonbon";font-display:block;src:url(art/fonts/bonbon.woff) format("woff")}
+html[data-sk]{--k-ink:#111;--k-bw:3px;--k-bst:solid;--k-rail:#fff;--k-txt:#111;--k-tsh:none;--k-ptxt:#111;--k-psh:none;--k-ring:#fff;--k-pill:#fff;--k-dead:#8a8784;--k-hl:transparent;
+  --k-drop:0 0 0 transparent;--k-rad:99px;--k-crad:calc(var(--r,58px)*.38);--k-mark:var(--k-ink);--k-mw:4px;--k-numsz:1.3em;--k-bullsz:1em;--k-case:none;--k-info:#8d8a85;--k-icon:var(--k-ptxt);--k-armtx:var(--k-ink);--k-railtx:var(--k-ptxt);--k-numy:0em}
+html[data-sk] body #game#game#game.sk.p2 footer :is(#b2,#bS,#b3)::after{font-size:calc(var(--r)*.42*var(--k-fsz,1))!important}
+html[data-sk] body :is(#x01#x01#x01,#killer#killer#killer) footer :is(#b2,#bS,#b3)::after{font-size:calc(3dvh*var(--k-fsz,1))!important}
+html[data-sk] body footer #fbar3 #fMode b{font-size:calc(var(--f3h)*.38*var(--k-fsz,1))!important}
+html[data-sk] body footer #fbar3 #fMode small{font-size:calc(var(--f3h)*.24*var(--k-fsz,1))!important}
+html[data-sk="retro"],.stc[data-st="retro"]{--k-font:"K-retro";--k-page:#f9eee5;--k-ink:#0b0b0b;--k-bw:3.6px;--k-rail:#fff;--k-txt:#0b0b0b;--k-ptxt:#0b0b0b;--k-ring:#fff;--k-pill:#fff;--k-dead:#8a8784;--k-hl:rgba(255,255,255,.7);--k-numsz:1.3em;--k-chip:#fdc702}
+html[data-sk="gothique"],.stc[data-st="gothique"]{--k-font:"K-gothique";--k-page:radial-gradient(120% 70% at 50% 0%,#3a0d0f 0%,#140b0c 55%,#070606 100%);--k-ink:#e8dfc9;--k-bw:2.4px;--k-rail:#1a1214;--k-txt:#f6efdc;--k-tsh:0 2px 0 #000,0 0 6px rgba(0,0,0,.6);--k-ptxt:#e8dfc9;--k-ring:#0b0808;--k-pill:#1a1214;--k-pilltx:#e8dfc9;--k-dead:#5d5350;--k-hl:transparent;--k-drop:0 0 12px rgba(190,20,20,.55);--k-rad:7px;--k-crad:7px;--k-mark:#e8dfc9;--k-numsz:1.35em;--k-numy:.2em;--k-info:#3a2a2c;--k-icon:#e8dfc9;--k-armtx:#111;--k-chip:#8f1418}
+html[data-sk="pirate"],.stc[data-st="pirate"]{--k-font:"K-pirate";--k-page:radial-gradient(130% 90% at 50% 40%,#f4e4bd 0%,#e6c991 60%,#b88c4f 100%);--k-ink:#3b2412;--k-bw:3px;--k-bst:dashed;--k-rail:#f7e9c6;--k-txt:#2a170a;--k-ptxt:#3b2412;--k-ring:#f1dcaa;--k-pill:#f7e9c6;--k-dead:#9b7a52;--k-hl:rgba(255,248,225,.45);--k-drop:3px 4px 0 rgba(59,36,18,.35);--k-rad:14px;--k-crad:14px;--k-mark:#3b2412;--k-numsz:1.5em;--k-bullsz:1.15em;--k-info:#7a5230;--k-chip:#a8322a}
+html[data-sk="souk"],.stc[data-st="souk"]{--k-font:"K-souk";--k-page:radial-gradient(circle,rgba(217,181,90,.22) 1.6px,transparent 2.4px) 0 0/22px 22px,radial-gradient(circle,rgba(217,181,90,.12) 1.2px,transparent 2px) 11px 11px/22px 22px,linear-gradient(#11423f,#0b2e2c);--k-ink:#d9b55a;--k-bw:2.6px;--k-rail:#0f3a37;--k-txt:#fff7e0;--k-tsh:0 2px 0 rgba(0,0,0,.35);--k-ptxt:#f3e2b0;--k-ring:#0b2e2c;--k-pill:#0f3a37;--k-pilltx:#f3e2b0;--k-dead:#5f837f;--k-hl:rgba(255,240,200,.45);--k-drop:0 3px 0 #061e1d;--k-mark:#f3e2b0;--k-numsz:1.3em;--k-info:#7c6430;--k-icon:#f3e2b0;--k-armtx:#111;--k-chip:#c9a03e}
+html[data-sk="magazine"],.stc[data-st="magazine"]{--k-font:"K-magazine";--k-page:#f4f1ea;--k-ink:#111;--k-bw:1.4px;--k-rail:transparent;--k-txt:#fff;--k-tsh:none;--k-ptxt:#111;--k-ring:#f4f1ea;--k-pill:#f4f1ea;--k-dead:#b9b2a6;--k-hl:transparent;--k-rad:2px;--k-crad:2px;--k-mark:#111;--k-mw:2.4px;--k-numsz:1.45em;--k-bullsz:1.1em;--k-info:#111;--k-chip:#d7262f}
+html[data-sk="western"],.stc[data-st="western"]{--k-font:"K-western";--k-page:linear-gradient(rgba(0,0,0,.18),rgba(0,0,0,.18)),repeating-linear-gradient(0deg,#6e4122 0 46px,#5a3319 46px 48px),#6e4122;--k-ink:#2b1a0c;--k-bw:5px;--k-bst:double;--k-rail:#f1dfb5;--k-txt:#2b1a0c;--k-ptxt:#f1dfb5;--k-psh:0 2px 0 rgba(0,0,0,.5);--k-ring:#f1dfb5;--k-pill:#f1dfb5;--k-dead:#c8a979;--k-hl:transparent;--k-drop:3px 4px 0 rgba(0,0,0,.45);--k-rad:6px;--k-crad:6px;--k-mark:#f1dfb5;--k-numsz:.92em;--k-bullsz:.5em;--k-case:uppercase;--k-fsz:.56;--k-info:#8a5a2e;--k-icon:#2b1a0c;--k-railtx:#2b1a0c;--k-chip:#b5462b}
+html[data-sk="arcade"],.stc[data-st="arcade"]{--k-font:"K-arcade";--k-page:linear-gradient(rgba(255,62,200,.16) 1px,transparent 1px) 0 0/100% 30px,linear-gradient(90deg,rgba(57,243,255,.12) 1px,transparent 1px) 0 0/30px 100%,radial-gradient(120% 60% at 50% 0%,#2a0f5c 0%,#0b0420 70%);--k-ink:#39f3ff;--k-bw:2.4px;--k-rail:rgba(20,10,51,.85);--k-txt:#fff;--k-tsh:0 0 8px rgba(255,255,255,.7);--k-ptxt:#e8f9ff;--k-psh:0 0 10px rgba(57,243,255,.8);--k-ring:#0b0420;--k-pill:#140a33;--k-pilltx:#e8f9ff;--k-dead:#4a4170;--k-hl:transparent;--k-drop:0 0 10px #39f3ff,0 0 2px #39f3ff;--k-rad:12px;--k-crad:12px;--k-mark:#ff3ec8;--k-numsz:1.45em;--k-info:#3b2a7a;--k-icon:#39f3ff;--k-armtx:#111;--k-chip:#ff3ec8}
+html[data-sk="graffiti"],.stc[data-st="graffiti"]{--k-font:"K-graffiti";--k-page:radial-gradient(60% 40% at 15% 20%,rgba(255,255,255,.12),transparent),radial-gradient(50% 35% at 85% 75%,rgba(0,0,0,.12),transparent),repeating-linear-gradient(0deg,#8e8d89 0 3px,#888783 3px 6px);--k-ink:#111;--k-bw:4px;--k-rail:#ecebe6;--k-txt:#fff;--k-tsh:-2px -2px 0 #111,2px -2px 0 #111,-2px 2px 0 #111,2px 2px 0 #111,0 3px 0 #111;--k-ptxt:#111;--k-ring:#fff;--k-pill:#ecebe6;--k-dead:#5d5c58;--k-hl:rgba(255,255,255,.55);--k-drop:5px 5px 0 #111;--k-numsz:1.4em;--k-info:#4d4c48;--k-chip:#ff3b7f}
+html[data-sk="foraine"],.stc[data-st="foraine"]{--k-font:"K-foraine";--k-page:repeating-linear-gradient(90deg,#fbefd9 0 28px,#f6d9c9 28px 56px);--k-ink:#1d2a5a;--k-bw:3.4px;--k-rail:#fffaf0;--k-txt:#fff;--k-tsh:-2px -2px 0 #1d2a5a,2px -2px 0 #1d2a5a,-2px 2px 0 #1d2a5a,2px 2px 0 #1d2a5a,0 4px 0 #1d2a5a;--k-ptxt:#1d2a5a;--k-ring:#fff;--k-pill:#fffaf0;--k-dead:#b9a596;--k-hl:rgba(255,255,255,.65);--k-drop:0 5px 0 #1d2a5a;--k-mark:#1d2a5a;--k-numsz:1.3em;--k-info:#c9433a;--k-chip:#e2382f}
+html[data-sk="bonbon"],.stc[data-st="bonbon"]{--k-font:"K-bonbon";--k-page:linear-gradient(160deg,#ffd9ee 0%,#f3dcff 55%,#d9e8ff 100%);--k-ink:#7b3fa0;--k-bw:3px;--k-rail:#fff4fa;--k-txt:#fff;--k-tsh:0 3px 0 rgba(123,63,160,.55);--k-ptxt:#7b3fa0;--k-ring:#fff;--k-pill:#fff4fa;--k-dead:#cdb0dc;--k-hl:rgba(255,255,255,.85);--k-drop:0 4px 0 rgba(123,63,160,.3);--k-mark:#7b3fa0;--k-numsz:1.25em;--k-info:#c08ad8;--k-chip:#ff7ac3}
 
-/* police et couleur du texte */
-html.retro body #game#game#game.sk.p2 :is(.nm,.pts,.mpr,.mpr b,.pill),html.retro body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) footer :is(#b2,#bS,#b3)::after,html.retro body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) #fbar3 #fMode :is(b,small){font-family:"Coop",serif!important;font-weight:400!important}
-html.retro body #game#game#game.sk.p2 #scores .sc :is(.nm,.pts,.mpr,.mpr b),html.retro body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) footer :is(#b2,#bS,#b3)::after{color:var(--rk)!important;text-shadow:none!important}
-html.retro body #game#game#game.sk.p2 #scores .pts{letter-spacing:-.03em}
-html.retro body #game#game#game.sk.p2 #grid .num .lbl{font-family:"Coop",serif!important;font-style:normal!important;color:var(--rk)!important;text-shadow:none!important;font-size:1.32em!important}
-html.retro body #game#game#game.sk.p2 #grid .num.bull .lbl{font-size:1em!important;font-style:italic!important;font-synthesis:style!important}
+/* page */
+html[data-sk] body :is(#game,#x01,#killer){background:var(--k-page)!important}
+/* police */
+html[data-sk] body #game#game#game.sk.p2 :is(.nm,.pts,.mpr,.mpr b,.pill,.lbl),html[data-sk] body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) footer :is(#b2,#bS,#b3)::after,html[data-sk] body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) #fbar3 #fMode :is(b,small){font-family:var(--k-font),serif!important;font-weight:400!important;text-transform:var(--k-case)}
+/* texte : sur la page / dans la case du joueur */
+html[data-sk] body #game#game#game.sk.p2 #scores .sc :is(.nm,.pts,.mpr,.mpr b){color:var(--k-ptxt)!important;text-shadow:var(--k-psh)!important}
+html[data-sk] body #game#game#game.sk.p2 #scores .sc.act :is(.nm,.pts,.mpr,.mpr b){color:var(--k-txt)!important;text-shadow:var(--k-tsh)!important}
+html[data-sk] body #game#game#game.sk.p2 #grid .num .lbl{font-style:normal!important;color:var(--k-txt)!important;text-shadow:var(--k-tsh)!important;font-size:var(--k-numsz)!important;position:relative;z-index:2;translate:0 var(--k-numy)!important}
+html[data-sk] body #game#game#game.sk.p2 #grid .num.bull .lbl{font-size:var(--k-bullsz)!important;font-style:italic!important;font-synthesis:style!important}
+/* bulles : forme, contour unique au bord du halo, reflet */
+html[data-sk] body #game#game#game.sk.p2 #grid .num,html[data-sk] body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) footer .fthumb,html[data-sk] body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) #fbar3 .f3b,html[data-sk] body #game#game#game.sk.p2 #grid :is(.rtrack,.rtrackb),html[data-sk] body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) :is(footer,#fbar3)::after{border-radius:var(--k-rad)!important}
+html[data-sk] body #game#game#game.sk.p2 #grid .num:not(.dead):not(.bnc),html[data-sk] body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) footer .fthumb,html[data-sk] body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) #fbar3 .f3b{overflow:visible!important;outline:0!important}
+html[data-sk] body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) #fbar3 .f3b{position:relative!important;background:var(--k-info)!important;box-shadow:0 0 0 var(--h,4px) var(--k-info)!important}
+html[data-sk] body #game#game#game.sk.p2 #grid .num:not(.dead):not(.bnc)::after,html[data-sk] body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) footer .fthumb::after,html[data-sk] body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) #fbar3 .f3b::after{content:""!important;display:block!important;position:absolute!important;inset:calc(-1*var(--h,5px))!important;
+  border:var(--k-bw) var(--k-bst) var(--k-ink)!important;border-radius:calc(var(--k-rad) + var(--h,5px))!important;background:none!important;box-shadow:var(--k-drop)!important;opacity:1!important;transform:none!important;animation:none!important;pointer-events:none}
+html[data-sk] body #game#game#game.sk.p2 #grid .num:not(.dead):not(.bnc)::before,html[data-sk] body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) footer .fthumb::before,html[data-sk] body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) #fbar3 .f3b::before,html[data-sk] body #game#game#game.sk.p2 #scores .sc.act::before{content:""!important;display:block!important;position:absolute!important;
+  left:8%;top:15%;width:17%;height:13%;border-radius:99px;background:var(--k-hl)!important;box-shadow:none!important;transform:none!important;animation:none!important;opacity:1!important;pointer-events:none;z-index:1}
+html[data-sk] body #game#game#game.sk.p2 #scores .sc.act::before{left:auto;right:7%;top:9%;width:14%;height:6%}
+html[data-sk] body #game#game#game.sk.p2 #grid .num:is(.dead,.bnc)::before,html[data-sk] body #game#game#game.sk.p2 #grid .num:is(.dead,.bnc)::after{content:none!important}
+/* pendant l'animation, la case au repos disparaît : seule la bulle qui bouge est dessinée */
+html[data-sk] body #game#game#game.sk.p2 #grid .num.bnc{background:transparent!important;box-shadow:none!important;animation:none!important}
+/* case du joueur en cours : contour, liseré, contour — dans l'empreinte Bulle */
+html[data-sk] body #game#game#game.sk.p2 #scores .sc.act{border-radius:var(--k-crad)!important;box-shadow:inset 0 0 0 3px var(--k-ring),0 0 0 calc(var(--h) - var(--k-bw)/2) var(--k-ring),0 0 0 var(--h) var(--k-ink),var(--k-drop)!important}
+html[data-sk] body #game#game#game.sk.p2 #scores .sc.act::after{inset:3px!important;border:var(--k-bw) var(--k-bst) var(--k-ink)!important;border-radius:calc(var(--k-crad) - 3px)!important}
+html[data-sk] body #game#game#game.sk.p2 #pframe{display:none!important}
+html[data-sk] body #game#game#game.sk.p2 #scores .pill:not(.undo){opacity:1!important;background:var(--k-pill)!important;border:calc(var(--k-bw)*.8) solid var(--k-ink)!important;color:var(--k-pilltx,var(--k-ink))!important;border-radius:var(--k-rad)!important}
+html[data-sk] body #game#game#game.sk.p2 #scores .nm svg.hat{background:url(art/crown.webp) center bottom/contain no-repeat;overflow:visible;scale:1.25;transform-origin:50% 100%}
+html[data-sk] body #game#game#game.sk.p2 #scores .nm svg.hat path{display:none}
+/* rails (lignes et bas d'écran), sous les bulles */
+html[data-sk] body #game#game#game.sk.p2 #grid .rtrack{background:var(--k-rail)!important}
+html[data-sk] body #game#game#game.sk.p2 #grid .rtrackb{border:var(--k-bw) var(--k-bst) var(--k-ink)!important;z-index:1!important}
+html[data-sk] body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) :is(footer,#fbar3)::after{border:var(--k-bw) var(--k-bst) var(--k-ink)!important;background:var(--k-rail);z-index:0!important}
+/* bas d'écran : textes et pictos */
+html[data-sk] body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) footer :is(#b2,#bS,#b3)::after{color:var(--k-railtx)!important;text-shadow:none!important}
+html[data-sk] body:not(.m2):not(.m3) :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) footer #bS::after{color:var(--k-txt)!important;text-shadow:var(--k-tsh)!important}
+html[data-sk] body.m2 :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) footer #b2::after,html[data-sk] body.m3 :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) footer #b3::after{color:var(--k-armtx)!important}
+html[data-sk] body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) footer #fbar3 :is(#fMenu,#fUndo){color:var(--k-icon)!important}
+html[data-sk] body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) footer #fbar3 :is(#fMenu,#fUndo) svg{stroke-width:2.6!important}
+html[data-sk] body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) footer #fbar3 #fMode{color:#fff!important}
+/* ligne fermée par tous : numéro droit, sans case */
+html[data-sk] body #game#game#game.sk.p2 #grid>.row:has(.num.dead){opacity:1!important}
+html[data-sk] body #game#game#game.sk.p2 #grid .num.dead{background:transparent!important;box-shadow:none!important}
+html[data-sk] body #game#game#game.sk.p2 #grid .num.dead .lbl{color:var(--k-dead)!important;text-shadow:none!important;font-style:normal!important}
+html[data-sk] body #game#game#game.sk.p2 #grid .pc.mk.dead{opacity:.5!important}
+/* marques ; fermé = croix sur un disque à la couleur du joueur */
+html[data-sk] body #game#game#game.sk.p2 .mw svg path{stroke:var(--k-mark)!important;stroke-width:var(--k-mw)!important;stroke-linecap:round!important}
+html[data-sk] body #game#game#game.sk.p2 .mw svg .disc{animation:none!important;transform:scale(1.3)!important;fill:var(--mc,var(--accent))!important}
+/* touches propres à certains styles */
+html[data-sk="magazine"] body #game#game#game.sk.p2 #scores .pts{letter-spacing:-.02em}
+/* gothique : noms en minuscules avec capitale (les capitales gothiques seules sont illisibles) */
+html[data-sk="gothique"] body #game#game#game.sk.p2 #scores .nm{text-transform:lowercase!important;line-height:1.05!important}
+html[data-sk="gothique"] body #game#game#game.sk.p2 #scores .nm::first-letter{text-transform:uppercase}
+html[data-sk="gothique"] body #game#game#game.sk.p2 #scores .pts{translate:0 .13em!important}
+html[data-sk="gothique"] body #game#game#game.sk.p2 #scores .nm{translate:0 -.1em!important}
+html[data-sk="arcade"] body #game#game#game.sk.p2 #grid .rtrackb,html[data-sk="arcade"] body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) :is(footer,#fbar3)::after{box-shadow:0 0 8px rgba(57,243,255,.55)}
+html[data-sk="gothique"] body #game#game#game.sk.p2 #grid .rtrackb{box-shadow:0 0 10px rgba(190,20,20,.35)}
+html[data-sk="western"] body #game#game#game.sk.p2 #grid .num .lbl{letter-spacing:.02em}
 
-/* contour unique des bulles (nombres, Spew, infos) */
-html.retro body #game#game#game.sk.p2 #grid .num:not(.dead):not(.bnc),html.retro body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) footer .fthumb,html.retro body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) #fbar3 .f3b{overflow:visible!important;outline:0!important}
-html.retro body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) #fbar3 .f3b{position:relative!important}
-html.retro body #game#game#game.sk.p2 #grid .num:not(.dead):not(.bnc)::after,html.retro body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) footer .fthumb::after,html.retro body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) #fbar3 .f3b::after{content:""!important;display:block!important;position:absolute!important;inset:calc(-1*var(--h,5px))!important;
-  border:var(--rbw) solid var(--rk)!important;border-radius:99px!important;background:none!important;box-shadow:none!important;opacity:1!important;transform:none!important;animation:none!important;pointer-events:none}
-html.retro body #game#game#game.sk.p2 #grid .num:is(.dead,.bnc)::after{content:none!important}
-/* pendant l'animation, la case au repos disparaît entièrement : seule la bulle qui bouge est dessinée */
-html.retro body #game#game#game.sk.p2 #grid .num.bnc{background:transparent!important;box-shadow:none!important;animation:none!important}
+/* Réglages : vignettes de style */
+.skinpick .skst{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:2px 0 6px}
+.skinpick .stc{position:relative;width:100%!important;min-width:0!important;margin:0!important;white-space:nowrap;font-size:14px!important;padding:0 6px!important;height:44px;border-radius:14px;border:2px solid var(--k-ink,#111);background:var(--k-page,#f7f2e5);color:var(--k-ptxt,#111);font:400 15px var(--k-font,"Fun"),sans-serif;
+  display:grid;place-items:center;overflow:hidden;padding:0 4px;text-transform:var(--k-case,none);text-shadow:var(--k-psh,none);line-height:1}
+.skinpick .stc::before{content:"";position:absolute;right:5px;top:5px;width:8px;height:8px;border-radius:50%;background:var(--k-chip,var(--accent));border:2px solid var(--k-ink,#111)}
+.skinpick .stc[data-st=""]{font-family:"Fun",sans-serif;border-color:var(--ink);background:var(--page,#f7f2e5);color:var(--ink)}
+.skinpick .stc[data-st=""]::before{background:var(--accent);border-color:var(--ink)}
+.skinpick .stc.on{outline:3px solid var(--accent);outline-offset:2px}
+.skinpick .stc[data-st="western"]{font-size:9.5px!important;letter-spacing:-.02em}
 
-/* case du joueur en cours : contour noir, liseré blanc, contour noir — dans l'empreinte Bulle */
-html.retro body #game#game#game.sk.p2 #scores .sc.act{box-shadow:inset 0 0 0 3px #fff,0 0 0 calc(var(--h) - var(--rbw)) #fff,0 0 0 var(--h) var(--rk)!important}
-html.retro body #game#game#game.sk.p2 #scores .sc.act::after{inset:3px!important;border:var(--rbw) solid var(--rk)!important;border-radius:calc(var(--r)*.38 - 3px)!important}
-html.retro body #game#game#game.sk.p2 #pframe{display:none!important}
-html.retro body #game#game#game.sk.p2 #scores .pill:not(.undo){opacity:1!important;background:#fff!important;border:var(--rbw) solid var(--rk)!important;color:var(--rk)!important}
-html.retro body #game#game#game.sk.p2 #scores .nm svg.hat{background:url(art/k6/crown.webp) center bottom/contain no-repeat;overflow:visible;scale:1.25;transform-origin:50% 100%}
-html.retro body #game#game#game.sk.p2 #scores .nm svg.hat path{display:none}
-
-/* rails (lignes et bas d'écran) : blancs, contour noir, sous les bulles */
-html.retro body #game#game#game.sk.p2 #grid .rtrack{background:#fff!important}
-html.retro body #game#game#game.sk.p2 #grid .rtrackb{border:var(--rbw) solid var(--rk)!important;z-index:1!important}
-html.retro body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) footer::after,html.retro body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) #fbar3::after{border:var(--rbw) solid var(--rk)!important;background:#fff;z-index:0!important}
-
-/* ligne fermée par tous : numéro gris droit, sans case */
-html.retro body #game#game#game.sk.p2 #grid>.row:has(.num.dead){opacity:1!important}
-html.retro body #game#game#game.sk.p2 #grid .num.dead{background:transparent!important;box-shadow:none!important}
-html.retro body #game#game#game.sk.p2 #grid .num.dead .lbl{font-family:"Coop",serif!important;font-style:normal!important;color:var(--rdead)!important}
-html.retro body #game#game#game.sk.p2 #grid .pc.mk.dead{opacity:.5!important}
-
-/* marques : traits noirs ; fermé = croix sur un disque à la couleur du joueur */
-html.retro body #game#game#game.sk.p2 .mw svg path{stroke:var(--rk)!important;stroke-width:4px!important;stroke-linecap:round!important}
-html.retro body #game#game#game.sk.p2 .mw svg .disc{animation:none!important;transform:scale(1.3)!important;fill:var(--mc,var(--accent))!important}
-/* Rétro : un reflet blanc simple sur chaque bulle (::before), en haut à gauche */
-html.retro body #game#game#game.sk.p2 #grid .num:not(.dead):not(.bnc)::before,html.retro body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) footer .fthumb::before,html.retro body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) #fbar3 .f3b::before,html.retro body #game#game#game.sk.p2 #scores .sc.act::before{content:""!important;display:block!important;position:absolute!important;
-  left:8%;top:15%;width:17%;height:13%;border-radius:99px;background:rgba(255,255,255,.7)!important;box-shadow:none!important;transform:none!important;animation:none!important;opacity:1!important;pointer-events:none;z-index:1}
-html.retro body #game#game#game.sk.p2 #scores .sc.act::before{left:auto;right:7%;top:9%;width:14%;height:6%}
-html.retro body #game#game#game.sk.p2 #grid .num:is(.dead,.bnc)::before{content:none!important}
-html.retro body #game#game#game.sk.p2 #grid .num .lbl{position:relative;z-index:2}
-html.retro body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) footer #fbar3 :is(#fMenu,#fUndo) svg{stroke-width:2.6!important}
 </style>
 </head>
 <body>
@@ -7685,7 +7733,7 @@ $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
   const p=el('div','');p.id='xpick';p.classList.add('skinpick');document.body.append(p);
   const cur=()=>{const T=S.th||{};return k=>(T[k]||TH[k].def)};
-  const draw=()=>{const T=S.th||{},c=cur();p.innerHTML=`<div class="skn"><button class="skgo" data-go="hStats">Statistiques</button><button class="skgo" data-go="hHist">Historique</button></div><div class="skp"><span>Style</span><div class="sksw skst"><button data-st="" class="${S.style!=='retro'?'on':''}">Bulle</button><button data-st="retro" class="${S.style==='retro'?'on':''}">Rétro</button></div></div><div class="skp"><span>Son</span><div class="sksw sksnd"><button data-s="1" class="${S.sound?'on':''}">Oui</button><button data-s="0" class="${S.sound?'':'on'}">Non</button></div></div><div class="xpt">Thème</div><div class="skps">${THP.map((t,i)=>`<button class="skpr${['bg','ink','acc','btx'].every(k=>c(k)===t[k])?' on':''}" data-i="${i}" style="--b:${t.bg};--i:${t.ink};--a:${t.acc};--t:${t.btx}"><i></i><span>${esc(t.n)}</span></button>`).join('')}</div>`+`<div class="skp"><span>Couleurs des joueurs</span><div class="sksw"><button data-p="1" class="${S.pcolOff?'':'on'}">Oui</button><button data-p="0" class="${S.pcolOff?'on':''}">Non</button></div></div>`};
+  const draw=()=>{const T=S.th||{},c=cur();p.innerHTML=`<div class="skn"><button class="skgo" data-go="hStats">Statistiques</button><button class="skgo" data-go="hHist">Historique</button></div><div class="xpt">Style</div><div class="skst">${SKINS.map(([k,n])=>`<button class="stc${(S.style||'')===k?' on':''}" data-st="${k}">${n}</button>`).join('')}</div><div class="skp"><span>Son</span><div class="sksw sksnd"><button data-s="1" class="${S.sound?'on':''}">Oui</button><button data-s="0" class="${S.sound?'':'on'}">Non</button></div></div><div class="xpt">Thème</div><div class="skps">${THP.map((t,i)=>`<button class="skpr${['bg','ink','acc','btx'].every(k=>c(k)===t[k])?' on':''}" data-i="${i}" style="--b:${t.bg};--i:${t.ink};--a:${t.acc};--t:${t.btx}"><i></i><span>${esc(t.n)}</span></button>`).join('')}</div>`+`<div class="skp"><span>Couleurs des joueurs</span><div class="sksw"><button data-p="1" class="${S.pcolOff?'':'on'}">Oui</button><button data-p="0" class="${S.pcolOff?'on':''}">Non</button></div></div>`};
   draw();p.style.left=Math.max(12,(innerWidth-p.offsetWidth)/2)+'px';p.style.top=Math.max(12,Math.min(innerHeight-p.offsetHeight-12,e.currentTarget.getBoundingClientRect().bottom+10))+'px';
   p.addEventListener('click',ev=>{ev.stopPropagation();const go=ev.target.closest('.skgo');if(go){p.remove();$(go.dataset.go).dispatchEvent(new MouseEvent('click',{bubbles:true}));return}
     const sn=ev.target.closest('.sksnd button');if(sn){if((sn.dataset.s==='1')!==!!S.sound)$('sndT').dispatchEvent(new MouseEvent('click',{bubbles:true}));draw();return}
@@ -7885,7 +7933,8 @@ addEventListener('resize',()=>{try{kArc()}catch(e){}});
   [$('fMenu'),$('fUndo')].forEach(b=>b.addEventListener('pointerdown',()=>go(b)))}}
 
 /* style d'habillage : Bulle (base) ou Rétro — mêmes proportions, seul l'habillage change */
-function styleApply(){document.documentElement.classList.toggle('retro',S.style==='retro');try{if(typeof layoutSk==='function')layoutSk();if(typeof fitSk==='function')fitSk()}catch(e){}}
+const SKINS=[['','Bulle'],['retro','Rétro'],['gothique','Gothique'],['pirate','Pirate'],['souk','Souk'],['magazine','Magazine'],['western','Western'],['arcade','Arcade'],['graffiti','Graffiti'],['foraine','Fête foraine'],['bonbon','Bonbon']];
+function styleApply(){const h=document.documentElement;if(S.style&&SKINS.some(x=>x[0]===S.style))h.dataset.sk=S.style;else delete h.dataset.sk;try{if(typeof layoutSk==='function')layoutSk();if(typeof fitSk==='function')fitSk()}catch(e){}}
 styleApply();
 /* fin de tour : on ne peut plus marquer pendant un court instant (le temps de passer la main) */
 const TURNLOCK_MS=1200;let TURNLOCK=0;
