@@ -4119,20 +4119,31 @@ html body #game#game.sk.p2.pn #scores#scores>.sc{transition:left .45s cubic-bezi
 html body #game#game.sk.p2.pn #scores#scores .sc.act>.pills{width:auto!important}
 
 
-/* ===================== ACCUEIL ET ANNULER : petits, dans les coins en bas =====================
-   Bas d'écran Double · Spew · Triple inchangé ; une petite bande sous lui porte les 2 icônes, alignées sur ses bords. */
-html body #fbar2#fbar2{grid-template-columns:1fr!important}
-html body footer{--f3h:30px;--f3g:6px}
+/* ===================== BARRE DU BAS : Accueil · infos de partie (dans la bulle) · Annuler =====================
+   La barre du haut disparaît : tout remonte. La bulle reste toujours sur les infos (touche = infos de partie). */
+html body #fbar2#fbar2{display:none!important}
+#game#game.sk.p2 main{padding-top:max(var(--sat,0px),calc(var(--uu)*1.2))!important}
+#x01 #xmain,#killer #kmain{padding-top:max(var(--sat,0px),calc(var(--uu)*1.2))!important}
+html body footer{--f3h:calc(var(--r,7dvh)*.66);--f3g:var(--g,3.5vw)}
+html body :is(#x01,#killer) footer{--f3h:5.4dvh;--f3g:1.6dvh}
 html body #game#game.sk.p2 footer,html body #game#game.sk.p2.pn footer,html body :is(#x01,#killer) footer{margin-bottom:calc(max(16px,calc(var(--sab,0px) - 8px)) + var(--f3g) + var(--f3h))!important}
-#fbar3{position:absolute;left:0;right:0;top:calc(100% + var(--f3g));height:var(--f3h);pointer-events:none}
-html body footer #fbar3 :is(#fMenu,#fUndo){position:absolute!important;top:0!important;bottom:auto!important;right:auto!important;translate:none!important;
-  width:var(--f3h)!important;height:var(--f3h)!important;min-width:0!important;margin:0!important;padding:0!important;display:grid!important;place-items:center!important;pointer-events:auto;
-  background:none!important;border:0!important;box-shadow:none!important;border-radius:50%!important;color:var(--mute,var(--ink))!important;opacity:.85;transform:none;transition:transform .12s ease,opacity .12s ease}
-html body footer #fbar3 #fMenu#fMenu{left:10px!important}
-html body footer #fbar3 #fUndo#fUndo{left:auto!important;right:10px!important}
-html body footer #fbar3 :is(#fMenu,#fUndo)::before,html body footer #fbar3 :is(#fMenu,#fUndo)::after{content:none!important;display:none!important}
-html body footer #fbar3 :is(#fMenu,#fUndo) svg{display:block!important;width:19px!important;height:19px!important;min-width:0!important;fill:none!important;stroke:currentColor!important;stroke-width:2.3!important;stroke-linecap:round!important;stroke-linejoin:round!important}
-html body footer #fbar3 :is(#fMenu,#fUndo):active{transform:scale(.82);opacity:1}
+#fbar3{position:absolute;left:0;right:0;top:calc(100% + var(--f3g));height:var(--f3h);display:grid;grid-template-columns:1fr 1fr 1fr}
+#game#game.sk.p2 #fbar3{grid-template-columns:var(--colw) var(--midw) var(--colw)}
+#fbar3::after{content:"";position:absolute;inset:0;border:var(--bub-bw,1.5px) solid var(--m-strong);border-radius:40px;pointer-events:none;z-index:3}
+#fbar3 .f3b{grid-column:2;grid-row:1;border-radius:40px;z-index:1;pointer-events:none;
+  background:var(--spw,var(--spew,var(--accent)));box-shadow:0 0 0 var(--h,var(--bub-h,4px)) var(--spw,var(--spew,var(--accent)));transition:background-color .2s,box-shadow .2s}
+html body footer #fbar3 :is(#fMenu,#fUndo,#fMode){position:relative!important;inset:auto!important;left:auto!important;top:auto!important;right:auto!important;bottom:auto!important;translate:none!important;grid-row:1;
+  width:100%!important;height:100%!important;min-width:0!important;margin:0!important;padding:0!important;display:grid!important;place-items:center!important;z-index:2;
+  background:none!important;border:0!important;box-shadow:none!important;border-radius:40px!important;color:var(--ink)!important;transform:none;transition:transform .12s ease;-webkit-tap-highlight-color:transparent}
+html body footer #fbar3 :is(#fMenu,#fUndo,#fMode)::before,html body footer #fbar3 :is(#fMenu,#fUndo,#fMode)::after{content:none!important;display:none!important}
+html body footer #fbar3 #fMenu{grid-column:1}
+html body footer #fbar3 #fMode{grid-column:2;align-content:center;gap:calc(var(--f3h)*.05);color:var(--btx,#fff)!important;text-align:center;overflow:visible}
+html body footer #fbar3 #fUndo{grid-column:3}
+html body footer #fbar3 #fMode :is(b,small){font-family:"Fun",sans-serif!important}
+html body footer #fbar3 #fMode b{font-weight:400;font-size:calc(var(--f3h)*.4);line-height:1;white-space:nowrap}
+html body footer #fbar3 #fMode small{font-size:calc(var(--f3h)*.26);line-height:1;opacity:.92;letter-spacing:.02em;white-space:nowrap}
+html body footer #fbar3 :is(#fMenu,#fUndo) svg{display:block!important;width:calc(var(--f3h)*.5)!important;height:calc(var(--f3h)*.5)!important;min-width:0!important;fill:none!important;stroke:currentColor!important;stroke-width:2.3!important;stroke-linecap:round!important;stroke-linejoin:round!important}
+html body footer #fbar3 :is(#fMenu,#fUndo,#fMode):active{transform:scale(.88)}
 </style>
 </head>
 <body>
@@ -4255,7 +4266,7 @@ html body footer #fbar3 :is(#fMenu,#fUndo):active{transform:scale(.82);opacity:1
     <button id="b3" aria-label="Triple">TRIPLE</button>
     <i class="fthumb"></i>
     <div id="fbar2"><i class="f2th"></i><button id="fMenu" aria-label="Retour"><svg viewBox="0 0 24 24"><path d="M15 5 8 12l7 7"/></svg></button><button id="fMode" aria-label="Infos partie"><b></b><small></small></button><button id="fUndo" aria-label="Annuler la dernière fléchette"><svg viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button></div>
-    <div id="fbar3"></div>
+    <div id="fbar3"><i class="f3b"></i></div>
   </footer>
 </section>
 
@@ -6805,12 +6816,13 @@ function placeTracks(){
 }
 /* 1 contre 1 : une seule unité de hauteur (--rowh = une ligne) et une seule marge (--g = 3,5 % de la largeur).
    De haut en bas : g, carte (2,44 lignes), g, 7 lignes séparées par g, g, switch (1 ligne), marge du bas. */
+const F3H=.66;   // hauteur de la barre du bas, en lignes (= --f3h)
 function layoutSk(){
   const g=$('game');if(!skp2())return;
   const gp=innerWidth*.035,hd=g.querySelector('header'),ft=g.querySelector('footer');
-  const rc=parseFloat(g.style.getPropertyValue('--rowh'))||58,gb=ft?parseFloat(getComputedStyle(ft).marginBottom)||gp:gp;
-  const mt=(parseFloat(getComputedStyle(g.querySelector('main')).paddingTop)||0)-rc*.82;   // marge du haut sans la barre
-  const r=Math.max(28,(g.clientHeight-hd.offsetHeight-mt-9*gp-gb)/11.51);
+  const b3=ft&&ft.querySelector('#fbar3'),gb=(ft?parseFloat(getComputedStyle(ft).marginBottom)||gp:gp)-(b3?b3.offsetHeight+gp:0);   // marge du bas sans la barre
+  const mt=parseFloat(getComputedStyle(g.querySelector('main')).paddingTop)||0;
+  const r=Math.max(28,(g.clientHeight-hd.offsetHeight-mt-10*gp-gb)/(10.69+F3H));
   g.style.setProperty('--rowh',r.toFixed(2)+'px');
 }
 /* nom et score : taille fixe (proportionnelle à la ligne), réduite seulement si ça ne tient pas dans la colonne ;
@@ -7798,8 +7810,8 @@ function kArc(){document.querySelectorAll('#kplayers.kbub>.kc').forEach(c=>{cons
 addEventListener('resize',()=>{try{kArc()}catch(e){}});
 
 
-/* Accueil et Annuler : petits, dans les coins sous le bas d'écran */
-{const b3=$('fbar3');if(b3){b3.prepend($('fMenu'));b3.append($('fUndo'));
+/* barre du bas : Accueil · infos de partie · Annuler */
+{const b3=$('fbar3');if(b3){b3.prepend($('fMenu'));b3.append($('fMode'));b3.append($('fUndo'));
   const H='<svg viewBox="0 0 24 24"><path d="M3.5 11.2 12 4l8.5 7.2"/><path d="M6 9.4V20h12V9.4"/><path d="M10 20v-5.2h4V20"/></svg>';$('fMenu').innerHTML=H;$('fMenu').setAttribute('aria-label','Accueil');}}
 /* fin de tour : on ne peut plus marquer pendant un court instant (le temps de passer la main) */
 const TURNLOCK_MS=1200;let TURNLOCK=0;
