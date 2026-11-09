@@ -4939,7 +4939,7 @@ function throwDart(t){
   if(me.darts>=3&&mpr0<3&&mpr(me)>=3){busy(2400);setTimeout(()=>{fireToast(`${esc(thr)}, T'ES EN FEU`);SFX.fire()},120)}
   if(turnOver&&HOLD){
     HOLD.quiet=!!(b||leadMsg||t===0);   // les bandeaux et le spew ont déjà leur propre son
-    HOLD.t=setTimeout(releaseHold,1500);busy(1500); // demi-seconde avant de passer au joueur suivant (un tap l'écourte)
+    HOLD.t=setTimeout(releaseHold,1150);busy(1150); // demi-seconde avant de passer au joueur suivant (un tap l'écourte)
   }
 }
 
@@ -6114,7 +6114,7 @@ function kThrow(n,quiet){
     if(alive.length<=1){KG.winner=alive.length?P.indexOf(alive[0]):cur;P[KG.winner].wins++;kEndTurn(true)}
     else if(me.dead||KG.turn.length>=3){kEndTurn(false);over=true}
   }
-  if(over&&KG.winner===null){busy(1500);KHOLD={who:cur,t:setTimeout(()=>{KHOLD=null;kRender();if(KG.def&&!KG.turn.length){const c=R2(KG.def.v);c&&anim(c.querySelector('.kno'),'freeze',900)}},1500)}}
+  if(over&&KG.winner===null){busy(1150);KHOLD={who:cur,t:setTimeout(()=>{KHOLD=null;kRender();if(KG.def&&!KG.turn.length){const c=R2(KG.def.v);c&&anim(c.querySelector('.kno'),'freeze',900)}},1150)}}
   kSave();kRender();haptic();
   if(!quiet)kFx(d,me,cur,over);
 }
@@ -7928,13 +7928,13 @@ document.addEventListener('pointerdown',e=>{if(S.art2!=='cartoon'||!e.target.clo
   const f=t.parentElement,c=t.id==='bS'?'kspew':t.classList.contains('kmenu')?'kmenuP':'kundoP';f.classList.remove('kspew','kmenuP','kundoP');f.classList.add(c);clearTimeout(f._ks);f._ks=setTimeout(()=>f.classList.remove(c),380)},true);
 
 /* fin de tour : on ne peut plus marquer pendant un court instant (le temps de passer la main) */
-const TURNLOCK_MS=1550;let TURNLOCK=0;
+const TURNLOCK_MS=1200;let TURNLOCK=0;
 const turnLocked=()=>performance.now()<TURNLOCK||!!HOLD||!!KHOLD||(typeof XHOLD!=='undefined'&&!!XHOLD);   // tant que le joueur n'a pas changé à l'écran
 {const _t=throwDart;throwDart=function(){if(turnLocked())return;const h=HOLD;const r=_t.apply(this,arguments);if(HOLD&&HOLD!==h)TURNLOCK=performance.now()+TURNLOCK_MS;return r}}
 {const _k=kThrow;kThrow=function(n,quiet){if(!quiet&&turnLocked())return;const h=KHOLD;const r=_k.apply(this,arguments);if(KHOLD&&KHOLD!==h)TURNLOCK=performance.now()+TURNLOCK_MS;return r}}
 {const _x=xThrow;xThrow=function(n,m,quiet){if(!quiet&&turnLocked())return;const c=XG&&XG.cur,len=XG?XG.turn.length:0;const r=_x.apply(this,arguments);
   if(XG&&XG.winner===null&&(XG.cur!==c||(XG.turn.length===0&&len>0))){TURNLOCK=performance.now()+TURNLOCK_MS;
-    if(XG.cur!==c&&!quiet){clearTimeout(XHOLD&&XHOLD.t);XHOLD={who:c,t:setTimeout(()=>{XHOLD=null;try{SFX.turn&&SFX.turn()}catch(e){}xRender()},1500)};busy(1500);xRender()}}return r}}
+    if(XG.cur!==c&&!quiet){clearTimeout(XHOLD&&XHOLD.t);XHOLD={who:c,t:setTimeout(()=>{XHOLD=null;try{SFX.turn&&SFX.turn()}catch(e){}xRender()},1150)};busy(1150);xRender()}}return r}}
 /* 501 et mini jeux : l'écran garde le joueur qui vient de jouer (et ses fléchettes) un instant avant de passer au suivant */
 let XHOLD=null;
 {const _r=xRender;xRender=function(){if(!XHOLD||!XG||XG.winner!==null)return _r.apply(this,arguments);
