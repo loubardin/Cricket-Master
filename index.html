@@ -4119,33 +4119,20 @@ html body #game#game.sk.p2.pn #scores#scores>.sc{transition:left .45s cubic-bezi
 html body #game#game.sk.p2.pn #scores#scores .sc.act>.pills{width:auto!important}
 
 
-/* ===================== BAS D'ÉCRAN SUR 2 RANGÉES (Bulle) =====================
-   rangée 1 : Double · Spew · Triple (inchangée) ; rangée 2 : Maison · Spew · Annuler.
-   Au repos, la bulle Spew descend sur les 2 rangées ; en Double/Triple elle file sur la case et le bas se replie. */
+/* ===================== ACCUEIL ET ANNULER : petits, dans les coins en bas =====================
+   Bas d'écran Double · Spew · Triple inchangé ; une petite bande sous lui porte les 2 icônes, alignées sur ses bords. */
 html body #fbar2#fbar2{grid-template-columns:1fr!important}
-html body footer{--f3h:calc(var(--r,6dvh)*.95);--f3g:var(--g,1.4dvh)}
-html body :is(#x01,#killer) footer{--f3h:6.6dvh;--f3g:1.4dvh}
-html body #game#game.sk.p2 footer,html body #game#game.sk.p2.pn footer{margin-bottom:calc(max(16px,calc(var(--sab,0px) - 8px)) + var(--f3g) + var(--f3h))!important}
-html body :is(#x01,#killer) footer{margin-bottom:calc(max(16px,calc(var(--sab,0px) - 8px)) + var(--f3g) + var(--f3h))!important}
-#fbar3{position:absolute;left:0;right:0;top:calc(100% + var(--f3g));height:var(--f3h);display:grid;grid-template-columns:1fr 1fr 1fr}
-#game#game.sk.p2 #fbar3{grid-template-columns:var(--colw) var(--midw) var(--colw)}
-#fbar3::after{content:"";position:absolute;inset:0;border:var(--bub-bw,1.5px) solid var(--m-strong);border-radius:40px;pointer-events:none;z-index:3}
-#fbar3 .f3s{grid-column:2;grid-row:1;position:relative;z-index:1;cursor:pointer;-webkit-tap-highlight-color:transparent;
-  margin-top:calc(-1*var(--f3g) - var(--f3h)*.6);border-radius:0 0 40px 40px;
-  background:var(--spw,var(--spew,var(--accent)));box-shadow:0 0 0 var(--h,var(--bub-h,5px)) var(--spw,var(--spew,var(--accent)));
-  transform-origin:50% 0;transition:transform .3s cubic-bezier(.3,1.3,.5,1),opacity .2s ease,background-color .2s,box-shadow .2s}
-body:is(.m2,.m3) #fbar3 .f3s{transform:scaleY(0);opacity:0;pointer-events:none}
-html body footer #fbar3 :is(#fMenu,#fUndo){position:relative!important;inset:auto!important;left:auto!important;top:auto!important;right:auto!important;bottom:auto!important;translate:none!important;
-  width:100%!important;height:100%!important;min-width:0!important;margin:0!important;padding:0!important;display:grid!important;place-items:center!important;z-index:2;
-  background:none!important;border:0!important;box-shadow:none!important;border-radius:40px!important;color:var(--ink)!important;transform:none;transition:transform .12s ease}
+html body footer{--f3h:30px;--f3g:6px}
+html body #game#game.sk.p2 footer,html body #game#game.sk.p2.pn footer,html body :is(#x01,#killer) footer{margin-bottom:calc(max(16px,calc(var(--sab,0px) - 8px)) + var(--f3g) + var(--f3h))!important}
+#fbar3{position:absolute;left:0;right:0;top:calc(100% + var(--f3g));height:var(--f3h);pointer-events:none}
+html body footer #fbar3 :is(#fMenu,#fUndo){position:absolute!important;top:0!important;bottom:auto!important;right:auto!important;translate:none!important;
+  width:var(--f3h)!important;height:var(--f3h)!important;min-width:0!important;margin:0!important;padding:0!important;display:grid!important;place-items:center!important;pointer-events:auto;
+  background:none!important;border:0!important;box-shadow:none!important;border-radius:50%!important;color:var(--mute,var(--ink))!important;opacity:.85;transform:none;transition:transform .12s ease,opacity .12s ease}
+html body footer #fbar3 #fMenu#fMenu{left:10px!important}
+html body footer #fbar3 #fUndo#fUndo{left:auto!important;right:10px!important}
 html body footer #fbar3 :is(#fMenu,#fUndo)::before,html body footer #fbar3 :is(#fMenu,#fUndo)::after{content:none!important;display:none!important}
-html body footer #fbar3 :is(#fMenu,#fUndo) svg{display:block!important;width:calc(var(--f3h)*.52)!important;height:calc(var(--f3h)*.52)!important;min-width:0!important;fill:none!important;stroke:currentColor!important;stroke-width:2.3!important;stroke-linecap:round!important;stroke-linejoin:round!important}
-html body footer #fbar3 :is(#fMenu,#fUndo):active{transform:scale(.86)}
-#fbar3 #fMenu{grid-column:1;grid-row:1}
-#fbar3 #fUndo{grid-column:3;grid-row:1}
-/* le mot Spew se centre sur la grande bulle */
-body:not(.m2):not(.m3) :is(#game,#x01,#killer) footer #bS::after{translate:0 calc((var(--f3g) + var(--f3h))*.5)}
-:is(#game,#x01,#killer) footer #bS::after{transition:translate .3s cubic-bezier(.3,1.3,.5,1),scale .3s,color .2s}
+html body footer #fbar3 :is(#fMenu,#fUndo) svg{display:block!important;width:19px!important;height:19px!important;min-width:0!important;fill:none!important;stroke:currentColor!important;stroke-width:2.3!important;stroke-linecap:round!important;stroke-linejoin:round!important}
+html body footer #fbar3 :is(#fMenu,#fUndo):active{transform:scale(.82);opacity:1}
 </style>
 </head>
 <body>
@@ -4268,7 +4255,7 @@ body:not(.m2):not(.m3) :is(#game,#x01,#killer) footer #bS::after{translate:0 cal
     <button id="b3" aria-label="Triple">TRIPLE</button>
     <i class="fthumb"></i>
     <div id="fbar2"><i class="f2th"></i><button id="fMenu" aria-label="Retour"><svg viewBox="0 0 24 24"><path d="M15 5 8 12l7 7"/></svg></button><button id="fMode" aria-label="Infos partie"><b></b><small></small></button><button id="fUndo" aria-label="Annuler la dernière fléchette"><svg viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button></div>
-    <div id="fbar3"><i class="f3s"></i></div>
+    <div id="fbar3"></div>
   </footer>
 </section>
 
@@ -6818,13 +6805,12 @@ function placeTracks(){
 }
 /* 1 contre 1 : une seule unité de hauteur (--rowh = une ligne) et une seule marge (--g = 3,5 % de la largeur).
    De haut en bas : g, carte (2,44 lignes), g, 7 lignes séparées par g, g, switch (1 ligne), marge du bas. */
-const F3H=.95;   // hauteur de la rangée Maison/Annuler, en lignes
 function layoutSk(){
   const g=$('game');if(!skp2())return;
   const gp=innerWidth*.035,hd=g.querySelector('header'),ft=g.querySelector('footer');
-  const rc=parseFloat(g.style.getPropertyValue('--rowh'))||58,b3=ft&&ft.querySelector('#fbar3'),x3=b3?b3.offsetHeight+gp:0,gb=(ft?parseFloat(getComputedStyle(ft).marginBottom)||gp:gp)-x3;
+  const rc=parseFloat(g.style.getPropertyValue('--rowh'))||58,gb=ft?parseFloat(getComputedStyle(ft).marginBottom)||gp:gp;
   const mt=(parseFloat(getComputedStyle(g.querySelector('main')).paddingTop)||0)-rc*.82;   // marge du haut sans la barre
-  const r=Math.max(28,(g.clientHeight-hd.offsetHeight-mt-10*gp-gb)/(11.51+F3H));
+  const r=Math.max(28,(g.clientHeight-hd.offsetHeight-mt-9*gp-gb)/11.51);
   g.style.setProperty('--rowh',r.toFixed(2)+'px');
 }
 /* nom et score : taille fixe (proportionnelle à la ligne), réduite seulement si ça ne tient pas dans la colonne ;
@@ -7812,10 +7798,9 @@ function kArc(){document.querySelectorAll('#kplayers.kbub>.kc').forEach(c=>{cons
 addEventListener('resize',()=>{try{kArc()}catch(e){}});
 
 
-/* bas d'écran sur 2 rangées : Double · Spew · Triple, puis Maison · (Spew) · Annuler */
+/* Accueil et Annuler : petits, dans les coins sous le bas d'écran */
 {const b3=$('fbar3');if(b3){b3.prepend($('fMenu'));b3.append($('fUndo'));
-  const H='<svg viewBox="0 0 24 24"><path d="M3.5 11.2 12 4l8.5 7.2"/><path d="M6 9.4V20h12V9.4"/><path d="M10 20v-5.2h4V20"/></svg>';$('fMenu').innerHTML=H;$('fMenu').setAttribute('aria-label','Accueil');
-  b3.querySelector('.f3s').addEventListener('click',e=>{e.stopPropagation();$('bS').click()})}}
+  const H='<svg viewBox="0 0 24 24"><path d="M3.5 11.2 12 4l8.5 7.2"/><path d="M6 9.4V20h12V9.4"/><path d="M10 20v-5.2h4V20"/></svg>';$('fMenu').innerHTML=H;$('fMenu').setAttribute('aria-label','Accueil');}}
 /* fin de tour : on ne peut plus marquer pendant un court instant (le temps de passer la main) */
 const TURNLOCK_MS=1200;let TURNLOCK=0;
 const turnLocked=()=>performance.now()<TURNLOCK||!!HOLD||!!KHOLD||(typeof XHOLD!=='undefined'&&!!XHOLD);   // tant que le joueur n'a pas changé à l'écran
