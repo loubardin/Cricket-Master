@@ -4161,14 +4161,14 @@ html body #game#game.sk.p2 footer,html body #game#game.sk.p2.pn footer{height:va
    Règle unique pour les bulles : chacune garde son empreinte Bulle (case + halo --h) et reçoit UN contour noir,
    tracé au bord du halo par son ::after. Une case masquée pendant son animation (.bnc) ou morte n'en a pas. */
 @font-face{font-family:"Coop";font-display:block;src:url(art/k6/coop.woff) format("woff")}
-html.retro{--rk:#0b0b0b;--rbw:2.6px;--rdead:#8a8784}
+html.retro{--rk:#0b0b0b;--rbw:3.6px;--rdead:#8a8784}
 
 /* police et couleur du texte */
 html.retro body #game#game#game.sk.p2 :is(.nm,.pts,.mpr,.mpr b,.pill),html.retro body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) footer :is(#b2,#bS,#b3)::after,html.retro body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) #fbar3 #fMode :is(b,small){font-family:"Coop",serif!important;font-weight:400!important}
 html.retro body #game#game#game.sk.p2 #scores .sc :is(.nm,.pts,.mpr,.mpr b),html.retro body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) footer :is(#b2,#bS,#b3)::after{color:var(--rk)!important;text-shadow:none!important}
 html.retro body #game#game#game.sk.p2 #scores .pts{letter-spacing:-.03em}
-html.retro body #game#game#game.sk.p2 #grid .num .lbl{font-family:"Coop",serif!important;font-style:italic!important;font-synthesis:style!important;color:var(--rk)!important;text-shadow:none!important;font-size:1.06em!important}
-html.retro body #game#game#game.sk.p2 #grid .num.bull .lbl{font-size:.84em!important}
+html.retro body #game#game#game.sk.p2 #grid .num .lbl{font-family:"Coop",serif!important;font-style:italic!important;font-synthesis:style!important;color:var(--rk)!important;text-shadow:none!important;font-size:1.32em!important}
+html.retro body #game#game#game.sk.p2 #grid .num.bull .lbl{font-size:1em!important}
 
 /* contour unique des bulles (nombres, Spew, infos) */
 html.retro body #game#game#game.sk.p2 #grid .num:not(.dead):not(.bnc),html.retro body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) footer .fthumb,html.retro body :is(#game#game#game,#x01#x01#x01,#killer#killer#killer) #fbar3 .f3b{overflow:visible!important;outline:0!important}
@@ -4197,7 +4197,7 @@ html.retro body #game#game#game.sk.p2 #grid .num.dead .lbl{font-family:"Coop",se
 html.retro body #game#game#game.sk.p2 #grid .pc.mk.dead{opacity:.5!important}
 
 /* marques : traits noirs ; fermé = croix sur un disque à la couleur du joueur */
-html.retro body #game#game#game.sk.p2 .mw svg path{stroke:var(--rk)!important;stroke-width:3px!important;stroke-linecap:round!important}
+html.retro body #game#game#game.sk.p2 .mw svg path{stroke:var(--rk)!important;stroke-width:4px!important;stroke-linecap:round!important}
 html.retro body #game#game#game.sk.p2 .mw svg .disc{animation:none!important;transform:scale(1.3)!important;fill:var(--mc,var(--accent))!important}
 </style>
 </head>
