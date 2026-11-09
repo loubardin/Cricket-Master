@@ -4174,6 +4174,7 @@ html.kart body>:is(.bhole,.bosstag,.bspark,.bullet,.ember,.fireglow,.flake,.bull
 #kc .qrow .qmk.qr{left:calc(647*var(--s))}
 #kc .qrow.qdead .qrail{opacity:0}
 #kc .qrow.qdead .qpl,#kc .qrow.qdead .qmk{opacity:.38}
+#kc .qpl img,#kc .qpan>img{transition:opacity .32s ease}
 /* bas */
 #kc .qft>img{opacity:0}
 #kc .qft>img.n{opacity:1}
@@ -7879,11 +7880,13 @@ function kcFill(box,i,act){const sc=R.sc[i],tx=box.querySelector('.qtx'),nm=tx.c
     if(h._c!==cls){h._c=cls;h.className=cls}if(h._x!==txt){h._x=txt;h.textContent=txt}})}
 function kcSync(){const g=$('game'),on=artOn()&&g.classList.contains('on');g.classList.toggle('kart',on);document.documentElement.classList.toggle('kart',on);if(!on||!R||!R.sc||!R.sc[1])return;
   if(!KC||!KC.k.isConnected)kcBuild();const k=KC.k,cur=shownCur(),side=cur===1?'sr':'sl',m=G.winner===null?G.mult:1;
+  const prev=KC.side;KC.side=side;
   k.classList.toggle('sl',side==='sl');k.classList.toggle('sr',side==='sr');k.classList.toggle('m2',m===2);k.classList.toggle('m3',m===3);
   const st=$('fMode')&&$('fMode').querySelector('small');kcSet(KC.sub,'t',st?st.textContent:'',v=>KC.sub.textContent=v);
   // panneau : joueur en cours ; à côté : l'autre
   const op=1-cur;KC.op.style.setProperty('--x',side==='sl'?594:48);KC.pan.style.setProperty('--x',side==='sl'?33:256);
   kcFill(KC.pan,cur,true);kcFill(KC.op,op,false);
+  if(prev&&prev!==side)kcSwap(side);
   // couronne : sur la case du meneur
   const lead=[0,1].find(i=>R.sc[i].nm.querySelector('.hat'));const cr=KC.crown;
   if(lead===undefined)cr.classList.remove('on');else{cr.classList.add('on');const s=getComputedStyle(k);
@@ -7894,6 +7897,13 @@ function kcSync(){const g=$('game'),on=artOn()&&g.classList.contains('on');g.cla
     [0,1].forEach(i=>{const n=Math.min(3,G.players[i].marks[t]||0),img=i?o.mr:o.ml;if(o.mk[i]===n)return;const up=o.mk[i]>=0&&n>o.mk[i];o.mk[i]=n;
       if(n){img.src=`art/k5/${n===3?(i?'mk3p':'mk3b'):'mk'+n}.webp`;img.classList.add('on');if(up)img.animate([{transform:'scale(1.45)'},{transform:'scale(.92)',offset:.6},{transform:'scale(1)'}],{duration:280,easing:'ease-out'})}
       else img.classList.remove('on')})})}
+
+/* changement de joueur : le panneau et les rails glissent vers l'autre côté, les couleurs passent en fondu */
+function kcSwap(side){if(!KC)return;const s=parseFloat(getComputedStyle(KC.k).getPropertyValue('--s'))||.45,dir=side==='sr'?-1:1,E='cubic-bezier(.3,1.2,.45,1)';
+  const mv=(el,dx,extra,delay)=>{if(!el)return;el.getAnimations().forEach(a=>a.cancel());
+    el.animate([{transform:`translate3d(${dx}px,0,0)${extra}`},{transform:`translate3d(0,0,0)${extra}`}],{duration:520,easing:E,delay:delay||0,fill:'backwards'})};
+  mv(KC.pan,dir*223*s,'');KC.op.getAnimations().forEach(a=>a.cancel());KC.op.animate([{opacity:0,transform:`translate3d(${-dir*60*s}px,0,0)`},{opacity:0,offset:.35},{opacity:1,transform:'translate3d(0,0,0)'}],{duration:520,easing:'ease-out'});
+  Object.values(KC.rows).forEach((o,i)=>{const rl=o.r.querySelector('.qrail');mv(rl,dir*230.5*s,side==='sr'?' scaleX(-1)':'',i*28)})}
 /* quand on marque : la case file jusqu'au bout du rail et revient en rebondissant (animation GPU, une seule) */
 function kcBounce(t){if(!KC||!KC.rows[t])return;const o=KC.rows[t];if(o.dead)return;const s=parseFloat(getComputedStyle(KC.k).getPropertyValue('--s'))||.45;
   const X=(KC.k.classList.contains('sr')?230.5:-230.5)*s,pl=o.pl;pl.getAnimations().forEach(a=>a.cancel());
