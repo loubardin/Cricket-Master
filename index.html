@@ -4203,6 +4203,11 @@ html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc .pill.d{backgr
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc .pill.t{background:linear-gradient(160deg,#ffe58a 0%,#f2bd1a 50%,#c48a00 100%)!important;color:#2b1d00!important}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #scores>.sc .pill.e{color:transparent!important}
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) #grid{transform:translateZ(0)}
+html.cartoon body.m2 #game#game.sk.p2:not(.pn):not(.bcg) #grid .num:not(.dead){background-image:var(--nb2)!important}
+html.cartoon body.m2 #game#game.sk.p2:not(.pn):not(.bcg).curR #grid .num:not(.dead){background-image:var(--np2)!important}
+html.cartoon body.m3 #game#game.sk.p2:not(.pn):not(.bcg) #grid .num:not(.dead){background-image:var(--nb3)!important}
+html.cartoon body.m3 #game#game.sk.p2:not(.pn):not(.bcg).curR #grid .num:not(.dead){background-image:var(--np3)!important}
+html.cartoon body:is(.m2,.m3) #game#game.sk.p2:not(.pn):not(.bcg) #grid .num.bnc:not(.nghost){background:none!important}
 /* bas : une planche de 6 états (normal, double, triple, spew, menu, annuler) — un seul affiché, même place et même taille */
 html.cartoon body #game#game.sk.p2:not(.pn):not(.bcg) footer{position:absolute!important;left:calc(var(--ox) + calc(16*var(--s)))!important;right:auto!important;top:calc(var(--oy) + 1478*var(--s))!important;bottom:auto!important;width:calc(820*var(--s))!important;height:calc(354*var(--s))!important;margin:0!important;padding:0!important;
   display:block!important;background:url(art/k5/ft_n.webp) center/100% 100% no-repeat!important;box-shadow:none!important;border:0!important;outline:0!important;border-radius:0!important;overflow:visible!important;transform:none!important;translate:none!important;aspect-ratio:auto!important;filter:none!important}
@@ -7896,8 +7901,10 @@ artApply();
 ['n','d','t','s','m','u'].forEach(k=>{const i=new Image();i.src='art/k5/ft_'+k+'.webp'});
 function artOn(){return S.art2==='cartoon'&&$('game').classList.contains('sk')&&$('game').classList.contains('p2')&&!$('game').classList.contains('pn')&&!$('game').classList.contains('bcg')}
 function artPaint(){if(S.art2!=='cartoon'||!R||!R.num)return;
-  TARGETS.forEach(n=>{const b=R.num[n];if(!b||b.dataset.art==='5')return;const k=n===25?'bulle':n;b.dataset.art='5';
-    b.style.setProperty('--nb',`url(art/k5/case_${k}.webp)`);b.style.setProperty('--np',`url(art/k5/case_${k}_p.webp)`)});
+  TARGETS.forEach(n=>{const b=R.num[n];if(!b||b.dataset.art==='6')return;const k=n===25?'bulle':n;b.dataset.art='6';
+    b.style.setProperty('--nb',`url(art/k5/case_${k}.webp)`);b.style.setProperty('--np',`url(art/k5/case_${k}_p.webp)`);
+    ['d','t'].forEach((x,j)=>{b.style.setProperty('--nb'+(j+2),`url(art/k5/case_${k}_${x}.webp)`);b.style.setProperty('--np'+(j+2),`url(art/k5/case_${k}_${x}_p.webp)`)})});
+  if(!artPaint._pre){artPaint._pre=1;['15','16','17','18','19','20','bulle'].forEach(k=>['d','t','d_p','t_p'].forEach(x=>{const i=new Image();i.src=`art/k5/case_${k}_${x}.webp`}))}
   R.sc.forEach(sc=>{if(sc&&sc.c)sc.c.classList.toggle('kcrown',!!(sc.nm&&sc.nm.querySelector('.hat')))});
   const f=document.querySelector('#game footer');
   if(f&&!f.querySelector('.kmenu')){const m=el('button','kmenu'),u=el('button','kundo');m.setAttribute('aria-label','Menu');u.setAttribute('aria-label','Annuler');
