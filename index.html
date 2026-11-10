@@ -4099,8 +4099,8 @@ html body #game#game.sk.p2.pn #scores#scores .sc.act>.pills{width:auto!important
 html body #fbar2#fbar2{display:none!important}
 #game#game.sk.p2 main{padding-top:max(var(--sat,0px),calc(var(--uu)*1.2))!important}
 #x01 #xmain,#killer #kmain{padding-top:max(var(--sat,0px),calc(var(--uu)*1.2))!important}
-html body footer{--f3h:var(--r,7dvh);--f3g:var(--g,3.5vw);--f3b:max(calc(var(--g,3.5vw)*.8),calc(var(--sab,0px) - 16px));--fmb:calc(var(--f3g) + var(--f3h) + var(--f3b))}
-html body :is(#x01,#killer) footer{--f3h:9dvh;--f3g:1.6dvh;--f3b:max(1.4dvh,calc(var(--sab,0px) - 16px))}
+html body footer{--f3h:var(--r,7dvh);--f3g:var(--g,3.5vw);--f3b:max(calc(var(--g,3.5vw)*.8),calc(var(--sab,0px) + 2px));--fmb:calc(var(--f3g) + var(--f3h) + var(--f3b))}
+html body :is(#x01,#killer) footer{--f3h:9dvh;--f3g:1.6dvh;--f3b:max(1.4dvh,calc(var(--sab,0px) + 2px))}
 html body #game#game.sk.p2 footer,html body #game#game.sk.p2.pn footer,html body :is(#x01,#killer) footer{margin-bottom:var(--fmb)!important}
 #fbar3{position:absolute;left:0;right:0;top:calc(100% + var(--fmb) - var(--f3h) - var(--f3b));height:var(--f3h);display:grid;grid-template-columns:1fr 1fr 1fr}
 #game#game.sk.p2 #fbar3{grid-template-columns:var(--colw) var(--midw) var(--colw)}
@@ -4148,8 +4148,8 @@ html.pop .popnum,html.pop body #game#game#game.sk #grid .num:not(.dead) .lbl,htm
   color:#fff!important;-webkit-text-stroke:var(--pop-num-sw) var(--pop-ink)!important;paint-order:stroke fill;text-shadow:var(--pop-shadow)!important}
 
 /* ---------- en-tête (Accueil · titre de la partie · Annuler) : la rangée du bas passe en haut ---------- */
-html.pop body footer{--f3h:calc(var(--r,7dvh)*.62);--f3b:max(calc(var(--g,3.5vw)*.8),calc(var(--sab,0px) - 16px));--fmb:var(--f3b)}
-html.pop body :is(#x01,#killer) footer{--f3h:5.4dvh;--f3b:max(1.4dvh,calc(var(--sab,0px) - 16px))}
+html.pop body footer{--f3h:calc(var(--r,7dvh)*.62);--f3b:max(calc(var(--g,3.5vw)*.8),calc(var(--sab,0px) + 2px));--fmb:var(--f3b)}
+html.pop body :is(#x01,#killer) footer{--f3h:5.4dvh;--f3b:max(1.4dvh,calc(var(--sab,0px) + 2px))}
 html.pop #fbar3{position:fixed!important;top:calc(var(--sat,0px) + 4px)!important;left:var(--g,3.5vw)!important;right:var(--g,3.5vw)!important;height:var(--f3h)!important;z-index:30;
   grid-template-columns:1fr 2.4fr 1fr!important}
 html.pop #fbar3::after,html.pop #fbar3 .f3b{display:none!important}
@@ -4265,7 +4265,7 @@ html.pop{--pfT:"Fun";--pfN:"Fun"}
 #pkl .pksh{mix-blend-mode:multiply}
 #game.pcl>#pcl{display:block;position:absolute;inset:0;z-index:20;overflow:hidden;background:var(--pop-bg);-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 #game.pcl>main,#game.pcl>footer,#game.pcl>header,#game.pcl #fbar2,html.pcl #fbar3{visibility:hidden!important}
-:is(#pcl,#pkl)>svg{position:absolute;left:0;width:100%;top:var(--sat,0px);height:calc(100% - var(--sat,0px));overflow:visible}
+:is(#pcl,#pkl)>svg{position:absolute;left:0;width:100%;top:var(--sat,0px);height:calc(100% - var(--sat,0px) - var(--sab,0px));overflow:visible}
 :is(#pcl,#pkl) svg *{transform-box:view-box}
 :is(#pcl,#pkl) text{font-family:var(--pfT),"Fun",sans-serif!important;text-anchor:middle;fill:#111;font-synthesis:none}
 :is(#pcl,#pkl,#pfp) .w,#pkl .pkw{fill:#fff;stroke:none}
@@ -4348,6 +4348,21 @@ html:is(.pcl,.pkl) body>:is(.fireglow,.ember,.bhole){display:none!important}
 #pfp .pfr{border:0;border-radius:99px;background:#fff;box-shadow:inset 0 0 0 3px #111;color:#111;font:400 17px "Fun",sans-serif;padding:12px;margin-top:4px}
 /* jamais de gras simulé (Safari l'imite en traçant un contour de la couleur du texte) */
 :is(#pcl,#pkl,#pfp) :is(text,span,b,button){font-weight:400!important;font-synthesis:none!important}
+
+:is(#pcl,#pkl) .spw{transition:transform .38s cubic-bezier(.3,1.25,.5,1)}
+:is(#pcl,#pkl) .spm{display:none}
+:is(#pcl,#pkl):is(.m2,.m3) .spm{display:inline}
+:is(#pcl,#pkl).m2 .tx.d,:is(#pcl,#pkl).m3 .tx.t{display:none}
+:is(#pcl,#pkl,#pfp) text:is(.spt,.spo){font-family:var(--pfS,var(--pfT)),"Fun",sans-serif!important}
+:is(#pcl,#pkl,#pfp) .wo.spo{stroke-width:calc(var(--swSp,5px)*2)}
+html.pop.pfm body *:not(#pcl *):not(#pkl *):not(#pfp):not(#pfp *):not(#game *):not(#x01 *):not(#killer *):not(#z1):not(#z2):not(#z3):not(#z4):not(#z5):not(#z6){font-family:var(--pfM),"Fun",sans-serif!important;font-weight:400!important;font-synthesis:none!important}
+html.pop.pmz body *:not(#pcl *):not(#pkl *):not(#pfp):not(#pfp *):not(#game *):not(#x01 *):not(#killer *):not(#z1):not(#z2):not(#z3):not(#z4):not(#z5):not(#z6){font-size-adjust:var(--pmA)!important}
+#pfp .pfs{display:grid!important;grid-template-columns:repeat(3,1fr);border-radius:22px!important}
+#pfp .pfs button{padding:8px 4px!important;font-size:16px!important}
+#pfp .pfc.mini{flex:0 0 auto;overflow:visible;gap:10px}
+#pfp .pfscr{flex:1 1 auto;overflow-y:auto;display:flex;flex-direction:column;gap:12px;-webkit-overflow-scrolling:touch}
+#pfp .pfscr .pfl{flex:0 0 auto;overflow:visible}
+#pfp .pfv text:is(.spt,.spo){font-family:var(--pfS,var(--pfT)),"Fun",sans-serif}
 </style>
 </head>
 <body>
@@ -5054,7 +5069,7 @@ function throwDart(t){
   if(me.darts>=3&&mpr0<3&&mpr(me)>=3){busy(2400);setTimeout(()=>{fireToast(`${esc(thr)}, T'ES EN FEU`);SFX.fire()},120)}
   if(turnOver&&HOLD){
     HOLD.quiet=!!(b||leadMsg||t===0);   // les bandeaux et le spew ont déjà leur propre son
-    HOLD.t=setTimeout(releaseHold,1150);busy(1150); // demi-seconde avant de passer au joueur suivant (un tap l'écourte)
+    HOLD.t=setTimeout(releaseHold,700);busy(700); // demi-seconde avant de passer au joueur suivant (un tap l'écourte)
   }
 }
 
@@ -6234,7 +6249,7 @@ function kThrow(n,quiet){
     if(alive.length<=1){KG.winner=alive.length?P.indexOf(alive[0]):cur;P[KG.winner].wins++;kEndTurn(true)}
     else if(me.dead||KG.turn.length>=3){kEndTurn(false);over=true}
   }
-  if(over&&KG.winner===null){busy(1150);KHOLD={who:cur,t:setTimeout(()=>{KHOLD=null;kRender();if(KG.def&&!KG.turn.length){const c=R2(KG.def.v);c&&anim(c.querySelector('.kno'),'freeze',900)}},1150)}}
+  if(over&&KG.winner===null){busy(700);KHOLD={who:cur,t:setTimeout(()=>{KHOLD=null;kRender();if(KG.def&&!KG.turn.length){const c=R2(KG.def.v);c&&anim(c.querySelector('.kno'),'freeze',900)}},700)}}
   kSave();kRender();haptic();
   if(!quiet)kFx(d,me,cur,over);
 }
@@ -7029,7 +7044,7 @@ function layoutSk(){
   const g=$('game');if(!skp2())return;
   const gp=innerWidth*.035,G=gp*1.8;
   let pb=$('sabProbe');if(!pb){pb=document.createElement('i');pb.id='sabProbe';pb.style.cssText='position:fixed;left:0;top:0;width:0;height:var(--sab,0px);visibility:hidden;pointer-events:none';document.body.append(pb)}
-  const B=Math.max(gp*.8,pb.offsetHeight-16),top=$('scores').getBoundingClientRect().top-g.getBoundingClientRect().top;
+  const B=Math.max(gp*.8,pb.offsetHeight+2),top=$('scores').getBoundingClientRect().top-g.getBoundingClientRect().top;
   const pop=document.documentElement.classList.contains('pop');
   const r=Math.max(28,(g.clientHeight-top-2*G-(pop?6:7)*gp-B)/(pop?10.44:11.44));
   g.style.setProperty('--rowh',r.toFixed(2)+'px');
@@ -7802,7 +7817,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||(S.style&&S.style!=='bulle'&&S.style!=='pop')){delete S.th;delete S.style;try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-233';   // à changer avec VERSION dans sw.js
+const APPV='lf-234';   // à changer avec VERSION dans sw.js
 function popOn(){return S.style!=='bulle'}
 function popApply(){document.documentElement.classList.toggle('pop',popOn());try{const m=document.querySelector('meta[name=theme-color]');if(m)m.content=popOn()?'#f9ecc9':'#f7f2e5'}catch(e){}try{if(G&&R&&$('game').classList.contains('on')){layoutSk();if(typeof fitSk==='function')fitSk();render()}}catch(e){}}
 popApply();
@@ -7810,7 +7825,7 @@ popApply();
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
   const p=el('div','');p.id='xpick';p.classList.add('skinpick');document.body.append(p);
-  const draw=()=>{p.innerHTML=`<div class="skn"><button class="skgo" data-go="hStats">Statistiques</button><button class="skgo" data-go="hHist">Historique</button></div><div class="skp"><span>Style</span><div class="sksw skst"><button data-st="pop" class="${popOn()?'on':''}">Pop</button><button data-st="bulle" class="${popOn()?'':'on'}">Bulle</button></div></div>${popOn()?'<div class="skp"><span>Polices</span><div class="sksw"><button class="skfp">Essayer</button></div></div>':''}<div class="skp"><span>Son</span><div class="sksw sksnd"><button data-s="1" class="${S.sound?'on':''}">Oui</button><button data-s="0" class="${S.sound?'':'on'}">Non</button></div></div>`+`<div class="skp"><span>Couleurs des joueurs</span><div class="sksw"><button data-p="1" class="${S.pcolOff?'':'on'}">Oui</button><button data-p="0" class="${S.pcolOff?'on':''}">Non</button></div></div><div class="skv">version ${APPV}</div>`};
+  const draw=()=>{p.innerHTML=`<div class="skn"><button class="skgo" data-go="hStats">Statistiques</button><button class="skgo" data-go="hHist">Historique</button></div><div class="skp"><span>Style</span><div class="sksw skst"><button data-st="pop" class="${popOn()?'on':''}">Pop</button><button data-st="bulle" class="${popOn()?'':'on'}">Bulle</button></div></div>${popOn()?'<div class="skp"><span>Polices, tailles, contours</span><div class="sksw"><button class="skfp">Régler</button></div></div>':''}<div class="skp"><span>Son</span><div class="sksw sksnd"><button data-s="1" class="${S.sound?'on':''}">Oui</button><button data-s="0" class="${S.sound?'':'on'}">Non</button></div></div>`+`<div class="skp"><span>Couleurs des joueurs</span><div class="sksw"><button data-p="1" class="${S.pcolOff?'':'on'}">Oui</button><button data-p="0" class="${S.pcolOff?'on':''}">Non</button></div></div><div class="skv">version ${APPV}</div>`};
   draw();p.style.left=Math.max(12,(innerWidth-p.offsetWidth)/2)+'px';p.style.top=Math.max(12,Math.min(innerHeight-p.offsetHeight-12,e.currentTarget.getBoundingClientRect().bottom+10))+'px';
   p.addEventListener('click',ev=>{ev.stopPropagation();const go=ev.target.closest('.skgo');if(go){p.remove();$(go.dataset.go).dispatchEvent(new MouseEvent('click',{bubbles:true}));return}
     if(ev.target.closest('.skfp')){p.remove();pfOpen();return}
@@ -8033,17 +8048,22 @@ addEventListener('resize',()=>{try{if(popOn()&&KG&&$('killer').classList.contain
 const PF={kT:1,kN:1};
 const pkDark=c=>{if(!/^#[0-9a-f]{6}$/i.test(c||''))return'#5a1408';return'#'+[1,3,5].map(k=>{const x=parseInt(c.slice(k,k+2),16);return Math.round(x*x/255*.58).toString(16).padStart(2,'0')}).join('')};
 const PST_D={c:10,n:5,m:17,s:1};let PST=Object.assign({},PST_D);
+const PSZ_D={ttl:1,sub:1,nm:1,sc:1,osc:1,mpr:1,pil:1,row:1,dt:1,knum:1,kk:1};let PSZ=Object.assign({},PSZ_D);
+const PSP_D={fs:1,o:5,w:1,h:1};let PSP=Object.assign({},PSP_D);
+const PMN_D={z:1,b:3.4};let PMN=Object.assign({},PMN_D);
+const zOf=el=>{const z=el&&el.dataset&&el.dataset.z;return !z?1:z==='sp'?PSP.fs:(PSZ[z]||1)};
+const kOf=el=>el.classList.contains('spt')?(PF.kS||PF.kT):el.classList.contains('fN')?PF.kN:PF.kT;
 const PCL={dx:-20};
 const PC_T=[15,16,17,18,19,20,25];
 const pclOn=()=>popOn()&&!!G&&!!G.players&&G.players.length===2&&!BARC&&!G._bar;
 const POPHEAD=`<g class="ico home"><path d="M302.1,274.84c0,7.89-.09,15.87,0,23.84.07,4.62-1.93,6.73-6.55,6.72q-30.24-.07-60.46,0c-4.47,0-6.31-2-6.21-6.41.14-6,0-12,0-18,0-3.08.46-6-3.17-8.07-3.08-1.8-.47-4.09,1.22-5.57,8-7,16.09-14,24.17-20.92,3.53-3,7.12-6,10.67-9,2.59-2.2,4.95-2,7.55.18,11.34,9.54,22.81,18.91,34.12,28.49C308.52,270.35,308.19,271.93,302.1,274.84Zm-7.52,22.9c0-9.25,0-18.19,0-27.14a3.19,3.19,0,0,0-.92-2.2c-9.32-8-18.7-15.87-28.16-23.88-9.51,8.19-18.59,16-27.62,23.85a3.94,3.94,0,0,0-1.39,2.47c-.1,8.93-.06,17.85-.06,26.81h19.76a5.57,5.57,0,0,0,.47-1.32c0-5,0-10,0-15,0-4.11,5.11-10.08,8.64-10.18s9.17,6,9.2,10.15c0,5.43,0,10.86,0,16.42Z" transform="translate(-29.6 0)"/><rect class="hit" x="150" y="190" width="180" height="170"/></g>
     <g class="ico undo"><path d="M936.21,313.92c-10.05,0-21.88-7.43-25.82-16.21-.53-1.17-.42-1.58-.37-1.68s.36-.5,1.78-.9a30.52,30.52,0,0,0,7.41-3.09,4.88,4.88,0,0,1,2.18-.85c.25,0,.91,0,1.76,2.13a9.56,9.56,0,0,0,4.36,4.85,18.73,18.73,0,0,0,8,1.8,19.36,19.36,0,0,0,17.74-11.72,22.11,22.11,0,0,0-.07-17.07,19.7,19.7,0,0,0-11-10.85,26.23,26.23,0,0,0-9.54-1.87,26.76,26.76,0,0,0-14.9,4.81l-.62.42,0,.74c0,.19,0,.35-.06.49a2.43,2.43,0,0,0,.16,1.56c.77,1.54,2.19,4.37,2.13,5.16-.66.4-3.73.4-5.06.4h-2.71l-6,0-5.95,0c-2.37,0-4.73,0-7.1-.05s-3-.57-3.09-.73-.33-.76.52-2.7c4.08-9.3,8.16-18.32,12.12-26.78a4.06,4.06,0,0,1,1.69-1.69,4.87,4.87,0,0,1,1.57,1.93c1.2,2.63,2.28,5.4,3.42,8.33.47,1.23,1,2.49,1.49,3.81l.76,1.91,1.58-1.3c7.14-5.87,14.37-8.72,22.1-8.72a36.12,36.12,0,0,1,11.43,2,33.8,33.8,0,0,1,22.39,36c-2.17,16.53-15,28.8-31.13,29.83C937,313.9,936.62,313.92,936.21,313.92Z" transform="translate(-40 -6)"/><rect class="hit" x="795" y="190" width="180" height="170"/></g>
-    <text class="ttl" x="562.5" y="279.7" font-size="57.5">CRICKET</text><rect class="hit fpo" x="370" y="200" width="385" height="150"/>
-    <text class="st1" x="562.5" y="310" font-size="25"></text><text class="st2" x="562.5" y="335" font-size="25"></text>`;
-const POPFOOT=`<g class="ft"><rect class="arm d" x="45" y="2215.9" width="560" height="154.6" rx="77.3"/><rect class="arm t" x="520" y="2215.9" width="560" height="154.6" rx="77.3"/>
-      <g class="sp"><rect class="pc" x="364" y="2200.4" width="397" height="185.3" rx="92.65"/><text class="w spt" x="562.5" y="2322" font-size="125">Spew</text></g>
+    <text class="ttl" x="562.5" y="279.7" font-size="57.5" data-z="ttl">CRICKET</text><rect class="hit fpo" x="370" y="200" width="385" height="150"/>
+    <text class="st1" x="562.5" y="310" font-size="25" data-z="sub"></text><text class="st2" x="562.5" y="335" font-size="25" data-z="sub"></text>`;
+const POPFOOT=`<g class="ft"><text class="spm" x="562.5" y="2318.3" font-size="76" data-z="dt">Spew</text>
+      <g class="spw"><g class="sp"><rect class="pc spr" x="364" y="2200.4" width="397" height="185.3" rx="92.65"/><text class="w spt" x="562.5" y="2322" font-size="125" data-z="sp">Spew</text></g></g>
       <rect class="ol" x="45" y="2215.9" width="1035" height="154.6" rx="77.3"/>
-      <text class="tx d" x="216" y="2318.3" font-size="76">Double</text><text class="tx t" x="909" y="2318.3" font-size="76">Triple</text>
+      <text class="tx d" x="216" y="2318.3" font-size="76" data-z="dt">Double</text><text class="tx t" x="909" y="2318.3" font-size="76" data-z="dt">Triple</text>
       <rect class="hit b2" x="0" y="2190" width="364" height="210"/><rect class="hit b3" x="761" y="2190" width="364" height="210"/><rect class="hit bs" x="364" y="2190" width="397" height="210"/></g>`;
 /* boutons communs du calque (Accueil, Annuler, Double, Triple, Spew) */
 function popBind(k){
@@ -8058,15 +8078,15 @@ function pclBuild(){const g=$('game');let k=$('pcl');if(k)k.remove();
      <rect class="hit" x="0" y="${cy-99}" width="1125" height="198.15"/>
      <g class="mk ml" data-cx="226.5" data-cy="${cy}"></g><g class="mk mr" data-cx="898.5" data-cy="${cy}"></g>
      <g class="cg"><rect class="cap pc" x="364" y="${813.4+y}" width="397" height="185.3" rx="92.65"/>
-     <text class="n w fN" x="562.5" y="${t===25?cy+47:cy+50.5}" font-size="${t===25?131:139}">${t===25?'Bulle':t}</text></g>
+     <text class="n w fN" data-z="row" x="562.5" y="${t===25?cy+47:cy+50.5}" font-size="${t===25?131:139}">${t===25?'Bulle':t}</text></g>
      <rect class="rail ol" x="40" y="${828.9+y}" width="705" height="154.6" rx="77.3"/></g>`}).join('');
   const h=`<div id="pcl"><svg viewBox="0 132 1125 2284" preserveAspectRatio="xMidYMid meet">
     ${POPHEAD}
     <g class="card"><rect class="pc halo" y="381.1" width="735" height="419" rx="103.87"/><rect class="ol cbd" y="396.1" width="707.3" height="392.6" rx="92.61"/>
-      <text class="cn" y="502.8" font-size="57.5"></text><text class="cs w fN" y="662" font-size="182"></text><text class="cm" y="715.7" font-size="35.4"></text>
-      ${[0,1,2].map(i=>`<rect class="pl cp" y="${480.1+i*84.75}" width="208.6" height="68.8" rx="31.48"/><text class="cpt fN" y="${480.1+i*84.75+55}" font-size="58"></text>`).join('')}</g>
-    <g class="opp"><text class="on" y="502.8" font-size="57.5"></text><text class="os fN" y="654.5" font-size="186"></text><text class="om" y="707.7" font-size="35.4"></text>
-      ${[0,1,2].map(i=>`<rect class="pl op" y="733.4" width="75.5" height="59.8" rx="22.1"/><text class="opt fN" y="781" font-size="50"></text>`).join('')}</g>
+      <text class="cn" data-z="nm" y="502.8" font-size="57.5"></text><text class="cs w fN" data-z="sc" y="662" font-size="182"></text><text class="cm" data-z="mpr" y="715.7" font-size="35.4"></text>
+      ${[0,1,2].map(i=>`<rect class="pl cp" y="${480.1+i*84.75}" width="208.6" height="68.8" rx="31.48"/><text class="cpt fN" data-z="pil" y="${480.1+i*84.75+55}" font-size="58"></text>`).join('')}</g>
+    <g class="opp"><text class="on" data-z="nm" y="502.8" font-size="57.5"></text><text class="os fN" data-z="osc" y="654.5" font-size="186"></text><text class="om" data-z="mpr" y="707.7" font-size="35.4"></text>
+      ${[0,1,2].map(i=>`<rect class="pl op" y="733.4" width="75.5" height="59.8" rx="22.1"/><text class="opt fN" data-z="pil" y="781" font-size="50"></text>`).join('')}</g>
     ${rows}
     ${POPFOOT}
   </svg></div>`;
@@ -8074,12 +8094,12 @@ function pclBuild(){const g=$('game');let k=$('pcl');if(k)k.remove();
   PCL.k=k;PCL.card=q('.card');PCL.opp=q('.opp');PCL.st1=q('.st1');PCL.st2=q('.st2');PCL.sp=q('.sp');PCL.side=null;PCL.col=null;
   PCL.c={halo:q('.halo'),bd:q('.cbd'),n:q('.cn'),s:q('.cs'),m:q('.cm'),p:qa('.cp'),pt:qa('.cpt')};
   PCL.o={n:q('.on'),s:q('.os'),m:q('.om'),p:qa('.op'),pt:qa('.opt')};
-  PCL.fix=[[q('.ttl'),'CRICKET',240,57.5],[q('.spt'),'Spew',262,125],[q('.tx.d'),'Double',232,76],[q('.tx.t'),'Triple',202,76]];
+  PCL.fix=[[q('.ttl'),'CRICKET',240,57.5],[q('.spm'),'Spew',200,76],[q('.tx.d'),'Double',232,76],[q('.tx.t'),'Triple',202,76]];
   PCL.rows={};qa('.row').forEach(r=>{const t=+r.dataset.t;PCL.fix.push([r.querySelector('.n'),t===25?'Bulle':String(t),t===25?280:150,t===25?131:139]);PCL.rows[t]={r,cg:r.querySelector('.cg'),rail:r.querySelector('.rail'),ml:r.querySelector('.ml'),mr:r.querySelector('.mr'),mk:['',''],dead:null}});
   k.addEventListener('click',e=>{const r=e.target.closest('.row');if(r)throwDart(+r.dataset.t)});popBind(k);
 }
 /* texte trop large : on le resserre d'abord (jusqu'à 78 %, comme la police condensée de la maquette), puis on le réduit */
-function pclText(el,txt,max,base){if(el._h===txt&&el._m===max)return;el._h=txt;el._m=max;el.textContent=txt;if(base)el.setAttribute('font-size',(base*(el.classList.contains('fN')?PF.kN:PF.kT)).toFixed(1));el.removeAttribute('textLength');el.removeAttribute('lengthAdjust');
+function pclText(el,txt,max,base){if(el._h===txt&&el._m===max)return;el._h=txt;el._m=max;el.textContent=txt;const Z=zOf(el);max*=Z;if(base)el.setAttribute('font-size',(base*kOf(el)*Z).toFixed(1));el.removeAttribute('textLength');el.removeAttribute('lengthAdjust');
   try{const w=el.getComputedTextLength();if(w>max&&w>0){const r=max/w,q=Math.max(r,.78);if(q>r)el.setAttribute('font-size',(parseFloat(el.getAttribute('font-size'))*r/q).toFixed(1));
     el.setAttribute('lengthAdjust','spacingAndGlyphs');el.setAttribute('textLength',max.toFixed(1))}}catch(e){}}
 function pclCount(el,a,b){cancelAnimationFrame(el._raf);const t0=performance.now(),D=Math.min(1500,600+(b-a)*10);
@@ -8148,15 +8168,15 @@ function pklBuild(){const sec=$('killer');let k=$('pkl');if(k)k.remove();
     <filter id="pkNs" x="-10%" y="-10%" width="130%" height="130%"><feOffset dx="10" dy="11" in="SourceAlpha" result="o"/><feFlood flood-color="#8e1717"/><feComposite operator="in" in2="o"/><feComposite in="SourceGraphic"/></filter></defs>
     ${POPHEAD}<g class="cards"></g>${POPFOOT}</svg></div>`);
   k=$('pkl');PKL.k=k;PKL.cards=k.querySelector('.cards');PKL.st1=k.querySelector('.st1');PKL.st2=k.querySelector('.st2');PKL.key=null;
-  PKL.fix=[[k.querySelector('.ttl'),'KILLER',240,57.5],[k.querySelector('.spt'),'Spew',262,125],[k.querySelector('.tx.d'),'Double',232,76],[k.querySelector('.tx.t'),'Triple',202,76]];
+  PKL.fix=[[k.querySelector('.ttl'),'KILLER',240,57.5],[k.querySelector('.spm'),'Spew',200,76],[k.querySelector('.tx.d'),'Double',232,76],[k.querySelector('.tx.t'),'Triple',202,76]];
   k.addEventListener('click',e=>{const c=e.target.closest('.kc2');if(!c||!KG)return;const p=KG.players[+c.dataset.i];if(p)kThrow(p.num)});popBind(k)}
 function pklCard(i,g,act){const p=KG.players[i],{W,H,wide,k}=g,DD=KG.def,isDef=DD&&DD.v===i,dead=p.dead&&!isDef;
-  const dk=pkDark(pkCol(i)),kT=PF.kT,kN=PF.kN;
+  const dk=pkDark(pkCol(i)),zn=PSZ.nm,zk=PSZ.kk,zh=PSZ.pil,kT=PF.kT,kN=PF.kN*PSZ.knum;
   let h=act?`<rect class="pksh" x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87" filter="url(#pkSh)"/><rect class="halo" x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87"/>`:'';
   h+=`<rect class="ol" width="${W}" height="${H}" rx="92.61"/>`;
   const cx=wide?.306*W:W/2,nm=esc(pkName(p,act));
-  if(act)h+=`<text x="${cx}" y="${(wide?-104:-94)*k}" font-size="${43*k*kT}">à toi</text><text class="pknmo" x="${cx}" y="${(wide?-16:-10)*k}" font-size="${87*k*kT}" data-fit="${wide?.62*W:W*1.02}" style="fill:${pkCol(i)};stroke:${pkCol(i)}">${nm}</text><text class="pknm" x="${cx}" y="${(wide?-16:-10)*k}" font-size="${87*k*kT}" data-fit="${wide?.62*W:W*1.02}">${nm}</text>`;
-  else h+=`<text class="pknm" x="${cx}" y="${-31*k}" font-size="${73*k*kT}" data-fit="${wide?.62*W:W*.98}">${nm}</text>`;
+  if(act)h+=`<text x="${cx}" y="${(wide?-104:-94)*k}" font-size="${43*k*kT*zn}">à toi</text><text class="pknmo" x="${cx}" y="${(wide?-16:-10)*k}" font-size="${87*k*kT*zn}" data-fit="${(wide?.62*W:W*1.02)*zn}" style="fill:${pkCol(i)};stroke:${pkCol(i)}">${nm}</text><text class="pknm" x="${cx}" y="${(wide?-16:-10)*k}" font-size="${87*k*kT*zn}" data-fit="${(wide?.62*W:W*1.02)*zn}">${nm}</text>`;
+  else h+=`<text class="pknm" x="${cx}" y="${-31*k}" font-size="${73*k*kT*zn}" data-fit="${(wide?.62*W:W*.98)*zn}">${nm}</text>`;
   // cœurs
   const nh=Math.max(p.maxl||0,p.lives||0,3),hw=(wide?.117:.204)*W,hh=(wide?.137:.132)*H,pitch=Math.min((wide?.141:.2475)*W,(wide?.5:.9)*W/nh),hy=(wide?.076:.052)*H,hx0=cx-pitch*(nh-1)/2-hw/2;
   const lw=hw*Math.min(1,pitch/hw*.92);
@@ -8164,19 +8184,19 @@ function pklCard(i,g,act){const p=KG.players[i],{W,H,wide,k}=g,DD=KG.def,isDef=D
   // numéro
   const ny=(wide?.272:.243)*H,nH=(wide?.44:.325)*H,nW=(wide?.445:.61)*W;
   const nx=wide?.307*W:cx,nfs=(nH/.725*kN).toFixed(1);
-  if(act)h+=`<text class="pkno fN pksn" x="${nx+10}" y="${ny+nH+11}" font-size="${nfs}" data-fit="${nW}" style="fill:${dk};stroke:${dk}">${p.num}</text>`;
-  if(act)h+=`<text class="pkno fN wo" x="${nx}" y="${ny+nH}" font-size="${nfs}" data-fit="${nW}">${p.num}</text>`;
-  h+=`<text class="pkno fN${act?' pkw':''}" x="${nx}" y="${ny+nH}" font-size="${nfs}" data-fit="${nW}">${p.num}</text>`;
+  if(act)h+=`<text class="pkno fN pksn" x="${nx+10}" y="${ny+nH+11}" font-size="${nfs}" data-fit="${nW*PSZ.knum}" style="fill:${dk};stroke:${dk}">${p.num}</text>`;
+  if(act)h+=`<text class="pkno fN wo" x="${nx}" y="${ny+nH}" font-size="${nfs}" data-fit="${nW*PSZ.knum}">${p.num}</text>`;
+  h+=`<text class="pkno fN${act?' pkw':''}" x="${nx}" y="${ny+nH}" font-size="${nfs}" data-fit="${nW*PSZ.knum}">${p.num}</text>`;
   // K / Killer
   const ky=(wide?.774:.626)*H,kh=(wide?.14:.137)*H;
-  if(isDef)h+=`<rect class="pkk" x="${cx-(wide?.22:.382)*W}" y="${ky}" width="${(wide?.44:.764)*W}" height="${kh}" rx="${kh*.37}"/><text x="${cx}" y="${ky+kh*.5+kh*.27}" font-size="${kh*.68*kT}">défense ${DD.got}/${DD.need}</text>`;
-  else if(p.killer){const kx=cx-(wide?.22:.382)*W,kw=(wide?.44:.764)*W;if(act)h+=`<rect x="${kx+10}" y="${ky+11}" width="${kw}" height="${kh}" rx="${kh*.37}" style="fill:${dk}"/>`;h+=`<rect class="pkk" x="${kx}" y="${ky}" width="${kw}" height="${kh}" rx="${kh*.37}"/><text x="${cx}" y="${ky+kh*.5+kh*.3}" font-size="${kh*.75*kT}">Killer</text>`}
+  if(isDef)h+=`<rect class="pkk" x="${cx-(wide?.22:.382)*W}" y="${ky}" width="${(wide?.44:.764)*W}" height="${kh}" rx="${kh*.37}"/><text x="${cx}" y="${ky+kh*.5+kh*.27}" font-size="${kh*.68*kT*zk}">défense ${DD.got}/${DD.need}</text>`;
+  else if(p.killer){const kx=cx-(wide?.22:.382)*W,kw=(wide?.44:.764)*W;if(act)h+=`<rect x="${kx+10}" y="${ky+11}" width="${kw}" height="${kh}" rx="${kh*.37}" style="fill:${dk}"/>`;h+=`<rect class="pkk" x="${kx}" y="${ky}" width="${kw}" height="${kh}" rx="${kh*.37}"/><text x="${cx}" y="${ky+kh*.5+kh*.3}" font-size="${kh*.75*kT*zk}">Killer</text>`}
   else{const km=KG.km||3,pw=(wide?.135:.25)*W,pp=Math.min((wide?.153:.258)*W,(wide?.46:.8)*W/km);
-    for(let j=0;j<km;j++){const x=cx-pp*(km-1)/2+j*pp-pw/2,on=j<(p.marks||0);h+=`<rect class="pkp${on?' on':''}" x="${x}" y="${ky}" width="${pw}" height="${kh}" rx="${kh*.42}"/>${on?`<text x="${x+pw/2}" y="${ky+kh*.5+kh*.3}" font-size="${kh*.72*kT}">K</text>`:''}`}}
+    for(let j=0;j<km;j++){const x=cx-pp*(km-1)/2+j*pp-pw/2,on=j<(p.marks||0);h+=`<rect class="pkp${on?' on':''}" x="${x}" y="${ky}" width="${pw}" height="${kh}" rx="${kh*.42}"/>${on?`<text x="${x+pw/2}" y="${ky+kh*.5+kh*.3}" font-size="${kh*.72*kT*zk}">K</text>`:''}`}}
   // dernières fléchettes
   const ds=act?(KHOLD?p.last:KG.turn):(p.last||[]),nd=act&&isDef?DD.darts:3;
   for(let j=0;j<nd;j++){let x,y,w,hh2;if(wide){w=.213*W;hh2=.174*H;x=.675*W;y=(.161+j*.249)*H}else{w=.232*W;hh2=.104*H;x=W/2-.265*W*(nd-1)/2+j*.265*W-w/2;y=.826*H}
-    const t=pkDartT(ds&&ds[j]);h+=`<rect class="pkhp" x="${x}" y="${y}" width="${w}" height="${hh2}" rx="${Math.min(29.5,hh2*.45)}"/><text class="fN" x="${x+w/2}" y="${y+hh2*.5+hh2*.3}" font-size="${hh2*.8*kN}" data-fit="${w*.86}">${t}</text>`}
+    const t=pkDartT(ds&&ds[j]);h+=`<rect class="pkhp" x="${x}" y="${y}" width="${w}" height="${hh2}" rx="${Math.min(29.5,hh2*.45)}"/><text class="fN" x="${x+w/2}" y="${y+hh2*.5+hh2*.3}" font-size="${hh2*.8*PF.kN*zh}" data-fit="${w*.86*zh}">${t}</text>`}
   h+=`<rect class="hit" x="-10" y="-10" width="${W+20}" height="${H+20}" rx="92"/>`;
   return {h,dead}}
 function pklSync(){const sec=$('killer'),on=pklOn()&&sec.classList.contains('on');sec.classList.toggle('pkl',on);document.documentElement.classList.toggle('pkl',on);if(!on)return;
@@ -8210,67 +8230,94 @@ function pfEnsure(f){if(!f||PF_ON[f]||f==='Fun'||f==='Pop')return;PF_ON[f]=1;
   const g=PF_LIST.find(x=>x[0]===f);if(!g)return;const l=document.createElement('link');l.rel='stylesheet';
   l.href='https://fonts.googleapis.com/css2?family='+f.replace(/ /g,'+')+(g[2]?':wght@'+g[2]:'')+'&display=block';document.head.append(l)}
 function pfCap(f,ch){try{const c=pfCap.c||(pfCap.c=document.createElement('canvas').getContext('2d'));c.font=`100px "${f}",monospace`;const m=c.measureText(ch);return m.actualBoundingBoxAscent+(ch==='8'?m.actualBoundingBoxDescent:0)}catch(e){return 0}}
-async function pfApply(){const T=S.pfT||'Fun',N=S.pfN||'Fun',st=document.documentElement.style;st.setProperty('--pfT',`"${T}"`);st.setProperty('--pfN',`"${N}"`);pfEnsure(T);pfEnsure(N);
+async function pfApply(){const T=S.pfT||'Fun',N=S.pfN||'Fun',SP=S.pfS||T,h=document.documentElement,st=h.style;st.setProperty('--pfT',`"${T}"`);st.setProperty('--pfN',`"${N}"`);pfEnsure(T);pfEnsure(N);
+  if(S.pfS){st.setProperty('--pfS',`"${S.pfS}"`);pfEnsure(S.pfS)}else st.removeProperty('--pfS');h.classList.toggle('pfm',!!S.pfM);if(S.pfM){st.setProperty('--pfM',`"${S.pfM}"`);pfEnsure(S.pfM)}
   try{await Promise.all([document.fonts.load('80px "Pop"','H8'),document.fonts.load(`80px "${T}"`,'LOUBARD'),document.fonts.load(`80px "${N}"`,'0123456789')])}catch(e){}
   // même hauteur de capitale / de chiffre que les mesures prises sur la maquette
-  const r=(a,b)=>a>0&&b>0?Math.min(1.6,Math.max(.6,a/b)):1;PF.kT=r(pfCap('Pop','H'),pfCap(T,'H'));PF.kN=r(pfCap('Pop','8'),pfCap(N,'8'));
+  const r=(a,b)=>a>0&&b>0?Math.min(1.6,Math.max(.6,a/b)):1;PF.kT=r(pfCap('Pop','H'),pfCap(T,'H'));PF.kN=r(pfCap('Pop','8'),pfCap(N,'8'));PF.kS=r(pfCap('Pop','H'),pfCap(SP,'H'));try{await document.fonts.load(`80px "${SP}"`,'Spew');PF.kS=r(pfCap('Pop','H'),pfCap(SP,'H'))}catch(e){}if(S.pfM)try{await document.fonts.load(`40px "${S.pfM}"`,'Partie');pmnApply()}catch(e){}
   [PCL.k,PKL.k].forEach(k=>{if(k){k.querySelectorAll('text').forEach(t=>{t._h=null});k.querySelectorAll('g.kin').forEach(g=>{g._h=null})}});
   try{if(G&&R)pclSync()}catch(e){}try{if(KG)pklSync()}catch(e){}pfPrev()}
 function pfPrev(){const p=$('pfp');if(!p)return;const sv=p.querySelector('.pfv');if(!sv)return;
-  sv.querySelectorAll('text[data-b]').forEach(t=>{const b=+t.dataset.b;t.setAttribute('font-size',(b*(t.classList.contains('fN')?PF.kN:PF.kT)).toFixed(1));t.removeAttribute('textLength');
-    const w=+t.dataset.w;if(w){try{const l=t.getComputedTextLength();if(l>w){t.setAttribute('lengthAdjust','spacingAndGlyphs');t.setAttribute('textLength',w)}}catch(e){}}});popOutl(sv)}
+  sv.querySelectorAll('text[data-b]').forEach(t=>{const b=+t.dataset.b,Z=zOf(t);t.setAttribute('font-size',(b*kOf(t)*Z).toFixed(1));t.removeAttribute('textLength');t.removeAttribute('lengthAdjust');
+    const w=+t.dataset.w*Z;if(w){try{const l=t.getComputedTextLength();if(l>w){t.setAttribute('lengthAdjust','spacingAndGlyphs');t.setAttribute('textLength',w)}}catch(e){}}});popOutl(sv)}
+const PFG={pst:['PST','PST_D',()=>pstApply()],psz:['PSZ','PSZ_D',()=>popRefresh()],psp:['PSP','PSP_D',()=>{pstApply();popRefresh()}],pmn:['PMN','PMN_D',()=>pmnApply()]};
+const PF_SL={
+  C:[['pst','c','Contours des cases',0,24,1,'','cases, rails, cartes, cœurs (pastilles : 40 %)'],['pst','n','Contour des chiffres',0,12,.5,'','épaisseur visible autour du score et des nombres'],['pst','m','Épaisseur des marques',4,32,1,''],['pst','s','Taille des marques',.6,1.4,.05,'%']],
+  Z:[['psz','ttl','Titre (CRICKET, KILLER)'],['psz','sub','Sous-titre'],['psz','nm','Noms'],['psz','sc','Score du joueur en cours'],['psz','osc','Score adverse'],['psz','mpr','MPR'],['psz','pil','Fléchettes (pastilles)'],['psz','row','Nombres 15 à Bulle'],['psz','dt','Double / Triple'],['psz','knum','Killer : numéro'],['psz','kk','Killer : K et Killer']].map(x=>x.concat([.5,1.6,.05,'%'])),
+  S:[['psp','fs','Taille du texte',.5,1.6,.05,'%'],['psp','o','Contour du texte',0,12,.5,''],['psp','w','Largeur de la bulle',.7,1.3,.05,'%'],['psp','h','Hauteur de la bulle',.7,1.2,.05,'%']],
+  M:[['pmn','z','Taille des textes',.8,1.3,.05,'%'],['pmn','b','Contours',0,8,.2,'']]};
+const pfObj=g=>({PST,PSZ,PSP,PMN})[PFG[g][0]];
+const pfFmt=(v,u)=>u==='%'?Math.round(v*100)+' %':String(+(+v).toFixed(1));
+function popRefresh(){[PCL.k,PKL.k].forEach(k=>{if(k){k.querySelectorAll('text').forEach(t=>{t._h=null});k.querySelectorAll('g.kin').forEach(g=>{g._h=null});const sp=k.querySelector('.spr');if(sp)sp._g=null}});
+  try{if(G&&R)pclSync()}catch(e){}try{if(KG)pklSync()}catch(e){}pfPrev()}
+function pmnApply(){PMN=Object.assign({},PMN_D,S.pmn||{});const h=document.documentElement,st=h.style;st.setProperty('--pop-bw',PMN.b+'px');
+  h.classList.toggle('pmz',PMN.z!==1);if(PMN.z!==1){let xr=0;try{const c=pfCap.c||(pfCap.c=document.createElement('canvas').getContext('2d'));c.font=`100px "${S.pfM||'Fun'}",sans-serif`;xr=c.measureText('x').actualBoundingBoxAscent/100}catch(e){}st.setProperty('--pmA',((xr>.3&&xr<.8?xr:.52)*PMN.z).toFixed(3))}}
 function pfOpen(){haptic();const old=$('pfp');if(old)old.remove();let tgt='T';
   const p=el('div','');p.id='pfp';document.body.append(p);
-  const all=()=>{const imp=Object.keys(pfStore()).map(n=>[n,n+' (importée)']);return imp.concat(PF_LIST)};
-  // toutes les polices de la liste, pour l'aperçu
+  const all=()=>{const imp=Object.keys(pfStore()).map(n=>[n,n+' (importée)']);return(tgt==='S'?[['','Comme les textes']]:tgt==='M'?[['',"Polices d'origine"]]:[]).concat(imp,PF_LIST)};
   {const l=document.createElement('link');l.rel='stylesheet';l.href='https://fonts.googleapis.com/css2?'+PF_LIST.filter(x=>x[0]!=='Fun'&&x[0]!=='Pop').map(x=>'family='+x[0].replace(/ /g,'+')+(x[2]?':wght@'+x[2]:'')).join('&')+'&display=swap';document.head.append(l);Object.keys(pfStore()).forEach(pfEnsure)}
-  const draw=()=>{const cur=tgt==='T'?(S.pfT||'Fun'):(S.pfN||'Fun');
-    p.innerHTML=`<div class="pfh"><b>Polices et contours</b><button class="pfx" aria-label="Fermer">✕</button></div>
-    <svg class="pfv" viewBox="0 0 1125 640"><rect x="20" y="20" width="735" height="420" rx="104" style="fill:var(--pc,#ff5a1f)"/><rect class="pvo" x="34" y="34" width="707" height="392" rx="93"/>
-      <text x="258" y="140" data-b="57.5" data-w="380">LOUBARD</text><text class="fN w" x="258" y="300" data-b="182" data-w="390">289</text><text x="258" y="354" data-b="35.4">MPR 2,33</text>
-      ${[0,1,2].map(i=>`<rect class="pvs" x="466" y="${118+i*85}" width="209" height="69" rx="31"/><text class="fN" x="570" y="${173+i*85}" data-b="58">${['18','T20','17'][i]}</text>`).join('')}
-      <text x="917" y="140" data-b="57.5" data-w="260">TONY</text><text class="fN" x="917" y="292" data-b="186" data-w="300">132</text>
-      <rect x="364" y="470" width="397" height="155" rx="77" style="fill:var(--pc,#ff5a1f)"/><rect class="pvo" x="40" y="478" width="705" height="140" rx="70"/>
-      <text class="fN w" x="562.5" y="598" data-b="139" data-w="150">15</text><g class="pvm" transform="translate(205 548)">${pclMark(3,'#fbb03b',true)}</g><g class="pvm" transform="translate(915 548)">${pclMark(2,'',false)}</g></svg>
-    <div class="pfs"><button data-t="T" class="${tgt==='T'?'on':''}">Textes</button><button data-t="N" class="${tgt==='N'?'on':''}">Numéros</button><button data-t="C" class="${tgt==='C'?'on':''}">Contours</button></div>
-    ${tgt==='C'?`<div class="pfc">${[['c','Contours des cases',0,24,1,'cases, rails, cartes, cœurs (pastilles : 40 %)'],['n','Contour des chiffres',0,12,.5,'épaisseur visible autour du score, des nombres, de Spew'],['m','Épaisseur des marques',4,32,1,''],['s','Taille des marques',.6,1.4,.05,'']].map(([k,l,a,b,st,h])=>`<label><span>${l}<b data-v="${k}">${k==='s'?Math.round(PST[k]*100)+' %':PST[k]}</b></span><input type="range" data-k="${k}" min="${a}" max="${b}" step="${st}" value="${PST[k]}">${h?`<small>${h}</small>`:''}</label>`).join('')}
-      <button class="pfr">Valeurs de la maquette</button></div>`:`<div class="pfl">${all().map(([f,l])=>`<button data-f="${esc(f)}" class="${f===cur?'on':''}"><span style="font-family:'${esc(f)}','Fun'">${tgt==='N'?'15 289':'Loubard'}</span><small>${esc(l||f)}</small></button>`).join('')}</div>
-    <div class="pfb"><button class="pfi">Importer un fichier (.otf, .ttf, .woff)</button><input type="file" hidden></div>`}`;
+  const KEY={T:'pfT',N:'pfN',S:'pfS',M:'pfM'},SAMP={T:'Loubard',N:'15 289',S:'Spew',M:'Nouvelle partie'};
+  const sliders=t=>`<div class="pfc${t==='S'||t==='M'?' mini':''}">${PF_SL[t].map(([g,k,l,a,b,st,u,h])=>{const v=pfObj(g)[k];return`<label><span>${l}<b data-v="${g}.${k}">${pfFmt(v,u)}</b></span><input type="range" data-g="${g}" data-k="${k}" data-u="${u||''}" min="${a}" max="${b}" step="${st}" value="${v}">${h?`<small>${h}</small>`:''}</label>`}).join('')}
+      <button class="pfr" data-g="${PF_SL[t][0][0]}">Valeurs d'origine</button></div>`;
+  const fonts=()=>{const cur=S[KEY[tgt]]||(tgt==='T'||tgt==='N'?'Fun':'');return`<div class="pfl">${all().map(([f,l])=>`<button data-f="${esc(f)}" class="${f===cur?'on':''}"><span style="font-family:'${esc(f||(tgt==='S'?(S.pfT||'Fun'):'Fun'))}','Fun'">${SAMP[tgt]}</span><small>${esc(l||f)}</small></button>`).join('')}</div>
+    <div class="pfb"><button class="pfi">Importer un fichier (.otf, .ttf, .woff)</button><input type="file" hidden></div>`};
+  const draw=()=>{const w=397*PSP.w,h=185.3*PSP.h;
+    p.innerHTML=`<div class="pfh"><b>Réglages du style</b><button class="pfx" aria-label="Fermer">✕</button></div>
+    <svg class="pfv" viewBox="0 0 1125 840"><rect x="20" y="20" width="735" height="420" rx="104" style="fill:var(--pc,#ff5a1f)"/><rect class="pvo" x="34" y="34" width="707" height="392" rx="93"/>
+      <text x="258" y="140" data-b="57.5" data-w="380" data-z="nm">LOUBARD</text><text class="fN w" x="258" y="300" data-b="182" data-w="390" data-z="sc">289</text><text x="258" y="354" data-b="35.4" data-z="mpr">MPR 2,33</text>
+      ${[0,1,2].map(i=>`<rect class="pvs" x="466" y="${118+i*85}" width="209" height="69" rx="31"/><text class="fN" x="570" y="${173+i*85}" data-b="58" data-z="pil">${['18','T20','17'][i]}</text>`).join('')}
+      <text x="917" y="140" data-b="57.5" data-w="260" data-z="nm">TONY</text><text class="fN" x="917" y="292" data-b="186" data-w="300" data-z="osc">132</text>
+      <rect x="364" y="463" width="397" height="155" rx="77" style="fill:var(--pc,#ff5a1f)"/><rect class="pvo" x="40" y="471" width="705" height="140" rx="70"/>
+      <text class="fN w" x="562.5" y="591" data-b="139" data-w="150" data-z="row">15</text><g class="pvm" transform="translate(205 541)">${pclMark(3,'#fbb03b',true)}</g><g class="pvm" transform="translate(915 541)">${pclMark(2,'',false)}</g>
+      <rect class="pvsp" x="${562.5-w/2}" y="${740-h/2}" width="${w}" height="${h}" rx="${h/2}" style="fill:var(--pc,#ff5a1f)"/><rect class="pvo" x="45" y="662.7" width="1035" height="154.6" rx="77.3"/>
+      <text class="w spt" x="562.5" y="769" data-b="125" data-w="${262*PSP.w}" data-z="sp">Spew</text><text x="216" y="765" data-b="76" data-w="232" data-z="dt">Double</text><text x="909" y="765" data-b="76" data-w="202" data-z="dt">Triple</text></svg>
+    <div class="pfs">${[['T','Textes'],['N','Numéros'],['S','Spew'],['C','Contours'],['Z','Tailles'],['M','Menus']].map(([k,l])=>`<button data-t="${k}" class="${tgt===k?'on':''}">${l}</button>`).join('')}</div>
+    <div class="pfscr">${tgt==='C'||tgt==='Z'?sliders(tgt):tgt==='S'||tgt==='M'?sliders(tgt)+fonts():fonts()}</div>`;
     pfPrev()};
   draw();
+  const setFont=f=>{const k=KEY[tgt];if(f)S[k]=f;else delete S[k];store.set(K_S,S);pfApply();if(tgt==='M')pmnApply();draw()};
   p.addEventListener('click',ev=>{ev.stopPropagation();if(ev.target.closest('.pfx')){p.remove();return}
     const sb=ev.target.closest('.pfs button');if(sb){tgt=sb.dataset.t;haptic();draw();return}
-    const fb=ev.target.closest('.pfl button');if(fb){haptic();if(tgt==='T')S.pfT=fb.dataset.f;else S.pfN=fb.dataset.f;store.set(K_S,S);pfApply();draw();return}
-    if(ev.target.closest('.pfr')){haptic();S.pst=Object.assign({v:2},PST_D);store.set(K_S,S);pstApply();draw();return}
+    const fb=ev.target.closest('.pfl button');if(fb){haptic();setFont(fb.dataset.f);return}
+    const rb=ev.target.closest('.pfr');if(rb){haptic();const g=rb.dataset.g;      if(g==='pst')S.pst=Object.assign({v:2},PST_D);if(g==='psz')S.psz=Object.assign({},PSZ_D);if(g==='psp')S.psp=Object.assign({},PSP_D);if(g==='pmn')S.pmn=Object.assign({},PMN_D);
+      store.set(K_S,S);styleLoad();PFG[g][2]();draw();return}
     if(ev.target.closest('.pfi'))p.querySelector('input[type=file]').click()});
-  p.addEventListener('input',ev=>{const r=ev.target.closest('input[type=range]');if(!r)return;S.pst=Object.assign({},PST,{[r.dataset.k]:+r.value,v:2});pstApply();const b=p.querySelector(`b[data-v="${r.dataset.k}"]`);if(b)b.textContent=r.dataset.k==='s'?Math.round(+r.value*100)+' %':r.value;
-    if(r.dataset.k==='s')p.querySelectorAll('.pvm').forEach((g,i)=>{g.innerHTML=pclMark(i?2:3,'#fbb03b',!i)});clearTimeout(p._sv);p._sv=setTimeout(()=>store.set(K_S,S),400)});
+  p.addEventListener('input',ev=>{const r=ev.target.closest('input[type=range]');if(!r)return;const g=r.dataset.g,k=r.dataset.k,v=+r.value;
+    S[g]=Object.assign({},pfObj(g),{[k]:v},g==='pst'?{v:2}:{});styleLoad();PFG[g][2]();const b=p.querySelector(`b[data-v="${g}.${k}"]`);if(b)b.textContent=pfFmt(v,r.dataset.u);
+    if(g==='pst'&&k==='s')p.querySelectorAll('.pvm').forEach((m,i)=>{m.innerHTML=pclMark(i?2:3,'#fbb03b',!i)});
+    if(g==='psp'&&(k==='w'||k==='h')){const w=397*PSP.w,h=185.3*PSP.h,cap=p.querySelector('.pfv .pvsp');if(cap){cap.setAttribute('x',562.5-w/2);cap.setAttribute('y',740-h/2);cap.setAttribute('width',w);cap.setAttribute('height',h);cap.setAttribute('rx',h/2)}const st=p.querySelector('.pfv .spt');if(st)st.dataset.w=262*PSP.w;pfPrev()}
+    clearTimeout(p._sv);p._sv=setTimeout(()=>store.set(K_S,S),400)});
   p.addEventListener('change',ev=>{const f=ev.target.files&&ev.target.files[0];if(!f)return;const name=f.name.replace(/\.[^.]+$/,'').replace(/[^\w \-]/g,' ').trim().slice(0,40)||'Police';
     const rd=new FileReader();rd.onload=()=>{const url=rd.result;const ff=new FontFace(name,`url(${url})`);ff.load().then(x=>{document.fonts.add(x);PF_ON[name]=1;
       const st=pfStore();st[name]=url;try{localStorage.setItem(PF_K,JSON.stringify(st))}catch(e){mkToast&&mkToast('','Police chargée pour cette session seulement (mémoire pleine)',2500)}
-      if(tgt==='T')S.pfT=name;else S.pfN=name;store.set(K_S,S);pfApply();draw()}).catch(()=>{try{mkToast('','Fichier de police illisible',2200)}catch(e){}})};rd.readAsDataURL(f)})}
+      setFont(name)}).catch(()=>{try{mkToast('','Fichier de police illisible',2200)}catch(e){}})};rd.readAsDataURL(f)})}
+function styleLoad(){PSZ=Object.assign({},PSZ_D,S.psz||{});PSP=Object.assign({},PSP_D,S.psp||{});PMN=Object.assign({},PMN_D,S.pmn||{})}
 if(S.pst&&S.pst.v!==2){if(S.pst.n!==undefined)S.pst.n=S.pst.n/2;S.pst.v=2;try{store.set(K_S,S)}catch(e){}}
 
 /* contour des chiffres : une copie noire épaissie posée dessous (sans « paint-order », mal rendu sur iPhone) */
-function popOutl(root){if(!root)return;root.querySelectorAll('text.w,text.tx').forEach(t=>{let o=t._o;
+function popOutl(root){if(!root)return;root.querySelectorAll('text.w').forEach(t=>{let o=t._o;
   if(!o||!o.isConnected||o.nextElementSibling!==t){if(o&&o.isConnected)o.remove();o=document.createElementNS('http://www.w3.org/2000/svg','text');t.parentNode.insertBefore(o,t);t._o=o}
-  const cls='wo'+(t.classList.contains('fN')?' fN':'')+(t.classList.contains('tx')?' txo '+(t.classList.contains('d')?'d':'t'):'');if(o.getAttribute('class')!==cls)o.setAttribute('class',cls);
+  const cls='wo'+(t.classList.contains('fN')?' fN':'')+(t.classList.contains('spt')?' spo':'');if(o.getAttribute('class')!==cls)o.setAttribute('class',cls);
   ['x','y','font-size','textLength','lengthAdjust'].forEach(a=>{const v=t.getAttribute(a);if(v===null){if(o.hasAttribute(a))o.removeAttribute(a)}else if(o.getAttribute(a)!==v)o.setAttribute(a,v)});
   if(o.textContent!==t.textContent)o.textContent=t.textContent})}
-{const _p=pclSync;pclSync=function(){const r=_p.apply(this,arguments);try{if(PCL.k&&PCL.k.isConnected)popOutl(PCL.k)}catch(e){}return r}}
-{const _p=pklSync;pklSync=function(){const r=_p.apply(this,arguments);try{if(PKL.k&&PKL.k.isConnected)popOutl(PKL.k)}catch(e){}return r}}
-function pstApply(){PST=Object.assign({},PST_D,S.pst||{});const st=document.documentElement.style;st.setProperty('--swC',PST.c+'px');st.setProperty('--swS',(PST.c*.4)+'px');st.setProperty('--swN',PST.n+'px');st.setProperty('--swM',PST.m+'px');
+function popFoot(k,m){if(!k)return;const sp=k.querySelector('.spr');if(!sp)return;const w=397*PSP.w,h=185.3*PSP.h,g=w+'|'+h;
+  if(sp._g!==g){sp._g=g;sp.setAttribute('x',562.5-w/2);sp.setAttribute('y',2293.2-h/2);sp.setAttribute('width',w);sp.setAttribute('height',h);sp.setAttribute('rx',h/2)}
+  const d=533-w/2,tr=m===2?`translate(${-d}px,0px)`:m===3?`translate(${d}px,0px)`:'translate(0px,0px)',sw=k.querySelector('.spw');if(sw.style.transform!==tr)sw.style.transform=tr;
+  pclText(k.querySelector('.spt'),m===2?'Double':m===3?'Triple':'Spew',262*PSP.w,125)}
+{const _p=pclSync;pclSync=function(){const r=_p.apply(this,arguments);try{if(PCL.k&&PCL.k.isConnected&&G){popFoot(PCL.k,G.winner===null?G.mult:1);popOutl(PCL.k)}}catch(e){}return r}}
+{const _p=pklSync;pklSync=function(){const r=_p.apply(this,arguments);try{if(PKL.k&&PKL.k.isConnected&&KG){popFoot(PKL.k,KG.winner===null?KG.mult:1);popOutl(PKL.k)}}catch(e){}return r}}
+function pstApply(){PST=Object.assign({},PST_D,S.pst||{});const st=document.documentElement.style;st.setProperty('--swC',PST.c+'px');st.setProperty('--swS',(PST.c*.4)+'px');st.setProperty('--swN',PST.n+'px');st.setProperty('--swM',PST.m+'px');st.setProperty('--swSp',PSP.o+'px');
   try{if(PCL.rows)Object.values(PCL.rows).forEach(o=>{o.mk=['','']});if(G&&R)pclSync()}catch(e){}}
-pstApply();
+styleLoad();pstApply();pmnApply();
 pfApply();
 /* fin de tour : on ne peut plus marquer pendant un court instant (le temps de passer la main) */
-const TURNLOCK_MS=1200;let TURNLOCK=0;
+const TURNLOCK_MS=750;let TURNLOCK=0;
 const turnLocked=()=>performance.now()<TURNLOCK||!!HOLD||!!KHOLD||(typeof XHOLD!=='undefined'&&!!XHOLD);   // tant que le joueur n'a pas changé à l'écran
 {const _t=throwDart;throwDart=function(){if(turnLocked())return;const h=HOLD;const r=_t.apply(this,arguments);if(HOLD&&HOLD!==h)TURNLOCK=performance.now()+TURNLOCK_MS;return r}}
 {const _k=kThrow;kThrow=function(n,quiet){if(!quiet&&turnLocked())return;const h=KHOLD;const r=_k.apply(this,arguments);if(KHOLD&&KHOLD!==h)TURNLOCK=performance.now()+TURNLOCK_MS;return r}}
 {const _x=xThrow;xThrow=function(n,m,quiet){if(!quiet&&turnLocked())return;const c=XG&&XG.cur,len=XG?XG.turn.length:0;const r=_x.apply(this,arguments);
   if(XG&&XG.winner===null&&(XG.cur!==c||(XG.turn.length===0&&len>0))){TURNLOCK=performance.now()+TURNLOCK_MS;
-    if(XG.cur!==c&&!quiet){clearTimeout(XHOLD&&XHOLD.t);XHOLD={who:c,t:setTimeout(()=>{XHOLD=null;try{SFX.turn&&SFX.turn()}catch(e){}xRender()},1150)};busy(1150);xRender()}}return r}}
+    if(XG.cur!==c&&!quiet){clearTimeout(XHOLD&&XHOLD.t);XHOLD={who:c,t:setTimeout(()=>{XHOLD=null;try{SFX.turn&&SFX.turn()}catch(e){}xRender()},700)};busy(700);xRender()}}return r}}
 /* 501 et mini jeux : l'écran garde le joueur qui vient de jouer (et ses fléchettes) un instant avant de passer au suivant */
 let XHOLD=null;
 {const _r=xRender;xRender=function(){if(!XHOLD||!XG||XG.winner!==null)return _r.apply(this,arguments);
