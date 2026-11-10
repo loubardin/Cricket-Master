@@ -4318,7 +4318,7 @@ html.krt body>:is(.bhole,.bosstag,.bspark,.bullet,.ember,.fireglow,.flake,.bullf
 /* lignes */
 #kr .rrow{pointer-events:auto;cursor:pointer}
 #kr .rrail{position:absolute;top:calc(50% - var(--rh)*var(--s)/2);height:calc(var(--rh)*var(--s));border:calc(var(--S1)*var(--s)) solid var(--ink);border-radius:999px;background:var(--cream);will-change:transform}
-#kr .rcap{position:absolute;left:calc(258*var(--s));width:calc(335*var(--s));top:calc(50% - var(--ch)*var(--s)/2);height:calc(var(--ch)*var(--s));border:calc(var(--S1)*var(--s)) solid var(--ink);border-radius:999px;
+#kr .rcap{position:absolute;left:calc(281*var(--s));width:calc(289*var(--s));top:calc(50% - var(--ch)*var(--s)/2);height:calc(var(--ch)*var(--s));border:calc(var(--S1)*var(--s)) solid var(--ink);border-radius:999px;
   background:var(--pc);transition:background-color .45s ease;will-change:transform}
 #kr.m2 .rrow:not(.dead) .rcap{background:linear-gradient(#ffffff,#d5dbe1 55%,#aeb7c1)}
 #kr.m3 .rrow:not(.dead) .rcap{background:linear-gradient(#fff2a8,#ffcf2e 55%,#e39d00)}
@@ -4326,7 +4326,7 @@ html.krt body>:is(.bhole,.bosstag,.bspark,.bullet,.ember,.fireglow,.flake,.bullf
 #game#game#game>#kr .rft{top:calc(100dvh - 316*var(--s))}
 
 #kr .rrow.dead .rrail{display:none}
-#kr .rrow.dead .rcap{background:transparent;border-color:#ada797;border-width:calc(var(--S2)*var(--s));top:calc(50% - var(--ch)*var(--s)*.43);height:calc(var(--ch)*var(--s)*.86);left:calc(266*var(--s));width:calc(320*var(--s))}
+#kr .rrow.dead .rcap{background:transparent;border-color:#ada797;border-width:calc(var(--S2)*var(--s));top:calc(50% - var(--ch)*var(--s)*.43);height:calc(var(--ch)*var(--s)*.86);left:calc(289*var(--s));width:calc(273*var(--s))}
 #kr .rrow.dead .rcap .t{color:#a29b8e;font-size:calc(112*var(--rk)*var(--s))!important}
 #kr .rmk{position:absolute;width:calc(100*var(--s));height:calc(100*var(--s));top:calc(50% - 50*var(--s))}
 #kr .rmk svg{inset:0;width:100%;height:100%}
@@ -8136,7 +8136,7 @@ function krSync(){const g=$('game'),on=krOn()&&g.classList.contains('on');g.clas
     cr.style.left=`calc(var(--ox) + ${X}*var(--s))`;cr.style.top=`calc(var(--oy) + ${Y}*var(--s))`;cr.style.width=`calc(${W}*var(--s))`;cr.style.height=`calc(${W*82/112}*var(--s))`}
   // lignes
   TARGETS.forEach(t=>{const o=KR.rows[t];if(!o)return;const d=dead(t);if(o.dead!==d){const was=o.dead;o.dead=d;clearTimeout(o._dt);if(d&&was===false){o.justDied=true;o._dt=setTimeout(()=>{o.justDied=false;o.r.classList.add('dead')},1000)}else{o.justDied=false;o.r.classList.toggle('dead',d)}}
-    o.rail.style.left=`calc(${F?258:27}*var(--s))`;o.rail.style.width=`calc(${F?567:566}*var(--s))`;
+    o.rail.style.left=`calc(${F?281:27}*var(--s))`;o.rail.style.width=`calc(${F?544:543}*var(--s))`;
     [0,1].forEach(i=>{const n=Math.min(3,G.players[i].marks[t]||0),el=i?o.mr:o.ml,key=n+pcolI(i);if(o.mk[i]===key)return;const up=typeof o.mk[i]==='string'&&n>parseInt(o.mk[i]);o.mk[i]=key;
       el.innerHTML=krMark(n,pcolI(i));if(up&&n)el.animate([{transform:'scale(1.4)'},{transform:'scale(.92)',offset:.6},{transform:'scale(1)'}],{duration:280,easing:'ease-out'})})})}
 /* lignes : réparties entre la case joueur (bas à 606) et le nuage (ancré en bas d'écran), même écart partout */
@@ -8147,8 +8147,8 @@ function krLayout(){const key=innerWidth+'x'+innerHeight;if(KR._lay===key)return
 function krSwap(side){if(!KR)return;const s=krS(),dir=side==='sr'?-1:1,E='cubic-bezier(.3,1.2,.45,1)';
   const mv=(el,dx,delay)=>{if(!el)return;el.getAnimations().forEach(a=>a.cancel());el.animate([{transform:`translate3d(${dx}px,0,0)`},{transform:'translate3d(0,0,0)'}],{duration:520,easing:E,delay:delay||0,fill:'backwards'})};
   mv(KR.card,dir*269*s);KR.opp.getAnimations().forEach(a=>a.cancel());KR.opp.animate([{opacity:0},{opacity:0,offset:.35},{opacity:1}],{duration:520,easing:'ease-out'});
-  Object.values(KR.rows).forEach((o,i)=>mv(o.rail,dir*231*s,i*28))}
-function krBounce(t){if(!KR||!KR.rows[t])return;const o=KR.rows[t];if(o.dead&&!o.justDied)return;const s=krS(),X=(KR.k.classList.contains('sr')?233:-231)*s,c=o.cap;c.getAnimations().forEach(a=>a.cancel());
+  Object.values(KR.rows).forEach((o,i)=>mv(o.rail,dir*254*s,i*28))}
+function krBounce(t){if(!KR||!KR.rows[t])return;const o=KR.rows[t];if(o.dead&&!o.justDied)return;const s=krS(),X=(KR.k.classList.contains('sr')?255:-254)*s,c=o.cap;c.getAnimations().forEach(a=>a.cancel());
   const K=[[0,0,'cubic-bezier(.1,.75,.3,1)'],[.27,X,'cubic-bezier(.5,0,.85,.45)'],[.66,0,'cubic-bezier(.2,.7,.4,1)'],[.79,X*.13,'cubic-bezier(.5,0,.85,.45)'],[.89,0,'cubic-bezier(.2,.7,.4,1)'],[.95,X*.035,'ease-in'],[1,0,'linear']];
   c.animate(K.map(([of,x,e])=>({offset:of,transform:`translate3d(${x}px,0,0)`,easing:e})),{duration:1000})}
 {const _r=render;render=function(){const x=_r.apply(this,arguments);try{krSync()}catch(e){console.error(e)}return x}}
