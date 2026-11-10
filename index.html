@@ -4258,14 +4258,16 @@ html.pop .pk.w .pkd .pill{width:22cqw;height:15cqh;font-size:10cqh!important}
 
 /* ===== POP : police (Titan One, OFL — remplace Berlin Sans FB Demi de la maquette) ===== */
 @font-face{font-family:"Pop";font-display:block;src:url(art/pop.woff) format("woff")}
-html.pop body *:not(#z1):not(#z2):not(#z3):not(#z4):not(#z5):not(#z6):not(#z7):not(#z8){font-family:"Pop",sans-serif!important;font-weight:400!important;font-synthesis:none}
+html.pop{--pfT:"Fun";--pfN:"Fun"}
 /* ===== POP : Cricket 1 contre 1 dessiné d'après la maquette vectorielle (1125 × 2435), calque :is(#pcl,#pkl) ===== */
 #pcl{display:none}
+:is(#pcl,#pkl) text.fN{font-family:var(--pfN),"Fun",sans-serif!important}
+#pkl .pksh{mix-blend-mode:multiply}
 #game.pcl>#pcl{display:block;position:absolute;inset:0;z-index:20;overflow:hidden;background:var(--pop-bg);-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 #game.pcl>main,#game.pcl>footer,#game.pcl>header,#game.pcl #fbar2,html.pcl #fbar3{visibility:hidden!important}
 :is(#pcl,#pkl)>svg{position:absolute;left:0;width:100%;top:var(--sat,0px);height:calc(100% - var(--sat,0px));overflow:visible}
 :is(#pcl,#pkl) svg *{transform-box:view-box}
-:is(#pcl,#pkl) text{font-family:"Pop",sans-serif!important;text-anchor:middle;fill:#111;font-synthesis:none}
+:is(#pcl,#pkl) text{font-family:var(--pfT),"Fun",sans-serif!important;text-anchor:middle;fill:#111;font-synthesis:none}
 :is(#pcl,#pkl) .w{fill:#fff;stroke:#111;stroke-width:10px;paint-order:stroke fill;stroke-linejoin:round}
 :is(#pcl,#pkl) .ol{fill:none;stroke:#111;stroke-width:10px}
 :is(#pcl,#pkl) .pl{fill:#fff;stroke:#111;stroke-width:4px}
@@ -4307,6 +4309,24 @@ html:is(.pcl,.pkl) body>:is(.fireglow,.ember,.bhole){display:none!important}
 #pkl .pknm{fill:#111}
 #pkl .kc2.act .pknm{fill:#1d1d1b;stroke:var(--kc);stroke-width:10px;paint-order:stroke fill;stroke-linejoin:round}
 #pkl .halo{fill:var(--kc);transition:fill .45s}
+
+/* essai des polices */
+#pfp{position:fixed;inset:0;z-index:300;background:var(--pop-bg,#f9ecc9);color:#111;display:flex;flex-direction:column;gap:12px;padding:calc(var(--sat,0px) + 12px) 16px calc(var(--sab,0px) + 12px);overflow:hidden}
+#pfp .pfh{display:flex;justify-content:space-between;align-items:center;font:400 24px "Fun",sans-serif}
+#pfp .pfx{border:0;background:#111;color:#fff;width:40px;height:40px;border-radius:50%;font:400 18px sans-serif}
+#pfp .pfv{width:100%;height:auto;flex:0 0 auto}
+#pfp .pfv text{font-family:var(--pfT),"Fun",sans-serif;text-anchor:middle;fill:#111}
+#pfp .pfv text.fN{font-family:var(--pfN),"Fun",sans-serif}
+#pfp .pfv text.w{fill:#fff;stroke:#111;stroke-width:10px;paint-order:stroke fill;stroke-linejoin:round}
+#pfp .pfs{display:flex;border-radius:99px;box-shadow:inset 0 0 0 3px #111;overflow:hidden;flex:0 0 auto}
+#pfp .pfs button{flex:1;border:0;background:transparent;font:400 18px "Fun",sans-serif;padding:10px;color:#111}
+#pfp .pfs button.on{background:#111;color:#fff}
+#pfp .pfl{flex:1 1 auto;overflow-y:auto;display:grid;grid-template-columns:1fr 1fr;gap:8px;align-content:start;-webkit-overflow-scrolling:touch}
+#pfp .pfl button{border:0;border-radius:18px;background:#fff;box-shadow:inset 0 0 0 2px #111;padding:10px 8px;display:flex;flex-direction:column;align-items:center;gap:2px;color:#111;min-width:0}
+#pfp .pfl button.on{background:#ffde00;box-shadow:inset 0 0 0 4px #111}
+#pfp .pfl span{font-size:26px;line-height:1.1;white-space:nowrap;overflow:hidden;max-width:100%}
+#pfp .pfl small{font:600 11px "Lbl",sans-serif;opacity:.7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+#pfp .pfb button{width:100%;border:0;border-radius:99px;background:#111;color:#fff;font:400 17px "Fun",sans-serif;padding:13px}
 </style>
 </head>
 <body>
@@ -7768,9 +7788,10 @@ popApply();
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
   const p=el('div','');p.id='xpick';p.classList.add('skinpick');document.body.append(p);
-  const draw=()=>{p.innerHTML=`<div class="skn"><button class="skgo" data-go="hStats">Statistiques</button><button class="skgo" data-go="hHist">Historique</button></div><div class="skp"><span>Style</span><div class="sksw skst"><button data-st="pop" class="${popOn()?'on':''}">Pop</button><button data-st="bulle" class="${popOn()?'':'on'}">Bulle</button></div></div><div class="skp"><span>Son</span><div class="sksw sksnd"><button data-s="1" class="${S.sound?'on':''}">Oui</button><button data-s="0" class="${S.sound?'':'on'}">Non</button></div></div>`+`<div class="skp"><span>Couleurs des joueurs</span><div class="sksw"><button data-p="1" class="${S.pcolOff?'':'on'}">Oui</button><button data-p="0" class="${S.pcolOff?'on':''}">Non</button></div></div>`};
+  const draw=()=>{p.innerHTML=`<div class="skn"><button class="skgo" data-go="hStats">Statistiques</button><button class="skgo" data-go="hHist">Historique</button></div><div class="skp"><span>Style</span><div class="sksw skst"><button data-st="pop" class="${popOn()?'on':''}">Pop</button><button data-st="bulle" class="${popOn()?'':'on'}">Bulle</button></div></div>${popOn()?'<div class="skp"><span>Polices</span><div class="sksw"><button class="skfp">Essayer</button></div></div>':''}<div class="skp"><span>Son</span><div class="sksw sksnd"><button data-s="1" class="${S.sound?'on':''}">Oui</button><button data-s="0" class="${S.sound?'':'on'}">Non</button></div></div>`+`<div class="skp"><span>Couleurs des joueurs</span><div class="sksw"><button data-p="1" class="${S.pcolOff?'':'on'}">Oui</button><button data-p="0" class="${S.pcolOff?'on':''}">Non</button></div></div>`};
   draw();p.style.left=Math.max(12,(innerWidth-p.offsetWidth)/2)+'px';p.style.top=Math.max(12,Math.min(innerHeight-p.offsetHeight-12,e.currentTarget.getBoundingClientRect().bottom+10))+'px';
   p.addEventListener('click',ev=>{ev.stopPropagation();const go=ev.target.closest('.skgo');if(go){p.remove();$(go.dataset.go).dispatchEvent(new MouseEvent('click',{bubbles:true}));return}
+    if(ev.target.closest('.skfp')){p.remove();pfOpen();return}
     const sn=ev.target.closest('.sksnd button');if(sn){if((sn.dataset.s==='1')!==!!S.sound)$('sndT').dispatchEvent(new MouseEvent('click',{bubbles:true}));draw();return}
     const stb=ev.target.closest('.skst button');if(stb){haptic();S.style=stb.dataset.st;store.set(K_S,S);popApply();SFX.ui();draw();return}
     const pb=ev.target.closest('.sksw button');if(pb){haptic();S.pcolOff=pb.dataset.p==='0';store.set(K_S,S);SFX.ui();draw();try{renderSetup()}catch(e){}return}
@@ -7987,12 +8008,14 @@ function popKiller(){const box=$('kplayers');if(!box||!box.classList.contains('k
 addEventListener('resize',()=>{try{if(popOn()&&KG&&$('killer').classList.contains('on'))popKiller()}catch(e){}});
 
 /* ===== POP : Cricket 1 contre 1 — calque #pcl, coordonnées de la maquette (1125 de large, tracés repris tels quels) ===== */
+const PF={kT:1,kN:1};
+const pkDark=c=>{if(!/^#[0-9a-f]{6}$/i.test(c||''))return'#5a1408';return'#'+[1,3,5].map(k=>{const x=parseInt(c.slice(k,k+2),16);return Math.round(x*x/255*.58).toString(16).padStart(2,'0')}).join('')};
 const PCL={dx:-20};
 const PC_T=[15,16,17,18,19,20,25];
 const pclOn=()=>popOn()&&!!G&&!!G.players&&G.players.length===2&&!BARC&&!G._bar;
 const POPHEAD=`<g class="ico home"><path d="M302.1,274.84c0,7.89-.09,15.87,0,23.84.07,4.62-1.93,6.73-6.55,6.72q-30.24-.07-60.46,0c-4.47,0-6.31-2-6.21-6.41.14-6,0-12,0-18,0-3.08.46-6-3.17-8.07-3.08-1.8-.47-4.09,1.22-5.57,8-7,16.09-14,24.17-20.92,3.53-3,7.12-6,10.67-9,2.59-2.2,4.95-2,7.55.18,11.34,9.54,22.81,18.91,34.12,28.49C308.52,270.35,308.19,271.93,302.1,274.84Zm-7.52,22.9c0-9.25,0-18.19,0-27.14a3.19,3.19,0,0,0-.92-2.2c-9.32-8-18.7-15.87-28.16-23.88-9.51,8.19-18.59,16-27.62,23.85a3.94,3.94,0,0,0-1.39,2.47c-.1,8.93-.06,17.85-.06,26.81h19.76a5.57,5.57,0,0,0,.47-1.32c0-5,0-10,0-15,0-4.11,5.11-10.08,8.64-10.18s9.17,6,9.2,10.15c0,5.43,0,10.86,0,16.42Z" transform="translate(-29.6 0)"/><rect class="hit" x="150" y="190" width="180" height="170"/></g>
     <g class="ico undo"><path d="M936.21,313.92c-10.05,0-21.88-7.43-25.82-16.21-.53-1.17-.42-1.58-.37-1.68s.36-.5,1.78-.9a30.52,30.52,0,0,0,7.41-3.09,4.88,4.88,0,0,1,2.18-.85c.25,0,.91,0,1.76,2.13a9.56,9.56,0,0,0,4.36,4.85,18.73,18.73,0,0,0,8,1.8,19.36,19.36,0,0,0,17.74-11.72,22.11,22.11,0,0,0-.07-17.07,19.7,19.7,0,0,0-11-10.85,26.23,26.23,0,0,0-9.54-1.87,26.76,26.76,0,0,0-14.9,4.81l-.62.42,0,.74c0,.19,0,.35-.06.49a2.43,2.43,0,0,0,.16,1.56c.77,1.54,2.19,4.37,2.13,5.16-.66.4-3.73.4-5.06.4h-2.71l-6,0-5.95,0c-2.37,0-4.73,0-7.1-.05s-3-.57-3.09-.73-.33-.76.52-2.7c4.08-9.3,8.16-18.32,12.12-26.78a4.06,4.06,0,0,1,1.69-1.69,4.87,4.87,0,0,1,1.57,1.93c1.2,2.63,2.28,5.4,3.42,8.33.47,1.23,1,2.49,1.49,3.81l.76,1.91,1.58-1.3c7.14-5.87,14.37-8.72,22.1-8.72a36.12,36.12,0,0,1,11.43,2,33.8,33.8,0,0,1,22.39,36c-2.17,16.53-15,28.8-31.13,29.83C937,313.9,936.62,313.92,936.21,313.92Z" transform="translate(-40 -6)"/><rect class="hit" x="795" y="190" width="180" height="170"/></g>
-    <text class="ttl" x="562.5" y="279.7" font-size="57.5">CRICKET</text>
+    <text class="ttl" x="562.5" y="279.7" font-size="57.5">CRICKET</text><rect class="hit fpo" x="370" y="200" width="385" height="150"/>
     <text class="st1" x="562.5" y="310" font-size="25"></text><text class="st2" x="562.5" y="335" font-size="25"></text>`;
 const POPFOOT=`<g class="ft"><rect class="arm d" x="45" y="2215.9" width="560" height="154.6" rx="77.3"/><rect class="arm t" x="520" y="2215.9" width="560" height="154.6" rx="77.3"/>
       <g class="sp"><rect class="pc" x="364" y="2200.4" width="397" height="185.3" rx="92.65"/><text class="w spt" x="562.5" y="2322" font-size="125">Spew</text></g>
@@ -8001,7 +8024,7 @@ const POPFOOT=`<g class="ft"><rect class="arm d" x="45" y="2215.9" width="560" h
       <rect class="hit b2" x="0" y="2190" width="364" height="210"/><rect class="hit b3" x="761" y="2190" width="364" height="210"/><rect class="hit bs" x="364" y="2190" width="397" height="210"/></g>`;
 /* boutons communs du calque (Accueil, Annuler, Double, Triple, Spew) */
 function popBind(k){
-  k.addEventListener('click',e=>{const ic=e.target.closest('.ico');if(ic){const b=$(ic.classList.contains('home')?'fMenu':'fUndo');if(b)b.click()}});
+  k.addEventListener('click',e=>{if(e.target.closest('.fpo')){pfOpen();return}const ic=e.target.closest('.ico');if(ic){const b=$(ic.classList.contains('home')?'fMenu':'fUndo');if(b)b.click()}});
   k.addEventListener('pointerdown',e=>{const h=e.target.closest('.hit');if(!h)return;
     const id=h.classList.contains('b2')?'b2':h.classList.contains('b3')?'b3':h.classList.contains('bs')?'bS':null;
     if(id&&$(id)){$(id).click();if(id==='bS'){const sp=k.querySelector('.sp');sp.getAnimations().forEach(a=>a.cancel());sp.animate([{transform:'scale(1)'},{transform:'scale(.92)',offset:.3},{transform:'scale(1.04)',offset:.65},{transform:'scale(1)'}],{duration:360,easing:'ease-out'})}}
@@ -8012,15 +8035,15 @@ function pclBuild(){const g=$('game');let k=$('pcl');if(k)k.remove();
      <rect class="hit" x="0" y="${cy-99}" width="1125" height="198.15"/>
      <g class="mk ml" data-cx="226.5" data-cy="${cy}"></g><g class="mk mr" data-cx="898.5" data-cy="${cy}"></g>
      <g class="cg"><rect class="cap pc" x="364" y="${813.4+y}" width="397" height="185.3" rx="92.65"/>
-     <text class="n w" x="562.5" y="${t===25?cy+47:cy+50.5}" font-size="${t===25?131:139}">${t===25?'Bulle':t}</text></g>
+     <text class="n w fN" x="562.5" y="${t===25?cy+47:cy+50.5}" font-size="${t===25?131:139}">${t===25?'Bulle':t}</text></g>
      <rect class="rail ol" x="40" y="${828.9+y}" width="705" height="154.6" rx="77.3"/></g>`}).join('');
   const h=`<div id="pcl"><svg viewBox="0 132 1125 2284" preserveAspectRatio="xMidYMid meet">
     ${POPHEAD}
     <g class="card"><rect class="pc halo" y="381.1" width="735" height="419" rx="103.87"/><rect class="ol cbd" y="396.1" width="707.3" height="392.6" rx="92.61"/>
-      <text class="cn" y="502.8" font-size="57.5"></text><text class="cs w" y="662" font-size="182"></text><text class="cm" y="715.7" font-size="35.4"></text>
-      ${[0,1,2].map(i=>`<rect class="pl cp" y="${480.1+i*84.75}" width="208.6" height="68.8" rx="31.48"/><text class="cpt" y="${480.1+i*84.75+55}" font-size="58"></text>`).join('')}</g>
-    <g class="opp"><text class="on" y="502.8" font-size="57.5"></text><text class="os" y="654.5" font-size="186"></text><text class="om" y="707.7" font-size="35.4"></text>
-      ${[0,1,2].map(i=>`<rect class="pl op" y="733.4" width="75.5" height="59.8" rx="22.1"/><text class="opt" y="781" font-size="50"></text>`).join('')}</g>
+      <text class="cn" y="502.8" font-size="57.5"></text><text class="cs w fN" y="662" font-size="182"></text><text class="cm" y="715.7" font-size="35.4"></text>
+      ${[0,1,2].map(i=>`<rect class="pl cp" y="${480.1+i*84.75}" width="208.6" height="68.8" rx="31.48"/><text class="cpt fN" y="${480.1+i*84.75+55}" font-size="58"></text>`).join('')}</g>
+    <g class="opp"><text class="on" y="502.8" font-size="57.5"></text><text class="os fN" y="654.5" font-size="186"></text><text class="om" y="707.7" font-size="35.4"></text>
+      ${[0,1,2].map(i=>`<rect class="pl op" y="733.4" width="75.5" height="59.8" rx="22.1"/><text class="opt fN" y="781" font-size="50"></text>`).join('')}</g>
     ${rows}
     ${POPFOOT}
   </svg></div>`;
@@ -8033,7 +8056,7 @@ function pclBuild(){const g=$('game');let k=$('pcl');if(k)k.remove();
   k.addEventListener('click',e=>{const r=e.target.closest('.row');if(r)throwDart(+r.dataset.t)});popBind(k);
 }
 /* texte trop large : on le resserre d'abord (jusqu'à 78 %, comme la police condensée de la maquette), puis on le réduit */
-function pclText(el,txt,max,base){if(el._h===txt&&el._m===max)return;el._h=txt;el._m=max;el.textContent=txt;if(base)el.setAttribute('font-size',base);el.removeAttribute('textLength');el.removeAttribute('lengthAdjust');
+function pclText(el,txt,max,base){if(el._h===txt&&el._m===max)return;el._h=txt;el._m=max;el.textContent=txt;if(base)el.setAttribute('font-size',(base*(el.classList.contains('fN')?PF.kN:PF.kT)).toFixed(1));el.removeAttribute('textLength');el.removeAttribute('lengthAdjust');
   try{const w=el.getComputedTextLength();if(w>max&&w>0){const r=max/w,q=Math.max(r,.78);if(q>r)el.setAttribute('font-size',(parseFloat(el.getAttribute('font-size'))*r/q).toFixed(1));
     el.setAttribute('lengthAdjust','spacingAndGlyphs');el.setAttribute('textLength',max.toFixed(1))}}catch(e){}}
 function pclCount(el,a,b){cancelAnimationFrame(el._raf);const t0=performance.now(),D=Math.min(1500,600+(b-a)*10);
@@ -8050,7 +8073,7 @@ function pclSync(){const g=$('game'),on=pclOn()&&g.classList.contains('on')&&!!R
   const m=G.winner===null?G.mult:1;k.classList.toggle('m2',m===2);k.classList.toggle('m3',m===3);
   // en-tête
   PCL.fix.forEach(([e,t,w,b])=>pclText(e,t,w,b));
-  const t1=G.mode==='cut'?'Coupe-gorge':'Standard',t2='tour '+G.round;if(PCL.st1.textContent!==t1)PCL.st1.textContent=t1;if(PCL.st2.textContent!==t2)PCL.st2.textContent=t2;
+  const t1=G.mode==='cut'?'Coupe-gorge':'Standard',t2='tour '+G.round;pclText(PCL.st1,t1,420,25);pclText(PCL.st2,t2,420,25);
   // case du joueur en cours (miroir quand c'est le joueur de droite)
   const prev=PCL.side;PCL.side=F?'r':'l';const C=PCL.c,O=PCL.o;
   C.halo.setAttribute('x',XW(24.7,735));C.bd.setAttribute('x',XW(38.4,707.3));
@@ -8098,35 +8121,38 @@ function pkName(p,act){if(!p.members||p.members.length<2)return p.name;const L=p
 function pkDartT(d){if(!d)return'·';if(d.n===0)return'S';return (d.m===3?'T':d.m===2?'D':'')+(d.n===25?'B':d.n)}
 function pklBuild(){const sec=$('killer');let k=$('pkl');if(k)k.remove();
   sec.insertAdjacentHTML('beforeend',`<div id="pkl"><svg viewBox="0 132 1125 2284" preserveAspectRatio="xMidYMid meet">
-    <defs><filter id="pkSh" x="-30%" y="-30%" width="160%" height="160%"><feOffset dx="12" dy="17" in="SourceAlpha"/><feGaussianBlur stdDeviation="23"/><feComposite in="SourceGraphic"/></filter>
+    <defs><filter id="pkSh" x="-30%" y="-30%" width="160%" height="160%"><feOffset dx="12" dy="17" in="SourceAlpha"/><feGaussianBlur stdDeviation="23" result="b"/><feFlood class="pkshc" flood-color="#000"/><feComposite operator="in" in2="b"/></filter>
     <filter id="pkNs" x="-10%" y="-10%" width="130%" height="130%"><feOffset dx="10" dy="11" in="SourceAlpha" result="o"/><feFlood flood-color="#8e1717"/><feComposite operator="in" in2="o"/><feComposite in="SourceGraphic"/></filter></defs>
     ${POPHEAD}<g class="cards"></g>${POPFOOT}</svg></div>`);
   k=$('pkl');PKL.k=k;PKL.cards=k.querySelector('.cards');PKL.st1=k.querySelector('.st1');PKL.st2=k.querySelector('.st2');PKL.key=null;
   PKL.fix=[[k.querySelector('.ttl'),'KILLER',240,57.5],[k.querySelector('.spt'),'Spew',262,125],[k.querySelector('.tx.d'),'Double',232,76],[k.querySelector('.tx.t'),'Triple',202,76]];
   k.addEventListener('click',e=>{const c=e.target.closest('.kc2');if(!c||!KG)return;const p=KG.players[+c.dataset.i];if(p)kThrow(p.num)});popBind(k)}
 function pklCard(i,g,act){const p=KG.players[i],{W,H,wide,k}=g,DD=KG.def,isDef=DD&&DD.v===i,dead=p.dead&&!isDef;
-  let h=act?`<rect class="halo" x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87" filter="url(#pkSh)"/>`:'';
+  const dk=pkDark(pkCol(i)),kT=PF.kT,kN=PF.kN;
+  let h=act?`<rect class="pksh" x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87" filter="url(#pkSh)"/><rect class="halo" x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87"/>`:'';
   h+=`<rect class="ol" width="${W}" height="${H}" rx="92.61"/>`;
   const cx=wide?.306*W:W/2,nm=esc(pkName(p,act));
-  if(act)h+=`<text x="${cx}" y="${(wide?-104:-94)*k}" font-size="${43*k}">à toi</text><text class="pknm" x="${cx}" y="${(wide?-16:-10)*k}" font-size="${87*k}" data-fit="${wide?.62*W:W*1.02}">${nm}</text>`;
-  else h+=`<text class="pknm" x="${cx}" y="${-31*k}" font-size="${73*k}" data-fit="${wide?.62*W:W*.98}">${nm}</text>`;
+  if(act)h+=`<text x="${cx}" y="${(wide?-104:-94)*k}" font-size="${43*k*kT}">à toi</text><text class="pknm" x="${cx}" y="${(wide?-16:-10)*k}" font-size="${87*k*kT}" data-fit="${wide?.62*W:W*1.02}">${nm}</text>`;
+  else h+=`<text class="pknm" x="${cx}" y="${-31*k}" font-size="${73*k*kT}" data-fit="${wide?.62*W:W*.98}">${nm}</text>`;
   // cœurs
   const nh=Math.max(p.maxl||0,p.lives||0,3),hw=(wide?.117:.204)*W,hh=(wide?.137:.132)*H,pitch=Math.min((wide?.141:.2475)*W,(wide?.5:.9)*W/nh),hy=(wide?.076:.052)*H,hx0=cx-pitch*(nh-1)/2-hw/2;
   const lw=hw*Math.min(1,pitch/hw*.92);
   for(let j=0;j<nh;j++){const on=!dead&&j<p.lives,gold=on&&j>=p.lives-(p.gold||0);h+=`<path class="phrt${on?' on':''}${gold?' gold':''}" d="${pkHeart(cx-pitch*(nh-1)/2+j*pitch-lw/2,hy,lw,hh)}"/>`}
   // numéro
   const ny=(wide?.272:.243)*H,nH=(wide?.44:.325)*H,nW=(wide?.445:.61)*W;
-  h+=`<text class="pkno${act?' w':''}" x="${wide?.307*W:cx}" y="${ny+nH}" font-size="${(nH/.725).toFixed(1)}" data-fit="${nW}" filter="url(#pkNs)">${p.num}</text>`;
+  const nx=wide?.307*W:cx,nfs=(nH/.725*kN).toFixed(1);
+  if(act)h+=`<text class="pkno fN w" x="${nx+10}" y="${ny+nH+11}" font-size="${nfs}" data-fit="${nW}" style="fill:${dk};stroke:${dk}">${p.num}</text>`;
+  h+=`<text class="pkno fN${act?' w':''}" x="${nx}" y="${ny+nH}" font-size="${nfs}" data-fit="${nW}">${p.num}</text>`;
   // K / Killer
   const ky=(wide?.774:.626)*H,kh=(wide?.14:.137)*H;
-  if(isDef)h+=`<rect class="pkk" x="${cx-(wide?.22:.382)*W}" y="${ky}" width="${(wide?.44:.764)*W}" height="${kh}" rx="${kh*.37}"/><text x="${cx}" y="${ky+kh*.5+kh*.27}" font-size="${kh*.68}">défense ${DD.got}/${DD.need}</text>`;
-  else if(p.killer)h+=`<rect class="pkk" x="${cx-(wide?.22:.382)*W}" y="${ky}" width="${(wide?.44:.764)*W}" height="${kh}" rx="${kh*.37}" filter="url(#pkNs)"/><text x="${cx}" y="${ky+kh*.5+kh*.3}" font-size="${kh*.75}">Killer</text>`;
+  if(isDef)h+=`<rect class="pkk" x="${cx-(wide?.22:.382)*W}" y="${ky}" width="${(wide?.44:.764)*W}" height="${kh}" rx="${kh*.37}"/><text x="${cx}" y="${ky+kh*.5+kh*.27}" font-size="${kh*.68*kT}">défense ${DD.got}/${DD.need}</text>`;
+  else if(p.killer){const kx=cx-(wide?.22:.382)*W,kw=(wide?.44:.764)*W;if(act)h+=`<rect x="${kx+10}" y="${ky+11}" width="${kw}" height="${kh}" rx="${kh*.37}" style="fill:${dk}"/>`;h+=`<rect class="pkk" x="${kx}" y="${ky}" width="${kw}" height="${kh}" rx="${kh*.37}"/><text x="${cx}" y="${ky+kh*.5+kh*.3}" font-size="${kh*.75*kT}">Killer</text>`}
   else{const km=KG.km||3,pw=(wide?.135:.25)*W,pp=Math.min((wide?.153:.258)*W,(wide?.46:.8)*W/km);
-    for(let j=0;j<km;j++){const x=cx-pp*(km-1)/2+j*pp-pw/2,on=j<(p.marks||0);h+=`<rect class="pkp${on?' on':''}" x="${x}" y="${ky}" width="${pw}" height="${kh}" rx="${kh*.42}"/>${on?`<text x="${x+pw/2}" y="${ky+kh*.5+kh*.3}" font-size="${kh*.72}">K</text>`:''}`}}
+    for(let j=0;j<km;j++){const x=cx-pp*(km-1)/2+j*pp-pw/2,on=j<(p.marks||0);h+=`<rect class="pkp${on?' on':''}" x="${x}" y="${ky}" width="${pw}" height="${kh}" rx="${kh*.42}"/>${on?`<text x="${x+pw/2}" y="${ky+kh*.5+kh*.3}" font-size="${kh*.72*kT}">K</text>`:''}`}}
   // dernières fléchettes
   const ds=act?(KHOLD?p.last:KG.turn):(p.last||[]),nd=act&&isDef?DD.darts:3;
   for(let j=0;j<nd;j++){let x,y,w,hh2;if(wide){w=.213*W;hh2=.174*H;x=.675*W;y=(.161+j*.249)*H}else{w=.232*W;hh2=.104*H;x=W/2-.265*W*(nd-1)/2+j*.265*W-w/2;y=.826*H}
-    const t=pkDartT(ds&&ds[j]);h+=`<rect class="pkhp" x="${x}" y="${y}" width="${w}" height="${hh2}" rx="${Math.min(29.5,hh2*.45)}"/><text x="${x+w/2}" y="${y+hh2*.5+hh2*.3}" font-size="${hh2*.8}" data-fit="${w*.86}">${t}</text>`}
+    const t=pkDartT(ds&&ds[j]);h+=`<rect class="pkhp" x="${x}" y="${y}" width="${w}" height="${hh2}" rx="${Math.min(29.5,hh2*.45)}"/><text class="fN" x="${x+w/2}" y="${y+hh2*.5+hh2*.3}" font-size="${hh2*.8*kN}" data-fit="${w*.86}">${t}</text>`}
   h+=`<rect class="hit" x="-10" y="-10" width="${W+20}" height="${H+20}" rx="92"/>`;
   return {h,dead}}
 function pklSync(){const sec=$('killer'),on=pklOn()&&sec.classList.contains('on');sec.classList.toggle('pkl',on);document.documentElement.classList.toggle('pkl',on);if(!on)return;
@@ -8134,9 +8160,9 @@ function pklSync(){const sec=$('killer'),on=pklOn()&&sec.classList.contains('on'
   {const v=getComputedStyle(document.documentElement).getPropertyValue('--sat');k.style.setProperty('--sat',v||'0px')}
   PKL.fix.forEach(([e,t,w,b])=>pclText(e,t,w,b));
   const P=KG.players,n=P.length,cur=KG.winner!==null?KG.winner:(KHOLD?KHOLD.who:KG.cur),g=pklGeo(n);
-  {const c=pkCol(cur);if(PKL.col!==c){PKL.col=c;k.style.setProperty('--pc',c)}}
+  {const c=pkCol(cur);if(PKL.col!==c){PKL.col=c;k.style.setProperty('--pc',c);const f=k.querySelector('.pkshc');if(f)f.setAttribute('flood-color',pkDark(c))}}
   const m=KG.winner===null?KG.mult:1;k.classList.toggle('m2',m===2);k.classList.toggle('m3',m===3);
-  const t1=n+' joueurs'+(KG.manche>1?' · manche '+KG.manche:''),t2='tour '+KG.round;if(PKL.st1.textContent!==t1)PKL.st1.textContent=t1;if(PKL.st2.textContent!==t2)PKL.st2.textContent=t2;
+  const t1=n+' joueurs'+(KG.manche>1?' · manche '+KG.manche:''),t2='tour '+KG.round;pclText(PKL.st1,t1,420,25);pclText(PKL.st2,t2,420,25);
   if(PKL.key!==n){PKL.key=n;PKL.cards.innerHTML=P.map((_,i)=>`<g class="kc2" data-i="${i}" transform="translate(${g.pos[i][0]} ${g.pos[i][1]})"><g class="kin" style="--ox:${g.W/2}px;--oy:${g.H/2}px"></g></g>`).join('');PKL.c=[...PKL.cards.children]}
   let actEl=null;
   P.forEach((p,i)=>{const el=PKL.c[i];if(!el)return;const act=i===cur&&KG.winner===null,{h,dead}=pklCard(i,g,act);
@@ -8148,6 +8174,54 @@ function pklSync(){const sec=$('killer'),on=pklOn()&&sec.classList.contains('on'
 {const _s=show;show=function(){const r=_s.apply(this,arguments);try{pklSync()}catch(e){}return r}}
 {const _p=popApply;popApply=function(){const r=_p.apply(this,arguments);try{if(KG)pklSync()}catch(e){}return r}}
 try{document.fonts&&document.fonts.addEventListener('loadingdone',()=>{if(PKL.k){PKL.k.querySelectorAll('.cards g.kin').forEach(g=>{g._h=null});PKL.k.querySelectorAll('text').forEach(t=>{t._h=null});try{pklSync()}catch(e){}}})}catch(e){}
+
+/* ===== POP : essai des polices (textes / numéros) — Google Fonts à la demande, ou fichier importé depuis le téléphone ===== */
+const PF_LIST=[['Fun','Lilita One (actuelle)'],['Pop','Titan One'],['Bowlby One'],['Archivo Black'],['Dela Gothic One'],['Bungee'],['Rammetto One'],['Paytone One'],['Chango'],['Shrikhand'],
+  ['Fredoka','',700],['Baloo 2','',800],['Rubik','',800],['Unbounded','',800],['Krona One'],['Lexend','',800],['Outfit','',800],['Plus Jakarta Sans','',800],['Bricolage Grotesque','',800],['Syne','',800],['Space Grotesk','',700],['Righteous'],['Gochi Hand']];
+const PF_K='lf-fonts';
+function pfStore(){try{return JSON.parse(localStorage.getItem(PF_K)||'{}')}catch(e){return{}}}
+const PF_ON={};
+function pfEnsure(f){if(!f||PF_ON[f]||f==='Fun'||f==='Pop')return;PF_ON[f]=1;
+  const imp=pfStore()[f];if(imp){try{const ff=new FontFace(f,`url(${imp})`);ff.load().then(x=>{document.fonts.add(x);pfApply()}).catch(()=>{})}catch(e){}return}
+  const g=PF_LIST.find(x=>x[0]===f);if(!g)return;const l=document.createElement('link');l.rel='stylesheet';
+  l.href='https://fonts.googleapis.com/css2?family='+f.replace(/ /g,'+')+(g[2]?':wght@'+g[2]:'')+'&display=block';document.head.append(l)}
+function pfCap(f,ch){try{const c=pfCap.c||(pfCap.c=document.createElement('canvas').getContext('2d'));c.font=`100px "${f}",monospace`;const m=c.measureText(ch);return m.actualBoundingBoxAscent+(ch==='8'?m.actualBoundingBoxDescent:0)}catch(e){return 0}}
+async function pfApply(){const T=S.pfT||'Fun',N=S.pfN||'Fun',st=document.documentElement.style;st.setProperty('--pfT',`"${T}"`);st.setProperty('--pfN',`"${N}"`);pfEnsure(T);pfEnsure(N);
+  try{await Promise.all([document.fonts.load('80px "Pop"','H8'),document.fonts.load(`80px "${T}"`,'LOUBARD'),document.fonts.load(`80px "${N}"`,'0123456789')])}catch(e){}
+  // même hauteur de capitale / de chiffre que les mesures prises sur la maquette
+  const r=(a,b)=>a>0&&b>0?Math.min(1.6,Math.max(.6,a/b)):1;PF.kT=r(pfCap('Pop','H'),pfCap(T,'H'));PF.kN=r(pfCap('Pop','8'),pfCap(N,'8'));
+  [PCL.k,PKL.k].forEach(k=>{if(k){k.querySelectorAll('text').forEach(t=>{t._h=null});k.querySelectorAll('g.kin').forEach(g=>{g._h=null})}});
+  try{if(G&&R)pclSync()}catch(e){}try{if(KG)pklSync()}catch(e){}pfPrev()}
+function pfPrev(){const p=$('pfp');if(!p)return;const sv=p.querySelector('.pfv');if(!sv)return;
+  sv.querySelectorAll('text').forEach(t=>{const b=+t.dataset.b;t.setAttribute('font-size',(b*(t.classList.contains('fN')?PF.kN:PF.kT)).toFixed(1));t.removeAttribute('textLength');
+    const w=+t.dataset.w;if(w){try{const l=t.getComputedTextLength();if(l>w){t.setAttribute('lengthAdjust','spacingAndGlyphs');t.setAttribute('textLength',w)}}catch(e){}}})}
+function pfOpen(){haptic();const old=$('pfp');if(old)old.remove();let tgt='T';
+  const p=el('div','');p.id='pfp';document.body.append(p);
+  const all=()=>{const imp=Object.keys(pfStore()).map(n=>[n,n+' (importée)']);return imp.concat(PF_LIST)};
+  // toutes les polices de la liste, pour l'aperçu
+  {const l=document.createElement('link');l.rel='stylesheet';l.href='https://fonts.googleapis.com/css2?'+PF_LIST.filter(x=>x[0]!=='Fun'&&x[0]!=='Pop').map(x=>'family='+x[0].replace(/ /g,'+')+(x[2]?':wght@'+x[2]:'')).join('&')+'&display=swap';document.head.append(l);Object.keys(pfStore()).forEach(pfEnsure)}
+  const draw=()=>{const cur=tgt==='T'?(S.pfT||'Fun'):(S.pfN||'Fun');
+    p.innerHTML=`<div class="pfh"><b>Polices</b><button class="pfx" aria-label="Fermer">✕</button></div>
+    <svg class="pfv" viewBox="0 0 1125 640"><rect x="20" y="20" width="735" height="420" rx="104" style="fill:var(--pc,#ff5a1f)"/><rect x="34" y="34" width="707" height="392" rx="93" style="fill:none;stroke:#111;stroke-width:10"/>
+      <text x="258" y="140" data-b="57.5" data-w="380">LOUBARD</text><text class="fN w" x="258" y="300" data-b="182" data-w="390">289</text><text x="258" y="354" data-b="35.4">MPR 2,33</text>
+      ${[0,1,2].map(i=>`<rect x="466" y="${118+i*85}" width="209" height="69" rx="31" style="fill:#fff;stroke:#111;stroke-width:4"/><text class="fN" x="570" y="${173+i*85}" data-b="58">${['18','T20','17'][i]}</text>`).join('')}
+      <text x="917" y="140" data-b="57.5" data-w="260">TONY</text><text class="fN" x="917" y="292" data-b="186" data-w="300">132</text>
+      <rect x="364" y="470" width="397" height="155" rx="77" style="fill:var(--pc,#ff5a1f)"/><rect x="40" y="478" width="705" height="140" rx="70" style="fill:none;stroke:#111;stroke-width:10"/>
+      <text class="fN w" x="562.5" y="598" data-b="139" data-w="150">15</text><text x="200" y="574" data-b="60">Spew</text><text class="fN" x="930" y="590" data-b="130">16</text></svg>
+    <div class="pfs"><button data-t="T" class="${tgt==='T'?'on':''}">Textes</button><button data-t="N" class="${tgt==='N'?'on':''}">Numéros</button></div>
+    <div class="pfl">${all().map(([f,l])=>`<button data-f="${esc(f)}" class="${f===cur?'on':''}"><span style="font-family:'${esc(f)}','Fun'">${tgt==='N'?'15 289':'Loubard'}</span><small>${esc(l||f)}</small></button>`).join('')}</div>
+    <div class="pfb"><button class="pfi">Importer un fichier (.otf, .ttf, .woff)</button><input type="file" hidden></div>`;
+    pfPrev()};
+  draw();
+  p.addEventListener('click',ev=>{ev.stopPropagation();if(ev.target.closest('.pfx')){p.remove();return}
+    const sb=ev.target.closest('.pfs button');if(sb){tgt=sb.dataset.t;haptic();draw();return}
+    const fb=ev.target.closest('.pfl button');if(fb){haptic();if(tgt==='T')S.pfT=fb.dataset.f;else S.pfN=fb.dataset.f;store.set(K_S,S);pfApply();draw();return}
+    if(ev.target.closest('.pfi'))p.querySelector('input[type=file]').click()});
+  p.addEventListener('change',ev=>{const f=ev.target.files&&ev.target.files[0];if(!f)return;const name=f.name.replace(/\.[^.]+$/,'').replace(/[^\w \-]/g,' ').trim().slice(0,40)||'Police';
+    const rd=new FileReader();rd.onload=()=>{const url=rd.result;const ff=new FontFace(name,`url(${url})`);ff.load().then(x=>{document.fonts.add(x);PF_ON[name]=1;
+      const st=pfStore();st[name]=url;try{localStorage.setItem(PF_K,JSON.stringify(st))}catch(e){mkToast&&mkToast('','Police chargée pour cette session seulement (mémoire pleine)',2500)}
+      if(tgt==='T')S.pfT=name;else S.pfN=name;store.set(K_S,S);pfApply();draw()}).catch(()=>{try{mkToast('','Fichier de police illisible',2200)}catch(e){}})};rd.readAsDataURL(f)})}
+pfApply();
 /* fin de tour : on ne peut plus marquer pendant un court instant (le temps de passer la main) */
 const TURNLOCK_MS=1200;let TURNLOCK=0;
 const turnLocked=()=>performance.now()<TURNLOCK||!!HOLD||!!KHOLD||(typeof XHOLD!=='undefined'&&!!XHOLD);   // tant que le joueur n'a pas changé à l'écran
