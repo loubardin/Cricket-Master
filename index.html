@@ -4317,7 +4317,7 @@ html.krt body>:is(.bhole,.bosstag,.bspark,.bullet,.ember,.fireglow,.flake,.bullf
 #kr .rcrown{position:absolute;pointer-events:none;transition:opacity .3s}
 /* lignes */
 #kr .rrow{pointer-events:auto;cursor:pointer}
-#kr .rrail{position:absolute;top:calc(50% - var(--rh)*var(--s)/2);height:calc(var(--rh)*var(--s));border:calc(var(--S1)*var(--s)) solid var(--ink);border-radius:999px;background:var(--cream);will-change:transform}
+#kr .rrail{position:absolute;top:calc(50% - (var(--ch) + 12)*var(--s)/2);height:calc((var(--ch) + 12)*var(--s));border:calc(var(--S1)*var(--s)) solid var(--ink);border-radius:999px;background:var(--cream);will-change:transform}
 #kr .rcap{position:absolute;left:calc(258*var(--s));width:calc(335*var(--s));top:calc(50% - var(--ch)*var(--s)/2);height:calc(var(--ch)*var(--s));border:calc(var(--S1)*var(--s)) solid var(--ink);border-radius:999px;
   background:var(--pc);transition:background-color .45s ease;will-change:transform}
 #kr.m2 .rrow:not(.dead) .rcap{background:linear-gradient(#ffffff,#d5dbe1 55%,#aeb7c1)}
@@ -4335,6 +4335,8 @@ html.krt body>:is(.bhole,.bosstag,.bspark,.bullet,.ember,.fireglow,.flake,.bullf
 #kr .rft{pointer-events:none}
 #kr .rft .zb{position:absolute;pointer-events:auto;cursor:pointer}
 #kr .rbtn{position:absolute;border:calc(var(--S2)*var(--s)) solid var(--ink);border-radius:999px;background:var(--cream);transition:transform .15s ease,opacity .2s,filter .2s}
+#kr .rbtn:is(.dbl,.home){border-right:0;border-radius:999px 0 0 999px}
+#kr .rbtn:is(.trp,.undo){border-left:0;border-radius:0 999px 999px 0}
 #kr .rbtn.dbl{background:#fbc103}
 #kr .rbtn.trp{background:#fc434a}
 #kr.m2 .rbtn.trp,#kr.m3 .rbtn.dbl{background:var(--cream)}
@@ -8040,14 +8042,14 @@ function krBuild(){const g=$('game');let k=$('kr');if(k)k.remove();
   const rowsY=[676.4,808.8,941.2,1073.6,1206,1338.4,1470.8],T=[25,20,19,18,17,16,15];
   let h=`<div id="kr" class="sl">`;
   // en-tête : logo + 2 lignes
-  h+=krT('rsub1',427.5,203.5,23,1.12)+krT('rsub2',428,236.5,23,1.12);
+  h+=krT('rsub1',427.5,192,23,1.12)+krT('rsub2',428,222,23,1.12);
   // case du joueur en cours
-  h+=`<div class="z rcard" style="--x:24;--y:297;--w:535;--h:309"><div class="rin"></div>
-      <div class="in">${krT('rnm',168.5,70,56,1.12)}${krT('rpt',168.5,160,127,1.05)}${krT('rmp',168.5,238.5,28,1.12,'letter-spacing:.04em')}
-      ${[0,1,2].map(i=>`<div class="z rpill" style="--x:316;--y:${47+i*73};--w:174;--h:61"><span></span></div>`).join('')}</div></div>`;
+  h+=`<div class="z rcard" style="--x:24;--y:252;--w:535;--h:354"><div class="rin"></div>
+      <div class="in">${krT('rnm',168.5,100,56,1.12)}${krT('rpt',168.5,192,127,1.05)}${krT('rmp',168.5,270,28,1.12,'letter-spacing:.04em')}
+      ${[0,1,2].map(i=>`<div class="z rpill" style="--x:316;--y:${55+i*91};--w:174;--h:61"><span></span></div>`).join('')}</div></div>`;
   // adversaire
-  h+=`<div class="z ropp" style="--x:580;--y:300;--w:226;--h:280"><div class="in">${krT('rnm',112,40.5,50,1.12)}${krT('rpt',115.5,131,122,1.05)}${krT('rmp',112.5,202.5,22,1.12)}
-      ${[0,1,2].map(i=>`<div class="z rpill" style="--x:${9+i*72};--y:231;--w:66;--h:40"><span></span></div>`).join('')}</div></div>`;
+  h+=`<div class="z ropp" style="--x:580;--y:252;--w:226;--h:354"><div class="in">${krT('rnm',112,100,50,1.12)}${krT('rpt',115.5,192,122,1.05)}${krT('rmp',112.5,270,22,1.12)}
+      ${[0,1,2].map(i=>`<div class="z rpill" style="--x:${9+i*72};--y:300;--w:66;--h:40"><span></span></div>`).join('')}</div></div>`;
   h+=`<svg class="rcrown" viewBox="0 0 112 82"><g stroke="#050505" stroke-width="4" stroke-linejoin="round">
       <circle cx="11" cy="30" r="10" fill="#fbc11a"/><circle cx="55" cy="12" r="11" fill="#fbc11a"/><circle cx="98" cy="27" r="10" fill="#fbc11a"/>
       <path d="M17 37 L38 55 L55 20 L73 54 L92 35 L94 66 Q56 78 16 66 Z" fill="#fbc11a"/></g>
@@ -8057,26 +8059,25 @@ function krBuild(){const g=$('game');let k=$('kr');if(k)k.remove();
       <circle cx="8" cy="27" r="3" fill="#fff" opacity=".7"/><circle cx="52" cy="8" r="3.4" fill="#fff" opacity=".7"/><circle cx="95" cy="24" r="3" fill="#fff" opacity=".7"/></svg>`;
   // lignes
   T.forEach((t,i)=>{const y=rowsY[i];h+=`<div class="z rrow" data-t="${t}" style="--x:0;--y:${y-64.5};--w:852;--h:129"><div class="rrail"></div><div class="rmk ml" style="left:calc(107*var(--s))"></div><div class="rmk mr" style="left:calc(643*var(--s))"></div>
-      <div class="rcap">${t===25?krT('rn',0,0,82,1.05,'--sk:-8deg'):krT('rn',0,0,110,1.02)}</div></div>`});
+      <div class="rcap">${t===25?krT('rn',0,0,82,1.05,'--sk:-8deg'):krT('rn',0,0,118,1.02)}</div></div>`});
   // bas
   h+=`<div class="z rft" style="--x:0;--y:1530;--w:852;--h:290">
-      <svg class="full" style="left:0;top:calc(-1530*var(--s));width:100%;height:calc(1846*var(--s))" viewBox="0 0 852 1846">
-        <rect x="21.5" y="1558.5" width="803.5" height="236.5" rx="60" fill="none" stroke="#050505" stroke-width="4.8"/></svg>
-      <div class="rbtn dbl" style="left:calc(37*var(--s));top:calc(43*var(--s));width:calc(310*var(--s));height:calc(101*var(--s))"></div>${krT('rdb',170,92.5,57,1.05,'--sk:-8deg')}
-      <div class="rbtn trp" style="left:calc(505*var(--s));top:calc(43*var(--s));width:calc(304*var(--s));height:calc(101*var(--s))"></div>${krT('rtr',682,92.5,57,1.05,'--sk:-8deg')}
-      <div class="rbtn home" style="left:calc(37*var(--s));top:calc(155*var(--s));width:calc(310*var(--s));height:calc(94*var(--s))"></div>
-      <div class="rbtn undo" style="left:calc(505*var(--s));top:calc(155*var(--s));width:calc(304*var(--s));height:calc(94*var(--s))"></div>
+
+      <div class="rbtn dbl" style="left:calc(24*var(--s));top:calc(43*var(--s));width:calc(402*var(--s));height:calc(101*var(--s))"></div>${krT('rdb',158,92.5,57,1.05,'--sk:-8deg')}
+      <div class="rbtn trp" style="left:calc(424*var(--s));top:calc(43*var(--s));width:calc(404*var(--s));height:calc(101*var(--s))"></div>${krT('rtr',694,92.5,57,1.05,'--sk:-8deg')}
+      <div class="rbtn home" style="left:calc(24*var(--s));top:calc(158*var(--s));width:calc(402*var(--s));height:calc(94*var(--s))"></div>
+      <div class="rbtn undo" style="left:calc(424*var(--s));top:calc(158*var(--s));width:calc(404*var(--s));height:calc(94*var(--s))"></div>
       <svg class="full" style="left:0;top:calc(-1530*var(--s));width:100%;height:calc(1846*var(--s))" viewBox="0 0 852 1846" stroke="#050505" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M125 1731 L159 1700 L193 1731 M132 1725 V1759 H186 V1725 M151 1759 V1739 H167 V1759" stroke-width="9"/>
-        <path d="M671 1713 A24 24 0 1 1 661 1752" stroke-width="10.5"/><path d="M647 1715 L671 1701 L673 1727 Z" fill="#050505" stroke-width="3"/></svg>
+        <path d="M125 1731 L159 1700 L193 1731 M132 1725 V1759 H186 V1725 M151 1759 V1739 H167 V1759" stroke-width="9" transform="translate(-12 5)"/>
+        <g transform="translate(16 5)"><path d="M671 1713 A24 24 0 1 1 661 1752" stroke-width="10.5"/><path d="M647 1715 L671 1701 L673 1727 Z" fill="#050505" stroke-width="3"/></g></svg>
       <div class="rcloud" style="position:absolute;inset:0">
         <svg class="full" style="left:0;top:calc(-1530*var(--s));width:100%;height:calc(1846*var(--s))" viewBox="0 0 852 1846">
           <defs><clipPath id="krcl"><circle cx="425" cy="1668" r="128"/></clipPath></defs><g stroke="#050505" stroke-width="11.2" fill="#050505"><circle cx="425" cy="1668" r="128"/></g><g fill="#b5f1d7"><circle cx="425" cy="1668" r="128"/></g><g clip-path="url(#krcl)" fill="#fef6e4"><g transform="translate(0 -30)"><circle cx="425" cy="1668" r="128"/></g></g></svg>
         ${krT('rsp',425,1668-1530,92,1.05)}</div>
-      <b class="zb b2" style="left:calc(37*var(--s));top:calc(43*var(--s));width:calc(222*var(--s));height:calc(101*var(--s))"></b>
-      <b class="zb b3" style="left:calc(592*var(--s));top:calc(43*var(--s));width:calc(217*var(--s));height:calc(101*var(--s))"></b>
-      <b class="zb bm" style="left:calc(37*var(--s));top:calc(155*var(--s));width:calc(222*var(--s));height:calc(94*var(--s))"></b>
-      <b class="zb bu" style="left:calc(592*var(--s));top:calc(155*var(--s));width:calc(217*var(--s));height:calc(94*var(--s))"></b>
+      <b class="zb b2" style="left:calc(24*var(--s));top:calc(43*var(--s));width:calc(270*var(--s));height:calc(101*var(--s))"></b>
+      <b class="zb b3" style="left:calc(558*var(--s));top:calc(43*var(--s));width:calc(270*var(--s));height:calc(101*var(--s))"></b>
+      <b class="zb bm" style="left:calc(24*var(--s));top:calc(158*var(--s));width:calc(270*var(--s));height:calc(94*var(--s))"></b>
+      <b class="zb bu" style="left:calc(558*var(--s));top:calc(158*var(--s));width:calc(270*var(--s));height:calc(94*var(--s))"></b>
       <b class="zb s" style="left:calc(294*var(--s));top:calc(7*var(--s));width:calc(262*var(--s));height:calc(262*var(--s));border-radius:50%"></b></div>`;
   h+=`</div>`;g.insertAdjacentHTML('beforeend',h);k=$('kr');
   const q=(x,el)=>(el||k).querySelector(x);
@@ -8126,18 +8127,18 @@ function krSync(){const g=$('game'),on=krOn()&&g.classList.contains('on');g.clas
   if(prev&&prev!==side)krSwap(side);
   // couronne
   const lead=[0,1].find(i=>R.sc[i].nm.querySelector('.hat')),cr=KR.crown;
-  if(lead===undefined)cr.style.opacity=0;else{cr.style.opacity=1;const a=lead===cur,X=a?(F?630:102):(F?114:640),Y=a?240:266,W=a?120:84;
+  if(lead===undefined)cr.style.opacity=0;else{cr.style.opacity=1;const a=lead===cur,X=a?(F?630:102):(F?114:640),Y=a?195:278,W=a?120:84;
     cr.style.left=`calc(var(--ox) + ${X}*var(--s))`;cr.style.top=`calc(var(--oy) + ${Y}*var(--s))`;cr.style.width=`calc(${W}*var(--s))`;cr.style.height=`calc(${W*82/112}*var(--s))`}
   // lignes
   TARGETS.forEach(t=>{const o=KR.rows[t];if(!o)return;const d=dead(t);if(o.dead!==d){o.dead=d;o.r.classList.toggle('dead',d)}
-    o.rail.style.left=`calc(${F?422:27}*var(--s))`;o.rail.style.width=`calc(403*var(--s))`;
+    o.rail.style.left=`calc(${F?417:20}*var(--s))`;o.rail.style.width=`calc(415*var(--s))`;
     [0,1].forEach(i=>{const n=Math.min(3,G.players[i].marks[t]||0),el=i?o.mr:o.ml,key=n+pcolI(i);if(o.mk[i]===key)return;const up=typeof o.mk[i]==='string'&&n>parseInt(o.mk[i]);o.mk[i]=key;
       el.innerHTML=krMark(n,pcolI(i));if(up&&n)el.animate([{transform:'scale(1.4)'},{transform:'scale(.92)',offset:.6},{transform:'scale(1)'}],{duration:280,easing:'ease-out'})})})}
 /* lignes : réparties entre la case joueur (bas à 606) et le nuage (ancré en bas d'écran), même écart partout */
 function krLayout(){const key=innerWidth+'x'+innerHeight;if(KR._lay===key)return;KR._lay=key;const s=krS(),U=innerHeight/s,D=U+169-1846;
-  const span=935+D,h=Math.min(150,(span-8*9)/7),g=(span-7*h)/8,k=KR.k;
+  const span=935+D,E=12,h=Math.min(150,(span-8*18)/7-E),g=(span-7*(h+E))/8,k=KR.k;
   k.style.setProperty('--ch',h.toFixed(2));k.style.setProperty('--rh',(h*107/124).toFixed(2));k.style.setProperty('--rk',(h/124).toFixed(3));
-  Object.values(KR.rows).forEach(o=>{const i=[25,20,19,18,17,16,15].indexOf(+o.r.dataset.t),c=606+g+h/2+i*(h+g);o.r.style.setProperty('--y',(c-(h+g)/2).toFixed(2));o.r.style.setProperty('--h',(h+g).toFixed(2))})}
+  Object.values(KR.rows).forEach(o=>{const i=[25,20,19,18,17,16,15].indexOf(+o.r.dataset.t),c=606+g+(h+E)/2+i*(h+E+g);o.r.style.setProperty('--y',(c-(h+E+g)/2).toFixed(2));o.r.style.setProperty('--h',(h+E+g).toFixed(2))})}
 function krSwap(side){if(!KR)return;const s=krS(),dir=side==='sr'?-1:1,E='cubic-bezier(.3,1.2,.45,1)';
   const mv=(el,dx,delay)=>{if(!el)return;el.getAnimations().forEach(a=>a.cancel());el.animate([{transform:`translate3d(${dx}px,0,0)`},{transform:'translate3d(0,0,0)'}],{duration:520,easing:E,delay:delay||0,fill:'backwards'})};
   mv(KR.card,dir*269*s);KR.opp.getAnimations().forEach(a=>a.cancel());KR.opp.animate([{opacity:0},{opacity:0,offset:.35},{opacity:1}],{duration:520,easing:'ease-out'});
