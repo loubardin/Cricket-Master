@@ -4289,7 +4289,7 @@ html.krt body>:is(.bhole,.bosstag,.bspark,.bullet,.ember,.fireglow,.flake,.bullf
   --s:min(calc(100vw/852),calc(100dvh/1560));--ox:calc((100vw - 852*var(--s))/2);--oy:calc(-169*var(--s));--ch:124;--rh:107;--rk:1;
   --ink:#050505;--cream:#fdf4e2;--bg:#fef3de;--S1:5.6;--S2:4.6;--pc:#fbc103;background:var(--bg);font-family:"K-retro",serif}
 #kr *{box-sizing:border-box}
-#game#game#game>#kr,#game#game#game>#kr *{font-family:"K-retro",serif!important;font-weight:400!important;font-synthesis:none}
+#game#game#game>#kr,#game#game#game>#kr *{font-family:"K-foraine",serif!important;font-weight:400!important;font-synthesis:none}
 #game#game#game>#kr .rrow{background:none!important;box-shadow:none!important}
 #kr .z{position:absolute;left:calc(var(--ox) + var(--x)*var(--s));top:calc(var(--oy) + var(--y)*var(--s));width:calc(var(--w)*var(--s));height:calc(var(--h)*var(--s))}
 #kr .t{position:absolute;left:calc(var(--ox) + var(--x)*var(--s));top:calc(var(--oy) + var(--y)*var(--s));white-space:nowrap;line-height:1;color:var(--ink);
@@ -4345,9 +4345,8 @@ html.krt body>:is(.bhole,.bosstag,.bspark,.bullet,.ember,.fireglow,.flake,.bullf
 #game#game#game>#kr :is(.rcap .rn,.rpt){color:#fff;-webkit-text-stroke:calc(var(--nw)*var(--s)) var(--ink)!important;paint-order:stroke fill}
 #game#game#game>#kr .rcap .rn{--nw:13}
 #game#game#game>#kr .rpt{--nw:14}
+#kr .rrow.dead .rcap .t{font-size:calc(96*var(--rk)*var(--s))!important}
 #game#game#game>#kr .rrow.dead .rcap .rn{color:#fff;-webkit-text-stroke-color:#ada797!important}
-#game#game#game>#kr :is(.rnm,.rsub2 b){font-family:"K-gothique",serif!important;text-transform:lowercase}
-#game#game#game>#kr :is(.rnm,.rsub2 b)::first-letter{text-transform:uppercase}
 #game#game#game>#kr .rsub2 b{display:inline-block;font-size:1.25em;line-height:1}
 </style>
 </head>
@@ -8040,13 +8039,13 @@ function krBuild(){const g=$('game');let k=$('kr');if(k)k.remove();
   const rowsY=[676.4,808.8,941.2,1073.6,1206,1338.4,1470.8],T=[25,20,19,18,17,16,15];
   let h=`<div id="kr" class="sl">`;
   // en-tête : logo + 2 lignes
-  h+=krT('rsub1',427.5,203.5,23.6,1.03,'--fw:.9')+krT('rsub2',428,236.5,23.6,1,'--fw:.9');
+  h+=krT('rsub1',427.5,203.5,23,1.12)+krT('rsub2',428,236.5,23,1.12);
   // case du joueur en cours
   h+=`<div class="z rcard" style="--x:24;--y:297;--w:535;--h:309"><div class="rin"></div>
-      <div class="in">${krT('rnm',168.5,66,74,1,'--fw:2.6')}${krT('rpt',168.5,160,148,.9,'--fw:4.5')}${krT('rmp',168.5,238.5,30,1,'letter-spacing:.05em;--fw:1.3')}
+      <div class="in">${krT('rnm',168.5,70,56,1.12)}${krT('rpt',168.5,160,127,1.05)}${krT('rmp',168.5,238.5,28,1.12,'letter-spacing:.04em')}
       ${[0,1,2].map(i=>`<div class="z rpill" style="--x:316;--y:${47+i*73};--w:174;--h:61"><span></span></div>`).join('')}</div></div>`;
   // adversaire
-  h+=`<div class="z ropp" style="--x:580;--y:300;--w:226;--h:280"><div class="in">${krT('rnm',112,37,66,1,'--fw:2.4')}${krT('rpt',115.5,131,142,.88,'--fw:4.5')}${krT('rmp',112.5,202.5,23.6,1.04,'--fw:1')}
+  h+=`<div class="z ropp" style="--x:580;--y:300;--w:226;--h:280"><div class="in">${krT('rnm',112,40.5,50,1.12)}${krT('rpt',115.5,131,122,1.05)}${krT('rmp',112.5,202.5,22,1.12)}
       ${[0,1,2].map(i=>`<div class="z rpill" style="--x:${9+i*72};--y:231;--w:66;--h:40"><span></span></div>`).join('')}</div></div>`;
   h+=`<svg class="rcrown" viewBox="0 0 112 82"><g stroke="#050505" stroke-width="4" stroke-linejoin="round">
       <circle cx="11" cy="30" r="10" fill="#fbc11a"/><circle cx="55" cy="12" r="11" fill="#fbc11a"/><circle cx="98" cy="27" r="10" fill="#fbc11a"/>
@@ -8057,13 +8056,13 @@ function krBuild(){const g=$('game');let k=$('kr');if(k)k.remove();
       <circle cx="8" cy="27" r="3" fill="#fff" opacity=".7"/><circle cx="52" cy="8" r="3.4" fill="#fff" opacity=".7"/><circle cx="95" cy="24" r="3" fill="#fff" opacity=".7"/></svg>`;
   // lignes
   T.forEach((t,i)=>{const y=rowsY[i];h+=`<div class="z rrow" data-t="${t}" style="--x:0;--y:${y-64.5};--w:852;--h:129"><div class="rrail"></div><div class="rmk ml" style="left:calc(107*var(--s))"></div><div class="rmk mr" style="left:calc(643*var(--s))"></div>
-      <div class="rcap">${t===25?krT('rn',0,0,87,.85,'--sk:-11deg;--fw:3'):krT('rn',0,0,128,.82,'--fw:4')}</div></div>`});
+      <div class="rcap">${t===25?krT('rn',0,0,82,1.05,'--sk:-8deg'):krT('rn',0,0,110,1.02)}</div></div>`});
   // bas
   h+=`<div class="z rft" style="--x:0;--y:1530;--w:852;--h:290">
       <svg class="full" style="left:0;top:calc(-1530*var(--s));width:100%;height:calc(1846*var(--s))" viewBox="0 0 852 1846">
         <rect x="21.5" y="1558.5" width="803.5" height="236.5" rx="60" fill="none" stroke="#050505" stroke-width="4.8"/></svg>
-      <div class="rbtn dbl" style="left:calc(37*var(--s));top:calc(43*var(--s));width:calc(310*var(--s));height:calc(101*var(--s))"></div>${krT('rdb',170,92.5,62,.74,'--sk:-9deg;--fw:2.6')}
-      <div class="rbtn trp" style="left:calc(505*var(--s));top:calc(43*var(--s));width:calc(304*var(--s));height:calc(101*var(--s))"></div>${krT('rtr',682,92.5,62,.79,'--sk:-9deg;--fw:2.6')}
+      <div class="rbtn dbl" style="left:calc(37*var(--s));top:calc(43*var(--s));width:calc(310*var(--s));height:calc(101*var(--s))"></div>${krT('rdb',170,92.5,57,1.05,'--sk:-8deg')}
+      <div class="rbtn trp" style="left:calc(505*var(--s));top:calc(43*var(--s));width:calc(304*var(--s));height:calc(101*var(--s))"></div>${krT('rtr',682,92.5,57,1.05,'--sk:-8deg')}
       <div class="rbtn home" style="left:calc(37*var(--s));top:calc(155*var(--s));width:calc(310*var(--s));height:calc(94*var(--s))"></div>
       <div class="rbtn undo" style="left:calc(505*var(--s));top:calc(155*var(--s));width:calc(304*var(--s));height:calc(94*var(--s))"></div>
       <svg class="full" style="left:0;top:calc(-1530*var(--s));width:100%;height:calc(1846*var(--s))" viewBox="0 0 852 1846" stroke="#050505" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -8072,7 +8071,7 @@ function krBuild(){const g=$('game');let k=$('kr');if(k)k.remove();
       <div class="rcloud" style="position:absolute;inset:0">
         <svg class="full" style="left:0;top:calc(-1530*var(--s));width:100%;height:calc(1846*var(--s))" viewBox="0 0 852 1846">
           <defs><clipPath id="krcl"><circle cx="425.0" cy="1590.0" r="50"/><circle cx="482.6" cy="1604.9" r="50"/><circle cx="518.2" cy="1643.9" r="50"/><circle cx="518.2" cy="1692.1" r="50"/><circle cx="482.6" cy="1731.1" r="50"/><circle cx="425.0" cy="1746.0" r="50"/><circle cx="367.4" cy="1731.1" r="50"/><circle cx="331.8" cy="1692.1" r="50"/><circle cx="331.8" cy="1643.9" r="50"/><circle cx="367.4" cy="1604.9" r="50"/><ellipse cx="425" cy="1668" rx="98" ry="78"/></clipPath></defs><g stroke="#050505" stroke-width="11.2" fill="#050505"><circle cx="425.0" cy="1590.0" r="50"/><circle cx="482.6" cy="1604.9" r="50"/><circle cx="518.2" cy="1643.9" r="50"/><circle cx="518.2" cy="1692.1" r="50"/><circle cx="482.6" cy="1731.1" r="50"/><circle cx="425.0" cy="1746.0" r="50"/><circle cx="367.4" cy="1731.1" r="50"/><circle cx="331.8" cy="1692.1" r="50"/><circle cx="331.8" cy="1643.9" r="50"/><circle cx="367.4" cy="1604.9" r="50"/><ellipse cx="425" cy="1668" rx="98" ry="78"/></g><g fill="#b5f1d7"><circle cx="425.0" cy="1590.0" r="50"/><circle cx="482.6" cy="1604.9" r="50"/><circle cx="518.2" cy="1643.9" r="50"/><circle cx="518.2" cy="1692.1" r="50"/><circle cx="482.6" cy="1731.1" r="50"/><circle cx="425.0" cy="1746.0" r="50"/><circle cx="367.4" cy="1731.1" r="50"/><circle cx="331.8" cy="1692.1" r="50"/><circle cx="331.8" cy="1643.9" r="50"/><circle cx="367.4" cy="1604.9" r="50"/><ellipse cx="425" cy="1668" rx="98" ry="78"/></g><g clip-path="url(#krcl)" fill="#fef6e4"><g transform="translate(0 -30)"><circle cx="425.0" cy="1590.0" r="50"/><circle cx="482.6" cy="1604.9" r="50"/><circle cx="518.2" cy="1643.9" r="50"/><circle cx="518.2" cy="1692.1" r="50"/><circle cx="482.6" cy="1731.1" r="50"/><circle cx="425.0" cy="1746.0" r="50"/><circle cx="367.4" cy="1731.1" r="50"/><circle cx="331.8" cy="1692.1" r="50"/><circle cx="331.8" cy="1643.9" r="50"/><circle cx="367.4" cy="1604.9" r="50"/><ellipse cx="425" cy="1668" rx="98" ry="78"/></g></g></svg>
-        ${krT('rsp',425,1668-1530,100,.74,'--fw:5')}</div>
+        ${krT('rsp',425,1668-1530,92,1.05)}</div>
       <b class="zb b2" style="left:calc(37*var(--s));top:calc(43*var(--s));width:calc(222*var(--s));height:calc(101*var(--s))"></b>
       <b class="zb b3" style="left:calc(592*var(--s));top:calc(43*var(--s));width:calc(217*var(--s));height:calc(101*var(--s))"></b>
       <b class="zb bm" style="left:calc(37*var(--s));top:calc(155*var(--s));width:calc(222*var(--s));height:calc(94*var(--s))"></b>
@@ -8095,10 +8094,10 @@ function krText(el,txt,base,maxW){if(el._h===txt&&el._b===base)return;el._h=txt;
   const s=krS(),sx=parseFloat(getComputedStyle(el).getPropertyValue('--sx'))||1;let n=0;while(el.scrollWidth*sx>maxW*s&&f>8&&n++<30){f*=.94;el.style.setProperty('--f',f)}}
 const krName=sc=>{const w=sc.nm.querySelector('.nmw');return (w?w.textContent:(sc.nm.firstChild&&sc.nm.firstChild.nodeType===3?sc.nm.firstChild.textContent:sc.nm.textContent)).trim()};
 function krFill(box,i,act){const sc=R.sc[i],t=box.querySelectorAll('.t');
-  krText(t[0],krName(sc),act?74:66,act?232:205);
+  krText(t[0],krName(sc),act?56:50,act?232:205);
   const nv=sc.pts.textContent.trim(),pt=t[1],same=pt._who===i,ov=pt._v;pt._who=i;if(!same){cancelAnimationFrame(pt._raf);pt._h=null}
-  krText(pt,nv,act?152:145,act?246:205);if(same&&ov!==undefined&&ov!==nv&&/^\d+$/.test(ov)&&/^\d+$/.test(nv)&&+nv>+ov)kcCountR(pt,+ov,+nv);pt._v=nv;
-  const b=sc.m&&sc.m.querySelector('b');krText(t[2],'MPR '+(b?b.textContent:''),act?30.5:23.6,act?220:190);
+  krText(pt,nv,act?127:122,act?246:205);if(same&&ov!==undefined&&ov!==nv&&/^\d+$/.test(ov)&&/^\d+$/.test(nv)&&+nv>+ov)kcCountR(pt,+ov,+nv);pt._v=nv;
+  const b=sc.m&&sc.m.querySelector('b');krText(t[2],'MPR '+(b?b.textContent:''),act?28:22,act?220:190);
   const ps=[...sc.pills.children].filter(x=>!x.classList.contains('undo')).slice(0,3);
   box.querySelectorAll('.rpill').forEach((h,k)=>{const p=ps[k],cls=p?(p.classList.contains('t')?'qT':p.classList.contains('d')?'qD':''):'',tx=p?p.textContent.trim():'';
     if(h._c!==cls){h._c=cls;h.className='z rpill '+cls}const sp=h.firstChild,tt=tx==='·'?'':tx;if(sp.textContent!==tt)sp.textContent=tt})}
