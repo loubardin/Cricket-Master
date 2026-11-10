@@ -4327,6 +4327,7 @@ html:is(.pcl,.pkl) body>:is(.fireglow,.ember,.bhole){display:none!important}
 #pfp .pfl span{font-size:26px;line-height:1.1;white-space:nowrap;overflow:hidden;max-width:100%}
 #pfp .pfl small{font:600 11px "Lbl",sans-serif;opacity:.7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 #pfp .pfb button{width:100%;border:0;border-radius:99px;background:#111;color:#fff;font:400 17px "Fun",sans-serif;padding:13px}
+.skinpick .skv{font:600 11px "Lbl",sans-serif;opacity:.5;text-align:center}
 </style>
 </head>
 <body>
@@ -7781,6 +7782,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||(S.style&&S.style!=='bulle'&&S.style!=='pop')){delete S.th;delete S.style;try{store.set(K_S,S)}catch(e){}}
+const APPV='lf-228';   // à changer avec VERSION dans sw.js
 function popOn(){return S.style!=='bulle'}
 function popApply(){document.documentElement.classList.toggle('pop',popOn());try{const m=document.querySelector('meta[name=theme-color]');if(m)m.content=popOn()?'#f9ecc9':'#f7f2e5'}catch(e){}try{if(G&&R&&$('game').classList.contains('on')){layoutSk();if(typeof fitSk==='function')fitSk();render()}}catch(e){}}
 popApply();
@@ -7788,7 +7790,7 @@ popApply();
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
   const p=el('div','');p.id='xpick';p.classList.add('skinpick');document.body.append(p);
-  const draw=()=>{p.innerHTML=`<div class="skn"><button class="skgo" data-go="hStats">Statistiques</button><button class="skgo" data-go="hHist">Historique</button></div><div class="skp"><span>Style</span><div class="sksw skst"><button data-st="pop" class="${popOn()?'on':''}">Pop</button><button data-st="bulle" class="${popOn()?'':'on'}">Bulle</button></div></div>${popOn()?'<div class="skp"><span>Polices</span><div class="sksw"><button class="skfp">Essayer</button></div></div>':''}<div class="skp"><span>Son</span><div class="sksw sksnd"><button data-s="1" class="${S.sound?'on':''}">Oui</button><button data-s="0" class="${S.sound?'':'on'}">Non</button></div></div>`+`<div class="skp"><span>Couleurs des joueurs</span><div class="sksw"><button data-p="1" class="${S.pcolOff?'':'on'}">Oui</button><button data-p="0" class="${S.pcolOff?'on':''}">Non</button></div></div>`};
+  const draw=()=>{p.innerHTML=`<div class="skn"><button class="skgo" data-go="hStats">Statistiques</button><button class="skgo" data-go="hHist">Historique</button></div><div class="skp"><span>Style</span><div class="sksw skst"><button data-st="pop" class="${popOn()?'on':''}">Pop</button><button data-st="bulle" class="${popOn()?'':'on'}">Bulle</button></div></div>${popOn()?'<div class="skp"><span>Polices</span><div class="sksw"><button class="skfp">Essayer</button></div></div>':''}<div class="skp"><span>Son</span><div class="sksw sksnd"><button data-s="1" class="${S.sound?'on':''}">Oui</button><button data-s="0" class="${S.sound?'':'on'}">Non</button></div></div>`+`<div class="skp"><span>Couleurs des joueurs</span><div class="sksw"><button data-p="1" class="${S.pcolOff?'':'on'}">Oui</button><button data-p="0" class="${S.pcolOff?'on':''}">Non</button></div></div><div class="skv">version ${APPV}</div>`};
   draw();p.style.left=Math.max(12,(innerWidth-p.offsetWidth)/2)+'px';p.style.top=Math.max(12,Math.min(innerHeight-p.offsetHeight-12,e.currentTarget.getBoundingClientRect().bottom+10))+'px';
   p.addEventListener('click',ev=>{ev.stopPropagation();const go=ev.target.closest('.skgo');if(go){p.remove();$(go.dataset.go).dispatchEvent(new MouseEvent('click',{bubbles:true}));return}
     if(ev.target.closest('.skfp')){p.remove();pfOpen();return}
