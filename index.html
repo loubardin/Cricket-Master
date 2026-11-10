@@ -4286,14 +4286,14 @@ html[data-sk] body:not(.m2):not(.m3) :is(#game#game#game,#x01#x01#x01,#killer#ki
 html.krt body>:is(.bhole,.bosstag,.bspark,.bullet,.ember,.fireglow,.flake,.bullfx,.inflate,.ring){display:none!important}
 #game.krt>main,#game.krt>footer,#game.krt #fbar2,#game.krt header{visibility:hidden!important}
 #game.krt>#kr{display:block;position:absolute;inset:0;z-index:20;overflow:hidden;contain:strict;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;
-  --s:min(calc(100vw/852),calc(100dvh/1741));--ox:calc((100vw - 852*var(--s))/2);--oy:calc((100dvh - 1741*var(--s))/2 - 105*var(--s));
+  --s:min(calc(100vw/852),calc(100dvh/1560));--ox:calc((100vw - 852*var(--s))/2);--oy:calc(-169*var(--s));--ch:124;--rh:107;--rk:1;
   --ink:#050505;--cream:#fdf4e2;--bg:#fef3de;--S1:5.6;--S2:4.6;--pc:#fbc103;background:var(--bg);font-family:"K-retro",serif}
 #kr *{box-sizing:border-box}
 #game#game#game>#kr,#game#game#game>#kr *{font-family:"K-retro",serif!important;font-weight:400!important;font-synthesis:none}
 #game#game#game>#kr .rrow{background:none!important;box-shadow:none!important}
 #kr .z{position:absolute;left:calc(var(--ox) + var(--x)*var(--s));top:calc(var(--oy) + var(--y)*var(--s));width:calc(var(--w)*var(--s));height:calc(var(--h)*var(--s))}
 #kr .t{position:absolute;left:calc(var(--ox) + var(--x)*var(--s));top:calc(var(--oy) + var(--y)*var(--s));white-space:nowrap;line-height:1;color:var(--ink);
-  font-size:calc(var(--f)*var(--s));transform:translate(-50%,-50%) scaleX(var(--sx,1)) skewX(var(--sk,0deg));font-family:"K-retro",serif;pointer-events:none;-webkit-text-stroke:calc(var(--fw,0)*var(--s)) currentColor}
+  font-size:calc(var(--f)*var(--s));transform:translate(-50%,-50%) scaleX(var(--sx,1)) skewX(var(--sk,0deg));font-family:"K-retro",serif;pointer-events:none;-webkit-text-stroke:0}
 #kr .in .t{left:calc(var(--x)*var(--s));top:calc(var(--y)*var(--s))}
 #kr .in .z{left:calc(var(--x)*var(--s));top:calc(var(--y)*var(--s))}
 #kr svg{position:absolute;overflow:visible;pointer-events:none}
@@ -4303,29 +4303,30 @@ html.krt body>:is(.bhole,.bosstag,.bspark,.bullet,.ember,.fireglow,.flake,.bullf
 #kr .full{left:var(--ox);top:var(--oy);width:calc(852*var(--s));height:calc(1846*var(--s))}
 /* en-tête */
 #kr .rsub1 i,#kr .rsub2 i{font-style:normal;font-size:.62em;vertical-align:.18em;margin:0 .1em}
-#kr .rsub2 b{font-weight:400;color:#fac806;-webkit-text-stroke:calc(4.2*var(--s)) var(--ink);paint-order:stroke fill}
+#kr .rsub2 b{font-weight:400;color:var(--ink);background:var(--pc);border-radius:calc(8*var(--s));padding:0 calc(7*var(--s));transition:background-color .45s}
 /* case du joueur */
 #kr .rcard{border:calc(var(--S1)*var(--s)) solid var(--ink);border-radius:calc(48*var(--s));background:#fff;will-change:transform}
 #kr .rcard>.rin{position:absolute;inset:calc(13.5*var(--s));border:calc(var(--S2)*var(--s)) solid var(--ink);border-radius:calc(34*var(--s));background:var(--pc);transition:background-color .45s ease}
 #kr .rpill{position:absolute;border:calc(var(--S2)*var(--s)) solid var(--ink);border-radius:999px;background:var(--cream);display:grid;place-items:center;overflow:hidden}
 #kr .rpill.qD{background:linear-gradient(#f7f9fb,#c9cfd6)}
 #kr .rpill.qT{background:linear-gradient(#ffe98a,#f2b90f)}
-#kr .rpill span{font-size:calc(28*var(--s));line-height:1;transform:translateY(calc(1*var(--s)));-webkit-text-stroke:calc(1.2*var(--s)) currentColor}
+#kr .rpill span{font-size:calc(28*var(--s));line-height:1;transform:translateY(calc(1*var(--s)));-webkit-text-stroke:0}
 #kr .rpill span:empty::after,#kr .rpill span:is(:empty,.dot)::after{content:"";display:block;width:calc(9*var(--s));height:calc(9*var(--s));border-radius:calc(2*var(--s));background:var(--ink)}
 #kr .ropp .rpill span{font-size:calc(26*var(--s))}
 #kr .rcrown{position:absolute;pointer-events:none;transition:opacity .3s}
 /* lignes */
 #kr .rrow{pointer-events:auto;cursor:pointer}
-#kr .rrail{position:absolute;top:calc(50% - 53.5*var(--s));height:calc(107*var(--s));border:calc(var(--S1)*var(--s)) solid var(--ink);border-radius:999px;background:var(--cream);will-change:transform}
-#kr .rcap{position:absolute;left:calc(258*var(--s));width:calc(335*var(--s));top:calc(50% - 62*var(--s));height:calc(124*var(--s));border:calc(var(--S1)*var(--s)) solid var(--ink);border-radius:999px;
+#kr .rrail{position:absolute;top:calc(50% - var(--rh)*var(--s)/2);height:calc(var(--rh)*var(--s));border:calc(var(--S1)*var(--s)) solid var(--ink);border-radius:999px;background:var(--cream);will-change:transform}
+#kr .rcap{position:absolute;left:calc(258*var(--s));width:calc(335*var(--s));top:calc(50% - var(--ch)*var(--s)/2);height:calc(var(--ch)*var(--s));border:calc(var(--S1)*var(--s)) solid var(--ink);border-radius:999px;
   background:var(--pc);transition:background-color .45s ease;will-change:transform}
 #kr.m2 .rrow:not(.dead) .rcap{background:linear-gradient(#ffffff,#d5dbe1 55%,#aeb7c1)}
 #kr.m3 .rrow:not(.dead) .rcap{background:linear-gradient(#fff2a8,#ffcf2e 55%,#e39d00)}
-#kr .rcap .t{left:50%;top:50%}
+#kr .rcap .t{left:50%;top:50%;font-size:calc(var(--f)*var(--rk)*var(--s))}
+#game#game#game>#kr .rft{top:calc(100dvh - 316*var(--s))}
 
 #kr .rrow.dead .rrail{display:none}
-#kr .rrow.dead .rcap{background:transparent;border-color:#ada797;border-width:calc(var(--S2)*var(--s));top:calc(50% - 53.5*var(--s));height:calc(107*var(--s));left:calc(266*var(--s));width:calc(320*var(--s))}
-#kr .rrow.dead .rcap .t{color:#a29b8e;font-size:calc(112*var(--s))!important}
+#kr .rrow.dead .rcap{background:transparent;border-color:#ada797;border-width:calc(var(--S2)*var(--s));top:calc(50% - var(--ch)*var(--s)*.43);height:calc(var(--ch)*var(--s)*.86);left:calc(266*var(--s));width:calc(320*var(--s))}
+#kr .rrow.dead .rcap .t{color:#a29b8e;font-size:calc(112*var(--rk)*var(--s))!important}
 #kr .rmk{position:absolute;width:calc(100*var(--s));height:calc(100*var(--s));top:calc(50% - 50*var(--s))}
 #kr .rmk svg{inset:0;width:100%;height:100%}
 #kr .rrow.dead .rmk{opacity:.45}
@@ -8031,11 +8032,6 @@ function krBuild(){const g=$('game');let k=$('kr');if(k)k.remove();
   const rowsY=[676.4,808.8,941.2,1073.6,1206,1338.4,1470.8],T=[25,20,19,18,17,16,15];
   let h=`<div id="kr" class="sl">`;
   // en-tête : logo + 2 lignes
-  h+=`<svg class="full" viewBox="0 0 852 1846"><g transform="rotate(-1.3 431 148)" font-family="K-retro" font-size="55" text-anchor="middle" stroke-linejoin="round">
-      <text x="431" y="172.5" fill="#c80d17" stroke="#c80d17" stroke-width="15">CRICKET</text>
-      <text x="431" y="167.5" fill="#fd1a26" stroke="#fd1a26" stroke-width="15">CRICKET</text>
-      <text x="431" y="167.5" fill="#fff" stroke="#fff" stroke-width="5.5">CRICKET</text>
-      <text x="431" y="167.5" fill="#050505" stroke="#050505" stroke-width="1.6">CRICKET</text></g></svg>`;
   h+=krT('rsub1',427.5,203.5,23.6,1.03,'--fw:.9')+krT('rsub2',428,236.5,23.6,1,'--fw:.9');
   // case du joueur en cours
   h+=`<div class="z rcard" style="--x:24;--y:297;--w:535;--h:309"><div class="rin"></div>
@@ -8086,7 +8082,7 @@ function krBuild(){const g=$('game');let k=$('kr');if(k)k.remove();
   k.addEventListener('pointerdown',e=>{const b=e.target.closest('.zb');if(!b)return;const c={s:'ps',bm:'pm',bu:'pu'}[b.classList[1]];if(!c)return;
     const f=KR.foot;f.classList.remove('ps','pm','pu');f.classList.add(c);clearTimeout(f._t);f._t=setTimeout(()=>f.classList.remove(c),360);
     if(c==='ps'){KR.cloud.getAnimations().forEach(a=>a.cancel());KR.cloud.animate([{transform:'scale(1)'},{transform:'scale(1.12)',offset:.35},{transform:'scale(.96)',offset:.7},{transform:'scale(1)'}],{duration:480,easing:'ease-out'})}})}
-const krS=()=>{const v=KR&&KR.probe?KR.probe.getBoundingClientRect().width/1000:0;return v>0?v:Math.min(innerWidth/852,innerHeight/1741)};
+const krS=()=>{const v=KR&&KR.probe?KR.probe.getBoundingClientRect().width/1000:0;return v>0?v:Math.min(innerWidth/852,innerHeight/1560)};
 function krText(el,txt,base,maxW){if(el._h===txt&&el._b===base)return;el._h=txt;el._b=base;el.textContent=txt;let f=base;el.style.setProperty('--f',f);
   const s=krS(),sx=parseFloat(getComputedStyle(el).getPropertyValue('--sx'))||1;let n=0;while(el.scrollWidth*sx>maxW*s&&f>8&&n++<30){f*=.94;el.style.setProperty('--f',f)}}
 const krName=sc=>{const w=sc.nm.querySelector('.nmw');return (w?w.textContent:(sc.nm.firstChild&&sc.nm.firstChild.nodeType===3?sc.nm.firstChild.textContent:sc.nm.textContent)).trim()};
@@ -8104,7 +8100,7 @@ function kcCountR(el,a,b){cancelAnimationFrame(el._raf);const t0=performance.now
 function krMark(n,c){if(!n)return'';const L='stroke="#050505" stroke-width="12" stroke-linecap="round"';
   return `<svg viewBox="0 0 100 100">${n>=3?`<circle cx="50" cy="50" r="44" fill="${c}"/>`:''}<path d="M15 85 L85 15" ${L}/>${n>=2?`<path d="M15 15 L85 85" ${L}/>`:''}</svg>`}
 function krSync(){const g=$('game'),on=krOn()&&g.classList.contains('on');g.classList.toggle('krt',on);document.documentElement.classList.toggle('krt',on);if(!on||!R||!R.sc||!R.sc[1])return;
-  if(!KR||!KR.k.isConnected)krBuild();const k=KR.k,cur=shownCur(),side=cur===1?'sr':'sl',m=G.winner===null?G.mult:1,F=side==='sr';
+  if(!KR||!KR.k.isConnected)krBuild();krLayout();const k=KR.k,cur=shownCur(),side=cur===1?'sr':'sl',m=G.winner===null?G.mult:1,F=side==='sr';
   const prev=KR.side;KR.side=side;{const c=pcolI(cur);if(KR.col!==c){KR.col=c;k.style.setProperty('--pc',c)}}
   k.classList.toggle('sl',!F);k.classList.toggle('sr',F);k.classList.toggle('m2',m===2);k.classList.toggle('m3',m===3);
   // en-tête
@@ -8126,6 +8122,11 @@ function krSync(){const g=$('game'),on=krOn()&&g.classList.contains('on');g.clas
     o.rail.style.left=`calc(${F?422:27}*var(--s))`;o.rail.style.width=`calc(403*var(--s))`;
     [0,1].forEach(i=>{const n=Math.min(3,G.players[i].marks[t]||0),el=i?o.mr:o.ml,key=n+pcolI(i);if(o.mk[i]===key)return;const up=typeof o.mk[i]==='string'&&n>parseInt(o.mk[i]);o.mk[i]=key;
       el.innerHTML=krMark(n,pcolI(i));if(up&&n)el.animate([{transform:'scale(1.4)'},{transform:'scale(.92)',offset:.6},{transform:'scale(1)'}],{duration:280,easing:'ease-out'})})})}
+/* lignes : réparties entre la case joueur (bas à 606) et le nuage (ancré en bas d'écran), même écart partout */
+function krLayout(){const key=innerWidth+'x'+innerHeight;if(KR._lay===key)return;KR._lay=key;const s=krS(),U=innerHeight/s,D=U+169-1846;
+  const span=935+D,h=Math.min(150,(span-8*9)/7),g=(span-7*h)/8,k=KR.k;
+  k.style.setProperty('--ch',h.toFixed(2));k.style.setProperty('--rh',(h*107/124).toFixed(2));k.style.setProperty('--rk',(h/124).toFixed(3));
+  Object.values(KR.rows).forEach(o=>{const i=[25,20,19,18,17,16,15].indexOf(+o.r.dataset.t),c=606+g+h/2+i*(h+g);o.r.style.setProperty('--y',(c-(h+g)/2).toFixed(2));o.r.style.setProperty('--h',(h+g).toFixed(2))})}
 function krSwap(side){if(!KR)return;const s=krS(),dir=side==='sr'?-1:1,E='cubic-bezier(.3,1.2,.45,1)';
   const mv=(el,dx,delay)=>{if(!el)return;el.getAnimations().forEach(a=>a.cancel());el.animate([{transform:`translate3d(${dx}px,0,0)`},{transform:'translate3d(0,0,0)'}],{duration:520,easing:E,delay:delay||0,fill:'backwards'})};
   mv(KR.card,dir*269*s);KR.opp.getAnimations().forEach(a=>a.cancel());KR.opp.animate([{opacity:0},{opacity:0,offset:.35},{opacity:1}],{duration:520,easing:'ease-out'});
@@ -8137,7 +8138,7 @@ function krBounce(t){if(!KR||!KR.rows[t])return;const o=KR.rows[t];if(o.dead)ret
 {const _t=throwDart;throwDart=function(t){const before=G&&t?G.players.map(p=>p.marks[t]+'|'+p.score).join():'';const r=_t.apply(this,arguments);
   try{if(t&&G&&krOn()&&G.players.map(p=>p.marks[t]+'|'+p.score).join()!==before)krBounce(t)}catch(e){}return r}}
 {const _s=show;show=function(){const r=_s.apply(this,arguments);try{if(!$('game').classList.contains('on')){$('game').classList.remove('krt');document.documentElement.classList.remove('krt')}else krSync()}catch(e){}return r}}
-addEventListener('resize',()=>{if(KR){KR.k.querySelectorAll('.t').forEach(e=>{e._h=null});try{krSync()}catch(e){}}});
+addEventListener('resize',()=>{if(KR){KR._lay=null;KR.k.querySelectorAll('.t').forEach(e=>{e._h=null});try{krSync()}catch(e){}}});
 /* fin de tour : on ne peut plus marquer pendant un court instant (le temps de passer la main) */
 const TURNLOCK_MS=1200;let TURNLOCK=0;
 const turnLocked=()=>performance.now()<TURNLOCK||!!HOLD||!!KHOLD||(typeof XHOLD!=='undefined'&&!!XHOLD);   // tant que le joueur n'a pas changé à l'écran
