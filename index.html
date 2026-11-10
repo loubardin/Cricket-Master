@@ -4317,7 +4317,7 @@ html.krt body>:is(.bhole,.bosstag,.bspark,.bullet,.ember,.fireglow,.flake,.bullf
 #kr .rcrown{position:absolute;pointer-events:none;transition:opacity .3s}
 /* lignes */
 #kr .rrow{pointer-events:auto;cursor:pointer}
-#kr .rrail{position:absolute;top:calc(50% - (var(--ch) + 12)*var(--s)/2);height:calc((var(--ch) + 12)*var(--s));border:calc(var(--S1)*var(--s)) solid var(--ink);border-radius:999px;background:var(--cream);will-change:transform}
+#kr .rrail{position:absolute;top:calc(50% - var(--rh)*var(--s)/2);height:calc(var(--rh)*var(--s));border:calc(var(--S1)*var(--s)) solid var(--ink);border-radius:999px;background:var(--cream);will-change:transform}
 #kr .rcap{position:absolute;left:calc(258*var(--s));width:calc(335*var(--s));top:calc(50% - var(--ch)*var(--s)/2);height:calc(var(--ch)*var(--s));border:calc(var(--S1)*var(--s)) solid var(--ink);border-radius:999px;
   background:var(--pc);transition:background-color .45s ease;will-change:transform}
 #kr.m2 .rrow:not(.dead) .rcap{background:linear-gradient(#ffffff,#d5dbe1 55%,#aeb7c1)}
@@ -5018,7 +5018,7 @@ function throwDart(t){
     }
     if(d.cl){pulse(t);anim(R.mk[t][who],'closing',600);busy(600)}
     if(m>=2)ripple(t,m-1);
-    if(!wasDead&&dead(t)){busy(220+1300);setTimeout(()=>killRow(t),220);SFX.bolt()}
+    if(!wasDead&&dead(t)){busy(950+1300);setTimeout(()=>killRow(t),950);SFX.bolt()}
   }
   if(t===0){
     anim($('bS'),'shk',450);
@@ -5455,7 +5455,12 @@ function render(){
     { const v=fr(mpr(p));if(s.mv!==v){const had=s.mv!==undefined;s.mv=v;s.m.innerHTML='MPR<b>'+v+'</b>';if(had)anim(s.m.querySelector('b'),'mprpop',500)} }
   });
   TARGETS.forEach(t=>{
-    const dd=dead(t);
+    // numéro qui vient de se fermer : il reste vivant 1 s, le temps que la bulle rebondisse
+    const d0=dead(t);R.dly=R.dly||{};R.live=R.live||{};
+    if(d0&&R.live[t]===true&&!R.dly[t]){R.dly[t]=performance.now()+950;setTimeout(()=>{if(R.dly)delete R.dly[t];try{render()}catch(e){}},960)}
+    if(!d0&&R.dly[t])delete R.dly[t];
+    R.live[t]=!d0;
+    const dd=d0&&!(R.dly[t]>performance.now());
     R.num[t].classList.toggle('dead',dd);
     { const cp=G.players[shownCur()];R.num[t].classList.toggle('seqoff',!!G.seq&&!dd&&G.winner===null&&!allowed(cp,t));R.num[t].classList.toggle('seqnext',!!G.seq&&!dd&&G.winner===null&&t===nextNum(cp)); }
     G.players.forEach((p,i)=>{
@@ -6988,7 +6993,7 @@ applyBStyle();
    tout ce qu'elle recouvre s'écrit en blanc */
 function flashRow(t){
   if(skp2()){   // 1 contre 1 : la bulle elle-même file jusqu'au bord du rail et rebondit (pas de double)
-    const num=R.num[t],tk=num&&num.parentElement.querySelector('.rtrack');if(!tk||dead(t)||!tk.offsetWidth)return;
+    const num=R.num[t],tk=num&&num.parentElement.querySelector('.rtrack');if(!tk||!tk.offsetWidth)return;
     const NL=num.offsetLeft,NW=num.offsetWidth,TL=tk.offsetLeft,TW=tk.offsetWidth;
     const X=(NL+NW/2)>(TL+TW/2)?TL-NL:(TL+TW-NW)-NL;if(Math.abs(X)<4)return;
     kickBall(num,X);return}
@@ -8059,7 +8064,7 @@ function krBuild(){const g=$('game');let k=$('kr');if(k)k.remove();
       <circle cx="8" cy="27" r="3" fill="#fff" opacity=".7"/><circle cx="52" cy="8" r="3.4" fill="#fff" opacity=".7"/><circle cx="95" cy="24" r="3" fill="#fff" opacity=".7"/></svg>`;
   // lignes
   T.forEach((t,i)=>{const y=rowsY[i];h+=`<div class="z rrow" data-t="${t}" style="--x:0;--y:${y-64.5};--w:852;--h:129"><div class="rrail"></div><div class="rmk ml" style="left:calc(107*var(--s))"></div><div class="rmk mr" style="left:calc(643*var(--s))"></div>
-      <div class="rcap">${t===25?krT('rn',0,0,82,1.05,'--sk:-8deg'):krT('rn',0,0,118,1.02)}</div></div>`});
+      <div class="rcap">${t===25?krT('rn',0,0,82,1.05,'--sk:-8deg'):krT('rn',0,0,110,1.02)}</div></div>`});
   // bas
   h+=`<div class="z rft" style="--x:0;--y:1530;--w:852;--h:290">
 
@@ -8130,20 +8135,20 @@ function krSync(){const g=$('game'),on=krOn()&&g.classList.contains('on');g.clas
   if(lead===undefined)cr.style.opacity=0;else{cr.style.opacity=1;const a=lead===cur,X=a?(F?630:102):(F?114:640),Y=a?195:278,W=a?120:84;
     cr.style.left=`calc(var(--ox) + ${X}*var(--s))`;cr.style.top=`calc(var(--oy) + ${Y}*var(--s))`;cr.style.width=`calc(${W}*var(--s))`;cr.style.height=`calc(${W*82/112}*var(--s))`}
   // lignes
-  TARGETS.forEach(t=>{const o=KR.rows[t];if(!o)return;const d=dead(t);if(o.dead!==d){o.dead=d;o.r.classList.toggle('dead',d)}
-    o.rail.style.left=`calc(${F?417:20}*var(--s))`;o.rail.style.width=`calc(415*var(--s))`;
+  TARGETS.forEach(t=>{const o=KR.rows[t];if(!o)return;const d=dead(t);if(o.dead!==d){const was=o.dead;o.dead=d;clearTimeout(o._dt);if(d&&was===false){o.justDied=true;o._dt=setTimeout(()=>{o.justDied=false;o.r.classList.add('dead')},1000)}else{o.justDied=false;o.r.classList.toggle('dead',d)}}
+    o.rail.style.left=`calc(${F?258:27}*var(--s))`;o.rail.style.width=`calc(${F?567:566}*var(--s))`;
     [0,1].forEach(i=>{const n=Math.min(3,G.players[i].marks[t]||0),el=i?o.mr:o.ml,key=n+pcolI(i);if(o.mk[i]===key)return;const up=typeof o.mk[i]==='string'&&n>parseInt(o.mk[i]);o.mk[i]=key;
       el.innerHTML=krMark(n,pcolI(i));if(up&&n)el.animate([{transform:'scale(1.4)'},{transform:'scale(.92)',offset:.6},{transform:'scale(1)'}],{duration:280,easing:'ease-out'})})})}
 /* lignes : réparties entre la case joueur (bas à 606) et le nuage (ancré en bas d'écran), même écart partout */
 function krLayout(){const key=innerWidth+'x'+innerHeight;if(KR._lay===key)return;KR._lay=key;const s=krS(),U=innerHeight/s,D=U+169-1846;
-  const span=935+D,E=12,h=Math.min(150,(span-8*18)/7-E),g=(span-7*(h+E))/8,k=KR.k;
+  const span=935+D,E=0,h=Math.min(150,(span-8*9)/7),g=(span-7*h)/8,k=KR.k;
   k.style.setProperty('--ch',h.toFixed(2));k.style.setProperty('--rh',(h*107/124).toFixed(2));k.style.setProperty('--rk',(h/124).toFixed(3));
   Object.values(KR.rows).forEach(o=>{const i=[25,20,19,18,17,16,15].indexOf(+o.r.dataset.t),c=606+g+(h+E)/2+i*(h+E+g);o.r.style.setProperty('--y',(c-(h+E+g)/2).toFixed(2));o.r.style.setProperty('--h',(h+E+g).toFixed(2))})}
 function krSwap(side){if(!KR)return;const s=krS(),dir=side==='sr'?-1:1,E='cubic-bezier(.3,1.2,.45,1)';
   const mv=(el,dx,delay)=>{if(!el)return;el.getAnimations().forEach(a=>a.cancel());el.animate([{transform:`translate3d(${dx}px,0,0)`},{transform:'translate3d(0,0,0)'}],{duration:520,easing:E,delay:delay||0,fill:'backwards'})};
   mv(KR.card,dir*269*s);KR.opp.getAnimations().forEach(a=>a.cancel());KR.opp.animate([{opacity:0},{opacity:0,offset:.35},{opacity:1}],{duration:520,easing:'ease-out'});
-  Object.values(KR.rows).forEach((o,i)=>mv(o.rail,dir*395*s,i*28))}
-function krBounce(t){if(!KR||!KR.rows[t])return;const o=KR.rows[t];if(o.dead)return;const s=krS(),X=(KR.k.classList.contains('sr')?233:-231)*s,c=o.cap;c.getAnimations().forEach(a=>a.cancel());
+  Object.values(KR.rows).forEach((o,i)=>mv(o.rail,dir*231*s,i*28))}
+function krBounce(t){if(!KR||!KR.rows[t])return;const o=KR.rows[t];if(o.dead&&!o.justDied)return;const s=krS(),X=(KR.k.classList.contains('sr')?233:-231)*s,c=o.cap;c.getAnimations().forEach(a=>a.cancel());
   const K=[[0,0,'cubic-bezier(.1,.75,.3,1)'],[.27,X,'cubic-bezier(.5,0,.85,.45)'],[.66,0,'cubic-bezier(.2,.7,.4,1)'],[.79,X*.13,'cubic-bezier(.5,0,.85,.45)'],[.89,0,'cubic-bezier(.2,.7,.4,1)'],[.95,X*.035,'ease-in'],[1,0,'linear']];
   c.animate(K.map(([of,x,e])=>({offset:of,transform:`translate3d(${x}px,0,0)`,easing:e})),{duration:1000})}
 {const _r=render;render=function(){const x=_r.apply(this,arguments);try{krSync()}catch(e){console.error(e)}return x}}
