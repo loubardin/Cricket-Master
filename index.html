@@ -4268,7 +4268,12 @@ html.pop{--pfT:"Fun";--pfN:"Fun"}
 :is(#pcl,#pkl)>svg{position:absolute;left:0;width:100%;top:var(--sat,0px);height:calc(100% - var(--sat,0px));overflow:visible}
 :is(#pcl,#pkl) svg *{transform-box:view-box}
 :is(#pcl,#pkl) text{font-family:var(--pfT),"Fun",sans-serif!important;text-anchor:middle;fill:#111;font-synthesis:none}
-:is(#pcl,#pkl) .w{fill:#fff;stroke:none;filter:url(#pOw)}
+:is(#pcl,#pkl,#pfp) .w,#pkl .pkw{fill:#fff;stroke:none}
+:is(#pcl,#pkl,#pfp) .wo{fill:#111;stroke:#111;stroke-width:calc(var(--swN,5px)*2);stroke-linejoin:round}
+:is(#pcl,#pkl) .txo{display:none}
+:is(#pcl,#pkl).m2 .txo.d,:is(#pcl,#pkl).m3 .txo.t{display:inline}
+:is(#pcl,#pkl) .row.dead .wo{display:none}
+#pkl .pknmo{stroke-width:calc(var(--swN,5px)*2);stroke-linejoin:round}
 :is(#pcl,#pkl) .ol{fill:none;stroke:#111;stroke-width:var(--swC,10px)}
 :is(#pcl,#pkl) .pl{fill:#fff;stroke:#111;stroke-width:var(--swS,4px)}
 :is(#pcl,#pkl) .pc{fill:var(--pc);transition:fill .45s ease}
@@ -4284,7 +4289,7 @@ html.pop{--pfT:"Fun";--pfN:"Fun"}
 :is(#pcl,#pkl) .row.pr .cg{transform:scale(.95);transform-origin:562.5px var(--cy)}
 :is(#pcl,#pkl) .arm{fill:var(--pc);opacity:0;transition:opacity .2s,fill .45s}
 :is(#pcl,#pkl).m2 .arm.d,:is(#pcl,#pkl).m3 .arm.t{opacity:1}
-:is(#pcl,#pkl).m2 .tx.d,:is(#pcl,#pkl).m3 .tx.t{fill:#fff;stroke:none;filter:url(#pOw)}
+:is(#pcl,#pkl).m2 .tx.d,:is(#pcl,#pkl).m3 .tx.t{fill:#fff;stroke:none}
 :is(#pcl,#pkl) .sp{transform-origin:562.5px 2293px}
 :is(#pcl,#pkl) .ico{transition:transform .15s}
 :is(#pcl,#pkl) .ico.pr{transform:scale(.88)}
@@ -4307,7 +4312,7 @@ html:is(.pcl,.pkl) body>:is(.fireglow,.ember,.bhole){display:none!important}
 #pkl .pkhp{fill:#c7b299}
 #pkl .kc2.act .pkhp{fill:#fff}
 #pkl .pknm{fill:#111}
-#pkl .kc2.act .pknm{fill:#1d1d1b;stroke:none;filter:url(#pOk)}
+#pkl .kc2.act .pknm{fill:#1d1d1b;stroke:none}
 #pkl .pksn{stroke-width:calc(var(--swN,5px)*2);stroke-linejoin:round}
 #pkl .halo{fill:var(--kc);transition:fill .45s}
 
@@ -4318,7 +4323,8 @@ html:is(.pcl,.pkl) body>:is(.fireglow,.ember,.bhole){display:none!important}
 #pfp .pfv{width:100%;height:auto;flex:0 0 auto}
 #pfp .pfv text{font-family:var(--pfT),"Fun",sans-serif;text-anchor:middle;fill:#111}
 #pfp .pfv text.fN{font-family:var(--pfN),"Fun",sans-serif}
-#pfp .pfv text.w{fill:#fff;stroke:none;filter:url(#pOw)}
+#pfp .pfv text.w{fill:#fff}
+#pfp .pfv text.wo{fill:#111;stroke:#111}
 #pfp .pfs{display:flex;border-radius:99px;box-shadow:inset 0 0 0 3px #111;overflow:hidden;flex:0 0 auto}
 #pfp .pfs button{flex:1;border:0;background:transparent;font:400 18px "Fun",sans-serif;padding:10px;color:#111}
 #pfp .pfs button.on{background:#111;color:#fff}
@@ -7794,7 +7800,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||(S.style&&S.style!=='bulle'&&S.style!=='pop')){delete S.th;delete S.style;try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-230';   // à changer avec VERSION dans sw.js
+const APPV='lf-231';   // à changer avec VERSION dans sw.js
 function popOn(){return S.style!=='bulle'}
 function popApply(){document.documentElement.classList.toggle('pop',popOn());try{const m=document.querySelector('meta[name=theme-color]');if(m)m.content=popOn()?'#f9ecc9':'#f7f2e5'}catch(e){}try{if(G&&R&&$('game').classList.contains('on')){layoutSk();if(typeof fitSk==='function')fitSk();render()}}catch(e){}}
 popApply();
@@ -8075,7 +8081,7 @@ function pclText(el,txt,max,base){if(el._h===txt&&el._m===max)return;el._h=txt;e
   try{const w=el.getComputedTextLength();if(w>max&&w>0){const r=max/w,q=Math.max(r,.78);if(q>r)el.setAttribute('font-size',(parseFloat(el.getAttribute('font-size'))*r/q).toFixed(1));
     el.setAttribute('lengthAdjust','spacingAndGlyphs');el.setAttribute('textLength',max.toFixed(1))}}catch(e){}}
 function pclCount(el,a,b){cancelAnimationFrame(el._raf);const t0=performance.now(),D=Math.min(1500,600+(b-a)*10);
-  const step=now=>{const k=Math.min(1,(now-t0)/D),v=Math.round(a+(b-a)*(1-Math.pow(1-k,3)));el.textContent=String(v);if(k<1)el._raf=requestAnimationFrame(step);else el.textContent=String(b)};el._raf=requestAnimationFrame(step)}
+  const step=now=>{const k=Math.min(1,(now-t0)/D),v=Math.round(a+(b-a)*(1-Math.pow(1-k,3)));el.textContent=String(v);if(k<1)el._raf=requestAnimationFrame(step);else el.textContent=String(b);if(el._o)el._o.textContent=el.textContent};el._raf=requestAnimationFrame(step)}
 function pclPill(d){if(!d)return'';if(d.t===0)return's';return (d.m===3?'T':d.m===2?'D':'')+LBL(d.t)}
 function pclMark(n,c,big){if(!n)return'';const L=(x1,y1,x2,y2)=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`,a=51.5*PST.s;
   return (n>=3?`<circle r="${(big?60:51.5)*PST.s}" style="fill:${c}"/>`:'')+L(-a,a,a,-a)+(n>=2?L(-a,-a,a,a):'')}
@@ -8147,7 +8153,7 @@ function pklCard(i,g,act){const p=KG.players[i],{W,H,wide,k}=g,DD=KG.def,isDef=D
   let h=act?`<rect class="pksh" x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87" filter="url(#pkSh)"/><rect class="halo" x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87"/>`:'';
   h+=`<rect class="ol" width="${W}" height="${H}" rx="92.61"/>`;
   const cx=wide?.306*W:W/2,nm=esc(pkName(p,act));
-  if(act)h+=`<text x="${cx}" y="${(wide?-104:-94)*k}" font-size="${43*k*kT}">à toi</text><text class="pknm" x="${cx}" y="${(wide?-16:-10)*k}" font-size="${87*k*kT}" data-fit="${wide?.62*W:W*1.02}">${nm}</text>`;
+  if(act)h+=`<text x="${cx}" y="${(wide?-104:-94)*k}" font-size="${43*k*kT}">à toi</text><text class="pknmo" x="${cx}" y="${(wide?-16:-10)*k}" font-size="${87*k*kT}" data-fit="${wide?.62*W:W*1.02}" style="fill:${pkCol(i)};stroke:${pkCol(i)}">${nm}</text><text class="pknm" x="${cx}" y="${(wide?-16:-10)*k}" font-size="${87*k*kT}" data-fit="${wide?.62*W:W*1.02}">${nm}</text>`;
   else h+=`<text class="pknm" x="${cx}" y="${-31*k}" font-size="${73*k*kT}" data-fit="${wide?.62*W:W*.98}">${nm}</text>`;
   // cœurs
   const nh=Math.max(p.maxl||0,p.lives||0,3),hw=(wide?.117:.204)*W,hh=(wide?.137:.132)*H,pitch=Math.min((wide?.141:.2475)*W,(wide?.5:.9)*W/nh),hy=(wide?.076:.052)*H,hx0=cx-pitch*(nh-1)/2-hw/2;
@@ -8157,7 +8163,8 @@ function pklCard(i,g,act){const p=KG.players[i],{W,H,wide,k}=g,DD=KG.def,isDef=D
   const ny=(wide?.272:.243)*H,nH=(wide?.44:.325)*H,nW=(wide?.445:.61)*W;
   const nx=wide?.307*W:cx,nfs=(nH/.725*kN).toFixed(1);
   if(act)h+=`<text class="pkno fN pksn" x="${nx+10}" y="${ny+nH+11}" font-size="${nfs}" data-fit="${nW}" style="fill:${dk};stroke:${dk}">${p.num}</text>`;
-  h+=`<text class="pkno fN${act?' w':''}" x="${nx}" y="${ny+nH}" font-size="${nfs}" data-fit="${nW}">${p.num}</text>`;
+  if(act)h+=`<text class="pkno fN wo" x="${nx}" y="${ny+nH}" font-size="${nfs}" data-fit="${nW}">${p.num}</text>`;
+  h+=`<text class="pkno fN${act?' pkw':''}" x="${nx}" y="${ny+nH}" font-size="${nfs}" data-fit="${nW}">${p.num}</text>`;
   // K / Killer
   const ky=(wide?.774:.626)*H,kh=(wide?.14:.137)*H;
   if(isDef)h+=`<rect class="pkk" x="${cx-(wide?.22:.382)*W}" y="${ky}" width="${(wide?.44:.764)*W}" height="${kh}" rx="${kh*.37}"/><text x="${cx}" y="${ky+kh*.5+kh*.27}" font-size="${kh*.68*kT}">défense ${DD.got}/${DD.need}</text>`;
@@ -8175,7 +8182,7 @@ function pklSync(){const sec=$('killer'),on=pklOn()&&sec.classList.contains('on'
   {const v=getComputedStyle(document.documentElement).getPropertyValue('--sat');k.style.setProperty('--sat',v||'0px')}
   PKL.fix.forEach(([e,t,w,b])=>pclText(e,t,w,b));
   const P=KG.players,n=P.length,cur=KG.winner!==null?KG.winner:(KHOLD?KHOLD.who:KG.cur),g=pklGeo(n);
-  {const c=pkCol(cur);if(PKL.col!==c){PKL.col=c;k.style.setProperty('--pc',c);const f=k.querySelector('.pkshc');if(f)f.setAttribute('flood-color',pkDark(c));const o=document.querySelector('.pOkc');if(o)o.setAttribute('flood-color',c)}}
+  {const c=pkCol(cur);if(PKL.col!==c){PKL.col=c;k.style.setProperty('--pc',c);const f=k.querySelector('.pkshc');if(f)f.setAttribute('flood-color',pkDark(c));}}
   const m=KG.winner===null?KG.mult:1;k.classList.toggle('m2',m===2);k.classList.toggle('m3',m===3);
   const t1=n+' joueurs'+(KG.manche>1?' · manche '+KG.manche:''),t2='tour '+KG.round;pclText(PKL.st1,t1,420,25);pclText(PKL.st2,t2,420,25);
   if(PKL.key!==n){PKL.key=n;PKL.cards.innerHTML=P.map((_,i)=>`<g class="kc2" data-i="${i}" transform="translate(${g.pos[i][0]} ${g.pos[i][1]})"><g class="kin" style="--ox:${g.W/2}px;--oy:${g.H/2}px"></g></g>`).join('');PKL.c=[...PKL.cards.children]}
@@ -8208,8 +8215,8 @@ async function pfApply(){const T=S.pfT||'Fun',N=S.pfN||'Fun',st=document.documen
   [PCL.k,PKL.k].forEach(k=>{if(k){k.querySelectorAll('text').forEach(t=>{t._h=null});k.querySelectorAll('g.kin').forEach(g=>{g._h=null})}});
   try{if(G&&R)pclSync()}catch(e){}try{if(KG)pklSync()}catch(e){}pfPrev()}
 function pfPrev(){const p=$('pfp');if(!p)return;const sv=p.querySelector('.pfv');if(!sv)return;
-  sv.querySelectorAll('text').forEach(t=>{const b=+t.dataset.b;t.setAttribute('font-size',(b*(t.classList.contains('fN')?PF.kN:PF.kT)).toFixed(1));t.removeAttribute('textLength');
-    const w=+t.dataset.w;if(w){try{const l=t.getComputedTextLength();if(l>w){t.setAttribute('lengthAdjust','spacingAndGlyphs');t.setAttribute('textLength',w)}}catch(e){}}})}
+  sv.querySelectorAll('text[data-b]').forEach(t=>{const b=+t.dataset.b;t.setAttribute('font-size',(b*(t.classList.contains('fN')?PF.kN:PF.kT)).toFixed(1));t.removeAttribute('textLength');
+    const w=+t.dataset.w;if(w){try{const l=t.getComputedTextLength();if(l>w){t.setAttribute('lengthAdjust','spacingAndGlyphs');t.setAttribute('textLength',w)}}catch(e){}}});popOutl(sv)}
 function pfOpen(){haptic();const old=$('pfp');if(old)old.remove();let tgt='T';
   const p=el('div','');p.id='pfp';document.body.append(p);
   const all=()=>{const imp=Object.keys(pfStore()).map(n=>[n,n+' (importée)']);return imp.concat(PF_LIST)};
@@ -8240,10 +8247,17 @@ function pfOpen(){haptic();const old=$('pfp');if(old)old.remove();let tgt='T';
     const rd=new FileReader();rd.onload=()=>{const url=rd.result;const ff=new FontFace(name,`url(${url})`);ff.load().then(x=>{document.fonts.add(x);PF_ON[name]=1;
       const st=pfStore();st[name]=url;try{localStorage.setItem(PF_K,JSON.stringify(st))}catch(e){mkToast&&mkToast('','Police chargée pour cette session seulement (mémoire pleine)',2500)}
       if(tgt==='T')S.pfT=name;else S.pfN=name;store.set(K_S,S);pfApply();draw()}).catch(()=>{try{mkToast('','Fichier de police illisible',2200)}catch(e){}})};rd.readAsDataURL(f)})}
-(function(){const d=document.createElement('div');d.innerHTML='<svg width="0" height="0" style="position:absolute;width:0;height:0" aria-hidden="true"><defs>'+
-  ['pOw','pOk'].map(id=>`<filter id="${id}" x="-25%" y="-25%" width="150%" height="150%"><feMorphology class="pomr" in="SourceAlpha" operator="dilate" radius="5" result="d"/><feFlood class="${id}c" flood-color="#111"/><feComposite in2="d" operator="in"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>`).join('')+'</defs></svg>';document.body.append(d.firstChild)})();
 if(S.pst&&S.pst.v!==2){if(S.pst.n!==undefined)S.pst.n=S.pst.n/2;S.pst.v=2;try{store.set(K_S,S)}catch(e){}}
-function pstApply(){PST=Object.assign({},PST_D,S.pst||{});document.querySelectorAll('.pomr').forEach(m=>m.setAttribute('radius',PST.n));const st=document.documentElement.style;st.setProperty('--swC',PST.c+'px');st.setProperty('--swS',(PST.c*.4)+'px');st.setProperty('--swN',PST.n+'px');st.setProperty('--swM',PST.m+'px');
+
+/* contour des chiffres : une copie noire épaissie posée dessous (sans « paint-order », mal rendu sur iPhone) */
+function popOutl(root){if(!root)return;root.querySelectorAll('text.w,text.tx').forEach(t=>{let o=t._o;
+  if(!o||!o.isConnected||o.nextElementSibling!==t){if(o&&o.isConnected)o.remove();o=document.createElementNS('http://www.w3.org/2000/svg','text');t.parentNode.insertBefore(o,t);t._o=o}
+  const cls='wo'+(t.classList.contains('fN')?' fN':'')+(t.classList.contains('tx')?' txo '+(t.classList.contains('d')?'d':'t'):'');if(o.getAttribute('class')!==cls)o.setAttribute('class',cls);
+  ['x','y','font-size','textLength','lengthAdjust'].forEach(a=>{const v=t.getAttribute(a);if(v===null){if(o.hasAttribute(a))o.removeAttribute(a)}else if(o.getAttribute(a)!==v)o.setAttribute(a,v)});
+  if(o.textContent!==t.textContent)o.textContent=t.textContent})}
+{const _p=pclSync;pclSync=function(){const r=_p.apply(this,arguments);try{if(PCL.k&&PCL.k.isConnected)popOutl(PCL.k)}catch(e){}return r}}
+{const _p=pklSync;pklSync=function(){const r=_p.apply(this,arguments);try{if(PKL.k&&PKL.k.isConnected)popOutl(PKL.k)}catch(e){}return r}}
+function pstApply(){PST=Object.assign({},PST_D,S.pst||{});const st=document.documentElement.style;st.setProperty('--swC',PST.c+'px');st.setProperty('--swS',(PST.c*.4)+'px');st.setProperty('--swN',PST.n+'px');st.setProperty('--swM',PST.m+'px');
   try{if(PCL.rows)Object.values(PCL.rows).forEach(o=>{o.mk=['','']});if(G&&R)pclSync()}catch(e){}}
 pstApply();
 pfApply();
