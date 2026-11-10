@@ -4140,7 +4140,7 @@ html body #game#game.sk.p2 footer,html body #game#game.sk.p2.pn footer{height:va
    Tout passe par les variables ci-dessous.
    ===================================================================================== */
 @font-face{font-family:"Script";font-display:block;src:url(art/script.woff) format("woff")}
-html.pop{--pop-bg:#f9ecc9;--pop-ink:#111;--pop-bw:3px;--pop-num-sw:5px;--pop-shadow:0 .06em 0 #111;--pop-dead:#c1b9a0;--pop-pill:#fff;--pop-pill2:#d9d3c3;--pop-yellow:#ffde00;
+html.pop{--pop-bg:#f9ecc9;--pop-ink:#111;--pop-bw:3.4px;--pop-num-sw:5px;--pop-shadow:0 .06em 0 #111;--pop-dead:#c1b9a0;--pop-pill:#fff;--pop-pill2:#d3c7b0;--pop-yellow:#ffde00;
   --bub-bw:var(--pop-bw);--m-strong:var(--pop-ink);--ink:var(--pop-ink);--page:var(--pop-bg);--m-bg:var(--pop-bg);--m-home:var(--pop-bg);--ui-bg:var(--pop-bg);--m-card:var(--pop-bg)}
 html.pop body,html.pop body :is(#home,#setup,#game,#x01,#killer,#hist,#stats){background:var(--pop-bg)!important}
 /* nombres : blanc détouré de noir (à l'extérieur) + ombre portée */
@@ -4184,7 +4184,7 @@ html.pop body #game#game#game.sk #grid .num.dead{background:var(--pop-dead)!impo
 html.pop body #game#game#game.sk #grid .num.dead .lbl{color:#fff!important;text-shadow:none!important;-webkit-text-stroke:0!important;opacity:1!important}
 html.pop body #game#game#game.sk #grid>.row:has(.num.dead) .rtrackb{opacity:0!important}
 /* marques : traits noirs épais */
-html.pop body #game#game#game.sk .mw svg path{stroke:var(--pop-ink)!important;stroke-width:4.6px!important;stroke-linecap:round!important}
+html.pop body #game#game#game.sk .mw svg path{stroke:var(--pop-ink)!important;stroke-width:6px!important;stroke-linecap:round!important}
 html.pop body #game#game#game.sk .pc.mk.dead .mw svg path{stroke:#9e9784!important}
 html.pop body #game#game#game.sk .pc.mk.dead .mw svg .disc{fill:#b7af97!important}
 
@@ -4195,59 +4195,66 @@ html.pop body footer #bS::after{font-family:"Script",cursive!important;font-weig
 html.pop body:is(.m2,.m3) footer #bS::after{color:var(--pop-ink)!important;-webkit-text-stroke:0!important;text-shadow:none!important}
 html.pop body.m2 footer #b2::after,html.pop body.m3 footer #b3::after{color:#fff!important;-webkit-text-stroke:calc(var(--pop-num-sw)*.8) var(--pop-ink)!important;paint-order:stroke fill;text-shadow:var(--pop-shadow)!important}
 
-/* ---------- Killer : cartes (rectangles arrondis) en grille ; nom au-dessus ; cœurs, numéro, « Killer » / K, historique ---------- */
 html.pop #killer #kplayers.kbub{--pkc:2;--pkr:2}
-html.pop body #killer#killer#killer #kplayers#kplayers.kbub{display:grid!important;grid-template-columns:repeat(var(--pkc),minmax(0,1fr))!important;grid-template-rows:repeat(var(--pkr),minmax(0,1fr))!important;grid-auto-rows:minmax(0,1fr)!important;
   column-gap:4.5vw!important;row-gap:calc(4.8vw + 1.3em)!important;padding:calc(1.6em + 3vw) 5vw 2.5vw!important;align-content:stretch!important;justify-content:stretch!important;flex:1 1 auto!important;min-height:0!important;font-size:min(4.6vw,2.6dvh)}
-html.pop body #killer#killer#killer #kplayers#kplayers.kbub>.kc{width:100%!important;height:100%!important;aspect-ratio:auto!important;scale:none!important;animation:none!important;justify-self:stretch!important;align-self:stretch!important;
   border-radius:min(6vw,3dvh)!important;background:var(--pop-bg)!important;box-shadow:inset 0 0 0 var(--pop-bw) var(--pop-ink)!important;padding:4% 6%!important;gap:3%!important;justify-content:center!important;container-type:size;opacity:1}
-html.pop body #killer#killer#killer #kplayers#kplayers.kbub>.kc.act{background:var(--pc)!important;box-shadow:inset 0 0 0 var(--pop-bw) var(--pop-ink),0 0 0 var(--h,4px) var(--pc),0 6px 18px color-mix(in srgb,var(--pc) 70%,transparent)!important;z-index:3}
-html.pop body #killer#killer#killer #kplayers#kplayers.kbub>.kc>:is(.kxx,.kbg){display:none!important}
-html.pop body #killer#killer#killer #kplayers#kplayers.kbub>.kc .kname{position:absolute!important;bottom:calc(100% + .25em)!important;left:0!important;right:0!important;margin:0!important;font-family:"Fun",sans-serif!important;
   font-size:1.15em!important;color:var(--pop-ink)!important;text-align:center;-webkit-text-stroke:0;text-shadow:none!important}
-html.pop body #killer#killer#killer #kplayers#kplayers.kbub>.kc.act .kname{color:var(--pc)!important;-webkit-text-stroke:calc(var(--pop-num-sw)*.85) var(--pop-ink);paint-order:stroke fill;font-size:1.3em!important}
-html.pop body #killer#killer#killer #kplayers#kplayers.kbub>.kc.act .kname::before{content:"à toi";display:block;font-size:.5em;color:var(--pop-ink);-webkit-text-stroke:0;margin-bottom:.05em}
-html.pop body #killer#killer#killer #kplayers#kplayers.kbub>.kc .klives{order:1;gap:.2em!important;font-size:15cqmin!important;line-height:1}
-html.pop body #killer#killer #kplayers#kplayers.kbub>.kc .klives i.h{translate:none!important;rotate:none!important;color:#fff!important;-webkit-text-stroke:.07em var(--pop-ink);paint-order:stroke fill;opacity:1!important}
-html.pop body #killer#killer #kplayers#kplayers.kbub>.kc .klives i.h.on{color:#ff1a1a!important}
-html.pop body #killer#killer#killer #kplayers#kplayers.kbub>.kc .kno{order:2;font-size:38cqmin!important;line-height:.9!important;margin:0!important;color:var(--pop-ink)!important;font-family:"Fun",sans-serif!important}
-html.pop body #killer#killer#killer #kplayers#kplayers.kbub>.kc.act .kno{color:#fff!important;-webkit-text-stroke:var(--pop-num-sw) var(--pop-ink)!important;paint-order:stroke fill;text-shadow:var(--pop-shadow)!important}
-html.pop body #killer#killer#killer #kplayers#kplayers.kbub>.kc .kkp{order:3;display:flex;gap:.25em;justify-content:center;font-size:9cqmin;width:100%}
-html.pop .kkp i{flex:1 1 0;max-width:3.2em;height:1.55em;border-radius:99px;background:#fff;box-shadow:inset 0 0 0 var(--pop-bw) var(--pop-ink);display:grid;place-items:center;font:400 1em "Fun",sans-serif;color:var(--pop-ink);font-style:normal}
-html.pop .kkp i.on{background:var(--pop-yellow)}
-html.pop .kkp b{flex:0 1 auto;width:80%;height:1.7em;border-radius:99px;background:var(--pop-yellow);box-shadow:inset 0 0 0 var(--pop-bw) var(--pop-ink),3px 3px 0 var(--pop-ink);display:grid;place-items:center;font:400 1.15em "Fun",sans-serif;color:var(--pop-ink)}
-html.pop body #killer#killer#killer #kplayers#kplayers.kbub>.kc .kx{order:4;display:block!important;margin:0!important;width:100%}
-html.pop body #killer#killer#killer #kplayers#kplayers.kbub>.kc .khist{gap:.25em!important;font-size:7.5cqmin;min-height:0}
-html.pop body #killer#killer#killer #kplayers#kplayers.kbub>.kc .khist .pill{translate:none!important;rotate:none!important;font-size:1em!important;min-width:2.6em!important;height:1.5em;padding:0 .3em!important;border:0!important;
   background:var(--pop-pill2)!important;color:var(--pop-ink)!important;box-shadow:none!important;opacity:1!important;font-family:"Fun",sans-serif!important;display:grid;place-items:center}
-html.pop body #killer#killer#killer #kplayers#kplayers.kbub>.kc.act .khist .pill{background:#fff!important;box-shadow:inset 0 0 0 calc(var(--pop-bw)*.8) var(--pop-ink)!important}
-html.pop body #killer#killer#killer #kplayers#kplayers.kbub>.kc.dead{opacity:.45!important;filter:grayscale(1)}
-/* 2 joueurs : cartes larges, historique à droite */
-html.pop body #killer#killer#killer #kplayers#kplayers.kbub.pk1>.kc{display:grid!important;grid-template-columns:1fr auto;grid-template-rows:auto 1fr auto;column-gap:6%;align-items:center;justify-items:center;padding:5% 7%!important}
-html.pop body #killer#killer#killer #kplayers#kplayers.kbub.pk1>.kc .klives{grid-column:1!important;grid-row:1!important;font-size:13cqmin!important}
-html.pop body #killer#killer#killer #kplayers#kplayers.kbub.pk1>.kc .kno{grid-column:1!important;grid-row:2!important;font-size:46cqmin!important}
-html.pop body #killer#killer#killer #kplayers#kplayers.kbub.pk1>.kc .kkp{grid-column:1!important;grid-row:3!important;font-size:9cqmin}
-html.pop body #killer#killer#killer #kplayers#kplayers.kbub.pk1>.kc .kx{grid-column:2!important;grid-row:1/4!important;width:auto}
-html.pop body #killer#killer#killer #kplayers#kplayers.kbub.pk1>.kc .khist{flex-direction:column;font-size:11cqmin;gap:.35em!important}
-html.pop body #killer#killer#killer #kplayers#kplayers.kbub>.kc .kname{grid-column:1/-1!important;grid-row:1/-1!important}
 
-html.pop body #killer#killer#killer #kplayers#kplayers.kbub>.kc :is(.klives,.kno,.kx,.khist,.kkp){position:relative!important;inset:auto!important;transform:none!important;translate:none!important}
-html.pop body #killer#killer#killer #kplayers#kplayers.kbub>.kc .klives{display:flex!important;justify-content:center!important;width:auto!important;height:auto!important}
-html.pop body #killer#killer#killer #kplayers#kplayers.kbub>.kc .klives i.h{position:static!important;margin:0!important;line-height:1}
-html.pop body #killer#killer#killer #kplayers#kplayers.kbub>.kc .khist{display:flex!important;width:auto!important;height:auto!important}
-html.pop body #killer#killer#killer #kplayers#kplayers.kbub>.kc .khist .pill{position:static!important}
 html.pop body #game#game#game.sk #scores .sc .nm *{color:inherit!important}
-/* tailles des cartes calculées pour tenir dans l'écran (popKiller) */
-html.pop body #killer#killer#killer #kplayers#kplayers.kbub{grid-template-rows:repeat(var(--pkr),var(--pkh,1fr))!important;grid-template-columns:repeat(var(--pkc),var(--pkw,1fr))!important;justify-content:center!important;align-content:center!important}
-html.pop body #killer#killer#killer #kplayers#kplayers.kbub>.kc .kno{font-size:44cqmin!important}
 
-html.pop body #killer#killer#killer #kplayers#kplayers.kbub.pk1>.kc .khist{flex-direction:column!important;align-items:stretch!important}
-html.pop body #killer#killer#killer #kplayers#kplayers.kbub.pk1>.kc .khist .pill{min-width:3.4em!important;height:1.7em}
-html.pop body #killer#killer#killer #kplayers#kplayers.kbub>.kc .kname{overflow:visible!important;text-overflow:clip!important;max-width:none!important;white-space:nowrap}
-html.pop body #killer#killer#killer #kplayers#kplayers.kbub.pk1>.kc .kname{text-align:left!important;left:4%!important}
 
 html.pop body :is(#home,#setup,#x01,#game,#killer):is(#home,#setup,#x01,#game,#killer):is(#home,#setup,#x01,#game,#killer).screen{background:var(--pop-bg)!important}
 html.pop body #setup#setup#setup :is(.sh,.gobar){background:var(--pop-bg)!important}
+
+/* ---------- Cricket (Pop) : retouches d'après la maquette ---------- */
+html.pop body #game#game#game#game#game.sk #grid{flex-direction:column!important}   /* 15 en haut, Bulle en bas */
+html.pop body #game#game#game#game#game.sk #scores .sc :is(.nm,.mpr,.mpr b){color:var(--pop-ink)!important;text-shadow:none!important}
+html.pop body #game#game#game#game#game.sk #scores .sc.act .pill:not(.undo){font-family:"Fun",sans-serif!important;color:var(--pop-ink)!important}
+html.pop body #game#game#game#game#game.sk #scores .sc:not(.act) .pill:not(.undo){background:#fff!important;box-shadow:inset 0 0 0 calc(var(--pop-bw)*.75) var(--pop-ink)!important;border-radius:.45em!important;color:var(--pop-ink)!important;font-family:"Fun",sans-serif!important}
+html.pop body footer #bS::after{font-size:1.4em!important;-webkit-text-stroke-width:calc(var(--pop-num-sw)*1.15)!important}
+
+/* =================== KILLER (Pop) : cartes d'après la maquette ===================
+   La carte Bulle garde son rôle (toucher = viser), mais son contenu est remplacé par .pk :
+   nom au-dessus, cœurs, gros numéro, pastilles K / « Killer », dernières fléchettes. Tailles en unités de carte (cqw/cqh). */
+html.pop body #killer#killer#killer#killer #kplayers#kplayers.kbub{display:grid!important;grid-template-columns:repeat(var(--pkc,2),var(--pkw,40vw))!important;grid-template-rows:repeat(var(--pkr,2),var(--pkh,50vw))!important;grid-auto-rows:var(--pkh,50vw)!important;
+  column-gap:var(--pkg,18px)!important;row-gap:var(--pkrg,46px)!important;padding:var(--pktop,46px) 0 0!important;justify-content:center!important;align-content:start!important;flex:1 1 auto!important;min-height:0!important;overflow:visible!important}
+html.pop body #killer#killer#killer#killer #kplayers#kplayers.kbub>.kc{width:var(--pkw)!important;height:var(--pkh)!important;aspect-ratio:auto!important;scale:none!important;translate:none!important;animation:none!important;
+  justify-self:center!important;align-self:center!important;padding:0!important;margin:0!important;display:block!important;border:0!important;outline:0!important;opacity:1!important;filter:none!important;
+  border-radius:var(--pkrad,26px)!important;background:var(--pop-bg)!important;box-shadow:inset 0 0 0 var(--pop-bw) var(--pop-ink)!important;container-type:size;position:relative!important;overflow:visible!important}
+html.pop body #killer#killer#killer#killer #kplayers#kplayers.kbub>.kc.act{background:var(--pc)!important;
+  box-shadow:inset 0 0 0 var(--pop-bw) var(--pop-ink),0 0 0 calc(var(--pop-bw)*1.6) var(--pc),0 9px 16px color-mix(in srgb,var(--pc) 75%,#000 10%)!important;z-index:3}
+html.pop body #killer#killer#killer#killer #kplayers#kplayers.kbub>.kc>:not(.pk){display:none!important}
+html.pop .pk{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.6cqh;padding:5cqh 6cqw 6cqh;font-family:"Fun",sans-serif;color:var(--pop-ink);pointer-events:none}
+html.pop .pk .pkn{position:absolute;left:0;right:0;bottom:calc(100% + 4px);text-align:center;font-size:var(--pkns,25px);line-height:1;white-space:nowrap;color:var(--pop-ink)}
+html.pop .kc.act .pk .pkn{color:var(--pc);-webkit-text-stroke:5px var(--pop-ink);paint-order:stroke fill;font-size:calc(var(--pkns,25px)*1.08);bottom:calc(100% - .3em);z-index:2}
+html.pop .kc.act .pk .pkn::before{content:"à toi";display:block;font-size:.55em;color:var(--pop-ink);-webkit-text-stroke:0;margin-bottom:.12em}
+html.pop .pk .pkh{display:flex;gap:1.5cqw;height:min(15.5cqh,23cqw)}
+html.pop .pk .pkh svg{height:100%;width:auto;aspect-ratio:24/21;overflow:visible}
+html.pop .pk .pkh path{fill:#fff;stroke:var(--pop-ink);stroke-width:2.1;stroke-linejoin:round}
+html.pop .pk .pkh .on path{fill:#ff1414}
+html.pop .pk .pkh .gold path{fill:#ffc61a}
+html.pop .pk .pkno{font-size:min(46cqh,64cqw);line-height:.8;margin:.3cqh 0 -.4cqh;letter-spacing:-.02em;color:var(--pop-ink)}
+html.pop .kc.act .pk .pkno{color:#fff;-webkit-text-stroke:min(1.6cqh,2.2cqw) var(--pop-ink);paint-order:stroke fill;text-shadow:min(.9cqh,1.3cqw) min(1.2cqh,1.8cqw) 0 var(--pop-ink)}
+html.pop .pk .pkk{display:flex;gap:2cqw;height:min(14cqh,20cqw);width:100%;justify-content:center}
+html.pop .pk .pkk i{flex:0 0 auto;width:24cqw;border-radius:99px;background:#fff;box-shadow:inset 0 0 0 var(--pop-bw) var(--pop-ink);display:grid;place-items:center;font:400 min(9.5cqh,14cqw) "Fun",sans-serif;font-style:normal;color:var(--pop-ink)}
+html.pop .pk .pkk i.on{background:var(--pop-yellow)}
+html.pop .pk .pkk b{flex:0 0 auto;width:78cqw;border-radius:99px;background:var(--pop-yellow);box-shadow:inset 0 0 0 var(--pop-bw) var(--pop-ink),min(.9cqh,1.3cqw) min(1.1cqh,1.6cqw) 0 var(--pop-ink);display:grid;place-items:center;font:400 min(10cqh,14cqw) "Fun",sans-serif;color:var(--pop-ink)}
+html.pop .pk .pkd{display:flex;gap:2cqw;height:min(10.5cqh,15cqw);justify-content:center}
+html.pop .pk .pkd .pill{flex:0 0 auto;width:22cqw;height:100%;min-width:0!important;padding:0!important;margin:0!important;border:0!important;border-radius:99px!important;background:var(--pop-pill2)!important;box-shadow:none!important;
+  display:grid!important;place-items:center;font:400 min(7cqh,10cqw) "Fun",sans-serif!important;color:var(--pop-ink)!important;opacity:1!important;translate:none!important;rotate:none!important;position:static!important}
+html.pop .kc.act .pk .pkd .pill{background:#fff!important;box-shadow:inset 0 0 0 calc(var(--pop-bw)*.8) var(--pop-ink)!important}
+html.pop .kc.dead .pk{filter:grayscale(1);opacity:.45}
+/* 2 joueurs : carte large, historique à droite */
+html.pop .pk.w{display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto auto;align-content:center;justify-items:start;column-gap:6cqw;row-gap:2.5cqh;padding:6cqh 8cqw}
+html.pop .pk.w .pkn{text-align:left;left:9cqw}
+html.pop .pk.w .pkh{grid-column:1;grid-row:1;height:15cqh}
+html.pop .pk.w .pkno{grid-column:1;grid-row:2;font-size:56cqh;margin:0}
+html.pop .pk.w .pkk{grid-column:1;grid-row:3;height:16cqh;width:auto;justify-content:flex-start}
+html.pop .pk.w .pkk i{width:16cqw}
+html.pop .pk.w .pkk b{width:48cqw;font-size:11cqh}
+html.pop .pk.w .pkd{grid-column:2;grid-row:1/4;flex-direction:column;height:auto;align-self:center;gap:4cqh}
+html.pop .pk.w .pkd .pill{width:22cqw;height:15cqh;font-size:10cqh!important}
 </style>
 </head>
 <body>
@@ -7906,16 +7913,26 @@ addEventListener('resize',()=>{try{kArc()}catch(e){}});
   [$('fMenu'),$('fUndo')].forEach(b=>b.addEventListener('pointerdown',()=>go(b)))}}
 
 
-/* Pop : Killer en cartes — grille, et pastilles « K » / « Killer » */
+
+/* Pop : Killer en cartes d'après la maquette */
+const PK_HEART='<svg viewBox="0 0 24 21"><path d="M12 19.5S2.2 13.6 2.2 7.2C2.2 4.1 4.6 1.8 7.4 1.8c2 0 3.6 1.1 4.6 2.7 1-1.6 2.6-2.7 4.6-2.7 2.8 0 5.2 2.3 5.2 5.4 0 6.4-9.8 12.3-9.8 12.3z"/></svg>';
 {const _kr=kRender;kRender=function(){const r=_kr.apply(this,arguments);try{if(popOn()&&KG)popKiller()}catch(e){console.error(e)}return r}}
-function popKiller(){const box=$('kplayers');if(!box||!box.classList.contains('kbub'))return;const P=KG.players,n=P.length,c=n<=2?1:2;
-  box.style.setProperty('--pkc',c);box.style.setProperty('--pkr',Math.ceil(n/c));box.classList.toggle('pk1',c===1);
-  {const rws=Math.ceil(n/c),fs=parseFloat(getComputedStyle(box).fontSize)||16,W=box.clientWidth-innerWidth*.1,H=box.clientHeight-fs*1.6-innerWidth*.055,cg=innerWidth*.045,rg=innerWidth*.048+fs*1.3,ar=c===1?1.45:.76;
-   let w=(W-(c-1)*cg)/c,h=w/ar;const hm=(H-(rws-1)*rg)/rws;if(h>hm){h=hm;w=Math.min(w,h*ar*(c===1?1:1.12))}
-   box.style.setProperty('--pkw',w.toFixed(1)+'px');box.style.setProperty('--pkh',h.toFixed(1)+'px')}
-  box.querySelectorAll('.kc[data-i]').forEach(card=>{const p=P[+card.dataset.i];if(!p)return;
-    const h=p.killer?'<b>Killer</b>':Array.from({length:KG.km||3},(_,k)=>`<i class="${k<(p.marks||0)?'on':''}">${k<(p.marks||0)?'K':''}</i>`).join('');
-    let e=card.querySelector('.kkp');if(!e){e=document.createElement('div');e.className='kkp';card.append(e)}if(e._h!==h){e._h=h;e.innerHTML=h}})}
+function popKiller(){const box=$('kplayers');if(!box||!box.classList.contains('kbub'))return;const P=KG.players,n=P.length,c=n<=2?1:2,rws=Math.ceil(n/c);
+  // tailles : cartes au plus grand possible, nom au-dessus de chaque carte
+  const vw=innerWidth,side=vw*.056,cg=vw*.046,ns=Math.round(vw*(c===1?.072:.064)),top=ns*1.9,rg=ns*1.9;
+  const Wt=vw-2*side,Ht=box.clientHeight-top-8;let w=(Wt-(c-1)*cg)/c,h=w/(c===1?1.34:.73);const hm=(Ht-(rws-1)*rg)/rws;if(h>hm)h=hm;
+  const st=box.style;st.setProperty('--pkc',c);st.setProperty('--pkr',rws);st.setProperty('--pkw',w.toFixed(1)+'px');st.setProperty('--pkh',h.toFixed(1)+'px');
+  st.setProperty('--pkg',cg.toFixed(1)+'px');st.setProperty('--pkrg',rg.toFixed(1)+'px');st.setProperty('--pktop',top.toFixed(1)+'px');st.setProperty('--pkns',ns+'px');
+  st.setProperty('--pkrad',(Math.min(w,h)*(c===1?.11:.17)).toFixed(1)+'px');
+  box.querySelectorAll('.kc[data-i]').forEach(card=>{const i=+card.dataset.i,p=P[i];if(!p)return;const act=card.classList.contains('act');
+    const nh=Math.max(p.maxl||KG.lives||3,p.lives||0);
+    const hearts=Array.from({length:nh},(_,k)=>`<i class="${k<p.lives?'on':''}${p.gold&&k===p.lives-1?' gold':''}">${PK_HEART}</i>`).join('');
+    const kk=p.killer?'<b>Killer</b>':Array.from({length:KG.km||3},(_,k)=>`<i class="${k<(p.marks||0)?'on':''}">${k<(p.marks||0)?'K':''}</i>`).join('');
+    const ds=act?(KHOLD?p.last:KG.turn):(p.last||[]);const darts=Array.from({length:3},(_,k)=>kDart(ds[k])).join('');
+    const h=`<div class="pkn">${esc(p.name)}</div><div class="pkh">${hearts.replace(/<i class="([^"]*)">/g,'<span class="$1">').replace(/<\/i>/g,'</span>')}</div><div class="pkno">${p.num}</div><div class="pkk">${kk}</div><div class="pkd">${darts}</div>`;
+    let e=card.querySelector(':scope>.pk');if(!e){e=document.createElement('div');card.append(e)}e.className='pk'+(c===1?' w':'');
+    if(e._h!==h){e._h=h;e.innerHTML=h}})}
+addEventListener('resize',()=>{try{if(popOn()&&KG&&$('killer').classList.contains('on'))popKiller()}catch(e){}});
 /* fin de tour : on ne peut plus marquer pendant un court instant (le temps de passer la main) */
 const TURNLOCK_MS=1200;let TURNLOCK=0;
 const turnLocked=()=>performance.now()<TURNLOCK||!!HOLD||!!KHOLD||(typeof XHOLD!=='undefined'&&!!XHOLD);   // tant que le joueur n'a pas changé à l'écran
