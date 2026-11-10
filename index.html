@@ -4268,7 +4268,7 @@ html.pop{--pfT:"Fun";--pfN:"Fun"}
 :is(#pcl,#pkl)>svg{position:absolute;left:0;width:100%;top:var(--sat,0px);height:calc(100% - var(--sat,0px));overflow:visible}
 :is(#pcl,#pkl) svg *{transform-box:view-box}
 :is(#pcl,#pkl) text{font-family:var(--pfT),"Fun",sans-serif!important;text-anchor:middle;fill:#111;font-synthesis:none}
-:is(#pcl,#pkl) .w{fill:#fff;stroke:#111;stroke-width:var(--swN,10px);paint-order:stroke fill;stroke-linejoin:round}
+:is(#pcl,#pkl) .w{fill:#fff;stroke:none;filter:url(#pOw)}
 :is(#pcl,#pkl) .ol{fill:none;stroke:#111;stroke-width:var(--swC,10px)}
 :is(#pcl,#pkl) .pl{fill:#fff;stroke:#111;stroke-width:var(--swS,4px)}
 :is(#pcl,#pkl) .pc{fill:var(--pc);transition:fill .45s ease}
@@ -4284,7 +4284,7 @@ html.pop{--pfT:"Fun";--pfN:"Fun"}
 :is(#pcl,#pkl) .row.pr .cg{transform:scale(.95);transform-origin:562.5px var(--cy)}
 :is(#pcl,#pkl) .arm{fill:var(--pc);opacity:0;transition:opacity .2s,fill .45s}
 :is(#pcl,#pkl).m2 .arm.d,:is(#pcl,#pkl).m3 .arm.t{opacity:1}
-:is(#pcl,#pkl).m2 .tx.d,:is(#pcl,#pkl).m3 .tx.t{fill:#fff;stroke:#111;stroke-width:var(--swN,10px);paint-order:stroke fill;stroke-linejoin:round}
+:is(#pcl,#pkl).m2 .tx.d,:is(#pcl,#pkl).m3 .tx.t{fill:#fff;stroke:none;filter:url(#pOw)}
 :is(#pcl,#pkl) .sp{transform-origin:562.5px 2293px}
 :is(#pcl,#pkl) .ico{transition:transform .15s}
 :is(#pcl,#pkl) .ico.pr{transform:scale(.88)}
@@ -4307,7 +4307,8 @@ html:is(.pcl,.pkl) body>:is(.fireglow,.ember,.bhole){display:none!important}
 #pkl .pkhp{fill:#c7b299}
 #pkl .kc2.act .pkhp{fill:#fff}
 #pkl .pknm{fill:#111}
-#pkl .kc2.act .pknm{fill:#1d1d1b;stroke:var(--kc);stroke-width:var(--swN,10px);paint-order:stroke fill;stroke-linejoin:round}
+#pkl .kc2.act .pknm{fill:#1d1d1b;stroke:none;filter:url(#pOk)}
+#pkl .pksn{stroke-width:calc(var(--swN,5px)*2);stroke-linejoin:round}
 #pkl .halo{fill:var(--kc);transition:fill .45s}
 
 /* essai des polices */
@@ -4317,7 +4318,7 @@ html:is(.pcl,.pkl) body>:is(.fireglow,.ember,.bhole){display:none!important}
 #pfp .pfv{width:100%;height:auto;flex:0 0 auto}
 #pfp .pfv text{font-family:var(--pfT),"Fun",sans-serif;text-anchor:middle;fill:#111}
 #pfp .pfv text.fN{font-family:var(--pfN),"Fun",sans-serif}
-#pfp .pfv text.w{fill:#fff;stroke:#111;stroke-width:var(--swN,10px);paint-order:stroke fill;stroke-linejoin:round}
+#pfp .pfv text.w{fill:#fff;stroke:none;filter:url(#pOw)}
 #pfp .pfs{display:flex;border-radius:99px;box-shadow:inset 0 0 0 3px #111;overflow:hidden;flex:0 0 auto}
 #pfp .pfs button{flex:1;border:0;background:transparent;font:400 18px "Fun",sans-serif;padding:10px;color:#111}
 #pfp .pfs button.on{background:#111;color:#fff}
@@ -7793,7 +7794,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||(S.style&&S.style!=='bulle'&&S.style!=='pop')){delete S.th;delete S.style;try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-229';   // à changer avec VERSION dans sw.js
+const APPV='lf-230';   // à changer avec VERSION dans sw.js
 function popOn(){return S.style!=='bulle'}
 function popApply(){document.documentElement.classList.toggle('pop',popOn());try{const m=document.querySelector('meta[name=theme-color]');if(m)m.content=popOn()?'#f9ecc9':'#f7f2e5'}catch(e){}try{if(G&&R&&$('game').classList.contains('on')){layoutSk();if(typeof fitSk==='function')fitSk();render()}}catch(e){}}
 popApply();
@@ -8023,7 +8024,7 @@ addEventListener('resize',()=>{try{if(popOn()&&KG&&$('killer').classList.contain
 /* ===== POP : Cricket 1 contre 1 — calque #pcl, coordonnées de la maquette (1125 de large, tracés repris tels quels) ===== */
 const PF={kT:1,kN:1};
 const pkDark=c=>{if(!/^#[0-9a-f]{6}$/i.test(c||''))return'#5a1408';return'#'+[1,3,5].map(k=>{const x=parseInt(c.slice(k,k+2),16);return Math.round(x*x/255*.58).toString(16).padStart(2,'0')}).join('')};
-const PST_D={c:10,n:10,m:17,s:1};let PST=Object.assign({},PST_D);
+const PST_D={c:10,n:5,m:17,s:1};let PST=Object.assign({},PST_D);
 const PCL={dx:-20};
 const PC_T=[15,16,17,18,19,20,25];
 const pclOn=()=>popOn()&&!!G&&!!G.players&&G.players.length===2&&!BARC&&!G._bar;
@@ -8155,7 +8156,7 @@ function pklCard(i,g,act){const p=KG.players[i],{W,H,wide,k}=g,DD=KG.def,isDef=D
   // numéro
   const ny=(wide?.272:.243)*H,nH=(wide?.44:.325)*H,nW=(wide?.445:.61)*W;
   const nx=wide?.307*W:cx,nfs=(nH/.725*kN).toFixed(1);
-  if(act)h+=`<text class="pkno fN w" x="${nx+10}" y="${ny+nH+11}" font-size="${nfs}" data-fit="${nW}" style="fill:${dk};stroke:${dk}">${p.num}</text>`;
+  if(act)h+=`<text class="pkno fN pksn" x="${nx+10}" y="${ny+nH+11}" font-size="${nfs}" data-fit="${nW}" style="fill:${dk};stroke:${dk}">${p.num}</text>`;
   h+=`<text class="pkno fN${act?' w':''}" x="${nx}" y="${ny+nH}" font-size="${nfs}" data-fit="${nW}">${p.num}</text>`;
   // K / Killer
   const ky=(wide?.774:.626)*H,kh=(wide?.14:.137)*H;
@@ -8174,7 +8175,7 @@ function pklSync(){const sec=$('killer'),on=pklOn()&&sec.classList.contains('on'
   {const v=getComputedStyle(document.documentElement).getPropertyValue('--sat');k.style.setProperty('--sat',v||'0px')}
   PKL.fix.forEach(([e,t,w,b])=>pclText(e,t,w,b));
   const P=KG.players,n=P.length,cur=KG.winner!==null?KG.winner:(KHOLD?KHOLD.who:KG.cur),g=pklGeo(n);
-  {const c=pkCol(cur);if(PKL.col!==c){PKL.col=c;k.style.setProperty('--pc',c);const f=k.querySelector('.pkshc');if(f)f.setAttribute('flood-color',pkDark(c))}}
+  {const c=pkCol(cur);if(PKL.col!==c){PKL.col=c;k.style.setProperty('--pc',c);const f=k.querySelector('.pkshc');if(f)f.setAttribute('flood-color',pkDark(c));const o=document.querySelector('.pOkc');if(o)o.setAttribute('flood-color',c)}}
   const m=KG.winner===null?KG.mult:1;k.classList.toggle('m2',m===2);k.classList.toggle('m3',m===3);
   const t1=n+' joueurs'+(KG.manche>1?' · manche '+KG.manche:''),t2='tour '+KG.round;pclText(PKL.st1,t1,420,25);pclText(PKL.st2,t2,420,25);
   if(PKL.key!==n){PKL.key=n;PKL.cards.innerHTML=P.map((_,i)=>`<g class="kc2" data-i="${i}" transform="translate(${g.pos[i][0]} ${g.pos[i][1]})"><g class="kin" style="--ox:${g.W/2}px;--oy:${g.H/2}px"></g></g>`).join('');PKL.c=[...PKL.cards.children]}
@@ -8223,7 +8224,7 @@ function pfOpen(){haptic();const old=$('pfp');if(old)old.remove();let tgt='T';
       <rect x="364" y="470" width="397" height="155" rx="77" style="fill:var(--pc,#ff5a1f)"/><rect class="pvo" x="40" y="478" width="705" height="140" rx="70"/>
       <text class="fN w" x="562.5" y="598" data-b="139" data-w="150">15</text><g class="pvm" transform="translate(205 548)">${pclMark(3,'#fbb03b',true)}</g><g class="pvm" transform="translate(915 548)">${pclMark(2,'',false)}</g></svg>
     <div class="pfs"><button data-t="T" class="${tgt==='T'?'on':''}">Textes</button><button data-t="N" class="${tgt==='N'?'on':''}">Numéros</button><button data-t="C" class="${tgt==='C'?'on':''}">Contours</button></div>
-    ${tgt==='C'?`<div class="pfc">${[['c','Contours des cases',0,24,1,'cases, rails, cartes, cœurs (pastilles : 40 %)'],['n','Contour des chiffres',0,24,1,'score, nombres, Spew'],['m','Épaisseur des marques',4,32,1,''],['s','Taille des marques',.6,1.4,.05,'']].map(([k,l,a,b,st,h])=>`<label><span>${l}<b data-v="${k}">${k==='s'?Math.round(PST[k]*100)+' %':PST[k]}</b></span><input type="range" data-k="${k}" min="${a}" max="${b}" step="${st}" value="${PST[k]}">${h?`<small>${h}</small>`:''}</label>`).join('')}
+    ${tgt==='C'?`<div class="pfc">${[['c','Contours des cases',0,24,1,'cases, rails, cartes, cœurs (pastilles : 40 %)'],['n','Contour des chiffres',0,12,.5,'épaisseur visible autour du score, des nombres, de Spew'],['m','Épaisseur des marques',4,32,1,''],['s','Taille des marques',.6,1.4,.05,'']].map(([k,l,a,b,st,h])=>`<label><span>${l}<b data-v="${k}">${k==='s'?Math.round(PST[k]*100)+' %':PST[k]}</b></span><input type="range" data-k="${k}" min="${a}" max="${b}" step="${st}" value="${PST[k]}">${h?`<small>${h}</small>`:''}</label>`).join('')}
       <button class="pfr">Valeurs de la maquette</button></div>`:`<div class="pfl">${all().map(([f,l])=>`<button data-f="${esc(f)}" class="${f===cur?'on':''}"><span style="font-family:'${esc(f)}','Fun'">${tgt==='N'?'15 289':'Loubard'}</span><small>${esc(l||f)}</small></button>`).join('')}</div>
     <div class="pfb"><button class="pfi">Importer un fichier (.otf, .ttf, .woff)</button><input type="file" hidden></div>`}`;
     pfPrev()};
@@ -8231,15 +8232,18 @@ function pfOpen(){haptic();const old=$('pfp');if(old)old.remove();let tgt='T';
   p.addEventListener('click',ev=>{ev.stopPropagation();if(ev.target.closest('.pfx')){p.remove();return}
     const sb=ev.target.closest('.pfs button');if(sb){tgt=sb.dataset.t;haptic();draw();return}
     const fb=ev.target.closest('.pfl button');if(fb){haptic();if(tgt==='T')S.pfT=fb.dataset.f;else S.pfN=fb.dataset.f;store.set(K_S,S);pfApply();draw();return}
-    if(ev.target.closest('.pfr')){haptic();S.pst=Object.assign({},PST_D);store.set(K_S,S);pstApply();draw();return}
+    if(ev.target.closest('.pfr')){haptic();S.pst=Object.assign({v:2},PST_D);store.set(K_S,S);pstApply();draw();return}
     if(ev.target.closest('.pfi'))p.querySelector('input[type=file]').click()});
-  p.addEventListener('input',ev=>{const r=ev.target.closest('input[type=range]');if(!r)return;S.pst=Object.assign({},PST,{[r.dataset.k]:+r.value});pstApply();const b=p.querySelector(`b[data-v="${r.dataset.k}"]`);if(b)b.textContent=r.dataset.k==='s'?Math.round(+r.value*100)+' %':r.value;
+  p.addEventListener('input',ev=>{const r=ev.target.closest('input[type=range]');if(!r)return;S.pst=Object.assign({},PST,{[r.dataset.k]:+r.value,v:2});pstApply();const b=p.querySelector(`b[data-v="${r.dataset.k}"]`);if(b)b.textContent=r.dataset.k==='s'?Math.round(+r.value*100)+' %':r.value;
     if(r.dataset.k==='s')p.querySelectorAll('.pvm').forEach((g,i)=>{g.innerHTML=pclMark(i?2:3,'#fbb03b',!i)});clearTimeout(p._sv);p._sv=setTimeout(()=>store.set(K_S,S),400)});
   p.addEventListener('change',ev=>{const f=ev.target.files&&ev.target.files[0];if(!f)return;const name=f.name.replace(/\.[^.]+$/,'').replace(/[^\w \-]/g,' ').trim().slice(0,40)||'Police';
     const rd=new FileReader();rd.onload=()=>{const url=rd.result;const ff=new FontFace(name,`url(${url})`);ff.load().then(x=>{document.fonts.add(x);PF_ON[name]=1;
       const st=pfStore();st[name]=url;try{localStorage.setItem(PF_K,JSON.stringify(st))}catch(e){mkToast&&mkToast('','Police chargée pour cette session seulement (mémoire pleine)',2500)}
       if(tgt==='T')S.pfT=name;else S.pfN=name;store.set(K_S,S);pfApply();draw()}).catch(()=>{try{mkToast('','Fichier de police illisible',2200)}catch(e){}})};rd.readAsDataURL(f)})}
-function pstApply(){PST=Object.assign({},PST_D,S.pst||{});const st=document.documentElement.style;st.setProperty('--swC',PST.c+'px');st.setProperty('--swS',(PST.c*.4)+'px');st.setProperty('--swN',PST.n+'px');st.setProperty('--swM',PST.m+'px');
+(function(){const d=document.createElement('div');d.innerHTML='<svg width="0" height="0" style="position:absolute;width:0;height:0" aria-hidden="true"><defs>'+
+  ['pOw','pOk'].map(id=>`<filter id="${id}" x="-25%" y="-25%" width="150%" height="150%"><feMorphology class="pomr" in="SourceAlpha" operator="dilate" radius="5" result="d"/><feFlood class="${id}c" flood-color="#111"/><feComposite in2="d" operator="in"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>`).join('')+'</defs></svg>';document.body.append(d.firstChild)})();
+if(S.pst&&S.pst.v!==2){if(S.pst.n!==undefined)S.pst.n=S.pst.n/2;S.pst.v=2;try{store.set(K_S,S)}catch(e){}}
+function pstApply(){PST=Object.assign({},PST_D,S.pst||{});document.querySelectorAll('.pomr').forEach(m=>m.setAttribute('radius',PST.n));const st=document.documentElement.style;st.setProperty('--swC',PST.c+'px');st.setProperty('--swS',(PST.c*.4)+'px');st.setProperty('--swN',PST.n+'px');st.setProperty('--swM',PST.m+'px');
   try{if(PCL.rows)Object.values(PCL.rows).forEach(o=>{o.mk=['','']});if(G&&R)pclSync()}catch(e){}}
 pstApply();
 pfApply();
