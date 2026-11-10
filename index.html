@@ -4341,6 +4341,14 @@ html.krt body>:is(.bhole,.bosstag,.bspark,.bullet,.ember,.fireglow,.flake,.bullf
 #kr.m2 .rbtn.dbl,#kr.m3 .rbtn.trp{filter:brightness(1.06) drop-shadow(0 0 calc(10*var(--s)) rgba(255,190,0,.8))}
 #kr .rft.pm .rbtn.home,#kr .rft.pu .rbtn.undo{transform:scale(.96);background:#efe4cc}
 #kr .rcloud{will-change:transform}
+/* Rétro : nombres blancs, contour noir à l'extérieur du chiffre ; noms en gothique (UnifrakturCook) */
+#game#game#game>#kr :is(.rcap .rn,.rpt){color:#fff;-webkit-text-stroke:calc(var(--nw)*var(--s)) var(--ink)!important;paint-order:stroke fill}
+#game#game#game>#kr .rcap .rn{--nw:13}
+#game#game#game>#kr .rpt{--nw:14}
+#game#game#game>#kr .rrow.dead .rcap .rn{color:#fff;-webkit-text-stroke-color:#ada797!important}
+#game#game#game>#kr :is(.rnm,.rsub2 b){font-family:"K-gothique",serif!important;text-transform:lowercase}
+#game#game#game>#kr :is(.rnm,.rsub2 b)::first-letter{text-transform:uppercase}
+#game#game#game>#kr .rsub2 b{display:inline-block;font-size:1.25em;line-height:1}
 </style>
 </head>
 <body>
@@ -8035,10 +8043,10 @@ function krBuild(){const g=$('game');let k=$('kr');if(k)k.remove();
   h+=krT('rsub1',427.5,203.5,23.6,1.03,'--fw:.9')+krT('rsub2',428,236.5,23.6,1,'--fw:.9');
   // case du joueur en cours
   h+=`<div class="z rcard" style="--x:24;--y:297;--w:535;--h:309"><div class="rin"></div>
-      <div class="in">${krT('rnm',159.5,70,57,.93,'--fw:2.6')}${krT('rpt',168.5,160,148,.9,'--fw:4.5')}${krT('rmp',168.5,238.5,30,1,'letter-spacing:.05em;--fw:1.3')}
+      <div class="in">${krT('rnm',168.5,66,74,1,'--fw:2.6')}${krT('rpt',168.5,160,148,.9,'--fw:4.5')}${krT('rmp',168.5,238.5,30,1,'letter-spacing:.05em;--fw:1.3')}
       ${[0,1,2].map(i=>`<div class="z rpill" style="--x:316;--y:${47+i*73};--w:174;--h:61"><span></span></div>`).join('')}</div></div>`;
   // adversaire
-  h+=`<div class="z ropp" style="--x:580;--y:300;--w:226;--h:280"><div class="in">${krT('rnm',112,40.5,53,.86,'--fw:2.4')}${krT('rpt',115.5,131,142,.88,'--fw:4.5')}${krT('rmp',112.5,202.5,23.6,1.04,'--fw:1')}
+  h+=`<div class="z ropp" style="--x:580;--y:300;--w:226;--h:280"><div class="in">${krT('rnm',112,37,66,1,'--fw:2.4')}${krT('rpt',115.5,131,142,.88,'--fw:4.5')}${krT('rmp',112.5,202.5,23.6,1.04,'--fw:1')}
       ${[0,1,2].map(i=>`<div class="z rpill" style="--x:${9+i*72};--y:231;--w:66;--h:40"><span></span></div>`).join('')}</div></div>`;
   h+=`<svg class="rcrown" viewBox="0 0 112 82"><g stroke="#050505" stroke-width="4" stroke-linejoin="round">
       <circle cx="11" cy="30" r="10" fill="#fbc11a"/><circle cx="55" cy="12" r="11" fill="#fbc11a"/><circle cx="98" cy="27" r="10" fill="#fbc11a"/>
@@ -8087,7 +8095,7 @@ function krText(el,txt,base,maxW){if(el._h===txt&&el._b===base)return;el._h=txt;
   const s=krS(),sx=parseFloat(getComputedStyle(el).getPropertyValue('--sx'))||1;let n=0;while(el.scrollWidth*sx>maxW*s&&f>8&&n++<30){f*=.94;el.style.setProperty('--f',f)}}
 const krName=sc=>{const w=sc.nm.querySelector('.nmw');return (w?w.textContent:(sc.nm.firstChild&&sc.nm.firstChild.nodeType===3?sc.nm.firstChild.textContent:sc.nm.textContent)).trim()};
 function krFill(box,i,act){const sc=R.sc[i],t=box.querySelectorAll('.t');
-  krText(t[0],krName(sc),act?58:54,act?232:205);
+  krText(t[0],krName(sc),act?74:66,act?232:205);
   const nv=sc.pts.textContent.trim(),pt=t[1],same=pt._who===i,ov=pt._v;pt._who=i;if(!same){cancelAnimationFrame(pt._raf);pt._h=null}
   krText(pt,nv,act?152:145,act?246:205);if(same&&ov!==undefined&&ov!==nv&&/^\d+$/.test(ov)&&/^\d+$/.test(nv)&&+nv>+ov)kcCountR(pt,+ov,+nv);pt._v=nv;
   const b=sc.m&&sc.m.querySelector('b');krText(t[2],'MPR '+(b?b.textContent:''),act?30.5:23.6,act?220:190);
