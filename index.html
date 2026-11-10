@@ -4286,7 +4286,7 @@ html[data-sk] body:not(.m2):not(.m3) :is(#game#game#game,#x01#x01#x01,#killer#ki
 html.krt body>:is(.bhole,.bosstag,.bspark,.bullet,.ember,.fireglow,.flake,.bullfx,.inflate,.ring){display:none!important}
 #game.krt>main,#game.krt>footer,#game.krt #fbar2,#game.krt header{visibility:hidden!important}
 #game.krt>#kr{display:block;position:absolute;inset:0;z-index:20;overflow:hidden;contain:strict;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;
-  --s:min(calc(100vw/852),calc(100dvh/1846));--ox:calc((100vw - 852*var(--s))/2);--oy:calc((100dvh - 1846*var(--s))/2);
+  --s:min(calc(100vw/852),calc(100dvh/1741));--ox:calc((100vw - 852*var(--s))/2);--oy:calc((100dvh - 1741*var(--s))/2 - 105*var(--s));
   --ink:#050505;--cream:#fdf4e2;--bg:#fef3de;--S1:5.6;--S2:4.6;--pc:#fbc103;background:var(--bg);font-family:"K-retro",serif}
 #kr *{box-sizing:border-box}
 #game#game#game>#kr,#game#game#game>#kr *{font-family:"K-retro",serif!important;font-weight:400!important;font-synthesis:none}
@@ -4322,8 +4322,7 @@ html.krt body>:is(.bhole,.bosstag,.bspark,.bullet,.ember,.fireglow,.flake,.bullf
 #kr.m2 .rrow:not(.dead) .rcap{background:linear-gradient(#ffffff,#d5dbe1 55%,#aeb7c1)}
 #kr.m3 .rrow:not(.dead) .rcap{background:linear-gradient(#fff2a8,#ffcf2e 55%,#e39d00)}
 #kr .rcap .t{left:50%;top:50%}
-#kr .rrow[data-t="25"] .rrail{top:calc(50% - 49*var(--s));height:calc(98*var(--s))}
-#kr .rrow[data-t="25"] .rcap{top:calc(50% - 56*var(--s));height:calc(112*var(--s))}
+
 #kr .rrow.dead .rrail{display:none}
 #kr .rrow.dead .rcap{background:transparent;border-color:#ada797;border-width:calc(var(--S2)*var(--s));top:calc(50% - 53.5*var(--s));height:calc(107*var(--s));left:calc(266*var(--s));width:calc(320*var(--s))}
 #kr .rrow.dead .rcap .t{color:#a29b8e;font-size:calc(112*var(--s))!important}
@@ -8029,7 +8028,7 @@ function krOn(){return S.style==='retro'&&!!G&&!!G.players&&G.players.length===2
 let KR=null;
 const krT=(cls,x,y,f,sx,extra)=>`<div class="t ${cls}" style="--x:${x};--y:${y};--f:${f};--sx:${sx||1};${extra||''}"></div>`;
 function krBuild(){const g=$('game');let k=$('kr');if(k)k.remove();
-  const rowsY=[667,789.5,920.5,1051.5,1182.5,1313.5,1444.5],T=[25,20,19,18,17,16,15];
+  const rowsY=[676.4,808.8,941.2,1073.6,1206,1338.4,1470.8],T=[25,20,19,18,17,16,15];
   let h=`<div id="kr" class="sl">`;
   // en-tête : logo + 2 lignes
   h+=`<svg class="full" viewBox="0 0 852 1846"><g transform="rotate(-1.3 431 148)" font-family="K-retro" font-size="55" text-anchor="middle" stroke-linejoin="round">
@@ -8068,16 +8067,13 @@ function krBuild(){const g=$('game');let k=$('kr');if(k)k.remove();
         <path d="M671 1713 A24 24 0 1 1 661 1752" stroke-width="10.5"/><path d="M647 1715 L671 1701 L673 1727 Z" fill="#050505" stroke-width="3"/></svg>
       <div class="rcloud" style="position:absolute;inset:0">
         <svg class="full" style="left:0;top:calc(-1530*var(--s));width:100%;height:calc(1846*var(--s))" viewBox="0 0 852 1846">
-          <defs><clipPath id="krcl"><path d="${KR_CLOUD}"/></clipPath></defs>
-          <g clip-path="url(#krcl)"><rect x="240" y="1530" width="370" height="280" fill="#b5f1d7"/><path d="${KR_CLOUD}" transform="translate(0 -29)" fill="#fef6e4"/></g>
-          <path d="${KR_CLOUD}" fill="none" stroke="#050505" stroke-width="5.6" stroke-linejoin="round"/>
-          <path d="M361 1614 C375 1604 395 1603 410 1609 S440 1621 453 1610 S467 1586 451 1578 S425 1583 431 1596" fill="none" stroke="#6ed8c1" stroke-width="7.5" stroke-linecap="round"/></svg>
-        ${krT('rsp',423,143,106,.77,'--fw:5')}</div>
+          <defs><clipPath id="krcl"><circle cx="425.0" cy="1590.0" r="50"/><circle cx="482.6" cy="1604.9" r="50"/><circle cx="518.2" cy="1643.9" r="50"/><circle cx="518.2" cy="1692.1" r="50"/><circle cx="482.6" cy="1731.1" r="50"/><circle cx="425.0" cy="1746.0" r="50"/><circle cx="367.4" cy="1731.1" r="50"/><circle cx="331.8" cy="1692.1" r="50"/><circle cx="331.8" cy="1643.9" r="50"/><circle cx="367.4" cy="1604.9" r="50"/><ellipse cx="425" cy="1668" rx="98" ry="78"/></clipPath></defs><g stroke="#050505" stroke-width="11.2" fill="#050505"><circle cx="425.0" cy="1590.0" r="50"/><circle cx="482.6" cy="1604.9" r="50"/><circle cx="518.2" cy="1643.9" r="50"/><circle cx="518.2" cy="1692.1" r="50"/><circle cx="482.6" cy="1731.1" r="50"/><circle cx="425.0" cy="1746.0" r="50"/><circle cx="367.4" cy="1731.1" r="50"/><circle cx="331.8" cy="1692.1" r="50"/><circle cx="331.8" cy="1643.9" r="50"/><circle cx="367.4" cy="1604.9" r="50"/><ellipse cx="425" cy="1668" rx="98" ry="78"/></g><g fill="#b5f1d7"><circle cx="425.0" cy="1590.0" r="50"/><circle cx="482.6" cy="1604.9" r="50"/><circle cx="518.2" cy="1643.9" r="50"/><circle cx="518.2" cy="1692.1" r="50"/><circle cx="482.6" cy="1731.1" r="50"/><circle cx="425.0" cy="1746.0" r="50"/><circle cx="367.4" cy="1731.1" r="50"/><circle cx="331.8" cy="1692.1" r="50"/><circle cx="331.8" cy="1643.9" r="50"/><circle cx="367.4" cy="1604.9" r="50"/><ellipse cx="425" cy="1668" rx="98" ry="78"/></g><g clip-path="url(#krcl)" fill="#fef6e4"><g transform="translate(0 -30)"><circle cx="425.0" cy="1590.0" r="50"/><circle cx="482.6" cy="1604.9" r="50"/><circle cx="518.2" cy="1643.9" r="50"/><circle cx="518.2" cy="1692.1" r="50"/><circle cx="482.6" cy="1731.1" r="50"/><circle cx="425.0" cy="1746.0" r="50"/><circle cx="367.4" cy="1731.1" r="50"/><circle cx="331.8" cy="1692.1" r="50"/><circle cx="331.8" cy="1643.9" r="50"/><circle cx="367.4" cy="1604.9" r="50"/><ellipse cx="425" cy="1668" rx="98" ry="78"/></g></g></svg>
+        ${krT('rsp',425,1668-1530,100,.74,'--fw:5')}</div>
       <b class="zb b2" style="left:calc(37*var(--s));top:calc(43*var(--s));width:calc(222*var(--s));height:calc(101*var(--s))"></b>
       <b class="zb b3" style="left:calc(592*var(--s));top:calc(43*var(--s));width:calc(217*var(--s));height:calc(101*var(--s))"></b>
       <b class="zb bm" style="left:calc(37*var(--s));top:calc(155*var(--s));width:calc(222*var(--s));height:calc(94*var(--s))"></b>
       <b class="zb bu" style="left:calc(592*var(--s));top:calc(155*var(--s));width:calc(217*var(--s));height:calc(94*var(--s))"></b>
-      <b class="zb s" style="left:calc(258*var(--s));top:calc(14*var(--s));width:calc(334*var(--s));height:calc(250*var(--s));border-radius:40%"></b></div>`;
+      <b class="zb s" style="left:calc(277*var(--s));top:calc(10*var(--s));width:calc(296*var(--s));height:calc(256*var(--s));border-radius:50%"></b></div>`;
   h+=`</div>`;g.insertAdjacentHTML('beforeend',h);k=$('kr');
   const q=(x,el)=>(el||k).querySelector(x);
   KR={k,sub1:q('.rsub1'),sub2:q('.rsub2'),card:q('.rcard'),opp:q('.ropp'),crown:q('.rcrown'),foot:q('.rft'),cloud:q('.rcloud'),rows:{},probe:null};
@@ -8090,7 +8086,7 @@ function krBuild(){const g=$('game');let k=$('kr');if(k)k.remove();
   k.addEventListener('pointerdown',e=>{const b=e.target.closest('.zb');if(!b)return;const c={s:'ps',bm:'pm',bu:'pu'}[b.classList[1]];if(!c)return;
     const f=KR.foot;f.classList.remove('ps','pm','pu');f.classList.add(c);clearTimeout(f._t);f._t=setTimeout(()=>f.classList.remove(c),360);
     if(c==='ps'){KR.cloud.getAnimations().forEach(a=>a.cancel());KR.cloud.animate([{transform:'scale(1)'},{transform:'scale(1.12)',offset:.35},{transform:'scale(.96)',offset:.7},{transform:'scale(1)'}],{duration:480,easing:'ease-out'})}})}
-const krS=()=>{const v=KR&&KR.probe?KR.probe.getBoundingClientRect().width/1000:0;return v>0?v:Math.min(innerWidth/852,innerHeight/1846)};
+const krS=()=>{const v=KR&&KR.probe?KR.probe.getBoundingClientRect().width/1000:0;return v>0?v:Math.min(innerWidth/852,innerHeight/1741)};
 function krText(el,txt,base,maxW){if(el._h===txt&&el._b===base)return;el._h=txt;el._b=base;el.textContent=txt;let f=base;el.style.setProperty('--f',f);
   const s=krS(),sx=parseFloat(getComputedStyle(el).getPropertyValue('--sx'))||1;let n=0;while(el.scrollWidth*sx>maxW*s&&f>8&&n++<30){f*=.94;el.style.setProperty('--f',f)}}
 const krName=sc=>{const w=sc.nm.querySelector('.nmw');return (w?w.textContent:(sc.nm.firstChild&&sc.nm.firstChild.nodeType===3?sc.nm.firstChild.textContent:sc.nm.textContent)).trim()};
