@@ -4268,11 +4268,11 @@ html.pop{--pfT:"Fun";--pfN:"Fun"}
 :is(#pcl,#pkl)>svg{position:absolute;left:0;width:100%;top:var(--sat,0px);height:calc(100% - var(--sat,0px));overflow:visible}
 :is(#pcl,#pkl) svg *{transform-box:view-box}
 :is(#pcl,#pkl) text{font-family:var(--pfT),"Fun",sans-serif!important;text-anchor:middle;fill:#111;font-synthesis:none}
-:is(#pcl,#pkl) .w{fill:#fff;stroke:#111;stroke-width:10px;paint-order:stroke fill;stroke-linejoin:round}
-:is(#pcl,#pkl) .ol{fill:none;stroke:#111;stroke-width:10px}
-:is(#pcl,#pkl) .pl{fill:#fff;stroke:#111;stroke-width:4px}
+:is(#pcl,#pkl) .w{fill:#fff;stroke:#111;stroke-width:var(--swN,10px);paint-order:stroke fill;stroke-linejoin:round}
+:is(#pcl,#pkl) .ol{fill:none;stroke:#111;stroke-width:var(--swC,10px)}
+:is(#pcl,#pkl) .pl{fill:#fff;stroke:#111;stroke-width:var(--swS,4px)}
 :is(#pcl,#pkl) .pc{fill:var(--pc);transition:fill .45s ease}
-:is(#pcl,#pkl) .mk line{stroke:#111;stroke-width:17px;stroke-linecap:round}
+:is(#pcl,#pkl) .mk line{stroke:#111;stroke-width:var(--swM,17px);stroke-linecap:round}
 :is(#pcl,#pkl) .hit{fill:transparent;cursor:pointer;pointer-events:all}
 :is(#pcl,#pkl) .row.dead .rail{display:none}
 :is(#pcl,#pkl) .row.dead .cap{fill:#626159;opacity:.37}
@@ -4284,7 +4284,7 @@ html.pop{--pfT:"Fun";--pfN:"Fun"}
 :is(#pcl,#pkl) .row.pr .cg{transform:scale(.95);transform-origin:562.5px var(--cy)}
 :is(#pcl,#pkl) .arm{fill:var(--pc);opacity:0;transition:opacity .2s,fill .45s}
 :is(#pcl,#pkl).m2 .arm.d,:is(#pcl,#pkl).m3 .arm.t{opacity:1}
-:is(#pcl,#pkl).m2 .tx.d,:is(#pcl,#pkl).m3 .tx.t{fill:#fff;stroke:#111;stroke-width:10px;paint-order:stroke fill;stroke-linejoin:round}
+:is(#pcl,#pkl).m2 .tx.d,:is(#pcl,#pkl).m3 .tx.t{fill:#fff;stroke:#111;stroke-width:var(--swN,10px);paint-order:stroke fill;stroke-linejoin:round}
 :is(#pcl,#pkl) .sp{transform-origin:562.5px 2293px}
 :is(#pcl,#pkl) .ico{transition:transform .15s}
 :is(#pcl,#pkl) .ico.pr{transform:scale(.88)}
@@ -4298,16 +4298,16 @@ html:is(.pcl,.pkl) body>:is(.fireglow,.ember,.bhole){display:none!important}
 #pkl .kc2.dead .kin{filter:grayscale(1)}
 #pkl .kc2 .kin{transform-origin:var(--ox) var(--oy);transition:transform .14s ease}
 #pkl .kc2.pr .kin{transform:scale(.96)}
-#pkl .phrt{stroke:#111;stroke-width:10px;stroke-linejoin:round;fill:none}
+#pkl .phrt{stroke:#111;stroke-width:var(--swC,10px);stroke-linejoin:round;fill:none}
 #pkl .phrt.on{fill:#ff0000}
 #pkl .phrt.gold{fill:#ffc61a}
-#pkl .pkp{stroke:#111;stroke-width:10px;fill:#fff}
+#pkl .pkp{stroke:#111;stroke-width:var(--swC,10px);fill:#fff}
 #pkl .pkp.on,#pkl .pkk{fill:#ffde00}
-#pkl .pkk{stroke:#111;stroke-width:10px}
+#pkl .pkk{stroke:#111;stroke-width:var(--swC,10px)}
 #pkl .pkhp{fill:#c7b299}
 #pkl .kc2.act .pkhp{fill:#fff}
 #pkl .pknm{fill:#111}
-#pkl .kc2.act .pknm{fill:#1d1d1b;stroke:var(--kc);stroke-width:10px;paint-order:stroke fill;stroke-linejoin:round}
+#pkl .kc2.act .pknm{fill:#1d1d1b;stroke:var(--kc);stroke-width:var(--swN,10px);paint-order:stroke fill;stroke-linejoin:round}
 #pkl .halo{fill:var(--kc);transition:fill .45s}
 
 /* essai des polices */
@@ -4317,7 +4317,7 @@ html:is(.pcl,.pkl) body>:is(.fireglow,.ember,.bhole){display:none!important}
 #pfp .pfv{width:100%;height:auto;flex:0 0 auto}
 #pfp .pfv text{font-family:var(--pfT),"Fun",sans-serif;text-anchor:middle;fill:#111}
 #pfp .pfv text.fN{font-family:var(--pfN),"Fun",sans-serif}
-#pfp .pfv text.w{fill:#fff;stroke:#111;stroke-width:10px;paint-order:stroke fill;stroke-linejoin:round}
+#pfp .pfv text.w{fill:#fff;stroke:#111;stroke-width:var(--swN,10px);paint-order:stroke fill;stroke-linejoin:round}
 #pfp .pfs{display:flex;border-radius:99px;box-shadow:inset 0 0 0 3px #111;overflow:hidden;flex:0 0 auto}
 #pfp .pfs button{flex:1;border:0;background:transparent;font:400 18px "Fun",sans-serif;padding:10px;color:#111}
 #pfp .pfs button.on{background:#111;color:#fff}
@@ -4328,6 +4328,17 @@ html:is(.pcl,.pkl) body>:is(.fireglow,.ember,.bhole){display:none!important}
 #pfp .pfl small{font:600 11px "Lbl",sans-serif;opacity:.7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 #pfp .pfb button{width:100%;border:0;border-radius:99px;background:#111;color:#fff;font:400 17px "Fun",sans-serif;padding:13px}
 .skinpick .skv{font:600 11px "Lbl",sans-serif;opacity:.5;text-align:center}
+
+#pfp .pfv .pvo{fill:none;stroke:#111;stroke-width:var(--swC,10px)}
+#pfp .pfv .pvs{fill:#fff;stroke:#111;stroke-width:var(--swS,4px)}
+#pfp .pfv .pvm line{stroke:#111;stroke-width:var(--swM,17px);stroke-linecap:round}
+#pfp .pfc{flex:1 1 auto;overflow-y:auto;display:flex;flex-direction:column;gap:16px;padding:4px 2px}
+#pfp .pfc label{display:flex;flex-direction:column;gap:6px;font:400 18px "Fun",sans-serif}
+#pfp .pfc label span{display:flex;justify-content:space-between}
+#pfp .pfc label b{font-weight:400}
+#pfp .pfc small{font:600 12px "Lbl",sans-serif;opacity:.6}
+#pfp .pfc input[type=range]{width:100%;accent-color:#111;height:28px}
+#pfp .pfr{border:0;border-radius:99px;background:#fff;box-shadow:inset 0 0 0 3px #111;color:#111;font:400 17px "Fun",sans-serif;padding:12px;margin-top:4px}
 </style>
 </head>
 <body>
@@ -7782,7 +7793,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||(S.style&&S.style!=='bulle'&&S.style!=='pop')){delete S.th;delete S.style;try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-228';   // à changer avec VERSION dans sw.js
+const APPV='lf-229';   // à changer avec VERSION dans sw.js
 function popOn(){return S.style!=='bulle'}
 function popApply(){document.documentElement.classList.toggle('pop',popOn());try{const m=document.querySelector('meta[name=theme-color]');if(m)m.content=popOn()?'#f9ecc9':'#f7f2e5'}catch(e){}try{if(G&&R&&$('game').classList.contains('on')){layoutSk();if(typeof fitSk==='function')fitSk();render()}}catch(e){}}
 popApply();
@@ -8012,6 +8023,7 @@ addEventListener('resize',()=>{try{if(popOn()&&KG&&$('killer').classList.contain
 /* ===== POP : Cricket 1 contre 1 — calque #pcl, coordonnées de la maquette (1125 de large, tracés repris tels quels) ===== */
 const PF={kT:1,kN:1};
 const pkDark=c=>{if(!/^#[0-9a-f]{6}$/i.test(c||''))return'#5a1408';return'#'+[1,3,5].map(k=>{const x=parseInt(c.slice(k,k+2),16);return Math.round(x*x/255*.58).toString(16).padStart(2,'0')}).join('')};
+const PST_D={c:10,n:10,m:17,s:1};let PST=Object.assign({},PST_D);
 const PCL={dx:-20};
 const PC_T=[15,16,17,18,19,20,25];
 const pclOn=()=>popOn()&&!!G&&!!G.players&&G.players.length===2&&!BARC&&!G._bar;
@@ -8064,8 +8076,8 @@ function pclText(el,txt,max,base){if(el._h===txt&&el._m===max)return;el._h=txt;e
 function pclCount(el,a,b){cancelAnimationFrame(el._raf);const t0=performance.now(),D=Math.min(1500,600+(b-a)*10);
   const step=now=>{const k=Math.min(1,(now-t0)/D),v=Math.round(a+(b-a)*(1-Math.pow(1-k,3)));el.textContent=String(v);if(k<1)el._raf=requestAnimationFrame(step);else el.textContent=String(b)};el._raf=requestAnimationFrame(step)}
 function pclPill(d){if(!d)return'';if(d.t===0)return's';return (d.m===3?'T':d.m===2?'D':'')+LBL(d.t)}
-function pclMark(n,c,big){if(!n)return'';const L=(x1,y1,x2,y2)=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`;
-  return (n>=3?`<circle r="${big?60:51.5}" style="fill:${c}"/>`:'')+L(-51.5,51.5,51.5,-51.5)+(n>=2?L(-51.5,-51.5,51.5,51.5):'')}
+function pclMark(n,c,big){if(!n)return'';const L=(x1,y1,x2,y2)=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`,a=51.5*PST.s;
+  return (n>=3?`<circle r="${(big?60:51.5)*PST.s}" style="fill:${c}"/>`:'')+L(-a,a,a,-a)+(n>=2?L(-a,-a,a,a):'')}
 function pclSync(){const g=$('game'),on=pclOn()&&g.classList.contains('on')&&!!R&&!!R.sc&&!!R.sc[1];
   g.classList.toggle('pcl',on);document.documentElement.classList.toggle('pcl',on);if(!on)return;
   if(!PCL.k||!PCL.k.isConnected)pclBuild();
@@ -8096,7 +8108,7 @@ function pclSync(){const g=$('game'),on=pclOn()&&g.classList.contains('on')&&!!R
     if(o.dead!==d){o.dead=d;o.r.classList.toggle('dead',d)}
     o.r.classList.toggle('off',!!nd&&nd.classList.contains('seqoff'));
     o.rail.setAttribute('x',XW(40,705));
-    [0,1].forEach(i=>{const n=Math.min(3,G.players[i].marks[t]||0),el=i?o.mr:o.ml,big=i===cur,key=n+'|'+pcolI(i)+'|'+big;if(o.mk[i]===key)return;
+    [0,1].forEach(i=>{const n=Math.min(3,G.players[i].marks[t]||0),el=i?o.mr:o.ml,big=i===cur,key=n+'|'+pcolI(i)+'|'+big+'|'+PST.s;if(o.mk[i]===key)return;
       const up=o.mk[i]&&n>parseInt(o.mk[i]);o.mk[i]=key;el.setAttribute('transform',`translate(${el.dataset.cx} ${el.dataset.cy})`);el.innerHTML=pclMark(n,pcolI(i),big);
       if(up&&n)el.animate([{opacity:.2},{opacity:1}],{duration:200});})})}
 function pclBounce(t){if(!PCL.k||!PCL.rows[t])return;const o=PCL.rows[t];const X=(PCL.side==='r'?1:-1)*340,c=o.cg;c.getAnimations().forEach(a=>a.cancel());
@@ -8203,26 +8215,33 @@ function pfOpen(){haptic();const old=$('pfp');if(old)old.remove();let tgt='T';
   // toutes les polices de la liste, pour l'aperçu
   {const l=document.createElement('link');l.rel='stylesheet';l.href='https://fonts.googleapis.com/css2?'+PF_LIST.filter(x=>x[0]!=='Fun'&&x[0]!=='Pop').map(x=>'family='+x[0].replace(/ /g,'+')+(x[2]?':wght@'+x[2]:'')).join('&')+'&display=swap';document.head.append(l);Object.keys(pfStore()).forEach(pfEnsure)}
   const draw=()=>{const cur=tgt==='T'?(S.pfT||'Fun'):(S.pfN||'Fun');
-    p.innerHTML=`<div class="pfh"><b>Polices</b><button class="pfx" aria-label="Fermer">✕</button></div>
-    <svg class="pfv" viewBox="0 0 1125 640"><rect x="20" y="20" width="735" height="420" rx="104" style="fill:var(--pc,#ff5a1f)"/><rect x="34" y="34" width="707" height="392" rx="93" style="fill:none;stroke:#111;stroke-width:10"/>
+    p.innerHTML=`<div class="pfh"><b>Polices et contours</b><button class="pfx" aria-label="Fermer">✕</button></div>
+    <svg class="pfv" viewBox="0 0 1125 640"><rect x="20" y="20" width="735" height="420" rx="104" style="fill:var(--pc,#ff5a1f)"/><rect class="pvo" x="34" y="34" width="707" height="392" rx="93"/>
       <text x="258" y="140" data-b="57.5" data-w="380">LOUBARD</text><text class="fN w" x="258" y="300" data-b="182" data-w="390">289</text><text x="258" y="354" data-b="35.4">MPR 2,33</text>
-      ${[0,1,2].map(i=>`<rect x="466" y="${118+i*85}" width="209" height="69" rx="31" style="fill:#fff;stroke:#111;stroke-width:4"/><text class="fN" x="570" y="${173+i*85}" data-b="58">${['18','T20','17'][i]}</text>`).join('')}
+      ${[0,1,2].map(i=>`<rect class="pvs" x="466" y="${118+i*85}" width="209" height="69" rx="31"/><text class="fN" x="570" y="${173+i*85}" data-b="58">${['18','T20','17'][i]}</text>`).join('')}
       <text x="917" y="140" data-b="57.5" data-w="260">TONY</text><text class="fN" x="917" y="292" data-b="186" data-w="300">132</text>
-      <rect x="364" y="470" width="397" height="155" rx="77" style="fill:var(--pc,#ff5a1f)"/><rect x="40" y="478" width="705" height="140" rx="70" style="fill:none;stroke:#111;stroke-width:10"/>
-      <text class="fN w" x="562.5" y="598" data-b="139" data-w="150">15</text><text x="200" y="574" data-b="60">Spew</text><text class="fN" x="930" y="590" data-b="130">16</text></svg>
-    <div class="pfs"><button data-t="T" class="${tgt==='T'?'on':''}">Textes</button><button data-t="N" class="${tgt==='N'?'on':''}">Numéros</button></div>
-    <div class="pfl">${all().map(([f,l])=>`<button data-f="${esc(f)}" class="${f===cur?'on':''}"><span style="font-family:'${esc(f)}','Fun'">${tgt==='N'?'15 289':'Loubard'}</span><small>${esc(l||f)}</small></button>`).join('')}</div>
-    <div class="pfb"><button class="pfi">Importer un fichier (.otf, .ttf, .woff)</button><input type="file" hidden></div>`;
+      <rect x="364" y="470" width="397" height="155" rx="77" style="fill:var(--pc,#ff5a1f)"/><rect class="pvo" x="40" y="478" width="705" height="140" rx="70"/>
+      <text class="fN w" x="562.5" y="598" data-b="139" data-w="150">15</text><g class="pvm" transform="translate(205 548)">${pclMark(3,'#fbb03b',true)}</g><g class="pvm" transform="translate(915 548)">${pclMark(2,'',false)}</g></svg>
+    <div class="pfs"><button data-t="T" class="${tgt==='T'?'on':''}">Textes</button><button data-t="N" class="${tgt==='N'?'on':''}">Numéros</button><button data-t="C" class="${tgt==='C'?'on':''}">Contours</button></div>
+    ${tgt==='C'?`<div class="pfc">${[['c','Contours des cases',0,24,1,'cases, rails, cartes, cœurs (pastilles : 40 %)'],['n','Contour des chiffres',0,24,1,'score, nombres, Spew'],['m','Épaisseur des marques',4,32,1,''],['s','Taille des marques',.6,1.4,.05,'']].map(([k,l,a,b,st,h])=>`<label><span>${l}<b data-v="${k}">${k==='s'?Math.round(PST[k]*100)+' %':PST[k]}</b></span><input type="range" data-k="${k}" min="${a}" max="${b}" step="${st}" value="${PST[k]}">${h?`<small>${h}</small>`:''}</label>`).join('')}
+      <button class="pfr">Valeurs de la maquette</button></div>`:`<div class="pfl">${all().map(([f,l])=>`<button data-f="${esc(f)}" class="${f===cur?'on':''}"><span style="font-family:'${esc(f)}','Fun'">${tgt==='N'?'15 289':'Loubard'}</span><small>${esc(l||f)}</small></button>`).join('')}</div>
+    <div class="pfb"><button class="pfi">Importer un fichier (.otf, .ttf, .woff)</button><input type="file" hidden></div>`}`;
     pfPrev()};
   draw();
   p.addEventListener('click',ev=>{ev.stopPropagation();if(ev.target.closest('.pfx')){p.remove();return}
     const sb=ev.target.closest('.pfs button');if(sb){tgt=sb.dataset.t;haptic();draw();return}
     const fb=ev.target.closest('.pfl button');if(fb){haptic();if(tgt==='T')S.pfT=fb.dataset.f;else S.pfN=fb.dataset.f;store.set(K_S,S);pfApply();draw();return}
+    if(ev.target.closest('.pfr')){haptic();S.pst=Object.assign({},PST_D);store.set(K_S,S);pstApply();draw();return}
     if(ev.target.closest('.pfi'))p.querySelector('input[type=file]').click()});
+  p.addEventListener('input',ev=>{const r=ev.target.closest('input[type=range]');if(!r)return;S.pst=Object.assign({},PST,{[r.dataset.k]:+r.value});pstApply();const b=p.querySelector(`b[data-v="${r.dataset.k}"]`);if(b)b.textContent=r.dataset.k==='s'?Math.round(+r.value*100)+' %':r.value;
+    if(r.dataset.k==='s')p.querySelectorAll('.pvm').forEach((g,i)=>{g.innerHTML=pclMark(i?2:3,'#fbb03b',!i)});clearTimeout(p._sv);p._sv=setTimeout(()=>store.set(K_S,S),400)});
   p.addEventListener('change',ev=>{const f=ev.target.files&&ev.target.files[0];if(!f)return;const name=f.name.replace(/\.[^.]+$/,'').replace(/[^\w \-]/g,' ').trim().slice(0,40)||'Police';
     const rd=new FileReader();rd.onload=()=>{const url=rd.result;const ff=new FontFace(name,`url(${url})`);ff.load().then(x=>{document.fonts.add(x);PF_ON[name]=1;
       const st=pfStore();st[name]=url;try{localStorage.setItem(PF_K,JSON.stringify(st))}catch(e){mkToast&&mkToast('','Police chargée pour cette session seulement (mémoire pleine)',2500)}
       if(tgt==='T')S.pfT=name;else S.pfN=name;store.set(K_S,S);pfApply();draw()}).catch(()=>{try{mkToast('','Fichier de police illisible',2200)}catch(e){}})};rd.readAsDataURL(f)})}
+function pstApply(){PST=Object.assign({},PST_D,S.pst||{});const st=document.documentElement.style;st.setProperty('--swC',PST.c+'px');st.setProperty('--swS',(PST.c*.4)+'px');st.setProperty('--swN',PST.n+'px');st.setProperty('--swM',PST.m+'px');
+  try{if(PCL.rows)Object.values(PCL.rows).forEach(o=>{o.mk=['','']});if(G&&R)pclSync()}catch(e){}}
+pstApply();
 pfApply();
 /* fin de tour : on ne peut plus marquer pendant un court instant (le temps de passer la main) */
 const TURNLOCK_MS=1200;let TURNLOCK=0;
