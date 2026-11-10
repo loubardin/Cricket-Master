@@ -4195,8 +4195,15 @@ html body #game#game.sk.p2.barT footer{--fmb:var(--f3b)!important}
 html body #game#game.sk.p2.barT #fbar3{position:fixed!important;top:max(var(--sat,0px),calc(var(--uu)*1.2))!important;left:14px!important;right:14px!important}
 html body #game#game.sk.p2.barT main{padding-top:calc(max(var(--sat,0px),calc(var(--uu)*1.2)) + var(--rb,58px) + var(--G))!important}
 html body #game#game.sk.p2 footer{--f3h:var(--rb,var(--r));--f3b:max(calc(3.5vw*.8),calc(var(--sab,0px) - 16px))}
-html body #game#game.sk.p2 #scores{margin-top:calc(3.5vw*1.4)!important}
-#lyp{position:fixed;left:10px;right:10px;bottom:calc(var(--sab,0px) + 10px);z-index:300;background:rgba(255,255,255,.94);color:#111;border-radius:22px;box-shadow:0 0 0 2px #111,0 10px 30px rgba(0,0,0,.25);
+html body #game#game.sk.p2 #scores{margin-top:var(--lytop,calc(3.5vw*1.4))!important;z-index:60}
+html body #game#game.sk.p2 #scores .sc>.nm>.hat{z-index:60}
+html body #game#game.sk.p2:not(.pn){--colw:calc((100vw - 7vw - var(--midw))/2)}
+html body #game#game.sk.p2 main{padding-left:3.5vw!important;padding-right:3.5vw!important}
+html body #game#game#game#game.sk.p2 #grid .num{font-size:calc(var(--r)*.65*var(--nfz,1))!important}
+html body #game#game#game#game.sk.p2 #grid .num:not(.dead) .lbl,html body #game#game#game#game.sk.p2 #scores .sc.act>.pts{text-shadow:var(--nts,none)!important}
+html body #game#game#game#game.sk.p2:not(.pn) .mw{width:calc(var(--r)*1.02*var(--mkz,1))!important;height:calc(var(--r)*1.02*var(--mkz,1))!important}
+html body #game#game#game#game.sk.p2 .mw svg{stroke-width:var(--mksw,5)!important}
+#lyp{position:fixed;left:10px;right:10px;bottom:calc(var(--sab,0px) + 10px);z-index:300;max-height:62dvh;overflow-y:auto;-webkit-overflow-scrolling:touch;background:rgba(255,255,255,.94);color:#111;border-radius:22px;box-shadow:0 0 0 2px #111,0 10px 30px rgba(0,0,0,.25);
   padding:12px 16px 14px;display:flex;flex-direction:column;gap:8px;font:400 15px "Fun",sans-serif;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 #lyp.up{bottom:auto;top:calc(var(--sat,0px) + 10px)}
 #lyp .lyh{display:flex;align-items:center;gap:8px}
@@ -6891,10 +6898,13 @@ function layoutSk(){
   const g=$('game');if(!skp2())return;
   const L=lyGet(),g0=innerWidth*.035,G0=g0*1.8,gp=innerWidth*L.g/100,G=innerWidth*L.G/100;
   g.style.setProperty('--g',gp.toFixed(2)+'px');g.style.setProperty('--G',G.toFixed(2)+'px');g.classList.remove('barT');
+  g.style.setProperty('--lytop',(innerWidth*L.top/100).toFixed(2)+'px');g.style.setProperty('--nfz',L.nfz);g.style.setProperty('--mkz',L.mkz);g.style.setProperty('--mksw',L.mksw);
+  g.style.setProperty('--bw',L.bw+'px');g.style.setProperty('--bub-bw',L.bw+'px');
+  {const w=L.nsw,d=(w*.71).toFixed(2),c='var(--m-strong)';g.style.setProperty('--nts',w>0?[[w,0],[-w,0],[0,w],[0,-w],[d,d],[-d,d],[d,-d],[-d,-d]].map(([x,y])=>`${x}px ${y}px 0 ${c}`).join(','):'none')}
   let pb=$('sabProbe');if(!pb){pb=document.createElement('i');pb.id='sabProbe';pb.style.cssText='position:fixed;left:0;top:0;width:0;height:var(--sab,0px);visibility:hidden;pointer-events:none';document.body.append(pb)}
   const B=Math.max(g0*.8,pb.offsetHeight-16),top=$('scores').getBoundingClientRect().top-g.getBoundingClientRect().top;
   // unité de base : celle des réglages d'origine (dépend seulement de l'écran) ; chaque réglage agit seul, sans retoucher les autres
-  const r=Math.max(18,(g.clientHeight-top-B-2*G0-7*g0)/11.44);
+  const r=Math.max(18,(g.clientHeight-(top-innerWidth*L.top/100+g0*1.4)-B-2*G0-7*g0)/11.44);   // la marge du haut ne change pas la taille de référence
   [['--rowh',1],['--rr',L.rowK],['--rf',L.ftK],['--rb',L.brK],['--rs',L.scK]].forEach(([k,f])=>g.style.setProperty(k,(r*f).toFixed(2)+'px'));
   g.classList.toggle('barT',!!L.barT);
 }
@@ -7666,7 +7676,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-239';   // à changer avec VERSION dans sw.js
+const APPV='lf-240';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
@@ -7960,10 +7970,12 @@ function popOutl(root){if(!root)return;root.querySelectorAll('text.w').forEach(t
 addEventListener('resize',()=>{try{if(KG&&PKL.k&&$('killer').classList.contains('on'))pklSync()}catch(e){}});
 
 /* ===== Mise en page du Cricket à 2 (Bulle) : hauteurs, écarts, barre Accueil · infos · Annuler en haut ou en bas ===== */
-const LY_D={scK:1,rowK:1,ftK:1,brK:1,g:3.5,G:6.3,barT:0};
+const LY_D={scK:1,rowK:1,ftK:1,brK:1,g:3.5,G:6.3,top:4.9,nfz:1,nsw:0,bw:1.5,mkz:1,mksw:5,barT:0};
 const lyGet=()=>Object.assign({},LY_D,S.lay||{});
 const LY_SL=[['scK','Hauteur des cases joueur',.6,1.6,.05,'%'],['rowK','Hauteur des bulles nombres',.6,1.6,.05,'%'],['ftK','Hauteur Double · Spew · Triple',.6,1.6,.05,'%'],['brK','Hauteur Accueil · infos · Annuler',.6,1.6,.05,'%'],
-  ['g','Écart entre les lignes',0,8,.1,''],['G','Écart entre les blocs',0,15,.1,'']];
+  ['g','Écart entre les lignes',0,8,.1,''],['G','Écart entre les blocs',0,15,.1,''],['top','Marge en haut',0,15,.1,''],
+  ['nfz','Taille des nombres dans les bulles',.6,1.5,.05,'%'],['nsw','Contour des nombres et du score',0,5,.25,''],['bw','Contour des cases',0,5,.25,''],
+  ['mkz','Taille des marques',.5,1.5,.05,'%'],['mksw','Épaisseur des marques',2,14,.5,'']];
 const lyFmt=(v,u)=>u==='%'?Math.round(v*100)+' %':(+v).toFixed(1);
 function lyApply(){try{if(G&&R&&$('game').classList.contains('on')){layoutSk();if(typeof fitSk==='function')fitSk();render()}}catch(e){}}
 function lyFromHome(){const ok=G&&G.players&&G.players.length===2&&G.winner===null&&!G._bar&&!BARC;
