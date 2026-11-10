@@ -4291,7 +4291,7 @@ html.pop{--pfT:"Fun";--pfN:"Fun"}
 :is(#pcl,#pkl).m2 .arm.d,:is(#pcl,#pkl).m3 .arm.t{opacity:1}
 :is(#pcl,#pkl).m2 .tx.d,:is(#pcl,#pkl).m3 .tx.t{fill:#fff;stroke:none}
 :is(#pcl,#pkl) .sp{transform-origin:562.5px 2293px}
-:is(#pcl,#pkl) .ico{transition:transform .15s}
+:is(#pcl,#pkl) .ico{transition:transform .15s;transform-box:fill-box;transform-origin:50% 50%}
 :is(#pcl,#pkl) .ico.pr{transform:scale(.88)}
 /* Killer : même calque (cartes d'après la maquette 2 / 4 / 6 joueurs) */
 #pkl{display:none}
@@ -4304,8 +4304,8 @@ html:is(.pcl,.pkl) body>:is(.fireglow,.ember,.bhole){display:none!important}
 #pkl .kc2 .kin{transform-origin:var(--ox) var(--oy);transition:transform .14s ease}
 #pkl .kc2.pr .kin{transform:scale(.96)}
 #pkl .phrt{stroke:#111;stroke-width:var(--swC,10px);stroke-linejoin:round;fill:none}
-#pkl .phrt.on{fill:#ff0000}
-#pkl .phrt.gold{fill:#ffc61a}
+#pkl .phrt.on{fill:none}
+
 #pkl .pkp{stroke:#111;stroke-width:var(--swC,10px);fill:#fff}
 #pkl .pkp.on,#pkl .pkk{fill:#ffde00}
 #pkl .pkk{stroke:#111;stroke-width:var(--swC,10px)}
@@ -4356,22 +4356,26 @@ html:is(.pcl,.pkl) body>:is(.fireglow,.ember,.bhole){display:none!important}
 :is(#pcl,#pkl).m2 .tx.d,:is(#pcl,#pkl).m3 .tx.t,:is(#pcl,#pkl) .arm,:is(#pcl,#pkl) .txo{display:none!important}
 :is(#pcl,#pkl).m2 .spr{fill:url(#pgS)}
 :is(#pcl,#pkl).m3 .spr{fill:url(#pgG)}
-:is(#pcl,#pkl).m2 .wo.spo{fill:url(#pgSd);stroke:url(#pgSd)}
-:is(#pcl,#pkl).m3 .wo.spo{fill:url(#pgGd);stroke:url(#pgGd)}
 /* nombres en argent / or quand Double / Triple est armé (le contour aussi) */
 #pcl.m2 .row:not(.dead) .n.w{fill:url(#pgS)}
 #pcl.m3 .row:not(.dead) .n.w{fill:url(#pgG)}
-#pcl.m2 .row:not(.dead) .wo{fill:url(#pgSd);stroke:url(#pgSd)}
-#pcl.m3 .row:not(.dead) .wo{fill:url(#pgGd);stroke:url(#pgGd)}
 #pkl.m2 .kc2.tgt:not(.dead) .pkno:not(.pksn):not(.wo){fill:url(#pgS)}
 #pkl.m3 .kc2.tgt:not(.dead) .pkno:not(.pksn):not(.wo){fill:url(#pgG)}
-#pkl.m2 .kc2.tgt:not(.dead) .pkno.wo{fill:url(#pgSd);stroke:url(#pgSd)}
-#pkl.m3 .kc2.tgt:not(.dead) .pkno.wo{fill:url(#pgGd);stroke:url(#pgGd)}
 /* reflet qui passe toutes les 3 s sur la case du joueur en cours */
-:is(#pcl,#pkl) .shine{fill:#fff;opacity:.38;animation:pshine 3s ease-in-out infinite;pointer-events:none}
-@keyframes pshine{0%{transform:translateX(0)}24%{transform:translateX(var(--sd))}100%{transform:translateX(var(--sd))}}
+:is(#pcl,#pkl) .shine{fill:#fff;opacity:.42;animation:pshine 3s cubic-bezier(.5,0,.35,1) infinite;pointer-events:none}
+@keyframes pshine{0%{transform:translateX(0)}14%{transform:translateX(var(--sd))}100%{transform:translateX(var(--sd))}}
 :is(#pcl,#pkl) .crown{transition:transform .45s cubic-bezier(.3,1.2,.45,1),opacity .3s;pointer-events:none}
 :is(#pcl,#pkl) .crs{transform-box:fill-box;transform-origin:50% 100%}
+
+#pkl .phb{fill:#b3000c}
+#pkl .phl{fill:#ff2a2a}
+#pkl .phb.gold{fill:#b07d0c}
+#pkl .phl.gold{fill:#ffc61a}
+#pkl .phg{fill:#fff;opacity:.85}
+#pkl .phrt.on{fill:none!important}
+#pkl .kc2.tgt:not(.dead) .pkng{animation:pktrem .22s linear infinite}
+@keyframes pktrem{0%{transform:translate(0,0)}25%{transform:translate(2.4px,-1.8px)}50%{transform:translate(-2.2px,1.8px)}75%{transform:translate(1.8px,2.2px)}100%{transform:translate(0,0)}}
+@media (prefers-reduced-motion:reduce){#pkl .pkng{animation:none!important}}
 </style>
 </head>
 <body>
@@ -7826,7 +7830,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||(S.style&&S.style!=='bulle'&&S.style!=='pop')){delete S.th;delete S.style;try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-236';   // à changer avec VERSION dans sw.js
+const APPV='lf-237';   // à changer avec VERSION dans sw.js
 function popOn(){return S.style!=='bulle'}
 function popApply(){document.documentElement.classList.toggle('pop',popOn());try{const m=document.querySelector('meta[name=theme-color]');if(m)m.content=popOn()?'#f9ecc9':'#f7f2e5'}catch(e){}try{if(G&&R&&$('game').classList.contains('on')){layoutSk();if(typeof fitSk==='function')fitSk();render()}}catch(e){}}
 popApply();
@@ -8071,7 +8075,8 @@ const POPFOOT=`<g class="ft"><text class="spm" x="562.5" y="2318.3" font-size="7
       <rect class="hit b2" x="0" y="2190" width="364" height="210"/><rect class="hit b3" x="761" y="2190" width="364" height="210"/><rect class="hit bs" x="364" y="2190" width="397" height="210"/></g>`;
 /* boutons communs du calque (Accueil, Annuler, Double, Triple, Spew) */
 function popBind(k){
-  k.addEventListener('click',e=>{if(e.target.closest('.fpo')){pfOpen();return}const ic=e.target.closest('.ico');if(ic){const b=$(ic.classList.contains('home')?'fMenu':'fUndo');if(b)b.click()}});
+  k.addEventListener('click',e=>{if(e.target.closest('.fpo')){pfOpen();return}const ic=e.target.closest('.ico.home');if(ic&&$('fMenu'))$('fMenu').click()});
+  k.addEventListener('pointerdown',e=>{if(e.target.closest('.ico.undo')&&$('fUndo')){e.preventDefault();$('fUndo').click()}});
   k.addEventListener('pointerdown',e=>{const h=e.target.closest('.hit');if(!h)return;
     const id=h.classList.contains('b2')?'b2':h.classList.contains('b3')?'b3':h.classList.contains('bs')?'bS':null;
     if(id)k._pd={id,x:e.clientX,y:e.clientY,t:performance.now(),p:e.pointerId};
@@ -8091,7 +8096,7 @@ function pclBuild(){const g=$('game');let k=$('pcl');if(k)k.remove();
      <rect class="rail ol" x="40" y="${828.9+y}" width="705" height="154.6" rx="77.3"/></g>`}).join('');
   const h=`<div id="pcl"><svg viewBox="0 132 1125 2284" preserveAspectRatio="xMidYMid meet">
     ${POPHEAD}
-    <g class="card"><rect class="pc halo" y="381.1" width="735" height="419" rx="103.87"/><clipPath id="pcClip"><rect class="pccl" y="381.1" width="735" height="419" rx="103.87"/></clipPath><g clip-path="url(#pcClip)"><g class="shg"><path class="shine" style="--sd:1180px" d="M-200 360H-90L-230 830H-340Z"/></g></g><rect class="ol cbd" y="396.1" width="707.3" height="392.6" rx="92.61"/>
+    <g class="card"><rect class="pc halo" y="381.1" width="735" height="419" rx="103.87"/><clipPath id="pcClip"><rect class="pccl" y="381.1" width="735" height="419" rx="103.87"/></clipPath><g clip-path="url(#pcClip)"><g class="shg"><path class="shine" style="--sd:1400px" d="M-330 360H-60L-200 830H-470Z"/></g></g><rect class="ol cbd" y="396.1" width="707.3" height="392.6" rx="92.61"/>
       <text class="cn" y="502.8" font-size="57.5"></text><text class="cs w fN" y="662" font-size="182"></text><text class="cm" y="715.7" font-size="35.4"></text>
       ${[0,1,2].map(i=>`<rect class="pl cp" y="${480.1+i*84.75}" width="208.6" height="68.8" rx="31.48"/><text class="cpt fN" y="${480.1+i*84.75+55}" font-size="58"></text>`).join('')}</g>
     <g class="opp"><text class="on" y="502.8" font-size="57.5"></text><text class="os fN" y="654.5" font-size="186"></text><text class="om" y="707.7" font-size="35.4"></text>
@@ -8184,21 +8189,24 @@ function pklBuild(){const sec=$('killer');let k=$('pkl');if(k)k.remove();
   k.addEventListener('click',e=>{const c=e.target.closest('.kc2');if(!c||!KG)return;const p=KG.players[+c.dataset.i];if(p)kThrow(p.num)});popBind(k)}
 function pklCard(i,g,act){const p=KG.players[i],{W,H,wide,k}=g,DD=KG.def,isDef=DD&&DD.v===i,dead=p.dead&&!isDef;
   const dk=pkDark(pkCol(i)),kT=PF.kT,kN=PF.kN;
-  let h=act?`<rect class="pksh" x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87" filter="url(#pkSh)"/><rect class="halo" x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87"/><clipPath id="pkClip"><rect x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87"/></clipPath><g clip-path="url(#pkClip)"><path class="shine" style="--sd:${W+460}px" d="M-220 -40H-110L${-110-H*.3} ${H+40}H${-220-H*.3}Z"/></g>`:'';
-  h+=`<rect class="ol" width="${W}" height="${H}" rx="92.61"/>`;
+  let h=act?`<rect class="pksh" x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87" filter="url(#pkSh)"/><rect class="halo" x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87"/><clipPath id="pkClip"><rect x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87"/></clipPath><g clip-path="url(#pkClip)"><path class="shine" style="--sd:${W+H*.3+560}px" d="M-300 -40H-30L${-30-H*.3} ${H+40}H${-300-H*.3}Z"/></g>`:'';
   const cx=wide?.306*W:W/2,nm=esc(pkName(p,act));
   if(act)h+=`<text x="${cx}" y="${(wide?-104:-94)*k}" font-size="${43*k*kT}">à toi</text><text class="pknmo" x="${cx}" y="${(wide?-16:-10)*k}" font-size="${87*k*kT}" data-fit="${wide?.62*W:W*1.02}" style="fill:${pkCol(i)};stroke:${pkCol(i)}">${nm}</text><text class="pknm" x="${cx}" y="${(wide?-16:-10)*k}" font-size="${87*k*kT}" data-fit="${wide?.62*W:W*1.02}">${nm}</text>`;
   else h+=`<text class="pknm" x="${cx}" y="${-31*k}" font-size="${73*k*kT}" data-fit="${wide?.62*W:W*.98}">${nm}</text>`;
   // cœurs
   const nh=Math.max(p.maxl||0,p.lives||0,3),hw=(wide?.117:.204)*W,hh=(wide?.137:.132)*H,pitch=Math.min((wide?.141:.2475)*W,(wide?.5:.9)*W/nh),hy=(wide?.076:.052)*H,hx0=cx-pitch*(nh-1)/2-hw/2;
   const lw=hw*Math.min(1,pitch/hw*.92);
-  for(let j=0;j<nh;j++){const on=!dead&&j<p.lives,gold=on&&j>=p.lives-(p.gold||0);h+=`<path class="phrt${on?' on':''}${gold?' gold':''}" d="${pkHeart(cx-pitch*(nh-1)/2+j*pitch-lw/2,hy,lw,hh)}"/>`}
+  for(let j=0;j<nh;j++){const on=!dead&&j<p.lives,gold=on&&j>=p.lives-(p.gold||0),x=cx-pitch*(nh-1)/2+j*pitch-lw/2,c=gold?' gold':'';
+    if(on)h+=`<path class="phb${c}" d="${pkHeart(x,hy,lw,hh)}"/><path class="phl${c}" d="${pkHeart(x+lw*.035,hy+hh*.03,lw*.86,hh*.84)}"/>`+
+      `<ellipse class="phg" cx="${x+lw*.3}" cy="${hy+hh*.3}" rx="${lw*.12}" ry="${hh*.075}" transform="rotate(-38 ${x+lw*.3} ${hy+hh*.3})"/><circle class="phg" cx="${x+lw*.17}" cy="${hy+hh*.47}" r="${Math.min(lw,hh)*.045}"/>`;
+    h+=`<path class="phrt${on?' on':''}" d="${pkHeart(x,hy,lw,hh)}"/>`}
   // numéro
   const ny=(wide?.272:.243)*H,nH=(wide?.44:.325)*H,nW=(wide?.445:.61)*W;
   const nx=wide?.307*W:cx,nfs=(nH/.725*kN).toFixed(1);
+  h+='<g class="pkng">';
   if(act)h+=`<text class="pkno fN pksn" x="${nx+10}" y="${ny+nH+11}" font-size="${nfs}" data-fit="${nW}" style="fill:${dk};stroke:${dk}">${p.num}</text>`;
   if(act)h+=`<text class="pkno fN wo" x="${nx}" y="${ny+nH}" font-size="${nfs}" data-fit="${nW}">${p.num}</text>`;
-  h+=`<text class="pkno fN${act?' pkw':''}" x="${nx}" y="${ny+nH}" font-size="${nfs}" data-fit="${nW}">${p.num}</text>`;
+  h+=`<text class="pkno fN${act?' pkw':''}" x="${nx}" y="${ny+nH}" font-size="${nfs}" data-fit="${nW}">${p.num}</text></g>`;
   // K / Killer
   const ky=(wide?.774:.626)*H,kh=(wide?.14:.137)*H;
   if(isDef)h+=`<rect class="pkk" x="${cx-(wide?.22:.382)*W}" y="${ky}" width="${(wide?.44:.764)*W}" height="${kh}" rx="${kh*.37}"/><text x="${cx}" y="${ky+kh*.5+kh*.27}" font-size="${kh*.68*kT}">défense ${DD.got}/${DD.need}</text>`;
@@ -8209,7 +8217,7 @@ function pklCard(i,g,act){const p=KG.players[i],{W,H,wide,k}=g,DD=KG.def,isDef=D
   const ds=act?(KHOLD?p.last:KG.turn):(p.last||[]),nd=act&&isDef?DD.darts:3;
   for(let j=0;j<nd;j++){let x,y,w,hh2;if(wide){w=.213*W;hh2=.174*H;x=.675*W;y=(.161+j*.249)*H}else{w=.232*W;hh2=.104*H;x=W/2-.265*W*(nd-1)/2+j*.265*W-w/2;y=.826*H}
     const t=pkDartT(ds&&ds[j]);h+=`<rect class="pkhp" x="${x}" y="${y}" width="${w}" height="${hh2}" rx="${Math.min(29.5,hh2*.45)}"/><text class="fN" x="${x+w/2}" y="${y+hh2*.5+hh2*.3}" font-size="${hh2*.8*kN}" data-fit="${w*.86}">${t}</text>`}
-  h+=`<rect class="hit" x="-10" y="-10" width="${W+20}" height="${H+20}" rx="92"/>`;
+  h+=`<rect class="ol" width="${W}" height="${H}" rx="92.61"/><rect class="hit" x="-10" y="-10" width="${W+20}" height="${H+20}" rx="92"/>`;
   return {h,dead}}
 function pklSync(){const sec=$('killer'),on=pklOn()&&sec.classList.contains('on');sec.classList.toggle('pkl',on);document.documentElement.classList.toggle('pkl',on);if(!on)return;
   if(!PKL.k||!PKL.k.isConnected)pklBuild();const k=PKL.k;
@@ -8224,7 +8232,7 @@ function pklSync(){const sec=$('killer'),on=pklOn()&&sec.classList.contains('on'
   P.forEach((p,i)=>{const el=PKL.c[i];if(!el)return;const act=i===cur&&KG.winner===null,{h,dead}=pklCard(i,g,act);
     el.classList.toggle('act',act);el.classList.toggle('dead',dead);{const D=KHOLD?null:KG.def,me=P[cur];el.classList.toggle('tgt',KG.winner===null&&!KHOLD&&(D?i===D.v:(me.killer?(i===cur||!p.dead):i===cur)))}el.style.setProperty('--kc',pkCol(i));if(act)actEl=el;
     const inn=el.firstElementChild;if(inn._h!==h){inn._h=h;inn.innerHTML=h;inn.querySelectorAll('[data-fit]').forEach(t=>{const w=+t.dataset.fit;t._h=null;pclText(t,t.textContent,w)})}});
-  if(actEl&&actEl!==PKL.cards.lastElementChild)PKL.cards.append(actEl);   // la carte en cours passe devant (ombre)
+  if(actEl&&actEl!==PKL.cards.firstElementChild)PKL.cards.prepend(actEl);   // la carte en cours dessous : les cadres noirs des autres restent devant son ombre
 }
 {const _k=kRender;kRender=function(){const r=_k.apply(this,arguments);try{pklSync()}catch(e){console.error(e)}return r}}
 {const _s=show;show=function(){const r=_s.apply(this,arguments);try{pklSync()}catch(e){}return r}}
