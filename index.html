@@ -4346,6 +4346,8 @@ html:is(.pcl,.pkl) body>:is(.fireglow,.ember,.bhole){display:none!important}
 #pfp .pfc small{font:600 12px "Lbl",sans-serif;opacity:.6}
 #pfp .pfc input[type=range]{width:100%;accent-color:#111;height:28px}
 #pfp .pfr{border:0;border-radius:99px;background:#fff;box-shadow:inset 0 0 0 3px #111;color:#111;font:400 17px "Fun",sans-serif;padding:12px;margin-top:4px}
+/* jamais de gras simulé (Safari l'imite en traçant un contour de la couleur du texte) */
+:is(#pcl,#pkl,#pfp) :is(text,span,b,button){font-weight:400!important;font-synthesis:none!important}
 </style>
 </head>
 <body>
@@ -7800,7 +7802,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||(S.style&&S.style!=='bulle'&&S.style!=='pop')){delete S.th;delete S.style;try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-232';   // à changer avec VERSION dans sw.js
+const APPV='lf-233';   // à changer avec VERSION dans sw.js
 function popOn(){return S.style!=='bulle'}
 function popApply(){document.documentElement.classList.toggle('pop',popOn());try{const m=document.querySelector('meta[name=theme-color]');if(m)m.content=popOn()?'#f9ecc9':'#f7f2e5'}catch(e){}try{if(G&&R&&$('game').classList.contains('on')){layoutSk();if(typeof fitSk==='function')fitSk();render()}}catch(e){}}
 popApply();
