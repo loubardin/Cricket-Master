@@ -4289,6 +4289,7 @@ html.krt body>:is(.bhole,.bosstag,.bspark,.bullet,.ember,.fireglow,.flake,.bullf
   --s:min(calc(100vw/852),calc(100dvh/1560));--ox:calc((100vw - 852*var(--s))/2);--oy:calc(-169*var(--s));--ch:124;--rh:107;--rk:1;
   --ink:#050505;--cream:#fdf4e2;--bg:#fef3de;--S1:5.6;--S2:4.6;--pc:#fbc103;background:var(--bg);font-family:"K-retro",serif}
 #kr *{box-sizing:border-box}
+#kr,#kr .zb,#kr .rrow{touch-action:manipulation}
 #game#game#game>#kr,#game#game#game>#kr *{font-family:"K-foraine",serif!important;font-weight:400!important;font-synthesis:none}
 #game#game#game>#kr .rrow{background:none!important;box-shadow:none!important}
 #kr .z{position:absolute;left:calc(var(--ox) + var(--x)*var(--s));top:calc(var(--oy) + var(--y)*var(--s));width:calc(var(--w)*var(--s));height:calc(var(--h)*var(--s))}
@@ -6952,7 +6953,7 @@ $('sBack').addEventListener('click',e=>{if(SU.classList.contains('p2')){e.stopIm
 new MutationObserver(()=>SU.classList.toggle('pk',$('ppick').classList.contains('on'))).observe($('ppick'),{attributes:true,attributeFilter:['class']});
 
 /* vibration à chaque saisie de fléchette (pavé, tableau, DOUBLE/SPEW/TRIPLE, Killer) */
-document.addEventListener('pointerdown',e=>{const b=e.target.closest&&e.target.closest('footer button,#game .num,#game .pc.mk.act,#xkeys button,#kplayers .kc,#knumPad button,.pill.undo,#xUndo');if(b)haptic()},{passive:true});
+document.addEventListener('pointerdown',e=>{const b=e.target.closest&&e.target.closest('footer button,#game .num,#kr .zb,#kr .rrow,#game .pc.mk.act,#xkeys button,#kplayers .kc,#knumPad button,.pill.undo,#xUndo');if(b)haptic()},{passive:true});
 
 /* manches gagnantes : curseur de 1 à 10 */
 function renderStp(){document.querySelectorAll('#setup .sld').forEach(g=>{const v=Math.min(10,Math.max(1,+S[g.dataset.k]||1)),inp=g.querySelector('input'),b=g.querySelector('.sldv');
@@ -8088,7 +8089,7 @@ function krBuild(){const g=$('game');let k=$('kr');if(k)k.remove();
     const b=e.target.closest('.zb');if(!b)return;const id={b2:'b2',b3:'b3',s:'bS',bm:'fMenu',bu:'fUndo'}[b.classList[1]];if(id&&$(id))$(id).click()});
   k.addEventListener('pointerdown',e=>{const b=e.target.closest('.zb');if(!b)return;const c={s:'ps',bm:'pm',bu:'pu'}[b.classList[1]];if(!c)return;
     const f=KR.foot;f.classList.remove('ps','pm','pu');f.classList.add(c);clearTimeout(f._t);f._t=setTimeout(()=>f.classList.remove(c),360);
-    if(c==='ps'){KR.cloud.getAnimations().forEach(a=>a.cancel());KR.cloud.animate([{transform:'scale(1)'},{transform:'scale(1.12)',offset:.35},{transform:'scale(.96)',offset:.7},{transform:'scale(1)'}],{duration:480,easing:'ease-out'})}})}
+    if(c==='ps'){KR.cloud.getAnimations().forEach(a=>a.cancel());KR.cloud.animate([{transform:'scale(.9)'},{transform:'scale(1.08)',offset:.45},{transform:'scale(1)'}],{duration:360,easing:'ease-out'})}})}
 const krS=()=>{const v=KR&&KR.probe?KR.probe.getBoundingClientRect().width/1000:0;return v>0?v:Math.min(innerWidth/852,innerHeight/1560)};
 function krText(el,txt,base,maxW){if(el._h===txt&&el._b===base)return;el._h=txt;el._b=base;el.textContent=txt;let f=base;el.style.setProperty('--f',f);
   const s=krS(),sx=parseFloat(getComputedStyle(el).getPropertyValue('--sx'))||1;let n=0;while(el.scrollWidth*sx>maxW*s&&f>8&&n++<30){f*=.94;el.style.setProperty('--f',f)}}
