@@ -4403,6 +4403,11 @@ html body #lyp .lyr,html body #lyp .lyra,html body #lyp .lyc{font-size:13px;padd
 #pkl .beat{transform-box:fill-box;transform-origin:50% 55%;animation:pkbeat 1.1s ease-in-out infinite}
 @keyframes pkbeat{0%,40%,100%{transform:scale(1)}10%{transform:scale(1.22)}20%{transform:scale(1)}30%{transform:scale(1.14)}}
 #pkl .kc2.act .pknm{stroke:none}
+
+/* menu options de l'accueil : les choix Oui / Non ont la même DA que les switchs du menu (piste beige cerclée, bulle orange qui déborde) */
+html body .skinpick .sksw{position:relative;overflow:visible!important;background:var(--m-cell,#ece5d3)!important;box-shadow:inset 0 0 0 var(--bub-bw,2px) #111!important;border-radius:99px!important;padding:4px!important;gap:2px}
+html body .skinpick .sksw button{position:relative;z-index:1;border-radius:99px!important;background:transparent!important;color:#111!important;padding:5px 14px!important;transition:background .2s,box-shadow .2s,color .2s}
+html body .skinpick .sksw button.on{background:var(--accent)!important;color:#fff!important;box-shadow:0 0 0 5px var(--accent),0 6px 14px rgba(var(--acc-rgb,255,90,31),.38)!important;z-index:2}
 </style>
 </head>
 <body>
@@ -7889,7 +7894,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-268';   // à changer avec VERSION dans sw.js
+const APPV='lf-269';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
