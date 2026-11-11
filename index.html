@@ -7855,7 +7855,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-261';   // à changer avec VERSION dans sw.js
+const APPV='lf-262';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
@@ -7881,6 +7881,14 @@ function spwSet(p,i){let c='';try{if(S.pcolOff)c='#ff5a1f';else if(p){const n=p.
 {const _r=bcRender;bcRender=function(){const r=_r.apply(this,arguments);try{if(G&&G.players){const i=shownCur();spwSet(G.players[i],i)}}catch(e){}return r}}
 {const _r=xRender;xRender=function(){const r=_r.apply(this,arguments);try{if(XG)spwSet(XG.players[XG.cur],XG.cur)}catch(e){}return r}}
 {const _r=kRender;kRender=function(){const r=_r.apply(this,arguments);try{if(KG){const i=KG.winner!==null?KG.winner:(KHOLD?KHOLD.who:KG.cur);spwSet(KG.players[i],i)}}catch(e){}return r}}
+/* règles : le cadre prend la hauteur du plus long texte possible pour ce jeu → changer une option ne déplace plus les switchs */
+{const RV={cricket:{mode:['std','cut']},x01:{xout:[0,1,2],xstart:[301,1001]},shanghai:{shw:[0,1],shr:[7,20]},halveit:{hip:[0,1],hid:[3,5]},clock:{clkb:[0,1],clkm:[0,1],clkr:[0,3]}};const _b=showRules;
+  showRules=function(){const e=$('gRules'),r=_b.apply(this,arguments);if(!e||!e.offsetParent)return r;
+    try{const V=RV[S.game||'cricket']||{},ks=Object.keys(V),keep={};ks.forEach(k=>keep[k]=S[k]);let combos=[{}];ks.forEach(k=>{combos=combos.flatMap(c=>V[k].map(v=>Object.assign({},c,{[k]:v})))});
+      e.style.minHeight='';let mx=e.offsetHeight;
+      combos.forEach(c=>{Object.assign(S,c);_b();mx=Math.max(mx,e.offsetHeight)});
+      ks.forEach(k=>{if(keep[k]===undefined)delete S[k];else S[k]=keep[k]});_b.apply(this,arguments);e.style.minHeight=mx+'px'}catch(err){}
+    return r}}
 /* règles : l'ancien texte glisse dehors, le nouveau arrive du côté du jeu choisi */
 {const GO=['cricket','x01','killer','clock','shanghai','halveit'];let lastG=null;const _sr=showRules;
   showRules=function(){const e=$('gRules');const g=S.game||'cricket',old=e?e.innerHTML:'';const r=_sr.apply(this,arguments);
