@@ -4423,6 +4423,9 @@ html body #x01#x01#x01 footer{margin-top:calc(var(--xgKF,2.8)*1dvh)!important}
 #lyp .lyel{font-size:12px;opacity:.7;margin:2px 0 0}
 
 #pkl .pkmate{opacity:.75}
+
+/* 501 / 301 : finish conseillé en gris dans les bulles d'historique */
+html body #x01#x01#x01#x01 #xplayers .xc .khist .pill.hint{background:rgba(255,255,255,.62)!important;color:#8e8a83!important;-webkit-text-fill-color:#8e8a83!important;text-shadow:none!important;box-shadow:inset 0 0 0 var(--bub-bw,2px) #b9b4ab!important;opacity:1!important;animation:none!important}
 </style>
 </head>
 <body>
@@ -6726,13 +6729,15 @@ function xRender(){
     if(XG.mode){put('.xs',XG.mode==='sh'?`MPR ${fr(p.darts?p.hits*3/p.darts:0)}${p.sh?' · shanghai×'+p.sh:''}`:`${clkDone(p)}/${clkEnd()} · ${p.darts?Math.round(p.hits*100/p.darts):0}% de réussite`)}
     else put('.xs',pend?'fini · attend la réponse':act&&XG.rep?`droit de réponse : ${XG.rep.darts} fl.`:`moy. ${fr(xAvg(p))}${p.n180?` · 180×${p.n180}`:''}`);
     const ds=act?XG.turn:p.last;
-    put('.xh',act||ds.length?`<div class="khist">${Array.from({length:act?xLeft():Math.max(3,ds.length)},(_,k)=>xDart(ds[k])).join('')}</div>`:'');
+    // aide au finish : chaque fléchette conseillée, en gris, à sa place parmi les fléchettes qui restent
+    const route=act&&!XG.mode&&p.open&&XG.hint&&p.rem<=(XG.outR===0?180:170)?(xCheckout(p.rem,xLeft()-XG.turn.length,XG.outR)||null):null;
+    put('.xh',act||ds.length?`<div class="khist">${Array.from({length:act?xLeft():Math.max(3,ds.length)},(_,k)=>{const h=route&&k>=ds.length?route[k-ds.length]:null;return h?`<div class="pill e hint${h[1]===3?' ht':h[1]===2?' hd':''}">${xLbl(h)}</div>`:xDart(ds[k])}).join('')}</div>`:'');
     let co='';
     if(XG.mode){if(act){const t=XG.mode==='sh'?shT():p.tgt;co=`vise ${t===25?'la':'le'} <span class="co1">${clkLbl(t)}</span>`}}
     else if(act&&!p.open&&XG.inR)co=XG.inR===1?'double pour entrer':'double ou triple pour entrer';
-    else if(act&&XG.hint&&p.rem<=(XG.outR===0?180:170)){const r=xCheckout(p.rem,xLeft()-XG.turn.length,XG.outR);if(r)co=r.map(d=>`<span class="co${d[1]}">${xLbl(d)}</span>`).join('<i> · </i>')}
+    // (le finish conseillé est maintenant affiché dans l'historique, plus au-dessus)
     {const ce=c.querySelector('.xco'),chg=ce.dataset.h!==co;put('.xco',co);if(chg&&co)anim(ce,'coin',450)}
-    if(act&&!XG.mode)FEAR=co&&p.open&&XG.hint&&p.rem<=(XG.outR===0?180:170)?(xCheckout(p.rem,xLeft()-XG.turn.length,XG.outR)||[])[0]:null;
+    if(act&&!XG.mode)FEAR=route?route[0]:null;
   });
   $('xkeys').querySelectorAll('.xk').forEach(k=>k.classList.toggle('fear',!fin&&!!FEAR&&+k.dataset.n===FEAR[0]));
   {const tg=!fin&&XG.mode?(XG.mode==='sh'?shT():P[cur].tgt):null;$('x01').classList.toggle('xbar',!!XG.mode);$('xkeys').querySelectorAll('.xk').forEach(k=>k.classList.toggle('tgt',tg!=null&&+k.dataset.n===tg))}
@@ -7909,7 +7914,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-272';   // à changer avec VERSION dans sw.js
+const APPV='lf-273';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
