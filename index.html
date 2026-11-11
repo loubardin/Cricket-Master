@@ -4399,6 +4399,10 @@ html body #lyp .lyt{position:sticky;top:-8px;z-index:2;background:rgba(255,255,2
 html body #lyp .lyt button{font-size:12px;padding:5px 9px}
 html body #lyp .lyg{font-size:11px;margin-top:4px}
 html body #lyp .lyr,html body #lyp .lyra,html body #lyp .lyc{font-size:13px;padding:7px}
+
+#pkl .beat{transform-box:fill-box;transform-origin:50% 55%;animation:pkbeat 1.1s ease-in-out infinite}
+@keyframes pkbeat{0%,40%,100%{transform:scale(1)}10%{transform:scale(1.22)}20%{transform:scale(1)}30%{transform:scale(1.14)}}
+#pkl .kc2.act .pknm{stroke:none}
 </style>
 </head>
 <body>
@@ -7885,7 +7889,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-265';   // à changer avec VERSION dans sw.js
+const APPV='lf-266';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
@@ -8132,17 +8136,18 @@ function pklCard(i,g,act){const p=KG.players[i],{W,H,wide,k}=g,DD=KG.def,isDef=D
   let h=act?`<rect class="pksh" x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87" filter="url(#pkSh)"/><rect class="halo" x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87"/><clipPath id="pkClip"><rect x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87"/></clipPath><g clip-path="url(#pkClip)"><path class="shine" style="--sd:${W+H*.3+560}px" d="M-300 -40H-30L${-30-H*.3} ${H+40}H${-300-H*.3}Z"/></g>`:'';
   const cx=wide?.306*W:W/2,nm=esc(pkName(p,act));
   h+=`<g transform="translate(0 ${(LZ.klNY*H/100).toFixed(1)})">`;
-  if(act)h+=`<text x="${cx}" y="${(wide?-104:-94)*k}" font-size="${43*k*kT}">à toi</text><text class="pknmo" x="${cx}" y="${(wide?-16:-10)*k}" font-size="${87*k*kT}" data-fit="${wide?.62*W:W*1.02}" style="fill:${pkCol(i)};stroke:${pkCol(i)}">${nm}</text><text class="pknm" x="${cx}" y="${(wide?-16:-10)*k}" font-size="${87*k*kT}" data-fit="${wide?.62*W:W*1.02}">${nm}</text>`;
-  else h+=`<text class="pknm" x="${cx}" y="${-31*k}" font-size="${73*k*kT}" data-fit="${wide?.62*W:W*.98}">${nm}</text>`;
+  if(act)h+=`<text x="${cx}" y="${(wide?-124:-116)*k}" font-size="${43*k*kT}">à toi</text><text class="pknm" style="fill:${pkCol(i)}" x="${cx}" y="${(wide?-36:-32)*k}" font-size="${87*k*kT}" data-fit="${wide?.62*W:W*1.02}">${nm}</text>`;
+  else h+=`<text class="pknm" style="fill:${pkCol(i)}" x="${cx}" y="${-31*k}" font-size="${73*k*kT}" data-fit="${wide?.62*W:W*.98}">${nm}</text>`;
   h+='</g>';
   // cœurs
   const nh=Math.max(p.maxl||0,p.lives||0,3),hw=(wide?.117:.204)*W,hh=(wide?.137:.132)*H,pitch=Math.min((wide?.141:.2475)*W,(wide?.5:.9)*W/nh),hy=(wide?.076:.052)*H,hx0=cx-pitch*(nh-1)/2-hw/2;
   const lw=hw*Math.min(1,pitch/hw*.92);
   h+=`<g transform="translate(${cx} ${hy+hh/2}) scale(${LZ.klHZ}) translate(${-cx} ${-(hy+hh/2)})">`;
   for(let j=0;j<nh;j++){const on=!dead&&j<p.lives,gold=on&&j>=p.lives-(p.gold||0),x=cx-pitch*(nh-1)/2+j*pitch-lw/2,c=gold?' gold':'';
+    const bt=on&&j===p.lives-1;if(bt)h+='<g class="beat">';
     if(on)h+=`<path class="phb${c}" d="${pkHeart(x,hy,lw,hh)}"/><path class="phl${c}" d="${pkHeart(x+lw*.035,hy+hh*.03,lw*.86,hh*.84)}"/>`+
       `<ellipse class="phg" cx="${x+lw*.3}" cy="${hy+hh*.3}" rx="${lw*.12}" ry="${hh*.075}" transform="rotate(-38 ${x+lw*.3} ${hy+hh*.3})"/><circle class="phg" cx="${x+lw*.17}" cy="${hy+hh*.47}" r="${Math.min(lw,hh)*.045}"/>`;
-    h+=`<path class="phrt${on?' on':''}" d="${pkHeart(x,hy,lw,hh)}"/>`}
+    h+=`<path class="phrt${on?' on':''}" d="${pkHeart(x,hy,lw,hh)}"/>`;if(bt)h+='</g>'}
   h+='</g>';
   // numéro
   const ny=(wide?.272:.243)*H,nH=(wide?.44:.325)*H,nW=(wide?.445:.61)*W;
