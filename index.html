@@ -7851,7 +7851,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-258';   // à changer avec VERSION dans sw.js
+const APPV='lf-259';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
@@ -8137,7 +8137,7 @@ function pkcCard(i,g,act){const p=XG.players[i],{W,H,wide}=g,LZ=lyGet(lyCur()),d
     h+=`<rect class="pkhp" x="${x}" y="${y}" width="${w}" height="${hh2}" rx="${Math.min(29.5,hh2*.45)}"/><text class="fN" x="${x+w/2}" y="${y+hh2*.5+hh2*.3}" font-size="${(hh2/HH*.8*PF.kN*LZ.zPl).toFixed(1)}" data-fit="${w*.86}">${dt(ds&&ds[j])}</text>`}
   h+=`<rect class="ol" width="${W}" height="${H}" rx="92.61"/><rect class="hit" x="-10" y="-10" width="${W+20}" height="${H+20}" rx="92"/>`;
   return{h,dead:!!p.out}}
-function pklSync(){const sec=$('killer'),on=pklOn()&&sec.classList.contains('on');sec.classList.toggle('pkl',on);document.documentElement.classList.toggle('pkl',on);if(!on)return;
+function pklSync(){const sec=$('killer'),on=pklOn()&&sec.classList.contains('on');sec.classList.toggle('pkl',pklOn());document.documentElement.classList.toggle('pkl',on);if(!on)return;
   if(!PKL.k||!PKL.k.isConnected)pklBuild();const k=PKL.k;
   // zone des cartes : du haut de l'écran jusqu'au-dessus des boutons de la Bulle
   {const sv=k.firstElementChild,km=$('kmain'),f=sec.querySelector('footer'),st=parseFloat(getComputedStyle(km).paddingTop)||0,sr=sec.getBoundingClientRect(),bot=f?f.getBoundingClientRect().top-sr.top-innerWidth*.035:sec.clientHeight;
