@@ -4365,6 +4365,10 @@ html body #x01#x01#x01#x01 #xplayers.many .xc .xs{grid-area:s!important;font-siz
 html body #x01#x01#x01#x01 #xplayers.many .xc .xr{grid-area:r!important;font-size:min(30cqw,46cqh)!important;margin:0!important;align-self:center!important}
 html body #x01#x01#x01#x01 #xplayers.many .xc .xb{grid-area:b!important;justify-self:center!important;margin-top:3cqh!important}
 html body #x01#x01#x01#x01 #xplayers.many .xc .khist .pill{font-size:min(6cqw,12cqh)!important}
+
+#pkl .pksh{display:none!important}
+
+#lyp .lybas{display:block;width:100%;margin:10px 0 2px;padding:12px;border-radius:14px;border:2px solid #111;background:#fff;font:inherit;font-weight:800;text-align:left}
 </style>
 </head>
 <body>
@@ -7851,7 +7855,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-260';   // à changer avec VERSION dans sw.js
+const APPV='lf-261';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
@@ -8176,7 +8180,7 @@ addEventListener('resize',()=>{try{if(KG&&PKL.k&&$('killer').classList.contains(
 const LY_D={xoN:0,xoS:0,xoM:0,xoH:0,xoC:0,xpW:1,xpH:1,xpG:1,xcG:1,xnZ:1,xrZ:1,xsZ:1,xcoZ:1,xhZ:1,xkz:1,xkh:1,xkg:1,xbh:1,paW:1,paH:1,poW:1,poH:1,zPo:1.05,poG:1,poY:0,crZ:1,crY:0,scR:1,hZ:1,nW:1,icZ:1,ifZ:1,dtZ:1,spZ:1,fbw:2.8,barTop:0,iNP:.1,iPM:.14,iPMo:.14,iY:0,iPl:.1,zNm:1.2,zSc:1.6,zMp:1.25,zPl:1.05,nfz:1.1,nsw:4,scsw:4,bw:2.5,mkz:.95,mksw:4,scK:1.1,rowK:1.05,ftK:1.05,brK:1,mT:4.1,gSN:1.1,gL:1.8,gNF:1.5,gFB:1.1,mB:.9,nA:0};   // « Pop » : les réglages de base
 if(S.lay&&!S.lay.v3){S.lay={v3:1};try{store.set(K_S,S)}catch(e){}}
 /* un profil de réglages par jeu ; les contours (et les polices) sont communs à toute l'appli */
-const LY_GLOB=['bw','fbw','nsw','scsw','brK','ftK','gFB','mB','icZ','ifZ','barTop'];   // contours et boutons du bas : un seul réglage pour toute l'appli
+const LY_GLOB=['bw','fbw','nsw','scsw','brK','ftK','gFB','mB','icZ','ifZ','dtZ','spZ','barTop'];   // contours et boutons du bas : un seul réglage pour toute l'appli
 /* réglages « Pop » (envoyés par Loubi, lf-258) : Shanghai / Halve-it reprennent le Cricket, l'Horloge reprend le Killer */
 const LY_POP={
   ck2:{mT:5,gSN:1.6,gL:1.6,rowK:1.05,scK:1.1,nA:0,zNm:1.4,zSc:1.35,zMp:1.45,zPl:1.6,gNF:0,iNP:.12,iPM:.12,iPMo:.12,iY:.04,iPl:.04,mkz:1,mksw:6,crY:-.14,crZ:1,poW:1.3,poG:.3,poH:1.05,zPo:1.2,paH:1.45,paW:1.2},
@@ -8196,8 +8200,10 @@ if(S.lays&&S.lays.x01){S.lays.x2=S.lays.x01;delete S.lays.x01;try{store.set(K_S,
 if(S.lay&&!S.lays){const o=S.lay,g={v3:1},c={};for(const k in o){if(k==='v3')continue;(LY_GLOB.includes(k)?g:c)[k]=o[k]}S.lay=g;S.lays={ck2:c};try{store.set(K_S,S)}catch(e){}}
 const lyGet=(cx)=>{cx=cx||lyCur();const P=(S.lays&&S.lays[cx])||{},Gl={};LY_GLOB.forEach(k=>{if(S.lay&&S.lay[k]!=null)Gl[k]=S.lay[k]});return Object.assign({},LY_D,LY_PD[cx]||{},P,Gl)};
 function lySet(k,v,cx){cx=cx||lyCur();if(LY_GLOB.includes(k)){S.lay=Object.assign(S.lay||{v3:1},{[k]:v})}else{S.lays=S.lays||{};S.lays[cx]=Object.assign(S.lays[cx]||{},{[k]:v})}}
-const LY_SL=[['Hauteurs'],['brK','Barre Accueil · infos · Annuler',.6,1.6,.05,'%'],['scK','Case joueur',.6,1.6,.05,'%'],['rowK','Cases nombres',.6,1.6,.05,'%'],['ftK','Bouton Spew',.6,1.6,.05,'%'],
-  ['Écarts (en % de la hauteur de l\'écran)'],['mT','Marge en haut (sous l\'heure)',0,10,.1,'pc'],['gSN','Case joueur → nombres',0,8,.1,'pc'],['gL','Entre les lignes de nombres',0,5,.1,'pc'],['gNF','Nombres → Spew (au moins)',0,8,.1,'pc'],['gFB','Spew → barre du bas',0,8,.1,'pc'],['mB','Marge en bas',0,8,.1,'pc'],
+const LY_BAS='Bas de l\'écran (identique dans tous les jeux)';
+const LY_SL=[[LY_BAS],['ftK','Hauteur du bouton Spew',.6,1.6,.05,'%'],['brK','Hauteur de la barre Accueil · infos · Annuler',.6,1.6,.05,'%'],['gFB','Écart Spew → barre (en % de l\'écran)',0,8,.1,'pc'],['mB','Marge en bas (en % de l\'écran)',0,8,.1,'pc'],['dtZ','Taille de « Double » et « Triple »',.5,1.6,.05,'%'],['spZ','Taille de « Spew »',.5,1.6,.05,'%'],['fbw','Contour du bouton Spew',0,6,.25,''],['icZ','Taille des icônes Accueil / Annuler',.5,1.8,.05,'%'],['ifZ','Taille du texte d\'infos',.5,1.8,.05,'%'],
+  ['Hauteurs'],['scK','Case joueur',.6,1.6,.05,'%'],['rowK','Cases nombres',.6,1.6,.05,'%'],
+  ['Écarts (en % de la hauteur de l\'écran)'],['mT','Marge en haut (sous l\'heure)',0,10,.1,'pc'],['gSN','Case joueur → nombres',0,8,.1,'pc'],['gL','Entre les lignes de nombres',0,5,.1,'pc'],['gNF','Nombres → Spew (au moins)',0,8,.1,'pc'],
   ['Case joueur : espacements (en hauteur de ligne)'],['iNP','Nom → score',-.4,1,.02,'x'],['iPM','Score → MPR (joueur en cours)',-.4,1,.02,'x'],['iPMo','Score → MPR (adversaire)',-.4,1,.02,'x'],['iY','Décaler nom, score et MPR (− haut, + bas)',-1,1,.02,'x'],
   ['Textes'],['zNm','Taille des noms',.5,1.6,.05,'%'],['zSc','Taille des scores',.5,1.6,.05,'%'],['zMp','Taille du MPR',.5,2,.05,'%'],
   ['nfz','Taille des nombres dans les bulles',.6,1.5,.05,'%'],['nsw','Contour des nombres dans les bulles',0,5,.25,''],['scsw','Contour noir du score',0,6,.25,''],
@@ -8205,12 +8211,11 @@ const LY_SL=[['Hauteurs'],['brK','Barre Accueil · infos · Annuler',.6,1.6,.05,
   ['Historique des fléchettes de l\'adversaire (bulles)'],['poW','Largeur des bulles',.5,4,.05,'%'],['poH','Hauteur des bulles',.5,2,.05,'%'],['zPo','Taille du texte',.5,2,.05,'%'],['poG','Écart',0,3,.05,'%'],['poY','Décaler (− haut, + bas)',-1,1,.02,'x'],
   ['Couronne'],['crZ','Taille',.4,1.8,.05,'%'],['crY','Décaler (− haut, + bas)',-1,1,.02,'x'],
   ['Formes'],['scR','Arrondi des cases joueur',0,1.6,.05,'%'],['hZ','Halo coloré autour des cases',0,3,.05,'%'],['nW','Largeur des bulles nombres et de Spew',.7,1.3,.01,'%'],['mkz','Taille des marques',.5,1.5,.05,'%'],['mksw','Épaisseur des marques',1,10,.25,''],
-  ['Barre du bas et bouton Spew'],['icZ','Taille des icônes Accueil / Annuler',.5,1.8,.05,'%'],['ifZ','Taille du texte d\'infos',.5,1.8,.05,'%'],['dtZ','Taille de « Double » et « Triple »',.5,1.6,.05,'%'],['spZ','Taille de « Spew »',.5,1.6,.05,'%'],
   ['501 / 301 : textes des cases joueur'],['xnZ','Taille des noms',.5,2,.05,'%'],['xrZ','Taille des scores',.5,2,.05,'%'],['xsZ','Taille de la moyenne',.5,2.5,.05,'%'],['xcoZ','Taille du finish proposé',.5,2.5,.05,'%'],['xhZ','Taille de l\'historique des fléchettes',.5,2.5,.05,'%'],
   ['501 / 301 : placement dans les cases joueur (en % de l\'écran, − monte, + descend)'],['xoN','Nom',-8,8,.1,'x'],['xoS','Score',-8,8,.1,'x'],['xoM','Moyenne',-8,8,.1,'x'],['xoH','Historique des fléchettes',-8,8,.1,'x'],['xoC','Finish proposé',-8,8,.1,'x'],
   ['501 / 301 : historique et cases'],['xpW','Largeur des bulles d\'historique',.5,2.5,.05,'%'],['xpH','Hauteur des bulles d\'historique',.4,3,.05,'%'],['xpG','Écart entre les bulles d\'historique',0,4,.05,'%'],['xcG','Écart entre les cases joueur',0,3,.05,'%'],
   ['501 / 301 : touches'],['xkz','Taille des chiffres',.5,1.6,.05,'%'],['xkh','Hauteur des touches 1 à 20',.5,1.6,.05,'%'],['xbh','Hauteur de la touche Bulle',.5,1.8,.05,'%'],['xkg','Écart entre les touches',0,3,.05,'%'],
-  ['Contours (toute l\'appli)'],['bw','Contour des cases',0,5,.25,''],['fbw','Contour du bouton Spew',0,6,.25,'']];
+  ['Contours (toute l\'appli)'],['bw','Contour des cases',0,5,.25,'']];
 const lyFmt=(v,u)=>u==='x'?(+v).toFixed(2):u==='%'?Math.round(v*100)+' %':u==='pc'?(+v).toFixed(1)+' %':(+v).toFixed(1);
 /* 501 : hauteur des touches (les rangées sont calculées par l'appli : on les reprend et on les multiplie) */
 function lyKeys(L){const k=$('xkeys'),x=$('x01');if(!k||!x.classList.contains('on'))return;
@@ -8230,13 +8235,14 @@ const LY_CTX={x:'brK ftK gFB mB bw fbw icZ ifZ xnZ xrZ xsZ xcoZ xhZ xkz xkh xkg 
 const lyCtx=()=>{const c=lyCur();return c==='kl'||(c.startsWith('clk')&&pkClk())?'kl':$('x01').classList.contains('on')?'x':($('game').classList.contains('on')&&skp2())?'ck':'ot'};
 function lyOpen(mode){const old=$('lyp');if(old)old.remove();haptic();const p=el('div','');p.id='lyp';document.body.append(p);let up=false;
   const CX=lyCur();const draw=()=>{const L=lyGet(CX);p.classList.toggle('up',up);
-    p.innerHTML=`<div class="lyh"><b>${mode==='txt'?'Textes et polices':'Réglages Pop'}<small>${LY_NAME[CX]}</small></b><button class="lyd" aria-label="Déplacer le panneau">${up?'↓':'↑'}</button><button class="lyx" aria-label="Fermer">✕</button></div>
-      ${(()=>{const cx=lyCtx(),ok=x=>x.length===1||(!(LY_NO[CX]||'').split(' ').includes(x[0])&&(mode==='txt'?/^Textes|^Case joueur|^Historique|^Couronne/.test(x._g):(cx==='ck'||LY_CTX[cx].split(' ').includes(x[0]))));let grp='';LY_SL.forEach(x=>{if(x.length===1)grp=x[0];x._g=grp});
+    p.innerHTML=`<div class="lyh"><b>${mode==='txt'?'Textes et polices':mode==='bas'?'Bas de l\'écran':'Réglages Pop'}<small>${mode==='bas'?'identique dans tous les jeux':LY_NAME[CX]}</small></b><button class="lyd" aria-label="Déplacer le panneau">${up?'↓':'↑'}</button><button class="lyx" aria-label="Fermer">✕</button></div>
+      ${(()=>{const cx=lyCtx(),ok=x=>mode==='bas'?x._g===LY_BAS:x._g===LY_BAS?false:x.length===1||(!(LY_NO[CX]||'').split(' ').includes(x[0])&&(mode==='txt'?/^Textes|^Case joueur|^Historique|^Couronne/.test(x._g):(cx==='ck'||LY_CTX[cx].split(' ').includes(x[0]))));let grp='';LY_SL.forEach(x=>{if(x.length===1)grp=x[0];x._g=grp});if(mode==='bas')return LY_SL.filter(ok).slice(1);
         const v=LY_SL.filter(ok);return v.filter((x,i)=>x.length>1||(v[i+1]&&v[i+1].length>1))})().map(([k,l,a,b,st,u])=>l===undefined?`<i class="lyg">${k}</i>`:`<label><span>${l}</span><b data-v="${k}">${lyFmt(L[k],u)}</b><input type="range" data-k="${k}" data-u="${u}" min="${a}" max="${b}" step="${st}" value="${L[k]}"></label>`).join('')}
-      ${mode==='txt'||lyCtx()!=='ck'?'':`<div class="lyb"><span>Barre Accueil · infos · Annuler</span><div class="sw">${['En bas','En haut'].map((t,i)=>`<button data-bt="${i}" class="${(L.barTop|0)===i?'on':''}">${t}</button>`).join('')}</div></div>`}
+      ${mode!=='bas'?'':`<div class="lyb"><span>Barre Accueil · infos · Annuler (Cricket)</span><div class="sw">${['En bas','En haut'].map((t,i)=>`<button data-bt="${i}" class="${(L.barTop|0)===i?'on':''}">${t}</button>`).join('')}</div></div>`}
       ${mode==='txt'||lyCtx()!=='ck'?'':`<div class="lyb"><span>Nombres dans la place libre</span><div class="sw">${['En haut','Au centre','En bas'].map((t,i)=>`<button data-a="${i}" class="${(L.nA|0)===i?'on':''}">${t}</button>`).join('')}</div></div>`}
-      <i class="lyg">Polices</i><div class="lyf"><button data-f="fN">Nombres<b style="font-family:'${esc(fcCur('fN'))}','Fun'">${esc(fcName(fcCur('fN')))}</b></button><button data-f="fT">Textes<b style="font-family:'${esc(fcCur('fT'))}','Fun'">${esc(fcName(fcCur('fT')))}</b></button></div>
-      <button class="lyr">Revenir à Pop pour ce jeu</button><button class="lyc">Copier mes réglages (pour Claude)</button>`};
+      ${mode==='bas'?'':`<button class="lybas">Bas de l'écran (tous les jeux) ›</button>`}
+      ${mode==='bas'?'':'<i class="lyg">Polices</i>'}${mode==='bas'?'':`<div class="lyf"><button data-f="fN">Nombres<b style="font-family:'${esc(fcCur('fN'))}','Fun'">${esc(fcName(fcCur('fN')))}</b></button><button data-f="fT">Textes<b style="font-family:'${esc(fcCur('fT'))}','Fun'">${esc(fcName(fcCur('fT')))}</b></button></div>`}
+      <button class="lyr">${mode==='bas'?'Revenir à Pop pour le bas de l\'écran':'Revenir à Pop pour ce jeu'}</button><button class="lyc">Copier mes réglages (pour Claude)</button>`};
   draw();
   p.addEventListener('click',ev=>{ev.stopPropagation();if(ev.target.closest('.lyx')){p.remove();return}
     if(ev.target.closest('.lyd')){up=!up;draw();return}
@@ -8246,7 +8252,11 @@ function lyOpen(mode){const old=$('lyp');if(old)old.remove();haptic();const p=el
     if(ev.target.closest('.lyc')){const L=Object.assign({},S.lay||{});delete L.v3;delete L.v4;const txt='Réglages Pop '+APPV+' : '+JSON.stringify({communs:L,jeux:S.lays||{},fN:S.fN||null,fT:S.fT||null});
       const ok=()=>{try{mkToast('','Réglages copiés : colle-les dans la conversation',2600)}catch(e){}};
       (navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(txt).then(ok):Promise.reject()).catch(()=>{if(navigator.share)navigator.share({text:txt}).catch(()=>{});else prompt('Copie ce texte :',txt)});return}
-    if(ev.target.closest('.lyr')){haptic();S.lays=S.lays||{};delete S.lays[CX];store.set(K_S,S);lyApply();draw()}});
+    if(ev.target.closest('.lybas')){lyOpen('bas');return}
+    if(ev.target.closest('.lyr')){haptic();const B=['brK','ftK','gFB','mB','icZ','ifZ','dtZ','spZ','fbw','barTop'];
+      if(mode==='bas'){if(S.lay)B.forEach(k=>delete S.lay[k])}
+      else{S.lays=S.lays||{};delete S.lays[CX];if(S.lay)LY_GLOB.filter(k=>!B.includes(k)).forEach(k=>delete S.lay[k])}   // le jeu + les contours communs
+      store.set(K_S,S);lyApply();try{lyPlace()}catch(e){}draw();try{mkToast('','Réglages Pop rétablis',1600)}catch(e){}}});
   p.addEventListener('input',ev=>{const r=ev.target.closest('input[type=range]');if(!r)return;const k=r.dataset.k,v=+r.value;lySet(k,v,CX);
     const b=p.querySelector(`b[data-v="${k}"]`);if(b)b.textContent=lyFmt(v,r.dataset.u);cancelAnimationFrame(p._raf);p._raf=requestAnimationFrame(lyApply);clearTimeout(p._sv);p._sv=setTimeout(()=>store.set(K_S,S),400)})}
 
