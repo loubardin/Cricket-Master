@@ -4304,6 +4304,13 @@ html body #game#game#game#game#game#game.sk.p2.pn #scores#scores .sc.act>.pills 
 html body #game#game#game#game#game#game.sk.p2.pn #scores#scores .sc.act>.pills{gap:calc(var(--r)*var(--iPl,.1))!important}
 html body #game#game#game#game#game#game.sk.p2.pn #scores .sc:not(.act)>.pills .pill{min-width:calc(var(--r)*.3*var(--poW,1))!important;height:calc(var(--r)*.25*var(--poH,1))!important;font-size:calc(var(--r)*.15*var(--zPo,1))!important}
 html body #game#game#game#game#game#game.sk.p2.pn #scores .sc:not(.act)>.pills{gap:calc(var(--r)*.04*var(--poG,1))!important;translate:0 calc(var(--r)*var(--poY,0))}
+
+/* couronne par-dessus tout : le nom (qui la porte) passe au-dessus du contour de la case, la case en cours au-dessus de l'autre */
+html body #game#game#game#game#game#game.sk.p2 #scores .sc>.nm{z-index:8!important;position:relative}
+html body #game#game#game#game#game#game.sk.p2 #scores>.pc.sc.act{z-index:3!important}
+html body #game#game#game#game#game#game.sk.p2 #scores .sc>.nm>.hat{z-index:9!important}
+/* l'historique peut déborder de sa colonne (centré) */
+html body #game#game#game#game#game#game.sk.p2 #scores .sc>.pills{overflow:visible!important}
 </style>
 </head>
 <body>
@@ -7782,7 +7789,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-251';   // à changer avec VERSION dans sw.js
+const APPV='lf-252';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
@@ -8094,8 +8101,8 @@ const LY_SL=[['Hauteurs'],['brK','Barre Accueil · infos · Annuler',.6,1.6,.05,
   ['Case joueur : espacements (en hauteur de ligne)'],['iNP','Nom → score',-.4,1,.02,'x'],['iPM','Score → MPR',-.4,1,.02,'x'],['iY','Décaler nom, score et MPR (− haut, + bas)',-1,1,.02,'x'],
   ['Textes'],['zNm','Taille des noms',.5,1.6,.05,'%'],['zSc','Taille des scores',.5,1.6,.05,'%'],['zMp','Taille du MPR',.5,2,.05,'%'],
   ['nfz','Taille des nombres dans les bulles',.6,1.5,.05,'%'],['nsw','Contour des nombres dans les bulles',0,5,.25,''],['scsw','Contour noir du score',0,6,.25,''],
-  ['Historique des fléchettes du joueur en cours (bulles)'],['paW','Largeur des bulles',.4,1.3,.05,'%'],['paH','Hauteur des bulles',.5,1.8,.05,'%'],['zPl','Taille du texte',.5,1.8,.05,'%'],['iPl','Écart (en hauteur de ligne)',0,.6,.01,'x'],
-  ['Historique des fléchettes de l\'adversaire (bulles)'],['poW','Largeur des bulles',.5,2.5,.05,'%'],['poH','Hauteur des bulles',.5,2,.05,'%'],['zPo','Taille du texte',.5,2,.05,'%'],['poG','Écart',0,3,.05,'%'],['poY','Décaler (− haut, + bas)',-1,1,.02,'x'],
+  ['Historique des fléchettes du joueur en cours (bulles)'],['paW','Largeur des bulles',.4,2.6,.05,'%'],['paH','Hauteur des bulles',.5,1.8,.05,'%'],['zPl','Taille du texte',.5,1.8,.05,'%'],['iPl','Écart (en hauteur de ligne)',0,.6,.01,'x'],
+  ['Historique des fléchettes de l\'adversaire (bulles)'],['poW','Largeur des bulles',.5,4,.05,'%'],['poH','Hauteur des bulles',.5,2,.05,'%'],['zPo','Taille du texte',.5,2,.05,'%'],['poG','Écart',0,3,.05,'%'],['poY','Décaler (− haut, + bas)',-1,1,.02,'x'],
   ['Couronne'],['crZ','Taille',.4,1.8,.05,'%'],['crY','Décaler (− haut, + bas)',-1,1,.02,'x'],
   ['Formes'],['scR','Arrondi des cases joueur',0,1.6,.05,'%'],['hZ','Halo coloré autour des cases',0,3,.05,'%'],['nW','Largeur des bulles nombres et de Spew',.7,1.3,.01,'%'],['mkz','Taille des marques',.5,1.5,.05,'%'],['mksw','Épaisseur des marques',1,10,.25,''],
   ['Barre du bas et bouton Spew'],['icZ','Taille des icônes Accueil / Annuler',.5,1.8,.05,'%'],['ifZ','Taille du texte d\'infos',.5,1.8,.05,'%'],['dtZ','Taille de « Double » et « Triple »',.5,1.6,.05,'%'],['spZ','Taille de « Spew »',.5,1.6,.05,'%'],
