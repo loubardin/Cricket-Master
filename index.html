@@ -4411,7 +4411,7 @@ html body .skinpick .sksw button.on{background:var(--accent)!important;color:#ff
 
 /* équipes : interligne entre les deux noms de la case (Cricket, Shanghai, Halve-it, 501/301) */
 html body #game#game#game.sk.p2 #scores .sc>.nm .nmm{bottom:calc(100% + .3em + var(--tmL,0)*1dvh)!important}
-html body #x01#x01#x01 #xplayers .xc .xn .xm{position:relative!important;top:calc(var(--tmL,0)*1dvh)!important}
+html body #x01#x01#x01 #xplayers .xc .xn .xm{position:relative!important;top:calc(var(--tmL,0)*-1dvh)!important}
 
 /* 501 / 301 : texte des bulles d'historique, écarts cases → touches → Spew */
 html body #x01#x01#x01#x01#x01 #xplayers .xc .khist .pill{font-size:calc(min(7cqw,2.2dvh)*var(--xpT,1))!important}
@@ -4421,6 +4421,8 @@ html body #x01#x01#x01 #xmain{gap:calc(var(--xgPK,1.2)*1dvh)!important;padding-b
 html body #x01#x01#x01 footer{margin-top:calc(var(--xgKF,2.8)*1dvh)!important}
 /* éditeur en direct : élément sélectionné */
 #lyp .lyel{font-size:12px;opacity:.7;margin:2px 0 0}
+
+#pkl .pkmate{opacity:.75}
 </style>
 </head>
 <body>
@@ -5519,7 +5521,7 @@ function render(){
     const badge=i===lead?'hat':i===last?'snail':'';
     const who=thrower(p,i),mate=p.members?p.members.find(x=>x!==who)||'':'',key=who+'|'+mate;
     if(s.badge!==badge||s.nmTxt!==key){
-      s.nm.innerHTML=(mate?'<small class="nmm">'+esc(mate)+'</small><b class="nmw">'+esc(who)+'</b>':esc(who))+(badge==='hat'?CROWN:'')+(badge==='snail'?SNAIL:'')
+      s.nm.innerHTML=(mate?'<small class="nmm">'+esc(mate)+' &amp;</small><b class="nmw">'+esc(who)+'</b>':esc(who))+(badge==='hat'?CROWN:'')+(badge==='snail'?SNAIL:'')
       if(badge&&s.badge!==undefined&&s.badge!==badge){const e=s.nm.querySelector('.'+badge);if(e)e.classList.add('pop')}
       s.badge=badge;s.nmTxt=key;
     }
@@ -6719,7 +6721,7 @@ function xRender(){
     c.className='xc'+(act?' act':'')+(won?' won':'')+(pend?' pend':'')+(p.out&&!won?' out':'')+(act&&XG.rep?' reply':'')+(!p.open&&XG.inR?' shut':'')+[...c.classList].filter(x=>keep.includes(x)).map(x=>' '+x).join('');
     const put=(sel,h)=>{const e=c.querySelector(sel);if(e.dataset.h!==h){e.innerHTML=h;e.dataset.h=h}};
     const legs0=XG.legsTo>1?`<span class="xl">${Array.from({length:XG.legsTo},(_,k)=>`<i class="${k<p.legs?'on':''}"></i>`).join('')}</span>`:'';
-    put('.xn',p.members?`${esc(p.members[p.mi])}${p.members.length>1?`<small class="xm">&amp; ${esc(p.members[(p.mi+1)%p.members.length])}</small>`:''}`:esc(p.name));
+    put('.xn',p.members&&p.members.length>1?(()=>{const L=p.members.length,j=((p.mi||0)+(!act&&p.last&&p.last.length?L-1:0))%L;return`<small class="xm">${esc(p.members[(j+1)%L])} &amp;</small>${esc(p.members[j])}`})():esc(p.members?p.members[0]:p.name));
     put('.xr',XG.mode==='clk'?clkLbl(p.tgt):String(p.rem));
     if(XG.mode){put('.xs',XG.mode==='sh'?`MPR ${fr(p.darts?p.hits*3/p.darts:0)}${p.sh?' · shanghai×'+p.sh:''}`:`${clkDone(p)}/${clkEnd()} · ${p.darts?Math.round(p.hits*100/p.darts):0}% de réussite`)}
     else put('.xs',pend?'fini · attend la réponse':act&&XG.rep?`droit de réponse : ${XG.rep.darts} fl.`:`moy. ${fr(xAvg(p))}${p.n180?` · 180×${p.n180}`:''}`);
@@ -7907,7 +7909,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-271';   // à changer avec VERSION dans sw.js
+const APPV='lf-272';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
@@ -8137,6 +8139,7 @@ function pklGeo(n){if(n<=2)return{W:902.6,H:688.6,wide:1,pos:[0,1].map(r=>[111.2
   const W=418.9,H=456.3,gap=60,R=Math.ceil(n/3),sc=Math.min(.76,1672/((R-1)*568+556.3)),bh=((R-1)*568+556.3)*sc,y0=420+(1672-bh)/2+100*sc,x0=(1125-(3*W+2*gap)*sc)/2,last=n-(R-1)*3;
   return{W,H,s:sc,pos:Array.from({length:n},(_,i)=>{const r=Math.floor(i/3),off=r===R-1?(3-last)*(W+gap)*sc/2:0;return[x0+off+(i%3)*(W+gap)*sc,y0+r*568*sc]}),k:.85}}
 const pkCol=i=>{const p=(pkClk()?XG:KG).players[i],c=p&&pcol(p.members?p.members[0]:p.name);return /^#[0-9a-f]{6}$/i.test(c||'')?c:PFB[i%PFB.length]};
+function pkMate(p,act){if(!p.members||p.members.length<2)return '';const L=p.members.length,j=((p.mi||0)+(!act&&p.last&&p.last.length?L-1:0))%L;return p.members[(j+1)%L]}
 function pkName(p,act){if(!p.members||p.members.length<2)return p.name;const L=p.members.length,j=((p.mi||0)+(!act&&p.last&&p.last.length?L-1:0))%L;return p.members[j]}
 function pkDartT(d){if(!d)return'·';if(d.n===0)return'S';return (d.m===3?'T':d.m===2?'D':'')+(d.n===25?'B':d.n)}
 function pklBuild(){const sec=$('killer');let k=$('pkl');if(k)k.remove();
@@ -8154,7 +8157,9 @@ function pklCard(i,g,act){const p=KG.players[i],{W,H,wide,k}=g,DD=KG.def,isDef=D
   let h=act?`<rect class="pksh" x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87" filter="url(#pkSh)"/><rect class="halo" x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87"/><clipPath id="pkClip"><rect x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87"/></clipPath><g clip-path="url(#pkClip)"><path class="shine" style="--sd:${W+H*.3+560}px" d="M-300 -40H-30L${-30-H*.3} ${H+40}H${-300-H*.3}Z"/></g>`:'';
   const cx=wide?.306*W:W/2,nm=esc(pkName(p,act));
   h+=`<g transform="translate(0 ${(LZ.klNY*H/100).toFixed(1)})">`;
-  if(act)h+=`<text x="${cx}" y="${(wide?-124:-116)*k}" font-size="${43*k*kT}">à toi</text><text class="pknm" style="fill:${pkCol(i)}" x="${cx}" y="${(wide?-36:-32)*k}" font-size="${87*k*kT}" data-fit="${wide?.62*W:W*1.02}">${nm}</text>`;
+  const mate=esc(pkMate(p,act)),tu=mate?((act?80:66)+LZ.tmL*8)*k:0;
+  if(mate)h+=`<text class="pknm pkmate" style="fill:${pkCol(i)}" x="${cx}" y="${((act?(wide?-36:-32):-31)*k-tu).toFixed(1)}" font-size="${(act?46:40)*k*kT}" data-fit="${wide?.62*W:W*.98}">${mate} &amp;</text>`;
+  if(act)h+=`${mate?'':`<text x="${cx}" y="${(wide?-124:-116)*k}" font-size="${43*k*kT}">à toi</text>`}<text class="pknm" style="fill:${pkCol(i)}" x="${cx}" y="${(wide?-36:-32)*k}" font-size="${87*k*kT}" data-fit="${wide?.62*W:W*1.02}">${nm}</text>`;
   else h+=`<text class="pknm" style="fill:${pkCol(i)}" x="${cx}" y="${-31*k}" font-size="${73*k*kT}" data-fit="${wide?.62*W:W*.98}">${nm}</text>`;
   h+='</g>';
   // cœurs
@@ -8194,9 +8199,10 @@ function pklCard(i,g,act){const p=KG.players[i],{W,H,wide,k}=g,DD=KG.def,isDef=D
 /* Horloge : même carte que le Killer — le nom à la place des cœurs, le numéro à viser en grand, le MPR en avant à la place des K */
 function pkcCard(i,g,act){const p=XG.players[i],{W,H,wide}=g,LZ=lyGet(lyCur()),dk=pkDark(pkCol(i)),kT=PF.kT*LZ.zNm,kN=PF.kN*LZ.nfz;
   let h=act?`<rect class="pksh" x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87" filter="url(#pkSh)"/><rect class="halo" x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87"/><clipPath id="pkClip"><rect x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87"/></clipPath><g clip-path="url(#pkClip)"><path class="shine" style="--sd:${W+H*.3+560}px" d="M-300 -40H-30L${-30-H*.3} ${H+40}H${-300-H*.3}Z"/></g>`:'';
-  const cx=wide?.306*W:W/2,nm=esc(p.members&&p.members.length>1?p.members[((p.mi||0)+(!act&&p.last&&p.last.length?p.members.length-1:0))%p.members.length]:p.name);
+  const cx=wide?.306*W:W/2,nm=esc(pkName(p,act));
   const hy=(wide?.076:.052)*H,hh=(wide?.137:.132)*H;
-  h+=`<g transform="translate(0 ${(LZ.klNY*H/100).toFixed(1)})"><text class="pcnm" x="${cx}" y="${hy+hh*.86}" font-size="${(hh*1.05*kT).toFixed(1)}" data-fit="${(wide?.6:.86)*W}">${nm}</text></g>`;
+  const mate=esc(pkMate(p,act));
+  h+=`<g transform="translate(0 ${(LZ.klNY*H/100).toFixed(1)})">`+(mate?`<text class="pcnm pkmate" x="${cx}" y="${hy+hh*.36-LZ.tmL*hh*.1}" font-size="${(hh*.5*kT).toFixed(1)}" data-fit="${(wide?.6:.86)*W}">${mate} &amp;</text><text class="pcnm" x="${cx}" y="${hy+hh*1.02}" font-size="${(hh*.68*kT).toFixed(1)}" data-fit="${(wide?.6:.86)*W}">${nm}</text>`:`<text class="pcnm" x="${cx}" y="${hy+hh*.86}" font-size="${(hh*1.05*kT).toFixed(1)}" data-fit="${(wide?.6:.86)*W}">${nm}</text>`)+`</g>`;
   const ny=(wide?.272:.243)*H,nH=(wide?.44:.325)*H,nW=(wide?.445:.61)*W,nx=wide?.307*W:cx,nfs=(nH/.725*kN).toFixed(1),lab=p.tgt===0?'✓':p.tgt===25?'B':String(p.tgt);
   h+=`<g transform="translate(0 ${(LZ.klNoY*H/100).toFixed(1)})"><g class="pkng">`;
   if(act)h+=`<text class="pkno fN pksn" x="${nx+10}" y="${ny+nH+11}" font-size="${nfs}" data-fit="${nW}" style="fill:${dk};stroke:${dk}">${lab}</text><text class="pkno fN wo" x="${nx}" y="${ny+nH}" font-size="${nfs}" data-fit="${nW}">${lab}</text>`;
@@ -8295,7 +8301,7 @@ const LY_K={
 const LY_B={
   pl:{ck:[['Bloc',['scK','mT','gSN','scR','hZ']],['Textes : tailles',['zNm','zSc','zMp']],['Textes : placement (en hauteur de ligne)',['iNP','iPM','iPMo','iY','tmL']],['Historique du joueur en cours',['paW','paH','zPl','iPl']],['Historique de l\'adversaire',['poW','poH','zPo','poG','poY']],['Couronne',['crZ','crY']],['Contours',['scsw','bw']]],
       x:[['Bloc',['xcG']],['Textes : tailles',['xnZ','xrZ','xsZ','xcoZ','xhZ']],['Textes : placement (en % de l\'écran)',['xoN','xoS','xoM','xoH','xoC','tmL']],['Historique',['xpW','xpH','xpT','xpG']],['Contours',['bw']]],
-      kl:[['Bloc',['klZ','klY']],['Textes : tailles',['zNm',['nfz','Numéro'],'klHZ','klKZ']],['Textes : placement (en % de la carte)',['klNY','klNoY','klKY','klPY']],['Historique',['paW','paH','zPl','iPl']]]},
+      kl:[['Bloc',['klZ','klY']],['Textes : tailles',['zNm',['nfz','Numéro'],'klHZ','klKZ']],['Textes : placement (en % de la carte)',['klNY','klNoY','klKY','klPY','tmL']],['Historique',['paW','paH','zPl','iPl']]]},
   nb:{ck:[['Bloc',['rowK','nW','gL','gNF']],['Textes',[['nfz','Taille des nombres'],'nsw']],['Marques',['mkz','mksw']]],
       x:[['Bloc',['xkh','xbh','xkg','xgPK','xgKF']],['Textes',['xkz']]]},
   bas:{all:[['Bloc',['ftK','brK','gFB','mB']],['Textes',['dtZ','spZ','icZ','ifZ']],['Contours',['fbw']]]}};
