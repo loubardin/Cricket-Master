@@ -4298,6 +4298,12 @@ html body footer #fbar3#fbar3 #fMode b{font-size:calc(var(--f3h)*.38*var(--ifZ,1
 html body footer #fbar3#fbar3 #fMode small{font-size:calc(var(--f3h)*.24*var(--ifZ,1))!important}
 html body #game#game#game#game.sk.p2:not(.pn) footer :is(#b2,#b3)::after{font-size:calc(var(--r)*.42*var(--dtZ,1))!important}
 html body #game#game#game#game.sk.p2:not(.pn) footer #bS::after{font-size:calc(var(--r)*.42*var(--spZ,1))!important}
+
+/* Cricket 3 joueurs et + : mêmes réglages de l'historique */
+html body #game#game#game#game#game#game.sk.p2.pn #scores#scores .sc.act>.pills .pill{width:calc(min(6.4vw,3dvh)*var(--paW,1))!important;height:calc(min(6.4vw,3dvh)*var(--paH,1))!important}
+html body #game#game#game#game#game#game.sk.p2.pn #scores#scores .sc.act>.pills{gap:calc(var(--r)*var(--iPl,.1))!important}
+html body #game#game#game#game#game#game.sk.p2.pn #scores .sc:not(.act)>.pills .pill{min-width:calc(var(--r)*.3*var(--poW,1))!important;height:calc(var(--r)*.25*var(--poH,1))!important;font-size:calc(var(--r)*.15*var(--zPo,1))!important}
+html body #game#game#game#game#game#game.sk.p2.pn #scores .sc:not(.act)>.pills{gap:calc(var(--r)*.04*var(--poG,1))!important;translate:0 calc(var(--r)*var(--poY,0))}
 </style>
 </head>
 <body>
@@ -7776,7 +7782,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-250';   // à changer avec VERSION dans sw.js
+const APPV='lf-251';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
@@ -8033,8 +8039,9 @@ function pklCard(i,g,act){const p=KG.players[i],{W,H,wide,k}=g,DD=KG.def,isDef=D
     for(let j=0;j<km;j++){const x=cx-pp*(km-1)/2+j*pp-pw/2,on=j<(p.marks||0);h+=`<rect class="pkp${on?' on':''}" x="${x}" y="${ky}" width="${pw}" height="${kh}" rx="${kh*.42}"/>${on?`<text x="${x+pw/2}" y="${ky+kh*.5+kh*.3}" font-size="${kh*.72*kT}">K</text>`:''}`}}
   // dernières fléchettes
   const ds=act?(KHOLD?p.last:KG.turn):(p.last||[]),nd=act&&isDef?DD.darts:3;
-  for(let j=0;j<nd;j++){let x,y,w,hh2;if(wide){w=.213*W;hh2=.174*H;x=.675*W;y=(.161+j*.249)*H}else{w=.232*W;hh2=.104*H;x=W/2-.265*W*(nd-1)/2+j*.265*W-w/2;y=.826*H}
-    const t=pkDartT(ds&&ds[j]);h+=`<rect class="pkhp" x="${x}" y="${y}" width="${w}" height="${hh2}" rx="${Math.min(29.5,hh2*.45)}"/><text class="fN" x="${x+w/2}" y="${y+hh2*.5+hh2*.3}" font-size="${hh2*.8*kN}" data-fit="${w*.86}">${t}</text>`}
+  const HW=LZ.paW,HH=LZ.paH,HP=Math.max(1,HW)*(1+LZ.iPl-.1);
+  for(let j=0;j<nd;j++){let x,y,w,hh2;if(wide){w=.213*W*HW;hh2=.174*H*HH;x=.675*W+.213*W*(1-HW)/2;y=(.161+j*.249)*H+.174*H*(1-HH)/2}else{w=.232*W*HW;hh2=.104*H*HH;x=W/2-.265*W*HP*(nd-1)/2+j*.265*W*HP-w/2;y=.826*H+.104*H*(1-HH)/2}
+    const t=pkDartT(ds&&ds[j]);h+=`<rect class="pkhp" x="${x}" y="${y}" width="${w}" height="${hh2}" rx="${Math.min(29.5,hh2*.45)}"/><text class="fN" x="${x+w/2}" y="${y+hh2*.5+hh2*.3}" font-size="${hh2/HH*.8*PF.kN*LZ.zPl}" data-fit="${w*.86}">${t}</text>`}
   h+=`<rect class="ol" width="${W}" height="${H}" rx="92.61"/><rect class="hit" x="-10" y="-10" width="${W+20}" height="${H+20}" rx="92"/>`;
   return {h,dead}}
 function pklSync(){const sec=$('killer'),on=pklOn()&&sec.classList.contains('on');sec.classList.toggle('pkl',on);document.documentElement.classList.toggle('pkl',on);if(!on)return;
@@ -8087,8 +8094,8 @@ const LY_SL=[['Hauteurs'],['brK','Barre Accueil · infos · Annuler',.6,1.6,.05,
   ['Case joueur : espacements (en hauteur de ligne)'],['iNP','Nom → score',-.4,1,.02,'x'],['iPM','Score → MPR',-.4,1,.02,'x'],['iY','Décaler nom, score et MPR (− haut, + bas)',-1,1,.02,'x'],
   ['Textes'],['zNm','Taille des noms',.5,1.6,.05,'%'],['zSc','Taille des scores',.5,1.6,.05,'%'],['zMp','Taille du MPR',.5,2,.05,'%'],
   ['nfz','Taille des nombres dans les bulles',.6,1.5,.05,'%'],['nsw','Contour des nombres dans les bulles',0,5,.25,''],['scsw','Contour noir du score',0,6,.25,''],
-  ['Fléchettes du joueur en cours (historique)'],['paW','Largeur',.4,1.3,.05,'%'],['paH','Hauteur',.5,1.8,.05,'%'],['zPl','Taille du texte',.5,1.8,.05,'%'],['iPl','Écart (en hauteur de ligne)',0,.6,.01,'x'],
-  ['Fléchettes de l\'adversaire (historique)'],['poW','Largeur',.5,2.5,.05,'%'],['poH','Hauteur',.5,2,.05,'%'],['zPo','Taille du texte',.5,2,.05,'%'],['poG','Écart',0,3,.05,'%'],['poY','Décaler (− haut, + bas)',-1,1,.02,'x'],
+  ['Historique des fléchettes du joueur en cours (bulles)'],['paW','Largeur des bulles',.4,1.3,.05,'%'],['paH','Hauteur des bulles',.5,1.8,.05,'%'],['zPl','Taille du texte',.5,1.8,.05,'%'],['iPl','Écart (en hauteur de ligne)',0,.6,.01,'x'],
+  ['Historique des fléchettes de l\'adversaire (bulles)'],['poW','Largeur des bulles',.5,2.5,.05,'%'],['poH','Hauteur des bulles',.5,2,.05,'%'],['zPo','Taille du texte',.5,2,.05,'%'],['poG','Écart',0,3,.05,'%'],['poY','Décaler (− haut, + bas)',-1,1,.02,'x'],
   ['Couronne'],['crZ','Taille',.4,1.8,.05,'%'],['crY','Décaler (− haut, + bas)',-1,1,.02,'x'],
   ['Formes'],['scR','Arrondi des cases joueur',0,1.6,.05,'%'],['hZ','Halo coloré autour des cases',0,3,.05,'%'],['nW','Largeur des bulles nombres et de Spew',.7,1.3,.01,'%'],['mkz','Taille des marques',.5,1.5,.05,'%'],['mksw','Épaisseur des marques',1,10,.25,''],
   ['Barre du bas et bouton Spew'],['icZ','Taille des icônes Accueil / Annuler',.5,1.8,.05,'%'],['ifZ','Taille du texte d\'infos',.5,1.8,.05,'%'],['dtZ','Taille de « Double » et « Triple »',.5,1.6,.05,'%'],['spZ','Taille de « Spew »',.5,1.6,.05,'%'],
@@ -8102,12 +8109,12 @@ function lyApply(){lyRoot();try{if(KG&&PKL.k&&$('killer').classList.contains('on
 function lyFromHome(){const ok=G&&G.players&&G.players.length===2&&G.winner===null&&!G._bar&&!BARC;
   if(!ok){try{mkToast('','Lance une partie de Cricket à 2 joueurs pour régler la mise en page',2600)}catch(e){}return}
   $('hResume').click();setTimeout(lyOpen,450)}
-const LY_CTX={kl:'brK ftK gFB mB zNm nfz nsw bw fbw icZ ifZ',ot:'brK ftK gFB mB bw fbw icZ ifZ'},LY_NO={ckn:'paW paH poW poH poG poY zPo nW dtZ spZ'};
+const LY_CTX={kl:'brK ftK gFB mB zNm nfz nsw bw fbw icZ ifZ paW paH zPl iPl',ot:'brK ftK gFB mB bw fbw icZ ifZ'},LY_NO={ckn:'nW dtZ spZ'};
 const lyCtx=()=>{const c=lyCur();return c==='kl'?'kl':c==='x01'?'ot':($('game').classList.contains('on')&&skp2())?'ck':'ot'};
 function lyOpen(mode){const old=$('lyp');if(old)old.remove();haptic();const p=el('div','');p.id='lyp';document.body.append(p);let up=false;
   const CX=lyCur();const draw=()=>{const L=lyGet(CX);p.classList.toggle('up',up);
     p.innerHTML=`<div class="lyh"><b>${mode==='txt'?'Textes et polices':'Réglages Pop'}<small>${LY_NAME[CX]}</small></b><button class="lyd" aria-label="Déplacer le panneau">${up?'↓':'↑'}</button><button class="lyx" aria-label="Fermer">✕</button></div>
-      ${(()=>{const cx=lyCtx(),ok=x=>x.length===1||(!(LY_NO[CX]||'').split(' ').includes(x[0])&&(mode==='txt'?/^Textes|^Case joueur|^Fléchettes|^Couronne/.test(x._g):(cx==='ck'||LY_CTX[cx].split(' ').includes(x[0]))));let grp='';LY_SL.forEach(x=>{if(x.length===1)grp=x[0];x._g=grp});
+      ${(()=>{const cx=lyCtx(),ok=x=>x.length===1||(!(LY_NO[CX]||'').split(' ').includes(x[0])&&(mode==='txt'?/^Textes|^Case joueur|^Historique|^Couronne/.test(x._g):(cx==='ck'||LY_CTX[cx].split(' ').includes(x[0]))));let grp='';LY_SL.forEach(x=>{if(x.length===1)grp=x[0];x._g=grp});
         const v=LY_SL.filter(ok);return v.filter((x,i)=>x.length>1||(v[i+1]&&v[i+1].length>1))})().map(([k,l,a,b,st,u])=>l===undefined?`<i class="lyg">${k}</i>`:`<label><span>${l}</span><b data-v="${k}">${lyFmt(L[k],u)}</b><input type="range" data-k="${k}" data-u="${u}" min="${a}" max="${b}" step="${st}" value="${L[k]}"></label>`).join('')}
       ${mode==='txt'||lyCtx()!=='ck'?'':`<div class="lyb"><span>Barre Accueil · infos · Annuler</span><div class="sw">${['En bas','En haut'].map((t,i)=>`<button data-bt="${i}" class="${(L.barTop|0)===i?'on':''}">${t}</button>`).join('')}</div></div>`}
       ${mode==='txt'||lyCtx()!=='ck'?'':`<div class="lyb"><span>Nombres dans la place libre</span><div class="sw">${['En haut','Au centre','En bas'].map((t,i)=>`<button data-a="${i}" class="${(L.nA|0)===i?'on':''}">${t}</button>`).join('')}</div></div>`}
