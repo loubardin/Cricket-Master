@@ -5044,6 +5044,7 @@ function throwDart(t){
   if(leadMsg){busy(80+2300);setTimeout(()=>{gunToast(leadMsg);SFX.mg()},80)}
   // MPR qui atteint ou dépasse 3,00 : tout de suite (à partir de 3 fléchettes lancées)
   if(me.darts>=3&&mpr0<3&&mpr(me)>=3){busy(2400);setTimeout(()=>{fireToast(`${esc(thr)}, T'ES EN FEU`);SFX.fire()},120)}
+  if(turnOver)say('MPR '+fr(mpr(me)),350);
   if(turnOver&&HOLD){
     HOLD.quiet=!!(b||leadMsg||t===0);   // les bandeaux et le spew ont déjà leur propre son
     HOLD.t=setTimeout(releaseHold,700);busy(700); // demi-seconde avant de passer au joueur suivant (un tap l'écourte)
@@ -5234,6 +5235,13 @@ function setMult(m){if(onX01()){xSetMult(m);return}if(onKiller()){kSetMult(m);re
 function save(){if(BARC)return;store.set(K_G,G);store.set(K_H,H.slice(-150))}
 
 /* ================= STATS ================= */
+/* annonces vocales (voix française de l'appareil) */
+const VOX={v:null,pick(){try{const vs=speechSynthesis.getVoices();this.v=vs.find(v=>/^fr[-_]FR/i.test(v.lang))||vs.find(v=>/^fr/i.test(v.lang))||null}catch(e){}}};
+function say(t,dl){if(!S.sound||S.voice===false||!('speechSynthesis' in window))return;
+  const go=()=>{try{const u=new SpeechSynthesisUtterance(t);u.lang='fr-FR';if(!VOX.v)VOX.pick();if(VOX.v)u.voice=VOX.v;u.rate=1.05;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}};
+  dl?setTimeout(go,dl):go()}
+try{speechSynthesis.onvoiceschanged=()=>VOX.pick()}catch(e){}
+addEventListener('pointerdown',function vu(){try{const x=new SpeechSynthesisUtterance(' ');x.volume=0;speechSynthesis.speak(x)}catch(e){}removeEventListener('pointerdown',vu,true)},true);   // iOS : la voix se débloque au premier toucher
 const fr=v=>v.toFixed(2).replace('.',',');   // décimale à la française
 const mpr=p=>p.darts?(p.hits*3/p.darts):0;
 const mpr5=p=>{const a=p.turnMarks.slice(-5);return a.length?a.reduce((x,y)=>x+y,0)/a.length:0};
@@ -5858,7 +5866,7 @@ function openStats(i){haptic();SFX.open();renderStats(i);$('info').classList.add
 $('bInfoClose').addEventListener('click',()=>{$('info').classList.remove('on');if($('info').dataset.fromWin){delete $('info').dataset.fromWin;$('win').classList.add('on')}});
 
 // raccourci : X2 puis S = 2 spews, X3 puis S = 3 spews (sans déborder sur le joueur suivant).
-// Une seule annulation efface tout le groupe.
+// Chaque fléchette du groupe s'annule une par une.
 $('bS').addEventListener('click',()=>{
   if(onX01()){xMiss();return}
   if(onKiller()){kSpew();return}
@@ -5868,7 +5876,6 @@ $('bS').addEventListener('click',()=>{
   G.mult=1;
   for(let i=0;i<k;i++){SPEWQ={k,i};throwDart(0)}
   SPEWQ={k:1,i:0};
-  if(H.length>h0+1){H.splice(h0+1);save()}
 });
 $('b2').addEventListener('click',()=>setMult(2));
 $('b3').addEventListener('click',()=>setMult(3));
@@ -6242,7 +6249,7 @@ function kFx(d,me,who,over){
   const hitSnd=()=>{d.m===3?SFX.triple():d.m===2?SFX.double():SFX.single()};
   const gain=i=>{const h=R2(i)&&R2(i).querySelectorAll('.h.on');if(h&&h.length)anim(h[h.length-1],'gain',800)};
   if(d.type==='mark'||d.type==='dmark'){hitSnd();anim(R2(who),'kmark',600);kRings(who,d.m)}
-  else if(d.type==='killer'){hitSnd();kRip(who);const t=R2(who)&&R2(who).querySelector('.kred');if(t)anim(t,'stampin',700);SFX.ignite();setTimeout(()=>SFX.big(3),150);toast('🔫 '+esc(me.name)+' EST KILLER')}
+  else if(d.type==='killer'){hitSnd();kRip(who);const t=R2(who)&&R2(who).querySelector('.kred');if(t)anim(t,'stampin',700);SFX.ignite();setTimeout(()=>SFX.big(3),150);toast('🔫 '+esc(me.name)+' EST KILLER');say('Killer !',300)}
   else if(d.type==='hit'){SFX.gun(d.m);setTimeout(SFX.given,200+(d.m-1)*450);kHurt(d.tgt,d.lost);kRings(d.tgt,d.m)}
   else if(d.type==='kill'){SFX.gun(d.m);kHurt(d.tgt,d.lost);setTimeout(()=>anim(R2(d.tgt),'kdie',1000),250);kRings(d.tgt,d.m);setTimeout(SFX.given,200+(d.m-1)*450);if(d.bonus)setTimeout(()=>{gain(who);kFloat(who,'+1 ♥',true)},400);
     setTimeout(()=>{toast('🥶 '+esc(P[d.tgt].name)+' : VICTIME'+(d.bonus?' · +1 ♥':''));SFX.big(4);confetti(30)},250)}
@@ -6307,7 +6314,6 @@ function kSpew(){
   const k=Math.max(1,Math.min(KG.mult,left)),h0=KH.length;
   KG.mult=1;
   for(let i=0;i<k;i++)kThrow(0,i<k-1);
-  if(KH.length>h0+1){KH.splice(h0+1);kSave()}
 }
 function kSetMult(m){KG.mult=KG.mult===m?1:m;haptic();if(KG.mult===3)SFX.ignite();else if(KG.mult===2)SFX.shing();else SFX.tick();kRender()}
 function kUndo(){kRelease();if(!KH.length){SFX.err();return}KG=JSON.parse(KH.pop());KG.mult=1;kSave();kRender();haptic();SFX.undo()}
@@ -6490,7 +6496,6 @@ function xMiss(){
   if(!XG||XG.winner!==null||XG.legW!==null)return;
   const k=Math.max(1,Math.min(XG.mult,xLeft()-XG.turn.length)),h0=XH.length;XG.mult=1;
   for(let i=0;i<k;i++){if(XG.legW!==null)break;xThrow(0,1,i<k-1)}
-  if(XH.length>h0+1){XH.splice(h0+1);xSave()}
 }
 const xOk=(rule,m)=>rule===0||(rule===1&&m===2)||(rule===2&&m>=2);
 function xThrow(n,m,quiet){
@@ -7818,16 +7823,17 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-255';   // à changer avec VERSION dans sw.js
+const APPV='lf-256';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
   const p=el('div','');p.id='xpick';p.classList.add('skinpick');document.body.append(p);
-  const draw=()=>{p.innerHTML=`<div class="skn"><button class="skgo" data-go="hStats">Statistiques</button><button class="skgo" data-go="hHist">Historique</button></div><div class="skp"><span>Mise en page du Cricket</span><div class="sksw"><button class="sklay">Régler</button></div></div><div class="skp"><span>Son</span><div class="sksw sksnd"><button data-s="1" class="${S.sound?'on':''}">Oui</button><button data-s="0" class="${S.sound?'':'on'}">Non</button></div></div>`+`<div class="skp"><span>Couleurs des joueurs</span><div class="sksw"><button data-p="1" class="${S.pcolOff?'':'on'}">Oui</button><button data-p="0" class="${S.pcolOff?'on':''}">Non</button></div></div><div class="skv">version ${APPV}</div>`};
+  const draw=()=>{p.innerHTML=`<div class="skn"><button class="skgo" data-go="hStats">Statistiques</button><button class="skgo" data-go="hHist">Historique</button></div><div class="skp"><span>Mise en page du Cricket</span><div class="sksw"><button class="sklay">Régler</button></div></div><div class="skp"><span>Son</span><div class="sksw sksnd"><button data-s="1" class="${S.sound?'on':''}">Oui</button><button data-s="0" class="${S.sound?'':'on'}">Non</button></div></div>`+`<div class="skp"><span>Annonces vocales</span><div class="sksw skvox"><button data-v="1" class="${S.voice!==false?'on':''}">Oui</button><button data-v="0" class="${S.voice===false?'on':''}">Non</button></div></div><div class="skp"><span>Couleurs des joueurs</span><div class="sksw"><button data-p="1" class="${S.pcolOff?'':'on'}">Oui</button><button data-p="0" class="${S.pcolOff?'on':''}">Non</button></div></div><div class="skv">version ${APPV}</div>`};
   draw();p.style.left=Math.max(12,(innerWidth-p.offsetWidth)/2)+'px';p.style.top=Math.max(12,Math.min(innerHeight-p.offsetHeight-12,e.currentTarget.getBoundingClientRect().bottom+10))+'px';
   p.addEventListener('click',ev=>{ev.stopPropagation();const go=ev.target.closest('.skgo');if(go){p.remove();$(go.dataset.go).dispatchEvent(new MouseEvent('click',{bubbles:true}));return}
     if(ev.target.closest('.sklay')){p.remove();lyFromHome();return}
     const sn=ev.target.closest('.sksnd button');if(sn){if((sn.dataset.s==='1')!==!!S.sound)$('sndT').dispatchEvent(new MouseEvent('click',{bubbles:true}));draw();return}
+    const vx=ev.target.closest('.skvox button');if(vx){haptic();S.voice=vx.dataset.v==='1';store.set(K_S,S);draw();if(S.voice)say('Annonces activées');return}
     const pb=ev.target.closest('.sksw button');if(pb){haptic();S.pcolOff=pb.dataset.p==='0';store.set(K_S,S);SFX.ui();draw();try{renderSetup()}catch(e){}return}
 });
   setTimeout(()=>document.addEventListener('pointerdown',function f(ev){if(!ev.target.closest('#xpick')){p.remove();document.removeEventListener('pointerdown',f,true)}},true),0)},true);
@@ -8249,6 +8255,8 @@ const TURNLOCK_MS=750;let TURNLOCK=0;
 const turnLocked=()=>performance.now()<TURNLOCK||!!HOLD||!!KHOLD||(typeof XHOLD!=='undefined'&&!!XHOLD);   // tant que le joueur n'a pas changé à l'écran
 {const _t=throwDart;throwDart=function(){if(turnLocked())return;const h=HOLD;const r=_t.apply(this,arguments);if(HOLD&&HOLD!==h)TURNLOCK=performance.now()+TURNLOCK_MS;return r}}
 {const _k=kThrow;kThrow=function(n,quiet){if(!quiet&&turnLocked())return;const h=KHOLD;const r=_k.apply(this,arguments);if(KHOLD&&KHOLD!==h)TURNLOCK=performance.now()+TURNLOCK_MS;return r}}
+{const _x=xThrow;xThrow=function(n,m,quiet){const p=XG&&!XG.mode&&XG.winner===null&&XG.legW===null?XG.players[XG.cur]:null,l0=p&&p.last;const r=_x.apply(this,arguments);
+  try{if(p&&p.last!==l0&&XG.legW===null&&XG.winner===null){const L=p.last||[];say(L.some(d=>d.type==='bust')?'Bust':String(L.reduce((a,d)=>a+(d.eff||0),0)),350)}}catch(e){}return r}}
 {const _x=xThrow;xThrow=function(n,m,quiet){if(!quiet&&turnLocked())return;const rd0=XG&&XG.round,c=XG&&XG.cur,len=XG?XG.turn.length:0;const r=_x.apply(this,arguments);
   if(XG&&XG.winner===null&&(XG.cur!==c||(XG.turn.length===0&&len>0))){TURNLOCK=performance.now()+TURNLOCK_MS;
     if(XG.cur!==c&&!quiet){clearTimeout(XHOLD&&XHOLD.t);XHOLD={who:c,round:rd0,t:setTimeout(()=>{XHOLD=null;try{SFX.turn&&SFX.turn()}catch(e){}xRender()},700)};busy(700);xRender()}}return r}}
