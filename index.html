@@ -4244,7 +4244,7 @@ html.pfN body :is(#grid .num,#grid .num *,#scores .pts,#scores .pts *,#scores .p
 
 html body #game#game#game#game.sk.p2 #scores .sc>.mpr{font-size:calc(var(--r)*.18*var(--zMp,1))!important}
 html body #game#game#game#game.sk.p2 #scores .sc.act>.pills .pill{font-size:calc(var(--r)*.27*var(--zPl,1))!important}
-html body #game#game#game#game.sk.p2 #scores .sc:not(.act)>.pills .pill{font-size:calc(var(--r)*.22*var(--zPl,1))!important}
+html body #game#game#game#game.sk.p2 #scores .sc:not(.act)>.pills .pill{font-size:calc(var(--r)*.22*var(--zPo,1))!important}
 #scores{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 @font-face{font-family:"Lexend";font-display:block;src:url(art/lexend.woff) format("woff")}
 #lyp .lyb .sw button{padding:7px 9px}
@@ -4283,6 +4283,21 @@ html body #game#game#game.sk.p2 footer.spewfx .fthumb{animation:pspew .62s cubic
 @keyframes pspew{0%{scale:1 1}18%{scale:1.16 .84}42%{scale:.93 1.08}66%{scale:1.03 .98}100%{scale:1 1}}
 #lyp .lyc{border:0;border-radius:99px;background:#111;color:#fff;font:400 15px "Fun",sans-serif;padding:10px;margin-top:2px}
 #lyp .lyh b small{display:block;font-size:12px;opacity:.55;margin-top:1px}
+
+/* historique des fléchettes */
+html body #game#game#game#game#game.sk.p2:not(.pn) #scores .sc.act>.pills{align-items:center!important}
+html body #game#game#game#game#game.sk.p2:not(.pn) #scores .sc.act>.pills .pill{width:calc(100%*var(--paW,1))!important;height:calc(var(--r)*.435*var(--paH,1))!important}
+html body #game#game#game#game#game.sk.p2:not(.pn) #scores .sc:not(.act)>.pills .pill{width:auto!important;min-width:calc(var(--r)*.45*var(--poW,1))!important;height:calc(var(--r)*.315*var(--poH,1))!important}
+html body #game#game#game#game#game#game.sk.p2:not(.pn) #scores .sc:not(.act)>.pills{gap:calc(var(--r)*.09*var(--poG,1))!important;bottom:calc(var(--r)*(-.06 - var(--poY,0)))!important}
+/* couronne, arrondi des cases */
+html body #game#game#game#game#game.sk.p2 #scores .sc>.nm>.hat{width:calc(var(--r)*.95*var(--crZ,1))!important;height:calc(var(--r)*.8*var(--crZ,1))!important;bottom:calc(100% + var(--r)*(.037 - var(--crY,0)))!important}
+html body #game#game#game#game#game.sk.p2 #scores>.pc.sc{border-radius:calc(var(--r)*.38*var(--scR,1))!important}
+/* barre du bas : icônes et texte d'infos ; bouton Spew : textes */
+html body footer #fbar3#fbar3 :is(#fMenu,#fUndo) svg{width:calc(var(--f3h)*.56*var(--icZ,1))!important;height:calc(var(--f3h)*.56*var(--icZ,1))!important}
+html body footer #fbar3#fbar3 #fMode b{font-size:calc(var(--f3h)*.38*var(--ifZ,1))!important}
+html body footer #fbar3#fbar3 #fMode small{font-size:calc(var(--f3h)*.24*var(--ifZ,1))!important}
+html body #game#game#game#game.sk.p2:not(.pn) footer :is(#b2,#b3)::after{font-size:calc(var(--r)*.42*var(--dtZ,1))!important}
+html body #game#game#game#game.sk.p2:not(.pn) footer #bS::after{font-size:calc(var(--r)*.42*var(--spZ,1))!important}
 </style>
 </head>
 <body>
@@ -6965,13 +6980,14 @@ function layoutSk(){
   const L=lyGet(lyCk()),H=innerHeight,u=H/100,g0=innerWidth*.035,G0=g0*1.8,gp=L.gL*u,G=G0;lyBlocks().forEach(e=>e&&e.style.removeProperty('translate'));
   g.style.setProperty('--g',gp.toFixed(2)+'px');g.style.setProperty('--G',G.toFixed(2)+'px');g.classList.remove('barT');
   g.style.setProperty('--lytop',(g0*1.4).toFixed(2)+'px');g.style.setProperty('--nfz',L.nfz);g.style.setProperty('--mkz',L.mkz);g.style.setProperty('--mksw',L.mksw);
-  g.style.setProperty('--bw',L.bw+'px');g.style.setProperty('--zMp',L.zMp);['iNP','iPM','iY','iPl'].forEach(k=>g.style.setProperty('--'+k,L[k]));g.style.setProperty('--zPl',L.zPl);g.style.setProperty('--bub-bw',L.bw+'px');lyRoot();
+  g.style.setProperty('--bw',L.bw+'px');g.style.setProperty('--zMp',L.zMp);['iNP','iPM','iY','iPl','paW','paH','poW','poH','zPo','poG','poY','crZ','crY','scR','dtZ','spZ'].forEach(k=>g.style.setProperty('--'+k,L[k]));
+  if(lyCk()==='ck2')g.style.setProperty('--midw',(33.333*L.nW).toFixed(3)+'vw');else g.style.removeProperty('--midw');g.style.setProperty('--zPl',L.zPl);g.style.setProperty('--bub-bw',L.bw+'px');lyRoot();
   {const ring=(w,c)=>w>0?Array.from({length:16},(_,i)=>{const a=i*Math.PI/8;return `${(Math.cos(a)*w).toFixed(2)}px ${(Math.sin(a)*w).toFixed(2)}px 0 ${c}`}).join(','):'none';
    g.style.setProperty('--nts',ring(L.nsw,getComputedStyle(g).getPropertyValue('--m-strong').trim()||'#141414'));g.style.setProperty('--sts',ring(L.scsw,'#111'))}
   let pb=$('sabProbe');if(!pb){pb=document.createElement('i');pb.id='sabProbe';pb.style.cssText='position:fixed;left:0;top:0;width:0;height:var(--sab,0px);visibility:hidden;pointer-events:none';document.body.append(pb)}
   const B=Math.max(g0*.8,pb.offsetHeight-16),top=$('scores').getBoundingClientRect().top-g.getBoundingClientRect().top;
   // unité de base : celle des réglages d'origine (dépend seulement de l'écran) ; chaque réglage agit seul, sans retoucher les autres
-  let r=Math.max(18,(g.clientHeight-top-B-2*G0-7*g0)/11.44);
+  let r=Math.max(18,(g.clientHeight-top-B-2*G0-7*g0)/11.44);g.style.setProperty('--h',`calc(var(--rowh)*.095*${L.hZ})`);
   // tout doit tenir dans l'écran, quel qu'il soit : sinon l'unité rapetisse
   {const room=H-satPx()-(L.mT+L.gSN+6*L.gL+L.gNF+L.gFB+L.mB)*u,hU=2.44*L.scK+7*L.rowK+L.ftK+L.brK;if(r*hU>room)r=Math.max(14,room/hU)}
   const setR=r=>[['--rowh',1],['--rr',L.rowK],['--rf',L.ftK],['--rb',L.brK],['--rs',L.scK]].forEach(([k,f])=>g.style.setProperty(k,(r*f).toFixed(2)+'px'));setR(r);
@@ -7760,7 +7776,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-249';   // à changer avec VERSION dans sw.js
+const APPV='lf-250';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
@@ -8055,7 +8071,7 @@ function popOutl(root){if(!root)return;root.querySelectorAll('text.w').forEach(t
 addEventListener('resize',()=>{try{if(KG&&PKL.k&&$('killer').classList.contains('on'))pklSync()}catch(e){}});
 
 /* ===== Mise en page du Cricket à 2 (Bulle) : hauteurs, écarts, barre Accueil · infos · Annuler en haut ou en bas ===== */
-const LY_D={fbw:2.8,barTop:0,iNP:.1,iPM:.14,iY:0,iPl:.1,zNm:1.2,zSc:1.6,zMp:1.25,zPl:1.05,nfz:1.1,nsw:3.5,scsw:3.5,bw:2.8,mkz:.95,mksw:4,scK:1.1,rowK:1.05,ftK:1,brK:.9,mT:4.1,gSN:1.1,gL:1.8,gNF:1.5,gFB:1.9,mB:.9,nA:0};   // « Pop » : les réglages de base
+const LY_D={paW:1,paH:1,poW:1,poH:1,zPo:1.05,poG:1,poY:0,crZ:1,crY:0,scR:1,hZ:1,nW:1,icZ:1,ifZ:1,dtZ:1,spZ:1,fbw:2.8,barTop:0,iNP:.1,iPM:.14,iY:0,iPl:.1,zNm:1.2,zSc:1.6,zMp:1.25,zPl:1.05,nfz:1.1,nsw:3.5,scsw:3.5,bw:2.8,mkz:.95,mksw:4,scK:1.1,rowK:1.05,ftK:1,brK:.9,mT:4.1,gSN:1.1,gL:1.8,gNF:1.5,gFB:1.9,mB:.9,nA:0};   // « Pop » : les réglages de base
 if(S.lay&&!S.lay.v3){S.lay={v3:1};try{store.set(K_S,S)}catch(e){}}
 /* un profil de réglages par jeu ; les contours (et les polices) sont communs à toute l'appli */
 const LY_GLOB=['bw','fbw','nsw','scsw'];
@@ -8068,25 +8084,30 @@ const lyGet=(cx)=>{cx=cx||lyCur();const P=(S.lays&&S.lays[cx])||{},Gl={};LY_GLOB
 function lySet(k,v,cx){cx=cx||lyCur();if(LY_GLOB.includes(k)){S.lay=Object.assign(S.lay||{v3:1},{[k]:v})}else{S.lays=S.lays||{};S.lays[cx]=Object.assign(S.lays[cx]||{},{[k]:v})}}
 const LY_SL=[['Hauteurs'],['brK','Barre Accueil · infos · Annuler',.6,1.6,.05,'%'],['scK','Case joueur',.6,1.6,.05,'%'],['rowK','Cases nombres',.6,1.6,.05,'%'],['ftK','Bouton Spew',.6,1.6,.05,'%'],
   ['Écarts (en % de la hauteur de l\'écran)'],['mT','Marge en haut (sous l\'heure)',0,10,.1,'pc'],['gSN','Case joueur → nombres',0,8,.1,'pc'],['gL','Entre les lignes de nombres',0,5,.1,'pc'],['gNF','Nombres → Spew (au moins)',0,8,.1,'pc'],['gFB','Spew → barre du bas',0,8,.1,'pc'],['mB','Marge en bas',0,8,.1,'pc'],
-  ['Case joueur : espacements (en hauteur de ligne)'],['iNP','Nom → score',-.4,1,.02,'x'],['iPM','Score → MPR',-.4,1,.02,'x'],['iY','Décaler nom, score et MPR (− haut, + bas)',-1,1,.02,'x'],['iPl','Entre les pastilles',0,.6,.01,'x'],
-  ['Textes'],['zNm','Taille des noms',.5,1.6,.05,'%'],['zSc','Taille des scores',.5,1.6,.05,'%'],['zMp','Taille du MPR',.5,2,.05,'%'],['zPl','Taille des fléchettes (pastilles)',.5,1.6,.05,'%'],
+  ['Case joueur : espacements (en hauteur de ligne)'],['iNP','Nom → score',-.4,1,.02,'x'],['iPM','Score → MPR',-.4,1,.02,'x'],['iY','Décaler nom, score et MPR (− haut, + bas)',-1,1,.02,'x'],
+  ['Textes'],['zNm','Taille des noms',.5,1.6,.05,'%'],['zSc','Taille des scores',.5,1.6,.05,'%'],['zMp','Taille du MPR',.5,2,.05,'%'],
   ['nfz','Taille des nombres dans les bulles',.6,1.5,.05,'%'],['nsw','Contour des nombres dans les bulles',0,5,.25,''],['scsw','Contour noir du score',0,6,.25,''],
-  ['Style (toute l\'appli pour les contours)'],['bw','Contour des cases',0,5,.25,''],['fbw','Contour du bouton Spew',0,6,.25,''],['mkz','Taille des marques',.5,1.5,.05,'%'],['mksw','Épaisseur des marques',1,10,.25,'']];
+  ['Fléchettes du joueur en cours (historique)'],['paW','Largeur',.4,1.3,.05,'%'],['paH','Hauteur',.5,1.8,.05,'%'],['zPl','Taille du texte',.5,1.8,.05,'%'],['iPl','Écart (en hauteur de ligne)',0,.6,.01,'x'],
+  ['Fléchettes de l\'adversaire (historique)'],['poW','Largeur',.5,2.5,.05,'%'],['poH','Hauteur',.5,2,.05,'%'],['zPo','Taille du texte',.5,2,.05,'%'],['poG','Écart',0,3,.05,'%'],['poY','Décaler (− haut, + bas)',-1,1,.02,'x'],
+  ['Couronne'],['crZ','Taille',.4,1.8,.05,'%'],['crY','Décaler (− haut, + bas)',-1,1,.02,'x'],
+  ['Formes'],['scR','Arrondi des cases joueur',0,1.6,.05,'%'],['hZ','Halo coloré autour des cases',0,3,.05,'%'],['nW','Largeur des bulles nombres et de Spew',.7,1.3,.01,'%'],['mkz','Taille des marques',.5,1.5,.05,'%'],['mksw','Épaisseur des marques',1,10,.25,''],
+  ['Barre du bas et bouton Spew'],['icZ','Taille des icônes Accueil / Annuler',.5,1.8,.05,'%'],['ifZ','Taille du texte d\'infos',.5,1.8,.05,'%'],['dtZ','Taille de « Double » et « Triple »',.5,1.6,.05,'%'],['spZ','Taille de « Spew »',.5,1.6,.05,'%'],
+  ['Contours (toute l\'appli)'],['bw','Contour des cases',0,5,.25,''],['fbw','Contour du bouton Spew',0,6,.25,'']];
 const lyFmt=(v,u)=>u==='x'?(+v).toFixed(2):u==='%'?Math.round(v*100)+' %':u==='pc'?(+v).toFixed(1)+' %':(+v).toFixed(1);
 function lyRoot(){const L=lyGet(lyCur()),st=document.documentElement.style,u=innerHeight/100;st.setProperty('--bub-bw',L.bw+'px');st.setProperty('--bw',L.bw+'px');
-  st.setProperty('--lyF',L.ftK);st.setProperty('--fbw',L.fbw+'px');st.setProperty('--lyB',L.brK);st.setProperty('--lyGFB',(L.gFB*u).toFixed(1)+'px');st.setProperty('--lyMB',(L.mB*u).toFixed(1)+'px')}
+  st.setProperty('--lyF',L.ftK);st.setProperty('--icZ',L.icZ);st.setProperty('--ifZ',L.ifZ);st.setProperty('--fbw',L.fbw+'px');st.setProperty('--lyB',L.brK);st.setProperty('--lyGFB',(L.gFB*u).toFixed(1)+'px');st.setProperty('--lyMB',(L.mB*u).toFixed(1)+'px')}
 lyRoot();
 {const _s=show;show=function(){const r=_s.apply(this,arguments);try{lyRoot()}catch(e){}return r}}
 function lyApply(){lyRoot();try{if(KG&&PKL.k&&$('killer').classList.contains('on')){PKL.k.querySelectorAll('g.kin').forEach(g=>{g._h=null});PKL.k.querySelectorAll('text').forEach(t=>{t._h=null});pklSync()}}catch(e){}try{if(G&&R&&$('game').classList.contains('on')){layoutSk();if(typeof fitSk==='function')fitSk();render()}}catch(e){}}
 function lyFromHome(){const ok=G&&G.players&&G.players.length===2&&G.winner===null&&!G._bar&&!BARC;
   if(!ok){try{mkToast('','Lance une partie de Cricket à 2 joueurs pour régler la mise en page',2600)}catch(e){}return}
   $('hResume').click();setTimeout(lyOpen,450)}
-const LY_CTX={kl:'brK ftK gFB mB zNm nfz nsw bw fbw',ot:'brK ftK gFB mB bw fbw'};
+const LY_CTX={kl:'brK ftK gFB mB zNm nfz nsw bw fbw icZ ifZ',ot:'brK ftK gFB mB bw fbw icZ ifZ'},LY_NO={ckn:'paW paH poW poH poG poY zPo nW dtZ spZ'};
 const lyCtx=()=>{const c=lyCur();return c==='kl'?'kl':c==='x01'?'ot':($('game').classList.contains('on')&&skp2())?'ck':'ot'};
 function lyOpen(mode){const old=$('lyp');if(old)old.remove();haptic();const p=el('div','');p.id='lyp';document.body.append(p);let up=false;
   const CX=lyCur();const draw=()=>{const L=lyGet(CX);p.classList.toggle('up',up);
     p.innerHTML=`<div class="lyh"><b>${mode==='txt'?'Textes et polices':'Réglages Pop'}<small>${LY_NAME[CX]}</small></b><button class="lyd" aria-label="Déplacer le panneau">${up?'↓':'↑'}</button><button class="lyx" aria-label="Fermer">✕</button></div>
-      ${(()=>{const cx=lyCtx(),ok=x=>x.length===1||(mode==='txt'?/^Textes|^Case joueur/.test(x._g):(cx==='ck'||LY_CTX[cx].split(' ').includes(x[0])));let grp='';LY_SL.forEach(x=>{if(x.length===1)grp=x[0];x._g=grp});
+      ${(()=>{const cx=lyCtx(),ok=x=>x.length===1||(!(LY_NO[CX]||'').split(' ').includes(x[0])&&(mode==='txt'?/^Textes|^Case joueur|^Fléchettes|^Couronne/.test(x._g):(cx==='ck'||LY_CTX[cx].split(' ').includes(x[0]))));let grp='';LY_SL.forEach(x=>{if(x.length===1)grp=x[0];x._g=grp});
         const v=LY_SL.filter(ok);return v.filter((x,i)=>x.length>1||(v[i+1]&&v[i+1].length>1))})().map(([k,l,a,b,st,u])=>l===undefined?`<i class="lyg">${k}</i>`:`<label><span>${l}</span><b data-v="${k}">${lyFmt(L[k],u)}</b><input type="range" data-k="${k}" data-u="${u}" min="${a}" max="${b}" step="${st}" value="${L[k]}"></label>`).join('')}
       ${mode==='txt'||lyCtx()!=='ck'?'':`<div class="lyb"><span>Barre Accueil · infos · Annuler</span><div class="sw">${['En bas','En haut'].map((t,i)=>`<button data-bt="${i}" class="${(L.barTop|0)===i?'on':''}">${t}</button>`).join('')}</div></div>`}
       ${mode==='txt'||lyCtx()!=='ck'?'':`<div class="lyb"><span>Nombres dans la place libre</span><div class="sw">${['En haut','Au centre','En bas'].map((t,i)=>`<button data-a="${i}" class="${(L.nA|0)===i?'on':''}">${t}</button>`).join('')}</div></div>`}
