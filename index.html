@@ -4248,6 +4248,13 @@ html body #game#game#game#game.sk.p2 #scores .sc:not(.act)>.pills .pill{font-siz
 #scores{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 @font-face{font-family:"Lexend";font-display:block;src:url(art/lexend.woff) format("woff")}
 #lyp .lyb .sw button{padding:7px 9px}
+
+html body #game#game#game#game#game.sk.p2 #scores .sc>.pts{margin-top:calc(var(--r)*var(--iNP,.1))!important}
+html body #game#game#game#game#game.sk.p2 #scores .sc>.mpr{margin-top:calc(var(--r)*var(--iPM,.14))!important}
+html body #game#game#game#game#game.sk.p2 #scores .sc>:is(.nm,.pts,.mpr){translate:0 calc(var(--r)*var(--iY,0))}
+html body #game#game#game#game#game.sk.p2 #scores .sc.act>.pills{gap:calc(var(--r)*var(--iPl,.1))!important}
+html body #x01#x01 footer,html body #killer#killer footer{height:calc(9dvh*var(--lyF,1))!important;--f3h:calc(9dvh*var(--lyB,1));--f3g:var(--lyGFB,1.6dvh);--f3b:var(--lyMB,1.4dvh)}
+#fch .fcl span{font-size:21px}
 </style>
 </head>
 <body>
@@ -6930,7 +6937,7 @@ function layoutSk(){
   const L=lyGet(),H=innerHeight,u=H/100,g0=innerWidth*.035,G0=g0*1.8,gp=L.gL*u,G=G0;lyBlocks().forEach(e=>e&&e.style.removeProperty('translate'));
   g.style.setProperty('--g',gp.toFixed(2)+'px');g.style.setProperty('--G',G.toFixed(2)+'px');g.classList.remove('barT');
   g.style.setProperty('--lytop',(g0*1.4).toFixed(2)+'px');g.style.setProperty('--nfz',L.nfz);g.style.setProperty('--mkz',L.mkz);g.style.setProperty('--mksw',L.mksw);
-  g.style.setProperty('--bw',L.bw+'px');g.style.setProperty('--zMp',L.zMp);g.style.setProperty('--zPl',L.zPl);g.style.setProperty('--bub-bw',L.bw+'px');lyRoot();
+  g.style.setProperty('--bw',L.bw+'px');g.style.setProperty('--zMp',L.zMp);['iNP','iPM','iY','iPl'].forEach(k=>g.style.setProperty('--'+k,L[k]));g.style.setProperty('--zPl',L.zPl);g.style.setProperty('--bub-bw',L.bw+'px');lyRoot();
   {const ring=(w,c)=>w>0?Array.from({length:16},(_,i)=>{const a=i*Math.PI/8;return `${(Math.cos(a)*w).toFixed(2)}px ${(Math.sin(a)*w).toFixed(2)}px 0 ${c}`}).join(','):'none';
    g.style.setProperty('--nts',ring(L.nsw,getComputedStyle(g).getPropertyValue('--m-strong').trim()||'#141414'));g.style.setProperty('--sts',ring(L.scsw,'#111'))}
   let pb=$('sabProbe');if(!pb){pb=document.createElement('i');pb.id='sabProbe';pb.style.cssText='position:fixed;left:0;top:0;width:0;height:var(--sab,0px);visibility:hidden;pointer-events:none';document.body.append(pb)}
@@ -7721,7 +7728,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-246';   // à changer avec VERSION dans sw.js
+const APPV='lf-247';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
@@ -7951,7 +7958,7 @@ function pklBuild(){const sec=$('killer');let k=$('pkl');if(k)k.remove();
   k.addEventListener('click',e=>{const c=e.target.closest('.kc2');if(!c||!KG)return;const p=KG.players[+c.dataset.i];if(p)kThrow(p.num)});
   k.addEventListener('pointerdown',e=>{const c=e.target.closest('.kc2');if(c){c.classList.add('pr');clearTimeout(c._pr);c._pr=setTimeout(()=>c.classList.remove('pr'),220)}})}
 function pklCard(i,g,act){const p=KG.players[i],{W,H,wide,k}=g,DD=KG.def,isDef=DD&&DD.v===i,dead=p.dead&&!isDef;
-  const dk=pkDark(pkCol(i)),kT=PF.kT,kN=PF.kN;
+  const LZ=lyGet(),dk=pkDark(pkCol(i)),kT=PF.kT*LZ.zNm,kN=PF.kN*LZ.nfz;
   let h=act?`<rect class="pksh" x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87" filter="url(#pkSh)"/><rect class="halo" x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87"/><clipPath id="pkClip"><rect x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87"/></clipPath><g clip-path="url(#pkClip)"><path class="shine" style="--sd:${W+H*.3+560}px" d="M-300 -40H-30L${-30-H*.3} ${H+40}H${-300-H*.3}Z"/></g>`:'';
   const cx=wide?.306*W:W/2,nm=esc(pkName(p,act));
   if(act)h+=`<text x="${cx}" y="${(wide?-104:-94)*k}" font-size="${43*k*kT}">à toi</text><text class="pknmo" x="${cx}" y="${(wide?-16:-10)*k}" font-size="${87*k*kT}" data-fit="${wide?.62*W:W*1.02}" style="fill:${pkCol(i)};stroke:${pkCol(i)}">${nm}</text><text class="pknm" x="${cx}" y="${(wide?-16:-10)*k}" font-size="${87*k*kT}" data-fit="${wide?.62*W:W*1.02}">${nm}</text>`;
@@ -7986,7 +7993,8 @@ function pklSync(){const sec=$('killer'),on=pklOn()&&sec.classList.contains('on'
   if(!PKL.k||!PKL.k.isConnected)pklBuild();const k=PKL.k;
   // zone des cartes : du haut de l'écran jusqu'au-dessus des boutons de la Bulle
   {const sv=k.firstElementChild,km=$('kmain'),f=sec.querySelector('footer'),st=parseFloat(getComputedStyle(km).paddingTop)||0,sr=sec.getBoundingClientRect(),bot=f?f.getBoundingClientRect().top-sr.top-innerWidth*.035:sec.clientHeight;
-    sv.style.top=st+'px';sv.style.height=Math.max(100,bot-st)+'px'}
+    sv.style.top=st+'px';sv.style.height=Math.max(100,bot-st)+'px';
+    const L=lyGet(),sc=Math.min(sv.clientWidth/1125,Math.max(100,bot-st)/1760)||.33;k.style.setProperty('--swC',(L.bw/sc).toFixed(1)+'px');k.style.setProperty('--swS',(L.bw*.4/sc).toFixed(1)+'px');k.style.setProperty('--swN',(L.nsw/sc).toFixed(1)+'px')}
   const P=KG.players,n=P.length,cur=KG.winner!==null?KG.winner:(KHOLD?KHOLD.who:KG.cur),g=pklGeo(n);
   {const c=pkCol(cur);if(PKL.col!==c){PKL.col=c;k.style.setProperty('--pc',c);const f=k.querySelector('.pkshc');if(f)f.setAttribute('flood-color',pkDark(c));}}
   const m=KG.winner===null?KG.mult:1;k.classList.toggle('m2',m===2);k.classList.toggle('m3',m===3);
@@ -8015,26 +8023,31 @@ function popOutl(root){if(!root)return;root.querySelectorAll('text.w').forEach(t
 addEventListener('resize',()=>{try{if(KG&&PKL.k&&$('killer').classList.contains('on'))pklSync()}catch(e){}});
 
 /* ===== Mise en page du Cricket à 2 (Bulle) : hauteurs, écarts, barre Accueil · infos · Annuler en haut ou en bas ===== */
-const LY_D={zNm:1.2,zSc:1.6,zMp:1.25,zPl:1.05,nfz:1.1,nsw:3.5,scsw:3.5,bw:2.8,mkz:.95,mksw:6,scK:1.1,rowK:1.05,ftK:1,brK:.9,mT:4.1,gSN:1.1,gL:1.8,gNF:1.5,gFB:1.9,mB:.9,nA:0};   // « Pop » : les réglages de base
+const LY_D={iNP:.1,iPM:.14,iY:0,iPl:.1,zNm:1.2,zSc:1.6,zMp:1.25,zPl:1.05,nfz:1.1,nsw:3.5,scsw:3.5,bw:2.8,mkz:.95,mksw:6,scK:1.1,rowK:1.05,ftK:1,brK:.9,mT:4.1,gSN:1.1,gL:1.8,gNF:1.5,gFB:1.9,mB:.9,nA:0};   // « Pop » : les réglages de base
 if(S.lay&&!S.lay.v3){S.lay={v3:1};try{store.set(K_S,S)}catch(e){}}
 const lyGet=()=>Object.assign({},LY_D,S.lay||{});
 const LY_SL=[['Hauteurs'],['brK','Barre Accueil · infos · Annuler',.6,1.6,.05,'%'],['scK','Case joueur',.6,1.6,.05,'%'],['rowK','Cases nombres',.6,1.6,.05,'%'],['ftK','Bouton Spew',.6,1.6,.05,'%'],
   ['Écarts (en % de la hauteur de l\'écran)'],['mT','Marge en haut (sous l\'heure)',0,10,.1,'pc'],['gSN','Case joueur → nombres',0,8,.1,'pc'],['gL','Entre les lignes de nombres',0,5,.1,'pc'],['gNF','Nombres → Spew (au moins)',0,8,.1,'pc'],['gFB','Spew → barre du bas',0,8,.1,'pc'],['mB','Marge en bas',0,8,.1,'pc'],
+  ['Case joueur : espacements (en hauteur de ligne)'],['iNP','Nom → score',-.4,1,.02,'x'],['iPM','Score → MPR',-.4,1,.02,'x'],['iY','Décaler nom, score et MPR (− haut, + bas)',-1,1,.02,'x'],['iPl','Entre les pastilles',0,.6,.01,'x'],
   ['Textes'],['zNm','Taille des noms',.5,1.6,.05,'%'],['zSc','Taille des scores',.5,1.6,.05,'%'],['zMp','Taille du MPR',.5,2,.05,'%'],['zPl','Taille des fléchettes (pastilles)',.5,1.6,.05,'%'],
   ['nfz','Taille des nombres dans les bulles',.6,1.5,.05,'%'],['nsw','Contour des nombres dans les bulles',0,5,.25,''],['scsw','Contour noir du score',0,6,.25,''],
   ['Style (toute l\'appli pour le contour des cases)'],['bw','Contour des cases',0,5,.25,''],['mkz','Taille des marques',.5,1.5,.05,'%'],['mksw','Épaisseur des marques',2,14,.5,'']];
-const lyFmt=(v,u)=>u==='%'?Math.round(v*100)+' %':u==='pc'?(+v).toFixed(1)+' %':(+v).toFixed(1);
-function lyRoot(){const L=lyGet(),st=document.documentElement.style;st.setProperty('--bub-bw',L.bw+'px');st.setProperty('--bw',L.bw+'px')}
+const lyFmt=(v,u)=>u==='x'?(+v).toFixed(2):u==='%'?Math.round(v*100)+' %':u==='pc'?(+v).toFixed(1)+' %':(+v).toFixed(1);
+function lyRoot(){const L=lyGet(),st=document.documentElement.style,u=innerHeight/100;st.setProperty('--bub-bw',L.bw+'px');st.setProperty('--bw',L.bw+'px');
+  st.setProperty('--lyF',L.ftK);st.setProperty('--lyB',L.brK);st.setProperty('--lyGFB',(L.gFB*u).toFixed(1)+'px');st.setProperty('--lyMB',(L.mB*u).toFixed(1)+'px')}
 lyRoot();
-function lyApply(){lyRoot();try{if(G&&R&&$('game').classList.contains('on')){layoutSk();if(typeof fitSk==='function')fitSk();render()}}catch(e){}}
+function lyApply(){lyRoot();try{if(KG&&PKL.k&&$('killer').classList.contains('on')){PKL.k.querySelectorAll('g.kin').forEach(g=>{g._h=null});PKL.k.querySelectorAll('text').forEach(t=>{t._h=null});pklSync()}}catch(e){}try{if(G&&R&&$('game').classList.contains('on')){layoutSk();if(typeof fitSk==='function')fitSk();render()}}catch(e){}}
 function lyFromHome(){const ok=G&&G.players&&G.players.length===2&&G.winner===null&&!G._bar&&!BARC;
   if(!ok){try{mkToast('','Lance une partie de Cricket à 2 joueurs pour régler la mise en page',2600)}catch(e){}return}
   $('hResume').click();setTimeout(lyOpen,450)}
+const LY_CTX={kl:'brK ftK gFB mB zNm nfz nsw bw',ot:'brK ftK gFB mB bw'};
+const lyCtx=()=>$('killer').classList.contains('on')?'kl':($('game').classList.contains('on')&&skp2())?'ck':'ot';
 function lyOpen(mode){const old=$('lyp');if(old)old.remove();haptic();const p=el('div','');p.id='lyp';document.body.append(p);let up=false;
   const draw=()=>{const L=lyGet();p.classList.toggle('up',up);
     p.innerHTML=`<div class="lyh"><b>${mode==='txt'?'Textes et polices':'Réglages Pop'}</b><button class="lyd" aria-label="Déplacer le panneau">${up?'↓':'↑'}</button><button class="lyx" aria-label="Fermer">✕</button></div>
-      ${(()=>{let grp='';return LY_SL.filter(x=>{if(x.length===1)grp=x[0];return mode!=='txt'||grp==='Textes'})})().map(([k,l,a,b,st,u])=>l===undefined?`<i class="lyg">${k}</i>`:`<label><span>${l}</span><b data-v="${k}">${lyFmt(L[k],u)}</b><input type="range" data-k="${k}" data-u="${u}" min="${a}" max="${b}" step="${st}" value="${L[k]}"></label>`).join('')}
-      ${mode==='txt'?'':`<div class="lyb"><span>Nombres dans la place libre</span><div class="sw">${['En haut','Au centre','En bas'].map((t,i)=>`<button data-a="${i}" class="${(L.nA|0)===i?'on':''}">${t}</button>`).join('')}</div></div>`}
+      ${(()=>{const cx=lyCtx(),ok=x=>x.length===1||(mode==='txt'?/^Textes|^Case joueur/.test(x._g):(cx==='ck'||LY_CTX[cx].split(' ').includes(x[0])));let grp='';LY_SL.forEach(x=>{if(x.length===1)grp=x[0];x._g=grp});
+        const v=LY_SL.filter(ok);return v.filter((x,i)=>x.length>1||(v[i+1]&&v[i+1].length>1))})().map(([k,l,a,b,st,u])=>l===undefined?`<i class="lyg">${k}</i>`:`<label><span>${l}</span><b data-v="${k}">${lyFmt(L[k],u)}</b><input type="range" data-k="${k}" data-u="${u}" min="${a}" max="${b}" step="${st}" value="${L[k]}"></label>`).join('')}
+      ${mode==='txt'||lyCtx()!=='ck'?'':`<div class="lyb"><span>Nombres dans la place libre</span><div class="sw">${['En haut','Au centre','En bas'].map((t,i)=>`<button data-a="${i}" class="${(L.nA|0)===i?'on':''}">${t}</button>`).join('')}</div></div>`}
       <i class="lyg">Polices</i><div class="lyf"><button data-f="fN">Nombres<b style="font-family:'${esc(fcCur('fN'))}','Fun'">${esc(fcName(fcCur('fN')))}</b></button><button data-f="fT">Textes<b style="font-family:'${esc(fcCur('fT'))}','Fun'">${esc(fcName(fcCur('fT')))}</b></button></div>
       <button class="lyr">Revenir à Pop</button>`};
   draw();
@@ -8047,8 +8060,7 @@ function lyOpen(mode){const old=$('lyp');if(old)old.remove();haptic();const p=el
     const b=p.querySelector(`b[data-v="${k}"]`);if(b)b.textContent=lyFmt(v,r.dataset.u);cancelAnimationFrame(p._raf);p._raf=requestAnimationFrame(lyApply);clearTimeout(p._sv);p._sv=setTimeout(()=>store.set(K_S,S),400)})}
 
 /* ===== Polices : une pour les nombres (bulles, scores, fléchettes, Killer), une pour tous les textes ===== */
-const FC_LIST=[['Bowlby One'],['Archivo Black'],['Dela Gothic One'],['Bungee'],['Rammetto One'],['Paytone One'],['Chango'],['Shrikhand'],['Titan One'],['Lilita One'],
-  ['Fredoka',700],['Baloo 2',800],['Rubik',800],['Unbounded',800],['Krona One'],['Lexend',800],['Outfit',800],['Plus Jakarta Sans',800],['Bricolage Grotesque',800],['Syne',800],['Space Grotesk',700],['Righteous'],['Gochi Hand']];
+const FC_LIST=[['Alfa Slab One'],['Anton'],['Archivo',800],['Archivo Black'],['Bagel Fat One'],['Baloo 2',800],['Bangers'],['Barlow Condensed',800],['Barriecito'],['Bebas Neue'],['Big Shoulders Display',800],['Black Han Sans'],['Black Ops One'],['Bowlby One'],['Bricolage Grotesque',800],['Bungee'],['Carter One'],['Changa One'],['Chango'],['Chewy'],['Climate Crisis'],['Coiny'],['Comfortaa',700],['Concert One'],['DM Sans',800],['Darker Grotesque',800],['Days One'],['Dela Gothic One'],['DynaPuff',700],['Familjen Grotesk',700],['Figtree',800],['Fredoka',700],['Fugaz One'],['Gabarito',800],['Gluten',800],['Gochi Hand'],['Grandstander',800],['Instrument Sans',700],['Josefin Sans',700],['Jua'],['Kanit',800],['Knewave'],['Kode Mono',700],['Krona One'],['Lalezar'],['Lexend Mega',800],['Lexend Zetta',800],['Lobster'],['Londrina Solid',900],['Luckiest Guy'],['Manrope',800],['Mochiy Pop One'],['Modak'],['Montserrat',800],['Mouse Memoirs'],['Nunito',800],['Onest',800],['Oswald',700],['Outfit',800],['Pacifico'],['Passion One',700],['Paytone One'],['Permanent Marker'],['Plus Jakarta Sans',800],['Poppins',800],['Quicksand',700],['Racing Sans One'],['Rammetto One'],['Rampart One'],['Rethink Sans',800],['Righteous'],['Rubik',800],['Rubik Bubbles'],['Rubik Mono One'],['Russo One'],['Schibsted Grotesk',800],['Shrikhand'],['Sigmar One'],['Sniglet',800],['Sora',800],['Sour Gummy',800],['Space Grotesk',700],['Syne',800],['Titan One'],['Ultra'],['Unbounded',800],['Urbanist',800],['Varela Round']];
 const FC_K='lf-fonts',FC_ON={Lexend:1,Fun:1};
 const FC_DEF={fN:'Fun',fT:'Lexend'},fcCur=k=>S[k]||FC_DEF[k],fcName=f=>f==='Fun'?'Lilita One':f;
 const fcStore=()=>{try{return JSON.parse(localStorage.getItem(FC_K)||'{}')}catch(e){return{}}};
@@ -8060,8 +8072,8 @@ function fcRefit(){try{if(G&&R&&$('game').classList.contains('on')){layoutSk();f
 function fcApply(){const h=document.documentElement,st=h.style;[['fN','--pfN','pfN'],['fT','--pfT','pfT']].forEach(([k,v,c])=>{const f=fcCur(k),on=f!=='Fun';h.classList.toggle(c,on);if(on){st.setProperty(v,`"${f}"`);fcEnsure(f)}else st.removeProperty(v)});
   try{document.fonts.ready.then(fcRefit)}catch(e){}}
 function fcOpen(k,back){const old=$('fch');if(old)old.remove();haptic();const p=el('div','');p.id='fch';document.body.append(p);
-  {const l=document.createElement('link');l.rel='stylesheet';l.href=fcUrl(FC_LIST);document.head.append(l);Object.keys(fcStore()).forEach(fcEnsure)}
-  const smp=k==='fN'?'15 20 289':'Loubard partie';
+  {FC_LIST.forEach(g=>{if(FC_ON['_'+g[0]])return;FC_ON['_'+g[0]]=1;const l=document.createElement('link');l.rel='stylesheet';l.href=fcUrl([g]);document.head.append(l)});Object.keys(fcStore()).forEach(fcEnsure)}
+  const smp='20 Bulle Spew';
   const draw=()=>{const cur=fcCur(k),all=[['Fun','Lilita One'+(FC_DEF[k]==='Fun'?' (Pop)':'')],['Lexend','Lexend'+(FC_DEF[k]==='Lexend'?' (Pop)':'')]].concat(Object.keys(fcStore()).map(n=>[n,n+' (importée)']),FC_LIST.filter(x=>x[0]!=='Lexend'&&x[0]!=='Lilita One').map(x=>[x[0],x[0]]));
     p.innerHTML=`<div class="fch"><b>Police des ${k==='fN'?'nombres':'textes'}</b><button class="fcx" aria-label="Fermer">✕</button></div>
       <div class="fcl">${all.map(([f,l])=>`<button data-f="${esc(f)}" class="${f===cur?'on':''}"><span style="font-family:'${esc(f)}','Fun'">${smp}</span><small>${esc(l)}</small></button>`).join('')}</div>
@@ -8084,7 +8096,7 @@ fcApply();
   sc.addEventListener('click',e=>{if(lp){lp=false;e.stopImmediatePropagation();e.preventDefault()}},true)}
 /* appui long sur la bulle d'infos (en partie) : ouvre la mise en page */
 {const fm=$('fMode');let t=0,lp=false;
-  fm.addEventListener('pointerdown',()=>{lp=false;clearTimeout(t);t=setTimeout(()=>{if($('game').classList.contains('on')&&skp2()){lp=true;lyOpen()}},600)});
+  fm.addEventListener('pointerdown',()=>{lp=false;clearTimeout(t);t=setTimeout(()=>{if(['game','killer','x01'].some(id=>$(id).classList.contains('on'))){lp=true;lyOpen()}},600)});
   ['pointerup','pointercancel','pointerleave'].forEach(ev=>fm.addEventListener(ev,()=>clearTimeout(t)));
   fm.addEventListener('click',e=>{if(lp){lp=false;e.stopImmediatePropagation();e.preventDefault()}},true)}
 /* fin de tour : on ne peut plus marquer pendant un court instant (le temps de passer la main) */
