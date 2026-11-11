@@ -7851,7 +7851,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-259';   // à changer avec VERSION dans sw.js
+const APPV='lf-260';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
@@ -8070,7 +8070,8 @@ const pklOn=()=>pkClk()||(!!KG&&!!KG.players&&!BARON);
 function pklGeo(n){if(n<=2)return{W:902.6,H:688.6,wide:1,pos:[0,1].map(r=>[111.2,586.1+r*841]),k:1.1};
   if(n<=4)return{W:458.7,H:633.8,pos:Array.from({length:n},(_,i)=>[i%2?594.75:71.55,562.2+Math.floor(i/2)*789]),k:1};
   if(n<=6)return{W:418.9,H:456.3,pos:Array.from({length:n},(_,i)=>[i%2?587.3:118.8,499.7+Math.floor(i/2)*568]),k:.85};
-  const rw=Math.ceil(n/2),pt=(2150-470)/rw,H=pt-82;return{W:400,H,pos:Array.from({length:n},(_,i)=>[i%2?585:140,470+Math.floor(i/2)*pt]),k:Math.max(.55,H/634*.95)}}
+  const W=418.9,H=456.3,gap=60,R=Math.ceil(n/3),sc=Math.min(.76,1672/((R-1)*568+556.3)),bh=((R-1)*568+556.3)*sc,y0=420+(1672-bh)/2+100*sc,x0=(1125-(3*W+2*gap)*sc)/2,last=n-(R-1)*3;
+  return{W,H,s:sc,pos:Array.from({length:n},(_,i)=>{const r=Math.floor(i/3),off=r===R-1?(3-last)*(W+gap)*sc/2:0;return[x0+off+(i%3)*(W+gap)*sc,y0+r*568*sc]}),k:.85}}
 const pkCol=i=>{const p=(pkClk()?XG:KG).players[i],c=p&&pcol(p.members?p.members[0]:p.name);return /^#[0-9a-f]{6}$/i.test(c||'')?c:PFB[i%PFB.length]};
 function pkName(p,act){if(!p.members||p.members.length<2)return p.name;const L=p.members.length,j=((p.mi||0)+(!act&&p.last&&p.last.length?L-1:0))%L;return p.members[j]}
 function pkDartT(d){if(!d)return'·';if(d.n===0)return'S';return (d.m===3?'T':d.m===2?'D':'')+(d.n===25?'B':d.n)}
@@ -8146,7 +8147,7 @@ function pklSync(){const sec=$('killer'),on=pklOn()&&sec.classList.contains('on'
   const CLK=pkClk(),SRC=CLK?XG:KG,P=SRC.players,n=P.length,cur=SRC.winner!==null?SRC.winner:(CLK?SRC.cur:(KHOLD?KHOLD.who:KG.cur)),g=pklGeo(n);
   {const c=pkCol(cur);if(PKL.col!==c){PKL.col=c;k.style.setProperty('--pc',c);const f=k.querySelector('.pkshc');if(f)f.setAttribute('flood-color',pkDark(c));}}
   const m=SRC.winner===null?SRC.mult:1;k.classList.toggle('m2',m===2);k.classList.toggle('m3',m===3);
-  if(PKL.key!==n+(CLK?'c':'k')){PKL.key=n+(CLK?'c':'k');PKL.cards.innerHTML=P.map((_,i)=>`<g class="kc2" data-i="${i}" transform="translate(${g.pos[i][0]} ${g.pos[i][1]})"><g class="kin" style="--ox:${g.W/2}px;--oy:${g.H/2}px"></g></g>`).join('');PKL.c=[...PKL.cards.children]}
+  if(PKL.key!==n+(CLK?'c':'k')){PKL.key=n+(CLK?'c':'k');PKL.cards.innerHTML=P.map((_,i)=>`<g class="kc2" data-i="${i}" transform="translate(${g.pos[i][0]} ${g.pos[i][1]})${g.s?` scale(${g.s})`:''}"><g class="kin" style="--ox:${g.W/2}px;--oy:${g.H/2}px"></g></g>`).join('');PKL.c=[...PKL.cards.children]}
   let actEl=null;
   P.forEach((p,i)=>{const el=PKL.c[i];if(!el)return;const act=i===cur&&SRC.winner===null,{h,dead}=CLK?pkcCard(i,g,act):pklCard(i,g,act);
     el.classList.toggle('act',act);el.classList.toggle('dead',dead);if(CLK)el.classList.toggle('tgt',act);else{const D=KHOLD?null:KG.def,me=P[cur];el.classList.toggle('tgt',KG.winner===null&&!KHOLD&&(D?i===D.v:(me.killer?(i===cur||!p.dead):i===cur)))}el.style.setProperty('--kc',pkCol(i));if(act)actEl=el;
@@ -8172,11 +8173,20 @@ function popOutl(root){if(!root)return;root.querySelectorAll('text.w').forEach(t
 addEventListener('resize',()=>{try{if(KG&&PKL.k&&$('killer').classList.contains('on'))pklSync()}catch(e){}});
 
 /* ===== Mise en page du Cricket à 2 (Bulle) : hauteurs, écarts, barre Accueil · infos · Annuler en haut ou en bas ===== */
-const LY_D={xoN:0,xoS:0,xoM:0,xoH:0,xoC:0,xpW:1,xpH:1,xpG:1,xcG:1,xnZ:1,xrZ:1,xsZ:1,xcoZ:1,xhZ:1,xkz:1,xkh:1,xkg:1,xbh:1,paW:1,paH:1,poW:1,poH:1,zPo:1.05,poG:1,poY:0,crZ:1,crY:0,scR:1,hZ:1,nW:1,icZ:1,ifZ:1,dtZ:1,spZ:1,fbw:2.8,barTop:0,iNP:.1,iPM:.14,iPMo:.14,iY:0,iPl:.1,zNm:1.2,zSc:1.6,zMp:1.25,zPl:1.05,nfz:1.1,nsw:3.5,scsw:3.5,bw:2.8,mkz:.95,mksw:4,scK:1.1,rowK:1.05,ftK:1,brK:.9,mT:4.1,gSN:1.1,gL:1.8,gNF:1.5,gFB:1.9,mB:.9,nA:0};   // « Pop » : les réglages de base
+const LY_D={xoN:0,xoS:0,xoM:0,xoH:0,xoC:0,xpW:1,xpH:1,xpG:1,xcG:1,xnZ:1,xrZ:1,xsZ:1,xcoZ:1,xhZ:1,xkz:1,xkh:1,xkg:1,xbh:1,paW:1,paH:1,poW:1,poH:1,zPo:1.05,poG:1,poY:0,crZ:1,crY:0,scR:1,hZ:1,nW:1,icZ:1,ifZ:1,dtZ:1,spZ:1,fbw:2.8,barTop:0,iNP:.1,iPM:.14,iPMo:.14,iY:0,iPl:.1,zNm:1.2,zSc:1.6,zMp:1.25,zPl:1.05,nfz:1.1,nsw:4,scsw:4,bw:2.5,mkz:.95,mksw:4,scK:1.1,rowK:1.05,ftK:1.05,brK:1,mT:4.1,gSN:1.1,gL:1.8,gNF:1.5,gFB:1.1,mB:.9,nA:0};   // « Pop » : les réglages de base
 if(S.lay&&!S.lay.v3){S.lay={v3:1};try{store.set(K_S,S)}catch(e){}}
 /* un profil de réglages par jeu ; les contours (et les polices) sont communs à toute l'appli */
-const LY_GLOB=['bw','fbw','nsw','scsw'];
-const LY_PDN={scK:1,rowK:1,ftK:1,brK:1,zNm:1,zSc:1,zMp:1,zPl:1,nfz:1};const LY_PD=new Proxy({},{get:(o,k)=>/^(ck|sh|hi)n$/.test(k)?LY_PDN:undefined});
+const LY_GLOB=['bw','fbw','nsw','scsw','brK','ftK','gFB','mB','icZ','ifZ','barTop'];   // contours et boutons du bas : un seul réglage pour toute l'appli
+/* réglages « Pop » (envoyés par Loubi, lf-258) : Shanghai / Halve-it reprennent le Cricket, l'Horloge reprend le Killer */
+const LY_POP={
+  ck2:{mT:5,gSN:1.6,gL:1.6,rowK:1.05,scK:1.1,nA:0,zNm:1.4,zSc:1.35,zMp:1.45,zPl:1.6,gNF:0,iNP:.12,iPM:.12,iPMo:.12,iY:.04,iPl:.04,mkz:1,mksw:6,crY:-.14,crZ:1,poW:1.3,poG:.3,poH:1.05,zPo:1.2,paH:1.45,paW:1.2},
+  ckn:{scK:1.1,rowK:1.1,gL:1.4,iNP:.2,iPM:.28,iPl:0,zNm:1.1,zSc:1.45,zMp:1.2,zPl:1.05,nfz:.85,mkz:1.3,mksw:4,crZ:.9,paW:1.75,paH:1.4,poW:1.5,poH:1.3,zPo:1.6,poG:.7,poY:.12,iY:0,crY:0,scR:1,hZ:.75,mT:3.2},
+  kl:{zNm:1.1,nfz:1,paW:1.05,paH:1.25,iPl:0},
+  x2:{xnZ:1.7,xrZ:1.3,xsZ:1.85,xhZ:1.4,xcoZ:2,xoN:4,xoM:6.2,xoH:-7.4,xoC:3.3,xpW:1.15,xpH:1.1,xpG:.3,xkz:1.2,xkg:.3},
+  xn:{xrZ:1.3,xsZ:1.25,xnZ:1.3,xcoZ:.85,xhZ:1.15,xkz:1.3,xbh:1,xkg:.3,xkh:1,xoH:.8,xcG:0,xpG:.25,xpW:1.55,xpH:1.05,xoM:.5,xoS:-.5,xoN:-1}};
+const LY_PD=new Proxy({},{get:(o,k)=>{k=String(k);if(/^(ck|sh|hi)2$/.test(k))return LY_POP.ck2;if(/^(ck|sh|hi)n$/.test(k))return LY_POP.ckn;if(k==='kl'||/K[2n]$/.test(k))return LY_POP.kl;return LY_POP[k]}});
+/* passage à un seul réglage des boutons du bas : on retire les valeurs propres à chaque jeu */
+if(S.lays&&!(S.lay&&S.lay.v4)){for(const c in S.lays)['brK','ftK','gFB','mB','icZ','ifZ','barTop'].forEach(k=>delete S.lays[c][k]);S.lay=Object.assign(S.lay||{v3:1},{v4:1});['brK','ftK','gFB','mB','icZ','ifZ','barTop'].forEach(k=>delete S.lay[k]);try{store.set(K_S,S)}catch(e){}}
 const LY_BASE={ck:'Cricket',sh:'Shanghai',hi:'Halve-it',x:'501 / 301',clk:'Horloge',kl:'Killer'};
 const LY_NAME=new Proxy({},{get:(o,k)=>{k=String(k);if(k==='kl')return'Killer';const m=k.match(/^([a-z]+?)(K?)([2n])$/);if(!m)return k;return(LY_BASE[m[1]]||m[1])+(m[3]==='2'?' · 2 joueurs':' · 3 joueurs et +')}});
 const lyN=a=>a&&a.length>2?'n':'2';
@@ -8233,7 +8243,7 @@ function lyOpen(mode){const old=$('lyp');if(old)old.remove();haptic();const p=el
     const fb=ev.target.closest('.lyf button');if(fb){fcOpen(fb.dataset.f,draw);return}
     const bt=ev.target.closest('.lyb button[data-bt]');if(bt){haptic();lySet('barTop',+bt.dataset.bt,CX);store.set(K_S,S);lyApply();draw();return}
     const ab=ev.target.closest('.lyb button[data-a]');if(ab){haptic();lySet('nA',+ab.dataset.a,CX);store.set(K_S,S);lyPlace();draw();return}
-    if(ev.target.closest('.lyc')){const L=Object.assign({},S.lay||{});delete L.v3;const txt='Réglages Pop '+APPV+' : '+JSON.stringify({communs:L,jeux:S.lays||{},fN:S.fN||null,fT:S.fT||null});
+    if(ev.target.closest('.lyc')){const L=Object.assign({},S.lay||{});delete L.v3;delete L.v4;const txt='Réglages Pop '+APPV+' : '+JSON.stringify({communs:L,jeux:S.lays||{},fN:S.fN||null,fT:S.fT||null});
       const ok=()=>{try{mkToast('','Réglages copiés : colle-les dans la conversation',2600)}catch(e){}};
       (navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(txt).then(ok):Promise.reject()).catch(()=>{if(navigator.share)navigator.share({text:txt}).catch(()=>{});else prompt('Copie ce texte :',txt)});return}
     if(ev.target.closest('.lyr')){haptic();S.lays=S.lays||{};delete S.lays[CX];store.set(K_S,S);lyApply();draw()}});
