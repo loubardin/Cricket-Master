@@ -7855,7 +7855,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-262';   // à changer avec VERSION dans sw.js
+const APPV='lf-263';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
@@ -8263,7 +8263,7 @@ function lyOpen(mode){const old=$('lyp');if(old)old.remove();haptic();const p=el
     if(ev.target.closest('.lybas')){lyOpen('bas');return}
     if(ev.target.closest('.lyr')){haptic();const B=['brK','ftK','gFB','mB','icZ','ifZ','dtZ','spZ','fbw','barTop'];
       if(mode==='bas'){if(S.lay)B.forEach(k=>delete S.lay[k])}
-      else{S.lays=S.lays||{};delete S.lays[CX];if(S.lay)LY_GLOB.filter(k=>!B.includes(k)).forEach(k=>delete S.lay[k])}   // le jeu + les contours communs
+      else{S.lays=S.lays||{};delete S.lays[CX];if(S.lay)LY_GLOB.filter(k=>!B.includes(k)).forEach(k=>delete S.lay[k]);delete S.fN;delete S.fT;try{fcApply();fcRefit()}catch(e){}}   // le jeu + les contours communs + les polices Pop
       store.set(K_S,S);lyApply();try{lyPlace()}catch(e){}draw();try{mkToast('','Réglages Pop rétablis',1600)}catch(e){}}});
   p.addEventListener('input',ev=>{const r=ev.target.closest('input[type=range]');if(!r)return;const k=r.dataset.k,v=+r.value;lySet(k,v,CX);
     const b=p.querySelector(`b[data-v="${k}"]`);if(b)b.textContent=lyFmt(v,r.dataset.u);cancelAnimationFrame(p._raf);p._raf=requestAnimationFrame(lyApply);clearTimeout(p._sv);p._sv=setTimeout(()=>store.set(K_S,S),400)})}
