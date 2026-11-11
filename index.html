@@ -4338,7 +4338,6 @@ html body #game#game#game#game#game.sk:not(.p2) #scores .sc:not(.act)>.mpr{margi
 /* switch des mini jeux (4 noms longs) : la bulle orange reste dans sa case */
 html body #setup.b2 #segBar button{font-size:calc(var(--u)*1.85)!important}
 html body #setup #segBar button.sel{transform:scale(1.1)!important}
-html body #setup.b2 #segBar .thumb{scale:.82 1!important}
 html body #setup.b2 #segBar button{flex:1 1 auto!important;width:auto!important;min-width:0!important}
 </style>
 </head>
@@ -5044,7 +5043,6 @@ function throwDart(t){
   if(leadMsg){busy(80+2300);setTimeout(()=>{gunToast(leadMsg);SFX.mg()},80)}
   // MPR qui atteint ou dépasse 3,00 : tout de suite (à partir de 3 fléchettes lancées)
   if(me.darts>=3&&mpr0<3&&mpr(me)>=3){busy(2400);setTimeout(()=>{fireToast(`${esc(thr)}, T'ES EN FEU`);SFX.fire()},120)}
-  if(turnOver)say('MPR '+fr(mpr(me)),350);
   if(turnOver&&HOLD){
     HOLD.quiet=!!(b||leadMsg||t===0);   // les bandeaux et le spew ont déjà leur propre son
     HOLD.t=setTimeout(releaseHold,700);busy(700); // demi-seconde avant de passer au joueur suivant (un tap l'écourte)
@@ -5237,7 +5235,8 @@ function save(){if(BARC)return;store.set(K_G,G);store.set(K_H,H.slice(-150))}
 /* ================= STATS ================= */
 /* annonces vocales (voix française de l'appareil) */
 const VOX={v:null,pick(){try{const vs=speechSynthesis.getVoices();this.v=vs.find(v=>/^fr[-_]FR/i.test(v.lang))||vs.find(v=>/^fr/i.test(v.lang))||null}catch(e){}}};
-function say(t,dl){if(!S.sound||S.voice===false||!('speechSynthesis' in window))return;
+const PHON=[[/\bkiller\b/gi,'kileure'],[/\bbust\b/gi,'beuste'],[/\bspew\b/gi,'spiou']];
+function say(t,dl){t=PHON.reduce((a,[r,v])=>a.replace(r,v),String(t));if(!S.sound||S.voice===false||!('speechSynthesis' in window))return;
   const go=()=>{try{const u=new SpeechSynthesisUtterance(t);u.lang='fr-FR';if(!VOX.v)VOX.pick();if(VOX.v)u.voice=VOX.v;u.rate=1.05;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}};
   dl?setTimeout(go,dl):go()}
 try{speechSynthesis.onvoiceschanged=()=>VOX.pick()}catch(e){}
@@ -5669,6 +5668,9 @@ function placeThumbs(){
     if(th.style.transition==='none')requestAnimationFrame(()=>th.style.transition='');
   });
 }
+/* switch des mini jeux : bulle un peu moins large que la case (pas d'écrasement), pour ne pas toucher les noms voisins */
+{const _p=placeThumbs;placeThumbs=function(){const r=_p.apply(this,arguments);try{const g=$('segBar'),th=g&&g.querySelector('.thumb'),b=g&&g.querySelector('button.sel');
+  if(th&&b&&g.offsetParent){const k=Math.min(9,b.offsetWidth*.1);th.style.width=(b.offsetWidth-2*k)+'px';th.style.translate=`${b.offsetLeft+k}px 0`}}catch(e){}return r}}
 addEventListener('resize',()=>{if($('setup').classList.contains('on'))placeThumbs()});
 /* bulle orange : replacée automatiquement dès qu'un switch devient visible ou change de taille (plus besoin de toucher) */
 {let q=0;const RO=new ResizeObserver(()=>{if(!q){q=1;requestAnimationFrame(()=>{q=0;placeThumbs();if(typeof alignLabels==='function')alignLabels()})}});
@@ -7823,7 +7825,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-256';   // à changer avec VERSION dans sw.js
+const APPV='lf-257';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
