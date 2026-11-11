@@ -4159,7 +4159,7 @@ html.pkl body>:is(.fireglow,.ember,.bhole){display:none!important}
 #pkl .pkp{stroke:#111;stroke-width:var(--swC,10px);fill:#fff}
 #pkl .pkp.on,#pkl .pkk{fill:#ffde00}
 #pkl .pkk{stroke:#111;stroke-width:var(--swC,10px)}
-#pkl .pkhp{fill:#c7b299}
+#pkl .pkhp{fill:#e2dfda}
 #pkl .kc2.act .pkhp{fill:#fff}
 #pkl .pknm{fill:#111}
 #pkl .kc2.act .pknm{fill:#1d1d1b;stroke:none}
@@ -4326,6 +4326,10 @@ html body #x01#x01#x01.xkset #xkeys button:is(.bull,[data-n="25"]){height:var(--
 /* accueil : « Reprendre / Nouvelle partie » sur une ligne, dans le switch */
 #home#home#home .hsw.two .big,#home#home#home .hsw.two #hResume{white-space:nowrap!important;font-size:min(calc(min(1dvh,1.7vw)*2.5),4.1vw)!important;letter-spacing:-.01em;overflow:visible}
 #home#home#home .hsw.two:not(.new) #hResume,#home#home#home .hsw.two.new #hPlay{scale:1.18}
+
+#pkl .pcnm{fill:#111}
+#pkl .kc2.act .pcnm{fill:#111}
+#pkl .pcmp{font-size:.62em}
 </style>
 </head>
 <body>
@@ -7804,7 +7808,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-253';   // à changer avec VERSION dans sw.js
+const APPV='lf-254';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
@@ -8017,12 +8021,13 @@ function pclText(el,txt,max,base){if(el._h===txt&&el._m===max)return;el._h=txt;e
 const PKL={};
 const PK_HP=[.5015,.1591,.6605,-.1041,.9135,.0036,.9745,.1724,1.0223,.304,1.0002,.4356,.9308,.549,.8718,.6456,.7982,.7316,.7267,.8179,.7053,.8443,.6669,.8532,.6401,.8758,.5966,.9125,.5562,.9539,.5074,1,.3283,.8673,.1424,.7301,.0373,.4968,-.0258,.3564,-.0068,.1766,.0789,.0847,.2041,-.0494,.359,-.024,.5015,.1591];
 function pkHeart(x,y,w,h){const P=PK_HP,f=(k)=>(x+P[k]*w).toFixed(1)+','+(y+P[k+1]*h).toFixed(1);let d='M'+f(0);for(let k=2;k<P.length;k+=6)d+='C'+f(k)+' '+f(k+2)+' '+f(k+4);return d+'Z'}
-const pklOn=()=>!!KG&&!!KG.players&&!BARON;
+const pkClk=()=>BARON&&!!XG&&XG.mode==='clk'&&!!XG.players;
+const pklOn=()=>pkClk()||(!!KG&&!!KG.players&&!BARON);
 function pklGeo(n){if(n<=2)return{W:902.6,H:688.6,wide:1,pos:[0,1].map(r=>[111.2,586.1+r*841]),k:1.1};
   if(n<=4)return{W:458.7,H:633.8,pos:Array.from({length:n},(_,i)=>[i%2?594.75:71.55,562.2+Math.floor(i/2)*789]),k:1};
   if(n<=6)return{W:418.9,H:456.3,pos:Array.from({length:n},(_,i)=>[i%2?587.3:118.8,499.7+Math.floor(i/2)*568]),k:.85};
   const rw=Math.ceil(n/2),pt=(2150-470)/rw,H=pt-82;return{W:400,H,pos:Array.from({length:n},(_,i)=>[i%2?585:140,470+Math.floor(i/2)*pt]),k:Math.max(.55,H/634*.95)}}
-const pkCol=i=>{const p=KG.players[i],c=p&&pcol(p.members?p.members[0]:p.name);return /^#[0-9a-f]{6}$/i.test(c||'')?c:PFB[i%PFB.length]};
+const pkCol=i=>{const p=(pkClk()?XG:KG).players[i],c=p&&pcol(p.members?p.members[0]:p.name);return /^#[0-9a-f]{6}$/i.test(c||'')?c:PFB[i%PFB.length]};
 function pkName(p,act){if(!p.members||p.members.length<2)return p.name;const L=p.members.length,j=((p.mi||0)+(!act&&p.last&&p.last.length?L-1:0))%L;return p.members[j]}
 function pkDartT(d){if(!d)return'·';if(d.n===0)return'S';return (d.m===3?'T':d.m===2?'D':'')+(d.n===25?'B':d.n)}
 function pklBuild(){const sec=$('killer');let k=$('pkl');if(k)k.remove();
@@ -8031,7 +8036,9 @@ function pklBuild(){const sec=$('killer');let k=$('pkl');if(k)k.remove();
     <filter id="pkNs" x="-10%" y="-10%" width="130%" height="130%"><feOffset dx="10" dy="11" in="SourceAlpha" result="o"/><feFlood flood-color="#8e1717"/><feComposite operator="in" in2="o"/><feComposite in="SourceGraphic"/></filter></defs>
     <g class="cards"></g></svg></div>`);
   k=$('pkl');PKL.k=k;PKL.cards=k.querySelector('.cards');PKL.key=null;
-  k.addEventListener('click',e=>{const c=e.target.closest('.kc2');if(!c||!KG)return;const p=KG.players[+c.dataset.i];if(p)kThrow(p.num)});
+  k.addEventListener('click',e=>{const c=e.target.closest('.kc2');if(!c)return;const i=+c.dataset.i;
+    if(pkClk()){if(XG.winner===null&&i===XG.cur){const t=XG.players[i].tgt;if(t)xThrow(t,XG.mult)}return}
+    if(!KG)return;const p=KG.players[i];if(p)kThrow(p.num)});
   k.addEventListener('pointerdown',e=>{const c=e.target.closest('.kc2');if(c){c.classList.add('pr');clearTimeout(c._pr);c._pr=setTimeout(()=>c.classList.remove('pr'),220)}})}
 function pklCard(i,g,act){const p=KG.players[i],{W,H,wide,k}=g,DD=KG.def,isDef=DD&&DD.v===i,dead=p.dead&&!isDef;
   const LZ=lyGet('kl'),dk=pkDark(pkCol(i)),kT=PF.kT*LZ.zNm,kN=PF.kN*LZ.nfz;
@@ -8066,23 +8073,44 @@ function pklCard(i,g,act){const p=KG.players[i],{W,H,wide,k}=g,DD=KG.def,isDef=D
     const t=pkDartT(ds&&ds[j]);h+=`<rect class="pkhp" x="${x}" y="${y}" width="${w}" height="${hh2}" rx="${Math.min(29.5,hh2*.45)}"/><text class="fN" x="${x+w/2}" y="${y+hh2*.5+hh2*.3}" font-size="${hh2/HH*.8*PF.kN*LZ.zPl}" data-fit="${w*.86}">${t}</text>`}
   h+=`<rect class="ol" width="${W}" height="${H}" rx="92.61"/><rect class="hit" x="-10" y="-10" width="${W+20}" height="${H+20}" rx="92"/>`;
   return {h,dead}}
+/* Horloge : même carte que le Killer — le nom à la place des cœurs, le numéro à viser en grand, le MPR en avant à la place des K */
+function pkcCard(i,g,act){const p=XG.players[i],{W,H,wide}=g,LZ=lyGet(lyCur()),dk=pkDark(pkCol(i)),kT=PF.kT*LZ.zNm,kN=PF.kN*LZ.nfz;
+  let h=act?`<rect class="pksh" x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87" filter="url(#pkSh)"/><rect class="halo" x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87"/><clipPath id="pkClip"><rect x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87"/></clipPath><g clip-path="url(#pkClip)"><path class="shine" style="--sd:${W+H*.3+560}px" d="M-300 -40H-30L${-30-H*.3} ${H+40}H${-300-H*.3}Z"/></g>`:'';
+  const cx=wide?.306*W:W/2,nm=esc(p.members&&p.members.length>1?p.members[((p.mi||0)+(!act&&p.last&&p.last.length?p.members.length-1:0))%p.members.length]:p.name);
+  const hy=(wide?.076:.052)*H,hh=(wide?.137:.132)*H;
+  h+=`<text class="pcnm" x="${cx}" y="${hy+hh*.86}" font-size="${(hh*1.05*kT).toFixed(1)}" data-fit="${(wide?.6:.86)*W}">${nm}</text>`;
+  const ny=(wide?.272:.243)*H,nH=(wide?.44:.325)*H,nW=(wide?.445:.61)*W,nx=wide?.307*W:cx,nfs=(nH/.725*kN).toFixed(1),lab=p.tgt===0?'✓':p.tgt===25?'B':String(p.tgt);
+  h+='<g class="pkng">';
+  if(act)h+=`<text class="pkno fN pksn" x="${nx+10}" y="${ny+nH+11}" font-size="${nfs}" data-fit="${nW}" style="fill:${dk};stroke:${dk}">${lab}</text><text class="pkno fN wo" x="${nx}" y="${ny+nH}" font-size="${nfs}" data-fit="${nW}">${lab}</text>`;
+  h+=`<text class="pkno fN${act?' pkw':''}" x="${nx}" y="${ny+nH}" font-size="${nfs}" data-fit="${nW}">${lab}</text></g>`;
+  // MPR bien en avant (à la place des K)
+  const ky=(wide?.774:.626)*H,kh=(wide?.14:.137)*H,kx=cx-(wide?.22:.382)*W,kw=(wide?.44:.764)*W,mp=p.darts?fr(p.hits*3/p.darts):'0,00';
+  if(act)h+=`<rect x="${kx+10}" y="${ky+11}" width="${kw}" height="${kh}" rx="${kh*.37}" style="fill:${dk}"/>`;
+  h+=`<rect class="pkk" x="${kx}" y="${ky}" width="${kw}" height="${kh}" rx="${kh*.37}"/><text x="${cx}" y="${ky+kh*.5+kh*.3}" font-size="${(kh*.78*kT).toFixed(1)}" data-fit="${kw*.88}"><tspan class="pcmp">MPR </tspan><tspan class="fN">${mp}</tspan></text>`;
+  // dernières fléchettes
+  const ds=act?XG.turn:(p.last||[]),HW=LZ.paW,HH=LZ.paH,HP=Math.max(1,HW)*(1+LZ.iPl-.1),dt=d=>!d?'·':d.n===0?'S':d.n===25?(d.m===2?'DB':'B'):(d.m===3?'T':d.m===2?'D':'')+d.n;
+  for(let j=0;j<3;j++){let x,y,w,hh2;if(wide){w=.213*W*HW;hh2=.174*H*HH;x=.675*W+.213*W*(1-HW)/2;y=(.161+j*.249)*H+.174*H*(1-HH)/2}else{w=.232*W*HW;hh2=.104*H*HH;x=W/2-.265*W*HP+j*.265*W*HP-w/2;y=.826*H+.104*H*(1-HH)/2}
+    h+=`<rect class="pkhp" x="${x}" y="${y}" width="${w}" height="${hh2}" rx="${Math.min(29.5,hh2*.45)}"/><text class="fN" x="${x+w/2}" y="${y+hh2*.5+hh2*.3}" font-size="${(hh2/HH*.8*PF.kN*LZ.zPl).toFixed(1)}" data-fit="${w*.86}">${dt(ds&&ds[j])}</text>`}
+  h+=`<rect class="ol" width="${W}" height="${H}" rx="92.61"/><rect class="hit" x="-10" y="-10" width="${W+20}" height="${H+20}" rx="92"/>`;
+  return{h,dead:!!p.out}}
 function pklSync(){const sec=$('killer'),on=pklOn()&&sec.classList.contains('on');sec.classList.toggle('pkl',on);document.documentElement.classList.toggle('pkl',on);if(!on)return;
   if(!PKL.k||!PKL.k.isConnected)pklBuild();const k=PKL.k;
   // zone des cartes : du haut de l'écran jusqu'au-dessus des boutons de la Bulle
   {const sv=k.firstElementChild,km=$('kmain'),f=sec.querySelector('footer'),st=parseFloat(getComputedStyle(km).paddingTop)||0,sr=sec.getBoundingClientRect(),bot=f?f.getBoundingClientRect().top-sr.top-innerWidth*.035:sec.clientHeight;
     sv.style.top=st+'px';sv.style.height=Math.max(100,bot-st)+'px';
-    const L=lyGet('kl'),sc=Math.min(sv.clientWidth/1125,Math.max(100,bot-st)/1760)||.33;k.style.setProperty('--swC',(L.bw/sc).toFixed(1)+'px');k.style.setProperty('--swS',(L.bw*.4/sc).toFixed(1)+'px');k.style.setProperty('--swN',(L.nsw/sc).toFixed(1)+'px')}
-  const P=KG.players,n=P.length,cur=KG.winner!==null?KG.winner:(KHOLD?KHOLD.who:KG.cur),g=pklGeo(n);
+    const L=lyGet(pkClk()?lyCur():'kl'),sc=Math.min(sv.clientWidth/1125,Math.max(100,bot-st)/1760)||.33;k.style.setProperty('--swC',(L.bw/sc).toFixed(1)+'px');k.style.setProperty('--swS',(L.bw*.4/sc).toFixed(1)+'px');k.style.setProperty('--swN',(L.nsw/sc).toFixed(1)+'px')}
+  const CLK=pkClk(),SRC=CLK?XG:KG,P=SRC.players,n=P.length,cur=SRC.winner!==null?SRC.winner:(CLK?SRC.cur:(KHOLD?KHOLD.who:KG.cur)),g=pklGeo(n);
   {const c=pkCol(cur);if(PKL.col!==c){PKL.col=c;k.style.setProperty('--pc',c);const f=k.querySelector('.pkshc');if(f)f.setAttribute('flood-color',pkDark(c));}}
-  const m=KG.winner===null?KG.mult:1;k.classList.toggle('m2',m===2);k.classList.toggle('m3',m===3);
-  if(PKL.key!==n){PKL.key=n;PKL.cards.innerHTML=P.map((_,i)=>`<g class="kc2" data-i="${i}" transform="translate(${g.pos[i][0]} ${g.pos[i][1]})"><g class="kin" style="--ox:${g.W/2}px;--oy:${g.H/2}px"></g></g>`).join('');PKL.c=[...PKL.cards.children]}
+  const m=SRC.winner===null?SRC.mult:1;k.classList.toggle('m2',m===2);k.classList.toggle('m3',m===3);
+  if(PKL.key!==n+(CLK?'c':'k')){PKL.key=n+(CLK?'c':'k');PKL.cards.innerHTML=P.map((_,i)=>`<g class="kc2" data-i="${i}" transform="translate(${g.pos[i][0]} ${g.pos[i][1]})"><g class="kin" style="--ox:${g.W/2}px;--oy:${g.H/2}px"></g></g>`).join('');PKL.c=[...PKL.cards.children]}
   let actEl=null;
-  P.forEach((p,i)=>{const el=PKL.c[i];if(!el)return;const act=i===cur&&KG.winner===null,{h,dead}=pklCard(i,g,act);
-    el.classList.toggle('act',act);el.classList.toggle('dead',dead);{const D=KHOLD?null:KG.def,me=P[cur];el.classList.toggle('tgt',KG.winner===null&&!KHOLD&&(D?i===D.v:(me.killer?(i===cur||!p.dead):i===cur)))}el.style.setProperty('--kc',pkCol(i));if(act)actEl=el;
+  P.forEach((p,i)=>{const el=PKL.c[i];if(!el)return;const act=i===cur&&SRC.winner===null,{h,dead}=CLK?pkcCard(i,g,act):pklCard(i,g,act);
+    el.classList.toggle('act',act);el.classList.toggle('dead',dead);if(CLK)el.classList.toggle('tgt',act);else{const D=KHOLD?null:KG.def,me=P[cur];el.classList.toggle('tgt',KG.winner===null&&!KHOLD&&(D?i===D.v:(me.killer?(i===cur||!p.dead):i===cur)))}el.style.setProperty('--kc',pkCol(i));if(act)actEl=el;
     const inn=el.firstElementChild;if(inn._h!==h){inn._h=h;inn.innerHTML=h;inn.querySelectorAll('[data-fit]').forEach(t=>{const w=+t.dataset.fit;t._h=null;pclText(t,t.textContent,w)})}});
   if(actEl&&actEl!==PKL.cards.firstElementChild)PKL.cards.prepend(actEl);   // la carte en cours dessous : les cadres noirs des autres restent devant son ombre
 }
 {const _k=kRender;kRender=function(){const r=_k.apply(this,arguments);try{pklSync()}catch(e){console.error(e)}return r}}
+{const _b=bRender;bRender=function(){const r=_b.apply(this,arguments);try{pklSync()}catch(e){console.error(e)}return r}}
 {const _s=show;show=function(){const r=_s.apply(this,arguments);try{pklSync()}catch(e){}return r}}
 try{document.fonts&&document.fonts.addEventListener('loadingdone',()=>{if(PKL.k){PKL.k.querySelectorAll('.cards g.kin').forEach(g=>{g._h=null});PKL.k.querySelectorAll('text').forEach(t=>{t._h=null});try{pklSync()}catch(e){}}})}catch(e){}
 
@@ -8143,7 +8171,7 @@ function lyFromHome(){const ok=G&&G.players&&G.players.length===2&&G.winner===nu
   if(!ok){try{mkToast('','Lance une partie de Cricket à 2 joueurs pour régler la mise en page',2600)}catch(e){}return}
   $('hResume').click();setTimeout(lyOpen,450)}
 const LY_CTX={x:'brK ftK gFB mB bw fbw icZ ifZ xnZ xrZ xsZ xcoZ xhZ xkz xkh xkg xbh',kl:'brK ftK gFB mB zNm nfz nsw bw fbw icZ ifZ paW paH zPl iPl',ot:'brK ftK gFB mB bw fbw icZ ifZ'},LY_NO=new Proxy({},{get:(o,k)=>/^(ck|sh|hi)n$/.test(k)?'nW dtZ spZ':''});
-const lyCtx=()=>{const c=lyCur();return c==='kl'?'kl':$('x01').classList.contains('on')?'x':($('game').classList.contains('on')&&skp2())?'ck':'ot'};
+const lyCtx=()=>{const c=lyCur();return c==='kl'||(c.startsWith('clk')&&pkClk())?'kl':$('x01').classList.contains('on')?'x':($('game').classList.contains('on')&&skp2())?'ck':'ot'};
 function lyOpen(mode){const old=$('lyp');if(old)old.remove();haptic();const p=el('div','');p.id='lyp';document.body.append(p);let up=false;
   const CX=lyCur();const draw=()=>{const L=lyGet(CX);p.classList.toggle('up',up);
     p.innerHTML=`<div class="lyh"><b>${mode==='txt'?'Textes et polices':'Réglages Pop'}<small>${LY_NAME[CX]}</small></b><button class="lyd" aria-label="Déplacer le panneau">${up?'↓':'↑'}</button><button class="lyx" aria-label="Fermer">✕</button></div>
@@ -8211,14 +8239,14 @@ const TURNLOCK_MS=750;let TURNLOCK=0;
 const turnLocked=()=>performance.now()<TURNLOCK||!!HOLD||!!KHOLD||(typeof XHOLD!=='undefined'&&!!XHOLD);   // tant que le joueur n'a pas changé à l'écran
 {const _t=throwDart;throwDart=function(){if(turnLocked())return;const h=HOLD;const r=_t.apply(this,arguments);if(HOLD&&HOLD!==h)TURNLOCK=performance.now()+TURNLOCK_MS;return r}}
 {const _k=kThrow;kThrow=function(n,quiet){if(!quiet&&turnLocked())return;const h=KHOLD;const r=_k.apply(this,arguments);if(KHOLD&&KHOLD!==h)TURNLOCK=performance.now()+TURNLOCK_MS;return r}}
-{const _x=xThrow;xThrow=function(n,m,quiet){if(!quiet&&turnLocked())return;const c=XG&&XG.cur,len=XG?XG.turn.length:0;const r=_x.apply(this,arguments);
+{const _x=xThrow;xThrow=function(n,m,quiet){if(!quiet&&turnLocked())return;const rd0=XG&&XG.round,c=XG&&XG.cur,len=XG?XG.turn.length:0;const r=_x.apply(this,arguments);
   if(XG&&XG.winner===null&&(XG.cur!==c||(XG.turn.length===0&&len>0))){TURNLOCK=performance.now()+TURNLOCK_MS;
-    if(XG.cur!==c&&!quiet){clearTimeout(XHOLD&&XHOLD.t);XHOLD={who:c,t:setTimeout(()=>{XHOLD=null;try{SFX.turn&&SFX.turn()}catch(e){}xRender()},700)};busy(700);xRender()}}return r}}
+    if(XG.cur!==c&&!quiet){clearTimeout(XHOLD&&XHOLD.t);XHOLD={who:c,round:rd0,t:setTimeout(()=>{XHOLD=null;try{SFX.turn&&SFX.turn()}catch(e){}xRender()},700)};busy(700);xRender()}}return r}}
 /* 501 et mini jeux : l'écran garde le joueur qui vient de jouer (et ses fléchettes) un instant avant de passer au suivant */
 let XHOLD=null;
 {const _r=xRender;xRender=function(){if(!XHOLD||!XG||XG.winner!==null)return _r.apply(this,arguments);
-  const c=XG.cur,t=XG.turn,p=XG.players[XHOLD.who];XG.cur=XHOLD.who;XG.turn=(p&&p.last)||[];
-  try{return _r.apply(this,arguments)}finally{XG.cur=c;XG.turn=t}}}
+  const c=XG.cur,t=XG.turn,rd=XG.round,p=XG.players[XHOLD.who];XG.cur=XHOLD.who;XG.turn=(p&&p.last)||[];if(XHOLD.round!=null)XG.round=XHOLD.round;
+  try{return _r.apply(this,arguments)}finally{XG.cur=c;XG.turn=t;XG.round=rd}}}
 {const _s=setMult;setMult=function(){if(turnLocked())return;return _s.apply(this,arguments)}}
 
 
