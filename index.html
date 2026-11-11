@@ -4412,6 +4412,15 @@ html body .skinpick .sksw button.on{background:var(--accent)!important;color:#ff
 /* équipes : interligne entre les deux noms de la case (Cricket, Shanghai, Halve-it, 501/301) */
 html body #game#game#game.sk.p2 #scores .sc>.nm .nmm{bottom:calc(100% + .3em + var(--tmL,0)*1dvh)!important}
 html body #x01#x01#x01 #xplayers .xc .xn .xm{position:relative!important;top:calc(var(--tmL,0)*1dvh)!important}
+
+/* 501 / 301 : texte des bulles d'historique, écarts cases → touches → Spew */
+html body #x01#x01#x01#x01#x01 #xplayers .xc .khist .pill{font-size:calc(min(7cqw,2.2dvh)*var(--xpT,1))!important}
+html body #x01#x01#x01#x01#x01 #xplayers:not(.two) .xc .khist .pill{font-size:calc(min(6cqw,9cqh)*var(--xpT,1))!important}
+html body #x01#x01#x01#x01#x01 #xplayers.many .xc .khist .pill{font-size:calc(min(6cqw,12cqh)*var(--xpT,1))!important}
+html body #x01#x01#x01 #xmain{gap:calc(var(--xgPK,1.2)*1dvh)!important;padding-bottom:0!important}
+html body #x01#x01#x01 footer{margin-top:calc(var(--xgKF,2.8)*1dvh)!important}
+/* éditeur en direct : élément sélectionné */
+#lyp .lyel{font-size:12px;opacity:.7;margin:2px 0 0}
 </style>
 </head>
 <body>
@@ -7898,7 +7907,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-270';   // à changer avec VERSION dans sw.js
+const APPV='lf-271';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
@@ -8241,7 +8250,7 @@ function popOutl(root){if(!root)return;root.querySelectorAll('text.w').forEach(t
 addEventListener('resize',()=>{try{if(KG&&PKL.k&&$('killer').classList.contains('on'))pklSync()}catch(e){}});
 
 /* ===== Mise en page du Cricket à 2 (Bulle) : hauteurs, écarts, barre Accueil · infos · Annuler en haut ou en bas ===== */
-const LY_D={tmL:0,klZ:1,klY:0,klHZ:1,klKZ:1,klNY:0,klNoY:0,klKY:0,klPY:0,xoN:0,xoS:0,xoM:0,xoH:0,xoC:0,xpW:1,xpH:1,xpG:1,xcG:1,xnZ:1,xrZ:1,xsZ:1,xcoZ:1,xhZ:1,xkz:1,xkh:1,xkg:1,xbh:1,paW:1,paH:1,poW:1,poH:1,zPo:1.05,poG:1,poY:0,crZ:1,crY:0,scR:1,hZ:1,nW:1,icZ:1,ifZ:1,dtZ:1,spZ:1,fbw:0,barTop:0,iNP:.1,iPM:.14,iPMo:.14,iY:0,iPl:.1,zNm:1.2,zSc:1.6,zMp:1.25,zPl:1.05,nfz:1.1,nsw:4,scsw:4,bw:2.5,mkz:.95,mksw:4,scK:1.1,rowK:1.05,ftK:1.05,brK:1,mT:4.1,gSN:1.1,gL:1.8,gNF:1.5,gFB:1.1,mB:.9,nA:0};   // « Pop » : les réglages de base
+const LY_D={xpT:1,xgPK:1.2,xgKF:2.8,tmL:0,klZ:1,klY:0,klHZ:1,klKZ:1,klNY:0,klNoY:0,klKY:0,klPY:0,xoN:0,xoS:0,xoM:0,xoH:0,xoC:0,xpW:1,xpH:1,xpG:1,xcG:1,xnZ:1,xrZ:1,xsZ:1,xcoZ:1,xhZ:1,xkz:1,xkh:1,xkg:1,xbh:1,paW:1,paH:1,poW:1,poH:1,zPo:1.05,poG:1,poY:0,crZ:1,crY:0,scR:1,hZ:1,nW:1,icZ:1,ifZ:1,dtZ:1,spZ:1,fbw:0,barTop:0,iNP:.1,iPM:.14,iPMo:.14,iY:0,iPl:.1,zNm:1.2,zSc:1.6,zMp:1.25,zPl:1.05,nfz:1.1,nsw:4,scsw:4,bw:2.5,mkz:.95,mksw:4,scK:1.1,rowK:1.05,ftK:1.05,brK:1,mT:4.1,gSN:1.1,gL:1.8,gNF:1.5,gFB:1.1,mB:.9,nA:0};   // « Pop » : les réglages de base
 if(S.lay&&!S.lay.v3){S.lay={v3:1};try{store.set(K_S,S)}catch(e){}}
 /* un profil de réglages par jeu ; les contours (et les polices) sont communs à toute l'appli */
 const LY_GLOB=['bw','fbw','nsw','scsw','brK','ftK','gFB','mB','icZ','ifZ','dtZ','spZ','barTop'];   // contours et boutons du bas : un seul réglage pour toute l'appli
@@ -8282,15 +8291,35 @@ const LY_K={
   xpW:['Largeur des bulles',.5,2.5,.05,'%'],xpH:['Hauteur des bulles',.4,3,.05,'%'],xpG:['Écart',0,4,.05,'%'],
   xkh:['Hauteur des touches 1 à 20',.5,1.6,.05,'%'],xbh:['Hauteur de la touche Bulle',.5,1.8,.05,'%'],xkg:['Écart entre les touches',0,3,.05,'%'],xkz:['Chiffres',.5,1.6,.05,'%'],
   klZ:['Taille des cartes',.6,1.3,.01,'%'],klY:['Décaler les cartes (− haut, + bas)',-10,10,.1,'pc'],klHZ:['Cœurs',.5,1.6,.05,'%'],klKZ:['Marques K (MPR à l\'Horloge)',.5,1.6,.05,'%'],
-  klNY:['Nom',-30,30,.5,'pc'],klNoY:['Numéro',-30,30,.5,'pc'],klKY:['Marques K (MPR à l\'Horloge)',-30,30,.5,'pc'],klPY:['Historique',-30,30,.5,'pc'],tmL:['Interligne entre les 2 noms d\'une équipe (en % de l\'écran)',-3,3,.05,'pc']};
+  klNY:['Nom',-30,30,.5,'pc'],klNoY:['Numéro',-30,30,.5,'pc'],klKY:['Marques K (MPR à l\'Horloge)',-30,30,.5,'pc'],klPY:['Historique',-30,30,.5,'pc'],xpT:['Taille du texte',.5,2.5,.05,'%'],xgPK:['Écart cases joueur → touches',0,6,.1,'pc'],xgKF:['Écart touches → Spew',0,8,.1,'pc'],tmL:['Interligne entre les 2 noms d\'une équipe (en % de l\'écran)',-3,3,.05,'pc']};
 const LY_B={
   pl:{ck:[['Bloc',['scK','mT','gSN','scR','hZ']],['Textes : tailles',['zNm','zSc','zMp']],['Textes : placement (en hauteur de ligne)',['iNP','iPM','iPMo','iY','tmL']],['Historique du joueur en cours',['paW','paH','zPl','iPl']],['Historique de l\'adversaire',['poW','poH','zPo','poG','poY']],['Couronne',['crZ','crY']],['Contours',['scsw','bw']]],
-      x:[['Bloc',['xcG']],['Textes : tailles',['xnZ','xrZ','xsZ','xcoZ','xhZ']],['Textes : placement (en % de l\'écran)',['xoN','xoS','xoM','xoH','xoC','tmL']],['Historique',['xpW','xpH','xpG']],['Contours',['bw']]],
+      x:[['Bloc',['xcG']],['Textes : tailles',['xnZ','xrZ','xsZ','xcoZ','xhZ']],['Textes : placement (en % de l\'écran)',['xoN','xoS','xoM','xoH','xoC','tmL']],['Historique',['xpW','xpH','xpT','xpG']],['Contours',['bw']]],
       kl:[['Bloc',['klZ','klY']],['Textes : tailles',['zNm',['nfz','Numéro'],'klHZ','klKZ']],['Textes : placement (en % de la carte)',['klNY','klNoY','klKY','klPY']],['Historique',['paW','paH','zPl','iPl']]]},
   nb:{ck:[['Bloc',['rowK','nW','gL','gNF']],['Textes',[['nfz','Taille des nombres'],'nsw']],['Marques',['mkz','mksw']]],
-      x:[['Bloc',['xkh','xbh','xkg']],['Textes',['xkz']]]},
+      x:[['Bloc',['xkh','xbh','xkg','xgPK','xgKF']],['Textes',['xkz']]]},
   bas:{all:[['Bloc',['ftK','brK','gFB','mB']],['Textes',['dtZ','spZ','icZ','ifZ']],['Contours',['fbw']]]}};
 const LY_TABS={ck:[['pl','Cases joueur'],['nb','Tableau'],['bas','Bas'],['pol','Polices']],x:[['pl','Cases joueur'],['nb','Touches'],['bas','Bas'],['pol','Polices']],kl:[['pl','Cartes'],['bas','Bas'],['pol','Polices']],ot:[['bas','Bas'],['pol','Polices']]};
+/* ===== éditeur en direct : appui long sur n'importe quel élément → sa taille et sa place (gauche/droite, haut/bas) ===== */
+const ED_REG={ck:[['crn','Couronne','#scores .hat'],['nmA','Nom (joueur en cours)','#scores .sc.act>.nm'],['nmO','Nom (adversaire)','#scores .sc:not(.act)>.nm'],['ptA','Score (joueur en cours)','#scores .sc.act>.pts'],['ptO','Score (adversaire)','#scores .sc:not(.act)>.pts'],
+    ['mpA','MPR (joueur en cours)','#scores .sc.act>.mpr'],['mpO','MPR (adversaire)','#scores .sc:not(.act)>.mpr'],['hiA','Historique (joueur en cours)','#scores .sc.act .pills'],['hiO','Historique (adversaire)','#scores .sc:not(.act) .pills'],
+    ['lbl','Nombres','#grid .num .lbl'],['mk','Marques','#grid .mw']],
+  x:[['xco','Finish proposé','#xplayers .xco'],['xnA','Nom (joueur en cours)','#xplayers .xc.act .xn'],['xnO','Nom (adversaire)','#xplayers .xc:not(.act) .xn'],['xrA','Score (joueur en cours)','#xplayers .xc.act .xr'],['xrO','Score (adversaire)','#xplayers .xc:not(.act) .xr'],
+    ['xsA','Moyenne (joueur en cours)','#xplayers .xc.act .xs'],['xsO','Moyenne (adversaire)','#xplayers .xc:not(.act) .xs'],['xhA','Historique (joueur en cours)','#xplayers .xc.act .xh'],['xhO','Historique (adversaire)','#xplayers .xc:not(.act) .xh'],
+    ['xkl','Chiffres des touches','#xkeys .xk .lbl']]};
+const ED_ROOT={ck:'#game',x:'#x01'};
+const edReg=(cx,id)=>(ED_REG[cx]||[]).find(r=>r[0]===id);
+function edPick(t){const cx=lyCtx(),R=ED_REG[cx],root=ED_ROOT[cx];if(!R||!t||!t.closest)return null;
+  for(let e=t;e&&e.id!==root.slice(1);e=e.parentElement){const r=R.find(r=>e.matches(root+' '+r[2]));if(r)return r[0]}return null}
+let ED_HL=null;
+function edApply(){let st=$('edSt');if(!st){st=document.createElement('style');st.id='edSt';document.head.append(st)}
+  const cx=lyCtx(),root=ED_ROOT[cx],E=((S.lays||{})[lyCur()]||{}).el||{};let css='';
+  if(root){const pre='html body '+root.repeat(6)+' ';
+    (ED_REG[cx]||[]).forEach(([id,,sel])=>{const v=E[id],q=pre+sel;
+      if(v){const e0=document.querySelector(root+' '+sel),abs=e0&&/absolute|fixed/.test(getComputedStyle(e0).position);
+        css+=`${q}{${v.z&&v.z!==1?`zoom:${v.z}!important;`:''}${v.x||v.y?(abs?`margin-left:${v.x||0}dvw!important;margin-top:${v.y||0}dvh!important;`:`position:relative!important;left:${v.x||0}dvw!important;top:${v.y||0}dvh!important;`):''}}\n`}
+      if(ED_HL===id)css+=`${q}{outline:2px dashed #ff5a1f!important;outline-offset:3px!important}\n`})}
+  st.textContent=css}
 const lyBlockKeys=(m,cx)=>((LY_B[m]||{})[m==='bas'?'all':cx]||[]).flatMap(g=>g[1].map(x=>Array.isArray(x)?x[0]:x));
 const lyFmt=(v,u)=>u==='x'?(+v).toFixed(2):u==='%'?Math.round(v*100)+' %':u==='pc'?(+v).toFixed(1)+' %':(+v).toFixed(1);
 /* 501 : hauteur des touches (les rangées sont calculées par l'appli : on les reprend et on les multiplie) */
@@ -8300,7 +8329,8 @@ function lyKeys(L){const k=$('xkeys'),x=$('x01');if(!k||!x.classList.contains('o
   const [h,hb]=lyKeys.h||[0,0];if(!h)return;x.style.setProperty('--xkH',(h*L.xkh).toFixed(1)+'px');x.style.setProperty('--xbH',((hb||h)*L.xbh).toFixed(1)+'px');x.classList.add('xkset')}
 {const _x=xRender;xRender=function(){const r=_x.apply(this,arguments);try{if($('x01').classList.contains('on')&&!xRender._k){xRender._k=1;requestAnimationFrame(()=>{xRender._k=0;lyKeys(lyGet())})}}catch(e){}return r}}
 function lyRoot(){const L=lyGet(lyCur()),st=document.documentElement.style,u=innerHeight/100;st.setProperty('--bub-bw',L.bw+'px');st.setProperty('--bw',L.bw+'px');
-  st.setProperty('--lyF',L.ftK);['tmL','dtZ','spZ','xnZ','xrZ','xsZ','xcoZ','xhZ','xkz','xkg','xoN','xoS','xoM','xoH','xoC','xpW','xpH','xpG','xcG'].forEach(k=>st.setProperty('--'+k,L[k]));lyKeys(L);st.setProperty('--icZ',L.icZ);st.setProperty('--ifZ',L.ifZ);st.setProperty('--fbw',L.fbw+'px');st.setProperty('--lyB',L.brK);st.setProperty('--lyGFB',(L.gFB*u).toFixed(1)+'px');st.setProperty('--lyMB',(L.mB*u).toFixed(1)+'px')}
+  try{edApply()}catch(e){}
+  st.setProperty('--lyF',L.ftK);['xpT','xgPK','xgKF','tmL','dtZ','spZ','xnZ','xrZ','xsZ','xcoZ','xhZ','xkz','xkg','xoN','xoS','xoM','xoH','xoC','xpW','xpH','xpG','xcG'].forEach(k=>st.setProperty('--'+k,L[k]));lyKeys(L);st.setProperty('--icZ',L.icZ);st.setProperty('--ifZ',L.ifZ);st.setProperty('--fbw',L.fbw+'px');st.setProperty('--lyB',L.brK);st.setProperty('--lyGFB',(L.gFB*u).toFixed(1)+'px');st.setProperty('--lyMB',(L.mB*u).toFixed(1)+'px')}
 lyRoot();
 {const _s=show;show=function(){const r=_s.apply(this,arguments);try{lyRoot()}catch(e){}return r}}
 function lyApply(){lyRoot();try{if(KG&&PKL.k&&$('killer').classList.contains('on')){PKL.k.querySelectorAll('g.kin').forEach(g=>{g._h=null});PKL.k.querySelectorAll('text').forEach(t=>{t._h=null});pklSync()}}catch(e){}try{if(G&&R&&$('game').classList.contains('on')){layoutSk();if(typeof fitSk==='function')fitSk();render()}}catch(e){}}
@@ -8309,23 +8339,29 @@ function lyFromHome(){const ok=G&&G.players&&G.players.length===2&&G.winner===nu
   $('hResume').click();setTimeout(lyOpen,450)}
 const LY_CTX={x:'brK ftK gFB mB bw fbw icZ ifZ xnZ xrZ xsZ xcoZ xhZ xkz xkh xkg xbh xoN xoS xoM xoH xoC xpW xpH xpG xcG',kl:'brK ftK gFB mB zNm nfz nsw bw fbw icZ ifZ paW paH zPl iPl',ot:'brK ftK gFB mB bw fbw icZ ifZ'},LY_NO=new Proxy({},{get:(o,k)=>/^(ck|sh|hi)n$/.test(k)?'nW':''});
 const lyCtx=()=>{const c=lyCur();return c==='kl'||(c.startsWith('clk')&&pkClk())?'kl':$('x01').classList.contains('on')?'x':($('game').classList.contains('on')&&skp2())?'ck':'ot'};
-function lyOpen(mode){const old=$('lyp');const up0=old?old.classList.contains('up'):false;if(old)old.remove();haptic();const p=el('div','');p.id='lyp';document.body.append(p);let up=up0;
-  const CX=lyCur(),cx=lyCtx(),tabs=LY_TABS[cx]||LY_TABS.ot;if(!mode||mode==='txt'||!tabs.some(t=>t[0]===mode))mode=tabs[0][0];
+function lyOpen(mode,elId){const old=$('lyp');const up0=old?old.classList.contains('up'):false;if(old)old.remove();haptic();const p=el('div','');p.id='lyp';document.body.append(p);let up=up0;
+  const CX=lyCur(),cx=lyCtx();let tabs=LY_TABS[cx]||LY_TABS.ot;
+  if(elId&&edReg(cx,elId))tabs=[['el','Élément']].concat(tabs);else elId=null;
+  if(!mode||mode==='txt'||!tabs.some(t=>t[0]===mode))mode=tabs[0][0];
+  const EL=()=>{S.lays=S.lays||{};S.lays[CX]=S.lays[CX]||{};S.lays[CX].el=S.lays[CX].el||{};return S.lays[CX].el[elId]=S.lays[CX].el[elId]||{z:1,x:0,y:0}};
+  const hl=()=>{ED_HL=mode==='el'?elId:null;try{edApply()}catch(e){}};
   const BAS=['brK','ftK','gFB','mB','icZ','ifZ','dtZ','spZ','fbw','barTop'];
   const draw=()=>{const L=lyGet(CX);p.classList.toggle('up',up);const tn=(tabs.find(t=>t[0]===mode)||[,''])[1];
     const groups=mode==='pol'?[]:((LY_B[mode]||{})[mode==='bas'?'all':cx]||[]),no=(LY_NO[CX]||'').split(' ');
     p.innerHTML=`<div class="lyh"><b>${mode==='bas'?'Bas de l\'écran':mode==='pol'?'Polices':tn}<small>${mode==='bas'?'identique dans tous les jeux':mode==='pol'?'toute l\'appli':LY_NAME[CX]}</small></b><button class="lyd" aria-label="Déplacer le panneau">${up?'↓':'↑'}</button><button class="lyx" aria-label="Fermer">✕</button></div>
       <div class="lyt">${tabs.map(([m,t])=>`<button data-m="${m}" class="${m===mode?'on':''}">${t}</button>`).join('')}</div>
+      ${mode==='el'?(()=>{const v=Object.assign({z:1,x:0,y:0},(((S.lays||{})[CX]||{}).el||{})[elId]||{});const r=edReg(cx,elId);
+        return `<i class="lyg">${r[1]}</i><p class="lyel">Appui long sur un autre élément pour le régler à son tour.</p>`+[['z','Taille',.4,2.5,.02,'%'],['x','Gauche ← → droite (en % de l\'écran)',-25,25,.1,'pc'],['y','Haut ↑ ↓ bas (en % de l\'écran)',-25,25,.1,'pc']].map(([k,l,a,b,st,u])=>`<label><span>${l}</span><b data-v="el_${k}">${lyFmt(v[k],u)}</b><input type="range" data-e="${k}" data-u="${u}" min="${a}" max="${b}" step="${st}" value="${v[k]}"></label>`).join('')})():''}
       ${groups.map(([gt,ks])=>{const rows=ks.map(x=>Array.isArray(x)?x:[x]).filter(([k])=>LY_K[k]&&!no.includes(k)).map(([k,lb])=>{const[l0,a,b,st,u]=LY_K[k],l=lb||l0;return`<label><span>${l}</span><b data-v="${k}">${lyFmt(L[k],u)}</b><input type="range" data-k="${k}" data-u="${u}" min="${a}" max="${b}" step="${st}" value="${L[k]}"></label>`}).join('');return rows?`<i class="lyg">${gt}</i>${rows}`:''}).join('')}
       ${mode==='nb'&&cx==='ck'?`<div class="lyb"><span>Nombres dans la place libre</span><div class="sw">${['En haut','Au centre','En bas'].map((t,i)=>`<button data-a="${i}" class="${(L.nA|0)===i?'on':''}">${t}</button>`).join('')}</div></div>`:''}
       ${mode==='bas'?`<div class="lyb"><span>Barre Accueil · infos · Annuler (Cricket)</span><div class="sw">${['En bas','En haut'].map((t,i)=>`<button data-bt="${i}" class="${(L.barTop|0)===i?'on':''}">${t}</button>`).join('')}</div></div>`:''}
       ${mode==='pol'?`<div class="lyf"><button data-f="fN">Nombres<b style="font-family:'${esc(fcCur('fN'))}','Fun'">${esc(fcName(fcCur('fN')))}</b></button><button data-f="fT">Textes<b style="font-family:'${esc(fcCur('fT'))}','Fun'">${esc(fcName(fcCur('fT')))}</b></button></div>`:''}
-      <button class="lyr">Revenir à Pop pour ${mode==='bas'?'le bas de l\'écran':mode==='pol'?'les polices':'ce bloc'}</button><button class="lyra">Tout remettre en Pop (tous les jeux)</button><button class="lyc">Copier mes réglages (pour Claude)</button>`};
-  draw();
-  const done=()=>{store.set(K_S,S);try{fcApply();fcRefit()}catch(e){}lyApply();try{lyPlace()}catch(e){}draw();try{mkToast('','Réglages Pop rétablis',1600)}catch(e){}};
-  p.addEventListener('click',ev=>{ev.stopPropagation();if(ev.target.closest('.lyx')){p.remove();return}
+      <button class="lyr">Revenir à Pop pour ${mode==='el'?'cet élément':mode==='bas'?'le bas de l\'écran':mode==='pol'?'les polices':'ce bloc'}</button><button class="lyra">Tout remettre en Pop (tous les jeux)</button><button class="lyc">Copier mes réglages (pour Claude)</button>`};
+  draw();hl();
+  const done=()=>{store.set(K_S,S);try{edApply()}catch(e){}try{fcApply();fcRefit()}catch(e){}lyApply();try{lyPlace()}catch(e){}draw();try{mkToast('','Réglages Pop rétablis',1600)}catch(e){}};
+  p.addEventListener('click',ev=>{ev.stopPropagation();if(ev.target.closest('.lyx')){p.remove();ED_HL=null;try{edApply()}catch(e){}return}
     if(ev.target.closest('.lyd')){up=!up;draw();return}
-    const tb=ev.target.closest('.lyt button');if(tb){haptic();mode=tb.dataset.m;p.scrollTop=0;draw();return}
+    const tb=ev.target.closest('.lyt button');if(tb){haptic();mode=tb.dataset.m;p.scrollTop=0;draw();hl();return}
     const fb=ev.target.closest('.lyf button');if(fb){fcOpen(fb.dataset.f,draw);return}
     const bt=ev.target.closest('.lyb button[data-bt]');if(bt){haptic();lySet('barTop',+bt.dataset.bt,CX);store.set(K_S,S);lyApply();draw();return}
     const ab=ev.target.closest('.lyb button[data-a]');if(ab){haptic();lySet('nA',+ab.dataset.a,CX);store.set(K_S,S);lyPlace();draw();return}
@@ -8334,11 +8370,14 @@ function lyOpen(mode){const old=$('lyp');const up0=old?old.classList.contains('u
       (navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(txt).then(ok):Promise.reject()).catch(()=>{if(navigator.share)navigator.share({text:txt}).catch(()=>{});else prompt('Copie ce texte :',txt)});return}
     if(ev.target.closest('.lyra')){haptic();S.lays={};S.lay={v3:1,v4:1};delete S.fN;delete S.fT;done();return}
     if(ev.target.closest('.lyr')){haptic();
-      if(mode==='pol'){delete S.fN;delete S.fT}
+      if(mode==='el'){const E=((S.lays||{})[CX]||{}).el;if(E)delete E[elId]}
+      else if(mode==='pol'){delete S.fN;delete S.fT}
       else{const ks=mode==='bas'?BAS:lyBlockKeys(mode,cx).concat(mode==='nb'&&cx==='ck'?['nA']:[]);S.lays=S.lays||{};S.lay=S.lay||{v3:1,v4:1};
         ks.forEach(k=>{if(LY_GLOB.includes(k))delete S.lay[k];else if(S.lays[CX])delete S.lays[CX][k]})}
       done()}});
-  p.addEventListener('input',ev=>{const r=ev.target.closest('input[type=range]');if(!r)return;const k=r.dataset.k,v=+r.value;lySet(k,v,CX);
+  p.addEventListener('input',ev=>{const r=ev.target.closest('input[type=range]');if(!r)return;
+    if(r.dataset.e){const k=r.dataset.e,v=+r.value;EL()[k]=v;const bv=p.querySelector(`b[data-v="el_${k}"]`);if(bv)bv.textContent=lyFmt(v,r.dataset.u);edApply();clearTimeout(lyOpen._t);lyOpen._t=setTimeout(()=>store.set(K_S,S),400);return}
+    const k=r.dataset.k,v=+r.value;lySet(k,v,CX);
     const b=p.querySelector(`b[data-v="${k}"]`);if(b)b.textContent=lyFmt(v,r.dataset.u);cancelAnimationFrame(p._raf);p._raf=requestAnimationFrame(lyApply);clearTimeout(p._sv);p._sv=setTimeout(()=>store.set(K_S,S),400)})}
 
 /* ===== Polices : une pour les nombres (bulles, scores, fléchettes, Killer), une pour tous les textes ===== */
@@ -8372,7 +8411,7 @@ function fcOpen(k,back){const old=$('fch');if(old)old.remove();haptic();const p=
 fcApply();
 /* appui long sur un bloc : ouvre les réglages de ce bloc (case joueur, tableau, touches, cartes, bas de l'écran) */
 function lyLP(el,mode,ok){if(!el)return;let t=0,lp=false,x0=0,y0=0;
-  el.addEventListener('pointerdown',e=>{lp=false;clearTimeout(t);if(ok&&!ok(e))return;x0=e.clientX;y0=e.clientY;t=setTimeout(()=>{lp=performance.now();lyOpen(mode)},560)},true);
+  el.addEventListener('pointerdown',e=>{lp=false;clearTimeout(t);if(ok&&!ok(e))return;x0=e.clientX;y0=e.clientY;const tg=e.target;t=setTimeout(()=>{lp=performance.now();const id=edPick(tg);lyOpen(id?'el':mode,id)},560)},true);
   el.addEventListener('pointermove',e=>{if(Math.hypot(e.clientX-x0,e.clientY-y0)>10)clearTimeout(t)},true);
   ['pointerup','pointercancel'].forEach(ev=>el.addEventListener(ev,()=>clearTimeout(t),true));
   el.addEventListener('click',e=>{if(lp&&performance.now()-lp<2500){e.stopImmediatePropagation();e.preventDefault()}lp=false},true)}
