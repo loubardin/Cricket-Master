@@ -4408,6 +4408,10 @@ html body #lyp .lyr,html body #lyp .lyra,html body #lyp .lyc{font-size:13px;padd
 html body .skinpick .sksw{position:relative;overflow:visible!important;background:var(--m-cell,#ece5d3)!important;box-shadow:inset 0 0 0 var(--bub-bw,2px) #111!important;border-radius:99px!important;padding:4px!important;gap:2px}
 html body .skinpick .sksw button{position:relative;z-index:1;border-radius:99px!important;background:transparent!important;color:#111!important;padding:5px 14px!important;transition:background .2s,box-shadow .2s,color .2s}
 html body .skinpick .sksw button.on{background:var(--accent)!important;color:#fff!important;box-shadow:0 0 0 5px var(--accent),0 6px 14px rgba(var(--acc-rgb,255,90,31),.38)!important;z-index:2}
+
+/* équipes : interligne entre les deux noms de la case (Cricket, Shanghai, Halve-it, 501/301) */
+html body #game#game#game.sk.p2 #scores .sc>.nm .nmm{bottom:calc(100% + .3em + var(--tmL,0)*1dvh)!important}
+html body #x01#x01#x01 #xplayers .xc .xn .xm{position:relative!important;top:calc(var(--tmL,0)*1dvh)!important}
 </style>
 </head>
 <body>
@@ -7894,7 +7898,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-269';   // à changer avec VERSION dans sw.js
+const APPV='lf-270';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
@@ -8237,7 +8241,7 @@ function popOutl(root){if(!root)return;root.querySelectorAll('text.w').forEach(t
 addEventListener('resize',()=>{try{if(KG&&PKL.k&&$('killer').classList.contains('on'))pklSync()}catch(e){}});
 
 /* ===== Mise en page du Cricket à 2 (Bulle) : hauteurs, écarts, barre Accueil · infos · Annuler en haut ou en bas ===== */
-const LY_D={klZ:1,klY:0,klHZ:1,klKZ:1,klNY:0,klNoY:0,klKY:0,klPY:0,xoN:0,xoS:0,xoM:0,xoH:0,xoC:0,xpW:1,xpH:1,xpG:1,xcG:1,xnZ:1,xrZ:1,xsZ:1,xcoZ:1,xhZ:1,xkz:1,xkh:1,xkg:1,xbh:1,paW:1,paH:1,poW:1,poH:1,zPo:1.05,poG:1,poY:0,crZ:1,crY:0,scR:1,hZ:1,nW:1,icZ:1,ifZ:1,dtZ:1,spZ:1,fbw:0,barTop:0,iNP:.1,iPM:.14,iPMo:.14,iY:0,iPl:.1,zNm:1.2,zSc:1.6,zMp:1.25,zPl:1.05,nfz:1.1,nsw:4,scsw:4,bw:2.5,mkz:.95,mksw:4,scK:1.1,rowK:1.05,ftK:1.05,brK:1,mT:4.1,gSN:1.1,gL:1.8,gNF:1.5,gFB:1.1,mB:.9,nA:0};   // « Pop » : les réglages de base
+const LY_D={tmL:0,klZ:1,klY:0,klHZ:1,klKZ:1,klNY:0,klNoY:0,klKY:0,klPY:0,xoN:0,xoS:0,xoM:0,xoH:0,xoC:0,xpW:1,xpH:1,xpG:1,xcG:1,xnZ:1,xrZ:1,xsZ:1,xcoZ:1,xhZ:1,xkz:1,xkh:1,xkg:1,xbh:1,paW:1,paH:1,poW:1,poH:1,zPo:1.05,poG:1,poY:0,crZ:1,crY:0,scR:1,hZ:1,nW:1,icZ:1,ifZ:1,dtZ:1,spZ:1,fbw:0,barTop:0,iNP:.1,iPM:.14,iPMo:.14,iY:0,iPl:.1,zNm:1.2,zSc:1.6,zMp:1.25,zPl:1.05,nfz:1.1,nsw:4,scsw:4,bw:2.5,mkz:.95,mksw:4,scK:1.1,rowK:1.05,ftK:1.05,brK:1,mT:4.1,gSN:1.1,gL:1.8,gNF:1.5,gFB:1.1,mB:.9,nA:0};   // « Pop » : les réglages de base
 if(S.lay&&!S.lay.v3){S.lay={v3:1};try{store.set(K_S,S)}catch(e){}}
 /* un profil de réglages par jeu ; les contours (et les polices) sont communs à toute l'appli */
 const LY_GLOB=['bw','fbw','nsw','scsw','brK','ftK','gFB','mB','icZ','ifZ','dtZ','spZ','barTop'];   // contours et boutons du bas : un seul réglage pour toute l'appli
@@ -8278,10 +8282,10 @@ const LY_K={
   xpW:['Largeur des bulles',.5,2.5,.05,'%'],xpH:['Hauteur des bulles',.4,3,.05,'%'],xpG:['Écart',0,4,.05,'%'],
   xkh:['Hauteur des touches 1 à 20',.5,1.6,.05,'%'],xbh:['Hauteur de la touche Bulle',.5,1.8,.05,'%'],xkg:['Écart entre les touches',0,3,.05,'%'],xkz:['Chiffres',.5,1.6,.05,'%'],
   klZ:['Taille des cartes',.6,1.3,.01,'%'],klY:['Décaler les cartes (− haut, + bas)',-10,10,.1,'pc'],klHZ:['Cœurs',.5,1.6,.05,'%'],klKZ:['Marques K (MPR à l\'Horloge)',.5,1.6,.05,'%'],
-  klNY:['Nom',-30,30,.5,'pc'],klNoY:['Numéro',-30,30,.5,'pc'],klKY:['Marques K (MPR à l\'Horloge)',-30,30,.5,'pc'],klPY:['Historique',-30,30,.5,'pc']};
+  klNY:['Nom',-30,30,.5,'pc'],klNoY:['Numéro',-30,30,.5,'pc'],klKY:['Marques K (MPR à l\'Horloge)',-30,30,.5,'pc'],klPY:['Historique',-30,30,.5,'pc'],tmL:['Interligne entre les 2 noms d\'une équipe (en % de l\'écran)',-3,3,.05,'pc']};
 const LY_B={
-  pl:{ck:[['Bloc',['scK','mT','gSN','scR','hZ']],['Textes : tailles',['zNm','zSc','zMp']],['Textes : placement (en hauteur de ligne)',['iNP','iPM','iPMo','iY']],['Historique du joueur en cours',['paW','paH','zPl','iPl']],['Historique de l\'adversaire',['poW','poH','zPo','poG','poY']],['Couronne',['crZ','crY']],['Contours',['scsw','bw']]],
-      x:[['Bloc',['xcG']],['Textes : tailles',['xnZ','xrZ','xsZ','xcoZ','xhZ']],['Textes : placement (en % de l\'écran)',['xoN','xoS','xoM','xoH','xoC']],['Historique',['xpW','xpH','xpG']],['Contours',['bw']]],
+  pl:{ck:[['Bloc',['scK','mT','gSN','scR','hZ']],['Textes : tailles',['zNm','zSc','zMp']],['Textes : placement (en hauteur de ligne)',['iNP','iPM','iPMo','iY','tmL']],['Historique du joueur en cours',['paW','paH','zPl','iPl']],['Historique de l\'adversaire',['poW','poH','zPo','poG','poY']],['Couronne',['crZ','crY']],['Contours',['scsw','bw']]],
+      x:[['Bloc',['xcG']],['Textes : tailles',['xnZ','xrZ','xsZ','xcoZ','xhZ']],['Textes : placement (en % de l\'écran)',['xoN','xoS','xoM','xoH','xoC','tmL']],['Historique',['xpW','xpH','xpG']],['Contours',['bw']]],
       kl:[['Bloc',['klZ','klY']],['Textes : tailles',['zNm',['nfz','Numéro'],'klHZ','klKZ']],['Textes : placement (en % de la carte)',['klNY','klNoY','klKY','klPY']],['Historique',['paW','paH','zPl','iPl']]]},
   nb:{ck:[['Bloc',['rowK','nW','gL','gNF']],['Textes',[['nfz','Taille des nombres'],'nsw']],['Marques',['mkz','mksw']]],
       x:[['Bloc',['xkh','xbh','xkg']],['Textes',['xkz']]]},
@@ -8296,7 +8300,7 @@ function lyKeys(L){const k=$('xkeys'),x=$('x01');if(!k||!x.classList.contains('o
   const [h,hb]=lyKeys.h||[0,0];if(!h)return;x.style.setProperty('--xkH',(h*L.xkh).toFixed(1)+'px');x.style.setProperty('--xbH',((hb||h)*L.xbh).toFixed(1)+'px');x.classList.add('xkset')}
 {const _x=xRender;xRender=function(){const r=_x.apply(this,arguments);try{if($('x01').classList.contains('on')&&!xRender._k){xRender._k=1;requestAnimationFrame(()=>{xRender._k=0;lyKeys(lyGet())})}}catch(e){}return r}}
 function lyRoot(){const L=lyGet(lyCur()),st=document.documentElement.style,u=innerHeight/100;st.setProperty('--bub-bw',L.bw+'px');st.setProperty('--bw',L.bw+'px');
-  st.setProperty('--lyF',L.ftK);['dtZ','spZ','xnZ','xrZ','xsZ','xcoZ','xhZ','xkz','xkg','xoN','xoS','xoM','xoH','xoC','xpW','xpH','xpG','xcG'].forEach(k=>st.setProperty('--'+k,L[k]));lyKeys(L);st.setProperty('--icZ',L.icZ);st.setProperty('--ifZ',L.ifZ);st.setProperty('--fbw',L.fbw+'px');st.setProperty('--lyB',L.brK);st.setProperty('--lyGFB',(L.gFB*u).toFixed(1)+'px');st.setProperty('--lyMB',(L.mB*u).toFixed(1)+'px')}
+  st.setProperty('--lyF',L.ftK);['tmL','dtZ','spZ','xnZ','xrZ','xsZ','xcoZ','xhZ','xkz','xkg','xoN','xoS','xoM','xoH','xoC','xpW','xpH','xpG','xcG'].forEach(k=>st.setProperty('--'+k,L[k]));lyKeys(L);st.setProperty('--icZ',L.icZ);st.setProperty('--ifZ',L.ifZ);st.setProperty('--fbw',L.fbw+'px');st.setProperty('--lyB',L.brK);st.setProperty('--lyGFB',(L.gFB*u).toFixed(1)+'px');st.setProperty('--lyMB',(L.mB*u).toFixed(1)+'px')}
 lyRoot();
 {const _s=show;show=function(){const r=_s.apply(this,arguments);try{lyRoot()}catch(e){}return r}}
 function lyApply(){lyRoot();try{if(KG&&PKL.k&&$('killer').classList.contains('on')){PKL.k.querySelectorAll('g.kin').forEach(g=>{g._h=null});PKL.k.querySelectorAll('text').forEach(t=>{t._h=null});pklSync()}}catch(e){}try{if(G&&R&&$('game').classList.contains('on')){layoutSk();if(typeof fitSk==='function')fitSk();render()}}catch(e){}}
