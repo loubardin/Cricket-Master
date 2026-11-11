@@ -1513,8 +1513,8 @@ html.night .ov{background:rgba(31,37,48,.98)}
 #setup.b2 .seg.mini button{padding-left:calc(var(--u)*1.2)!important;padding-right:calc(var(--u)*1.2)!important}
 /* ===== v66 ===== */
 :root{--m-home:#f7f2e5;--ui-bg:#f7f2e5;--m-cell:#ece5d3;--acc-rgb:255,90,31}
-html:not(.night) #home,html:not(.night) #setup.b2,html:not(.night) #hist,html:not(.night) #draw{background:#f7f2e5!important}
-html:not(.night) body{background:#f7f2e5}
+html:not(.night) #home,html:not(.night) #setup.b2,html:not(.night) #hist,html:not(.night) #draw{background:var(--m-home,#f7f2e5)!important}
+html:not(.night) body{background:var(--m-home,#f7f2e5)}
 /* plus de grandes cases blanches dans les menus */
 #setup.b2 .sect,#setup.b2 .sect.s1,#setup.b2 .sect.s2{background:transparent!important;box-shadow:none!important;border-radius:0!important}
 #setup.b2 .sect.s1{padding-left:0!important;padding-right:0!important}
@@ -3279,6 +3279,28 @@ html body #x01#x01#x01#x01 #xplayers .xc .khist .pill.hint{background:rgba(255,2
 #xpick .cgrid.sp{grid-template-columns:repeat(4,1fr);padding-bottom:22px}
 #xpick .cgrid .ct{border-radius:12px;aspect-ratio:auto;height:34px;grid-column:span 2;font-size:12px;box-shadow:inset 0 0 0 2px rgba(0,0,0,.18)}
 #xpick .creset{margin-top:4px;width:100%;height:36px;border-radius:99px;border:0;background:transparent;box-shadow:inset 0 0 0 var(--bub-bw,2px) var(--ol,#111);font:400 15px "Fun",sans-serif;color:var(--ink)}
+
+/* panneau des couleurs */
+#xpick .cmain b{display:flex;gap:4px}#xpick .cmain b i{width:20px;height:20px;border-radius:50%;box-shadow:inset 0 0 0 2px var(--ol,#111);display:block}
+#colp{position:fixed;left:8px;right:8px;bottom:calc(var(--sab,0px) + 8px);z-index:300;height:min(58dvh,520px);background:#fff;border-radius:22px;box-shadow:0 0 0 2px var(--ol,#111),0 10px 40px rgba(0,0,0,.25);display:flex;flex-direction:column;padding:10px 12px 0;font:400 14px "Fun",sans-serif;color:#111}
+#colp .ch{display:flex;align-items:center;justify-content:space-between}#colp .ch b{font-size:17px;font-weight:400}
+#colp .cx{width:30px;height:30px;border-radius:50%;border:0;background:#111;color:#fff;font:inherit}
+#colp .cprev{display:flex;align-items:center;justify-content:center;gap:14px;margin:8px 0 6px;padding:10px;border-radius:16px;background:var(--m-home,#f7f2e5)}
+#colp .cpsw{display:flex;padding:3px;border-radius:99px;background:var(--m-cell,#ece5d3);box-shadow:inset 0 0 0 var(--bub-bw,2px) var(--ol,#111)}
+#colp .cpsw i{font-style:normal;padding:4px 12px;border-radius:99px}#colp .cpsw i.on{background:var(--accent);background-image:var(--accimg,none);color:var(--btx,#fff);box-shadow:0 0 0 3px var(--accent)}
+#colp .cpn{font:400 30px "Fun",sans-serif;color:#fff;background:var(--accent);background-image:var(--accimg,none);border-radius:99px;padding:0 14px;box-shadow:inset 0 0 0 var(--bub-bw,2px) var(--ol,#111);
+  text-shadow:2px 0 0 var(--tol,#111),-2px 0 0 var(--tol,#111),0 2px 0 var(--tol,#111),0 -2px 0 var(--tol,#111),1.4px 1.4px 0 var(--tol,#111),-1.4px 1.4px 0 var(--tol,#111),1.4px -1.4px 0 var(--tol,#111),-1.4px -1.4px 0 var(--tol,#111)}
+#colp .cpb{padding:6px 16px;border-radius:99px;background:var(--accent);background-image:var(--accimg,none);color:var(--btx,#fff);box-shadow:inset 0 0 0 var(--bub-bw,2px) var(--ol,#111)}
+#colp .ctabs{display:flex;gap:5px;overflow-x:auto;scrollbar-width:none;padding:2px 0 6px}
+#colp .ctabs button{flex:1 1 auto;padding:6px 6px!important;font-size:12.5px!important;border:0;border-radius:99px;background:#fff;box-shadow:inset 0 0 0 2px #111;color:#111;font:inherit;font-size:13px;padding:6px 11px}
+#colp .ctabs button.on{background:#111;color:#fff}
+#colp .cscroll{flex:1;overflow-y:auto;padding:4px 2px 14px}
+#colp .cg{display:grid;grid-template-columns:repeat(6,1fr);gap:16px 8px;padding:4px 2px 6px}
+#colp .cg button{aspect-ratio:1;border-radius:50%;border:0;box-shadow:inset 0 0 0 2px rgba(0,0,0,.16);position:relative;padding:0}
+#colp .cg button small{position:absolute;left:50%;top:100%;translate:-50% 1px;white-space:nowrap;font-size:9.5px;color:#555;max-width:120%;overflow:hidden;text-overflow:ellipsis}
+#colp .cg button.on{box-shadow:0 0 0 3px #fff,0 0 0 5.5px #111}
+#colp .cg.sp{grid-template-columns:repeat(4,1fr);margin-top:6px}#colp .cg.sp button{aspect-ratio:auto;height:40px;border-radius:14px}
+#colp .cpop{display:block;width:100%;margin-top:14px;height:40px;border-radius:99px;border:0;background:#fff;box-shadow:inset 0 0 0 2px #111;font:inherit;font-size:15px;color:#111}
 </style>
 </head>
 <body>
@@ -4859,21 +4881,53 @@ const botMetal=n=>BOTMETAL[botBase(n)]||null;
 ROSTER=ROSTER.filter(r=>!isBot(r.name));
 
 /* ===== couleurs de l'appli : bulles, contours, texte dans les bulles, contour du texte ===== */
-const COL_ACC=[['#e63946','Rouge'],['#dc5470','Pastèque'],['#f72585','Fuchsia'],['#b5179e','Magenta'],['#ffafcc','Rose'],['#cdb4db','Lilas'],
-  ['#e76f51','Terracotta'],['#ff5a1f','Orange Pop'],['#fb8500','Mandarine'],['#f4a261','Abricot'],['#ffb703','Ambre'],['#ffd166','Soleil'],
-  ['#e9c46a','Sable'],['#8ac926','Citron vert'],['#06d6a0','Menthe'],['#2a9d8f','Lagune'],['#4cc9f0','Ciel'],['#a2d2ff','Bleu pastel'],
-  ['#219ebc','Turquoise'],['#4776f6','Azur'],['#3a0ca3','Indigo'],['#7209b7','Violet'],['#264653','Ardoise'],['#111111','Noir']];
+const COL_ACC=[['#ff9aa2','Rose bonbon'],['#e63946','Rouge'],['#9d0208','Grenat'],
+  ['#ffc8dd','Rose pâle'],['#ffafcc','Rose'],['#dc5470','Pastèque'],['#f72585','Fuchsia'],['#b5179e','Magenta'],
+  ['#ffb4a2','Pêche'],['#ff6f59','Corail'],['#e76f51','Terracotta'],['#ff5a1f','Orange Pop'],['#fb8500','Mandarine'],['#f4a261','Abricot'],['#ffd6a5','Melon'],
+  ['#fdffb6','Vanille'],['#ffd166','Soleil'],['#ffb703','Ambre'],['#e9c46a','Sable'],['#bc8a5f','Caramel'],
+  ['#caffbf','Menthe pâle'],['#8ac926','Citron vert'],['#52b788','Prairie'],['#06d6a0','Menthe'],['#2a9d8f','Lagune'],['#2d6a4f','Forêt'],
+  ['#9bf6ff','Glacier'],['#a2d2ff','Bleu pastel'],['#4cc9f0','Ciel'],['#219ebc','Turquoise'],['#4776f6','Azur'],['#023e8a','Roi'],['#3a0ca3','Indigo'],
+  ['#bdb2ff','Pervenche'],['#cdb4db','Lilas'],['#9b5de5','Améthyste'],['#7209b7','Violet'],
+  ['#8d99ae','Gris bleu'],['#264653','Ardoise'],['#111111','Noir']];
 const COL_SP=[['rainbow','Arc-en-ciel','#ff9f1c','linear-gradient(90deg,#ff3b3b,#ff9f1c,#ffd60a,#38d27a,#3aa0ff,#8b5cf6)'],['gold','Or','#e0a800','linear-gradient(160deg,#ffe58a,#f2b705 50%,#c48a00)'],
   ['silver','Argent','#a9b1ba','linear-gradient(160deg,#f4f6f8,#a9b1ba 55%,#7d8792)'],['diamond','Diamant','#9ee7ff','linear-gradient(135deg,#e8fbff,#9ee7ff 28%,#ffffff 48%,#b8c6ff 68%,#e8fbff)']];
-const COL_OL=[['#111111','Noir'],['#023047','Marine'],['#264653','Ardoise'],['#240046','Nuit'],['#6a040f','Bordeaux'],['#4a2511','Chocolat'],['#5c6670','Acier'],['acc','Comme les bulles']];
-const COL_TX=[['auto','Auto'],['#ffffff','Blanc'],['#fdf0d5','Crème'],['#ffe8a3','Jaune pâle'],['#111111','Noir'],['#023047','Marine']];
-const COL_TO=[['ol','Comme les contours'],['#111111','Noir'],['#023047','Marine'],['#264653','Ardoise'],['#240046','Nuit'],['#6a040f','Bordeaux'],['#4a2511','Chocolat'],['#ffffff','Blanc']];
-const COL_D={acc:'#ff5a1f',ol:'#111111',btx:'auto',tol:'ol'};
+const COL_OL=[['#111111','Noir'],['#2b2d42','Anthracite'],['#5c6670','Acier'],['#8d99ae','Gris bleu'],
+  ['#14213d','Bleu nuit'],['#023047','Marine'],['#264653','Ardoise'],['#1b4332','Forêt'],['#2d6a4f','Sapin'],
+  ['#240046','Nuit'],['#3c096c','Violet'],['#6a040f','Bordeaux'],['#9d0208','Grenat'],['#4a2511','Chocolat'],['#7f5539','Bronze'],
+  ['#ffffff','Blanc'],['acc','Comme les bulles']];
+const COL_TX=[['auto','Auto'],['#ffffff','Blanc'],['#fdf0d5','Crème'],['#fdffb6','Vanille'],['#ffe8a3','Jaune pâle'],['#ffc8dd','Rose pâle'],['#9bf6ff','Glacier'],['#caffbf','Menthe pâle'],
+  ['#111111','Noir'],['#2b2d42','Anthracite'],['#023047','Marine'],['#6a040f','Bordeaux'],['ol','Comme les contours']];
+const COL_TO=[['ol','Comme les contours'],['#111111','Noir'],['#2b2d42','Anthracite'],['#14213d','Bleu nuit'],['#023047','Marine'],['#264653','Ardoise'],['#1b4332','Forêt'],
+  ['#240046','Nuit'],['#3c096c','Violet'],['#6a040f','Bordeaux'],['#9d0208','Grenat'],['#4a2511','Chocolat'],['#e0a800','Or'],['#ffffff','Blanc'],['#fdf0d5','Crème'],['acc','Comme les bulles']];
+const COL_BG=[['#f7f2e5','Crème Pop'],['#ffffff','Blanc'],['#faf6ee','Papier'],['#f1f1ef','Perle'],['#e9ecef','Brume'],
+  ['#f2e8cf','Sable'],['#efe6dd','Lin'],['#fbf8cc','Citron'],['#fffbe0','Vanille'],['#ffe5d9','Pêche'],['#fde2e4','Poudre'],['#ffe3ec','Rose'],
+  ['#efe4f7','Lilas'],['#e7e6fb','Lavande'],['#e3f2fd','Ciel'],['#e0fbfc','Glacier'],['#e2f5ea','Menthe'],['#edf6e5','Amande']];
+const COL_D={acc:'#ff5a1f',ol:'#111111',btx:'auto',tol:'ol',bg:'#f7f2e5'};
 const colGet=()=>Object.assign({},COL_D,S.col||{});
 const colAcc=()=>{const a=colGet().acc,sp=COL_SP.find(x=>x[0]===a);return sp?sp[2]:a};
 const colLum=h=>{const r=[1,3,5].map(k=>parseInt(h.slice(k,k+2),16)/255);return .299*r[0]+.587*r[1]+.114*r[2]};
+
+/* panneau « Couleurs de l'appli » : onglets, aperçu en direct, grandes pastilles */
+function colOpen(tab){const old=$('colp');if(old)old.remove();const p=el('div','');p.id='colp';document.body.append(p);tab=tab||'acc';
+  const T=[['acc','Bulles',COL_ACC],['ol','Contours',COL_OL],['btx','Texte',COL_TX],['tol','Contour texte',COL_TO],['bg','Fond',COL_BG]];
+  const sw=v=>{const C=colGet(),sp=COL_SP.find(x=>x[0]===v);return sp?sp[3]:v==='acc'?colAcc():v==='ol'?(C.ol==='acc'?colAcc():C.ol):v==='auto'?'linear-gradient(90deg,#fff 50%,#111 50%)':v};
+  const draw=()=>{const C=colGet(),cur=T.find(t=>t[0]===tab);
+    p.innerHTML=`<div class="ch"><b>Couleurs de l'appli</b><button class="cx" aria-label="Fermer">✕</button></div>
+      <div class="cprev"><span class="cpsw"><i class="on">Oui</i><i>Non</i></span><span class="cpn">20</span><span class="cpb">Jouer</span></div>
+      <div class="ctabs">${T.map(([k,n])=>`<button data-t="${k}" class="${k===tab?'on':''}">${n}</button>`).join('')}</div>
+      <div class="cscroll"><div class="cg">${cur[2].map(([v,n])=>`<button data-v="${v}" class="${C[tab]===v?'on':''}" style="background:${sw(v)}"><small>${n}</small></button>`).join('')}</div>
+      ${tab==='acc'?`<div class="cg sp">${COL_SP.map(([v,n])=>`<button data-v="${v}" class="${C.acc===v?'on':''}" style="background:${sw(v)}"><small>${n}</small></button>`).join('')}</div>`:''}
+      <button class="cpop">Couleurs Pop</button></div>`};
+  draw();
+  p.addEventListener('click',ev=>{ev.stopPropagation();if(ev.target.closest('.cx')){p.remove();return}
+    const t=ev.target.closest('.ctabs button');if(t){haptic();tab=t.dataset.t;draw();return}
+    const b=ev.target.closest('.cg button');if(b){haptic();S.col=Object.assign({},S.col||{},{[tab]:b.dataset.v});store.set(K_S,S);colApply();SFX.ui();const y=p.querySelector('.cscroll').scrollTop;draw();p.querySelector('.cscroll').scrollTop=y;try{renderSetup()}catch(e){}return}
+    if(ev.target.closest('.cpop')){haptic();delete S.col;store.set(K_S,S);colApply();draw();try{renderSetup()}catch(e){}}});
+}
 function colApply(){const C=colGet(),st=document.documentElement.style,sp=COL_SP.find(x=>x[0]===C.acc),acc=sp?sp[2]:C.acc,
-    ol=C.ol==='acc'?acc:C.ol,btx=C.btx==='auto'?(colLum(acc)>.62?'#111111':'#ffffff'):C.btx,tol=C.tol==='ol'?ol:C.tol;
+    ol=C.ol==='acc'?acc:C.ol,btx=C.btx==='auto'?(colLum(acc)>.62?'#111111':'#ffffff'):C.btx==='ol'?ol:C.btx,tol=C.tol==='ol'?ol:C.tol==='acc'?acc:C.tol,
+    bg=C.bg,cell='#'+[1,3,5].map(k=>Math.round(parseInt(bg.slice(k,k+2),16)*.95).toString(16).padStart(2,'0')).join('');
+  st.setProperty('--m-home',bg);st.setProperty('--ui-bg',bg);st.setProperty('--m-cell',cell);try{topColor()}catch(e){}
   st.setProperty('--accent',acc);st.setProperty('--acc-rgb',[1,3,5].map(k=>parseInt(acc.slice(k,k+2),16)).join(','));st.setProperty('--accimg',sp?sp[3]:'none');
   st.setProperty('--ol',ol);st.setProperty('--btx',btx);if(C.btx==='auto')st.removeProperty('--btxU');else st.setProperty('--btxU',btx);st.setProperty('--tol',tol);
   document.documentElement.classList.toggle('accsp',!!sp)}
@@ -6626,22 +6680,17 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-279';   // à changer avec VERSION dans sw.js
+const APPV='lf-280';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
   const p=el('div','');p.id='xpick';p.classList.add('skinpick');document.body.append(p);
   const draw=()=>{p.innerHTML=`<div class="skn"><button class="skgo" data-go="hStats">Statistiques</button><button class="skgo" data-go="hHist">Historique</button></div><div class="skp"><span>Mise en page du Cricket</span><div class="sksw"><button class="sklay">Régler</button></div></div><div class="skp"><span>Son</span><div class="sksw sksnd"><button data-s="1" class="${S.sound?'on':''}">Oui</button><button data-s="0" class="${S.sound?'':'on'}">Non</button></div></div>`+`<div class="skp"><span>Annonces vocales</span><div class="sksw skvox"><button data-v="1" class="${S.voice!==false?'on':''}">Oui</button><button data-v="0" class="${S.voice===false?'on':''}">Non</button></div></div><div class="skp"><span>Couleurs des joueurs</span><div class="sksw"><button data-p="1" class="${S.pcolOff?'':'on'}">Oui</button><button data-p="0" class="${S.pcolOff?'on':''}">Non</button></div></div>`+colMenu()+`<div class="skv">version ${APPV}</div>`;if(p.style.top)p.style.top=Math.max(12,Math.min(parseFloat(p.style.top),innerHeight-p.offsetHeight-12))+'px'};
-  let CO=null;   // rangée de couleurs ouverte
-  const colMenu=()=>{const C=colGet(),sw=(v,L)=>{const sp=COL_SP.find(x=>x[0]===v);return sp?`background:${sp[3]}`:v==='acc'?`background:${colAcc()}`:v==='ol'?`background:${C.ol==='acc'?colAcc():C.ol}`:v==='auto'?`background:linear-gradient(90deg,#fff 50%,#111 50%)`:`background:${v}`};
-    const row=(k,t,list,spc)=>`<button class="crow" data-c="${k}"><span>${t}</span><i style="${sw(C[k])}"></i></button>`+(CO===k?`<div class="cgrid">${list.map(([v,n])=>`<button data-k="${k}" data-v="${v}" class="${C[k]===v?'on':''}" style="${sw(v)}" aria-label="${n}">${['acc','ol','auto'].includes(v)?`<small>${n}</small>`:''}</button>`).join('')}</div>`+(spc?`<div class="cgrid sp">${COL_SP.map(([v,n])=>`<button class="ct ${C[k]===v?'on':''}" data-k="${k}" data-v="${v}" style="${sw(v)}">${n}</button>`).join('')}</div>`:''):'');
-    return `<div class="cgh">Couleurs de l'appli</div>`+row('acc','Bulles',COL_ACC,1)+row('ol','Contours',COL_OL)+row('btx','Texte dans les bulles',COL_TX)+row('tol','Contour du texte',COL_TO)+(S.col?`<button class="creset">Couleurs Pop</button>`:'')};
+  const colMenu=()=>{const C=colGet(),dot=v=>`<i style="background:${v}"></i>`;return `<button class="crow cmain"><span>Couleurs de l'appli</span><b>${dot(colAcc())}${dot(C.ol==='acc'?colAcc():C.ol)}${dot(C.bg)}</b></button>`};
   draw();p.style.left=Math.max(12,(innerWidth-p.offsetWidth)/2)+'px';p.style.top=Math.max(12,Math.min(innerHeight-p.offsetHeight-12,e.currentTarget.getBoundingClientRect().bottom+10))+'px';
   p.addEventListener('click',ev=>{ev.stopPropagation();const go=ev.target.closest('.skgo');if(go){p.remove();$(go.dataset.go).dispatchEvent(new MouseEvent('click',{bubbles:true}));return}
     if(ev.target.closest('.sklay')){p.remove();lyFromHome();return}
-    const cr=ev.target.closest('.crow');if(cr){haptic();CO=CO===cr.dataset.c?null:cr.dataset.c;draw();return}
-    const cb=ev.target.closest('.cgrid button');if(cb){haptic();S.col=Object.assign({},S.col||{},{[cb.dataset.k]:cb.dataset.v});store.set(K_S,S);colApply();SFX.ui();draw();try{renderSetup()}catch(e){}return}
-    if(ev.target.closest('.creset')){haptic();delete S.col;store.set(K_S,S);colApply();CO=null;draw();try{renderSetup()}catch(e){}return}
+    if(ev.target.closest('.cmain')){haptic();p.remove();colOpen();return}
     const sn=ev.target.closest('.sksnd button');if(sn){if((sn.dataset.s==='1')!==!!S.sound)$('sndT').dispatchEvent(new MouseEvent('click',{bubbles:true}));draw();return}
     const vx=ev.target.closest('.skvox button');if(vx){haptic();S.voice=vx.dataset.v==='1';store.set(K_S,S);draw();if(S.voice)say('Annonces activées');return}
     const pb=ev.target.closest('.sksw button');if(pb){haptic();S.pcolOff=pb.dataset.p==='0';store.set(K_S,S);SFX.ui();draw();try{renderSetup()}catch(e){}return}
