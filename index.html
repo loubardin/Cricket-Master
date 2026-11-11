@@ -996,7 +996,7 @@ html.night #home .hch{color:#5d6679!important}
 #setup.b2 .gobar{border:0!important;box-shadow:none!important}
 /* overlays */
 html.night #hist,html.night #roster,html.night #info,html.night #ask,html.night #ppick{--ui-bg:#1f2530;--ui-card:#283040;--ui-line:#343c4d;--ui-sub:#97a1b4;--ui-track:#2b3241;--hi:#283040;--page:#1f2530;--ink:#f2f4f8;--mute:#97a1b4;color:#f2f4f8}
-html.night #hist,html.night #roster,html.night #info,html.night #ask{background:#1f2530!important}
+html.night #hist,html.night #roster,html.night #info,html.night #ask{background:var(--m-home,#1f2530)!important}
 html.night .htabs{background:#2b3241!important}
 html.night #hist .big.dark,html.night #roster .big.dark,html.night #ask .big.dark{background:#2b3241!important;color:#f2f4f8!important}
 html.night :is(#setup,#hist,#roster,#info,#ask,#ppick) .circ{background:#2b3241;color:#f2f4f8}
@@ -1293,7 +1293,7 @@ body.m3 #xkeys .xk.bull .lbl{background:none!important;-webkit-text-fill-color:#
 #xplayers.many .xc{row-gap:.3dvh!important}
 /* ===== vérif plein écran ===== */
 html,body{background:var(--m-home,#f4f2ee)}
-html.night,html.night body{background:#1f2530}
+html.night,html.night body{background:var(--m-home,#1f2530)}
 #setup.b2 #go{line-height:1!important;padding:0!important}
 #ppick{z-index:40!important}
 /* cricket : couronne et glace au-dessus du nom */
@@ -3226,7 +3226,7 @@ html body :is(#x01,#killer):is(#x01,#killer) footer :is(#b2,#b3)::after{font-siz
 html body :is(#x01,#killer):is(#x01,#killer) footer #bS::after{font-size:calc(3dvh*var(--spZ,1))!important}
 /* cadre du bouton Spew : contour général des cases ; réglage « Contour du texte Spew » : autour du mot */
 html body #game#game#game.sk.p2 footer::after,html body #x01#x01#x01 footer::after,html body #killer#killer#killer footer::after{border-width:var(--bw,2.5px)!important}
-html body :is(#game,#x01,#killer):is(#game,#x01,#killer):is(#game,#x01,#killer) footer #bS::after{--o:var(--fbw,0px);--on:calc(var(--fbw,0px)*-1);--d:calc(var(--fbw,0px)*.71);--dn:calc(var(--fbw,0px)*-.71);
+html body :is(#game,#x01,#killer):is(#game,#x01,#killer):is(#game,#x01,#killer) footer:not(.armed2):not(.armed3) #bS::after{--o:var(--fbw,0px);--on:calc(var(--fbw,0px)*-1);--d:calc(var(--fbw,0px)*.71);--dn:calc(var(--fbw,0px)*-.71);
   text-shadow:var(--o) 0 0 var(--tol,#111),var(--on) 0 0 var(--tol,#111),0 var(--o) 0 var(--tol,#111),0 var(--on) 0 var(--tol,#111),var(--d) var(--d) 0 var(--tol,#111),var(--dn) var(--d) 0 var(--tol,#111),var(--d) var(--dn) 0 var(--tol,#111),var(--dn) var(--dn) 0 var(--tol,#111)!important}
 /* aide au finish : l'animation d'arrivée part de sa place réglée (plus de saut) */
 @keyframes coin{0%{opacity:0;translate:0 calc(60% + var(--xoC,0)*1dvh)}100%{opacity:1;translate:0 calc(var(--xoC,0)*1dvh)}}
@@ -3291,8 +3291,8 @@ html body #x01#x01#x01#x01 #xplayers .xc .khist .pill.hint{background:rgba(255,2
 #colp .cpn{font:400 30px "Fun",sans-serif;color:#fff;background:var(--accent);background-image:var(--accimg,none);border-radius:99px;padding:0 14px;box-shadow:inset 0 0 0 var(--bub-bw,2px) var(--ol,#111);
   text-shadow:2px 0 0 var(--tol,#111),-2px 0 0 var(--tol,#111),0 2px 0 var(--tol,#111),0 -2px 0 var(--tol,#111),1.4px 1.4px 0 var(--tol,#111),-1.4px 1.4px 0 var(--tol,#111),1.4px -1.4px 0 var(--tol,#111),-1.4px -1.4px 0 var(--tol,#111)}
 #colp .cpb{padding:6px 16px;border-radius:99px;background:var(--accent);background-image:var(--accimg,none);color:var(--btx,#fff);box-shadow:inset 0 0 0 var(--bub-bw,2px) var(--ol,#111)}
-#colp .ctabs{display:flex;gap:5px;overflow-x:auto;scrollbar-width:none;padding:2px 0 6px}
-#colp .ctabs button{flex:0 0 auto;white-space:nowrap;padding:6px 9px!important;font-size:12px!important;border:0;border-radius:99px;background:#fff;box-shadow:inset 0 0 0 2px #111;color:#111;font:inherit;font-size:13px;padding:6px 11px}
+#colp .ctabs{display:flex;flex-wrap:wrap;gap:5px;padding:2px 0 6px}
+#colp .ctabs button{flex:1 0 28%;white-space:nowrap;padding:6px 6px!important;font-size:12.5px!important;border:0;border-radius:99px;background:#fff;box-shadow:inset 0 0 0 2px #111;color:#111;font:inherit;font-size:13px;padding:6px 11px}
 #colp .ctabs button.on{background:#111;color:#fff}
 #colp .cscroll{flex:1;overflow-y:auto;padding:4px 2px 14px}
 #colp .cg{display:grid;grid-template-columns:repeat(6,1fr);gap:16px 8px;padding:4px 2px 6px}
@@ -3302,62 +3302,6 @@ html body #x01#x01#x01#x01 #xplayers .xc .khist .pill.hint{background:rgba(255,2
 #colp .cg.sp{grid-template-columns:repeat(4,1fr);margin-top:6px}#colp .cg.sp button{aspect-ratio:auto;height:40px;border-radius:14px}
 #colp .cpop{display:block;width:100%;margin-top:14px;height:40px;border-radius:99px;border:0;background:#fff;box-shadow:inset 0 0 0 2px #111;font:inherit;font-size:15px;color:#111}
 
-/* couleurs spéciales (arc-en-ciel, or, argent, diamant) : la bulle et ce qui déborde autour ne font qu'un */
-html.accsp body #setup.b2 .seg .thumb{background:transparent!important;background-image:none!important;box-shadow:0 8px 18px rgba(0,0,0,.18)!important;isolation:isolate}
-html.accsp body #setup.b2 .seg .thumb:not(.thumb){position:relative}
-html.accsp body #setup.b2 .seg .thumb::before{content:'';position:absolute;inset:calc(-1*calc(var(--u)*1.7));border-radius:999px;background:var(--accimg);z-index:-1;pointer-events:none}
-html.accsp body #setup .sld .sldv{background:transparent!important;background-image:none!important;box-shadow:0 8px 18px rgba(0,0,0,.18)!important;isolation:isolate}
-html.accsp body #setup .sld .sldv:not(.thumb){position:relative}
-html.accsp body #setup .sld .sldv::before{content:'';position:absolute;inset:calc(-1*calc(var(--u)*1));border-radius:999px;background:var(--accimg);z-index:-1;pointer-events:none}
-html.accsp body #setup.b2 #go span{background:transparent!important;background-image:none!important;box-shadow:0 8px 18px rgba(0,0,0,.18)!important;isolation:isolate}
-html.accsp body #setup.b2 #go span:not(.thumb){position:relative}
-html.accsp body #setup.b2 #go span::before{content:'';position:absolute;inset:calc(-1*calc(var(--u)*1.7));border-radius:999px;background:var(--accimg);z-index:-1;pointer-events:none}
-html.accsp body #home#home .hbtns .big.acc{background:transparent!important;background-image:none!important;box-shadow:0 8px 18px rgba(0,0,0,.18)!important;isolation:isolate}
-html.accsp body #home#home .hbtns .big.acc:not(.thumb){position:relative}
-html.accsp body #home#home .hbtns .big.acc::before{content:'';position:absolute;inset:calc(-1*var(--bub-h));border-radius:999px;background:var(--accimg);z-index:-1;pointer-events:none}
-html.accsp body #draw #drawGo span{background:transparent!important;background-image:none!important;box-shadow:0 8px 18px rgba(0,0,0,.18)!important;isolation:isolate}
-html.accsp body #draw #drawGo span:not(.thumb){position:relative}
-html.accsp body #draw #drawGo span::before{content:'';position:absolute;inset:calc(-1*var(--bub-h));border-radius:999px;background:var(--accimg);z-index:-1;pointer-events:none}
-html.accsp body #home .hsw.two .hth{background:transparent!important;background-image:none!important;box-shadow:0 8px 18px rgba(0,0,0,.18)!important;isolation:isolate}
-html.accsp body #home .hsw.two .hth:not(.thumb){position:relative}
-html.accsp body #home .hsw.two .hth::before{content:'';position:absolute;inset:calc(-1*var(--bub-h));border-radius:999px;background:var(--accimg);z-index:-1;pointer-events:none}
-html.accsp body #ask .asw .hth{background:transparent!important;background-image:none!important;box-shadow:0 8px 18px rgba(0,0,0,.18)!important;isolation:isolate}
-html.accsp body #ask .asw .hth:not(.thumb){position:relative}
-html.accsp body #ask .asw .hth::before{content:'';position:absolute;inset:calc(-1*var(--bub-h));border-radius:999px;background:var(--accimg);z-index:-1;pointer-events:none}
-html.accsp body #draw .dsw .hth{background:transparent!important;background-image:none!important;box-shadow:0 8px 18px rgba(0,0,0,.18)!important;isolation:isolate}
-html.accsp body #draw .dsw .hth:not(.thumb){position:relative}
-html.accsp body #draw .dsw .hth::before{content:'';position:absolute;inset:calc(-1*var(--bub-h));border-radius:999px;background:var(--accimg);z-index:-1;pointer-events:none}
-html.accsp body #bill .bsw .hth{background:transparent!important;background-image:none!important;box-shadow:0 8px 18px rgba(0,0,0,.18)!important;isolation:isolate}
-html.accsp body #bill .bsw .hth:not(.thumb){position:relative}
-html.accsp body #bill .bsw .hth::before{content:'';position:absolute;inset:calc(-1*var(--bub-h));border-radius:999px;background:var(--accimg);z-index:-1;pointer-events:none}
-html.accsp body #betask .bsw .hth{background:transparent!important;background-image:none!important;box-shadow:0 8px 18px rgba(0,0,0,.18)!important;isolation:isolate}
-html.accsp body #betask .bsw .hth:not(.thumb){position:relative}
-html.accsp body #betask .bsw .hth::before{content:'';position:absolute;inset:calc(-1*var(--bub-h));border-radius:999px;background:var(--accimg);z-index:-1;pointer-events:none}
-html.accsp body :is(#win,#hist,#roster,#info,#knext,#icet) .big.acc{background:transparent!important;background-image:none!important;box-shadow:0 8px 18px rgba(0,0,0,.18)!important;isolation:isolate}
-html.accsp body :is(#win,#hist,#roster,#info,#knext,#icet) .big.acc:not(.thumb){position:relative}
-html.accsp body :is(#win,#hist,#roster,#info,#knext,#icet) .big.acc::before{content:'';position:absolute;inset:calc(-1*var(--bub-h));border-radius:999px;background:var(--accimg);z-index:-1;pointer-events:none}
-html.accsp body #hist .seg.htabs button.sel{background:transparent!important;background-image:none!important;box-shadow:0 8px 18px rgba(0,0,0,.18)!important;isolation:isolate}
-html.accsp body #hist .seg.htabs button.sel:not(.thumb){position:relative}
-html.accsp body #hist .seg.htabs button.sel::before{content:'';position:absolute;inset:calc(-1*calc(var(--bub-h)*.8));border-radius:999px;background:var(--accimg);z-index:-1;pointer-events:none}
-html.accsp body #setup .bsl .bfill{background:transparent!important;background-image:none!important;box-shadow:0 8px 18px rgba(0,0,0,.18)!important;isolation:isolate}
-html.accsp body #setup .bsl .bfill:not(.thumb){position:relative}
-html.accsp body #setup .bsl .bfill::before{content:'';position:absolute;inset:calc(-1*var(--bub-h));border-radius:999px;background:var(--accimg);z-index:-1;pointer-events:none}
-html.accsp body .betpick .bchip.sel{background:transparent!important;background-image:none!important;box-shadow:0 8px 18px rgba(0,0,0,.18)!important;isolation:isolate}
-html.accsp body .betpick .bchip.sel:not(.thumb){position:relative}
-html.accsp body .betpick .bchip.sel::before{content:'';position:absolute;inset:calc(-1*4px);border-radius:999px;background:var(--accimg);z-index:-1;pointer-events:none}
-html.accsp body .hipick .hch.sel{background:transparent!important;background-image:none!important;box-shadow:0 8px 18px rgba(0,0,0,.18)!important;isolation:isolate}
-html.accsp body .hipick .hch.sel:not(.thumb){position:relative}
-html.accsp body .hipick .hch.sel::before{content:'';position:absolute;inset:calc(-1*4px);border-radius:999px;background:var(--accimg);z-index:-1;pointer-events:none}
-html.accsp body .skinpick .sksw button.on{background:transparent!important;background-image:none!important;box-shadow:0 8px 18px rgba(0,0,0,.18)!important;isolation:isolate}
-html.accsp body .skinpick .sksw button.on:not(.thumb){position:relative}
-html.accsp body .skinpick .sksw button.on::before{content:'';position:absolute;inset:calc(-1*5px);border-radius:999px;background:var(--accimg);z-index:-1;pointer-events:none}
-html.accsp body #colp .cpsw i.on{background:transparent!important;background-image:none!important;box-shadow:0 8px 18px rgba(0,0,0,.18)!important;isolation:isolate}
-html.accsp body #colp .cpsw i.on:not(.thumb){position:relative}
-html.accsp body #colp .cpsw i.on::before{content:'';position:absolute;inset:calc(-1*3px);border-radius:999px;background:var(--accimg);z-index:-1;pointer-events:none}
-html.accsp body #setup .sh h1 .gtag{background:transparent!important;background-image:none!important;box-shadow:0 8px 18px rgba(0,0,0,.18)!important;isolation:isolate}
-html.accsp body #setup .sh h1 .gtag:not(.thumb){position:relative}
-html.accsp body #setup .sh h1 .gtag::before{content:'';position:absolute;inset:calc(-1*3px);border-radius:999px;background:var(--accimg);z-index:-1;pointer-events:none}
-html.accsp #colp .cpn,html.accsp #colp .cpb{box-shadow:inset 0 0 0 var(--bub-bw,2px) var(--ol,#111)}
 
 #xpick .skdemo{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:-2px 0 4px}
 #xpick .skdemo button{height:32px;border-radius:99px;border:0;background:var(--m-cell,#ece5d3);box-shadow:inset 0 0 0 var(--bub-bw,2px) var(--ol,#111);font:400 12.5px "Fun",sans-serif;color:var(--ink)}
@@ -3366,6 +3310,35 @@ html.accsp #colp .cpn,html.accsp #colp .cpb{box-shadow:inset 0 0 0 var(--bub-bw,
 #colp .cfont{display:grid;gap:8px;margin:4px 2px 8px}
 #colp .cfont button{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-radius:16px;border:0;background:#fff;box-shadow:inset 0 0 0 2px #111;font:400 14px "Fun",sans-serif;color:#111}
 #colp .cfont button b{font-size:22px;font-weight:400}
+
+/* couleur spéciale arc-en-ciel : la bulle change doucement de teinte, toujours d'une seule couleur */
+@property --accent{syntax:'<color>';inherits:true;initial-value:#ff5a1f}
+@keyframes accrb{0%{--accent:#ff3b3b}17%{--accent:#ff9f1c}33%{--accent:#f4c20d}50%{--accent:#2fbf71}67%{--accent:#3a86ff}83%{--accent:#8b5cf6}100%{--accent:#ff3b3b}}
+html.accrb{animation:accrb 9s linear infinite}
+/* Cricket, 4 cases et plus : « MPR » au-dessus de sa valeur, centré sur la même place */
+html body #game#game#game.sk #scores:has(>.sc~.sc~.sc~.sc) .sc>.mpr{line-height:1.05!important;margin-top:-.55em!important;text-align:center}
+html body #game#game#game.sk #scores:has(>.sc~.sc~.sc~.sc) .sc>.mpr b{display:block!important;margin:0!important}
+/* Double ou Triple choisi : « Spew » redevient un texte simple, comme les autres */
+html body footer:is(.armed2,.armed3) #bS::after{text-shadow:none!important;color:var(--ink,#111)!important;-webkit-text-stroke:0!important}
+/* Triple choisi : plus de contour autour des nombres */
+html body.m3 :is(#game #grid .num,#x01 #xkeys .xk) .lbl,html body.m3 :is(#game #grid .num,#x01 #xkeys .xk) .lbl::before{text-shadow:none!important;-webkit-text-stroke:0!important}
+/* fond foncé : numéros des cartes du Killer lisibles */
+html.night #pkl .kc2:not(.act) .pkno:not(.pksn){fill:#f2f4f8}
+
+/* ===== bas de l'écran identique dans tous les jeux : place et tailles fixes, indépendantes du tableau ===== */
+html body :is(#game,#x01,#killer):is(#game,#x01,#killer):is(#game,#x01,#killer) footer{position:absolute!important;left:3.56vw!important;right:3.56vw!important;width:auto!important;top:auto!important;margin:0!important;
+  bottom:calc(var(--lyMB,7.7px) + 6.1dvh*var(--lyB,1) + var(--lyGFB,5px))!important;height:calc(6.16dvh*var(--lyF,1))!important;min-height:0!important;max-height:none!important;grid-template-columns:1fr 33.4vw 1fr!important}
+html body :is(#game,#x01,#killer):is(#game,#x01,#killer):is(#game,#x01,#killer) footer #fbar3{position:absolute!important;left:0!important;right:0!important;width:auto!important;top:calc(100% + var(--lyGFB,5px))!important;bottom:auto!important;margin:0!important;
+  height:calc(6.1dvh*var(--lyB,1))!important;min-height:0!important;grid-template-columns:1fr 33.4vw 1fr!important}
+html body :is(#game,#x01,#killer):is(#game,#x01,#killer):is(#game,#x01,#killer) footer :is(#b2,#b3)::after{font-size:calc(3.1dvh*var(--dtZ,1))!important}
+html body :is(#game,#x01,#killer):is(#game,#x01,#killer):is(#game,#x01,#killer) footer #bS::after{font-size:calc(3.1dvh*var(--spZ,1))!important}
+html body :is(#game,#x01,#killer):is(#game,#x01,#killer):is(#game,#x01,#killer) #fbar3 #fMode{font-size:calc(2.04dvh*var(--ifZ,1))!important}
+html body :is(#game,#x01,#killer):is(#game,#x01,#killer):is(#game,#x01,#killer) #fbar3 #fMode b{font-size:calc(2.34dvh*var(--ifZ,1))!important}
+html body :is(#game,#x01,#killer):is(#game,#x01,#killer):is(#game,#x01,#killer) #fbar3 #fMode small{font-size:calc(1.48dvh*var(--ifZ,1))!important}
+html body :is(#game,#x01,#killer):is(#game,#x01,#killer):is(#game,#x01,#killer) #fbar3 :is(#fMenu,#fUndo) svg{width:calc(3.45dvh*var(--icZ,1))!important;height:calc(3.45dvh*var(--icZ,1))!important}
+/* 501 / 301 : les touches s'arrêtent au-dessus du bas de l'écran */
+html body #x01#x01#x01#x01 #xmain{padding-bottom:calc(calc(var(--lyMB,7.7px) + 6.1dvh*var(--lyB,1) + var(--lyGFB,5px)) + 6.16dvh*var(--lyF,1) + var(--xgKF,2.8)*1dvh)!important}
+#colp .cpsw i{color:var(--ink,#111)}#colp .cpsw i.on{color:var(--btx,#fff)}
 </style>
 </head>
 <body>
@@ -4950,27 +4923,24 @@ const botMetal=n=>BOTMETAL[botBase(n)]||null;
 ROSTER=ROSTER.filter(r=>!isBot(r.name));
 
 /* ===== couleurs de l'appli : bulles, contours, texte dans les bulles, contour du texte ===== */
-const COL_ACC=[['#ff9aa2','Rose bonbon'],['#e63946','Rouge'],['#9d0208','Grenat'],
-  ['#ffc8dd','Rose pâle'],['#ffafcc','Rose'],['#dc5470','Pastèque'],['#f72585','Fuchsia'],['#b5179e','Magenta'],
-  ['#ffb4a2','Pêche'],['#ff6f59','Corail'],['#e76f51','Terracotta'],['#ff5a1f','Orange Pop'],['#fb8500','Mandarine'],['#f4a261','Abricot'],['#ffd6a5','Melon'],
-  ['#fdffb6','Vanille'],['#ffd166','Soleil'],['#ffb703','Ambre'],['#e9c46a','Sable'],['#bc8a5f','Caramel'],
-  ['#caffbf','Menthe pâle'],['#8ac926','Citron vert'],['#52b788','Prairie'],['#06d6a0','Menthe'],['#2a9d8f','Lagune'],['#2d6a4f','Forêt'],
-  ['#9bf6ff','Glacier'],['#a2d2ff','Bleu pastel'],['#4cc9f0','Ciel'],['#219ebc','Turquoise'],['#4776f6','Azur'],['#023e8a','Roi'],['#3a0ca3','Indigo'],
-  ['#bdb2ff','Pervenche'],['#cdb4db','Lilas'],['#9b5de5','Améthyste'],['#7209b7','Violet'],
-  ['#8d99ae','Gris bleu'],['#264653','Ardoise'],['#111111','Noir']];
-const COL_SP=[['rainbow','Arc-en-ciel','#ff9f1c','linear-gradient(90deg,#ff3b3b,#ff9f1c,#ffd60a,#38d27a,#3aa0ff,#8b5cf6)'],['gold','Or','#e0a800','linear-gradient(160deg,#ffe58a,#f2b705 50%,#c48a00)'],
-  ['silver','Argent','#a9b1ba','linear-gradient(160deg,#f4f6f8,#a9b1ba 55%,#7d8792)'],['diamond','Diamant','#9ee7ff','linear-gradient(135deg,#e8fbff,#9ee7ff 28%,#ffffff 48%,#b8c6ff 68%,#e8fbff)']];
-const COL_OL=[['#111111','Noir'],['#2b2d42','Anthracite'],['#5c6670','Acier'],['#8d99ae','Gris bleu'],
-  ['#14213d','Bleu nuit'],['#023047','Marine'],['#264653','Ardoise'],['#1b4332','Forêt'],['#2d6a4f','Sapin'],
-  ['#240046','Nuit'],['#3c096c','Violet'],['#6a040f','Bordeaux'],['#9d0208','Grenat'],['#4a2511','Chocolat'],['#7f5539','Bronze'],
-  ['#ffffff','Blanc'],['acc','Comme les bulles']];
-const COL_TX=[['auto','Auto'],['#ffffff','Blanc'],['#fdf0d5','Crème'],['#fdffb6','Vanille'],['#ffe8a3','Jaune pâle'],['#ffc8dd','Rose pâle'],['#9bf6ff','Glacier'],['#caffbf','Menthe pâle'],
-  ['#111111','Noir'],['#2b2d42','Anthracite'],['#023047','Marine'],['#6a040f','Bordeaux'],['ol','Comme les contours']];
-const COL_TO=[['ol','Comme les contours'],['#111111','Noir'],['#2b2d42','Anthracite'],['#14213d','Bleu nuit'],['#023047','Marine'],['#264653','Ardoise'],['#1b4332','Forêt'],
-  ['#240046','Nuit'],['#3c096c','Violet'],['#6a040f','Bordeaux'],['#9d0208','Grenat'],['#4a2511','Chocolat'],['#e0a800','Or'],['#ffffff','Blanc'],['#fdf0d5','Crème'],['acc','Comme les bulles']];
-const COL_BG=[['#f7f2e5','Crème Pop'],['#ffffff','Blanc'],['#faf6ee','Papier'],['#f1f1ef','Perle'],['#e9ecef','Brume'],
-  ['#f2e8cf','Sable'],['#efe6dd','Lin'],['#fbf8cc','Citron'],['#fffbe0','Vanille'],['#ffe5d9','Pêche'],['#fde2e4','Poudre'],['#ffe3ec','Rose'],
-  ['#efe4f7','Lilas'],['#e7e6fb','Lavande'],['#e3f2fd','Ciel'],['#e0fbfc','Glacier'],['#e2f5ea','Menthe'],['#edf6e5','Amande']];
+/* un seul nuancier pour tous les réglages : par famille, du plus clair au plus foncé */
+const COL_ALL=[
+  ['#ffffff','Blanc'],['#f7f2e5','Crème Pop'],['#e9ecef','Brume'],['#c9ced6','Perle'],['#8d99ae','Gris bleu'],['#5c6670','Acier'],['#2b2d42','Anthracite'],['#1d2433','Nuit Pop'],['#111111','Noir'],
+  ['#ffe3ec','Rose poudre'],['#ffc8dd','Rose pâle'],['#ff9aa2','Rose bonbon'],['#dc5470','Pastèque'],['#e63946','Rouge'],['#9d0208','Grenat'],['#6a040f','Bordeaux'],['#3d0a14','Lie de vin'],
+  ['#ffafcc','Rose'],['#f72585','Fuchsia'],['#b5179e','Magenta'],['#5c0b4f','Prune'],
+  ['#ffe5d9','Pêche'],['#ffb4a2','Saumon'],['#ff6f59','Corail'],['#e76f51','Terracotta'],['#ff5a1f','Orange Pop'],['#fb8500','Mandarine'],['#9a3412','Rouille'],
+  ['#ffd6a5','Melon'],['#f4a261','Abricot'],['#bc8a5f','Caramel'],['#7f5539','Bronze'],['#4a2511','Chocolat'],['#2b1608','Café'],
+  ['#fffbe0','Vanille'],['#fdffb6','Citron pâle'],['#ffd166','Soleil'],['#ffb703','Ambre'],['#e9c46a','Sable'],['#f2e8cf','Lin'],['#8a6d1d','Olive dorée'],
+  ['#edf6e5','Amande'],['#caffbf','Menthe pâle'],['#8ac926','Citron vert'],['#52b788','Prairie'],['#06d6a0','Menthe'],['#2d6a4f','Forêt'],['#1b4332','Sapin'],['#0b2618','Jungle'],
+  ['#e0fbfc','Glacier'],['#9bf6ff','Lagon pâle'],['#2a9d8f','Lagune'],['#219ebc','Turquoise'],['#264653','Ardoise'],['#023047','Marine'],['#03181f','Abysse'],
+  ['#e3f2fd','Ciel pâle'],['#a2d2ff','Bleu pastel'],['#4cc9f0','Ciel'],['#4776f6','Azur'],['#023e8a','Roi'],['#14213d','Bleu nuit'],['#0a1128','Minuit'],
+  ['#e7e6fb','Lavande'],['#bdb2ff','Pervenche'],['#cdb4db','Lilas'],['#9b5de5','Améthyste'],['#7209b7','Violet'],['#3a0ca3','Indigo'],['#240046','Nuit'],['#10002b','Encre']];
+const COL_SP=[['rainbow','Arc-en-ciel','#ff5a1f','linear-gradient(115deg,rgba(255,255,255,0) 20%,rgba(255,255,255,.35) 46%,rgba(255,255,255,0) 70%)'],
+  ['gold','Or','#e9b10c','linear-gradient(115deg,rgba(255,255,255,0) 18%,rgba(255,246,190,.75) 46%,rgba(255,255,255,0) 72%)'],
+  ['silver','Argent','#aab3bd','linear-gradient(115deg,rgba(255,255,255,0) 18%,rgba(255,255,255,.8) 46%,rgba(255,255,255,0) 72%)'],
+  ['diamond','Diamant','#8fdcf5','linear-gradient(115deg,rgba(255,255,255,0) 14%,rgba(255,255,255,.85) 40%,rgba(214,201,255,.6) 52%,rgba(255,255,255,0) 74%)']];
+const COL_ACC=COL_ALL,COL_OL=COL_ALL.concat([['acc','Comme les bulles']]),COL_TX=[['auto','Auto']].concat(COL_ALL,[['ol','Comme les contours']]),
+  COL_TO=[['ol','Comme les contours']].concat(COL_ALL,[['acc','Comme les bulles']]),COL_BG=COL_ALL;
 const COL_D={acc:'#ff5a1f',ol:'#111111',btx:'auto',tol:'ol',bg:'#f7f2e5'};
 const colGet=()=>Object.assign({},COL_D,S.col||{});
 const colAcc=()=>{const a=colGet().acc,sp=COL_SP.find(x=>x[0]===a);return sp?sp[2]:a};
@@ -4978,7 +4948,7 @@ const colLum=h=>{const r=[1,3,5].map(k=>parseInt(h.slice(k,k+2),16)/255);return 
 
 /* panneau « Couleurs de l'appli » : onglets, aperçu en direct, grandes pastilles */
 function colOpen(tab){const old=$('colp');if(old)old.remove();const p=el('div','');p.id='colp';document.body.append(p);tab=tab||'acc';
-  const T=[['acc','Bulles',COL_ACC],['ol','Contours',COL_OL],['btx','Texte',COL_TX],['tol','Contour du texte',COL_TO],['bg','Fond',COL_BG],['pol','Polices',[]]];
+  const T=[['acc','Bulles',COL_ACC],['ol','Contours',COL_OL],['btx','Texte',COL_TX],['tol','Contour texte',COL_TO],['bg','Fond',COL_BG],['pol','Polices',[]]];
   const SL={ol:[['bw','Épaisseur des contours',0,5,.25]],tol:[['scsw','Contour des scores',0,6,.25],['nsw','Contour des nombres',0,5,.25]]};
   const sw=v=>{const C=colGet(),sp=COL_SP.find(x=>x[0]===v);return sp?sp[3]:v==='acc'?colAcc():v==='ol'?(C.ol==='acc'?colAcc():C.ol):v==='auto'?'linear-gradient(90deg,#fff 50%,#111 50%)':v};
   const draw=()=>{const C=colGet(),cur=T.find(t=>t[0]===tab);
@@ -5001,9 +4971,11 @@ function colOpen(tab){const old=$('colp');if(old)old.remove();const p=el('div','
     const L=lyGet();p.querySelector('.cpn').style.textShadow=Array.from({length:16},(_,i)=>{const a=i*Math.PI/8,w=L.nsw*.7;return w>0?`${(Math.cos(a)*w).toFixed(2)}px ${(Math.sin(a)*w).toFixed(2)}px 0 var(--tol,#111)`:'0 0 0 transparent'}).join(',');
     clearTimeout(colOpen._t);colOpen._t=setTimeout(()=>store.set(K_S,S),400)});
 }
-function colApply(){const C=colGet(),st=document.documentElement.style,sp=COL_SP.find(x=>x[0]===C.acc),acc=sp?sp[2]:C.acc,
-    ol=C.ol==='acc'?acc:C.ol,btx=C.btx==='auto'?(colLum(acc)>.62?'#111111':'#ffffff'):C.btx==='ol'?ol:C.btx,tol=C.tol==='ol'?ol:C.tol==='acc'?acc:C.tol,
-    bg=C.bg,cell='#'+[1,3,5].map(k=>Math.round(parseInt(bg.slice(k,k+2),16)*.95).toString(16).padStart(2,'0')).join('');
+function colApply(){const C=colGet(),st=document.documentElement.style,sp=COL_SP.find(x=>x[0]===C.acc),acc=sp?sp[2]:C.acc,dark=colLum(C.bg)<.45;
+  if(dark&&!(S.col&&S.col.ol))C.ol='#f2f4f8';
+  const ol=C.ol==='acc'?acc:C.ol,btx=C.btx==='auto'?(colLum(acc)>.62?'#111111':'#ffffff'):C.btx==='ol'?ol:C.btx,tol=C.tol==='ol'?ol:C.tol==='acc'?acc:C.tol,
+    bg=C.bg,cell='#'+[1,3,5].map(k=>{const v=parseInt(bg.slice(k,k+2),16);return Math.round(dark?v+(255-v)*.1:v*.95).toString(16).padStart(2,'0')}).join('');
+  document.documentElement.classList.toggle('night',dark);if(dark){st.setProperty('--page',bg);st.setProperty('--bg',bg)}else{st.removeProperty('--page');st.removeProperty('--bg')}st.setProperty('--m-strong',ol);document.documentElement.classList.toggle('accrb',C.acc==='rainbow');
   st.setProperty('--m-home',bg);st.setProperty('--ui-bg',bg);st.setProperty('--m-cell',cell);try{topColor()}catch(e){}
   st.setProperty('--accent',acc);st.setProperty('--acc-rgb',[1,3,5].map(k=>parseInt(acc.slice(k,k+2),16)).join(','));st.setProperty('--accimg',sp?sp[3]:'none');
   st.setProperty('--ol',ol);st.setProperty('--btx',btx);if(C.btx==='auto')st.removeProperty('--btxU');else st.setProperty('--btxU',btx);st.setProperty('--tol',tol);
@@ -6024,11 +5996,11 @@ function lyLbl(){document.querySelectorAll('#grid .num .lbl').forEach(l=>{const 
 function lyPlace(){lyLbl();const L=lyGet(lyCk()),[sc,gr,ft,br]=lyBlocks(),H=innerHeight,u=H/100;if(!sc||!gr||!ft||!br)return;
   [sc,gr,ft,br].forEach(e=>e.style.removeProperty('translate'));ft.style.removeProperty('margin-top');
   let R4=[sc,gr,ft,br].map(e=>e.getBoundingClientRect()),n=R4.map(x=>x.top),h=R4.map(x=>x.height);
-  const top=satPx()+L.mT*u,T=!!L.barTop,yB=T?top:H-L.mB*u-h[3],yS=T?top+h[3]+L.gFB*u:top,yN0=yS+h[0]+L.gSN*u,yF=T?H-L.mB*u-h[2]:yB-L.gFB*u-h[2],free=Math.max(0,yF-L.gNF*u-(yN0+h[1])),yN=yN0+free*([0,.5,1][L.nA|0]||0);
+  const top=satPx()+L.mT*u,T=!!L.barTop,yB=T?top:H-L.mB*u-h[3],yS=T?top+h[3]+L.gFB*u:top,yN0=yS+h[0]+L.gSN*u,yF=T?H-L.mB*u-h[2]:n[2],   /* bas de l'écran : place fixe, commune à tous les jeux */free=Math.max(0,yF-L.gNF*u-(yN0+h[1])),yN=yN0+free*([0,.5,1][L.nA|0]||0);
   // la zone des nombres coupe ce qui dépasse : on l'agrandit en remontant la place du pied de page dans le flux (il est replacé ensuite)
   {const mn=gr.parentElement.getBoundingClientRect().bottom,need=yN+h[1]-mn+4;if(need>0){ft.style.setProperty('margin-top',(parseFloat(getComputedStyle(ft).marginTop)-need)+'px','important');R4=[sc,gr,ft,br].map(e=>e.getBoundingClientRect());n=R4.map(x=>x.top)}}
   const mv=(e,d)=>{if(Math.abs(d)>.5)e.style.setProperty('translate','0 '+d.toFixed(1)+'px','important')};
-  mv(sc,yS-n[0]);mv(gr,yN-n[1]);const dF=yF-n[2];mv(ft,dF);mv(br,yB-n[3]-dF)}
+  mv(sc,yS-n[0]);mv(gr,yN-n[1]);if(T){const dF=yF-n[2];mv(ft,dF);mv(br,yB-n[3]-dF)}}
 /* le pied de page change d'écran (Killer, 501…) : il perd son placement */
 {const _m=mountFooter;mountFooter=function(){const f=document.querySelector('footer');if(f){f.style.removeProperty('translate');f.style.removeProperty('margin-top');const b=$('fbar3');b&&b.style.removeProperty('translate')}return _m.apply(this,arguments)}}
 /* nom et score : taille fixe (proportionnelle à la ligne), réduite seulement si ça ne tient pas dans la colonne ;
@@ -6758,8 +6730,9 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-281';   // à changer avec VERSION dans sw.js
+const APPV='lf-282';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
+try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
   const p=el('div','');p.id='xpick';p.classList.add('skinpick');document.body.append(p);
