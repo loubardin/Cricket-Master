@@ -4339,6 +4339,32 @@ html body #game#game#game#game#game.sk:not(.p2) #scores .sc:not(.act)>.mpr{margi
 html body #setup.b2 #segBar button{font-size:calc(var(--u)*1.85)!important}
 html body #setup #segBar button.sel{transform:scale(1.1)!important}
 html body #setup.b2 #segBar button{flex:1 1 auto!important;width:auto!important;min-width:0!important}
+
+/* ===== 501 / 301 : cases joueur réglables ===== */
+html body #x01#x01#x01 #xplayers{gap:calc(12.6px*var(--xcG,1))!important}
+html body #x01#x01#x01 #xplayers .xc .xn{translate:0 calc(var(--xoN,0)*1dvh)}
+html body #x01#x01#x01 #xplayers .xc .xr{translate:0 calc(var(--xoS,0)*1dvh)}
+html body #x01#x01#x01 #xplayers .xc .xs{translate:0 calc(var(--xoM,0)*1dvh)}
+html body #x01#x01#x01 #xplayers .xc .xh{translate:0 calc(var(--xoH,0)*1dvh)}
+html body #x01#x01#x01 #xplayers .xc .xco{translate:0 calc(var(--xoC,0)*1dvh)}
+html body #x01#x01#x01#x01 #xplayers .xc .khist .pill{min-width:calc(min(18cqw,6dvh)*var(--xpW,1))!important;padding-block:max(0px,calc(.25em + (var(--xpH,1) - 1)*.9em))!important}
+html body #x01#x01#x01#x01 #xplayers .xc .khist{gap:calc(3.1px*var(--xpG,1))!important}
+/* 3 joueurs et + : tout est proportionné à la hauteur de la case (plus de chevauchement) */
+html body #x01#x01#x01#x01 #xplayers:not(.two) .xc{container-type:size!important;display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:center!important;row-gap:0!important;padding:0 2vw!important}
+html body #x01#x01#x01#x01 #xplayers:not(.two) .xc .xn{font-size:min(13cqw,14cqh)!important;line-height:1.05!important}
+html body #x01#x01#x01#x01 #xplayers:not(.two) .xc .xr{font-size:min(38cqw,40cqh)!important;line-height:.95!important;margin-top:1cqh!important}
+html body #x01#x01#x01#x01 #xplayers:not(.two) .xc .xs{font-size:min(7cqw,8.5cqh)!important;line-height:1.1!important}
+html body #x01#x01#x01#x01 #xplayers:not(.two) .xc .xb{min-height:0!important;margin-top:2.5cqh!important;top:0!important;align-self:center!important}
+html body #x01#x01#x01#x01 #xplayers:not(.two) .xc .xn{align-self:center!important}
+html body #x01#x01#x01#x01 #xplayers:not(.two) .xc .khist .pill{font-size:min(6cqw,9cqh)!important;min-width:calc(min(15cqw,16cqh)*var(--xpW,1))!important}
+html body #x01#x01#x01#x01 #xplayers:not(.two) .xc .khist{gap:calc(5.5px*var(--xpG,1))!important}
+/* 5 joueurs et + : nom et moyenne à gauche, score à droite, historique dessous */
+html body #x01#x01#x01#x01 #xplayers.many .xc{display:grid!important;grid-template-columns:auto auto!important;grid-template-areas:"n r" "s r" "b b"!important;align-content:center!important;justify-content:center!important;column-gap:5cqw!important}
+html body #x01#x01#x01#x01 #xplayers.many .xc .xn{grid-area:n!important;font-size:min(11cqw,17cqh)!important;align-self:end!important}
+html body #x01#x01#x01#x01 #xplayers.many .xc .xs{grid-area:s!important;font-size:min(7cqw,12cqh)!important;align-self:start!important}
+html body #x01#x01#x01#x01 #xplayers.many .xc .xr{grid-area:r!important;font-size:min(30cqw,46cqh)!important;margin:0!important;align-self:center!important}
+html body #x01#x01#x01#x01 #xplayers.many .xc .xb{grid-area:b!important;justify-self:center!important;margin-top:3cqh!important}
+html body #x01#x01#x01#x01 #xplayers.many .xc .khist .pill{font-size:min(6cqw,12cqh)!important}
 </style>
 </head>
 <body>
@@ -7825,7 +7851,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-257';   // à changer avec VERSION dans sw.js
+const APPV='lf-258';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
@@ -8146,7 +8172,7 @@ function popOutl(root){if(!root)return;root.querySelectorAll('text.w').forEach(t
 addEventListener('resize',()=>{try{if(KG&&PKL.k&&$('killer').classList.contains('on'))pklSync()}catch(e){}});
 
 /* ===== Mise en page du Cricket à 2 (Bulle) : hauteurs, écarts, barre Accueil · infos · Annuler en haut ou en bas ===== */
-const LY_D={xnZ:1,xrZ:1,xsZ:1,xcoZ:1,xhZ:1,xkz:1,xkh:1,xkg:1,xbh:1,paW:1,paH:1,poW:1,poH:1,zPo:1.05,poG:1,poY:0,crZ:1,crY:0,scR:1,hZ:1,nW:1,icZ:1,ifZ:1,dtZ:1,spZ:1,fbw:2.8,barTop:0,iNP:.1,iPM:.14,iPMo:.14,iY:0,iPl:.1,zNm:1.2,zSc:1.6,zMp:1.25,zPl:1.05,nfz:1.1,nsw:3.5,scsw:3.5,bw:2.8,mkz:.95,mksw:4,scK:1.1,rowK:1.05,ftK:1,brK:.9,mT:4.1,gSN:1.1,gL:1.8,gNF:1.5,gFB:1.9,mB:.9,nA:0};   // « Pop » : les réglages de base
+const LY_D={xoN:0,xoS:0,xoM:0,xoH:0,xoC:0,xpW:1,xpH:1,xpG:1,xcG:1,xnZ:1,xrZ:1,xsZ:1,xcoZ:1,xhZ:1,xkz:1,xkh:1,xkg:1,xbh:1,paW:1,paH:1,poW:1,poH:1,zPo:1.05,poG:1,poY:0,crZ:1,crY:0,scR:1,hZ:1,nW:1,icZ:1,ifZ:1,dtZ:1,spZ:1,fbw:2.8,barTop:0,iNP:.1,iPM:.14,iPMo:.14,iY:0,iPl:.1,zNm:1.2,zSc:1.6,zMp:1.25,zPl:1.05,nfz:1.1,nsw:3.5,scsw:3.5,bw:2.8,mkz:.95,mksw:4,scK:1.1,rowK:1.05,ftK:1,brK:.9,mT:4.1,gSN:1.1,gL:1.8,gNF:1.5,gFB:1.9,mB:.9,nA:0};   // « Pop » : les réglages de base
 if(S.lay&&!S.lay.v3){S.lay={v3:1};try{store.set(K_S,S)}catch(e){}}
 /* un profil de réglages par jeu ; les contours (et les polices) sont communs à toute l'appli */
 const LY_GLOB=['bw','fbw','nsw','scsw'];
@@ -8171,6 +8197,8 @@ const LY_SL=[['Hauteurs'],['brK','Barre Accueil · infos · Annuler',.6,1.6,.05,
   ['Formes'],['scR','Arrondi des cases joueur',0,1.6,.05,'%'],['hZ','Halo coloré autour des cases',0,3,.05,'%'],['nW','Largeur des bulles nombres et de Spew',.7,1.3,.01,'%'],['mkz','Taille des marques',.5,1.5,.05,'%'],['mksw','Épaisseur des marques',1,10,.25,''],
   ['Barre du bas et bouton Spew'],['icZ','Taille des icônes Accueil / Annuler',.5,1.8,.05,'%'],['ifZ','Taille du texte d\'infos',.5,1.8,.05,'%'],['dtZ','Taille de « Double » et « Triple »',.5,1.6,.05,'%'],['spZ','Taille de « Spew »',.5,1.6,.05,'%'],
   ['501 / 301 : textes des cases joueur'],['xnZ','Taille des noms',.5,2,.05,'%'],['xrZ','Taille des scores',.5,2,.05,'%'],['xsZ','Taille de la moyenne',.5,2.5,.05,'%'],['xcoZ','Taille du finish proposé',.5,2.5,.05,'%'],['xhZ','Taille de l\'historique des fléchettes',.5,2.5,.05,'%'],
+  ['501 / 301 : placement dans les cases joueur (en % de l\'écran, − monte, + descend)'],['xoN','Nom',-8,8,.1,'x'],['xoS','Score',-8,8,.1,'x'],['xoM','Moyenne',-8,8,.1,'x'],['xoH','Historique des fléchettes',-8,8,.1,'x'],['xoC','Finish proposé',-8,8,.1,'x'],
+  ['501 / 301 : historique et cases'],['xpW','Largeur des bulles d\'historique',.5,2.5,.05,'%'],['xpH','Hauteur des bulles d\'historique',.4,3,.05,'%'],['xpG','Écart entre les bulles d\'historique',0,4,.05,'%'],['xcG','Écart entre les cases joueur',0,3,.05,'%'],
   ['501 / 301 : touches'],['xkz','Taille des chiffres',.5,1.6,.05,'%'],['xkh','Hauteur des touches 1 à 20',.5,1.6,.05,'%'],['xbh','Hauteur de la touche Bulle',.5,1.8,.05,'%'],['xkg','Écart entre les touches',0,3,.05,'%'],
   ['Contours (toute l\'appli)'],['bw','Contour des cases',0,5,.25,''],['fbw','Contour du bouton Spew',0,6,.25,'']];
 const lyFmt=(v,u)=>u==='x'?(+v).toFixed(2):u==='%'?Math.round(v*100)+' %':u==='pc'?(+v).toFixed(1)+' %':(+v).toFixed(1);
@@ -8181,14 +8209,14 @@ function lyKeys(L){const k=$('xkeys'),x=$('x01');if(!k||!x.classList.contains('o
   const [h,hb]=lyKeys.h||[0,0];if(!h)return;x.style.setProperty('--xkH',(h*L.xkh).toFixed(1)+'px');x.style.setProperty('--xbH',((hb||h)*L.xbh).toFixed(1)+'px');x.classList.add('xkset')}
 {const _x=xRender;xRender=function(){const r=_x.apply(this,arguments);try{if($('x01').classList.contains('on')&&!xRender._k){xRender._k=1;requestAnimationFrame(()=>{xRender._k=0;lyKeys(lyGet())})}}catch(e){}return r}}
 function lyRoot(){const L=lyGet(lyCur()),st=document.documentElement.style,u=innerHeight/100;st.setProperty('--bub-bw',L.bw+'px');st.setProperty('--bw',L.bw+'px');
-  st.setProperty('--lyF',L.ftK);['xnZ','xrZ','xsZ','xcoZ','xhZ','xkz','xkg'].forEach(k=>st.setProperty('--'+k,L[k]));lyKeys(L);st.setProperty('--icZ',L.icZ);st.setProperty('--ifZ',L.ifZ);st.setProperty('--fbw',L.fbw+'px');st.setProperty('--lyB',L.brK);st.setProperty('--lyGFB',(L.gFB*u).toFixed(1)+'px');st.setProperty('--lyMB',(L.mB*u).toFixed(1)+'px')}
+  st.setProperty('--lyF',L.ftK);['xnZ','xrZ','xsZ','xcoZ','xhZ','xkz','xkg','xoN','xoS','xoM','xoH','xoC','xpW','xpH','xpG','xcG'].forEach(k=>st.setProperty('--'+k,L[k]));lyKeys(L);st.setProperty('--icZ',L.icZ);st.setProperty('--ifZ',L.ifZ);st.setProperty('--fbw',L.fbw+'px');st.setProperty('--lyB',L.brK);st.setProperty('--lyGFB',(L.gFB*u).toFixed(1)+'px');st.setProperty('--lyMB',(L.mB*u).toFixed(1)+'px')}
 lyRoot();
 {const _s=show;show=function(){const r=_s.apply(this,arguments);try{lyRoot()}catch(e){}return r}}
 function lyApply(){lyRoot();try{if(KG&&PKL.k&&$('killer').classList.contains('on')){PKL.k.querySelectorAll('g.kin').forEach(g=>{g._h=null});PKL.k.querySelectorAll('text').forEach(t=>{t._h=null});pklSync()}}catch(e){}try{if(G&&R&&$('game').classList.contains('on')){layoutSk();if(typeof fitSk==='function')fitSk();render()}}catch(e){}}
 function lyFromHome(){const ok=G&&G.players&&G.players.length===2&&G.winner===null&&!G._bar&&!BARC;
   if(!ok){try{mkToast('','Lance une partie de Cricket à 2 joueurs pour régler la mise en page',2600)}catch(e){}return}
   $('hResume').click();setTimeout(lyOpen,450)}
-const LY_CTX={x:'brK ftK gFB mB bw fbw icZ ifZ xnZ xrZ xsZ xcoZ xhZ xkz xkh xkg xbh',kl:'brK ftK gFB mB zNm nfz nsw bw fbw icZ ifZ paW paH zPl iPl',ot:'brK ftK gFB mB bw fbw icZ ifZ'},LY_NO=new Proxy({},{get:(o,k)=>/^(ck|sh|hi)n$/.test(k)?'nW dtZ spZ':''});
+const LY_CTX={x:'brK ftK gFB mB bw fbw icZ ifZ xnZ xrZ xsZ xcoZ xhZ xkz xkh xkg xbh xoN xoS xoM xoH xoC xpW xpH xpG xcG',kl:'brK ftK gFB mB zNm nfz nsw bw fbw icZ ifZ paW paH zPl iPl',ot:'brK ftK gFB mB bw fbw icZ ifZ'},LY_NO=new Proxy({},{get:(o,k)=>/^(ck|sh|hi)n$/.test(k)?'nW dtZ spZ':''});
 const lyCtx=()=>{const c=lyCur();return c==='kl'||(c.startsWith('clk')&&pkClk())?'kl':$('x01').classList.contains('on')?'x':($('game').classList.contains('on')&&skp2())?'ck':'ot'};
 function lyOpen(mode){const old=$('lyp');if(old)old.remove();haptic();const p=el('div','');p.id='lyp';document.body.append(p);let up=false;
   const CX=lyCur();const draw=()=>{const L=lyGet(CX);p.classList.toggle('up',up);
