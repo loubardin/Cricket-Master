@@ -4201,7 +4201,9 @@ html body #game#game.sk.p2:not(.pn){--colw:calc((100vw - 7vw - var(--midw))/2)}
 html body #game#game.sk.p2 main{padding-left:3.5vw!important;padding-right:3.5vw!important}
 html body #game#game#game#game.sk.p2 #grid .num{font-size:calc(var(--r)*.65*var(--nfz,1))!important}
 html body #game#game#game#game.sk.p2 #grid .num:not(.dead) .lbl{text-shadow:var(--nts,none)!important}
-html body #game#game#game#game#game.sk.p2 #scores .sc>.pts{text-shadow:var(--sts,none)!important}
+/* « paint-order » empêche Safari de dessiner les ombres de texte : on le neutralise sur le score */
+html body #game#game#game#game#game.sk.p2 #scores .sc>.pts{paint-order:normal!important;-webkit-text-stroke:0!important}
+html body #game#game#game#game#game.sk.p2 #scores .sc.act>.pts{text-shadow:var(--sts,none)!important}
 html body #game#game#game#game.sk.p2:not(.pn) .mw{width:calc(var(--r)*1.02*var(--mkz,1))!important;height:calc(var(--r)*1.02*var(--mkz,1))!important}
 html body #game#game#game#game.sk.p2 .mw svg{stroke-width:var(--mksw,5)!important}
 #lyp{position:fixed;left:10px;right:10px;bottom:calc(var(--sab,0px) + 10px);z-index:300;max-height:62dvh;overflow-y:auto;-webkit-overflow-scrolling:touch;background:rgba(255,255,255,.94);color:#111;border-radius:22px;box-shadow:0 0 0 2px #111,0 10px 30px rgba(0,0,0,.25);
@@ -7714,7 +7716,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-244';   // à changer avec VERSION dans sw.js
+const APPV='lf-245';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
