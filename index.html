@@ -7889,7 +7889,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-266';   // à changer avec VERSION dans sw.js
+const APPV='lf-267';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
@@ -8144,7 +8144,7 @@ function pklCard(i,g,act){const p=KG.players[i],{W,H,wide,k}=g,DD=KG.def,isDef=D
   const lw=hw*Math.min(1,pitch/hw*.92);
   h+=`<g transform="translate(${cx} ${hy+hh/2}) scale(${LZ.klHZ}) translate(${-cx} ${-(hy+hh/2)})">`;
   for(let j=0;j<nh;j++){const on=!dead&&j<p.lives,gold=on&&j>=p.lives-(p.gold||0),x=cx-pitch*(nh-1)/2+j*pitch-lw/2,c=gold?' gold':'';
-    const bt=on&&j===p.lives-1;if(bt)h+='<g class="beat">';
+    const bt=on&&p.lives===1&&j===0;   // il ne bat que quand c'est le dernier cœur en vieif(bt)h+='<g class="beat">';
     if(on)h+=`<path class="phb${c}" d="${pkHeart(x,hy,lw,hh)}"/><path class="phl${c}" d="${pkHeart(x+lw*.035,hy+hh*.03,lw*.86,hh*.84)}"/>`+
       `<ellipse class="phg" cx="${x+lw*.3}" cy="${hy+hh*.3}" rx="${lw*.12}" ry="${hh*.075}" transform="rotate(-38 ${x+lw*.3} ${hy+hh*.3})"/><circle class="phg" cx="${x+lw*.17}" cy="${hy+hh*.47}" r="${Math.min(lw,hh)*.045}"/>`;
     h+=`<path class="phrt${on?' on':''}" d="${pkHeart(x,hy,lw,hh)}"/>`;if(bt)h+='</g>'}
