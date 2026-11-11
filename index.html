@@ -4246,6 +4246,8 @@ html body #game#game#game#game.sk.p2 #scores .sc>.mpr{font-size:calc(var(--r)*.1
 html body #game#game#game#game.sk.p2 #scores .sc.act>.pills .pill{font-size:calc(var(--r)*.27*var(--zPl,1))!important}
 html body #game#game#game#game.sk.p2 #scores .sc:not(.act)>.pills .pill{font-size:calc(var(--r)*.22*var(--zPl,1))!important}
 #scores{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+@font-face{font-family:"Lexend";font-display:block;src:url(art/lexend.woff) format("woff")}
+#lyp .lyb .sw button{padding:7px 9px}
 </style>
 </head>
 <body>
@@ -6925,27 +6927,30 @@ function placeTracks(){
    De haut en bas : case joueur (2,44 lignes), G, 7 lignes séparées par g, G, switch (1 ligne), g, switch (1 ligne), marge B. */
 function layoutSk(){
   const g=$('game');if(!skp2())return;
-  const L=lyGet(),g0=innerWidth*.035,G0=g0*1.8,gp=innerWidth*L.g/100,G=G0;lyBlocks().forEach(e=>e&&e.style.removeProperty('translate'));
+  const L=lyGet(),H=innerHeight,u=H/100,g0=innerWidth*.035,G0=g0*1.8,gp=L.gL*u,G=G0;lyBlocks().forEach(e=>e&&e.style.removeProperty('translate'));
   g.style.setProperty('--g',gp.toFixed(2)+'px');g.style.setProperty('--G',G.toFixed(2)+'px');g.classList.remove('barT');
   g.style.setProperty('--lytop',(g0*1.4).toFixed(2)+'px');g.style.setProperty('--nfz',L.nfz);g.style.setProperty('--mkz',L.mkz);g.style.setProperty('--mksw',L.mksw);
-  g.style.setProperty('--bw',L.bw+'px');g.style.setProperty('--zMp',L.zMp);g.style.setProperty('--zPl',L.zPl);g.style.setProperty('--bub-bw',L.bw+'px');
+  g.style.setProperty('--bw',L.bw+'px');g.style.setProperty('--zMp',L.zMp);g.style.setProperty('--zPl',L.zPl);g.style.setProperty('--bub-bw',L.bw+'px');lyRoot();
   {const ring=(w,c)=>w>0?Array.from({length:16},(_,i)=>{const a=i*Math.PI/8;return `${(Math.cos(a)*w).toFixed(2)}px ${(Math.sin(a)*w).toFixed(2)}px 0 ${c}`}).join(','):'none';
    g.style.setProperty('--nts',ring(L.nsw,getComputedStyle(g).getPropertyValue('--m-strong').trim()||'#141414'));g.style.setProperty('--sts',ring(L.scsw,'#111'))}
   let pb=$('sabProbe');if(!pb){pb=document.createElement('i');pb.id='sabProbe';pb.style.cssText='position:fixed;left:0;top:0;width:0;height:var(--sab,0px);visibility:hidden;pointer-events:none';document.body.append(pb)}
   const B=Math.max(g0*.8,pb.offsetHeight-16),top=$('scores').getBoundingClientRect().top-g.getBoundingClientRect().top;
   // unité de base : celle des réglages d'origine (dépend seulement de l'écran) ; chaque réglage agit seul, sans retoucher les autres
-  const r=Math.max(18,(g.clientHeight-top-B-2*G0-7*g0)/11.44);
+  let r=Math.max(18,(g.clientHeight-top-B-2*G0-7*g0)/11.44);
+  // tout doit tenir dans l'écran, quel qu'il soit : sinon l'unité rapetisse
+  {const room=H-satPx()-(L.mT+L.gSN+6*L.gL+L.gNF+L.gFB+L.mB)*u,hU=2.44*L.scK+7*L.rowK+L.ftK+L.brK;if(r*hU>room)r=Math.max(14,room/hU)}
   [['--rowh',1],['--rr',L.rowK],['--rf',L.ftK],['--rb',L.brK],['--rs',L.scK]].forEach(([k,f])=>g.style.setProperty(k,(r*f).toFixed(2)+'px'));
   lyPlace();
 }
-/* blocs : case joueur, nombres, bouton Spew, barre Accueil · infos · Annuler — chacun peut être placé où on veut (haut du bloc en % de l'écran) */
+/* blocs empilés : case joueur et nombres calés en haut, Spew et barre calés en bas ; la place libre va entre les nombres et Spew (nombres en haut, au centre ou en bas) */
 const lyBlocks=()=>[$('scores'),$('grid'),document.querySelector('#game footer'),document.querySelector('#game #fbar3')];
-let LYNAT={};
-function lyPlace(){const L=lyGet(),[sc,gr,ft,br]=lyBlocks(),H=innerHeight;if(!sc||!gr||!ft||!br)return;
+function satPx(){let p=$('satProbe');if(!p){p=document.createElement('i');p.id='satProbe';p.style.cssText='position:fixed;left:0;top:0;width:0;height:var(--sat,0px);visibility:hidden;pointer-events:none';document.body.append(p)}return p.offsetHeight}
+function lyPlace(){const L=lyGet(),[sc,gr,ft,br]=lyBlocks(),H=innerHeight,u=H/100;if(!sc||!gr||!ft||!br)return;
   [sc,gr,ft,br].forEach(e=>e.style.removeProperty('translate'));
-  const n=[sc,gr,ft,br].map(e=>e.getBoundingClientRect().top);LYNAT={pS:n[0]/H*100,pN:n[1]/H*100,pF:n[2]/H*100,pB:n[3]/H*100};
-  const at=(k,i)=>L[k]!=null?L[k]/100*H:n[i],mv=(e,d)=>{if(Math.abs(d)>.5)e.style.setProperty('translate','0 '+d.toFixed(1)+'px','important')};
-  mv(sc,at('pS',0)-n[0]);mv(gr,at('pN',1)-n[1]);const dF=at('pF',2)-n[2];mv(ft,dF);mv(br,at('pB',3)-n[3]-dF)}
+  const R4=[sc,gr,ft,br].map(e=>e.getBoundingClientRect()),n=R4.map(x=>x.top),h=R4.map(x=>x.height);
+  const yS=satPx()+L.mT*u,yN0=yS+h[0]+L.gSN*u,yB=H-L.mB*u-h[3],yF=yB-L.gFB*u-h[2],free=Math.max(0,yF-L.gNF*u-(yN0+h[1])),yN=yN0+free*([0,.5,1][L.nA|0]||0);
+  const mv=(e,d)=>{if(Math.abs(d)>.5)e.style.setProperty('translate','0 '+d.toFixed(1)+'px','important')};
+  mv(sc,yS-n[0]);mv(gr,yN-n[1]);const dF=yF-n[2];mv(ft,dF);mv(br,yB-n[3]-dF)}
 /* le pied de page change d'écran (Killer, 501…) : il perd son placement */
 {const _m=mountFooter;mountFooter=function(){const f=document.querySelector('footer');if(f){f.style.removeProperty('translate');const b=$('fbar3');b&&b.style.removeProperty('translate')}return _m.apply(this,arguments)}}
 /* nom et score : taille fixe (proportionnelle à la ligne), réduite seulement si ça ne tient pas dans la colonne ;
@@ -7716,7 +7721,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-245';   // à changer avec VERSION dans sw.js
+const APPV='lf-246';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
@@ -8010,53 +8015,59 @@ function popOutl(root){if(!root)return;root.querySelectorAll('text.w').forEach(t
 addEventListener('resize',()=>{try{if(KG&&PKL.k&&$('killer').classList.contains('on'))pklSync()}catch(e){}});
 
 /* ===== Mise en page du Cricket à 2 (Bulle) : hauteurs, écarts, barre Accueil · infos · Annuler en haut ou en bas ===== */
-const LY_D={scsw:0,zNm:1,zSc:1,zMp:1,zPl:1,scK:1,rowK:1,ftK:1,brK:1,g:3.5,nfz:1,nsw:0,bw:1.5,mkz:1,mksw:5,pS:null,pN:null,pF:null,pB:null};
+const LY_D={zNm:1.2,zSc:1.6,zMp:1.25,zPl:1.05,nfz:1.1,nsw:3.5,scsw:3.5,bw:2.8,mkz:.95,mksw:6,scK:1.1,rowK:1.05,ftK:1,brK:.9,mT:4.1,gSN:1.1,gL:1.8,gNF:1.5,gFB:1.9,mB:.9,nA:0};   // « Pop » : les réglages de base
+if(S.lay&&!S.lay.v3){S.lay={v3:1};try{store.set(K_S,S)}catch(e){}}
 const lyGet=()=>Object.assign({},LY_D,S.lay||{});
-const LY_SL=[['Hauteurs'],['brK','Barre Accueil · infos · Annuler',.6,1.6,.05,'%'],['scK','Case joueur',.6,1.6,.05,'%'],['rowK','Cases nombres',.6,1.6,.05,'%'],['g','Écart entre les lignes de nombres',0,8,.1,''],['ftK','Bouton Spew',.6,1.6,.05,'%'],
-  ['Position dans la page (haut du bloc, % de l\'écran)'],['pB','Barre Accueil · infos · Annuler',0,100,.25,'pc'],['pS','Case joueur',0,100,.25,'pc'],['pN','Cases nombres',0,100,.25,'pc'],['pF','Bouton Spew',0,100,.25,'pc'],
+const LY_SL=[['Hauteurs'],['brK','Barre Accueil · infos · Annuler',.6,1.6,.05,'%'],['scK','Case joueur',.6,1.6,.05,'%'],['rowK','Cases nombres',.6,1.6,.05,'%'],['ftK','Bouton Spew',.6,1.6,.05,'%'],
+  ['Écarts (en % de la hauteur de l\'écran)'],['mT','Marge en haut (sous l\'heure)',0,10,.1,'pc'],['gSN','Case joueur → nombres',0,8,.1,'pc'],['gL','Entre les lignes de nombres',0,5,.1,'pc'],['gNF','Nombres → Spew (au moins)',0,8,.1,'pc'],['gFB','Spew → barre du bas',0,8,.1,'pc'],['mB','Marge en bas',0,8,.1,'pc'],
   ['Textes'],['zNm','Taille des noms',.5,1.6,.05,'%'],['zSc','Taille des scores',.5,1.6,.05,'%'],['zMp','Taille du MPR',.5,2,.05,'%'],['zPl','Taille des fléchettes (pastilles)',.5,1.6,.05,'%'],
   ['nfz','Taille des nombres dans les bulles',.6,1.5,.05,'%'],['nsw','Contour des nombres dans les bulles',0,5,.25,''],['scsw','Contour noir du score',0,6,.25,''],
-  ['Style'],['bw','Contour des cases',0,5,.25,''],['mkz','Taille des marques',.5,1.5,.05,'%'],['mksw','Épaisseur des marques',2,14,.5,'']];
+  ['Style (toute l\'appli pour le contour des cases)'],['bw','Contour des cases',0,5,.25,''],['mkz','Taille des marques',.5,1.5,.05,'%'],['mksw','Épaisseur des marques',2,14,.5,'']];
 const lyFmt=(v,u)=>u==='%'?Math.round(v*100)+' %':u==='pc'?(+v).toFixed(1)+' %':(+v).toFixed(1);
-function lyApply(){try{if(G&&R&&$('game').classList.contains('on')){layoutSk();if(typeof fitSk==='function')fitSk();render()}}catch(e){}}
+function lyRoot(){const L=lyGet(),st=document.documentElement.style;st.setProperty('--bub-bw',L.bw+'px');st.setProperty('--bw',L.bw+'px')}
+lyRoot();
+function lyApply(){lyRoot();try{if(G&&R&&$('game').classList.contains('on')){layoutSk();if(typeof fitSk==='function')fitSk();render()}}catch(e){}}
 function lyFromHome(){const ok=G&&G.players&&G.players.length===2&&G.winner===null&&!G._bar&&!BARC;
   if(!ok){try{mkToast('','Lance une partie de Cricket à 2 joueurs pour régler la mise en page',2600)}catch(e){}return}
   $('hResume').click();setTimeout(lyOpen,450)}
 function lyOpen(mode){const old=$('lyp');if(old)old.remove();haptic();const p=el('div','');p.id='lyp';document.body.append(p);let up=false;
-  const draw=()=>{const L=lyGet();for(const k in LYNAT)if(L[k]==null)L[k]=+LYNAT[k].toFixed(1);p.classList.toggle('up',up);
-    p.innerHTML=`<div class="lyh"><b>${mode==='txt'?'Textes et polices':'Mise en page'}</b><button class="lyd" aria-label="Déplacer le panneau">${up?'↓':'↑'}</button><button class="lyx" aria-label="Fermer">✕</button></div>
+  const draw=()=>{const L=lyGet();p.classList.toggle('up',up);
+    p.innerHTML=`<div class="lyh"><b>${mode==='txt'?'Textes et polices':'Réglages Pop'}</b><button class="lyd" aria-label="Déplacer le panneau">${up?'↓':'↑'}</button><button class="lyx" aria-label="Fermer">✕</button></div>
       ${(()=>{let grp='';return LY_SL.filter(x=>{if(x.length===1)grp=x[0];return mode!=='txt'||grp==='Textes'})})().map(([k,l,a,b,st,u])=>l===undefined?`<i class="lyg">${k}</i>`:`<label><span>${l}</span><b data-v="${k}">${lyFmt(L[k],u)}</b><input type="range" data-k="${k}" data-u="${u}" min="${a}" max="${b}" step="${st}" value="${L[k]}"></label>`).join('')}
-      <i class="lyg">Polices</i><div class="lyf"><button data-f="fN">Nombres<b style="font-family:'${esc(S.fN||'Fun')}','Fun'">${esc(S.fN||'Lilita One')}</b></button><button data-f="fT">Textes<b style="font-family:'${esc(S.fT||'Fun')}','Fun'">${esc(S.fT||'Lilita One')}</b></button></div>
-      <button class="lyr">Valeurs d'origine</button>`};
+      ${mode==='txt'?'':`<div class="lyb"><span>Nombres dans la place libre</span><div class="sw">${['En haut','Au centre','En bas'].map((t,i)=>`<button data-a="${i}" class="${(L.nA|0)===i?'on':''}">${t}</button>`).join('')}</div></div>`}
+      <i class="lyg">Polices</i><div class="lyf"><button data-f="fN">Nombres<b style="font-family:'${esc(fcCur('fN'))}','Fun'">${esc(fcName(fcCur('fN')))}</b></button><button data-f="fT">Textes<b style="font-family:'${esc(fcCur('fT'))}','Fun'">${esc(fcName(fcCur('fT')))}</b></button></div>
+      <button class="lyr">Revenir à Pop</button>`};
   draw();
   p.addEventListener('click',ev=>{ev.stopPropagation();if(ev.target.closest('.lyx')){p.remove();return}
     if(ev.target.closest('.lyd')){up=!up;draw();return}
     const fb=ev.target.closest('.lyf button');if(fb){fcOpen(fb.dataset.f,draw);return}
-    if(ev.target.closest('.lyr')){haptic();S.lay=Object.assign({},LY_D);store.set(K_S,S);lyApply();draw()}});
-  p.addEventListener('input',ev=>{const r=ev.target.closest('input[type=range]');if(!r)return;const k=r.dataset.k,v=+r.value;S.lay=Object.assign(lyGet(),{[k]:v});if(k[0]==='p'){cancelAnimationFrame(p._r2);p._r2=requestAnimationFrame(lyPlace);const b=p.querySelector(`b[data-v="${k}"]`);if(b)b.textContent=lyFmt(v,'pc');clearTimeout(p._sv);p._sv=setTimeout(()=>store.set(K_S,S),400);return}
+    const ab=ev.target.closest('.lyb button[data-a]');if(ab){haptic();S.lay=Object.assign(S.lay||{},{nA:+ab.dataset.a});store.set(K_S,S);lyPlace();draw();return}
+    if(ev.target.closest('.lyr')){haptic();S.lay={v3:1};if(mode!=='txt'){delete S.fN;delete S.fT;fcApply()}store.set(K_S,S);lyApply();draw()}});
+  p.addEventListener('input',ev=>{const r=ev.target.closest('input[type=range]');if(!r)return;const k=r.dataset.k,v=+r.value;S.lay=Object.assign(S.lay||{v3:1},{[k]:v});
     const b=p.querySelector(`b[data-v="${k}"]`);if(b)b.textContent=lyFmt(v,r.dataset.u);cancelAnimationFrame(p._raf);p._raf=requestAnimationFrame(lyApply);clearTimeout(p._sv);p._sv=setTimeout(()=>store.set(K_S,S),400)})}
 
 /* ===== Polices : une pour les nombres (bulles, scores, fléchettes, Killer), une pour tous les textes ===== */
 const FC_LIST=[['Bowlby One'],['Archivo Black'],['Dela Gothic One'],['Bungee'],['Rammetto One'],['Paytone One'],['Chango'],['Shrikhand'],['Titan One'],['Lilita One'],
   ['Fredoka',700],['Baloo 2',800],['Rubik',800],['Unbounded',800],['Krona One'],['Lexend',800],['Outfit',800],['Plus Jakarta Sans',800],['Bricolage Grotesque',800],['Syne',800],['Space Grotesk',700],['Righteous'],['Gochi Hand']];
-const FC_K='lf-fonts',FC_ON={};
+const FC_K='lf-fonts',FC_ON={Lexend:1,Fun:1};
+const FC_DEF={fN:'Fun',fT:'Lexend'},fcCur=k=>S[k]||FC_DEF[k],fcName=f=>f==='Fun'?'Lilita One':f;
 const fcStore=()=>{try{return JSON.parse(localStorage.getItem(FC_K)||'{}')}catch(e){return{}}};
 const fcUrl=l=>'https://fonts.googleapis.com/css2?'+l.map(([f,w])=>'family='+f.replace(/ /g,'+')+(w?':wght@'+w:'')).join('&')+'&display=swap';
 function fcEnsure(f){if(!f||FC_ON[f])return;FC_ON[f]=1;const imp=fcStore()[f];
   if(imp){try{new FontFace(f,`url(${imp})`).load().then(x=>{document.fonts.add(x);fcRefit()}).catch(()=>{})}catch(e){}return}
   const g=FC_LIST.find(x=>x[0]===f);if(!g)return;const l=document.createElement('link');l.rel='stylesheet';l.href=fcUrl([g]);document.head.append(l)}
 function fcRefit(){try{if(G&&R&&$('game').classList.contains('on')){layoutSk();fitSk();render()}}catch(e){}try{if(KG&&PKL.k){PKL.k.querySelectorAll('g.kin').forEach(g=>{g._h=null});pklSync()}}catch(e){}}
-function fcApply(){const h=document.documentElement,st=h.style;[['fN','--pfN','pfN'],['fT','--pfT','pfT']].forEach(([k,v,c])=>{const f=S[k];h.classList.toggle(c,!!f);if(f){st.setProperty(v,`"${f}"`);fcEnsure(f)}else st.removeProperty(v)});
+function fcApply(){const h=document.documentElement,st=h.style;[['fN','--pfN','pfN'],['fT','--pfT','pfT']].forEach(([k,v,c])=>{const f=fcCur(k),on=f!=='Fun';h.classList.toggle(c,on);if(on){st.setProperty(v,`"${f}"`);fcEnsure(f)}else st.removeProperty(v)});
   try{document.fonts.ready.then(fcRefit)}catch(e){}}
 function fcOpen(k,back){const old=$('fch');if(old)old.remove();haptic();const p=el('div','');p.id='fch';document.body.append(p);
   {const l=document.createElement('link');l.rel='stylesheet';l.href=fcUrl(FC_LIST);document.head.append(l);Object.keys(fcStore()).forEach(fcEnsure)}
   const smp=k==='fN'?'15 20 289':'Loubard partie';
-  const draw=()=>{const cur=S[k]||'',all=[['','Lilita One (d\'origine)']].concat(Object.keys(fcStore()).map(n=>[n,n+' (importée)']),FC_LIST.map(x=>[x[0],x[0]]));
+  const draw=()=>{const cur=fcCur(k),all=[['Fun','Lilita One'+(FC_DEF[k]==='Fun'?' (Pop)':'')],['Lexend','Lexend'+(FC_DEF[k]==='Lexend'?' (Pop)':'')]].concat(Object.keys(fcStore()).map(n=>[n,n+' (importée)']),FC_LIST.filter(x=>x[0]!=='Lexend'&&x[0]!=='Lilita One').map(x=>[x[0],x[0]]));
     p.innerHTML=`<div class="fch"><b>Police des ${k==='fN'?'nombres':'textes'}</b><button class="fcx" aria-label="Fermer">✕</button></div>
-      <div class="fcl">${all.map(([f,l])=>`<button data-f="${esc(f)}" class="${f===cur?'on':''}"><span style="font-family:'${esc(f||'Fun')}','Fun'">${smp}</span><small>${esc(l)}</small></button>`).join('')}</div>
+      <div class="fcl">${all.map(([f,l])=>`<button data-f="${esc(f)}" class="${f===cur?'on':''}"><span style="font-family:'${esc(f)}','Fun'">${smp}</span><small>${esc(l)}</small></button>`).join('')}</div>
       <button class="fci">Importer un fichier (.otf, .ttf, .woff)</button><input type="file" hidden>`};
   draw();
-  const set=f=>{if(f)S[k]=f;else delete S[k];store.set(K_S,S);fcApply();draw();if(back)back()};
+  const set=f=>{if(f&&f!==FC_DEF[k])S[k]=f;else delete S[k];store.set(K_S,S);fcApply();draw();if(back)back()};
   p.addEventListener('click',ev=>{ev.stopPropagation();if(ev.target.closest('.fcx')){p.remove();return}
     const b=ev.target.closest('.fcl button');if(b){haptic();set(b.dataset.f);return}
     if(ev.target.closest('.fci'))p.querySelector('input[type=file]').click()});
