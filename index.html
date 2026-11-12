@@ -5651,7 +5651,7 @@ function xRender(){
     c.className='xc'+(act?' act':'')+(won?' won':'')+(pend?' pend':'')+(p.out&&!won?' out':'')+(act&&XG.rep?' reply':'')+(!p.open&&XG.inR?' shut':'')+[...c.classList].filter(x=>keep.includes(x)).map(x=>' '+x).join('');
     const put=(sel,h)=>{const e=c.querySelector(sel);if(e.dataset.h!==h){e.innerHTML=h;e.dataset.h=h}};
     const legs0=XG.legsTo>1?`<span class="xl">${Array.from({length:XG.legsTo},(_,k)=>`<i class="${k<p.legs?'on':''}"></i>`).join('')}</span>`:'';
-    put('.xn',p.members&&p.members.length>1?(()=>{const L=p.members.length,j=((p.mi||0)+(!act&&p.last&&p.last.length?L-1:0))%L;return`<small class="xm">${esc(p.members[(j+1)%L])} &amp;</small>${esc(p.members[j])}`})():esc(p.members?p.members[0]:p.name));
+    put('.xn',p.members&&p.members.length>1?(()=>{const L=p.members.length,j=((p.mi||0)+(tmHeld(p)?L-1:0))%L;return`<small class="xm">${esc(p.members[(j+1)%L])} &amp;</small>${esc(p.members[j])}`})():esc(p.members?p.members[0]:p.name));
     put('.xr',XG.mode==='clk'?clkLbl(p.tgt):String(p.rem));
     if(XG.mode){put('.xs',XG.mode==='sh'?`MPR ${fr(p.darts?p.hits*3/p.darts:0)}${p.sh?' · shanghai×'+p.sh:''}`:`${clkDone(p)}/${clkEnd()} · ${p.darts?Math.round(p.hits*100/p.darts):0}% de réussite`)}
     else put('.xs',pend?'fini · attend la réponse':act&&XG.rep?`droit de réponse : ${XG.rep.darts} fl.`:`moy. ${fr(xAvg(p))}${p.n180?` · 180×${p.n180}`:''}`);
@@ -6773,7 +6773,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-302';   // à changer avec VERSION dans sw.js
+const APPV='lf-303';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -6978,8 +6978,10 @@ function pklGeo(n){if(n<=2)return{W:902.6,H:688.6,wide:1,pos:[0,1].map(r=>[111.2
   const W=418.9,H=456.3,gap=49.6,R=Math.ceil(n/2),sc=Math.min(1,1672/((R-1)*568+556.3)),bh=((R-1)*568+556.3)*sc,y0=420+(1672-bh)/2+100*sc,x0=(1125-(2*W+gap)*sc)/2,last=n-(R-1)*2;
   return{W,H,s:sc,pos:Array.from({length:n},(_,i)=>{const r=Math.floor(i/2),off=r===R-1&&last===1?(W+gap)*sc/2:0;return[x0+off+(i%2)*(W+gap)*sc,y0+r*568*sc]}),k:.85}}
 const pkCol=i=>{const p=(pkClk()?XG:KG).players[i],c=p&&pcol(p.members?p.members[0]:p.name);return /^#[0-9a-f]{6}$/i.test(c||'')?c:PFB[i%PFB.length]};
-function pkMate(p,act){if(!p.members||p.members.length<2)return '';const L=p.members.length,j=((p.mi||0)+(!act&&p.last&&p.last.length?L-1:0))%L;return p.members[(j+1)%L]}
-function pkName(p,act){if(!p.members||p.members.length<2)return p.name;const L=p.members.length,j=((p.mi||0)+(!act&&p.last&&p.last.length?L-1:0))%L;return p.members[j]}
+/* équipe : le joueur mis en avant est celui qui lancera au prochain tour de l'équipe ; seulement pendant la pause de fin de tour, c'est celui qui vient de lancer */
+function tmHeld(p){return!!((typeof KHOLD!=='undefined'&&KHOLD&&KG&&KG.players[KHOLD.who]===p)||(typeof XHOLD!=='undefined'&&XHOLD&&XG&&XG.players[XHOLD.who]===p))}
+function pkMate(p,act){if(!p.members||p.members.length<2)return '';const L=p.members.length,j=((p.mi||0)+(tmHeld(p)?L-1:0))%L;return p.members[(j+1)%L]}
+function pkName(p,act){if(!p.members||p.members.length<2)return p.name;const L=p.members.length,j=((p.mi||0)+(tmHeld(p)?L-1:0))%L;return p.members[j]}
 function pkDartT(d){if(!d)return'·';if(d.n===0)return'S';return (d.m===3?'T':d.m===2?'D':'')+(d.n===25?'B':d.n)}
 function pklBuild(){const sec=$('killer');let k=$('pkl');if(k)k.remove();
   sec.insertAdjacentHTML('beforeend',`<div id="pkl"><svg viewBox="0 380 1125 1760" preserveAspectRatio="xMidYMid meet">
