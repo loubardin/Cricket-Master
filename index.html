@@ -6465,7 +6465,7 @@ function pnOrder(){const g=$('game');if(!g.classList.contains('pn')||!R||!G)retu
   const prev=R.pnCur,turned=prev!==undefined&&prev!==cur;
   const all=[...TARGETS.map(t=>R.num[t]),...G.players.flatMap((p,i)=>TARGETS.map(t=>R.mk[t][i]))],old=turned?all.map(c=>c.offsetLeft):null;
   g.classList.add('curR');g.classList.remove('curL','rot');
-  const seq=pnSeq(n,cur),pos=i=>seq.indexOf(i);   // 3 joueurs : celui qui joue au centre ; 4 et + : ordre fixe, la colonne des numéros vient se placer devant lui
+  const seq=pnSeq(n,cur),pos=i=>seq.indexOf(i);   // celui qui joue toujours au milieu
   G.players.forEach((p,i)=>{R.sc[i].c.dataset.o=pos(i);R.sc[i].c.style.order=pos(i)*2;TARGETS.forEach(t=>{R.mk[t][i].style.order=pos(i)*2})});
   TARGETS.forEach(t=>{R.num[t].style.order=seq.indexOf('N')*2});
   if(turned)all.forEach((c,k)=>{const dx=old[k]-c.offsetLeft;if(Math.abs(dx)>1)c.animate([{transform:'translateX('+dx+'px)'},{transform:'none'}],{duration:450,easing:'cubic-bezier(.3,1.25,.5,1)'})});
@@ -6473,7 +6473,7 @@ function pnOrder(){const g=$('game');if(!g.classList.contains('pn')||!R||!G)retu
     m.scrollTo({left:Math.max(0,x-(m.clientWidth-w)/2),behavior:turned?'smooth':'auto'})}
 }
 /* ordre des colonnes à 3 joueurs et + ('N' = colonne des numéros, toujours juste avant le joueur en cours) */
-function pnSeq(n,cur){if(n===3)return[(cur+2)%3,'N',cur,(cur+1)%3];const q=[];for(let i=0;i<n;i++){if(i===cur)q.push('N');q.push(i)}return q}
+function pnSeq(n,cur){const L=Math.floor((n-1)/2),q=[];for(let k=L;k>0;k--)q.push((cur-k+n)%n);q.push('N',cur);for(let k=1;k<n-L;k++)q.push((cur+k)%n);return q}   // joueur en cours (et sa colonne de numéros) au milieu, les autres autour dans l'ordre de jeu
 function pnPlace(){const g=$('game');if(!g.classList.contains('pn')||!R||!G)return;
   const W=innerWidth,n=G.players.length,mid=W*.15,colw=Math.max(W*.20,(W*.93-mid)/n),cur=shownCur();g.style.setProperty('--colw',colw+'px');
   const seq=pnSeq(n,cur),X={};let x=0;seq.forEach(k=>{X[k]=x;x+=k==='N'?mid:colw});
@@ -6750,7 +6750,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-286';   // à changer avec VERSION dans sw.js
+const APPV='lf-287';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
