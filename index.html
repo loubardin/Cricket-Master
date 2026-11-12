@@ -6449,7 +6449,7 @@ const BALLS=new Map();
 function kickBall(num,X){const row=num.parentElement;let B=BALLS.get(num);
   if(!B||!B.gh.isConnected){const gh=num.cloneNode(true);gh.classList.add('nghost');gh.classList.remove('pressed','pgrey','away','bnc');
     Object.entries({position:'absolute',left:num.offsetLeft+'px',top:num.offsetTop+'px',width:num.offsetWidth+'px',height:num.offsetHeight+'px',margin:'0','pointer-events':'none','z-index':'3',flex:'none',order:'0'}).forEach(([k,v])=>gh.style.setProperty(k,v,'important'));
-    row.append(gh);B={gh,x:0,v:0,X,t:0};BALLS.set(num,B)}
+    row.append(gh);B={gh,x:0,v:0,X,t:0};BALLS.set(num,B);try{pnStick()}catch(e){}}
   B.X=X;const A=Math.abs(X),g=A*26,dir=Math.sign(X);
   B.v=dir*Math.max(Math.sqrt(2*g*A*1.25),Math.abs(B.v));   // impulsion vers le bout du rail
   B.gh.innerHTML=num.innerHTML;B.gh.className=num.className+' nghost';B.gh.classList.remove('pressed','pgrey','bnc');
@@ -6495,10 +6495,10 @@ function pnPlace(){const g=$('game');if(!g.classList.contains('pn')||!R||!G)retu
 /* le joueur en cours (sa case, la colonne des numéros, ses marques) reste à l'écran quand on fait défiler */
 function pnStick(){const g=$('game');if(!g.classList.contains('pn')||!R||!G||R.pnXN===undefined)return;
   const m=g.querySelector('main'),cur=shownCur(),PL=parseFloat(getComputedStyle(m).paddingLeft)||0,x0=PL+R.pnXN-m.scrollLeft,cw=m.clientWidth;if(!cw)return;g.style.setProperty('--pnbg',getComputedStyle(g).backgroundColor);
-  let sh=0;if(x0<0)sh=-x0;else if(x0+R.pnGW>cw)sh=Math.min(0,cw-R.pnGW-x0);
-  const els=[R.sc[cur]&&R.sc[cur].c,...TARGETS.flatMap(t=>{const r=R.num[t]&&R.num[t].parentElement;return r?[R.num[t],R.mk[t][cur],r.querySelector('.rtrack'),r.querySelector('.rtrackb')]:[]})].filter(Boolean);
+  let sh=0;if(x0<PL)sh=PL-x0;else if(x0+R.pnGW>cw-PL)sh=Math.min(0,cw-PL-R.pnGW-x0);   // garde la même marge que le bord du tableau
+  const els=[R.sc[cur]&&R.sc[cur].c,...TARGETS.flatMap(t=>{const r=R.num[t]&&R.num[t].parentElement;return r?[R.num[t],R.mk[t][cur],r.querySelector('.rtrack'),r.querySelector('.rtrackb'),r.querySelector('.nghost')]:[]})].filter(Boolean);
   (R.pnEls||[]).forEach(e=>{if(!els.includes(e)){e.style.removeProperty('translate');e.classList.remove('pnf')}});R.pnEls=els;
-  els.forEach(e=>{e.classList.add('pnf');if(sh)e.style.setProperty('translate',sh+'px 0','important');else e.style.removeProperty('translate')})}
+  els.forEach(e=>{e.classList.add('pnf');if(e.classList.contains('nghost'))e.style.setProperty('z-index','9','important');if(sh)e.style.setProperty('translate',sh+'px 0','important');else e.style.removeProperty('translate')})}
 {const _r=render;render=function(){const x=_r.apply(this,arguments);try{pnOrder()}catch(e){}return x}}
 
 /* spew : la bulle du switch ondule comme une vague */
@@ -6768,7 +6768,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-295';   // à changer avec VERSION dans sw.js
+const APPV='lf-296';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -7141,7 +7141,7 @@ const LY_B={
   pl:{ck:[['Case',['scK','scR','hZ','mT','gSN']],
           ['Nom',[['zNm','Taille'],['iNP','Écart nom → score'],'@x:nmA,nmO']],
           ['Coéquipier (équipes)',[['tmZ','Taille'],['tmL','Interligne avec le nom']]],
-          ['Score',[['zSc','Taille'],'@x:ptA,ptO']],
+          ['Score',[['zSc','Taille'],'scsw','@x:ptA,ptO']],
           ['MPR',[['zMp','Taille'],'iPM','iPMo','@x:mpA,mpO']],
           ['Nom, score et MPR ensemble',['iY']],
           ['Historique du joueur en cours',['paW','paH','zPl','iPl','pbw','@x:hiA']],
@@ -7160,7 +7160,7 @@ const LY_B={
           ['Cœurs',[['klHZ','Taille']]],
           ['Marques K (MPR à l\'Horloge)',[['klKZ','Taille'],['klKY','Position']]],
           ['Historique des fléchettes',[['klPY','Position'],'paW','paH','zPl','iPl']]]},
-  nb:{ck:[['Bulles des nombres',['rowK','nW','gL','gNF']],['Nombres',[['nfz','Taille'],'@x:lbl']],['Marques',['mkz','mksw','@x:mk']]],
+  nb:{ck:[['Bulles des nombres',['rowK','nW','gL','gNF']],['Nombres',[['nfz','Taille'],'nsw','@x:lbl']],['Marques',['mkz','mksw','@x:mk']]],
       x:[['Touches',['xkh','xbh','xkg','xgPK','xgKF']],['Chiffres',[['xkz','Taille'],'@x:xkl']]]},
   bas:{all:[['Bloc',['ftK','brK','gFB','mB']],['Textes',['dtZ','spZ','icZ','ifZ']],['Contour du texte « Spew »',['fbw']]]}};
 const LY_TABS={ck:[['pl','Cases joueur'],['nb','Tableau'],['bas','Bas']],x:[['pl','Cases joueur'],['nb','Touches'],['bas','Bas']],kl:[['pl','Cartes'],['bas','Bas']],ot:[['bas','Bas']]};
