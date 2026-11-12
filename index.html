@@ -3023,7 +3023,7 @@ html.pkl body>:is(.fireglow,.ember,.bhole){display:none!important}
 #pkl .kc2.dead .kin{filter:grayscale(1)}
 #pkl .kc2 .kin{transform-origin:var(--ox) var(--oy);transition:transform .14s ease}
 #pkl .kc2.pr .kin{transform:scale(.96)}
-#pkl .phrt{stroke:var(--ol,#111);stroke-width:var(--swC,10px);stroke-linejoin:round;fill:none}
+#pkl .phrt{stroke:var(--ol,#111);stroke-width:var(--swH,var(--swC,10px));stroke-linejoin:round;fill:none}
 #pkl .pkp{stroke:var(--ol,#111);stroke-width:var(--swC,10px);fill:#fff}
 #pkl .pkp.on,#pkl .pkk{fill:#ffde00}
 #pkl .pkk{stroke:var(--ol,#111);stroke-width:var(--swC,10px)}
@@ -3047,6 +3047,7 @@ html.pkl body>:is(.fireglow,.ember,.bhole){display:none!important}
 #pkl .phl.gold{fill:#ffc61a}
 #pkl .phg{fill:#fff;opacity:.85}
 #pkl .phrt.on{fill:none!important}
+#pkl .phrt:not(.on){fill:#dcd7cd}
 #pkl .kc2.tgt:not(.dead) .pkng{animation:pktrem .22s linear infinite}
 @keyframes pktrem{0%{transform:translate(0,0)}25%{transform:translate(2.4px,-1.8px)}50%{transform:translate(-2.2px,1.8px)}75%{transform:translate(1.8px,2.2px)}100%{transform:translate(0,0)}}
 @media (prefers-reduced-motion:reduce){#pkl .pkng{animation:none!important}}
@@ -6772,7 +6773,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-300';   // à changer avec VERSION dans sw.js
+const APPV='lf-301';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -6994,14 +6995,9 @@ function pklCard(i,g,act){const p=KG.players[i],{W,H,wide,k}=g,DD=KG.def,isDef=D
   const Wn=g.W0||W,LZ=lyGet(lyKl()),dk=pkDark(pkCol(i)),kT=PF.kT*LZ.zNm,kN=PF.kN*LZ.nfz;
   let h=act?`<rect class="pksh" x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87" filter="url(#pkSh)"/><rect class="halo" x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87"/><clipPath id="pkClip"><rect x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87"/></clipPath><g clip-path="url(#pkClip)"><path class="shine" style="--sd:${W+H*.3+560}px" d="M-300 -40H-30L${-30-H*.3} ${H+40}H${-300-H*.3}Z"/></g>`:'';
   const cx=wide?.306*W:W/2,nm=esc(pkName(p,act));
-  h+=`<g transform="translate(0 ${(LZ.klNY*H/100).toFixed(1)})">`;
-  const mate=esc(pkMate(p,act)),tu=mate?((act?80:66)*Math.max(.7,LZ.tmZ)+LZ.tmL*8)*k:0;
-  if(mate)h+=`<text class="pknm pkmate" style="fill:${pkCol(i)}" x="${cx}" y="${((act?(wide?-36:-32):-31)*k-tu).toFixed(1)}" font-size="${(act?46:40)*k*kT*LZ.tmZ}" data-fit="${wide?.62*W:W*.98}">${mate} &amp;</text>`;
-  if(act)h+=`${mate?'':`<text x="${cx}" y="${(wide?-124:-116)*k}" font-size="${43*k*kT}">à toi</text>`}<text class="pknm" style="fill:${pkCol(i)}" x="${cx}" y="${(wide?-36:-32)*k}" font-size="${87*k*kT}" data-fit="${wide?.62*W:W*1.02}">${nm}</text>`;
-  else h+=`<text class="pknm" style="fill:${pkCol(i)}" x="${cx}" y="${-31*k}" font-size="${73*k*kT}" data-fit="${wide?.62*W:W*.98}">${nm}</text>`;
-  h+='</g>';
-  // cœurs
-  const nh=Math.max(p.maxl||0,p.lives||0,3),hh0=(wide?.137:.132)*H,hs=Math.min(1,(wide?.5:.9)*W/(hh0*1.12*(1.21*(nh-1)+1))),hh=hh0*hs,lw=hh*1.12,pitch=lw*1.21,hy=(wide?.076:.052)*H+(hh0-hh)/2;   // cœurs : toujours 1,12 × plus larges que hauts
+  // cœurs : à cheval sur le haut du cadre (dessinés après le cadre, voir plus bas)
+  const nh=Math.max(p.maxl||0,p.lives||0,3),hh0=(wide?.137:.132)*H,hs=Math.min(1,(wide?.5:.9)*W/(hh0*1.12*(1.21*(nh-1)+1))),hh=hh0*hs,lw=hh*1.12,pitch=lw*1.21,hy=-hh/2+LZ.klHY*H/100;   // cœurs : toujours 1,12 × plus larges que hauts
+  const h0=h;h='';
   h+=`<g transform="translate(${cx} ${hy+hh/2}) scale(${LZ.klHZ}) translate(${-cx} ${-(hy+hh/2)})">`;
   for(let j=0;j<nh;j++){const on=!dead&&j<p.lives,gold=on&&j>=p.lives-(p.gold||0),x=cx-pitch*(nh-1)/2+j*pitch-lw/2,c=gold?' gold':'';
     const bt=on&&p.lives===1&&j===0;/* il ne bat que quand c'est le dernier cœur en vie */if(bt)h+='<g class="beat">';
@@ -7009,6 +7005,13 @@ function pklCard(i,g,act){const p=KG.players[i],{W,H,wide,k}=g,DD=KG.def,isDef=D
       `<ellipse class="phg" cx="${x+lw*.3}" cy="${hy+hh*.3}" rx="${lw*.12}" ry="${hh*.075}" transform="rotate(-38 ${x+lw*.3} ${hy+hh*.3})"/><circle class="phg" cx="${x+lw*.17}" cy="${hy+hh*.47}" r="${Math.min(lw,hh)*.045}"/>`;
     h+=`<path class="phrt${on?' on':''}" d="${pkHeart(x,hy,lw,hh)}"/>`;if(bt)h+='</g>'}
   h+='</g>';
+  if(act)h+=`<text x="${cx}" y="${(hy+hh/2-hh*LZ.klHZ/2-14*k).toFixed(1)}" font-size="${43*k*kT}">à toi</text>`;
+  const hrt=h;h=h0;
+  // nom (et coéquipier) dans la carte, à l'ancienne place des cœurs
+  {const ny0=(wide?.076:.052)*H,nh0=(wide?.137:.132)*H,mate=esc(pkMate(p,act)),fit=(wide?.6:.86)*W,st=act?'':` style="fill:${pkCol(i)}"`;
+   h+=`<g transform="translate(0 ${(LZ.klNY*H/100).toFixed(1)})">`+(mate
+     ?`<text class="pknm pkmate"${st} x="${cx}" y="${(ny0+nh0*.5-LZ.tmL*nh0*.1).toFixed(1)}" font-size="${(nh0*.42*kT*LZ.tmZ).toFixed(1)}" data-fit="${fit}">${mate} &amp;</text><text class="pknm"${st} x="${cx}" y="${(ny0+nh0*1.02).toFixed(1)}" font-size="${(nh0*.62*kT).toFixed(1)}" data-fit="${fit}">${nm}</text>`
+     :`<text class="pknm"${st} x="${cx}" y="${(ny0+nh0*.95).toFixed(1)}" font-size="${(nh0*.8*kT).toFixed(1)}" data-fit="${fit}">${nm}</text>`)+'</g>'}
   // numéro
   const ny=(wide?.272:.243)*H,nH=(wide?.44:.325)*H,nW=(wide?.445:.61)*W;
   const nx=wide?.307*W:cx,nfs=(nH/.725*kN).toFixed(1);
@@ -7032,7 +7035,7 @@ function pklCard(i,g,act){const p=KG.players[i],{W,H,wide,k}=g,DD=KG.def,isDef=D
   for(let j=0;j<nd;j++){let x,y,w,hh2;if(wide){w=.213*Wn*HW;hh2=.174*H*HH;x=.675*W+.213*Wn*(1-HW)/2;y=(.161+j*.249)*H+.174*H*(1-HH)/2}else{w=hwf;hh2=.104*H*HH;x=W/2-hsp*(nd-1)/2+j*hsp-w/2;y=.826*H+.104*H*(1-HH)/2}
     const t=pkDartT(ds&&ds[j]);h+=`<rect class="pkhp" x="${x}" y="${y}" width="${w}" height="${hh2}" rx="${Math.min(29.5,hh2*.45)}"/><text class="fN" x="${x+w/2}" y="${y+hh2*.5+hh2*.3}" font-size="${hh2/HH*.8*PF.kN*LZ.zPl}" data-fit="${w*.86}">${t}</text>`}
   h+='</g>';
-  h+=`<rect class="ol" width="${W}" height="${H}" rx="92.61"/><rect class="hit" x="-10" y="-10" width="${W+20}" height="${H+20}" rx="92"/>`;
+  h+=`<rect class="ol" width="${W}" height="${H}" rx="92.61"/>${hrt}<rect class="hit" x="-10" y="-10" width="${W+20}" height="${H+20}" rx="92"/>`;
   return {h,dead}}
 /* Horloge : même carte que le Killer — le nom à la place des cœurs, le numéro à viser en grand, le MPR en avant à la place des K */
 function pkcCard(i,g,act){const p=XG.players[i],{W,H,wide}=g,Wn=g.W0||W,LZ=lyGet(lyCur()),dk=pkDark(pkCol(i)),kT=PF.kT*LZ.zNm,kN=PF.kN*LZ.nfz;
@@ -7065,7 +7068,7 @@ function pklSync(){const sec=$('killer'),on=pklOn()&&sec.classList.contains('on'
   // zone des cartes : du haut de l'écran jusqu'au-dessus des boutons de la Bulle
   {const sv=k.firstElementChild,km=$('kmain'),f=sec.querySelector('footer'),st=parseFloat(getComputedStyle(km).paddingTop)||0,sr=sec.getBoundingClientRect(),bot=f?f.getBoundingClientRect().top-sr.top-innerWidth*.035:sec.clientHeight;
     sv.style.top=st+'px';sv.style.height=Math.max(100,bot-st)+'px';
-    const L=lyGet(pkClk()?lyCur():lyKl()),sc=Math.min(sv.clientWidth/1125,Math.max(100,bot-st)/1760)||.33;k.style.setProperty('--swC',(L.bw/sc).toFixed(1)+'px');k.style.setProperty('--swS',(L.bw*.4/sc).toFixed(1)+'px');k.style.setProperty('--swN',(L.nsw/sc).toFixed(1)+'px')}
+    const L=lyGet(pkClk()?lyCur():lyKl()),sc=Math.min(sv.clientWidth/1125,Math.max(100,bot-st)/1760)||.33;k.style.setProperty('--swC',(L.bw/sc).toFixed(1)+'px');k.style.setProperty('--swH',(L.bw*L.klHO/sc).toFixed(1)+'px');k.style.setProperty('--swS',(L.bw*.4/sc).toFixed(1)+'px');k.style.setProperty('--swN',(L.nsw/sc).toFixed(1)+'px')}
   const CLK=pkClk(),SRC=CLK?XG:KG,P=SRC.players,n=P.length,cur=SRC.winner!==null?SRC.winner:(CLK?SRC.cur:(KHOLD?KHOLD.who:KG.cur)),g=pklGeo(n);
   {const f=+lyGet(CLK?lyCur():lyKl()).klW||1;if(f!==1){const sc=g.s||1,w0=g.W*sc,w1=w0*f,xs=g.pos.map(p=>p[0]),P=Math.max(...xs)-Math.min(...xs),r=P>1?(P+w1-w0)/P:1,mid=1125/2;
     g.W0=g.W;g.W*=f;g.pos=g.pos.map(([x,y])=>[mid+(x+w0/2-mid)*r-w1/2,y])}g.f=f}   // largeur des cartes (réglage) : les colonnes s'écartent d'autant, l'écart entre cartes ne change pas
@@ -7097,7 +7100,7 @@ function popOutl(root){if(!root)return;root.querySelectorAll('text.w').forEach(t
 addEventListener('resize',()=>{try{if(KG&&PKL.k&&$('killer').classList.contains('on'))pklSync()}catch(e){}});
 
 /* ===== Mise en page du Cricket à 2 (Bulle) : hauteurs, écarts, barre Accueil · infos · Annuler en haut ou en bas ===== */
-const LY_D={klW:1,tmZ:1,pbw:1,xsw:0,xcH:1,xpT:1,xgPK:1.2,xgKF:2.8,tmL:0,klZ:1,klY:0,klHZ:1,klKZ:1,klNY:0,klNoY:0,klKY:0,klPY:0,xoN:0,xoS:0,xoM:0,xoH:0,xoC:0,xpW:1,xpH:1,xpG:1,xcG:1,xnZ:1,xrZ:1,xsZ:1,xcoZ:1,xhZ:1,xkz:1,xkh:1,xkg:1,xbh:1,paW:1,paH:1,poW:1,poH:1,zPo:1.05,poG:1,poY:0,crZ:1,crY:0,scR:1,hZ:1,nW:1,icZ:0.85,ifZ:0.75,dtZ:0.95,spZ:0.95,fbw:2.5,barTop:0,iNP:.1,iPM:.14,iPMo:.14,iY:0,iPl:.1,zNm:1.2,zSc:1.6,zMp:1.25,zPl:1.05,nfz:1.1,nsw:4,scsw:4,bw:3.25,mkz:.95,mksw:4,scK:1.1,rowK:1.05,ftK:1.2,brK:1,mT:4.1,gSN:1.1,gL:1.8,gNF:1.5,gFB:0.1,mB:.9,nA:0};   // « Pop » : les réglages de base
+const LY_D={klW:1,klHY:0,klHO:1,tmZ:1,pbw:1,xsw:0,xcH:1,xpT:1,xgPK:1.2,xgKF:2.8,tmL:0,klZ:1,klY:0,klHZ:1,klKZ:1,klNY:0,klNoY:0,klKY:0,klPY:0,xoN:0,xoS:0,xoM:0,xoH:0,xoC:0,xpW:1,xpH:1,xpG:1,xcG:1,xnZ:1,xrZ:1,xsZ:1,xcoZ:1,xhZ:1,xkz:1,xkh:1,xkg:1,xbh:1,paW:1,paH:1,poW:1,poH:1,zPo:1.05,poG:1,poY:0,crZ:1,crY:0,scR:1,hZ:1,nW:1,icZ:0.85,ifZ:0.75,dtZ:0.95,spZ:0.95,fbw:2.5,barTop:0,iNP:.1,iPM:.14,iPMo:.14,iY:0,iPl:.1,zNm:1.2,zSc:1.6,zMp:1.25,zPl:1.05,nfz:1.1,nsw:4,scsw:4,bw:3.25,mkz:.95,mksw:4,scK:1.1,rowK:1.05,ftK:1.2,brK:1,mT:4.1,gSN:1.1,gL:1.8,gNF:1.5,gFB:0.1,mB:.9,nA:0};   // « Pop » : les réglages de base
 if(S.lay&&!S.lay.v3){S.lay={v3:1};try{store.set(K_S,S)}catch(e){}}
 /* un profil de réglages par jeu ; les contours (et les polices) sont communs à toute l'appli */
 const LY_GLOB=['bw','fbw','nsw','scsw','brK','ftK','gFB','mB','icZ','ifZ','dtZ','spZ','barTop'];   // contours et boutons du bas : un seul réglage pour toute l'appli
@@ -7135,7 +7138,7 @@ const LY_K={
   iNP:['Nom → score',-.4,1,.02,'x'],iPM:['Score → MPR (joueur en cours)',-.4,1,.02,'x'],iPMo:['Score → MPR (adversaire)',-.4,1,.02,'x'],iY:['Tout décaler (− haut, + bas)',-1,1,.02,'x'],
   paW:['Largeur des bulles',.4,2.6,.05,'%'],paH:['Hauteur des bulles',.5,1.8,.05,'%'],zPl:['Taille du texte',.5,1.8,.05,'%'],iPl:['Écart',0,.6,.01,'x'],
   poW:['Largeur des bulles',.5,4,.05,'%'],poH:['Hauteur des bulles',.5,2,.05,'%'],zPo:['Taille du texte',.5,2,.05,'%'],poG:['Écart',0,3,.05,'%'],poY:['Décaler (− haut, + bas)',-1,1,.02,'x'],
-  klW:['Largeur des cartes',.6,1.5,.01,'%'],crZ:['Taille',.4,1.8,.05,'%'],crY:['Décaler (− haut, + bas)',-1,1,.02,'x'],
+  klHY:['Position',-30,30,.5,'pc'],klHO:['Contour',0,3,.05,'%'],klW:['Largeur des cartes',.6,1.5,.01,'%'],crZ:['Taille',.4,1.8,.05,'%'],crY:['Décaler (− haut, + bas)',-1,1,.02,'x'],
   rowK:['Hauteur des bulles',.6,1.6,.05,'%'],nW:['Largeur des bulles (et du Spew)',.7,1.3,.01,'%'],gL:['Écart entre les lignes',0,5,.1,'pc'],gNF:['Écart avec le Spew (au moins)',0,8,.1,'pc'],
   nfz:['Nombres',.6,1.5,.05,'%'],mkz:['Taille',.5,1.5,.05,'%'],mksw:['Épaisseur',1,10,.25,''],
   xcG:['Écart entre les cases',0,3,.05,'%'],xnZ:['Nom',.5,2,.05,'%'],xrZ:['Score',.5,2,.05,'%'],xsZ:['Moyenne',.5,2.5,.05,'%'],xcoZ:['Finish proposé',.5,2.5,.05,'%'],xhZ:['Historique',.5,2.5,.05,'%'],
@@ -7166,7 +7169,7 @@ const LY_B={
           ['Nom',[['zNm','Taille'],['klNY','Position']]],
           ['Coéquipier (équipes)',[['tmZ','Taille'],['tmL','Interligne avec le nom']]],
           ['Numéro',[['nfz','Taille'],['klNoY','Position']]],
-          ['Cœurs',[['klHZ','Taille']]],
+          ['Cœurs',[['klHZ','Taille'],'klHY','klHO']],
           ['Marques K (MPR à l\'Horloge)',[['klKZ','Taille'],['klKY','Position']]],
           ['Historique des fléchettes',[['klPY','Position'],'paW','paH','zPl','iPl']]]},
   nb:{ck:[['Bulles des nombres',['rowK','nW','gL','gNF']],['Nombres',[['nfz','Taille'],'nsw','@x:lbl']],['Marques',['mkz','mksw','@x:mk']]],
