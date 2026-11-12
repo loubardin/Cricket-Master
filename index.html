@@ -3355,8 +3355,12 @@ html body #x01#x01#x01#x01 #xplayers .xc{height:calc(100% * var(--xcH,1))!import
 html body :is(#game,#x01,#killer):is(#game,#x01,#killer):is(#game,#x01,#killer) footer.armed2 #b2::after,html body :is(#game,#x01,#killer):is(#game,#x01,#killer):is(#game,#x01,#killer) footer.armed3 #b3::after{
   --o:var(--fbw,0px);--on:calc(var(--fbw,0px)*-1);--d:calc(var(--fbw,0px)*.71);--dn:calc(var(--fbw,0px)*-.71);color:#fff!important;-webkit-text-fill-color:#fff!important;
   text-shadow:var(--o) 0 0 var(--tol,#111),var(--on) 0 0 var(--tol,#111),0 var(--o) 0 var(--tol,#111),0 var(--on) 0 var(--tol,#111),var(--d) var(--d) 0 var(--tol,#111),var(--dn) var(--d) 0 var(--tol,#111),var(--d) var(--dn) 0 var(--tol,#111),var(--dn) var(--dn) 0 var(--tol,#111)!important}
-/* lf-292 : colonne des numéros toujours visible au premier plan quand on fait défiler */
-html body #game#game#game.pn #grid>.row>.num{position:sticky!important;left:0!important;right:0!important;z-index:6!important}
+/* lf-293 : colonne du joueur en cours (case, numéros, marques) épinglée au premier plan quand on fait défiler — voir pnStick */
+html body #game#game#game.pn #grid>.row>.rtrack.pnf{z-index:7!important;background-color:var(--pnbg,var(--page))!important}
+html body #game#game#game.pn #grid>.row>.mk.pnf{z-index:8!important}
+html body #game#game#game.pn #grid>.row>.rtrackb.pnf{z-index:9!important}
+html body #game#game#game.pn #grid>.row>.num{z-index:10!important}
+html body #game#game#game.pn #scores>.sc.pnf{z-index:5!important}
 </style>
 </head>
 <body>
@@ -6473,6 +6477,8 @@ function pnOrder(){const g=$('game');if(!g.classList.contains('pn')||!R||!G)retu
   if(turned)all.forEach((c,k)=>{const dx=old[k]-c.offsetLeft;if(Math.abs(dx)>1)c.animate([{transform:'translateX('+dx+'px)'},{transform:'none'}],{duration:450,easing:'cubic-bezier(.3,1.25,.5,1)'})});
   if(R.pnCur!==cur){R.pnCur=cur;try{pnPlace()}catch(e){}const m=g.querySelector('main'),x=parseFloat(R.sc[cur].c.style.left)||0,w=parseFloat(R.sc[cur].c.style.width)||0;
     m.scrollTo({left:Math.max(0,x+(parseFloat(getComputedStyle(m).paddingLeft)||0)-(m.clientWidth-w)/2),behavior:turned?'smooth':'auto'})}
+  {const m=g.querySelector('main');if(!m.pnS){m.pnS=1;m.addEventListener('scroll',()=>{try{pnStick()}catch(e){}},{passive:true})}}
+  pnStick();requestAnimationFrame(()=>{try{pnStick()}catch(e){}});
 }
 /* ordre des colonnes à 3 joueurs et + ('N' = colonne des numéros, toujours juste avant le joueur en cours) */
 function pnSeq(n,cur){const q=[];for(let i=0;i<n;i++){if(i===cur)q.push('N');q.push(i)}return q}   // 3 joueurs et + : ordre fixe, la colonne des numéros vient sous le joueur en cours
@@ -6484,7 +6490,15 @@ function pnPlace(){const g=$('game');if(!g.classList.contains('pn')||!R||!G)retu
   R.sc.forEach((sc,i)=>{const L=i===cur?X.N:X[i],w=i===cur?colw+mid:colw;
     sc.c.style.setProperty('left',L+'px','important');sc.c.style.setProperty('width',w+'px','important')});
   $('scores').style.setProperty('width',(pad+colw*n+mid+padR)+'px','important');
+  R.pnXN=X.N;R.pnGW=mid+colw;
 }
+/* le joueur en cours (sa case, la colonne des numéros, ses marques) reste à l'écran quand on fait défiler */
+function pnStick(){const g=$('game');if(!g.classList.contains('pn')||!R||!G||R.pnXN===undefined)return;
+  const m=g.querySelector('main'),cur=shownCur(),PL=parseFloat(getComputedStyle(m).paddingLeft)||0,x0=PL+R.pnXN-m.scrollLeft,cw=m.clientWidth;if(!cw)return;g.style.setProperty('--pnbg',getComputedStyle(g).backgroundColor);
+  let sh=0;if(x0<0)sh=-x0;else if(x0+R.pnGW>cw)sh=Math.min(0,cw-R.pnGW-x0);
+  const els=[R.sc[cur]&&R.sc[cur].c,...TARGETS.flatMap(t=>{const r=R.num[t]&&R.num[t].parentElement;return r?[R.num[t],R.mk[t][cur],r.querySelector('.rtrack'),r.querySelector('.rtrackb')]:[]})].filter(Boolean);
+  (R.pnEls||[]).forEach(e=>{if(!els.includes(e)){e.style.removeProperty('translate');e.classList.remove('pnf')}});R.pnEls=els;
+  els.forEach(e=>{e.classList.add('pnf');if(sh)e.style.setProperty('translate',sh+'px 0','important');else e.style.removeProperty('translate')})}
 {const _r=render;render=function(){const x=_r.apply(this,arguments);try{pnOrder()}catch(e){}return x}}
 
 /* spew : la bulle du switch ondule comme une vague */
@@ -6754,7 +6768,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-292';   // à changer avec VERSION dans sw.js
+const APPV='lf-293';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
