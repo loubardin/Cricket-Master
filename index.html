@@ -6773,7 +6773,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-301';   // à changer avec VERSION dans sw.js
+const APPV='lf-302';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -7005,7 +7005,7 @@ function pklCard(i,g,act){const p=KG.players[i],{W,H,wide,k}=g,DD=KG.def,isDef=D
       `<ellipse class="phg" cx="${x+lw*.3}" cy="${hy+hh*.3}" rx="${lw*.12}" ry="${hh*.075}" transform="rotate(-38 ${x+lw*.3} ${hy+hh*.3})"/><circle class="phg" cx="${x+lw*.17}" cy="${hy+hh*.47}" r="${Math.min(lw,hh)*.045}"/>`;
     h+=`<path class="phrt${on?' on':''}" d="${pkHeart(x,hy,lw,hh)}"/>`;if(bt)h+='</g>'}
   h+='</g>';
-  if(act)h+=`<text x="${cx}" y="${(hy+hh/2-hh*LZ.klHZ/2-14*k).toFixed(1)}" font-size="${43*k*kT}">à toi</text>`;
+  if(act)h+=`<text x="${cx}" y="${(hy+hh/2-hh*LZ.klHZ/2-14*k).toFixed(1)}" font-size="${43*k*PF.kT}">à toi</text>`;
   const hrt=h;h=h0;
   // nom (et coéquipier) dans la carte, à l'ancienne place des cœurs
   {const ny0=(wide?.076:.052)*H,nh0=(wide?.137:.132)*H,mate=esc(pkMate(p,act)),fit=(wide?.6:.86)*W,st=act?'':` style="fill:${pkCol(i)}"`;
@@ -7022,10 +7022,10 @@ function pklCard(i,g,act){const p=KG.players[i],{W,H,wide,k}=g,DD=KG.def,isDef=D
   // K / Killer
   const ky=(wide?.774:.626)*H,kh=(wide?.14:.137)*H;
   h+=`<g transform="translate(0 ${(LZ.klKY*H/100).toFixed(1)}) translate(${cx} ${ky+kh/2}) scale(${LZ.klKZ}) translate(${-cx} ${-(ky+kh/2)})">`;
-  if(isDef)h+=`<rect class="pkk" x="${cx-(wide?.22:.382)*Wn}" y="${ky}" width="${(wide?.44:.764)*Wn}" height="${kh}" rx="${kh*.37}"/><text x="${cx}" y="${ky+kh*.5+kh*.27}" font-size="${kh*.68*kT}">défense ${DD.got}/${DD.need}</text>`;
-  else if(p.killer){const kx=cx-(wide?.22:.382)*Wn,kw=(wide?.44:.764)*Wn;if(act)h+=`<rect x="${kx+10}" y="${ky+11}" width="${kw}" height="${kh}" rx="${kh*.37}" style="fill:${dk}"/>`;h+=`<rect class="pkk" x="${kx}" y="${ky}" width="${kw}" height="${kh}" rx="${kh*.37}"/><text x="${cx}" y="${ky+kh*.5+kh*.3}" font-size="${kh*.75*kT}">Killer</text>`}
+  if(isDef)h+=`<rect class="pkk" x="${cx-(wide?.22:.382)*Wn}" y="${ky}" width="${(wide?.44:.764)*Wn}" height="${kh}" rx="${kh*.37}"/><text x="${cx}" y="${ky+kh*.5+kh*.27}" font-size="${kh*.68*PF.kT}">défense ${DD.got}/${DD.need}</text>`;
+  else if(p.killer){const kx=cx-(wide?.22:.382)*Wn,kw=(wide?.44:.764)*Wn;if(act)h+=`<rect x="${kx+10}" y="${ky+11}" width="${kw}" height="${kh}" rx="${kh*.37}" style="fill:${dk}"/>`;h+=`<rect class="pkk" x="${kx}" y="${ky}" width="${kw}" height="${kh}" rx="${kh*.37}"/><text x="${cx}" y="${ky+kh*.5+kh*.3}" font-size="${kh*.75*PF.kT}">Killer</text>`}
   else{const km=KG.km||3,pp=Math.min((wide?.153:.258)*Wn,(wide?.46:.8)*W/km),pw=Math.min((wide?.135:.25)*Wn,pp*.97);
-    for(let j=0;j<km;j++){const x=cx-pp*(km-1)/2+j*pp-pw/2,on=j<(p.marks||0);h+=`<rect class="pkp${on?' on':''}" x="${x}" y="${ky}" width="${pw}" height="${kh}" rx="${kh*.42}"/>${on?`<text x="${x+pw/2}" y="${ky+kh*.5+kh*.3}" font-size="${kh*.72*kT}">K</text>`:''}`}}
+    for(let j=0;j<km;j++){const x=cx-pp*(km-1)/2+j*pp-pw/2,on=j<(p.marks||0);h+=`<rect class="pkp${on?' on':''}" x="${x}" y="${ky}" width="${pw}" height="${kh}" rx="${kh*.42}"/>${on?`<text x="${x+pw/2}" y="${ky+kh*.5+kh*.3}" font-size="${kh*.72*PF.kT}">K</text>`:''}`}}
   h+='</g>';
   // dernières fléchettes
   const ds=act?(KHOLD?p.last:KG.turn):(p.last||[]),nd=act&&isDef?DD.darts:3;
@@ -7052,7 +7052,7 @@ function pkcCard(i,g,act){const p=XG.players[i],{W,H,wide}=g,Wn=g.W0||W,LZ=lyGet
   const ky=(wide?.774:.626)*H,kh=(wide?.14:.137)*H,kx=cx-(wide?.22:.382)*Wn,kw=(wide?.44:.764)*Wn,mp=p.darts?fr(p.hits*3/p.darts):'0,00';
   h+=`<g transform="translate(0 ${(LZ.klKY*H/100).toFixed(1)}) translate(${cx} ${ky+kh/2}) scale(${LZ.klKZ}) translate(${-cx} ${-(ky+kh/2)})">`;
   if(act)h+=`<rect x="${kx+10}" y="${ky+11}" width="${kw}" height="${kh}" rx="${kh*.37}" style="fill:${dk}"/>`;
-  h+=`<rect class="pkk" x="${kx}" y="${ky}" width="${kw}" height="${kh}" rx="${kh*.37}"/><text x="${cx}" y="${ky+kh*.5+kh*.3}" font-size="${(kh*.78*kT).toFixed(1)}" data-fit="${kw*.88}"><tspan class="pcmp">MPR </tspan><tspan class="fN">${mp}</tspan></text></g>`;
+  h+=`<rect class="pkk" x="${kx}" y="${ky}" width="${kw}" height="${kh}" rx="${kh*.37}"/><text x="${cx}" y="${ky+kh*.5+kh*.3}" font-size="${(kh*.78*PF.kT).toFixed(1)}" data-fit="${kw*.88}"><tspan class="pcmp">MPR </tspan><tspan class="fN">${mp}</tspan></text></g>`;
   // dernières fléchettes
   h+=`<g transform="translate(0 ${(LZ.klPY*H/100).toFixed(1)})">`;
   const ds=act?XG.turn:(p.last||[]),HW=LZ.paW,HH=LZ.paH,HP=Math.max(1,HW)*(1+LZ.iPl-.1),dt=d=>!d?'·':d.n===0?'S':d.n===25?(d.m===2?'DB':'B'):(d.m===3?'T':d.m===2?'D':'')+d.n;
@@ -7228,12 +7228,12 @@ function demoStart(kind){
   if(!localStorage.getItem(DEMO_K)){const ls={};for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k!==K_S&&k!==DEMO_K)ls[k]=localStorage.getItem(k)}
     const s={};Object.keys(S).forEach(k=>{if(!DEMO_KEEP.includes(k))s[k]=S[k]});try{localStorage.setItem(DEMO_K,JSON.stringify({ls,s}))}catch(e){return}}
   DEMO=kind;const N2=['ALICE','BOB'],N3=['ALICE','BOB','CHLOÉ'];
+  const TM=a=>{const M=['ZOÉ','YANN'],t=a.map((n,i)=>i<2?[n,M[i]]:[n]);return{l:t.map(x=>x.join(' & ')),t}};   // les 2 premiers en équipe, les autres seuls
   try{$('draw').classList.remove('on')}catch(e){}
-  if(/^ck[2345]$/.test(kind)){startGame('std',['ALICE','BOB','CHLOÉ','DAN','EVE'].slice(0,+kind[2]),0);setTimeout(()=>{try{throwDart(20);throwDart(20)}catch(e){}},300)}
-  else if(kind==='x2'||kind==='xn'){startX01(kind==='x2'?N2:N3,0,null);setTimeout(()=>{try{xThrow(20,3)}catch(e){}},300)}
-  else if(kind==='kl'){KTEAMS=null;startKiller(N3,[20,19,18])}
-  else if(kind==='kl7'){KTEAMS=null;startKiller(['ALICE','BOB','CHLOÉ','DAN','EVE','FRED','GUS','HUGO'],[20,19,18,17,16,15,14,13])}
-  else if(kind==='clk'){startX01(N2,0,null,'clk')}
+  if(/^ck[2345]$/.test(kind)){const T=TM(['ALICE','BOB','CHLOÉ','DAN','EVE'].slice(0,+kind[2]));startGame('std',T.l,0,T.t);setTimeout(()=>{try{throwDart(20);throwDart(20)}catch(e){}},300)}
+  else if(kind==='x2'||kind==='xn'){const T=TM(kind==='x2'?N2:N3);startX01(T.l,0,T.t);setTimeout(()=>{try{xThrow(20,3)}catch(e){}},300)}
+  else if(kind==='kl'||kind==='kl7'){const T=TM(kind==='kl'?N3:['ALICE','BOB','CHLOÉ','DAN','EVE','FRED','GUS','HUGO']);KTEAMS=Object.fromEntries(T.l.map((l,i)=>[l,T.t[i]]).filter(x=>x[1].length>1));startKiller(T.l,[20,19,18,17,16,15,14,13].slice(0,T.l.length))}
+  else if(kind==='clk'){const T=TM(N2);startX01(T.l,0,T.t,'clk')}
   setTimeout(()=>{try{lyOpen()}catch(e){}try{mkToast('','Partie de démonstration : ta partie en cours sera rétablie en revenant à l’accueil',3200)}catch(e){}},700)}
 function lyFromHome(){const ok=G&&G.players&&G.players.length===2&&G.winner===null&&!G._bar&&!BARC;
   if(!ok){try{mkToast('','Lance une partie de Cricket à 2 joueurs pour régler la mise en page',2600)}catch(e){}return}
