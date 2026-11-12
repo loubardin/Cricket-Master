@@ -843,8 +843,8 @@ footer{box-shadow:none!important}
 .mprpop{display:inline-block;animation:mprpop .45s var(--ease)}
 @keyframes mprpop{0%{transform:translateY(0)}35%{transform:translateY(-30%);color:var(--accent)}100%{transform:none}}
 /* ===== DOUBLE = argent, TRIPLE = or, tous deux avec le reflet qui balaie (ancien effet du DOUBLE) ===== */
-#b2{background:linear-gradient(160deg,#c3cad2 0%,#9aa3ad 45%,#7d8792 100%)!important;color:var(--btx,#fff)!important;text-shadow:0 1px 2px rgba(0,0,0,.3)}
-#b3{background:linear-gradient(160deg,#f6cf4a 0%,#e0a800 50%,#b47e00 100%)!important;color:var(--btx,#fff)!important;text-shadow:0 1px 2px rgba(0,0,0,.3)}
+#b2{background:linear-gradient(160deg,#c3cad2 0%,#9aa3ad 45%,#7d8792 100%)!important;color:var(--btx,#fff)!important}
+#b3{background:linear-gradient(160deg,#f6cf4a 0%,#e0a800 50%,#b47e00 100%)!important;color:var(--btx,#fff)!important}
 footer.armed3 #b3{animation:gold 1.4s ease-in-out infinite alternate!important}
 footer.armed3 #b3::before,footer.armed2 #b2::before{content:"";position:absolute;top:-20%;bottom:-20%;width:35%;left:-50%;right:auto;height:auto;z-index:-1;pointer-events:none;
   background:linear-gradient(100deg,transparent,rgba(255,255,255,.6),transparent)!important;transform:skewX(-18deg);filter:none;animation:shine 1.8s ease-in-out infinite!important}
@@ -1753,8 +1753,6 @@ html.sang #game.sk footer::after{border-width:3px}
 #game.sk footer button::before,#game.sk footer button::after{display:none!important}
 #game .fthumb{display:none}
 #game.sk .fthumb{display:block;position:absolute;top:0;bottom:0;left:0;width:calc(100% / 3);z-index:1;border-radius:99px;translate:100% 0;transition:translate .42s cubic-bezier(.3,1.35,.5,1),background .25s,box-shadow .25s}
-body.m2 #game.sk .fthumb{translate:0 0}
-body.m3 #game.sk .fthumb{translate:200% 0}
 body:not(.m2):not(.m3) #game.sk #bS,body.m2 #game.sk #b2,body.m3 #game.sk #b3{color:var(--btx,#fff)!important}
 #game.sk footer button:active{transform:scale(.95)}
 /* ===== v77 : style switch — cartes divisées en 2, boutons du bas = switch 3 positions des menus ===== */
@@ -2053,12 +2051,12 @@ body.m3 #x01#x01 #xkeys button .lbl{animation-duration:.2s}
 :is(#x01,#killer) footer #bS{animation:none}
 :is(#x01,#killer) footer button::before{display:none!important}
 :is(#x01,#killer) footer button .bt,:is(#x01,#killer) footer #bS small{display:none!important}
-:is(#x01,#killer) footer #b2::after,:is(#x01,#killer) footer #bS::after,:is(#x01,#killer) footer #b3::after{display:block!important;position:static!important;font-family:"Fun",sans-serif;
+:is(#x01,#killer) footer #b2::after,:is(#x01,#killer) footer #bS::after,:is(#x01,#killer) footer #b3::after{display:block!important;position:static!important;
   font-size:2.6dvh;line-height:1;text-box:trim-both cap alphabetic;color:var(--ink);background:none!important;border:0!important;box-shadow:none!important;transition:scale .25s,color .2s}
 :is(#x01,#killer) footer #b2::after{content:"Double"!important}
 :is(#x01,#killer) footer #bS::after{content:"Spew"!important}
 :is(#x01,#killer) footer #b3::after{content:"Triple"!important}
-body:not(.m2):not(.m3) :is(#x01,#killer) footer #bS::after,body.m2 :is(#x01,#killer) footer #b2::after,body.m3 :is(#x01,#killer) footer #b3::after{color:var(--btx,#fff);scale:1.4}
+body:not(.m2):not(.m3) :is(#x01,#killer) footer #bS::after,body.m2 :is(#x01,#killer) footer #b2::after,body.m3 :is(#x01,#killer) footer #b3::after{color:var(--btx,#fff);scale:1.53}
 :is(#x01,#killer) footer .fthumb{display:block!important;position:absolute!important;top:0!important;bottom:0!important;left:0!important;width:33.333%!important;height:auto!important;border-radius:99px!important;
   translate:100% 0!important;transform:none!important;background:var(--spw,var(--spew))!important;box-shadow:0 0 0 var(--bub-h) var(--spw,var(--spew))!important;z-index:1;transition:translate .35s cubic-bezier(.3,1.4,.5,1),background .2s,box-shadow .2s!important}
 body.m2 :is(#x01,#killer) footer .fthumb{translate:0 0!important;background:var(--silver)!important;box-shadow:0 0 0 var(--bub-h) #a9b1ba!important}
@@ -2347,8 +2345,6 @@ html body #fbar2 #fMode small{color:var(--mute)}
 /* switch du bas : plus grand, presque bord à bord, coins qui suivent ceux de l'écran */
 html body #game#game.sk.p2.pn footer{--midw:33.333vw}
 html body :is(#x01,#killer) footer{height:9dvh!important}
-html body #game#game.sk.p2 footer #b2::after,html body #game#game.sk.p2 footer #bS::after,html body #game#game.sk.p2 footer #b3::after{font-size:calc(var(--r)*.42)!important}
-html body :is(#x01,#killer) footer #b2::after,html body :is(#x01,#killer) footer #bS::after,html body :is(#x01,#killer) footer #b3::after{font-size:3dvh!important}
 html body #fbar2 #fMode small{font-size:calc(var(--tbh)*.26)!important}
 /* switch du bas : marge plus large (côtés et bas), le halo reste à l'écran */
 html body #game#game.sk.p2 footer,html body #game#game.sk.p2.pn footer{--colw:calc((100vw - 28px - var(--midw))/2);margin:var(--g) 14px max(16px,calc(var(--sab,0px) - 8px))!important}
@@ -2376,7 +2372,7 @@ html body.m3 :is(#game,#x01,#killer) footer .fthumb,html body.m3 #game#game.sk.p
 html body.m2 :is(#game,#x01,#killer) footer #b2::after,html body.m3 :is(#game,#x01,#killer) footer #b3::after{color:var(--btx,#fff)!important;text-shadow:0 1px 2px rgba(0,0,0,.35)}
 html body #setup#setup.b2 .sect.s2>.opt.kl>.seg,html body #setup#setup.b2 .kpair>.opt.kl>.seg{width:100%!important;max-width:none!important;flex:1 1 auto!important}
 html body #setup#setup.b2 .sect.s2>.opt.kl,html body #setup#setup.b2 .sect.s2>.kpair{flex:0 0 100%!important;width:100%!important}
-html body.m2 #game#game.sk.p2 footer #b2::after,html body.m3 #game#game.sk.p2 footer #b3::after{scale:1.2!important}
+html body.m2 :is(#game#game#game#game,#x01#x01#x01#x01,#killer#killer#killer#killer) footer #b2::after,html body.m3 :is(#game#game#game#game,#x01#x01#x01#x01,#killer#killer#killer#killer) footer #b3::after{scale:1.2!important}   /* Double / Triple armés : même taille partout */
 /* ===== v99 : Double / Triple — seul le bouton du bas a l'effet ; aucun effet sur les nombres ===== */
 html body.m2 #game#game.sk.p2 #grid .num:not(.zz):not(.zy) .lbl,html body.m3 #game#game.sk.p2 #grid .num:not(.zz):not(.zy) .lbl,html body.m2 #x01#x01 #xkeys button:not(.zz):not(.zy) .lbl,html body.m3 #x01#x01 #xkeys button:not(.zz):not(.zy) .lbl{animation:none!important;transform:none!important}
 /* historique des fléchettes visible pour tous les joueurs */
@@ -3137,8 +3133,6 @@ html body #game#game#game#game.sk.p2 #scores .sc.act>.pts:not(.pop){animation:pv
 @media (prefers-reduced-motion:reduce){#game #grid .num .lbl,#game #scores .pts{animation:none!important}}
 /* Spew : rebond symétrique (le déplacement passe par « translate », l'écrasement reste centré) */
 html body #game#game#game.sk.p2 .fthumb{transform:none!important;translate:var(--colw) 0!important;transition:translate .38s cubic-bezier(.3,1.3,.5,1),background .3s,box-shadow .3s!important}
-html body.m2 #game#game#game.sk.p2 .fthumb{translate:0 0!important}
-html body.m3 #game#game#game.sk.p2 .fthumb{translate:calc(var(--colw)*2) 0!important}
 html body #game#game#game.sk.p2 footer.spewfx .fthumb{animation:pspew .62s cubic-bezier(.3,1.3,.5,1)!important}
 @keyframes pspew{0%{scale:1 1}18%{scale:1.16 .84}42%{scale:.93 1.08}66%{scale:1.03 .98}100%{scale:1 1}}
 #lyp .lyc{border:0;border-radius:99px;background:#111;color:#fff;font:400 15px "Fun",sans-serif;padding:10px;margin-top:2px}
@@ -3155,8 +3149,6 @@ html body #game#game#game#game#game.sk.p2 #scores>.pc.sc{border-radius:calc(var(
 html body footer #fbar3#fbar3 :is(#fMenu,#fUndo) svg{width:calc(var(--f3h)*.56*var(--icZ,1))!important;height:calc(var(--f3h)*.56*var(--icZ,1))!important}
 html body footer #fbar3#fbar3 #fMode b{font-size:calc(var(--f3h)*.38*var(--ifZ,1))!important}
 html body footer #fbar3#fbar3 #fMode small{font-size:calc(var(--f3h)*.24*var(--ifZ,1))!important}
-html body #game#game#game#game.sk.p2 footer :is(#b2,#b3)::after{font-size:calc(var(--r)*.42*var(--dtZ,1))!important}
-html body #game#game#game#game.sk.p2 footer #bS::after{font-size:calc(var(--r)*.42*var(--spZ,1))!important}
 /* Cricket 3 joueurs et + : mêmes réglages de l'historique */
 html body #game#game#game#game#game#game.sk.p2.pn #scores#scores .sc.act>.pills .pill{width:calc(min(6.4vw,3dvh)*var(--paW,1))!important;height:calc(min(6.4vw,3dvh)*var(--paH,1))!important}
 html body #game#game#game#game#game#game.sk.p2.pn #scores#scores .sc.act>.pills{gap:calc(var(--r)*var(--iPl,.1))!important}
@@ -3224,8 +3216,6 @@ html body #x01#x01#x01#x01 #xplayers.many .xc .khist .pill{font-size:min(6cqw,12
 #lyp .lyt button.on{background:#111;color:#fff}
 #lyp .lyra{border:0;border-radius:99px;background:#fff;box-shadow:inset 0 0 0 2px var(--ol,#111);color:#111;font:400 15px "Fun",sans-serif;padding:9px;margin-top:2px}
 /* Double / Triple / Spew : tailles réglables partout */
-html body :is(#x01,#killer):is(#x01,#killer) footer :is(#b2,#b3)::after{font-size:calc(3dvh*var(--dtZ,1))!important}
-html body :is(#x01,#killer):is(#x01,#killer) footer #bS::after{font-size:calc(3dvh*var(--spZ,1))!important}
 /* cadre du bouton Spew : contour général des cases ; réglage « Contour du texte Spew » : autour du mot */
 html body #game#game#game.sk.p2 footer::after,html body #x01#x01#x01 footer::after,html body #killer#killer#killer footer::after{border-width:var(--bw,2.5px)!important}
 html body :is(#game,#x01,#killer):is(#game,#x01,#killer):is(#game,#x01,#killer) footer:not(.armed2):not(.armed3) #bS::after{--o:var(--fbw,0px);--on:calc(var(--fbw,0px)*-1);--d:calc(var(--fbw,0px)*.71);--dn:calc(var(--fbw,0px)*-.71);
@@ -3333,8 +3323,9 @@ html body :is(#game,#x01,#killer):is(#game,#x01,#killer):is(#game,#x01,#killer) 
   bottom:calc(var(--lyMB,7.7px) + 6.1dvh*var(--lyB,1) + var(--lyGFB,5px))!important;height:calc(6.16dvh*var(--lyF,1))!important;min-height:0!important;max-height:none!important;grid-template-columns:1fr 33.4vw 1fr!important}
 html body :is(#game,#x01,#killer):is(#game,#x01,#killer):is(#game,#x01,#killer) footer #fbar3{position:absolute!important;left:0!important;right:0!important;width:auto!important;top:calc(100% + var(--lyGFB,5px))!important;bottom:auto!important;margin:0!important;
   height:calc(6.1dvh*var(--lyB,1))!important;min-height:0!important;grid-template-columns:1fr 33.4vw 1fr!important}
-html body :is(#game,#x01,#killer):is(#game,#x01,#killer):is(#game,#x01,#killer) footer :is(#b2,#b3)::after{font-size:calc(3.1dvh*var(--dtZ,1))!important}
-html body :is(#game,#x01,#killer):is(#game,#x01,#killer):is(#game,#x01,#killer) footer #bS::after{font-size:calc(3.1dvh*var(--spZ,1))!important}
+/* textes du switch : même police et même taille dans tous les jeux, proportionnels à la hauteur du switch */
+html body :is(#game#game#game#game,#x01#x01#x01#x01,#killer#killer#killer#killer) footer :is(#b2,#b3)::after{font-size:calc(6.16dvh*var(--lyF,1)*.46*var(--dtZ,1))!important}
+html body :is(#game#game#game#game,#x01#x01#x01#x01,#killer#killer#killer#killer) footer #bS::after{font-size:calc(6.16dvh*var(--lyF,1)*.46*var(--spZ,1))!important}
 html body :is(#game,#x01,#killer):is(#game,#x01,#killer):is(#game,#x01,#killer) #fbar3 #fMode{font-size:calc(2.04dvh*var(--ifZ,1))!important}
 html body :is(#game,#x01,#killer):is(#game,#x01,#killer):is(#game,#x01,#killer) #fbar3 #fMode b{font-size:calc(2.34dvh*var(--ifZ,1))!important}
 html body :is(#game,#x01,#killer):is(#game,#x01,#killer):is(#game,#x01,#killer) #fbar3 #fMode small{font-size:calc(1.48dvh*var(--ifZ,1))!important}
@@ -3363,6 +3354,10 @@ html body #game#game#game.pn #grid>.row>.mk.pnf{z-index:8!important}
 html body #game#game#game.pn #grid>.row>.rtrackb.pnf{z-index:10!important}
 html body #game#game#game.pn #grid>.row>.num{z-index:9!important}   /* le cadre noir (rtrackb) passe par-dessus la bulle, comme avant */
 html body #game#game#game.pn #scores>.sc.pnf{z-index:5!important}
+/* lf-304 : bulle du switch Double / Spew / Triple — une seule règle de position pour tous les jeux.
+   ftPlace() pose --tbL / --tbW (place et largeur du bouton choisi) ; la bulle glisse dessus. */
+html body :is(#game#game#game#game,#x01#x01#x01#x01,#killer#killer#killer#killer) footer .fthumb{left:var(--tbL,33.33%)!important;width:var(--tbW,33.33%)!important;translate:none!important;transform:none!important;
+  transition:left .38s cubic-bezier(.3,1.3,.5,1),width .38s cubic-bezier(.3,1.3,.5,1),background .3s,box-shadow .3s!important}
 </style>
 </head>
 <body>
@@ -4564,7 +4559,11 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 
 /* ================= NAVIGATION ================= */
 function topColor(){try{const sc=document.querySelector('.screen.on');if(!sc)return;const h=sc.querySelector('header,.sh')||sc;let c=getComputedStyle(h).backgroundColor;if(!c||c==='rgba(0, 0, 0, 0)')c=getComputedStyle(sc).backgroundColor;document.querySelector('meta[name=theme-color]').content=c}catch(e){}}
-function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));requestAnimationFrame(topColor);if(id==='home'&&typeof placeHome==='function')requestAnimationFrame(placeHome)}
+function ftPlace(){document.querySelectorAll('footer').forEach(f=>{const t=f.querySelector('.fthumb');if(!t||!f.offsetWidth)return;
+  const b=f.querySelector(document.body.classList.contains('m2')?'#b2':document.body.classList.contains('m3')?'#b3':'#bS');if(!b)return;
+  const F=f.getBoundingClientRect(),B=b.getBoundingClientRect();f.style.setProperty('--tbL',(B.left-F.left-f.clientLeft).toFixed(1)+'px');f.style.setProperty('--tbW',B.width.toFixed(1)+'px')})}
+new MutationObserver(()=>requestAnimationFrame(ftPlace)).observe(document.body,{attributes:true,attributeFilter:['class']});addEventListener('resize',()=>requestAnimationFrame(ftPlace));try{const ro=new ResizeObserver(()=>ftPlace());document.querySelectorAll('footer,footer #b2,footer #bS,footer #b3').forEach(e=>ro.observe(e))}catch(e){}
+function show(id){requestAnimationFrame(ftPlace);document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));requestAnimationFrame(topColor);if(id==='home'&&typeof placeHome==='function')requestAnimationFrame(placeHome)}
 
 function startGame(mode,names,start=0,teams=null){noFear();
   if(HOLD){clearTimeout(HOLD.t);HOLD=null}
@@ -6773,7 +6772,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-303';   // à changer avec VERSION dans sw.js
+const APPV='lf-304';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
