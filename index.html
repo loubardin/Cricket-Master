@@ -3254,7 +3254,8 @@ html body .skinpick .sksw button{position:relative;z-index:1;border-radius:99px!
 html body .skinpick .sksw button.on{background:var(--accent)!important;background-image:var(--accimg,none)!important;color:#fff!important;box-shadow:0 0 0 5px var(--accent),0 6px 14px rgba(var(--acc-rgb,255,90,31),.38)!important;z-index:2}
 /* équipes : interligne entre les deux noms de la case (Cricket, Shanghai, Halve-it, 501/301) */
 html body #game#game#game.sk.p2 #scores .sc>.nm .nmm{bottom:calc(100% + .3em + var(--tmL,0)*1dvh)!important}
-html body #x01#x01#x01 #xplayers .xc .xn .xm{position:relative!important;top:calc(var(--tmL,0)*-1dvh)!important}
+html body #x01#x01#x01 #xplayers .xc .xn{position:relative!important;overflow:visible!important}
+html body #x01#x01#x01#x01 #xplayers .xc .xn .xm{position:absolute!important;left:50%!important;right:auto!important;top:auto!important;bottom:calc(100% + var(--tmL,0)*1dvh)!important;translate:-50% 0!important;width:max-content!important;max-width:none!important;overflow:visible!important;text-overflow:clip!important;margin:0!important;text-align:center!important;white-space:nowrap!important}
 /* 501 / 301 : texte des bulles d'historique, écarts cases → touches → Spew */
 html body #x01#x01#x01#x01#x01 #xplayers .xc .khist .pill{font-size:calc(min(7cqw,2.2dvh)*var(--xpT,1))!important}
 html body #x01#x01#x01#x01#x01 #xplayers:not(.two) .xc .khist .pill{font-size:calc(min(6cqw,9cqh)*var(--xpT,1))!important}
@@ -6740,7 +6741,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-284';   // à changer avec VERSION dans sw.js
+const APPV='lf-285';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -7071,7 +7072,7 @@ const LY_POP={   /* réglages « Pop » envoyés par Loubi (lf-273) */
   ckn:{scK:1.1,rowK:1.15,gL:1.4,iNP:.2,iPM:.28,iPl:0,zNm:1.1,zSc:1.45,zMp:1.2,zPl:1.05,nfz:.85,mkz:1.3,mksw:4,crZ:.9,paW:1.75,paH:1.4,poW:1.3,poH:1.6,zPo:1.5,poG:.5,poY:.12,iY:0,crY:-.14,scR:1,hZ:.75,mT:3.2,el:{crn:{z:1,x:.1,y:-.7}}},
   kl:{zNm:1.05,nfz:.85,paW:1.05,paH:.95,iPl:0,klZ:1,klY:3.1,klHZ:1.1,klKZ:1,klNY:-1,klNoY:-3,klPY:-.5,klKY:1,zPl:1},
   x2:{xnZ:1.7,xrZ:1.3,xsZ:1.85,xhZ:1.7,xcoZ:1.3,xoN:4,xoM:8,xoH:-5.6,xoC:5,xpW:1,xpH:1.1,xpG:0,xkz:1.35,xkg:.3,xcG:0,xoS:.5},
-  xn:{xrZ:1.3,xsZ:1.25,xnZ:1.2,xcoZ:.85,xhZ:1.15,xkz:.95,xbh:.7,xkg:.4,xkh:.75,xoH:1.5,xcG:.25,xpG:.3,xpW:1.6,xpH:1.05,xoM:.8,xoS:-.5,xoN:-1,tmL:-1.6,xpT:1.6,xgKF:1.1,xgPK:1.4,el:{xnO:{z:.98,x:.2,y:-.1}}},
+  xn:{xrZ:1.3,xsZ:1.25,xnZ:1.2,xcoZ:.85,xhZ:1.15,xkz:.95,xbh:.7,xkg:.4,xkh:.75,xoH:1.5,xcG:.25,xpG:.3,xpW:1.6,xpH:1.05,xoM:.8,xoS:-.5,xoN:-1,xpT:1.6,xgKF:1.1,xgPK:1.4,el:{xnO:{z:.98,x:.2,y:-.1}}},
   clk:{zNm:.8,nfz:.85,paW:1.05,paH:.95,iPl:0,klZ:.95,klY:0,klHZ:1.1,klKZ:1,klNY:-1,klNoY:-3,klPY:-.5,klKY:1,zPl:1}};
 const LY_PD=new Proxy({},{get:(o,k)=>{k=String(k);if(/^(ck|sh|hi)2$/.test(k))return LY_POP.ck2;if(/^(ck|sh|hi)n$/.test(k))return LY_POP.ckn;if(/^clkK[2n]$/.test(k))return LY_POP.clk;if(k==='kl'||/K[2n]$/.test(k))return LY_POP.kl;return LY_POP[k]}});
 /* passage à un seul réglage des boutons du bas : on retire les valeurs propres à chaque jeu */
@@ -7121,7 +7122,6 @@ const LY_B={
           ['Coéquipier (équipes)',[['tmZ','Taille'],['tmL','Interligne avec le nom']]],
           ['Score',[['xrZ','Taille'],['xoS','Position'],'xsw','@x:xrA,xrO']],
           ['Moyenne',[['xsZ','Taille'],['xoM','Position'],'@x:xsA,xsO']],
-          ['Finish et indications',[['xcoZ','Taille'],['xoC','Position'],'@x:xco']],
           ['Historique des fléchettes',[['xhZ','Taille de l\'ensemble'],['xoH','Position'],'xpW','xpH','xpT','xpG','pbw','@x:xhA,xhO']]],
       kl:[['Cartes',['klZ','klY']],
           ['Nom',[['zNm','Taille'],['klNY','Position']]],
@@ -7145,7 +7145,7 @@ const ED_REG={ck:[['crn','Couronne','#scores .hat'],['nmA','Nom (joueur en cours
 const ED_ROOT={ck:'#game',x:'#x01'};
 const edReg=(cx,id)=>(ED_REG[cx]||[]).find(r=>r[0]===id);
 const ED_SEC={crn:['pl','Couronne'],nmA:['pl','Nom'],nmO:['pl','Nom'],ptA:['pl','Score'],ptO:['pl','Score'],mpA:['pl','MPR'],mpO:['pl','MPR'],hiA:['pl','Historique du joueur en cours'],hiO:['pl','Historique de l\'adversaire'],lbl:['nb','Nombres'],mk:['nb','Marques'],
-  xco:['pl','Finish et indications'],xnA:['pl','Nom (joueur qui lance)'],xnO:['pl','Nom (joueur qui lance)'],xrA:['pl','Score'],xrO:['pl','Score'],xsA:['pl','Moyenne'],xsO:['pl','Moyenne'],xhA:['pl','Historique des fléchettes'],xhO:['pl','Historique des fléchettes'],xkl:['nb','Chiffres']};
+  xco:['pl','Historique des fléchettes'],xnA:['pl','Nom (joueur qui lance)'],xnO:['pl','Nom (joueur qui lance)'],xrA:['pl','Score'],xrO:['pl','Score'],xsA:['pl','Moyenne'],xsO:['pl','Moyenne'],xhA:['pl','Historique des fléchettes'],xhO:['pl','Historique des fléchettes'],xkl:['nb','Chiffres']};
 function edPick(t){const cx=lyCtx(),R=ED_REG[cx],root=ED_ROOT[cx];if(!R||!t||!t.closest)return null;
   for(let e=t;e&&e.id!==root.slice(1);e=e.parentElement){const r=R.find(r=>e.matches(root+' '+r[2]));if(r)return r[0]}return null}
 let ED_HL=null;
