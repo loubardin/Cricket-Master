@@ -3304,7 +3304,7 @@ html body #x01#x01#x01#x01 #xplayers .xc .khist .pill.hint{background:rgba(255,2
 #colp .cpop{display:block;width:100%;margin-top:14px;height:40px;border-radius:99px;border:0;background:#fff;box-shadow:inset 0 0 0 2px #111;font:inherit;font-size:15px;color:#111}
 
 
-#xpick .skdemo{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:-2px 0 4px}
+#xpick .skdemo{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:-2px 0 4px}
 #xpick .skdemo button{height:32px;border-radius:99px;border:0;background:var(--m-cell,#ece5d3);box-shadow:inset 0 0 0 var(--bub-bw,2px) var(--ol,#111);font:400 12.5px "Fun",sans-serif;color:var(--ink)}
 #colp .csl{display:grid;grid-template-columns:1fr auto;gap:2px 8px;margin:2px 2px 10px;font-size:13px}
 #colp .csl input{grid-column:1/-1;width:100%}
@@ -6752,13 +6752,13 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-288';   // à changer avec VERSION dans sw.js
+const APPV='lf-289';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
   const p=el('div','');p.id='xpick';p.classList.add('skinpick');document.body.append(p);
-  const draw=()=>{p.innerHTML=`<div class="skn"><button class="skgo" data-go="hStats">Statistiques</button><button class="skgo" data-go="hHist">Historique</button></div><div class="skp skjeux"><span>Mise en page des jeux</span></div><div class="skdemo"><button data-d="ck2">Cricket 1v1</button><button data-d="ckn">Cricket 3+</button><button data-d="x2">501 1v1</button><button data-d="xn">501 3+</button><button data-d="kl">Killer</button><button data-d="clk">Horloge</button></div><div class="skp"><span>Son</span><div class="sksw sksnd"><button data-s="1" class="${S.sound?'on':''}">Oui</button><button data-s="0" class="${S.sound?'':'on'}">Non</button></div></div>`+`<div class="skp"><span>Annonces vocales</span><div class="sksw skvox"><button data-v="1" class="${S.voice!==false?'on':''}">Oui</button><button data-v="0" class="${S.voice===false?'on':''}">Non</button></div></div><div class="skp"><span>Couleurs des joueurs</span><div class="sksw"><button data-p="1" class="${S.pcolOff?'':'on'}">Oui</button><button data-p="0" class="${S.pcolOff?'on':''}">Non</button></div></div>`+colMenu()+`<div class="skv">version ${APPV}</div>`;if(p.style.top)p.style.top=Math.max(12,Math.min(parseFloat(p.style.top),innerHeight-p.offsetHeight-12))+'px'};
+  const draw=()=>{p.innerHTML=`<div class="skn"><button class="skgo" data-go="hStats">Statistiques</button><button class="skgo" data-go="hHist">Historique</button></div><div class="skp skjeux"><span>Mise en page des jeux</span></div><div class="skdemo"><button data-d="ck2">Cricket 1v1</button><button data-d="ck3">Cricket 3</button><button data-d="ck4">Cricket 4</button><button data-d="ck5">Cricket 5+</button><button data-d="x2">501 1v1</button><button data-d="xn">501 3+</button><button data-d="kl">Killer</button><button data-d="clk">Horloge</button></div><div class="skp"><span>Son</span><div class="sksw sksnd"><button data-s="1" class="${S.sound?'on':''}">Oui</button><button data-s="0" class="${S.sound?'':'on'}">Non</button></div></div>`+`<div class="skp"><span>Annonces vocales</span><div class="sksw skvox"><button data-v="1" class="${S.voice!==false?'on':''}">Oui</button><button data-v="0" class="${S.voice===false?'on':''}">Non</button></div></div><div class="skp"><span>Couleurs des joueurs</span><div class="sksw"><button data-p="1" class="${S.pcolOff?'':'on'}">Oui</button><button data-p="0" class="${S.pcolOff?'on':''}">Non</button></div></div>`+colMenu()+`<div class="skv">version ${APPV}</div>`;if(p.style.top)p.style.top=Math.max(12,Math.min(parseFloat(p.style.top),innerHeight-p.offsetHeight-12))+'px'};
   const colMenu=()=>{const C=colGet(),dot=v=>`<i style="background:${v}"></i>`;return `<button class="crow cmain"><span>Apparence de l'appli</span><b>${dot(colAcc())}${dot(C.ol==='acc'?colAcc():C.ol)}${dot(C.bg)}</b></button>`};
   draw();p.style.left=Math.max(12,(innerWidth-p.offsetWidth)/2)+'px';p.style.top=Math.max(12,Math.min(innerHeight-p.offsetHeight-12,e.currentTarget.getBoundingClientRect().bottom+10))+'px';
   p.addEventListener('click',ev=>{ev.stopPropagation();const go=ev.target.closest('.skgo');if(go){p.remove();$(go.dataset.go).dispatchEvent(new MouseEvent('click',{bubbles:true}));return}
@@ -7085,13 +7085,14 @@ const LY_POP={   /* réglages « Pop » envoyés par Loubi (lf-273) */
   x2:{xnZ:1.7,xrZ:1.3,xsZ:1.85,xhZ:1.7,xcoZ:1.3,xoN:4,xoM:8,xoH:-5.6,xoC:5,xpW:1,xpH:1.1,xpG:0,xkz:1.35,xkg:.3,xcG:0,xoS:.5},
   xn:{xrZ:1.3,xsZ:1.25,xnZ:1.2,xcoZ:.85,xhZ:1.15,xkz:.95,xbh:.7,xkg:.4,xkh:.75,xoH:1.5,xcG:.25,xpG:.3,xpW:1.6,xpH:1.05,xoM:.8,xoS:-.5,xoN:-1,xpT:1.6,xgKF:1.1,xgPK:1.4,el:{xnO:{z:.98,x:.2,y:-.1}}},
   clk:{zNm:.8,nfz:.85,paW:1.05,paH:.95,iPl:0,klZ:.95,klY:0,klHZ:1.1,klKZ:1,klNY:-1,klNoY:-3,klPY:-.5,klKY:1,zPl:1}};
-const LY_PD=new Proxy({},{get:(o,k)=>{k=String(k);if(/^(ck|sh|hi)2$/.test(k))return LY_POP.ck2;if(/^(ck|sh|hi)n$/.test(k))return LY_POP.ckn;if(/^clkK[2n]$/.test(k))return LY_POP.clk;if(k==='kl'||/K[2n]$/.test(k))return LY_POP.kl;return LY_POP[k]}});
+try{if(S.lays&&!(S.lay&&S.lay.v5)){['ck','sh','hi'].forEach(g=>{const o=S.lays[g+'n'];if(o)['3','4','5'].forEach(n=>{if(!S.lays[g+n])S.lays[g+n]=JSON.parse(JSON.stringify(o))})});S.lay=Object.assign(S.lay||{v3:1,v4:1},{v5:1});store.set(K_S,S)}}catch(e){}
+const LY_PD=new Proxy({},{get:(o,k)=>{k=String(k);if(/^(ck|sh|hi)2$/.test(k))return LY_POP.ck2;if(/^(ck|sh|hi)[345n]$/.test(k))return LY_POP.ckn;if(/^clkK[2n]$/.test(k))return LY_POP.clk;if(k==='kl'||/K[2n]$/.test(k))return LY_POP.kl;return LY_POP[k]}});
 /* passage à un seul réglage des boutons du bas : on retire les valeurs propres à chaque jeu */
 if(S.lays&&!(S.lay&&S.lay.v4)){for(const c in S.lays)['brK','ftK','gFB','mB','icZ','ifZ','barTop'].forEach(k=>delete S.lays[c][k]);S.lay=Object.assign(S.lay||{v3:1},{v4:1});['brK','ftK','gFB','mB','icZ','ifZ','barTop'].forEach(k=>delete S.lay[k]);try{store.set(K_S,S)}catch(e){}}
 const LY_BASE={ck:'Cricket',sh:'Shanghai',hi:'Halve-it',x:'501 / 301',clk:'Horloge',kl:'Killer'};
-const LY_NAME=new Proxy({},{get:(o,k)=>{k=String(k);if(k==='kl')return'Killer';const m=k.match(/^([a-z]+?)(K?)([2n])$/);if(!m)return k;return(LY_BASE[m[1]]||m[1])+(m[3]==='2'?' · 2 joueurs':' · 3 joueurs et +')}});
+const LY_NAME=new Proxy({},{get:(o,k)=>{k=String(k);if(k==='kl')return'Killer';const m=k.match(/^([a-z]+?)(K?)([2345n])$/);if(!m)return k;return(LY_BASE[m[1]]||m[1])+({'2':' · 2 joueurs','3':' · 3 joueurs','4':' · 4 joueurs','5':' · 5 joueurs et +'}[m[3]]||' · 3 joueurs et +')}});
 const lyN=a=>a&&a.length>2?'n':'2';
-const lyCk=()=>((typeof BARC!=='undefined'&&BARC&&XG&&XG.mode)?XG.mode:'ck')+lyN(G&&G.players);
+const lyCk=()=>((typeof BARC!=='undefined'&&BARC&&XG&&XG.mode)?XG.mode:'ck')+(a=>!a||a.length<=2?'2':a.length>=5?'5':String(a.length))(G&&G.players);   // Cricket : réglages séparés à 2, 3, 4 et 5 cases et +
 const lyCur=()=>$('killer').classList.contains('on')?(BARON&&XG?(XG.mode||'bar')+'K'+lyN(XG.players):'kl'):$('x01').classList.contains('on')?((XG&&XG.mode)||'x')+lyN(XG&&XG.players):lyCk();
 if(S.lays&&S.lays.x01){S.lays.x2=S.lays.x01;delete S.lays.x01;try{store.set(K_S,S)}catch(e){}}
 if(S.lay&&!S.lays){const o=S.lay,g={v3:1},c={};for(const k in o){if(k==='v3')continue;(LY_GLOB.includes(k)?g:c)[k]=o[k]}S.lay=g;S.lays={ck2:c};try{store.set(K_S,S)}catch(e){}}
@@ -7198,7 +7199,7 @@ function demoStart(kind){
     const s={};Object.keys(S).forEach(k=>{if(!DEMO_KEEP.includes(k))s[k]=S[k]});try{localStorage.setItem(DEMO_K,JSON.stringify({ls,s}))}catch(e){return}}
   DEMO=kind;const N2=['ALICE','BOB'],N3=['ALICE','BOB','CHLOÉ'];
   try{$('draw').classList.remove('on')}catch(e){}
-  if(kind==='ck2'||kind==='ckn'){startGame('std',kind==='ck2'?N2:N3,0);setTimeout(()=>{try{throwDart(20);throwDart(20)}catch(e){}},300)}
+  if(/^ck[2345]$/.test(kind)){startGame('std',['ALICE','BOB','CHLOÉ','DAN','EVE'].slice(0,+kind[2]),0);setTimeout(()=>{try{throwDart(20);throwDart(20)}catch(e){}},300)}
   else if(kind==='x2'||kind==='xn'){startX01(kind==='x2'?N2:N3,0,null);setTimeout(()=>{try{xThrow(20,3)}catch(e){}},300)}
   else if(kind==='kl'){KTEAMS=null;startKiller(N3,[20,19,18])}
   else if(kind==='clk'){startX01(N2,0,null,'clk')}
@@ -7206,7 +7207,7 @@ function demoStart(kind){
 function lyFromHome(){const ok=G&&G.players&&G.players.length===2&&G.winner===null&&!G._bar&&!BARC;
   if(!ok){try{mkToast('','Lance une partie de Cricket à 2 joueurs pour régler la mise en page',2600)}catch(e){}return}
   $('hResume').click();setTimeout(lyOpen,450)}
-const LY_CTX={x:'brK ftK gFB mB bw fbw icZ ifZ xnZ xrZ xsZ xcoZ xhZ xkz xkh xkg xbh xoN xoS xoM xoH xoC xpW xpH xpG xcG',kl:'brK ftK gFB mB zNm nfz nsw bw fbw icZ ifZ paW paH zPl iPl',ot:'brK ftK gFB mB bw fbw icZ ifZ'},LY_NO=new Proxy({},{get:(o,k)=>/^(ck|sh|hi)n$/.test(k)?'nW':''});
+const LY_CTX={x:'brK ftK gFB mB bw fbw icZ ifZ xnZ xrZ xsZ xcoZ xhZ xkz xkh xkg xbh xoN xoS xoM xoH xoC xpW xpH xpG xcG',kl:'brK ftK gFB mB zNm nfz nsw bw fbw icZ ifZ paW paH zPl iPl',ot:'brK ftK gFB mB bw fbw icZ ifZ'},LY_NO=new Proxy({},{get:(o,k)=>/^(ck|sh|hi)[345n]$/.test(k)?'nW':''});
 const lyCtx=()=>{const c=lyCur();return c==='kl'||(c.startsWith('clk')&&pkClk())?'kl':$('x01').classList.contains('on')?'x':($('game').classList.contains('on')&&skp2())?'ck':'ot'};
 function lyOpen(mode,elId,sec){const old=$('lyp');const up0=old?old.classList.contains('up'):false;if(old)old.remove();haptic();const p=el('div','');p.id='lyp';document.body.append(p);let up=up0;
   const CX=lyCur(),cx=lyCtx();let tabs=LY_TABS[cx]||LY_TABS.ot;
@@ -7238,7 +7239,7 @@ function lyOpen(mode,elId,sec){const old=$('lyp');const up0=old?old.classList.co
     const fb=ev.target.closest('.lyf button');if(fb){fcOpen(fb.dataset.f,draw);return}
     const bt=ev.target.closest('.lyb button[data-bt]');if(bt){haptic();lySet('barTop',+bt.dataset.bt,CX);store.set(K_S,S);lyApply();draw();return}
     const ab=ev.target.closest('.lyb button[data-a]');if(ab){haptic();lySet('nA',+ab.dataset.a,CX);store.set(K_S,S);lyPlace();draw();return}
-    if(ev.target.closest('.lyc')){const L=Object.assign({},S.lay||{});delete L.v3;delete L.v4;const txt='Réglages Pop '+APPV+' : '+JSON.stringify({communs:L,jeux:S.lays||{},fN:S.fN||null,fT:S.fT||null});
+    if(ev.target.closest('.lyc')){const L=Object.assign({},S.lay||{});delete L.v3;delete L.v4;delete L.v5;const txt='Réglages Pop '+APPV+' : '+JSON.stringify({communs:L,jeux:S.lays||{},fN:S.fN||null,fT:S.fT||null});
       const ok=()=>{try{mkToast('','Réglages copiés : colle-les dans la conversation',2600)}catch(e){}};
       (navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(txt).then(ok):Promise.reject()).catch(()=>{if(navigator.share)navigator.share({text:txt}).catch(()=>{});else prompt('Copie ce texte :',txt)});return}
     if(ev.target.closest('.lyra')){haptic();S.lays={};S.lay={v3:1,v4:1};delete S.fN;delete S.fT;done();return}
