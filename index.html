@@ -3358,8 +3358,8 @@ html body :is(#game,#x01,#killer):is(#game,#x01,#killer):is(#game,#x01,#killer) 
 /* lf-293 : colonne du joueur en cours (case, numéros, marques) épinglée au premier plan quand on fait défiler — voir pnStick */
 html body #game#game#game.pn #grid>.row>.rtrack.pnf{z-index:7!important;background-color:var(--pnbg,var(--page))!important}
 html body #game#game#game.pn #grid>.row>.mk.pnf{z-index:8!important}
-html body #game#game#game.pn #grid>.row>.rtrackb.pnf{z-index:9!important}
-html body #game#game#game.pn #grid>.row>.num{z-index:10!important}
+html body #game#game#game.pn #grid>.row>.rtrackb.pnf{z-index:10!important}
+html body #game#game#game.pn #grid>.row>.num{z-index:9!important}   /* le cadre noir (rtrackb) passe par-dessus la bulle, comme avant */
 html body #game#game#game.pn #scores>.sc.pnf{z-index:5!important}
 </style>
 </head>
@@ -6768,7 +6768,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-293';   // à changer avec VERSION dans sw.js
+const APPV='lf-294';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
