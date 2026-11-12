@@ -6469,17 +6469,19 @@ function pnOrder(){const g=$('game');if(!g.classList.contains('pn')||!R||!G)retu
   G.players.forEach((p,i)=>{R.sc[i].c.dataset.o=pos(i);R.sc[i].c.style.order=pos(i)*2;TARGETS.forEach(t=>{R.mk[t][i].style.order=pos(i)*2})});
   TARGETS.forEach(t=>{R.num[t].style.order=seq.indexOf('N')*2});
   if(turned)all.forEach((c,k)=>{const dx=old[k]-c.offsetLeft;if(Math.abs(dx)>1)c.animate([{transform:'translateX('+dx+'px)'},{transform:'none'}],{duration:450,easing:'cubic-bezier(.3,1.25,.5,1)'})});
-  if(R.pnCur!==cur){R.pnCur=cur;const m=g.querySelector('main'),x=parseFloat(R.sc[cur].c.style.left)||0,w=parseFloat(R.sc[cur].c.style.width)||0;
-    m.scrollTo({left:Math.max(0,x-(m.clientWidth-w)/2),behavior:turned?'smooth':'auto'})}
+  if(R.pnCur!==cur){R.pnCur=cur;try{pnPlace()}catch(e){}const m=g.querySelector('main'),x=parseFloat(R.sc[cur].c.style.left)||0,w=parseFloat(R.sc[cur].c.style.width)||0;
+    m.scrollTo({left:Math.max(0,x+(parseFloat(getComputedStyle(m).paddingLeft)||0)-(m.clientWidth-w)/2),behavior:turned?'smooth':'auto'})}
 }
 /* ordre des colonnes à 3 joueurs et + ('N' = colonne des numéros, toujours juste avant le joueur en cours) */
 function pnSeq(n,cur){const L=Math.floor((n-1)/2),q=[];for(let k=L;k>0;k--)q.push((cur-k+n)%n);q.push('N',cur);for(let k=1;k<n-L;k++)q.push((cur+k)%n);return q}   // joueur en cours (et sa colonne de numéros) au milieu, les autres autour dans l'ordre de jeu
 function pnPlace(){const g=$('game');if(!g.classList.contains('pn')||!R||!G)return;
-  const W=innerWidth,n=G.players.length,mid=W*.15,colw=Math.max(W*.20,(W*.93-mid)/n),cur=shownCur();g.style.setProperty('--colw',colw+'px');
-  const seq=pnSeq(n,cur),X={};let x=0;seq.forEach(k=>{X[k]=x;x+=k==='N'?mid:colw});
+  const W=innerWidth,n=G.players.length,mid=W*.15,colw=Math.max(W*.155,(W*.93-mid)/(2*Math.ceil((n-1)/2)+1)),cur=shownCur();g.style.setProperty('--colw',colw+'px');   // place symétrique autour du joueur en cours
+  const Lc=Math.floor((n-1)/2),Rc=n-1-Lc,Wm=g.querySelector('main').clientWidth||W,PL=parseFloat(getComputedStyle(g.querySelector('main')).paddingLeft)||0,half=(Wm-(mid+colw))/2-PL,pad=Math.max(0,half-Lc*colw),padR=Math.max(0,half-Rc*colw);   // marges pour que le joueur en cours puisse toujours être pile au milieu
+  const seq=pnSeq(n,cur),X={};let x=pad;seq.forEach(k=>{X[k]=x;x+=k==='N'?mid:colw});
+  TARGETS.forEach(t=>{const row=R.num[t]&&R.num[t].parentElement;if(row){row.style.setProperty('padding-left',pad+'px','important');row.style.setProperty('padding-right',padR+'px','important')}});
   R.sc.forEach((sc,i)=>{const L=i===cur?X.N:X[i],w=i===cur?colw+mid:colw;
     sc.c.style.setProperty('left',L+'px','important');sc.c.style.setProperty('width',w+'px','important')});
-  $('scores').style.setProperty('width',(colw*n+mid)+'px','important');
+  $('scores').style.setProperty('width',(pad+colw*n+mid+padR)+'px','important');
 }
 {const _r=render;render=function(){const x=_r.apply(this,arguments);try{pnOrder()}catch(e){}return x}}
 
@@ -6750,7 +6752,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-287';   // à changer avec VERSION dans sw.js
+const APPV='lf-288';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
