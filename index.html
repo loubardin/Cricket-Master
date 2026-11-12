@@ -6740,7 +6740,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-283';   // à changer avec VERSION dans sw.js
+const APPV='lf-284';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -7099,7 +7099,7 @@ const LY_K={
   rowK:['Hauteur des bulles',.6,1.6,.05,'%'],nW:['Largeur des bulles (et du Spew)',.7,1.3,.01,'%'],gL:['Écart entre les lignes',0,5,.1,'pc'],gNF:['Écart avec le Spew (au moins)',0,8,.1,'pc'],
   nfz:['Nombres',.6,1.5,.05,'%'],mkz:['Taille',.5,1.5,.05,'%'],mksw:['Épaisseur',1,10,.25,''],
   xcG:['Écart entre les cases',0,3,.05,'%'],xnZ:['Nom',.5,2,.05,'%'],xrZ:['Score',.5,2,.05,'%'],xsZ:['Moyenne',.5,2.5,.05,'%'],xcoZ:['Finish proposé',.5,2.5,.05,'%'],xhZ:['Historique',.5,2.5,.05,'%'],
-  xoN:['Nom',-8,8,.1,'pc'],xoS:['Score',-8,8,.1,'pc'],xoM:['Moyenne',-8,8,.1,'pc'],xoH:['Historique',-8,8,.1,'pc'],xoC:['Finish proposé',-8,8,.1,'pc'],
+  xoN:['Nom',-20,20,.1,'pc'],xoS:['Score',-20,20,.1,'pc'],xoM:['Moyenne',-20,20,.1,'pc'],xoH:['Historique',-20,20,.1,'pc'],xoC:['Finish proposé',-20,20,.1,'pc'],
   xpW:['Largeur des bulles',.5,2.5,.05,'%'],xpH:['Hauteur des bulles',.4,3,.05,'%'],xpG:['Écart',0,4,.05,'%'],
   xkh:['Hauteur des touches 1 à 20',.5,1.6,.05,'%'],xbh:['Hauteur de la touche Bulle',.5,1.8,.05,'%'],xkg:['Écart entre les touches',0,3,.05,'%'],xkz:['Chiffres',.5,1.6,.05,'%'],
   klZ:['Taille des cartes',.6,1.3,.01,'%'],klY:['Décaler les cartes (− haut, + bas)',-10,10,.1,'pc'],klHZ:['Cœurs',.5,1.6,.05,'%'],klKZ:['Marques K (MPR à l\'Horloge)',.5,1.6,.05,'%'],
