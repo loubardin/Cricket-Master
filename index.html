@@ -3339,6 +3339,16 @@ html body :is(#game,#x01,#killer):is(#game,#x01,#killer):is(#game,#x01,#killer) 
 /* 501 / 301 : les touches s'arrêtent au-dessus du bas de l'écran */
 html body #x01#x01#x01#x01 #xmain{padding-bottom:calc(calc(var(--lyMB,7.7px) + 6.1dvh*var(--lyB,1) + var(--lyGFB,5px)) + 6.16dvh*var(--lyF,1) + var(--xgKF,2.8)*1dvh)!important}
 #colp .cpsw i{color:var(--ink,#111)}#colp .cpsw i.on{color:var(--btx,#fff)}
+
+/* coéquipier : taille ; bulles d'historique : épaisseur du contour ; 501 : contour du score, hauteur des cases */
+html body #game#game#game.sk.p2 #scores .sc>.nm .nmm{zoom:var(--tmZ,1)}
+html body #x01#x01#x01 #xplayers .xc .xn .xm{zoom:var(--tmZ,1)}
+html body #game#game#game #scores .pills .pill,html body #x01#x01#x01 #xplayers .khist .pill{border-width:calc(var(--bw,3px)*var(--pbw,1))!important}
+html.xsw body #x01#x01#x01 #xplayers .xc.act .xr{text-shadow:var(--xsts)!important}
+html body #x01#x01#x01#x01 #xplayers .xc{height:calc(100% * var(--xcH,1))!important;align-self:center!important}
+#lyp .lyg.flash{animation:lyflash 1.2s ease}
+@keyframes lyflash{0%,60%{background:#ffe08a;color:#111}100%{background:transparent}}
+#lyp .lyg{border-radius:8px;padding:2px 4px;margin-left:-4px}
 </style>
 </head>
 <body>
@@ -6730,7 +6740,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-282';   // à changer avec VERSION dans sw.js
+const APPV='lf-283';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -6952,8 +6962,8 @@ function pklCard(i,g,act){const p=KG.players[i],{W,H,wide,k}=g,DD=KG.def,isDef=D
   let h=act?`<rect class="pksh" x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87" filter="url(#pkSh)"/><rect class="halo" x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87"/><clipPath id="pkClip"><rect x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87"/></clipPath><g clip-path="url(#pkClip)"><path class="shine" style="--sd:${W+H*.3+560}px" d="M-300 -40H-30L${-30-H*.3} ${H+40}H${-300-H*.3}Z"/></g>`:'';
   const cx=wide?.306*W:W/2,nm=esc(pkName(p,act));
   h+=`<g transform="translate(0 ${(LZ.klNY*H/100).toFixed(1)})">`;
-  const mate=esc(pkMate(p,act)),tu=mate?((act?80:66)+LZ.tmL*8)*k:0;
-  if(mate)h+=`<text class="pknm pkmate" style="fill:${pkCol(i)}" x="${cx}" y="${((act?(wide?-36:-32):-31)*k-tu).toFixed(1)}" font-size="${(act?46:40)*k*kT}" data-fit="${wide?.62*W:W*.98}">${mate} &amp;</text>`;
+  const mate=esc(pkMate(p,act)),tu=mate?((act?80:66)*Math.max(.7,LZ.tmZ)+LZ.tmL*8)*k:0;
+  if(mate)h+=`<text class="pknm pkmate" style="fill:${pkCol(i)}" x="${cx}" y="${((act?(wide?-36:-32):-31)*k-tu).toFixed(1)}" font-size="${(act?46:40)*k*kT*LZ.tmZ}" data-fit="${wide?.62*W:W*.98}">${mate} &amp;</text>`;
   if(act)h+=`${mate?'':`<text x="${cx}" y="${(wide?-124:-116)*k}" font-size="${43*k*kT}">à toi</text>`}<text class="pknm" style="fill:${pkCol(i)}" x="${cx}" y="${(wide?-36:-32)*k}" font-size="${87*k*kT}" data-fit="${wide?.62*W:W*1.02}">${nm}</text>`;
   else h+=`<text class="pknm" style="fill:${pkCol(i)}" x="${cx}" y="${-31*k}" font-size="${73*k*kT}" data-fit="${wide?.62*W:W*.98}">${nm}</text>`;
   h+='</g>';
@@ -7051,7 +7061,7 @@ function popOutl(root){if(!root)return;root.querySelectorAll('text.w').forEach(t
 addEventListener('resize',()=>{try{if(KG&&PKL.k&&$('killer').classList.contains('on'))pklSync()}catch(e){}});
 
 /* ===== Mise en page du Cricket à 2 (Bulle) : hauteurs, écarts, barre Accueil · infos · Annuler en haut ou en bas ===== */
-const LY_D={xpT:1,xgPK:1.2,xgKF:2.8,tmL:0,klZ:1,klY:0,klHZ:1,klKZ:1,klNY:0,klNoY:0,klKY:0,klPY:0,xoN:0,xoS:0,xoM:0,xoH:0,xoC:0,xpW:1,xpH:1,xpG:1,xcG:1,xnZ:1,xrZ:1,xsZ:1,xcoZ:1,xhZ:1,xkz:1,xkh:1,xkg:1,xbh:1,paW:1,paH:1,poW:1,poH:1,zPo:1.05,poG:1,poY:0,crZ:1,crY:0,scR:1,hZ:1,nW:1,icZ:.85,ifZ:.75,dtZ:.95,spZ:.95,fbw:2.5,barTop:0,iNP:.1,iPM:.14,iPMo:.14,iY:0,iPl:.1,zNm:1.2,zSc:1.6,zMp:1.25,zPl:1.05,nfz:1.1,nsw:4,scsw:4,bw:3.25,mkz:.95,mksw:4,scK:1.1,rowK:1.05,ftK:1.2,brK:1,mT:4.1,gSN:1.1,gL:1.8,gNF:1.5,gFB:.6,mB:.9,nA:0};   // « Pop » : les réglages de base
+const LY_D={tmZ:1,pbw:1,xsw:0,xcH:1,xpT:1,xgPK:1.2,xgKF:2.8,tmL:0,klZ:1,klY:0,klHZ:1,klKZ:1,klNY:0,klNoY:0,klKY:0,klPY:0,xoN:0,xoS:0,xoM:0,xoH:0,xoC:0,xpW:1,xpH:1,xpG:1,xcG:1,xnZ:1,xrZ:1,xsZ:1,xcoZ:1,xhZ:1,xkz:1,xkh:1,xkg:1,xbh:1,paW:1,paH:1,poW:1,poH:1,zPo:1.05,poG:1,poY:0,crZ:1,crY:0,scR:1,hZ:1,nW:1,icZ:.85,ifZ:.75,dtZ:.95,spZ:.95,fbw:2.5,barTop:0,iNP:.1,iPM:.14,iPMo:.14,iY:0,iPl:.1,zNm:1.2,zSc:1.6,zMp:1.25,zPl:1.05,nfz:1.1,nsw:4,scsw:4,bw:3.25,mkz:.95,mksw:4,scK:1.1,rowK:1.05,ftK:1.2,brK:1,mT:4.1,gSN:1.1,gL:1.8,gNF:1.5,gFB:.6,mB:.9,nA:0};   // « Pop » : les réglages de base
 if(S.lay&&!S.lay.v3){S.lay={v3:1};try{store.set(K_S,S)}catch(e){}}
 /* un profil de réglages par jeu ; les contours (et les polices) sont communs à toute l'appli */
 const LY_GLOB=['bw','fbw','nsw','scsw','brK','ftK','gFB','mB','icZ','ifZ','dtZ','spZ','barTop'];   // contours et boutons du bas : un seul réglage pour toute l'appli
@@ -7093,13 +7103,35 @@ const LY_K={
   xpW:['Largeur des bulles',.5,2.5,.05,'%'],xpH:['Hauteur des bulles',.4,3,.05,'%'],xpG:['Écart',0,4,.05,'%'],
   xkh:['Hauteur des touches 1 à 20',.5,1.6,.05,'%'],xbh:['Hauteur de la touche Bulle',.5,1.8,.05,'%'],xkg:['Écart entre les touches',0,3,.05,'%'],xkz:['Chiffres',.5,1.6,.05,'%'],
   klZ:['Taille des cartes',.6,1.3,.01,'%'],klY:['Décaler les cartes (− haut, + bas)',-10,10,.1,'pc'],klHZ:['Cœurs',.5,1.6,.05,'%'],klKZ:['Marques K (MPR à l\'Horloge)',.5,1.6,.05,'%'],
-  klNY:['Nom',-30,30,.5,'pc'],klNoY:['Numéro',-30,30,.5,'pc'],klKY:['Marques K (MPR à l\'Horloge)',-30,30,.5,'pc'],klPY:['Historique',-30,30,.5,'pc'],xpT:['Taille du texte',.5,2.5,.05,'%'],xgPK:['Écart cases joueur → touches',0,6,.1,'pc'],xgKF:['Écart touches → Spew',0,8,.1,'pc'],tmL:['Interligne entre les 2 noms d\'une équipe (en % de l\'écran)',-3,3,.05,'pc']};
+  klNY:['Nom',-30,30,.5,'pc'],klNoY:['Numéro',-30,30,.5,'pc'],klKY:['Marques K (MPR à l\'Horloge)',-30,30,.5,'pc'],klPY:['Historique',-30,30,.5,'pc'],xpT:['Taille du texte',.5,2.5,.05,'%'],tmZ:['Taille',.5,1.8,.05,'%'],pbw:['Contour des bulles',0,3,.05,'%'],xsw:['Contour du score',0,6,.25,''],xcH:['Hauteur de la case',.5,1,.01,'%'],xgPK:['Écart cases joueur → touches',0,6,.1,'pc'],xgKF:['Écart touches → Spew',0,8,.1,'pc'],tmL:['Interligne entre les 2 noms d\'une équipe (en % de l\'écran)',-3,3,.05,'pc']};
+/* réglages rangés élément par élément : pour chaque élément, sa taille, sa place, son contour.
+   « @x:ids » = curseur gauche ← → droite (éditeur d'éléments) */
 const LY_B={
-  pl:{ck:[['Bloc',['scK','mT','gSN','scR','hZ']],['Textes : tailles',['zNm','zSc','zMp']],['Textes : placement (en hauteur de ligne)',['iNP','iPM','iPMo','iY','tmL']],['Historique du joueur en cours',['paW','paH','zPl','iPl']],['Historique de l\'adversaire',['poW','poH','zPo','poG','poY']],['Couronne',['crZ','crY']]],
-      x:[['Bloc',['xcG']],['Textes : tailles',['xnZ','xrZ','xsZ','xcoZ','xhZ']],['Textes : placement (en % de l\'écran)',['xoN','xoS','xoM','xoH','xoC','tmL']],['Historique',['xpW','xpH','xpT','xpG']]],
-      kl:[['Bloc',['klZ','klY']],['Textes : tailles',['zNm',['nfz','Numéro'],'klHZ','klKZ']],['Textes : placement (en % de la carte)',['klNY','klNoY','klKY','klPY','tmL']],['Historique',['paW','paH','zPl','iPl']]]},
-  nb:{ck:[['Bloc',['rowK','nW','gL','gNF']],['Textes',[['nfz','Taille des nombres']]],['Marques',['mkz','mksw']]],
-      x:[['Bloc',['xkh','xbh','xkg','xgPK','xgKF']],['Textes',['xkz']]]},
+  pl:{ck:[['Case',['scK','scR','hZ','mT','gSN']],
+          ['Nom',[['zNm','Taille'],['iNP','Écart nom → score'],'@x:nmA,nmO']],
+          ['Coéquipier (équipes)',[['tmZ','Taille'],['tmL','Interligne avec le nom']]],
+          ['Score',[['zSc','Taille'],'@x:ptA,ptO']],
+          ['MPR',[['zMp','Taille'],'iPM','iPMo','@x:mpA,mpO']],
+          ['Nom, score et MPR ensemble',['iY']],
+          ['Historique du joueur en cours',['paW','paH','zPl','iPl','pbw','@x:hiA']],
+          ['Historique de l\'adversaire',['poW','poH','zPo','poG','poY','@x:hiO']],
+          ['Couronne',['crZ','crY','@x:crn']]],
+      x:[['Case',['xcH','xcG']],
+          ['Nom (joueur qui lance)',[['xnZ','Taille'],['xoN','Position'],'@x:xnA,xnO']],
+          ['Coéquipier (équipes)',[['tmZ','Taille'],['tmL','Interligne avec le nom']]],
+          ['Score',[['xrZ','Taille'],['xoS','Position'],'xsw','@x:xrA,xrO']],
+          ['Moyenne',[['xsZ','Taille'],['xoM','Position'],'@x:xsA,xsO']],
+          ['Finish et indications',[['xcoZ','Taille'],['xoC','Position'],'@x:xco']],
+          ['Historique des fléchettes',[['xhZ','Taille de l\'ensemble'],['xoH','Position'],'xpW','xpH','xpT','xpG','pbw','@x:xhA,xhO']]],
+      kl:[['Cartes',['klZ','klY']],
+          ['Nom',[['zNm','Taille'],['klNY','Position']]],
+          ['Coéquipier (équipes)',[['tmZ','Taille'],['tmL','Interligne avec le nom']]],
+          ['Numéro',[['nfz','Taille'],['klNoY','Position']]],
+          ['Cœurs',[['klHZ','Taille']]],
+          ['Marques K (MPR à l\'Horloge)',[['klKZ','Taille'],['klKY','Position']]],
+          ['Historique des fléchettes',[['klPY','Position'],'paW','paH','zPl','iPl']]]},
+  nb:{ck:[['Bulles des nombres',['rowK','nW','gL','gNF']],['Nombres',[['nfz','Taille'],'@x:lbl']],['Marques',['mkz','mksw','@x:mk']]],
+      x:[['Touches',['xkh','xbh','xkg','xgPK','xgKF']],['Chiffres',[['xkz','Taille'],'@x:xkl']]]},
   bas:{all:[['Bloc',['ftK','brK','gFB','mB']],['Textes',['dtZ','spZ','icZ','ifZ']],['Contour du texte « Spew »',['fbw']]]}};
 const LY_TABS={ck:[['pl','Cases joueur'],['nb','Tableau'],['bas','Bas']],x:[['pl','Cases joueur'],['nb','Touches'],['bas','Bas']],kl:[['pl','Cartes'],['bas','Bas']],ot:[['bas','Bas']]};
 /* ===== éditeur en direct : appui long sur n'importe quel élément → sa taille et sa place (gauche/droite, haut/bas) ===== */
@@ -7112,6 +7144,8 @@ const ED_REG={ck:[['crn','Couronne','#scores .hat'],['nmA','Nom (joueur en cours
     ['xkl','Chiffres des touches','#xkeys .xk .lbl']]};
 const ED_ROOT={ck:'#game',x:'#x01'};
 const edReg=(cx,id)=>(ED_REG[cx]||[]).find(r=>r[0]===id);
+const ED_SEC={crn:['pl','Couronne'],nmA:['pl','Nom'],nmO:['pl','Nom'],ptA:['pl','Score'],ptO:['pl','Score'],mpA:['pl','MPR'],mpO:['pl','MPR'],hiA:['pl','Historique du joueur en cours'],hiO:['pl','Historique de l\'adversaire'],lbl:['nb','Nombres'],mk:['nb','Marques'],
+  xco:['pl','Finish et indications'],xnA:['pl','Nom (joueur qui lance)'],xnO:['pl','Nom (joueur qui lance)'],xrA:['pl','Score'],xrO:['pl','Score'],xsA:['pl','Moyenne'],xsO:['pl','Moyenne'],xhA:['pl','Historique des fléchettes'],xhO:['pl','Historique des fléchettes'],xkl:['nb','Chiffres']};
 function edPick(t){const cx=lyCtx(),R=ED_REG[cx],root=ED_ROOT[cx];if(!R||!t||!t.closest)return null;
   for(let e=t;e&&e.id!==root.slice(1);e=e.parentElement){const r=R.find(r=>e.matches(root+' '+r[2]));if(r)return r[0]}return null}
 let ED_HL=null;
@@ -7123,7 +7157,7 @@ function edApply(){let st=$('edSt');if(!st){st=document.createElement('style');s
         css+=`${q}{${v.z&&v.z!==1?`zoom:${v.z}!important;`:''}${v.x||v.y?(abs?`margin-left:${v.x||0}dvw!important;margin-top:${v.y||0}dvh!important;`:`position:relative!important;left:${v.x||0}dvw!important;top:${v.y||0}dvh!important;`):''}}\n`}
       if(ED_HL===id)css+=`${q}{outline:2px dashed #ff5a1f!important;outline-offset:3px!important}\n`})}
   st.textContent=css}
-const lyBlockKeys=(m,cx)=>((LY_B[m]||{})[m==='bas'?'all':cx]||[]).flatMap(g=>g[1].map(x=>Array.isArray(x)?x[0]:x));
+const lyBlockKeys=(m,cx)=>((LY_B[m]||{})[m==='bas'?'all':cx]||[]).flatMap(g=>g[1].map(x=>Array.isArray(x)?x[0]:x)).filter(k=>!k.startsWith('@'));
 const lyFmt=(v,u)=>u==='x'?(+v).toFixed(2):u==='%'?Math.round(v*100)+' %':u==='pc'?(+v).toFixed(1)+' %':(+v).toFixed(1);
 /* 501 : hauteur des touches (les rangées sont calculées par l'appli : on les reprend et on les multiplie) */
 function lyKeys(L){const k=$('xkeys'),x=$('x01');if(!k||!x.classList.contains('on'))return;
@@ -7133,7 +7167,7 @@ function lyKeys(L){const k=$('xkeys'),x=$('x01');if(!k||!x.classList.contains('o
 {const _x=xRender;xRender=function(){const r=_x.apply(this,arguments);try{if($('x01').classList.contains('on')&&!xRender._k){xRender._k=1;requestAnimationFrame(()=>{xRender._k=0;lyKeys(lyGet())})}}catch(e){}return r}}
 function lyRoot(){const L=lyGet(lyCur()),st=document.documentElement.style,u=innerHeight/100;st.setProperty('--bub-bw',L.bw+'px');st.setProperty('--bw',L.bw+'px');
   try{edApply()}catch(e){}
-  st.setProperty('--lyF',L.ftK);['xpT','xgPK','xgKF','tmL','dtZ','spZ','xnZ','xrZ','xsZ','xcoZ','xhZ','xkz','xkg','xoN','xoS','xoM','xoH','xoC','xpW','xpH','xpG','xcG'].forEach(k=>st.setProperty('--'+k,L[k]));lyKeys(L);st.setProperty('--icZ',L.icZ);st.setProperty('--ifZ',L.ifZ);st.setProperty('--fbw',L.fbw+'px');st.setProperty('--lyB',L.brK);st.setProperty('--lyGFB',(L.gFB*u).toFixed(1)+'px');st.setProperty('--lyMB',(L.mB*u).toFixed(1)+'px')}
+  st.setProperty('--lyF',L.ftK);['tmZ','pbw','xcH','xpT','xgPK','xgKF','tmL','dtZ','spZ','xnZ','xrZ','xsZ','xcoZ','xhZ','xkz','xkg','xoN','xoS','xoM','xoH','xoC','xpW','xpH','xpG','xcG'].forEach(k=>st.setProperty('--'+k,L[k]));lyKeys(L);st.setProperty('--icZ',L.icZ);{const w=L.xsw;document.documentElement.classList.toggle('xsw',w>0);if(w>0)st.setProperty('--xsts',Array.from({length:16},(_,i)=>{const a=i*Math.PI/8;return`${(Math.cos(a)*w).toFixed(2)}px ${(Math.sin(a)*w).toFixed(2)}px 0 var(--tol,#111)`}).join(','))}st.setProperty('--ifZ',L.ifZ);st.setProperty('--fbw',L.fbw+'px');st.setProperty('--lyB',L.brK);st.setProperty('--lyGFB',(L.gFB*u).toFixed(1)+'px');st.setProperty('--lyMB',(L.mB*u).toFixed(1)+'px')}
 lyRoot();
 {const _s=show;show=function(){const r=_s.apply(this,arguments);try{lyRoot()}catch(e){}return r}}
 function lyApply(){lyRoot();try{if(KG&&PKL.k&&$('killer').classList.contains('on')){PKL.k.querySelectorAll('g.kin').forEach(g=>{g._h=null});PKL.k.querySelectorAll('text').forEach(t=>{t._h=null});pklSync()}}catch(e){}try{if(G&&R&&$('game').classList.contains('on')){layoutSk();if(typeof fitSk==='function')fitSk();render()}}catch(e){}}
@@ -7163,7 +7197,7 @@ function lyFromHome(){const ok=G&&G.players&&G.players.length===2&&G.winner===nu
   $('hResume').click();setTimeout(lyOpen,450)}
 const LY_CTX={x:'brK ftK gFB mB bw fbw icZ ifZ xnZ xrZ xsZ xcoZ xhZ xkz xkh xkg xbh xoN xoS xoM xoH xoC xpW xpH xpG xcG',kl:'brK ftK gFB mB zNm nfz nsw bw fbw icZ ifZ paW paH zPl iPl',ot:'brK ftK gFB mB bw fbw icZ ifZ'},LY_NO=new Proxy({},{get:(o,k)=>/^(ck|sh|hi)n$/.test(k)?'nW':''});
 const lyCtx=()=>{const c=lyCur();return c==='kl'||(c.startsWith('clk')&&pkClk())?'kl':$('x01').classList.contains('on')?'x':($('game').classList.contains('on')&&skp2())?'ck':'ot'};
-function lyOpen(mode,elId){const old=$('lyp');const up0=old?old.classList.contains('up'):false;if(old)old.remove();haptic();const p=el('div','');p.id='lyp';document.body.append(p);let up=up0;
+function lyOpen(mode,elId,sec){const old=$('lyp');const up0=old?old.classList.contains('up'):false;if(old)old.remove();haptic();const p=el('div','');p.id='lyp';document.body.append(p);let up=up0;
   const CX=lyCur(),cx=lyCtx();let tabs=LY_TABS[cx]||LY_TABS.ot;
   if(elId&&edReg(cx,elId))tabs=[['el','Élément']].concat(tabs);else elId=null;
   if(!mode||mode==='txt'||!tabs.some(t=>t[0]===mode))mode=tabs[0][0];
@@ -7176,12 +7210,16 @@ function lyOpen(mode,elId){const old=$('lyp');const up0=old?old.classList.contai
       <div class="lyt">${tabs.map(([m,t])=>`<button data-m="${m}" class="${m===mode?'on':''}">${t}</button>`).join('')}</div>
       ${mode==='el'?(()=>{const v=Object.assign({z:1,x:0,y:0},((LY_PD[CX]||{}).el||{})[elId]||{},(((S.lays||{})[CX]||{}).el||{})[elId]||{});const r=edReg(cx,elId);
         return `<i class="lyg">${r[1]}</i><p class="lyel">Appui long sur un autre élément pour le régler à son tour.</p>`+[['z','Taille',.4,2.5,.02,'%'],['x','Gauche ← → droite (en % de l\'écran)',-25,25,.1,'pc'],['y','Haut ↑ ↓ bas (en % de l\'écran)',-25,25,.1,'pc']].map(([k,l,a,b,st,u])=>`<label><span>${l}</span><b data-v="el_${k}">${lyFmt(v[k],u)}</b><input type="range" data-e="${k}" data-u="${u}" min="${a}" max="${b}" step="${st}" value="${v[k]}"></label>`).join('')})():''}
-      ${groups.map(([gt,ks])=>{const rows=ks.map(x=>Array.isArray(x)?x:[x]).filter(([k])=>LY_K[k]&&!no.includes(k)).map(([k,lb])=>{const[l0,a,b,st,u]=LY_K[k],l=lb||l0;return`<label><span>${l}</span><b data-v="${k}">${lyFmt(L[k],u)}</b><input type="range" data-k="${k}" data-u="${u}" min="${a}" max="${b}" step="${st}" value="${L[k]}"></label>`}).join('');return rows?`<i class="lyg">${gt}</i>${rows}`:''}).join('')}
+      ${groups.map(([gt,ks])=>{const E=Object.assign({},(LY_PD[CX]||{}).el||{},((S.lays||{})[CX]||{}).el||{});
+        const rows=ks.map(x=>{if(typeof x==='string'&&x.startsWith('@x:')){const ids=x.slice(3),v=(E[ids.split(',')[0]]||{}).x||0;return`<label><span>Gauche ← → droite</span><b data-v="ex_${ids}">${lyFmt(v,'pc')}</b><input type="range" data-ex="${ids}" data-u="pc" min="-25" max="25" step=".1" value="${v}"></label>`}
+          const[k,lb]=Array.isArray(x)?x:[x];if(!LY_K[k]||no.includes(k))return'';const[l0,a,b,st,u]=LY_K[k],l=lb||l0;return`<label><span>${l}</span><b data-v="${k}">${lyFmt(L[k],u)}</b><input type="range" data-k="${k}" data-u="${u}" min="${a}" max="${b}" step="${st}" value="${L[k]}"></label>`}).join('');
+        return rows?`<i class="lyg" data-g="${gt}">${gt}</i>${rows}`:''}).join('')}
       ${mode==='nb'&&cx==='ck'?`<div class="lyb"><span>Nombres dans la place libre</span><div class="sw">${['En haut','Au centre','En bas'].map((t,i)=>`<button data-a="${i}" class="${(L.nA|0)===i?'on':''}">${t}</button>`).join('')}</div></div>`:''}
       ${mode==='bas'?`<div class="lyb"><span>Barre Accueil · infos · Annuler (Cricket)</span><div class="sw">${['En bas','En haut'].map((t,i)=>`<button data-bt="${i}" class="${(L.barTop|0)===i?'on':''}">${t}</button>`).join('')}</div></div>`:''}
       ${mode==='pol'?`<div class="lyf"><button data-f="fN">Nombres<b style="font-family:'${esc(fcCur('fN'))}','Fun'">${esc(fcName(fcCur('fN')))}</b></button><button data-f="fT">Textes<b style="font-family:'${esc(fcCur('fT'))}','Fun'">${esc(fcName(fcCur('fT')))}</b></button></div>`:''}
       <button class="lyr">Revenir à Pop pour ${mode==='el'?'cet élément':mode==='bas'?'le bas de l\'écran':mode==='pol'?'les polices':'ce bloc'}</button><button class="lyra">Tout remettre en Pop (tous les jeux)</button><button class="lyc">Copier mes réglages (pour Claude)</button>`};
   draw();hl();
+  if(sec){const g=[...p.querySelectorAll('.lyg')].find(x=>x.dataset.g===sec);if(g){p.scrollTop=g.offsetTop-p.querySelector('.lyt').offsetHeight-6;g.classList.add('flash');setTimeout(()=>g.classList.remove('flash'),1200)}}
   const done=()=>{store.set(K_S,S);try{edApply()}catch(e){}try{fcApply();fcRefit()}catch(e){}lyApply();try{lyPlace()}catch(e){}draw();try{mkToast('','Réglages Pop rétablis',1600)}catch(e){}};
   p.addEventListener('click',ev=>{ev.stopPropagation();if(ev.target.closest('.lyx')){p.remove();ED_HL=null;try{edApply()}catch(e){}return}
     if(ev.target.closest('.lyd')){up=!up;draw();return}
@@ -7197,9 +7235,13 @@ function lyOpen(mode,elId){const old=$('lyp');const up0=old?old.classList.contai
       if(mode==='el'){const E=((S.lays||{})[CX]||{}).el;if(E)delete E[elId]}
       else if(mode==='pol'){delete S.fN;delete S.fT}
       else{const ks=mode==='bas'?BAS:lyBlockKeys(mode,cx).concat(mode==='nb'&&cx==='ck'?['nA']:[]);S.lays=S.lays||{};S.lay=S.lay||{v3:1,v4:1};
-        ks.forEach(k=>{if(LY_GLOB.includes(k))delete S.lay[k];else if(S.lays[CX])delete S.lays[CX][k]})}
+        ks.forEach(k=>{if(LY_GLOB.includes(k))delete S.lay[k];else if(S.lays[CX])delete S.lays[CX][k]});
+        const E=S.lays[CX]&&S.lays[CX].el;if(E)((LY_B[mode]||{})[cx]||[]).forEach(g=>g[1].forEach(x=>{if(typeof x==='string'&&x.startsWith('@x:'))x.slice(3).split(',').forEach(id=>delete E[id])}))}
       done()}});
   p.addEventListener('input',ev=>{const r=ev.target.closest('input[type=range]');if(!r)return;
+    if(r.dataset.ex){const v=+r.value;S.lays=S.lays||{};S.lays[CX]=S.lays[CX]||{};const E=S.lays[CX].el=S.lays[CX].el||{};
+      r.dataset.ex.split(',').forEach(id=>{E[id]=Object.assign({z:1,x:0,y:0},((LY_PD[CX]||{}).el||{})[id]||{},E[id]||{},{x:v})});
+      const bv=p.querySelector(`b[data-v="ex_${r.dataset.ex}"]`);if(bv)bv.textContent=lyFmt(v,'pc');edApply();clearTimeout(lyOpen._t);lyOpen._t=setTimeout(()=>store.set(K_S,S),400);return}
     if(r.dataset.e){const k=r.dataset.e,v=+r.value;EL()[k]=v;const bv=p.querySelector(`b[data-v="el_${k}"]`);if(bv)bv.textContent=lyFmt(v,r.dataset.u);edApply();clearTimeout(lyOpen._t);lyOpen._t=setTimeout(()=>store.set(K_S,S),400);return}
     const k=r.dataset.k,v=+r.value;lySet(k,v,CX);
     const b=p.querySelector(`b[data-v="${k}"]`);if(b)b.textContent=lyFmt(v,r.dataset.u);cancelAnimationFrame(p._raf);p._raf=requestAnimationFrame(lyApply);clearTimeout(p._sv);p._sv=setTimeout(()=>store.set(K_S,S),400)})}
@@ -7235,7 +7277,7 @@ function fcOpen(k,back){const old=$('fch');if(old)old.remove();haptic();const p=
 fcApply();
 /* appui long sur un bloc : ouvre les réglages de ce bloc (case joueur, tableau, touches, cartes, bas de l'écran) */
 function lyLP(el,mode,ok){if(!el)return;let t=0,lp=false,x0=0,y0=0;
-  el.addEventListener('pointerdown',e=>{lp=false;clearTimeout(t);if(ok&&!ok(e))return;x0=e.clientX;y0=e.clientY;const tg=e.target;t=setTimeout(()=>{lp=performance.now();const id=edPick(tg);lyOpen(id?'el':mode,id)},560)},true);
+  el.addEventListener('pointerdown',e=>{lp=false;clearTimeout(t);if(ok&&!ok(e))return;x0=e.clientX;y0=e.clientY;const tg=e.target;t=setTimeout(()=>{lp=performance.now();const id=edPick(tg),sc=id&&ED_SEC[id];lyOpen(sc?sc[0]:mode,null,sc?sc[1]:null)},560)},true);
   el.addEventListener('pointermove',e=>{if(Math.hypot(e.clientX-x0,e.clientY-y0)>10)clearTimeout(t)},true);
   ['pointerup','pointercancel'].forEach(ev=>el.addEventListener(ev,()=>clearTimeout(t),true));
   el.addEventListener('click',e=>{if(lp&&performance.now()-lp<2500){e.stopImmediatePropagation();e.preventDefault()}lp=false},true)}
