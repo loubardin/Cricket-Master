@@ -6473,10 +6473,11 @@ function pnOrder(){const g=$('game');if(!g.classList.contains('pn')||!R||!G)retu
     m.scrollTo({left:Math.max(0,x+(parseFloat(getComputedStyle(m).paddingLeft)||0)-(m.clientWidth-w)/2),behavior:turned?'smooth':'auto'})}
 }
 /* ordre des colonnes à 3 joueurs et + ('N' = colonne des numéros, toujours juste avant le joueur en cours) */
-function pnSeq(n,cur){const L=Math.floor((n-1)/2),q=[];for(let k=L;k>0;k--)q.push((cur-k+n)%n);q.push('N',cur);for(let k=1;k<n-L;k++)q.push((cur+k)%n);return q}   // joueur en cours (et sa colonne de numéros) au milieu, les autres autour dans l'ordre de jeu
+function pnSeq(n,cur){if(n===4){const q=[];for(let i=0;i<n;i++){if(i===cur)q.push('N');q.push(i)}return q}   // 4 joueurs : ordre fixe, la colonne des numéros vient sous le joueur en cours
+  const L=Math.floor((n-1)/2),q=[];for(let k=L;k>0;k--)q.push((cur-k+n)%n);q.push('N',cur);for(let k=1;k<n-L;k++)q.push((cur+k)%n);return q}   // joueur en cours (et sa colonne de numéros) au milieu, les autres autour dans l'ordre de jeu
 function pnPlace(){const g=$('game');if(!g.classList.contains('pn')||!R||!G)return;
-  const W=innerWidth,n=G.players.length,mid=W*.15,colw=Math.max(W*.155,(W*.93-mid)/(2*Math.ceil((n-1)/2)+1)),cur=shownCur();g.style.setProperty('--colw',colw+'px');   // place symétrique autour du joueur en cours
-  const Lc=Math.floor((n-1)/2),Rc=n-1-Lc,Wm=g.querySelector('main').clientWidth||W,PL=parseFloat(getComputedStyle(g.querySelector('main')).paddingLeft)||0,half=(Wm-(mid+colw))/2-PL,pad=Math.max(0,half-Lc*colw),padR=Math.max(0,half-Rc*colw);   // marges pour que le joueur en cours puisse toujours être pile au milieu
+  const W=innerWidth,n=G.players.length,mid=W*.15,colw=n===4?Math.max(W*.2,(W*.93-mid)/n):Math.max(W*.155,(W*.93-mid)/(2*Math.ceil((n-1)/2)+1)),cur=shownCur();g.style.setProperty('--colw',colw+'px');   // place symétrique autour du joueur en cours
+  const Lc=Math.floor((n-1)/2),Rc=n-1-Lc,Wm=g.querySelector('main').clientWidth||W,PL=parseFloat(getComputedStyle(g.querySelector('main')).paddingLeft)||0,half=(Wm-(mid+colw))/2-PL,pad=n===4?0:Math.max(0,half-Lc*colw),padR=n===4?0:Math.max(0,half-Rc*colw);   // marges pour que le joueur en cours puisse toujours être pile au milieu
   const seq=pnSeq(n,cur),X={};let x=pad;seq.forEach(k=>{X[k]=x;x+=k==='N'?mid:colw});
   TARGETS.forEach(t=>{const row=R.num[t]&&R.num[t].parentElement;if(row){row.style.setProperty('padding-left',pad+'px','important');row.style.setProperty('padding-right',padR+'px','important')}});
   R.sc.forEach((sc,i)=>{const L=i===cur?X.N:X[i],w=i===cur?colw+mid:colw;
@@ -6752,7 +6753,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-289';   // à changer avec VERSION dans sw.js
+const APPV='lf-290';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
