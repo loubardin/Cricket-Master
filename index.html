@@ -6476,7 +6476,7 @@ function pnOrder(){const g=$('game');if(!g.classList.contains('pn')||!R||!G)retu
 function pnSeq(n,cur){if(n===4){const q=[];for(let i=0;i<n;i++){if(i===cur)q.push('N');q.push(i)}return q}   // 4 joueurs : ordre fixe, la colonne des numéros vient sous le joueur en cours
   const L=Math.floor((n-1)/2),q=[];for(let k=L;k>0;k--)q.push((cur-k+n)%n);q.push('N',cur);for(let k=1;k<n-L;k++)q.push((cur+k)%n);return q}   // joueur en cours (et sa colonne de numéros) au milieu, les autres autour dans l'ordre de jeu
 function pnPlace(){const g=$('game');if(!g.classList.contains('pn')||!R||!G)return;
-  const W=innerWidth,n=G.players.length,mid=W*.15,colw=n===4?Math.max(W*.2,(W*.93-mid)/n):Math.max(W*.155,(W*.93-mid)/(2*Math.ceil((n-1)/2)+1)),cur=shownCur();g.style.setProperty('--colw',colw+'px');   // place symétrique autour du joueur en cours
+  const W=innerWidth,n=G.players.length,mid=W*.15,colw=n>=4?Math.max(W*.2,(W*.93-mid)/4):Math.max(W*.155,(W*.93-mid)/(2*Math.ceil((n-1)/2)+1)),cur=shownCur();   // 5 joueurs et + : mêmes proportions qu'à 4g.style.setProperty('--colw',colw+'px');   // place symétrique autour du joueur en cours
   const Lc=Math.floor((n-1)/2),Rc=n-1-Lc,Wm=g.querySelector('main').clientWidth||W,PL=parseFloat(getComputedStyle(g.querySelector('main')).paddingLeft)||0,half=(Wm-(mid+colw))/2-PL,pad=n===4?0:Math.max(0,half-Lc*colw),padR=n===4?0:Math.max(0,half-Rc*colw);   // marges pour que le joueur en cours puisse toujours être pile au milieu
   const seq=pnSeq(n,cur),X={};let x=pad;seq.forEach(k=>{X[k]=x;x+=k==='N'?mid:colw});
   TARGETS.forEach(t=>{const row=R.num[t]&&R.num[t].parentElement;if(row){row.style.setProperty('padding-left',pad+'px','important');row.style.setProperty('padding-right',padR+'px','important')}});
@@ -6753,7 +6753,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-290';   // à changer avec VERSION dans sw.js
+const APPV='lf-291';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -7074,26 +7074,28 @@ function popOutl(root){if(!root)return;root.querySelectorAll('text.w').forEach(t
 addEventListener('resize',()=>{try{if(KG&&PKL.k&&$('killer').classList.contains('on'))pklSync()}catch(e){}});
 
 /* ===== Mise en page du Cricket à 2 (Bulle) : hauteurs, écarts, barre Accueil · infos · Annuler en haut ou en bas ===== */
-const LY_D={tmZ:1,pbw:1,xsw:0,xcH:1,xpT:1,xgPK:1.2,xgKF:2.8,tmL:0,klZ:1,klY:0,klHZ:1,klKZ:1,klNY:0,klNoY:0,klKY:0,klPY:0,xoN:0,xoS:0,xoM:0,xoH:0,xoC:0,xpW:1,xpH:1,xpG:1,xcG:1,xnZ:1,xrZ:1,xsZ:1,xcoZ:1,xhZ:1,xkz:1,xkh:1,xkg:1,xbh:1,paW:1,paH:1,poW:1,poH:1,zPo:1.05,poG:1,poY:0,crZ:1,crY:0,scR:1,hZ:1,nW:1,icZ:.85,ifZ:.75,dtZ:.95,spZ:.95,fbw:2.5,barTop:0,iNP:.1,iPM:.14,iPMo:.14,iY:0,iPl:.1,zNm:1.2,zSc:1.6,zMp:1.25,zPl:1.05,nfz:1.1,nsw:4,scsw:4,bw:3.25,mkz:.95,mksw:4,scK:1.1,rowK:1.05,ftK:1.2,brK:1,mT:4.1,gSN:1.1,gL:1.8,gNF:1.5,gFB:.6,mB:.9,nA:0};   // « Pop » : les réglages de base
+const LY_D={tmZ:1,pbw:1,xsw:0,xcH:1,xpT:1,xgPK:1.2,xgKF:2.8,tmL:0,klZ:1,klY:0,klHZ:1,klKZ:1,klNY:0,klNoY:0,klKY:0,klPY:0,xoN:0,xoS:0,xoM:0,xoH:0,xoC:0,xpW:1,xpH:1,xpG:1,xcG:1,xnZ:1,xrZ:1,xsZ:1,xcoZ:1,xhZ:1,xkz:1,xkh:1,xkg:1,xbh:1,paW:1,paH:1,poW:1,poH:1,zPo:1.05,poG:1,poY:0,crZ:1,crY:0,scR:1,hZ:1,nW:1,icZ:0.85,ifZ:0.75,dtZ:0.95,spZ:0.95,fbw:2.5,barTop:0,iNP:.1,iPM:.14,iPMo:.14,iY:0,iPl:.1,zNm:1.2,zSc:1.6,zMp:1.25,zPl:1.05,nfz:1.1,nsw:4,scsw:4,bw:3.25,mkz:.95,mksw:4,scK:1.1,rowK:1.05,ftK:1.2,brK:1,mT:4.1,gSN:1.1,gL:1.8,gNF:1.5,gFB:0.1,mB:.9,nA:0};   // « Pop » : les réglages de base
 if(S.lay&&!S.lay.v3){S.lay={v3:1};try{store.set(K_S,S)}catch(e){}}
 /* un profil de réglages par jeu ; les contours (et les polices) sont communs à toute l'appli */
 const LY_GLOB=['bw','fbw','nsw','scsw','brK','ftK','gFB','mB','icZ','ifZ','dtZ','spZ','barTop'];   // contours et boutons du bas : un seul réglage pour toute l'appli
 /* réglages « Pop » (envoyés par Loubi, lf-258) : Shanghai / Halve-it reprennent le Cricket, l'Horloge reprend le Killer */
-const LY_POP={   /* réglages « Pop » envoyés par Loubi (lf-273) */
-  ck2:{mT:5,gSN:1.6,gL:1.6,rowK:1.05,scK:1.1,nA:0,zNm:1.4,zSc:1.35,zMp:1.45,zPl:1.6,gNF:0,iNP:.12,iPM:.12,iPMo:.12,iY:.04,iPl:.04,mkz:1.15,mksw:4.5,crY:-.14,crZ:1,poW:1.3,poG:.3,poH:1.05,zPo:1.2,paH:1.45,paW:1.2},
-  ckn:{scK:1.1,rowK:1.15,gL:1.4,iNP:.2,iPM:.28,iPl:0,zNm:1.1,zSc:1.45,zMp:1.2,zPl:1.05,nfz:.85,mkz:1.3,mksw:4,crZ:.9,paW:1.75,paH:1.4,poW:1.3,poH:1.6,zPo:1.5,poG:.5,poY:.12,iY:0,crY:-.14,scR:1,hZ:.75,mT:3.2,el:{crn:{z:1,x:.1,y:-.7}}},
-  kl:{zNm:1.05,nfz:.85,paW:1.05,paH:.95,iPl:0,klZ:1,klY:3.1,klHZ:1.1,klKZ:1,klNY:-1,klNoY:-3,klPY:-.5,klKY:1,zPl:1},
-  x2:{xnZ:1.7,xrZ:1.3,xsZ:1.85,xhZ:1.7,xcoZ:1.3,xoN:4,xoM:8,xoH:-5.6,xoC:5,xpW:1,xpH:1.1,xpG:0,xkz:1.35,xkg:.3,xcG:0,xoS:.5},
-  xn:{xrZ:1.3,xsZ:1.25,xnZ:1.2,xcoZ:.85,xhZ:1.15,xkz:.95,xbh:.7,xkg:.4,xkh:.75,xoH:1.5,xcG:.25,xpG:.3,xpW:1.6,xpH:1.05,xoM:.8,xoS:-.5,xoN:-1,xpT:1.6,xgKF:1.1,xgPK:1.4,el:{xnO:{z:.98,x:.2,y:-.1}}},
-  clk:{zNm:.8,nfz:.85,paW:1.05,paH:.95,iPl:0,klZ:.95,klY:0,klHZ:1.1,klKZ:1,klNY:-1,klNoY:-3,klPY:-.5,klKY:1,zPl:1}};
+const LY_POP={   /* réglages « Pop » envoyés par Loubi (lf-290) */
+  ck2:{mT:5,gSN:1.6,gL:1.7,rowK:1.05,scK:1.1,nA:0,zNm:1.4,zSc:1.35,zMp:1.45,zPl:1.6,gNF:0,iNP:0.1,iPM:0.12,iPMo:0.12,iY:0.04,iPl:0.18,mkz:1.15,mksw:4.5,crY:-0.14,crZ:1,poW:1.3,poG:0.3,poH:1.35,zPo:1.2,paH:1.25,paW:1,nW:0.95,el:{lbl:{z:0.92,x:0,y:0}},poY:0.16,pbw:0},
+  ckn:{scK:1.1,rowK:1.15,gL:1.4,iNP:0.2,iPM:0.28,iPl:0.09,zNm:1.1,zSc:1.45,zMp:1.2,zPl:1.05,nfz:0.85,mkz:1.1,mksw:4,crZ:0.9,paW:1.75,paH:1.25,poW:1.45,poH:1.6,zPo:1.35,poG:0,poY:0,iY:0,crY:-0.14,scR:1,hZ:0.75,mT:3.2,el:{crn:{z:1,x:0.1,y:-0.7}},pbw:0},
+  kl:{zNm:1.05,nfz:0.8,paW:1.05,paH:0.95,iPl:0,klZ:1.02,klY:0.5,klHZ:1.1,klKZ:1,klNY:1,klNoY:-5.5,klPY:-0.5,klKY:-1,zPl:1,tmL:-0.45},
+  x2:{xnZ:1.95,xrZ:1.3,xsZ:1.65,xhZ:1.5,xcoZ:1.3,xoN:1.7,xoM:2.3,xoH:0.7,xoC:5,xpW:1,xpH:1.1,xpG:0.4,xkz:1.35,xkg:0.3,xcG:0.8,xoS:0,tmZ:0.65,tmL:-2.2,xsw:3,xcH:0.82,xkh:1.1,xgPK:0,xgKF:1.2,pbw:0},
+  xn:{xrZ:1.3,xsZ:1.55,xnZ:1.5,xcoZ:0.85,xhZ:1.15,xkz:0.95,xbh:0.7,xkg:0.4,xkh:0.75,xoH:2.9,xcG:0,xpG:0.3,xpW:1.5,xpH:1.05,xoM:1.8,xoS:-0.5,xoN:-2,xpT:1.6,xgKF:1.1,xgPK:1.4,el:{xnO:{z:0.98,x:0.2,y:-0.1}},tmL:-1.6,xcH:1,tmZ:1,xsw:3,pbw:0},
+  clk:{zNm:0.8,nfz:0.85,paW:1.05,paH:0.95,iPl:0,klZ:0.95,klY:0,klHZ:1.1,klKZ:1,klNY:-1,klNoY:-3,klPY:-0.5,klKY:1,zPl:1},
+  ck3:{scK:1.1,rowK:1.15,gL:1.4,iNP:0.2,iPM:0.28,iPl:0.09,zNm:1.1,zSc:1.45,zMp:1.2,zPl:1.05,nfz:0.65,mkz:1.25,mksw:3,crZ:0.9,paW:1.75,paH:1.25,poW:1.45,poH:1.6,zPo:1.35,poG:0,poY:0,iY:0,crY:-0.14,scR:1,hZ:0.75,mT:3.2,el:{crn:{z:1,x:0.1,y:-0.7},lbl:{z:1,x:0.2,y:0}},pbw:0},
+  ck4:{scK:1.3,rowK:1.15,gL:1.4,iNP:0.18,iPM:0.18,iPl:0.09,zNm:0.65,zSc:1.2,zMp:1.25,zPl:1.05,nfz:0.85,mkz:1.1,mksw:4,crZ:0.9,paW:1.75,paH:1.3,poW:1.25,poH:1.45,zPo:1.55,poG:0,poY:-0.04,iY:0,crY:-0.14,scR:1,hZ:0.75,mT:3.2,el:{crn:{z:1,x:0.1,y:-0.7},nmA:{z:1,x:-0.8,y:0},ptA:{z:1,x:-0.8,y:0},ptO:{z:1,x:-0.8,y:0},nmO:{z:1,x:-0.8,y:0},mpA:{z:1,x:-0.1,y:0},mpO:{z:1,x:-0.1,y:0}},pbw:0,gSN:1.9,iPMo:0.2}};
 try{if(S.lays&&!(S.lay&&S.lay.v5)){['ck','sh','hi'].forEach(g=>{const o=S.lays[g+'n'];if(o)['3','4','5'].forEach(n=>{if(!S.lays[g+n])S.lays[g+n]=JSON.parse(JSON.stringify(o))})});S.lay=Object.assign(S.lay||{v3:1,v4:1},{v5:1});store.set(K_S,S)}}catch(e){}
-const LY_PD=new Proxy({},{get:(o,k)=>{k=String(k);if(/^(ck|sh|hi)2$/.test(k))return LY_POP.ck2;if(/^(ck|sh|hi)[345n]$/.test(k))return LY_POP.ckn;if(/^clkK[2n]$/.test(k))return LY_POP.clk;if(k==='kl'||/K[2n]$/.test(k))return LY_POP.kl;return LY_POP[k]}});
+const LY_PD=new Proxy({},{get:(o,k)=>{k=String(k);if(/^(ck|sh|hi)2$/.test(k))return LY_POP.ck2;{const m=k.match(/^(ck|sh|hi)([345n])$/);if(m)return m[2]==='3'?LY_POP.ck3:m[2]==='n'?LY_POP.ckn:LY_POP.ck4}if(/^clkK[2n]$/.test(k))return LY_POP.clk;if(k==='kl'||/K[2n]$/.test(k))return LY_POP.kl;return LY_POP[k]}});
 /* passage à un seul réglage des boutons du bas : on retire les valeurs propres à chaque jeu */
 if(S.lays&&!(S.lay&&S.lay.v4)){for(const c in S.lays)['brK','ftK','gFB','mB','icZ','ifZ','barTop'].forEach(k=>delete S.lays[c][k]);S.lay=Object.assign(S.lay||{v3:1},{v4:1});['brK','ftK','gFB','mB','icZ','ifZ','barTop'].forEach(k=>delete S.lay[k]);try{store.set(K_S,S)}catch(e){}}
 const LY_BASE={ck:'Cricket',sh:'Shanghai',hi:'Halve-it',x:'501 / 301',clk:'Horloge',kl:'Killer'};
-const LY_NAME=new Proxy({},{get:(o,k)=>{k=String(k);if(k==='kl')return'Killer';const m=k.match(/^([a-z]+?)(K?)([2345n])$/);if(!m)return k;return(LY_BASE[m[1]]||m[1])+({'2':' · 2 joueurs','3':' · 3 joueurs','4':' · 4 joueurs','5':' · 5 joueurs et +'}[m[3]]||' · 3 joueurs et +')}});
+const LY_NAME=new Proxy({},{get:(o,k)=>{k=String(k);if(k==='kl')return'Killer';const m=k.match(/^([a-z]+?)(K?)([2345n])$/);if(!m)return k;return(LY_BASE[m[1]]||m[1])+({'2':' · 2 joueurs','3':' · 3 joueurs','4':' · 4 joueurs et +','5':' · 4 joueurs et +'}[m[3]]||' · 3 joueurs et +')}});
 const lyN=a=>a&&a.length>2?'n':'2';
-const lyCk=()=>((typeof BARC!=='undefined'&&BARC&&XG&&XG.mode)?XG.mode:'ck')+(a=>!a||a.length<=2?'2':a.length>=5?'5':String(a.length))(G&&G.players);   // Cricket : réglages séparés à 2, 3, 4 et 5 cases et +
+const lyCk=()=>((typeof BARC!=='undefined'&&BARC&&XG&&XG.mode)?XG.mode:'ck')+(a=>!a||a.length<=2?'2':a.length>=4?'4':String(a.length))(G&&G.players);   // Cricket : réglages séparés à 2, 3, et 4 cases et +
 const lyCur=()=>$('killer').classList.contains('on')?(BARON&&XG?(XG.mode||'bar')+'K'+lyN(XG.players):'kl'):$('x01').classList.contains('on')?((XG&&XG.mode)||'x')+lyN(XG&&XG.players):lyCk();
 if(S.lays&&S.lays.x01){S.lays.x2=S.lays.x01;delete S.lays.x01;try{store.set(K_S,S)}catch(e){}}
 if(S.lay&&!S.lays){const o=S.lay,g={v3:1},c={};for(const k in o){if(k==='v3')continue;(LY_GLOB.includes(k)?g:c)[k]=o[k]}S.lay=g;S.lays={ck2:c};try{store.set(K_S,S)}catch(e){}}
