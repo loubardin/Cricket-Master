@@ -6768,13 +6768,13 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-296';   // à changer avec VERSION dans sw.js
+const APPV='lf-297';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
   const p=el('div','');p.id='xpick';p.classList.add('skinpick');document.body.append(p);
-  const draw=()=>{p.innerHTML=`<div class="skn"><button class="skgo" data-go="hStats">Statistiques</button><button class="skgo" data-go="hHist">Historique</button></div><div class="skp skjeux"><span>Mise en page des jeux</span></div><div class="skdemo"><button data-d="ck2">Cricket 1v1</button><button data-d="ck3">Cricket 3</button><button data-d="ck4">Cricket 4</button><button data-d="ck5">Cricket 5+</button><button data-d="x2">501 1v1</button><button data-d="xn">501 3+</button><button data-d="kl">Killer</button><button data-d="clk">Horloge</button></div><div class="skp"><span>Son</span><div class="sksw sksnd"><button data-s="1" class="${S.sound?'on':''}">Oui</button><button data-s="0" class="${S.sound?'':'on'}">Non</button></div></div>`+`<div class="skp"><span>Annonces vocales</span><div class="sksw skvox"><button data-v="1" class="${S.voice!==false?'on':''}">Oui</button><button data-v="0" class="${S.voice===false?'on':''}">Non</button></div></div><div class="skp"><span>Couleurs des joueurs</span><div class="sksw"><button data-p="1" class="${S.pcolOff?'':'on'}">Oui</button><button data-p="0" class="${S.pcolOff?'on':''}">Non</button></div></div>`+colMenu()+`<div class="skv">version ${APPV}</div>`;if(p.style.top)p.style.top=Math.max(12,Math.min(parseFloat(p.style.top),innerHeight-p.offsetHeight-12))+'px'};
+  const draw=()=>{p.innerHTML=`<div class="skn"><button class="skgo" data-go="hStats">Statistiques</button><button class="skgo" data-go="hHist">Historique</button></div><div class="skp skjeux"><span>Mise en page des jeux</span></div><div class="skdemo"><button data-d="ck2">Cricket 1v1</button><button data-d="ck3">Cricket 3</button><button data-d="ck4">Cricket 4</button><button data-d="ck5">Cricket 5+</button><button data-d="x2">501 1v1</button><button data-d="xn">501 3+</button><button data-d="kl">Killer 6</button><button data-d="kl7">Killer 7+</button><button data-d="clk">Horloge</button></div><div class="skp"><span>Son</span><div class="sksw sksnd"><button data-s="1" class="${S.sound?'on':''}">Oui</button><button data-s="0" class="${S.sound?'':'on'}">Non</button></div></div>`+`<div class="skp"><span>Annonces vocales</span><div class="sksw skvox"><button data-v="1" class="${S.voice!==false?'on':''}">Oui</button><button data-v="0" class="${S.voice===false?'on':''}">Non</button></div></div><div class="skp"><span>Couleurs des joueurs</span><div class="sksw"><button data-p="1" class="${S.pcolOff?'':'on'}">Oui</button><button data-p="0" class="${S.pcolOff?'on':''}">Non</button></div></div>`+colMenu()+`<div class="skv">version ${APPV}</div>`;if(p.style.top)p.style.top=Math.max(12,Math.min(parseFloat(p.style.top),innerHeight-p.offsetHeight-12))+'px'};
   const colMenu=()=>{const C=colGet(),dot=v=>`<i style="background:${v}"></i>`;return `<button class="crow cmain"><span>Apparence de l'appli</span><b>${dot(colAcc())}${dot(C.ol==='acc'?colAcc():C.ol)}${dot(C.bg)}</b></button>`};
   draw();p.style.left=Math.max(12,(innerWidth-p.offsetWidth)/2)+'px';p.style.top=Math.max(12,Math.min(innerHeight-p.offsetHeight-12,e.currentTarget.getBoundingClientRect().bottom+10))+'px';
   p.addEventListener('click',ev=>{ev.stopPropagation();const go=ev.target.closest('.skgo');if(go){p.remove();$(go.dataset.go).dispatchEvent(new MouseEvent('click',{bubbles:true}));return}
@@ -6986,7 +6986,7 @@ function pklBuild(){const sec=$('killer');let k=$('pkl');if(k)k.remove();
     if(!KG)return;const p=KG.players[i];if(p)kThrow(p.num)});
   k.addEventListener('pointerdown',e=>{const c=e.target.closest('.kc2');if(c){c.classList.add('pr');clearTimeout(c._pr);c._pr=setTimeout(()=>c.classList.remove('pr'),220)}})}
 function pklCard(i,g,act){const p=KG.players[i],{W,H,wide,k}=g,DD=KG.def,isDef=DD&&DD.v===i,dead=p.dead&&!isDef;
-  const LZ=lyGet('kl'),dk=pkDark(pkCol(i)),kT=PF.kT*LZ.zNm,kN=PF.kN*LZ.nfz;
+  const LZ=lyGet(lyKl()),dk=pkDark(pkCol(i)),kT=PF.kT*LZ.zNm,kN=PF.kN*LZ.nfz;
   let h=act?`<rect class="pksh" x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87" filter="url(#pkSh)"/><rect class="halo" x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87"/><clipPath id="pkClip"><rect x="-18" y="-18" width="${W+36}" height="${H+36}" rx="103.87"/></clipPath><g clip-path="url(#pkClip)"><path class="shine" style="--sd:${W+H*.3+560}px" d="M-300 -40H-30L${-30-H*.3} ${H+40}H${-300-H*.3}Z"/></g>`:'';
   const cx=wide?.306*W:W/2,nm=esc(pkName(p,act));
   h+=`<g transform="translate(0 ${(LZ.klNY*H/100).toFixed(1)})">`;
@@ -7055,11 +7055,11 @@ function pkcCard(i,g,act){const p=XG.players[i],{W,H,wide}=g,LZ=lyGet(lyCur()),d
   return{h,dead:!!p.out}}
 function pklSync(){const sec=$('killer'),on=pklOn()&&sec.classList.contains('on');sec.classList.toggle('pkl',pklOn());document.documentElement.classList.toggle('pkl',on);if(!on)return;
   if(!PKL.k||!PKL.k.isConnected)pklBuild();const k=PKL.k;
-  {const Lc=lyGet(pkClk()?lyCur():'kl'),z=Lc.klZ,dy=Lc.klY*17.6;PKL.cards.setAttribute('transform',`translate(562.5 ${(1260+dy).toFixed(1)}) scale(${z}) translate(-562.5 -1260)`)}
+  {const Lc=lyGet(pkClk()?lyCur():lyKl()),z=Lc.klZ,dy=Lc.klY*17.6;PKL.cards.setAttribute('transform',`translate(562.5 ${(1260+dy).toFixed(1)}) scale(${z}) translate(-562.5 -1260)`)}
   // zone des cartes : du haut de l'écran jusqu'au-dessus des boutons de la Bulle
   {const sv=k.firstElementChild,km=$('kmain'),f=sec.querySelector('footer'),st=parseFloat(getComputedStyle(km).paddingTop)||0,sr=sec.getBoundingClientRect(),bot=f?f.getBoundingClientRect().top-sr.top-innerWidth*.035:sec.clientHeight;
     sv.style.top=st+'px';sv.style.height=Math.max(100,bot-st)+'px';
-    const L=lyGet(pkClk()?lyCur():'kl'),sc=Math.min(sv.clientWidth/1125,Math.max(100,bot-st)/1760)||.33;k.style.setProperty('--swC',(L.bw/sc).toFixed(1)+'px');k.style.setProperty('--swS',(L.bw*.4/sc).toFixed(1)+'px');k.style.setProperty('--swN',(L.nsw/sc).toFixed(1)+'px')}
+    const L=lyGet(pkClk()?lyCur():lyKl()),sc=Math.min(sv.clientWidth/1125,Math.max(100,bot-st)/1760)||.33;k.style.setProperty('--swC',(L.bw/sc).toFixed(1)+'px');k.style.setProperty('--swS',(L.bw*.4/sc).toFixed(1)+'px');k.style.setProperty('--swN',(L.nsw/sc).toFixed(1)+'px')}
   const CLK=pkClk(),SRC=CLK?XG:KG,P=SRC.players,n=P.length,cur=SRC.winner!==null?SRC.winner:(CLK?SRC.cur:(KHOLD?KHOLD.who:KG.cur)),g=pklGeo(n);
   {const c=pkCol(cur);if(PKL.col!==c){PKL.col=c;k.style.setProperty('--pc',c);const f=k.querySelector('.pkshc');if(f)f.setAttribute('flood-color',pkDark(c));}}
   const m=SRC.winner===null?SRC.mult:1;k.classList.toggle('m2',m===2);k.classList.toggle('m3',m===3);
@@ -7104,14 +7104,15 @@ const LY_POP={   /* réglages « Pop » envoyés par Loubi (lf-290) */
   ck3:{scK:1.1,rowK:1.15,gL:1.4,iNP:0.2,iPM:0.28,iPl:0.09,zNm:1.1,zSc:1.45,zMp:1.2,zPl:1.05,nfz:0.65,mkz:1.25,mksw:3,crZ:0.9,paW:1.75,paH:1.25,poW:1.45,poH:1.6,zPo:1.35,poG:0,poY:0,iY:0,crY:-0.14,scR:1,hZ:0.75,mT:3.2,el:{crn:{z:1,x:0.1,y:-0.7},lbl:{z:1,x:0.2,y:0}},pbw:0},
   ck4:{scK:1.3,rowK:1.15,gL:1.4,iNP:0.18,iPM:0.18,iPl:0.09,zNm:0.65,zSc:1.2,zMp:1.25,zPl:1.05,nfz:0.85,mkz:1.1,mksw:4,crZ:0.9,paW:1.75,paH:1.3,poW:1.25,poH:1.45,zPo:1.55,poG:0,poY:-0.04,iY:0,crY:-0.14,scR:1,hZ:0.75,mT:3.2,el:{crn:{z:1,x:0.1,y:-0.7},nmA:{z:1,x:-0.8,y:0},ptA:{z:1,x:-0.8,y:0},ptO:{z:1,x:-0.8,y:0},nmO:{z:1,x:-0.8,y:0},mpA:{z:1,x:-0.1,y:0},mpO:{z:1,x:-0.1,y:0}},pbw:0,gSN:1.9,iPMo:0.2}};
 try{if(S.lays&&!(S.lay&&S.lay.v5)){['ck','sh','hi'].forEach(g=>{const o=S.lays[g+'n'];if(o)['3','4','5'].forEach(n=>{if(!S.lays[g+n])S.lays[g+n]=JSON.parse(JSON.stringify(o))})});S.lay=Object.assign(S.lay||{v3:1,v4:1},{v5:1});store.set(K_S,S)}}catch(e){}
-const LY_PD=new Proxy({},{get:(o,k)=>{k=String(k);if(/^(ck|sh|hi)2$/.test(k))return LY_POP.ck2;{const m=k.match(/^(ck|sh|hi)([345n])$/);if(m)return m[2]==='3'?LY_POP.ck3:m[2]==='n'?LY_POP.ckn:LY_POP.ck4}if(/^clkK[2n]$/.test(k))return LY_POP.clk;if(k==='kl'||/K[2n]$/.test(k))return LY_POP.kl;return LY_POP[k]}});
+const LY_PD=new Proxy({},{get:(o,k)=>{k=String(k);if(/^(ck|sh|hi)2$/.test(k))return LY_POP.ck2;{const m=k.match(/^(ck|sh|hi)([345n])$/);if(m)return m[2]==='3'?LY_POP.ck3:m[2]==='n'?LY_POP.ckn:LY_POP.ck4}if(/^clkK[2n]$/.test(k))return LY_POP.clk;if(k==='kl7')return LY_POP.kl7||LY_POP.kl;if(k==='kl'||/K[2n]$/.test(k))return LY_POP.kl;return LY_POP[k]}});
 /* passage à un seul réglage des boutons du bas : on retire les valeurs propres à chaque jeu */
 if(S.lays&&!(S.lay&&S.lay.v4)){for(const c in S.lays)['brK','ftK','gFB','mB','icZ','ifZ','barTop'].forEach(k=>delete S.lays[c][k]);S.lay=Object.assign(S.lay||{v3:1},{v4:1});['brK','ftK','gFB','mB','icZ','ifZ','barTop'].forEach(k=>delete S.lay[k]);try{store.set(K_S,S)}catch(e){}}
 const LY_BASE={ck:'Cricket',sh:'Shanghai',hi:'Halve-it',x:'501 / 301',clk:'Horloge',kl:'Killer'};
-const LY_NAME=new Proxy({},{get:(o,k)=>{k=String(k);if(k==='kl')return'Killer';const m=k.match(/^([a-z]+?)(K?)([2345n])$/);if(!m)return k;return(LY_BASE[m[1]]||m[1])+({'2':' · 2 joueurs','3':' · 3 joueurs','4':' · 4 joueurs et +','5':' · 4 joueurs et +'}[m[3]]||' · 3 joueurs et +')}});
+const LY_NAME=new Proxy({},{get:(o,k)=>{k=String(k);if(k==='kl')return'Killer · jusqu\'à 6 joueurs';if(k==='kl7')return'Killer · 7 joueurs et +';const m=k.match(/^([a-z]+?)(K?)([2345n])$/);if(!m)return k;return(LY_BASE[m[1]]||m[1])+({'2':' · 2 joueurs','3':' · 3 joueurs','4':' · 4 joueurs et +','5':' · 4 joueurs et +'}[m[3]]||' · 3 joueurs et +')}});
+function lyKl(){return(typeof KG!=='undefined'&&KG&&KG.players&&KG.players.length>6)?'kl7':'kl'}   // Killer : un réglage jusqu'à 6 joueurs, un autre à 7 et +
 const lyN=a=>a&&a.length>2?'n':'2';
 const lyCk=()=>((typeof BARC!=='undefined'&&BARC&&XG&&XG.mode)?XG.mode:'ck')+(a=>!a||a.length<=2?'2':a.length>=4?'4':String(a.length))(G&&G.players);   // Cricket : réglages séparés à 2, 3, et 4 cases et +
-const lyCur=()=>$('killer').classList.contains('on')?(BARON&&XG?(XG.mode||'bar')+'K'+lyN(XG.players):'kl'):$('x01').classList.contains('on')?((XG&&XG.mode)||'x')+lyN(XG&&XG.players):lyCk();
+const lyCur=()=>$('killer').classList.contains('on')?(BARON&&XG?(XG.mode||'bar')+'K'+lyN(XG.players):lyKl()):$('x01').classList.contains('on')?((XG&&XG.mode)||'x')+lyN(XG&&XG.players):lyCk();
 if(S.lays&&S.lays.x01){S.lays.x2=S.lays.x01;delete S.lays.x01;try{store.set(K_S,S)}catch(e){}}
 if(S.lay&&!S.lays){const o=S.lay,g={v3:1},c={};for(const k in o){if(k==='v3')continue;(LY_GLOB.includes(k)?g:c)[k]=o[k]}S.lay=g;S.lays={ck2:c};try{store.set(K_S,S)}catch(e){}}
 const lyGet=(cx)=>{cx=cx||lyCur();const P=(S.lays&&S.lays[cx])||{},Gl={};LY_GLOB.forEach(k=>{if(S.lay&&S.lay[k]!=null)Gl[k]=S.lay[k]});return Object.assign({},LY_D,LY_PD[cx]||{},P,Gl)};
@@ -7220,13 +7221,14 @@ function demoStart(kind){
   if(/^ck[2345]$/.test(kind)){startGame('std',['ALICE','BOB','CHLOÉ','DAN','EVE'].slice(0,+kind[2]),0);setTimeout(()=>{try{throwDart(20);throwDart(20)}catch(e){}},300)}
   else if(kind==='x2'||kind==='xn'){startX01(kind==='x2'?N2:N3,0,null);setTimeout(()=>{try{xThrow(20,3)}catch(e){}},300)}
   else if(kind==='kl'){KTEAMS=null;startKiller(N3,[20,19,18])}
+  else if(kind==='kl7'){KTEAMS=null;startKiller(['ALICE','BOB','CHLOÉ','DAN','EVE','FRED','GUS','HUGO'],[20,19,18,17,16,15,14,13])}
   else if(kind==='clk'){startX01(N2,0,null,'clk')}
   setTimeout(()=>{try{lyOpen()}catch(e){}try{mkToast('','Partie de démonstration : ta partie en cours sera rétablie en revenant à l’accueil',3200)}catch(e){}},700)}
 function lyFromHome(){const ok=G&&G.players&&G.players.length===2&&G.winner===null&&!G._bar&&!BARC;
   if(!ok){try{mkToast('','Lance une partie de Cricket à 2 joueurs pour régler la mise en page',2600)}catch(e){}return}
   $('hResume').click();setTimeout(lyOpen,450)}
 const LY_CTX={x:'brK ftK gFB mB bw fbw icZ ifZ xnZ xrZ xsZ xcoZ xhZ xkz xkh xkg xbh xoN xoS xoM xoH xoC xpW xpH xpG xcG',kl:'brK ftK gFB mB zNm nfz nsw bw fbw icZ ifZ paW paH zPl iPl',ot:'brK ftK gFB mB bw fbw icZ ifZ'},LY_NO=new Proxy({},{get:(o,k)=>/^(ck|sh|hi)[345n]$/.test(k)?'nW':''});
-const lyCtx=()=>{const c=lyCur();return c==='kl'||(c.startsWith('clk')&&pkClk())?'kl':$('x01').classList.contains('on')?'x':($('game').classList.contains('on')&&skp2())?'ck':'ot'};
+const lyCtx=()=>{const c=lyCur();return c==='kl'||c==='kl7'||(c.startsWith('clk')&&pkClk())?'kl':$('x01').classList.contains('on')?'x':($('game').classList.contains('on')&&skp2())?'ck':'ot'};
 function lyOpen(mode,elId,sec){const old=$('lyp');const up0=old?old.classList.contains('up'):false;if(old)old.remove();haptic();const p=el('div','');p.id='lyp';document.body.append(p);let up=up0;
   const CX=lyCur(),cx=lyCtx();let tabs=LY_TABS[cx]||LY_TABS.ot;
   if(elId&&edReg(cx,elId))tabs=[['el','Élément']].concat(tabs);else elId=null;
