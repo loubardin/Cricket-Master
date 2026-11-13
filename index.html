@@ -3359,6 +3359,19 @@ html body #game#game#game.pn #scores>.sc.pnf{z-index:5!important}
    ftPlace() pose --tbL / --tbW (place et largeur du bouton choisi) ; la bulle glisse dessus. */
 html body :is(#game#game#game#game,#x01#x01#x01#x01,#killer#killer#killer#killer) footer .fthumb{left:var(--tbL,33.33%)!important;width:var(--tbW,33.33%)!important;translate:none!important;transform:none!important;
   transition:left .38s cubic-bezier(.3,1.3,.5,1),width .38s cubic-bezier(.3,1.3,.5,1),background .3s,box-shadow .3s!important}
+/* effacer des données */
+.skinpick .skdanger{display:block;width:100%;margin-top:6px;border:0;background:transparent;color:#c0392b;font:600 13px "Lbl",sans-serif;padding:8px;text-decoration:underline}
+#danger{gap:12px;overflow-y:auto;background:var(--page,#f7f2e5)!important}
+#danger .dgw{margin:0;font:400 14px/1.4 "Lbl",sans-serif;color:var(--ink);background:rgba(192,57,43,.1);border-radius:16px;padding:12px 14px;box-shadow:inset 0 0 0 2px #c0392b}
+#danger .dgo{display:flex;flex-direction:column;gap:4px;text-align:left;border:0;border-radius:18px;padding:14px 16px;background:var(--m-cell,#fff);box-shadow:inset 0 0 0 2px var(--ol,#111);color:var(--ink)}
+#danger .dgo b{font:400 17px "Fun",sans-serif}
+#danger .dgo span{font:400 13px/1.35 "Lbl",sans-serif;color:var(--mute)}
+#danger .dgo.on{box-shadow:inset 0 0 0 3px #c0392b;background:rgba(192,57,43,.08)}
+#danger .dgc{display:flex;flex-direction:column;gap:10px;padding:14px;border-radius:18px;background:rgba(192,57,43,.1)}
+#danger .dgc p{margin:0;font:400 14px/1.4 "Lbl",sans-serif;color:var(--ink)}
+#danger .dgc input{font:400 20px "Fun",sans-serif;text-align:center;letter-spacing:.1em;border:2px solid #c0392b;border-radius:14px;padding:10px;background:var(--m-cell,#fff);color:var(--ink)}
+#danger .dgbtn{font:400 18px "Fun",sans-serif;border:0;border-radius:99px;padding:14px;background:#c0392b;color:#fff}
+#danger .dgbtn:disabled{opacity:.35}
 </style>
 </head>
 <body>
@@ -5047,6 +5060,7 @@ function recCricket(){
   if(G.winner===null){histDel(G.id);return}
   if(HIST.some(r=>r.id===G.id&&r.w===G.winner&&r.p.every((x,i)=>x.score===G.players[i].score)))return;
   histPut({id:G.id,date:Date.now(),game:'cricket',mode:G.mode,teams:!!G.teams,rounds:G.round,dur:G.t0?Date.now()-G.t0:0,w:G.winner,
+    fin:(w=>w&&w.members?w.members[w.mi||0]:w&&w.name)(G.players[G.winner]),   /* qui a lancé la fléchette gagnante */
     p:G.players.map((p,i)=>({name:p.name,members:p.members||null,score:p.score,darts:p.darts,hits:p.hits,turns:p.turns,spews:p.spews,triple:p.triple,best:p.best,win:i===G.winner}))});
 }
 function recKiller(){
@@ -6782,18 +6796,19 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-308';   // à changer avec VERSION dans sw.js
+const APPV='lf-309';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
   const p=el('div','');p.id='xpick';p.classList.add('skinpick');document.body.append(p);
-  const draw=()=>{p.innerHTML=`<div class="skn"><button class="skgo" data-go="hStats">Statistiques</button><button class="skgo" data-go="hHist">Historique</button></div><div class="skp skjeux"><span>Mise en page des jeux</span></div><div class="skdemo"><button data-d="ck2">Cricket 1v1</button><button data-d="ck3">Cricket 3</button><button data-d="ck4">Cricket 4</button><button data-d="ck5">Cricket 5+</button><button data-d="x2">501 1v1</button><button data-d="xn">501 3+</button><button data-d="kl">Killer 6</button><button data-d="kl7">Killer 7+</button><button data-d="clk">Horloge</button></div><div class="skp"><span>Son</span><div class="sksw sksnd"><button data-s="1" class="${S.sound?'on':''}">Oui</button><button data-s="0" class="${S.sound?'':'on'}">Non</button></div></div>`+`<div class="skp"><span>Annonces vocales</span><div class="sksw skvox"><button data-v="1" class="${S.voice!==false?'on':''}">Oui</button><button data-v="0" class="${S.voice===false?'on':''}">Non</button></div></div><div class="skp"><span>Couleurs des joueurs</span><div class="sksw"><button data-p="1" class="${S.pcolOff?'':'on'}">Oui</button><button data-p="0" class="${S.pcolOff?'on':''}">Non</button></div></div>`+colMenu()+`<div class="skv">version ${APPV}</div>`;if(p.style.top)p.style.top=Math.max(12,Math.min(parseFloat(p.style.top),innerHeight-p.offsetHeight-12))+'px'};
+  const draw=()=>{p.innerHTML=`<div class="skn"><button class="skgo" data-go="hStats">Statistiques</button><button class="skgo" data-go="hHist">Historique</button></div><div class="skp skjeux"><span>Mise en page des jeux</span></div><div class="skdemo"><button data-d="ck2">Cricket 1v1</button><button data-d="ck3">Cricket 3</button><button data-d="ck4">Cricket 4</button><button data-d="ck5">Cricket 5+</button><button data-d="x2">501 1v1</button><button data-d="xn">501 3+</button><button data-d="kl">Killer 6</button><button data-d="kl7">Killer 7+</button><button data-d="clk">Horloge</button></div><div class="skp"><span>Son</span><div class="sksw sksnd"><button data-s="1" class="${S.sound?'on':''}">Oui</button><button data-s="0" class="${S.sound?'':'on'}">Non</button></div></div>`+`<div class="skp"><span>Annonces vocales</span><div class="sksw skvox"><button data-v="1" class="${S.voice!==false?'on':''}">Oui</button><button data-v="0" class="${S.voice===false?'on':''}">Non</button></div></div><div class="skp"><span>Couleurs des joueurs</span><div class="sksw"><button data-p="1" class="${S.pcolOff?'':'on'}">Oui</button><button data-p="0" class="${S.pcolOff?'on':''}">Non</button></div></div>`+colMenu()+`<button class="skdanger">Effacer des données…</button><div class="skv">version ${APPV}</div>`;if(p.style.top)p.style.top=Math.max(12,Math.min(parseFloat(p.style.top),innerHeight-p.offsetHeight-12))+'px'};
   const colMenu=()=>{const C=colGet(),dot=v=>`<i style="background:${v}"></i>`;return `<button class="crow cmain"><span>Apparence de l'appli</span><b>${dot(colAcc())}${dot(C.ol==='acc'?colAcc():C.ol)}${dot(C.bg)}</b></button>`};
   draw();p.style.left=Math.max(12,(innerWidth-p.offsetWidth)/2)+'px';p.style.top=Math.max(12,Math.min(innerHeight-p.offsetHeight-12,e.currentTarget.getBoundingClientRect().bottom+10))+'px';
   p.addEventListener('click',ev=>{ev.stopPropagation();const go=ev.target.closest('.skgo');if(go){p.remove();$(go.dataset.go).dispatchEvent(new MouseEvent('click',{bubbles:true}));return}
     const dm=ev.target.closest('.skdemo button');if(dm){haptic();p.remove();demoStart(dm.dataset.d);return}
     if(ev.target.closest('.cmain')){haptic();p.remove();colOpen();return}
+    if(ev.target.closest('.skdanger')){haptic();p.remove();dangerOpen();return}
     const sn=ev.target.closest('.sksnd button');if(sn){if((sn.dataset.s==='1')!==!!S.sound)$('sndT').dispatchEvent(new MouseEvent('click',{bubbles:true}));draw();return}
     const vx=ev.target.closest('.skvox button');if(vx){haptic();S.voice=vx.dataset.v==='1';store.set(K_S,S);draw();if(S.voice)say('Annonces activées');return}
     const pb=ev.target.closest('.sksw button');if(pb){haptic();S.pcolOff=pb.dataset.p==='0';store.set(K_S,S);SFX.ui();draw();try{renderSetup()}catch(e){}return}
@@ -6856,6 +6871,28 @@ function statBoard(H){
     v.forEach((x,i)=>{h+=x===null?`<div class="cv nil">–</div>`:`<div class="cv${best!==null&&uniq&&x===best&&x>0?' best':''}" style="--pc:${col(H[i],i)}"><span>${dec?fr(x):x}${suf||''}</span></div>`})});
   return h+'</div>'}
 
+/* ===== Effacer des données : 3 niveaux, chacun confirmé en tapant EFFACER ===== */
+function dangerOpen(){SFX.open();let o=$('danger');if(o)o.remove();o=el('div','ov');o.id='danger';document.body.append(o);
+  const A=[['stats','Remettre les statistiques à zéro','Efface l’historique des parties, les statistiques, les records et les paris. Les joueurs, la partie en cours et tes réglages restent.'],
+    ['players','Supprimer tous les joueurs enregistrés','Efface la liste des joueurs et leurs couleurs. Les statistiques et l’historique restent.'],
+    ['all','Repartir d’une appli neuve','Efface TOUT : parties, statistiques, paris, joueurs, couleurs, polices, mise en page et réglages. L’appli redémarre comme au premier jour.']];
+  let pick=null;
+  const draw=()=>{o.innerHTML=`<div class="ovh"><h2>Effacer des données</h2><button class="circ" data-x aria-label="Fermer"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+    <p class="dgw">⚠️ Ces actions sont <b>définitives</b> : rien ne peut être récupéré ensuite. Exporte d’abord une sauvegarde si tu veux pouvoir revenir en arrière.</p>
+    <button class="big dark" data-exp>Exporter une sauvegarde</button>
+    ${A.map(([k,t,d])=>`<button class="dgo${pick===k?' on':''}" data-k="${k}"><b>${t}</b><span>${d}</span></button>`).join('')}
+    ${pick?`<div class="dgc"><p>Pour confirmer « ${A.find(a=>a[0]===pick)[1]} », tape <b>EFFACER</b> ci-dessous.</p><input id="dgIn" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="EFFACER"><button class="dgbtn" disabled>Effacer définitivement</button></div>`:''}`;
+    const inp=o.querySelector('#dgIn');if(inp){inp.focus();inp.addEventListener('input',()=>o.querySelector('.dgbtn').disabled=inp.value.trim().toUpperCase()!=='EFFACER')}};
+  draw();requestAnimationFrame(()=>o.classList.add('on'));
+  o.addEventListener('click',e=>{const t=e.target;
+    if(t.closest('[data-x]')){o.classList.remove('on');setTimeout(()=>o.remove(),300);return}
+    if(t.closest('[data-exp]')){$('hExport').click();return}
+    const k=t.closest('.dgo');if(k){haptic();SFX.ui();pick=pick===k.dataset.k?null:k.dataset.k;draw();return}
+    if(t.closest('.dgbtn')&&!t.closest('.dgbtn').disabled){haptic();
+      if(pick==='stats'){HIST.length=0;histSave();BET=[];BETH=[];betSave();toast('Statistiques remises à zéro','🧹')}
+      else if(pick==='players'){ROSTER=[];store.set(K_R,ROSTER);toast('Joueurs supprimés','🧹')}
+      else if(pick==='all'){try{Object.keys(localStorage).filter(x=>/^(cricket|darts|banc)/.test(x)).forEach(x=>localStorage.removeItem(x))}catch(e){}location.reload();return}
+      pick=null;o.classList.remove('on');setTimeout(()=>o.remove(),300)}})}
 /* ===== Statistiques (joueurs / équipes, par jeu) et Historique (parties, notes) ===== */
 let HMODE='stats';
 $('hTabs').innerHTML='<button data-v="players" class="sel">Joueurs</button><button data-v="teams">Équipes</button>';
@@ -6867,7 +6904,7 @@ const tKey=x=>(x.members||[x.name]).slice().sort().join(' & ');
 function stEnts(r,team){const out=[];
   if(team){if(!r.teams)return out;r.p.forEach(x=>{if(x.members&&x.members.length>1)out.push([tKey(x),x,true])})}
   else r.p.forEach(x=>(x.members||[x.name]).forEach(n=>{if(!isBot(n))out.push([n,x,!x.members])}));return out}
-function stBets(game,team){const E=BETH.flatMap(n=>n.list).concat(BET).filter(e=>e.game===game),U={};
+function stBets(game,team){const E=BETH.flatMap(n=>n.list).concat(BET).filter(e=>game==='*'||e.game===game),U={};
   E.forEach(e=>{const N=betNet([e]),u=betUnit(e),m=N[u]||{};let map=null;
     if(team){const r=HIST.find(r=>r.id===e.rid);if(!r||!r.teams)return;map={};r.p.forEach(x=>(x.members||[]).forEach(n=>map[n]=tKey(x)))}
     Object.entries(m).forEach(([n,v])=>{const k=team?map[n]:n;if(!k)return;(U[u]=U[u]||{});U[u][k]=(U[u][k]||0)+v})});return U}
@@ -6875,26 +6912,38 @@ const sgn=(v,d)=>(v>.004?'+':v<-.004?'−':'')+(d?fr(Math.abs(v)):fr2(Math.abs(v
 /* statistiques : un onglet par jeu + un onglet Général (parties jouées / gagnées) ;
    une ligne par joueur, classée par la colonne touchée (toucher encore = ordre inverse) */
 const STS={g:'all',sort:{}};
-function stAgg(game,team){const L=HIST.filter(r=>r.game===game&&(!team||r.teams)),M={};
-  L.forEach(r=>stEnts(r,team).forEach(([k,x,solo])=>{const a=M[k]||(M[k]={name:k,first:k.split(' & ')[0],wins:0,g:0,d:0,h:0,top:0,sp:0,xd:0,xp:0,n180:0,co:0,k:0,best:0,sh:0,hv:0});
+function stAgg(game,team){const L=HIST.filter(r=>r.game===game&&(!team||r.teams)).sort((a,b)=>a.date-b.date),M={};
+  L.forEach(r=>stEnts(r,team).forEach(([k,x,solo])=>{const a=M[k]||(M[k]={name:k,first:k.split(' & ')[0],wins:0,g:0,d:0,h:0,top:0,sp:0,xd:0,xp:0,n180:0,co:0,k:0,best:0,sh:0,hv:0,
+      spD:0,spN:0,worst:null,tri:0,sav:0,run:0,str:0,fast:null,turn:0,kil:0,self:0,n140:0,n100:0,vol:0,leg:null,bust:0,fastD:null});
     a.g++;if(x.win)a.wins++;a.sp+=x.spews||0;
+    a.run=x.win?a.run+1:0;a.str=Math.max(a.str,a.run);                                   /* série de victoires */
+    if(x.win&&r.rounds)a.fast=a.fast===null?r.rounds:Math.min(a.fast,r.rounds);            /* victoire la plus rapide (tours) */
+    if(solo&&x.darts&&x.spews!==undefined){a.spD+=x.darts;a.spN+=x.spews||0;if(x.darts>=9){const q=(x.spews||0)*100/x.darts;a.worst=a.worst===null?q:Math.max(a.worst,q)}}
+    if(solo)a.tri+=x.triple||0;
+    if(r.teams&&x.win&&r.fin===k&&!team)a.sav++;                                           /* sauveur d'équipe */
+    if(solo&&game==='cricket')a.turn=Math.max(a.turn,x.best||0);
+    if(game==='killer'){if(x.killer)a.kil++;a.self+=x.selfhits||0}
+    if(game==='x01'&&solo){a.n140+=x.n140||0;a.n100+=x.n100||0;a.vol=Math.max(a.vol,x.best||0);a.bust+=x.busts||0;if(x.bestLeg)a.leg=a.leg===null?x.bestLeg:Math.min(a.leg,x.bestLeg)}
+    if(game==='clock'&&x.win&&x.darts)a.fastD=a.fastD===null?x.darts:Math.min(a.fastD,x.darts);
     if(solo&&x.darts){a.d+=x.darts;a.h+=x.hits||0;if(x.darts>=9)a.top=Math.max(a.top,mprOf(x))}
     if(game==='x01'&&solo){a.xd+=x.darts||0;a.xp+=x.pts||0;a.n180+=x.n180||0;a.co=Math.max(a.co,x.co||0)}
     if(game==='killer')a.k+=x.kills||0;
     if(game==='shanghai'||game==='halveit'){a.best=Math.max(a.best,x.rem||0);a.sh+=x.sh||0;a.hv+=x.halves||0}}));
   return{E:Object.values(M),n:L.length}}
-function stCols(game,team){const mpr=a=>a.d?a.h*3/a.d:null,pc=a=>a.g?a.wins*100/a.g:null,P0=[['Victoires',a=>a.wins],['Parties',a=>a.g],['% gagnées',pc,x=>Math.round(x)+' %']];
-  if(game==='all')return P0;
-  const C=P0.concat({cricket:[['MPR moyen',mpr,fr],['Meilleur MPR',a=>a.top||null,fr],['Spews',a=>a.sp,null,1]],
-    x01:[['Moyenne',a=>a.xd?a.xp*3/a.xd:null,fr],['180',a=>a.n180],['Meilleur finish',a=>a.co||null]],
-    killer:[['Vies prises',a=>a.k],['MPR moyen',mpr,fr],['Spews',a=>a.sp,null,1]],
-    clock:[['Réussite',a=>a.d?a.h*100/a.d:null,x=>Math.round(x)+' %']],
-    shanghai:[['MPR moyen',mpr,fr],['Record',a=>a.best||null],['Shanghai',a=>a.sh]],
-    halveit:[['Record',a=>a.best||null],['Fois ÷ 2',a=>a.hv,null,1]]}[game]);
+function stCols(game,team){const mpr=a=>a.d?a.h*3/a.d:null,pc=a=>a.g?a.wins*100/a.g:null,P0=[['Victoires',a=>a.wins],['Parties',a=>a.g],['% gagnées',pc,x=>Math.round(x)+' %']],
+    pct=x=>fr(x)+' %',SER=['Série de victoires',a=>a.str||null],SP=[['% Spew moyen',a=>a.spD?a.spN*100/a.spD:null,pct,1],['Pire % Spew',a=>a.worst,pct,1],['Triples Spew',a=>a.tri,null,1]];
+  if(game==='all'){const C=P0.concat([SER]);const B=stBets('*',team);if(B['€'])C.push(['Paris €',a=>B['€'][a.name]!==undefined?B['€'][a.name]:null,v=>sgn(v)]);return C}
+  const C=P0.concat({cricket:[['MPR moyen',mpr,fr],['Meilleur MPR',a=>a.top||null,fr],['Meilleur tour (marques)',a=>a.turn||null],...SP,['Sauveur d’équipe',a=>a.sav||null],SER,['Victoire la plus rapide (tours)',a=>a.fast,null,1]],
+    x01:[['Moyenne',a=>a.xd?a.xp*3/a.xd:null,fr],['Meilleure volée',a=>a.vol||null],['180',a=>a.n180],['140 +',a=>a.n140],['100 +',a=>a.n100],['Meilleur finish',a=>a.co||null],['Manche la plus courte (fléch.)',a=>a.leg,null,1],['Busts',a=>a.bust,null,1],SER],
+    killer:[['Vies prises',a=>a.k],['Devenu killer',a=>a.kil],['Tirs sur soi',a=>a.self,null,1],['MPR moyen',mpr,fr],...SP,SER,['Victoire la plus rapide (tours)',a=>a.fast,null,1]],
+    clock:[['Réussite',a=>a.d?a.h*100/a.d:null,x=>Math.round(x)+' %'],['Tour le plus rapide (fléch.)',a=>a.fastD,null,1],SER],
+    shanghai:[['MPR moyen',mpr,fr],['Record',a=>a.best||null],['Shanghai',a=>a.sh],SER],
+    halveit:[['Record',a=>a.best||null],['Fois ÷ 2',a=>a.hv,null,1],SER]}[game]);
   const B=stBets(game,team);Object.keys(B).sort((a,b)=>(b==='€')-(a==='€')).forEach(u=>C.push([u==='€'?'Paris €':'Paris '+u,a=>B[u][a.name]!==undefined?B[u][a.name]:null,v=>sgn(v)]));
   return C}
 function stView(team){const G0=STS.g,games=G0==='all'?STG:[G0];let E,n=0;
-  if(G0==='all'){const M={};games.forEach(g=>{const r=stAgg(g,team);n+=r.n;r.E.forEach(a=>{const m=M[a.name]||(M[a.name]={name:a.name,first:a.first,wins:0,g:0});m.wins+=a.wins;m.g+=a.g})});E=Object.values(M)}
+  if(G0==='all'){const M={};games.forEach(g=>{const r=stAgg(g,team);n+=r.n;r.E.forEach(a=>{const m=M[a.name]||(M[a.name]={name:a.name,first:a.first,wins:0,g:0,run:0,str:0});m.wins+=a.wins;m.g+=a.g})});
+    HIST.filter(r=>STG.includes(r.game)&&(!team||r.teams)).sort((a,b)=>a.date-b.date).forEach(r=>stEnts(r,team).forEach(([k,x])=>{const m=M[k];if(!m)return;m.run=x.win?m.run+1:0;m.str=Math.max(m.str,m.run)}));E=Object.values(M)}
   else{const r=stAgg(G0,team);E=r.E;n=r.n}
   const C=stCols(G0,team).filter((c,i)=>i<3||E.some(a=>c[1](a)!==null)),so=STS.sort[G0]||{c:0,inv:false},ci=Math.min(so.c,C.length-1),[,f,,low]=C[ci],dir=(low?1:-1)*(so.inv?-1:1);
   E.sort((a,b)=>{const x=f(a),y=f(b);if(x===null&&y===null)return b.wins-a.wins;if(x===null)return 1;if(y===null)return-1;return(x-y)*dir||b.wins-a.wins||a.name.localeCompare(b.name)});
