@@ -2889,7 +2889,7 @@ html body #hist #hBody .stt td{padding:11px 5px;text-align:center;white-space:no
 html body #hist #hBody .stt tr:last-child td{border-bottom:0}
 html body #hist #hBody .stt td.on{background:rgba(var(--acc-rgb,224,84,111),.13);font-size:18px}
 html body #hist #hBody .stt .sn{position:sticky;left:0;z-index:1;background:var(--m-cell,#fff);text-align:left;padding-left:10px;max-width:38vw;min-width:0}
-html body #hist #hBody .stt td.sn{display:flex;align-items:center;gap:8px;overflow:hidden}
+html body #hist #hBody .stt td.sn>div{display:flex;align-items:center;gap:8px;overflow:hidden}
 html body #hist #hBody .stt td.sn i{font-style:normal;font-size:12px;color:var(--mute);min-width:1.2em}
 html body #hist #hBody .stt td.sn b{flex:none;width:12px;height:12px;border-radius:50%;background:var(--pc)}
 html body #hist #hBody .stt td.sn span{overflow:hidden;text-overflow:ellipsis;text-transform:uppercase}
@@ -6903,7 +6903,7 @@ function stView(team){const G0=STS.g,games=G0==='all'?STG:[G0];let E,n=0;
   if(!E.length)return tabs+`<p class="hempty">${team?'Aucune partie en équipes ici pour l\'instant.':'Aucune partie ici pour l\'instant.'}</p>`;
   let h=tabs+`<p class="stn">${n} partie${n>1?'s':''}${G0==='all'?' · tous jeux confondus':''} · touche un titre de colonne pour classer</p><div class="stw"><table class="stt"><thead><tr><th class="sn">${team?'Équipe':'Joueur'}</th>`+
     C.map((c,i)=>`<th data-sc="${i}" class="${i===ci?'on':''}">${esc(c[0])}${i===ci?(dir<0?' ▼':' ▲'):''}</th>`).join('')+'</tr></thead><tbody>';
-  E.forEach((a,r)=>{h+=`<tr><td class="sn"><i>${r+1}</i><b style="--pc:${col(a,r)}"></b><span>${esc(a.name)}</span></td>`+C.map((c,i)=>{const v=c[1](a);return`<td class="${i===ci?'on':''}">${v===null?'–':c[2]?c[2](v):v}</td>`}).join('')+'</tr>'});
+  E.forEach((a,r)=>{h+=`<tr><td class="sn"><div><i>${r+1}</i><b style="--pc:${col(a,r)}"></b><span>${esc(a.name)}</span></div></td>`+C.map((c,i)=>{const v=c[1](a);return`<td class="${i===ci?'on':''}">${v===null?'–':c[2]?c[2](v):v}</td>`}).join('')+'</tr>'});
   return h+'</tbody></table></div>'}
 $('hBody').addEventListener('click',e=>{if(HMODE!=='stats')return;const g=e.target.closest('[data-sg]'),c=e.target.closest('[data-sc]');
   if(g){STS.g=g.dataset.sg;SFX.ui();renderHist()}
