@@ -2688,7 +2688,7 @@ html body #bill .bsw .big{position:relative;z-index:1;background:transparent!imp
 html body #bill .bsw:not(.new) #bOk,html body #bill .bsw.new #bSend{color:var(--btx,#fff)!important}
 #hist .bbal p{display:flex;justify-content:space-between;margin:.35em 0;font-size:calc(var(--uu,1dvh)*2.1)}
 #hist .bbal>div{flex:1}
-#hist.tbets #hGame{display:none!important}
+#hist.tbets #hGame,#hist.hm-stats #hGame{display:none!important}   /* stats : les onglets de jeu sont dans le panneau */
 /* la note v2 */
 #bill{justify-content:flex-start!important;padding:0 5vw calc(env(safe-area-inset-bottom) + 3dvh)!important;gap:2dvh!important}
 #bill .bsh{display:grid;grid-template-columns:40px 1fr 40px;align-items:center;width:100%;padding-top:calc(env(safe-area-inset-top) + 1.2dvh)}
@@ -2875,24 +2875,25 @@ html body #xpick.hipick>*{min-width:0;width:100%}
 #gRules{position:relative}
 #setup{overflow-x:hidden!important}
 #gRules .rold{position:absolute;inset:0;pointer-events:none}
-/* stats joueurs : même tableau que le cricket à x joueurs */
-html body #hist #hBody .cbd{display:grid;grid-template-columns:var(--lw) repeat(var(--n),var(--cw));overflow-x:auto;overflow-y:visible;padding:8px 0 14px;flex:0 0 auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-html body #hist #hBody .cbd::-webkit-scrollbar{display:none}
-html body #hist #hBody .cbd *{font-family:"FunTxt","Fun",sans-serif!important;font-weight:400!important}
-html body #hist #hBody .cbd .cl0,html body #hist #hBody .cbd .cl{position:sticky;left:0;z-index:2;background:var(--m-home,var(--page));display:grid;place-items:center}
-html body #hist #hBody .cbd .ch{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:calc(var(--cw)*.04);height:calc(var(--cw)*1.75);max-height:148px;min-height:118px;border-radius:23px;color:var(--ink);margin:0 2px 12px;text-align:center}
-html body #hist #hBody .cbd .ch.top{background:var(--pc);color:var(--btx,#fff);box-shadow:0 0 0 5.75px var(--pc);margin-inline:6px}
-html body #hist #hBody .cbd .ch .cn{font-size:min(23px,calc(var(--cw)*.27));line-height:1;text-transform:uppercase;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 4px}
-html body #hist #hBody .cbd .ch .cw{font-size:min(65px,calc(var(--cw)*.78));line-height:.82}
-html body #hist #hBody .cbd .ch .cs{font-size:min(11px,calc(var(--cw)*.14));letter-spacing:.02em;text-transform:uppercase;opacity:.9}
-html body #hist #hBody .cbd .ch .cd{display:inline-block;width:.6em;height:.6em;border-radius:50%;background:var(--pc);margin-right:.25em;vertical-align:.08em}
-html body #hist #hBody .cbd .ch.top .cd{display:none}
-html body #hist #hBody .cbd .cl b{display:grid;place-items:center;width:calc(var(--lw) - 12px);height:52px;border-radius:99px;background:var(--accent);background-image:var(--accimg,none);box-shadow:0 0 0 5.75px var(--accent);color:var(--btx,#fff);font-size:min(17px,4.4vw);line-height:1;text-align:center;padding:0 4px;box-sizing:border-box}
-html body #hist #hBody .cbd .cl,html body #hist #hBody .cbd .cv{height:61px;margin-bottom:13px}
-html body #hist #hBody .cbd .cv{display:grid;place-items:center;font-size:min(30px,calc(var(--cw)*.31));letter-spacing:-.02em;color:var(--ink);line-height:1}
-html body #hist #hBody .cbd .cv span{display:grid;place-items:center;min-width:1.9em;height:1.9em;padding:0 .3em;max-width:calc(var(--cw) - 4px);border-radius:99px;box-sizing:border-box}
-html body #hist #hBody .cbd .cv.best span{background:var(--pc);color:var(--btx,#fff)}
-html body #hist #hBody .cbd .cv.nil{color:var(--mute);opacity:.6}
+/* statistiques : onglets par jeu + tableau classé (une ligne par joueur) */
+html body #hist #hBody .stg{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px 2px 4px;flex:none}
+html body #hist #hBody .stg::-webkit-scrollbar{display:none}
+html body #hist #hBody .stg button{flex:none;font:400 15px "Fun",sans-serif;color:var(--ink);background:transparent;border:0;border-radius:99px;box-shadow:inset 0 0 0 2px var(--ol,#111);padding:8px 14px}
+html body #hist #hBody .stg button.on{background:var(--accent);background-image:var(--accimg,none);color:var(--btx,#fff);box-shadow:none}
+html body #hist #hBody .stn{margin:2px 4px 0;font:400 12px "Lbl",sans-serif;color:var(--mute);flex:none}
+html body #hist #hBody .stw{overflow-x:auto;-webkit-overflow-scrolling:touch;flex:none;border-radius:18px;box-shadow:inset 0 0 0 2px var(--ol,#111);background:var(--m-cell,#fff)}
+html body #hist #hBody .stt{border-collapse:separate;border-spacing:0;width:100%;font:400 16px "FunTxt","Fun",sans-serif;color:var(--ink)}
+html body #hist #hBody .stt th{font:400 10.5px/1.15 "Lbl",sans-serif;text-transform:uppercase;letter-spacing:.03em;color:var(--mute);padding:10px 5px 8px;text-align:center;white-space:normal;min-width:52px;max-width:74px;vertical-align:bottom;cursor:pointer;border-bottom:2px solid var(--ol,#111)}
+html body #hist #hBody .stt th.on{color:var(--ink);font-weight:700}
+html body #hist #hBody .stt td{padding:11px 5px;text-align:center;white-space:nowrap;border-bottom:1px solid rgba(0,0,0,.08);font-variant-numeric:tabular-nums}
+html body #hist #hBody .stt tr:last-child td{border-bottom:0}
+html body #hist #hBody .stt td.on{background:rgba(var(--acc-rgb,224,84,111),.13);font-size:18px}
+html body #hist #hBody .stt .sn{position:sticky;left:0;z-index:1;background:var(--m-cell,#fff);text-align:left;padding-left:10px;max-width:38vw;min-width:0}
+html body #hist #hBody .stt td.sn{display:flex;align-items:center;gap:8px;overflow:hidden}
+html body #hist #hBody .stt td.sn i{font-style:normal;font-size:12px;color:var(--mute);min-width:1.2em}
+html body #hist #hBody .stt td.sn b{flex:none;width:12px;height:12px;border-radius:50%;background:var(--pc)}
+html body #hist #hBody .stt td.sn span{overflow:hidden;text-overflow:ellipsis;text-transform:uppercase}
+html body #hist #hBody .stt tbody tr:first-child td.sn span{font-size:18px}
 /* menu : Statistiques + Historique côte à côte */
 #home .hrow2{display:grid;grid-template-columns:1fr 1fr;gap:3vw;width:100%}
 #home .hrow2>.big{width:100%!important;margin:0!important}
@@ -4894,9 +4895,10 @@ $('bRematch').addEventListener('click',()=>{
   if(onKiller()){const w=KG.players[KG.winner];
     $('knextD').innerHTML='Ordre : '+kRank().map((i,k)=>(k+1)+'. '+esc(KG.players[i].name)).join(' · ')+(KG.opt.carry?'<br>+1 ♥ pour '+esc(w.name):'');
     $('win').classList.remove('on');$('knext').classList.add('on');return}
-  const names=G.players.map(p=>p.name),start=(G.start+1)%names.length;
+  let names=G.players.map(p=>p.name),start=(G.start+1)%names.length,teams=G.teams?G.players.map(p=>p.members):null;
   if(!cMatchOver())CARRY={legsTo:G.legsTo,legs:cLegs(),leg:(G.leg||1)+1};
-  startGame(G.mode,names,start,G.teams?G.players.map(p=>p.members):null);
+  if(names.length===2&&start===1){names.reverse();if(teams)teams.reverse();if(CARRY&&CARRY.legs)CARRY.legs.reverse();start=0}   /* à 2 : celui qui commence est toujours en premier */
+  startGame(G.mode,names,start,teams);
 });
 $('bWinInfo').addEventListener('click',()=>{if(onX01())xStats();else if(onKiller())kStats();else renderStats();$('win').classList.remove('on');$('info').dataset.fromWin=1;$('info').classList.add('on')});
 $('bWinUndo').addEventListener('click',()=>{if(onX01())xUndo();else if(onKiller())kUndo();else undo()});
@@ -5585,7 +5587,9 @@ function xRematch(){
     XG.leg++;XG.starter=(XG.starter+1)%P.length;XG.cur=XG.starter;XG.round=1;XG.legW=null;XG.turn=[];XG.mult=1;
     P.forEach(p=>{p.rem=XG.start;p.open=XG.inR===0;p.legDarts=0;p.last=[]});XG.ts=XG.start;XG.tso=XG.inR===0;
     xSave();$('win').classList.remove('on');xRender();return}
-  const names=P.map(p=>p.name);startX01(names,(XG.starter+1)%names.length,XG.teams?P.map(p=>p.members):null,XG.mode||null);$('win').classList.remove('on');
+  let names=P.map(p=>p.name),st=(XG.starter+1)%names.length,tm=XG.teams?P.map(p=>p.members):null;
+  if(names.length===2&&st===1){names.reverse();if(tm)tm.reverse();st=0}   /* à 2 : celui qui commence est toujours en premier */
+  startX01(names,st,tm,XG.mode||null);$('win').classList.remove('on');
 }
 /* finish conseillé (goûts de Loubi) :
    1) le moins de fléchettes possible ce tour-ci ;
@@ -6778,7 +6782,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-307';   // à changer avec VERSION dans sw.js
+const APPV='lf-308';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -6868,34 +6872,42 @@ function stBets(game,team){const E=BETH.flatMap(n=>n.list).concat(BET).filter(e=
     if(team){const r=HIST.find(r=>r.id===e.rid);if(!r||!r.teams)return;map={};r.p.forEach(x=>(x.members||[]).forEach(n=>map[n]=tKey(x)))}
     Object.entries(m).forEach(([n,v])=>{const k=team?map[n]:n;if(!k)return;(U[u]=U[u]||{});U[u][k]=(U[u][k]||0)+v})});return U}
 const sgn=(v,d)=>(v>.004?'+':v<-.004?'−':'')+(d?fr(Math.abs(v)):fr2(Math.abs(v)));
-function stGame(game,team){
-  const L=HIST.filter(r=>r.game===game),M={};
+/* statistiques : un onglet par jeu + un onglet Général (parties jouées / gagnées) ;
+   une ligne par joueur, classée par la colonne touchée (toucher encore = ordre inverse) */
+const STS={g:'all',sort:{}};
+function stAgg(game,team){const L=HIST.filter(r=>r.game===game&&(!team||r.teams)),M={};
   L.forEach(r=>stEnts(r,team).forEach(([k,x,solo])=>{const a=M[k]||(M[k]={name:k,first:k.split(' & ')[0],wins:0,g:0,d:0,h:0,top:0,sp:0,xd:0,xp:0,n180:0,co:0,k:0,best:0,sh:0,hv:0});
     a.g++;if(x.win)a.wins++;a.sp+=x.spews||0;
     if(solo&&x.darts){a.d+=x.darts;a.h+=x.hits||0;if(x.darts>=9)a.top=Math.max(a.top,mprOf(x))}
     if(game==='x01'&&solo){a.xd+=x.darts||0;a.xp+=x.pts||0;a.n180+=x.n180||0;a.co=Math.max(a.co,x.co||0)}
     if(game==='killer')a.k+=x.kills||0;
     if(game==='shanghai'||game==='halveit'){a.best=Math.max(a.best,x.rem||0);a.sh+=x.sh||0;a.hv+=x.halves||0}}));
-  const E=Object.values(M).sort((a,b)=>b.wins-a.wins||b.wins/b.g-a.wins/a.g);if(!E.length)return'';
-  const mpr=a=>a.d?a.h*3/a.d:null,P=['Parties',a=>a.g],PC=['%',a=>Math.round(a.wins*100/a.g),x=>x+'%'];
-  const R={cricket:[P,PC,['MPR',mpr,fr],['Top MPR',a=>a.top||null,fr],['Spews',a=>a.sp]],
-    x01:[P,PC,['Moy.',a=>a.xd?a.xp*3/a.xd:null,fr],['180',a=>a.n180],['Finish',a=>a.co||null]],
-    killer:[P,PC,['Vies prises',a=>a.k],['MPR',mpr,fr],['Spews',a=>a.sp]],
-    clock:[P,PC,['Réussite',a=>a.d?Math.round(a.h*100/a.d):null,x=>x+'%']],
-    shanghai:[P,PC,['MPR',mpr,fr],['Record',a=>a.best||null],['Shanghai',a=>a.sh]],
-    halveit:[P,PC,['Record',a=>a.best||null],['÷ 2',a=>a.hv,null,1]]}[game].slice();
-  const B=stBets(game,team);Object.keys(B).sort((a,b)=>(b==='€')-(a==='€')).forEach(u=>R.push([u==='€'?'Paris €':'Paris · '+u,a=>B[u][a.name]!==undefined?B[u][a.name]:null,v=>sgn(v)]));
-  return`<div class="cbt">${GNAME[game]}<small>${(c=>c+' partie'+(c>1?'s':''))(L.filter(r=>!team||r.teams).length)}</small></div>`+sBoard(E,R)}
-function sBoard(E,RW){
-  const n=E.length,bw=$('hBody').clientWidth,W=(bw>200?bw:Math.min(innerWidth,520)-40),lw=Math.round(Math.max(74,W*.215)),cw=Math.max(64,Math.floor((W-lw)/Math.min(n,4)));
+  return{E:Object.values(M),n:L.length}}
+function stCols(game,team){const mpr=a=>a.d?a.h*3/a.d:null,pc=a=>a.g?a.wins*100/a.g:null,P0=[['Victoires',a=>a.wins],['Parties',a=>a.g],['% gagnées',pc,x=>Math.round(x)+' %']];
+  if(game==='all')return P0;
+  const C=P0.concat({cricket:[['MPR moyen',mpr,fr],['Meilleur MPR',a=>a.top||null,fr],['Spews',a=>a.sp,null,1]],
+    x01:[['Moyenne',a=>a.xd?a.xp*3/a.xd:null,fr],['180',a=>a.n180],['Meilleur finish',a=>a.co||null]],
+    killer:[['Vies prises',a=>a.k],['MPR moyen',mpr,fr],['Spews',a=>a.sp,null,1]],
+    clock:[['Réussite',a=>a.d?a.h*100/a.d:null,x=>Math.round(x)+' %']],
+    shanghai:[['MPR moyen',mpr,fr],['Record',a=>a.best||null],['Shanghai',a=>a.sh]],
+    halveit:[['Record',a=>a.best||null],['Fois ÷ 2',a=>a.hv,null,1]]}[game]);
+  const B=stBets(game,team);Object.keys(B).sort((a,b)=>(b==='€')-(a==='€')).forEach(u=>C.push([u==='€'?'Paris €':'Paris '+u,a=>B[u][a.name]!==undefined?B[u][a.name]:null,v=>sgn(v)]));
+  return C}
+function stView(team){const G0=STS.g,games=G0==='all'?STG:[G0];let E,n=0;
+  if(G0==='all'){const M={};games.forEach(g=>{const r=stAgg(g,team);n+=r.n;r.E.forEach(a=>{const m=M[a.name]||(M[a.name]={name:a.name,first:a.first,wins:0,g:0});m.wins+=a.wins;m.g+=a.g})});E=Object.values(M)}
+  else{const r=stAgg(G0,team);E=r.E;n=r.n}
+  const C=stCols(G0,team).filter((c,i)=>i<3||E.some(a=>c[1](a)!==null)),so=STS.sort[G0]||{c:0,inv:false},ci=Math.min(so.c,C.length-1),[,f,,low]=C[ci],dir=(low?1:-1)*(so.inv?-1:1);
+  E.sort((a,b)=>{const x=f(a),y=f(b);if(x===null&&y===null)return b.wins-a.wins;if(x===null)return 1;if(y===null)return-1;return(x-y)*dir||b.wins-a.wins||a.name.localeCompare(b.name)});
   const col=(a,i)=>{const c=pcol(a.first);return /^#[0-9a-f]{6}$/i.test(c||'')?c:PFB[i%PFB.length]};
-  const RR=RW.filter(r=>E.some(a=>r[1](a)!==null)),maxW=Math.max(...E.map(a=>a.wins)),topN=E.filter(a=>a.wins===maxW).length;
-  let h=`<div class="cbd" style="--n:${n};--lw:${lw}px;--cw:${cw}px"><div class="cl0"></div>`;
-  E.forEach((a,i)=>{h+=`<div class="ch${a.wins===maxW&&maxW>0&&topN===1?' top':''}" style="--pc:${col(a,i)}"><span class="cn">${esc(a.name.replace(/ & /g,'&'))}</span><span class="cw">${a.wins}</span><span class="cs">victoire${a.wins>1?'s':''}</span></div>`});
-  RR.forEach(([lab,f,fmt,low])=>{const v=E.map(f),nums=v.filter(x=>x!==null),best=nums.length>1?(low?Math.min(...nums):Math.max(...nums)):null,uniq=nums.filter(x=>x===best).length===1;
-    h+=`<div class="cl"><b>${esc(lab)}</b></div>`;
-    v.forEach((x,i)=>{h+=x===null?`<div class="cv nil">–</div>`:`<div class="cv${best!==null&&uniq&&x===best&&(low||x>0)?' best':''}" style="--pc:${col(E[i],i)}"><span>${fmt?fmt(x):x}</span></div>`})});
-  return h+'</div>'}
+  const tabs=`<div class="stg">${['all',...STG].map(g=>`<button data-sg="${g}" class="${g===G0?'on':''}">${g==='all'?'Général':GNAME[g]}</button>`).join('')}</div>`;
+  if(!E.length)return tabs+`<p class="hempty">${team?'Aucune partie en équipes ici pour l\'instant.':'Aucune partie ici pour l\'instant.'}</p>`;
+  let h=tabs+`<p class="stn">${n} partie${n>1?'s':''}${G0==='all'?' · tous jeux confondus':''} · touche un titre de colonne pour classer</p><div class="stw"><table class="stt"><thead><tr><th class="sn">${team?'Équipe':'Joueur'}</th>`+
+    C.map((c,i)=>`<th data-sc="${i}" class="${i===ci?'on':''}">${esc(c[0])}${i===ci?(dir<0?' ▼':' ▲'):''}</th>`).join('')+'</tr></thead><tbody>';
+  E.forEach((a,r)=>{h+=`<tr><td class="sn"><i>${r+1}</i><b style="--pc:${col(a,r)}"></b><span>${esc(a.name)}</span></td>`+C.map((c,i)=>{const v=c[1](a);return`<td class="${i===ci?'on':''}">${v===null?'–':c[2]?c[2](v):v}</td>`}).join('')+'</tr>'});
+  return h+'</tbody></table></div>'}
+$('hBody').addEventListener('click',e=>{if(HMODE!=='stats')return;const g=e.target.closest('[data-sg]'),c=e.target.closest('[data-sc]');
+  if(g){STS.g=g.dataset.sg;SFX.ui();renderHist()}
+  else if(c){const k=+c.dataset.sc,o=STS.sort[STS.g]||{c:0,inv:false};STS.sort[STS.g]=o.c===k?{c:k,inv:!o.inv}:{c:k,inv:false};SFX.tick();renderHist()}});
 function hgCard(r){const P=r.p,w=P[r.w]||{};
   const sub=r.game==='cricket'?(r.mode==='cut'?'coupe-gorge':'standard'):r.game==='x01'?(r.start||501)+' · '+(['simple','double','master'][r.outR]||'double')+' out':r.game==='shanghai'?(r.shr||7)+' tours':r.game==='halveit'?((r.hiseq||HI_CLASSIC).length)+' manches':r.game==='killer'&&r.manche>1?'manche '+r.manche:'';
   const val=x=>r.game==='cricket'?x.score:r.game==='x01'?(r.legsTo>1?(x.legs||0)+' m.':(x.win?0:(x.rem!==undefined?x.rem:''))):r.game==='killer'?(x.lives?x.lives+' ♥':'💀'):r.game==='clock'?clkLbl(x.tgt):x.rem;
@@ -6918,8 +6930,7 @@ renderHist=function(){const h=$('hist'),b=$('hBody');
     if(HSEL.game==='all')BETH.forEach(n=>L.push({t:n.date,h:noteCard(n,false)}));
     L.sort((a,b)=>b.t-a.t);
     b.innerHTML=(BET.length&&HSEL.game==='all'?noteCard({list:BET},true):'')+L.map(x=>x.h).join('')||'<p class="hempty">Aucune partie enregistrée pour l\'instant.<br>Chaque partie terminée s\'ajoute ici automatiquement.</p>'}
-  else{const team=HSEL.tab==='teams';
-    b.innerHTML=stScope(HSEL.game).map(g=>stGame(g,team)).join('')||`<p class="hempty">${team?'Aucune partie en équipes pour l\'instant.':'Aucune partie.'}</p>`}
+  else{b.innerHTML=stView(HSEL.tab==='teams');requestAnimationFrame(()=>{const th=b.querySelector('.stt th.on'),w=th&&th.closest('.stw'),sn=b.querySelector('.stt th.sn');if(w&&th.offsetLeft+th.offsetWidth>w.clientWidth)w.scrollLeft=th.offsetLeft-(sn?sn.offsetWidth:0)-8;const tb=b.querySelector('.stg button.on');if(tb)tb.scrollIntoView({inline:'center',block:'nearest'})})}   /* colonne choisie et onglet visibles */
   requestAnimationFrame(placeThumbs)};
 
 {const hb=document.querySelector('#home .hbtns'),r2=hb.querySelector('.hrow2'),sw=hb.querySelector('.hsw');if(r2&&sw)hb.insertBefore(r2,sw)}
