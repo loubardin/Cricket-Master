@@ -6778,7 +6778,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-306';   // à changer avec VERSION dans sw.js
+const APPV='lf-307';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -7150,7 +7150,7 @@ const LY_K={
   iNP:['Nom → score',-.4,1,.02,'x'],iPM:['Score → MPR (joueur en cours)',-.4,1,.02,'x'],iPMo:['Score → MPR (adversaire)',-.4,1,.02,'x'],iY:['Tout décaler (− haut, + bas)',-1,1,.02,'x'],
   paW:['Largeur des bulles',.4,2.6,.05,'%'],paH:['Hauteur des bulles',.5,1.8,.05,'%'],zPl:['Taille du texte',.5,1.8,.05,'%'],iPl:['Écart',0,.6,.01,'x'],
   poW:['Largeur des bulles',.5,4,.05,'%'],poH:['Hauteur des bulles',.5,2,.05,'%'],zPo:['Taille du texte',.5,2,.05,'%'],poG:['Écart',0,3,.05,'%'],poY:['Décaler (− haut, + bas)',-1,1,.02,'x'],
-  klHY:['Position',-30,30,.5,'pc'],klHO:['Contour',0,3,.05,'%'],klW:['Largeur des cartes',.6,1.5,.01,'%'],klH:['Hauteur des cartes',.6,1.6,.01,'%'],klGX:['Écart horizontal entre les cartes',-20,40,.5,'pc'],klGY:['Écart vertical entre les cartes',-20,40,.5,'pc'],crZ:['Taille',.4,1.8,.05,'%'],crY:['Décaler (− haut, + bas)',-1,1,.02,'x'],
+  klHY:['Position',-30,80,.5,'pc'],klHO:['Contour',0,3,.05,'%'],klW:['Largeur des cartes',.6,1.5,.01,'%'],klH:['Hauteur des cartes',.6,1.6,.01,'%'],klGX:['Écart horizontal entre les cartes',-20,40,.5,'pc'],klGY:['Écart vertical entre les cartes',-20,40,.5,'pc'],crZ:['Taille',.4,1.8,.05,'%'],crY:['Décaler (− haut, + bas)',-1,1,.02,'x'],
   rowK:['Hauteur des bulles',.6,1.6,.05,'%'],nW:['Largeur des bulles (et du Spew)',.7,1.3,.01,'%'],gL:['Écart entre les lignes',0,5,.1,'pc'],gNF:['Écart avec le Spew (au moins)',0,8,.1,'pc'],
   nfz:['Nombres',.6,1.5,.05,'%'],mkz:['Taille',.5,1.5,.05,'%'],mksw:['Épaisseur',1,10,.25,''],
   xcG:['Écart entre les cases',0,3,.05,'%'],xnZ:['Nom',.5,2,.05,'%'],xrZ:['Score',.5,2,.05,'%'],xsZ:['Moyenne',.5,2.5,.05,'%'],xcoZ:['Finish proposé',.5,2.5,.05,'%'],xhZ:['Historique',.5,2.5,.05,'%'],
