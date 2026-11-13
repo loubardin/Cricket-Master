@@ -6778,7 +6778,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-305';   // à changer avec VERSION dans sw.js
+const APPV='lf-306';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -7012,7 +7012,6 @@ function pklCard(i,g,act){const p=KG.players[i],{W,H,wide,k}=g,Hn=g.H0||H,dy=(H-
       `<ellipse class="phg" cx="${x+lw*.3}" cy="${hy+hh*.3}" rx="${lw*.12}" ry="${hh*.075}" transform="rotate(-38 ${x+lw*.3} ${hy+hh*.3})"/><circle class="phg" cx="${x+lw*.17}" cy="${hy+hh*.47}" r="${Math.min(lw,hh)*.045}"/>`;
     h+=`<path class="phrt${on?' on':''}" d="${pkHeart(x,hy,lw,hh)}"/>`;if(bt)h+='</g>'}
   h+='</g>';
-  if(act)h+=`<text x="${cx}" y="${(hy+hh/2-hh*LZ.klHZ/2-14*k).toFixed(1)}" font-size="${43*k*PF.kT}">à toi</text>`;
   const hrt=h;h=h0;h+=`<g transform="translate(0 ${dy.toFixed(1)})">`;   /* contenu centré dans la carte */
   // nom (et coéquipier) dans la carte, à l'ancienne place des cœurs
   {const ny0=(wide?.076:.052)*Hn,nh0=(wide?.137:.132)*Hn,mate=esc(pkMate(p,act)),fit=(wide?.6:.86)*W,st=act?'':` style="fill:${pkCol(i)}"`;
