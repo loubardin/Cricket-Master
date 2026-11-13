@@ -3455,6 +3455,14 @@ html body :is(#game#game#game#game,#x01#x01#x01#x01,#killer#killer#killer#killer
 #prof .prt em{font:400 13px "Fun",sans-serif;font-style:normal;color:var(--accent)}
 #prof .prt>div:not(.on) em{color:var(--mute);font:400 10px "Lbl",sans-serif}
 #prof .prt small{grid-column:2/4;font:400 10.5px/1.25 "Lbl",sans-serif;color:var(--mute)}
+#prof .prv{display:flex;flex-direction:column;gap:8px;border-radius:18px;background:var(--m-cell,#fff);box-shadow:inset 0 0 0 2px var(--ol,#111);padding:4px}
+#prof .prvt{display:flex;align-items:center;gap:10px;border:0;background:transparent;padding:10px 12px;text-align:left;color:var(--ink)}
+#prof .prvt span{font-size:20px}#prof .prvt b{flex:1;font:400 15px/1.2 "Fun",sans-serif}#prof .prvt i{font:400 12px "Lbl",sans-serif;font-style:normal;color:var(--mute);white-space:nowrap}
+#prof .prvl{padding:0 10px 12px}#prof .prvg{margin:10px 2px 6px;font:400 11px "Lbl",sans-serif;text-transform:uppercase;letter-spacing:.04em;color:var(--mute)}
+#prof .prvc{display:flex;flex-wrap:wrap;gap:6px}
+#prof .prvc button{border:0;border-radius:99px;padding:8px 12px;background:transparent;box-shadow:inset 0 0 0 2px rgba(0,0,0,.18);font:400 13px "Lbl",sans-serif;color:var(--ink)}
+#prof .prvc button.on{background:var(--accent);color:#fff;box-shadow:inset 0 0 0 2px var(--ol,#111)}
+#prof .prvc button.on::before{content:'✓ '}
 #prof .prr{display:flex;flex-direction:column;border-radius:18px;background:var(--m-cell,#fff);box-shadow:inset 0 0 0 2px var(--ol,#111)}
 #prof .prr>div{display:flex;justify-content:space-between;padding:11px 14px;font:400 14px "Lbl",sans-serif;color:var(--ink)}#prof .prr>div+div{border-top:1px solid rgba(0,0,0,.08)}
 #prof .prr b{font:400 17px "Fun",sans-serif}
@@ -4172,7 +4180,7 @@ function throwDart(t){
   const prevLead=G.lastLead;if(leadAfter>=0)G.lastLead=leadAfter;
   if(leadAfter>=0&&prevLead!==undefined&&prevLead>=0&&leadAfter!==prevLead&&G.winner===null)
     leadMsg=`${esc(P[leadAfter].name)} VOUS ALLUME`;
-  if(G.winner!==null){setTimeout(()=>{SFX.win();confetti(90);setTimeout(SFX.sparkle,500)},200);return}
+  if(G.winner!==null){setTimeout(()=>{const w=G.players[G.winner];if(!winSnd(w,w&&w.members?w.members[w.mi||0]:null))setTimeout(SFX.sparkle,500);confetti(90)},200);return}
   const b=turnOver?turnBadge(me.last):null;
   const bd=250;   // les bandeaux s'empilent : l'exploit s'affiche en même temps que les autres
   if(b){busy(bd+1800);setTimeout(()=>{if(b.fx){b.fx();return}toast(b.txt,b.sub);b.snd();if(b.conf){confetti(b.conf);setTimeout(SFX.sparkle,250)}},bd)}
@@ -5468,7 +5476,7 @@ function kFx(d,me,who,over){
   if(me.darts>=3&&d.mpr0<3&&me.hits*3/me.darts>=3)setTimeout(()=>{fireToast(`${esc(me.name)}, T'ES EN FEU`);SFX.fire()},120);
   // BIG BOSS : 3 fléchettes du tour qui enlèvent toutes des vies
   if(over||KG.winner!==null){const t=me.last||[];if(t.length===3&&t.every(x=>x.lost>0&&x.tgt>=0)){const n=t.reduce((a,x)=>a+x.lost,0);setTimeout(()=>bossFx(me.name,n),300)}}
-  if(KG.winner!==null)setTimeout(()=>{SFX.win();confetti(90);setTimeout(SFX.sparkle,500)},300);
+  if(KG.winner!==null)setTimeout(()=>{if(!winSnd(KG.players[KG.winner]))setTimeout(SFX.sparkle,500);confetti(90)},300);
   else if(over&&d.type!=='defstart'){
     const marks=me.last.filter(x=>x.type==='mark').reduce((a,x)=>a+x.eff,0);
     if(!me.killer&&!me.dead&&marks===1&&!me.last.some(x=>x.type&&x.type.startsWith('d')))setTimeout(()=>kMinimum(),250);
@@ -5695,7 +5703,7 @@ function xFx(d,me,who,end,tsum){
   if(d.reply==='ok'){setTimeout(()=>{toast('RÉPONDU ! 🤝','les deux finishs s’annulent');SFX.big(4);confetti(30)},150);return}
   if(d.reply==='lost'&&end==='bust'){spewFx('','',2,false,card)}
   if(end==='bust'){spewFx('','',2,false,card);setTimeout(()=>toast('BUST','',true),120)}
-  else if(end==='out'){setTimeout(()=>{SFX.win();confetti(XG.winner!==null?90:50)},150)}
+  else if(end==='out'){setTimeout(()=>{if(XG.winner!==null)winSnd(XG.players[XG.winner]);else SFX.win();confetti(XG.winner!==null?90:50)},150)}
   else if(end==='turn'&&tsum===180){setTimeout(()=>{toast('180 !!!');SFX.big(5);confetti(70)},150)}
   else if(end==='turn'&&tsum>=100){setTimeout(()=>SFX.big(3),150)}
 }
@@ -5892,7 +5900,7 @@ function xBarFx(d,me,who,end,tsum){
   if(d.sh){setTimeout(()=>{toast('SHANGHAI !',d.bonus?'+'+d.bonus+' points':'');SFX.big(5);confetti(90)},120);if(!end||end!=='win')return}
   if(d.again){setTimeout(()=>{toast(esc(me.members?me.members[me.mi]:me.name)+' REJOUE !','MPR '+turn3(me)+' ce tour');SFX.ignite()},200)}
   if(d.halve){setTimeout(()=>{toast('÷ 2 !','−'+d.halve+' points');SFX.loser(2);if(card)anim(card,'khit',700)},250)}
-  if(end==='win'){setTimeout(()=>{SFX.win();confetti(90)},150);return}
+  if(end==='win'){setTimeout(()=>{winSnd(XG.players[XG.winner]);confetti(90)},150);return}
   if(d.extra)setTimeout(()=>{toast('ÉGALITÉ !','prolongation à la bulle');SFX.ignite()},200);
   else if(XG.mode==='sh'&&end==='turn'&&tsum>=d.t*6&&d.t!==25)setTimeout(()=>SFX.big(3),150);
   else if(XG.mode==='hi'&&end==='turn'&&tsum>=60)setTimeout(()=>SFX.big(3),150);
@@ -6903,7 +6911,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-313';   // à changer avec VERSION dans sw.js
+const APPV='lf-314';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -7166,21 +7174,43 @@ function winExtras(rec){const box=$('wExtra')||(()=>{const d=el('div','');d.id='
   box.innerHTML=(got.length?`<div class="wtro"><div class="wtt">Trophées gagnés</div>${got.join('')}</div>`:'')+(hh?`<div class="wh2h">${hh}</div>`:'')}
 /* ---------- profils ---------- */
 function allPeople(){const S0=new Set(ROSTER.map(r=>r.name).filter(Boolean));HIST.forEach(r=>r.p&&rPeople(r).forEach(n=>{if(!isBot(n))S0.add(n)}));return[...S0]}
+/* ---------- son de victoire de chaque joueur (musiques du banc de sons, fichier vic.js chargé à la demande) ---------- */
+let VSND={};try{VSND=JSON.parse(localStorage.getItem('darts.vicsnd')||'{}')||{}}catch(e){}
+const vsSave=()=>{try{localStorage.setItem('darts.vicsnd',JSON.stringify(VSND))}catch(e){}};
+let vicP=null;
+function vicLoad(){if(window.VIC)return Promise.resolve(VIC);if(vicP)return vicP;
+  vicP=new Promise(ok=>{const sc=document.createElement('script');sc.src='vic.js';sc.onload=()=>{const t0=Date.now(),w=()=>window.VIC&&VIC.ready()||Date.now()-t0>20000?ok(window.VIC||null):setTimeout(w,150);w()};sc.onerror=()=>{vicP=null;ok(null)};document.head.append(sc)});return vicP}
+function winSnd(p,fin){const L=p?pers(p):[],who=[fin,...L].find(n=>n&&VSND[n]),id=who&&VSND[who];
+  if(id&&S.sound&&AC&&window.VIC&&VIC.ready()&&VIC.play(id))return true;SFX.win();return false}
+setTimeout(()=>{if(Object.keys(VSND).length)vicLoad()},2500);
+function vsHtml(n){const cur=VSND[n],open=VSO===n;
+  if(!open){const x=window.VIC&&cur?VIC.list.find(y=>y.id===cur):null;return`<button class="prvt" data-vt><span>🎵</span><b>${cur?(x?esc(x.g+' · '+x.n):'Musique choisie'):'Classique'}</b><i>Changer ▾</i></button>`}
+  if(!window.VIC||!VIC.ready())return`<button class="prvt" data-vt><span>🎵</span><b>Chargement des musiques…</b><i>Fermer ▴</i></button>`;
+  const G={};VIC.list.forEach(x=>(G[x.g]=G[x.g]||[]).push(x));
+  return`<button class="prvt" data-vt><span>🎵</span><b>Touche une musique pour l’écouter et la choisir</b><i>Fermer ▴</i></button><div class="prvl">
+    <div class="prvc"><button data-vs="" class="${cur?'':'on'}">Classique</button></div>`+
+    Object.entries(G).map(([g,a])=>`<p class="prvg">${esc(g)}</p><div class="prvc">${a.map(x=>`<button data-vs="${esc(x.id)}" class="${cur===x.id?'on':''}">${esc(x.n)}</button>`).join('')}</div>`).join('')+'</div>'}
+let VSO=null;
 function profOpen(name){SFX.open();let o=$('prof');if(o)o.remove();o=el('div','ov');o.id='prof';document.body.append(o);
   const draw=n=>{if(!n){const L=allPeople();o.innerHTML=`<div class="ovh"><h2>Profils</h2><button class="circ" data-x aria-label="Fermer"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>`+
       (L.length?`<div class="prl">${L.map(x=>`<button data-p="${esc(x)}"><b style="--pc:${pColor(x)}"></b>${esc(x)}</button>`).join('')}</div>`:'<p class="hempty">Aucun joueur pour l’instant.</p>');return}
-    const T=trAll()[n]||{},rows=[];
+    o.dataset.n=n;const T=trAll()[n]||{},rows=[];
     STG.forEach(g=>{const a=stAgg(g,false).E.find(x=>x.name===n);if(!a||!a.g)return;const key={cricket:['MPR moyen',a.d?fr(a.h*3/a.d):'–'],x01:['Moyenne',a.xd?fr(a.xp*3/a.xd):'–'],killer:['Vies prises',a.k],clock:['Réussite',a.d?Math.round(a.h*100/a.d)+' %':'–'],shanghai:['Record',a.best||'–'],halveit:['Record',a.best||'–']}[g]||['',''];
       rows.push(`<tr><td class="sn">${GNAME[g]}</td><td>${a.g}</td><td>${a.wins}</td><td>${Math.round(a.wins*100/a.g)} %</td><td class="pk">${key[0]?`<b>${key[1]}</b><small>${key[0]}</small>`:''}</td></tr>`)});
     const ck=stAgg('cricket',false).E.find(x=>x.name===n)||{},xo=stAgg('x01',false).E.find(x=>x.name===n)||{};let str=0;STG.forEach(g=>{const a=stAgg(g,false).E.find(x=>x.name===n);if(a)str=Math.max(str,a.str||0)});
     const rec=[['Meilleur MPR (Cricket)',ck.top?fr(ck.top):'–'],['Meilleur tour (Cricket)',ck.turn?ck.turn+' marques':'–'],['Meilleur finish (501)',xo.co||'–'],['180 (501)',xo.n180||0],['Plus longue série de victoires',str||'–']];
     o.innerHTML=`<div class="ovh"><button class="prb" data-back>‹ Profils</button><button class="circ" data-x aria-label="Fermer"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
       <div class="prh"><b style="--pc:${pColor(n)}"></b><h2>${esc(n)}</h2></div>
+      ${isBot(n)?'':`<h3 class="prs">Son de victoire</h3><div class="prv">${vsHtml(n)}</div>`}
       <h3 class="prs">Trophées <i>${Object.keys(T).length}/${TROPH.length}</i></h3><div class="prt">${TROPH.map(t=>`<div class="${T[t[0]]?'on':''}" title="${esc(t[2])}"><span>${t[3]}</span><b>${esc(t[1])}</b><em>${T[t[0]]?(t[0]==='ser'?T[t[0]]+' d’affilée':'×'+T[t[0]]):''}</em><small>${esc(t[2])}</small></div>`).join('')}</div>
       <h3 class="prs">Par jeu</h3>${rows.length?`<div class="stw"><table class="stt"><thead><tr><th class="sn">Jeu</th><th>Parties</th><th>Victoires</th><th>%</th><th>Stat clé</th></tr></thead><tbody>${rows.join('')}</tbody></table></div>`:'<p class="hempty">Pas encore de partie.</p>'}
       <h3 class="prs">Records</h3><div class="prr">${rec.map(([k,v])=>`<div><span>${k}</span><b>${v}</b></div>`).join('')}</div>`};
-  draw(name);requestAnimationFrame(()=>o.classList.add('on'));
-  o.addEventListener('click',e=>{const t=e.target;if(t.closest('[data-x]')){o.classList.remove('on');setTimeout(()=>o.remove(),300);return}if(t.closest('[data-back]')){SFX.back();draw(null);return}const b=t.closest('[data-p]');if(b){haptic();SFX.ui();draw(b.dataset.p);o.scrollTop=0}})}
+  VSO=null;draw(name);requestAnimationFrame(()=>o.classList.add('on'));
+  o.addEventListener('click',e=>{const t=e.target;if(t.closest('[data-x]')){o.classList.remove('on');setTimeout(()=>o.remove(),300);return}if(t.closest('[data-back]')){SFX.back();VSO=null;draw(null);return}
+    const vb=o.querySelector('.prv'),n=o.dataset.n,vr=()=>{if(vb)vb.innerHTML=vsHtml(n)};
+    if(t.closest('[data-vt]')){haptic();SFX.tick();VSO=VSO===n?null:n;vr();if(VSO&&!(window.VIC&&VIC.ready()))vicLoad().then(()=>{if(VSO===n)vr()});return}
+    const vs=t.closest('[data-vs]');if(vs){haptic();audioInit();const id=vs.dataset.vs;if(id)VSND[n]=id;else delete VSND[n];vsSave();vr();
+      if(!id)SFX.win();else if(S.sound)VIC.play(id);return}const b=t.closest('[data-p]');if(b){haptic();SFX.ui();draw(b.dataset.p);o.scrollTop=0}})}
 /* ---------- infos partie : stats en direct (même tableau que l'historique) + face-à-face ---------- */
 const INF={c:0,inv:false};
 renderStats=function(){infoRender()};xStats=function(){infoRender()};kStats=function(){infoRender()};
