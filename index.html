@@ -5053,14 +5053,16 @@ $('go').addEventListener('click',()=>{
   haptic();
   if(S.n<2){toast('AJOUTE AU MOINS 2 JOUEURS','',true);SFX.err();return}
   if(S.teams>0&&!teamsOK()){toast('ÉQUIPES : AU MOINS 3 JOUEURS','',true);SFX.err();return}
-  const enCours=XGAME(S.game)?(XG&&XG.winner===null&&XG.players.some(p=>p.darts>0)):S.game==='killer'?(KG&&KG.winner===null&&KG.players.some(p=>p.darts>0)):(G&&G.winner===null&&G.players.some(p=>p.darts>0));
+  const enCours=XGAME(S.game)?(XG&&!XG.aband&&XG.winner===null&&XG.players.some(p=>p.darts>0)):S.game==='killer'?(KG&&!KG.aband&&KG.winner===null&&KG.players.some(p=>p.darts>0)):(G&&!G.aband&&G.winner===null&&G.players.some(p=>p.darts>0));
   if(enCours&&!ABAND)openAsk('go');
   else launchNew();
 });
 let ASKFROM='go',ABAND=false;
 function openAsk(from){ASKFROM=from;const a=$('ask');try{askSummary()}catch(e){}a.querySelector('.asw').classList.remove('new');a.classList.add('on')}
 $('askYes').addEventListener('click',()=>{haptic();const w=$('ask').querySelector('.asw');w.classList.add('new');
-  setTimeout(()=>{$('ask').classList.remove('on');if(ASKFROM==='home'){ABAND=true;renderSetup();show('setup')}else launchNew()},230)});
+  setTimeout(()=>{$('ask').classList.remove('on');if(ASKFROM==='home'){ABAND=true;abandon();renderSetup();show('setup')}else launchNew()},230)});
+/* abandon confirmé une fois : la partie en cours est marquée abandonnée (enregistré), on ne redemande plus */
+function abandon(){try{if(S.last==='killer'&&KG){KG.aband=1;kSave()}else if(S.last==='x01'&&XG){XG.aband=1;xSave()}else if(G){G.aband=1;save()}}catch(e){}}
 $('askNo').addEventListener('click',()=>{haptic();$('ask').classList.remove('on');if(ASKFROM==='home'){if(S.last==='x01')showX01();else if(S.last==='killer')showKiller();else{mountFooter('game');build();render();show('game')}}});
 {const w=document.createElement('div');w.className='asw';w.innerHTML='<i class="hth"></i>';w.append($('askNo'),$('askYes'));$('ask').append(w);
  $('askNo').textContent='Reprendre';$('askYes').textContent='Nouvelle partie'}
@@ -5068,9 +5070,9 @@ $('askNo').addEventListener('click',()=>{haptic();$('ask').classList.remove('on'
 
 $('bBack').addEventListener('click',()=>{haptic();goHome()});
 function goHome(){
-  const k=S.last==='killer'&&KG&&KG.winner===null&&KG.players.some(p=>p.darts>0);
-  const x=S.last==='x01'&&XG&&XG.winner===null&&XG.players.some(p=>p.darts>0);
-  const c=S.last!=='killer'&&S.last!=='x01'&&G&&G.winner===null&&G.players.some(p=>p.darts>0);
+  const k=S.last==='killer'&&KG&&!KG.aband&&KG.winner===null&&KG.players.some(p=>p.darts>0);
+  const x=S.last==='x01'&&XG&&!XG.aband&&XG.winner===null&&XG.players.some(p=>p.darts>0);
+  const c=S.last!=='killer'&&S.last!=='x01'&&G&&!G.aband&&G.winner===null&&G.players.some(p=>p.darts>0);
   $('hResume').style.display=(k||c||x)?'block':'none';show('home')}
 $('sBack').addEventListener('click',()=>{haptic();goHome()});
 $('hPlay').addEventListener('click',()=>{haptic();renderSetup();show('setup')});
@@ -7062,7 +7064,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-325';   // à changer avec VERSION dans sw.js
+const APPV='lf-326';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
