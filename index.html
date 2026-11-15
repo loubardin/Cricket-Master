@@ -5234,7 +5234,7 @@ $('rAdd').addEventListener('click',()=>{ROSTER.push({name:'',color:PCOLS[ROSTER.
 const K_HI='darts.history.v1';
 let HIST=store.get(K_HI,[]);
 try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
-const histSave=()=>store.set(K_HI,HIST);
+const histSave=()=>store.set(K_HI,HIST.filter(r=>!r.ext));   /* les parties venues d'autres téléphones sont gardées à part (sync.js) */
 const HIST_MAX=500;   /* au-delà, les parties les plus anciennes sont supprimées */
 function histPut(rec){try{if(rec.w!=null&&rec.w>=0)setTimeout(()=>winExtras(rec),30)}catch(e){}const i=HIST.findIndex(r=>r.id===rec.id);if(i>=0){rec.date=HIST[i].date;HIST[i]=rec}else HIST.push(rec);
   if(HIST.length>HIST_MAX){HIST.sort((a,b)=>a.date-b.date);HIST.splice(0,HIST.length-HIST_MAX)}histSave()}
@@ -6322,7 +6322,7 @@ function placeHead(){
  function renamePlayer(old,nw){nw=(nw||'').trim().toUpperCase().slice(0,8);if(!nw||nw===old)return old;if(typeof VSND!=='undefined'&&VSND[old]&&!isBot(nw)&&!ROSTER.some(r=>r.name===nw)){VSND[nw]=VSND[old];delete VSND[old];vsSave()}
    if(isBot(nw)||ROSTER.some(r=>r.name===nw)||S.names.includes(nw)){toast('NOM DÉJÀ PRIS','',true);SFX.err();return old}
    const r=ROSTER.find(q=>q.name===old);if(r)r.name=nw;else ROSTER.push({name:nw,color:PCOLS[0]});store.set(K_R,ROSTER);
-   S.names=S.names.map(n=>n===old?nw:n);store.set(K_S,S);return nw}
+   S.names=S.names.map(n=>n===old?nw:n);store.set(K_S,S);try{window.syRename&&syRename(old,nw)}catch(e){}return nw}
  const close=()=>{const p=$('cpick');if(!p)return;const inp=p.querySelector('.cpn');if(inp&&inp.value.trim().toUpperCase()!==p.dataset.n){renamePlayer(p.dataset.n,inp.value);p.remove();refresh();return}p.remove()};
  window.openColorsFor=(n,a,m)=>openColors(n,a,m);
  function openColors(name,anchor,mode){
@@ -6331,7 +6331,7 @@ function placeHead(){
    const inp=p.querySelector('.cpn');inp.addEventListener('input',()=>{inp.value=inp.value.toUpperCase()});
    inp.addEventListener('keydown',e=>{if(e.key==='Enter'){inp.blur();close()}});
    PCOLS.forEach(c=>{const b=el('button','cpc'+(c===cur?' on':''));b.style.setProperty('--c',c);b.setAttribute('aria-label','Couleur');
-     b.addEventListener('click',()=>{const nm=renamePlayer(name,inp.value);let r=ROSTER.find(q=>q.name===nm);if(!r){r={name:nm,color:c};ROSTER.push(r)}r.color=c;store.set(K_R,ROSTER);haptic();SFX.ui();
+     b.addEventListener('click',()=>{const nm=renamePlayer(name,inp.value);let r=ROSTER.find(q=>q.name===nm);if(!r){r={name:nm,color:c};ROSTER.push(r)}r.color=c;store.set(K_R,ROSTER);haptic();SFX.ui();try{window.syTouch&&syTouch(nm,'color')}catch(e){}
        p.dataset.n=nm;inp.value=nm;p.remove();refresh()});
      g.append(b)});
    const place=()=>{p.style.maxHeight='';p.style.overflowY='';const mh=innerHeight-24;if(p.offsetHeight>mh){p.style.maxHeight=mh+'px';p.style.overflowY='auto'}
@@ -6353,7 +6353,7 @@ function placeHead(){
      if(b.dataset.ct==='c'){g.hidden=!g.hidden;mu.hidden=true}else{mu.hidden=!mu.hidden;g.hidden=true;if(!mu.hidden)drawMu()}
      tb.querySelectorAll('[data-ct]').forEach(x=>x.classList.toggle('on',x.dataset.ct==='c'?!g.hidden:!mu.hidden));place()});
    mu.addEventListener('click',e=>{const b=e.target.closest('[data-vs]');if(!b)return;haptic();audioInit();const id=b.dataset.vs;if(id)VSND[name]=id;else delete VSND[name];vsSave();
-     if(!id)SFX.win();else if(S.sound)VIC.play(id);const y=mu.scrollTop,py=p.scrollTop;drawMu();p.scrollTop=py;tb.querySelector('[data-ct="m"] span').textContent=mName()});
+     try{window.syTouch&&syTouch(name,'music')}catch(e){}if(!id)SFX.win();else if(S.sound)VIC.play(id);const y=mu.scrollTop,py=p.scrollTop;drawMu();p.scrollTop=py;tb.querySelector('[data-ct="m"] span').textContent=mName()});
    p.append(tb,g,mu,tr);document.body.append(p);place();
  }
  document.addEventListener('pointerdown',e=>{
@@ -7021,19 +7021,20 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-321';   // à changer avec VERSION dans sw.js
+const APPV='lf-322';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
   const p=el('div','');p.id='xpick';p.classList.add('skinpick');document.body.append(p);
-  const draw=()=>{p.innerHTML=`<div class="skn"><button class="skgo" data-go="hStats">Statistiques</button><button class="skgo" data-go="hHist">Historique</button><button class="skprof">Profils</button></div><div class="skp skjeux"><span>Mise en page des jeux</span></div><div class="skdemo"><button data-d="ck2">Cricket 1v1</button><button data-d="ck3">Cricket 3</button><button data-d="ck4">Cricket 4</button><button data-d="ck5">Cricket 5+</button><button data-d="x2">501 1v1</button><button data-d="xn">501 3+</button><button data-d="kl">Killer 6</button><button data-d="kl7">Killer 7+</button><button data-d="clk">Horloge</button></div><div class="skp"><span>Son</span><div class="sksw sksnd"><button data-s="1" class="${S.sound?'on':''}">Oui</button><button data-s="0" class="${S.sound?'':'on'}">Non</button></div></div>`+`<div class="skp"><span>Annonces vocales</span><div class="sksw skvox"><button data-v="1" class="${S.voice!==false?'on':''}">Oui</button><button data-v="0" class="${S.voice===false?'on':''}">Non</button></div></div><div class="skp"><span>Couleurs des joueurs</span><div class="sksw"><button data-p="1" class="${S.pcolOff?'':'on'}">Oui</button><button data-p="0" class="${S.pcolOff?'on':''}">Non</button></div></div>`+colMenu()+`<button class="skdanger">Effacer des données…</button><div class="skv">version ${APPV}</div>`;if(p.style.top)p.style.top=Math.max(12,Math.min(parseFloat(p.style.top),innerHeight-p.offsetHeight-12))+'px'};
+  const draw=()=>{p.innerHTML=`<div class="skn"><button class="skgo" data-go="hStats">Statistiques</button><button class="skgo" data-go="hHist">Historique</button><button class="skprof">Profils</button><button class="skprof skami">Amis</button></div><div class="skp skjeux"><span>Mise en page des jeux</span></div><div class="skdemo"><button data-d="ck2">Cricket 1v1</button><button data-d="ck3">Cricket 3</button><button data-d="ck4">Cricket 4</button><button data-d="ck5">Cricket 5+</button><button data-d="x2">501 1v1</button><button data-d="xn">501 3+</button><button data-d="kl">Killer 6</button><button data-d="kl7">Killer 7+</button><button data-d="clk">Horloge</button></div><div class="skp"><span>Son</span><div class="sksw sksnd"><button data-s="1" class="${S.sound?'on':''}">Oui</button><button data-s="0" class="${S.sound?'':'on'}">Non</button></div></div>`+`<div class="skp"><span>Annonces vocales</span><div class="sksw skvox"><button data-v="1" class="${S.voice!==false?'on':''}">Oui</button><button data-v="0" class="${S.voice===false?'on':''}">Non</button></div></div><div class="skp"><span>Couleurs des joueurs</span><div class="sksw"><button data-p="1" class="${S.pcolOff?'':'on'}">Oui</button><button data-p="0" class="${S.pcolOff?'on':''}">Non</button></div></div>`+colMenu()+`<button class="skdanger">Effacer des données…</button><div class="skv">version ${APPV}</div>`;if(p.style.top)p.style.top=Math.max(12,Math.min(parseFloat(p.style.top),innerHeight-p.offsetHeight-12))+'px'};
   const colMenu=()=>{const C=colGet(),dot=v=>`<i style="background:${v}"></i>`;return `<button class="crow cmain"><span>Apparence de l'appli</span><b>${dot(colAcc())}${dot(C.ol==='acc'?colAcc():C.ol)}${dot(C.bg)}</b></button>`};
   draw();p.style.left=Math.max(12,(innerWidth-p.offsetWidth)/2)+'px';p.style.top=Math.max(12,Math.min(innerHeight-p.offsetHeight-12,e.currentTarget.getBoundingClientRect().bottom+10))+'px';
   p.addEventListener('click',ev=>{ev.stopPropagation();const go=ev.target.closest('.skgo');if(go){p.remove();$(go.dataset.go).dispatchEvent(new MouseEvent('click',{bubbles:true}));return}
     const dm=ev.target.closest('.skdemo button');if(dm){haptic();p.remove();demoStart(dm.dataset.d);return}
     if(ev.target.closest('.cmain')){haptic();p.remove();colOpen();return}
     if(ev.target.closest('.skdanger')){haptic();p.remove();dangerOpen();return}
+    if(ev.target.closest('.skami')){haptic();p.remove();if(window.syOpen)syOpen();return}
     if(ev.target.closest('.skprof')){haptic();p.remove();profOpen(null);return}
     const sn=ev.target.closest('.sksnd button');if(sn){if((sn.dataset.s==='1')!==!!S.sound)$('sndT').dispatchEvent(new MouseEvent('click',{bubbles:true}));draw();return}
     const vx=ev.target.closest('.skvox button');if(vx){haptic();S.voice=vx.dataset.v==='1';store.set(K_S,S);draw();if(S.voice)say('Annonces activées');return}
@@ -7407,13 +7408,14 @@ function profOpen(name){SFX.open();let o=$('prof');if(o)o.remove();o=el('div','o
         <div class="prl prm">${M.map(m=>`<button data-p="${esc(m)}"><b style="--pc:${pColor(m)}"></b>${esc(m)}<i>profil ›</i></button>`).join('')}</div>
         <h3 class="prs">Trophées d’équipe <i>${Object.keys(T).length}/${TTR.length}</i></h3><div class="prt">${TTR.map(t=>`<div class="${T[t[0]]?'on':''}" title="${esc(t[2])}"><span>${t[3]}</span><b>${esc(t[1])}</b><em>${T[t[0]]&&t[0]!=='dream'?'×'+T[t[0]]:''}</em><small>${esc(t[2])}</small></div>`).join('')}</div>
         <h3 class="prs">Par jeu</h3>${rows.length?`<div class="stw"><table class="stt"><thead><tr><th class="sn">Jeu</th><th>Parties</th><th>Victoires</th><th>%</th><th>Stat clé</th></tr></thead><tbody>${rows.join('')}</tbody></table></div>`:'<p class="hempty">Pas encore de partie.</p>'}${pgHist(n)}`;return}
-    o.dataset.n=n;const T=trAll()[n]||{},rows=[],TM=teamsOf(n);
+    o.dataset.n=n;let T=trAll()[n]||{};const rows=[],TM=teamsOf(n);
     STG.forEach(g=>{const a=stAgg(g,false).E.find(x=>x.name===n);if(!a||!a.g)return;const key={cricket:['MPR moyen',a.d?fr(a.h*3/a.d):'–'],x01:['Moyenne',a.xd?fr(a.xp*3/a.xd):'–'],killer:['Vies prises',a.k],clock:['Réussite',a.d?Math.round(a.h*100/a.d)+' %':'–'],shanghai:['Record',a.best||'–'],halveit:['Record',a.best||'–']}[g]||['',''];
       rows.push(`<tr><td class="sn">${GNAME[g]}</td><td>${a.g}</td><td>${a.wins}</td><td>${Math.round(a.wins*100/a.g)} %</td><td class="pk">${key[0]?`<b>${key[1]}</b><small>${key[0]}</small>`:''}</td></tr>`)});
     const ck=stAgg('cricket',false).E.find(x=>x.name===n)||{},xo=stAgg('x01',false).E.find(x=>x.name===n)||{};let str=0;STG.forEach(g=>{const a=stAgg(g,false).E.find(x=>x.name===n);if(a)str=Math.max(str,a.str||0)});
-    const rec=[['Meilleur MPR (Cricket)',ck.top?fr(ck.top):'–'],['Meilleur tour (Cricket)',ck.turn?ck.turn+' marques':'–'],['Meilleur finish (501)',xo.co||'–'],['180 (501)',xo.n180||0],['Plus longue série de victoires',str||'–']];
+    let rec=[['Meilleur MPR (Cricket)',ck.top?fr(ck.top):'–'],['Meilleur tour (Cricket)',ck.turn?ck.turn+' marques':'–'],['Meilleur finish (501)',xo.co||'–'],['180 (501)',xo.n180||0],['Plus longue série de victoires',str||'–']];
+    const OF=window.syOfficial&&syOfficial(n);if(OF){T=OF.T;rows.length=0;rows.push(...OF.rows);rec=OF.rec}   /* ami relié : bilan officiel publié par son téléphone */
     o.innerHTML=`<div class="ovh"><button class="prb" data-back>‹ Profils</button><button class="circ" data-x aria-label="Fermer"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
-      <div class="prh"><b style="--pc:${pColor(n)}"></b><h2>${esc(n)}</h2>${isBot(n)?'':'<button class="prc" data-pc aria-label="Couleur et nom">🎨</button>'}</div>
+      <div class="prh"><b style="--pc:${pColor(n)}"></b><h2>${esc(n)}</h2>${isBot(n)?'':'<button class="prc" data-pc aria-label="Couleur et nom">🎨</button>'}</div>${window.syTag?syTag(n):''}
       ${isBot(n)?'':`<h3 class="prs">Son de victoire</h3><div class="prv">${vsHtml(n)}</div>`}
       <h3 class="prs">Trophées <i>${Object.keys(T).filter(k=>TROPH.some(t=>t[0]===k)).length}/${TROPH.length}</i></h3><div class="prt">${trByCat().map(([c,L])=>`<p class="prtc">${esc(c)}</p>`+L.map(t=>`<div class="${T[t[0]]?'on':''}" data-tr="${t[0]}"><span>${t[3]}</span><b>${esc(t[1])}</b><em>${T[t[0]]?(t[0]==='ser'?T[t[0]]+' d’affilée':'×'+T[t[0]]):''}</em><small>${esc(t[2])}</small></div>`).join('')).join('')}</div>
       <h3 class="prs">Par jeu</h3>${rows.length?`<div class="stw"><table class="stt"><thead><tr><th class="sn">Jeu</th><th>Parties</th><th>Victoires</th><th>%</th><th>Stat clé</th></tr></thead><tbody>${rows.join('')}</tbody></table></div>`:'<p class="hempty">Pas encore de partie.</p>'}
@@ -7430,7 +7432,7 @@ function profOpen(name){SFX.open();let o=$('prof');if(o)o.remove();o=el('div','o
       const iv=setInterval(()=>{if(document.body.contains(cp))return;clearInterval(iv);const nw=inp.value.trim().toUpperCase();draw(ROSTER.some(r=>r.name===nw)?nw:n);if($('roster').classList.contains('on'))renderRoster()},150);return}
     if(t.closest('[data-vt]')){haptic();SFX.tick();VSO=VSO===n?null:n;vr();if(VSO&&!(window.VIC&&VIC.ready()))vicLoad().then(()=>{if(VSO===n)vr()});return}
     const vs=t.closest('[data-vs]');if(vs){haptic();audioInit();const id=vs.dataset.vs;if(id)VSND[n]=id;else delete VSND[n];vsSave();vr();
-      if(!id)SFX.win();else if(S.sound)VIC.play(id);return}const b=t.closest('[data-p]');if(b){haptic();SFX.ui();PGN=20;draw(b.dataset.p);o.scrollTop=0}})}
+      try{window.syTouch&&syTouch(n,'music')}catch(e){}if(!id)SFX.win();else if(S.sound)VIC.play(id);return}const b=t.closest('[data-p]');if(b){haptic();SFX.ui();PGN=20;draw(b.dataset.p);o.scrollTop=0}})}
 /* ---------- infos partie : stats en direct (même tableau que l'historique) + face-à-face ---------- */
 const INF={c:0,inv:false};
 renderStats=function(){infoRender()};xStats=function(){infoRender()};kStats=function(){infoRender()};
@@ -7898,5 +7900,6 @@ let XHOLD=null;
 
 
 </script>
+<script src="sync.js"></script>
 </body>
 </html>
