@@ -2883,17 +2883,32 @@ html body #hist #hBody .stg button.on{background:var(--accent);background-image:
 html body #hist #hBody .stn{margin:2px 4px 0;font:400 12px "Lbl",sans-serif;color:var(--mute);flex:none}
 html body #hist #hBody .stw{overflow-x:auto;-webkit-overflow-scrolling:touch;flex:none;border-radius:18px;box-shadow:inset 0 0 0 2px var(--ol,#111);background:var(--m-cell,#fff)}
 html body #hist #hBody .stt{border-collapse:separate;border-spacing:0;width:100%;font:400 16px "FunTxt","Fun",sans-serif;color:var(--ink)}
-html body #hist #hBody .stt th{font:400 10.5px/1.15 "Lbl",sans-serif;text-transform:uppercase;letter-spacing:.03em;color:var(--mute);padding:10px 5px 8px;text-align:center;white-space:normal;min-width:52px;max-width:74px;vertical-align:bottom;cursor:pointer;border-bottom:2px solid var(--ol,#111)}
+html body #hist #hBody .stt td[data-cn],html body #hist #hBody .stt td.sn{font-size:calc(16px*var(--fz,1))}
+html body #hist #hBody .stt th[data-cn]{-webkit-touch-callout:none;touch-action:pan-x pan-y}
+html body #hist #hBody .stt .drg{background:rgba(var(--acc-rgb,224,84,111),.28)!important;transition:none}
+html body #hist #hBody .stt.stdrag th.drg{color:var(--ink);box-shadow:inset 0 -3px 0 var(--accent)}
+html body #hist #hBody tr[data-pn]{cursor:pointer}
+html body #hist #hBody .stt th{font:400 10.5px/1.15 "Lbl",sans-serif;text-transform:uppercase;letter-spacing:.03em;color:var(--mute);padding:10px calc(5px*var(--stCW,1)) 8px;text-align:center;white-space:normal;min-width:calc(52px*var(--stCW,1));max-width:calc(74px*var(--stCW,1));vertical-align:bottom;cursor:pointer;border-bottom:2px solid var(--ol,#111)}
 html body #hist #hBody .stt th.on{color:var(--ink);font-weight:700}
-html body #hist #hBody .stt td{padding:11px 5px;text-align:center;white-space:nowrap;border-bottom:1px solid rgba(0,0,0,.08);font-variant-numeric:tabular-nums}
+html body #hist #hBody .stt td{padding:calc(11px*var(--stRH,1)) calc(5px*var(--stCW,1));text-align:center;white-space:nowrap;border-bottom:1px solid rgba(0,0,0,.08);font-variant-numeric:tabular-nums}
 html body #hist #hBody .stt tr:last-child td{border-bottom:0}
-html body #hist #hBody .stt td.on{background:rgba(var(--acc-rgb,224,84,111),.13);font-size:18px}
-html body #hist #hBody .stt .sn{position:sticky;left:0;z-index:1;background:var(--m-cell,#fff);text-align:left;padding-left:10px;max-width:38vw;min-width:0}
+html body #hist #hBody .stt td.on{background:rgba(var(--acc-rgb,224,84,111),.13);font-size:calc(18px*var(--fz,1))}
+html body #hist #hBody .stt .sn{position:sticky;left:0;z-index:1;background:var(--m-cell,#fff);text-align:left;padding-left:10px;max-width:calc(38vw*var(--stNW,1));min-width:calc(20vw*var(--stNW,1))}
 html body #hist #hBody .stt td.sn>div{display:flex;align-items:center;gap:8px;overflow:hidden}
 html body #hist #hBody .stt td.sn i{font-style:normal;font-size:12px;color:var(--mute);min-width:1.2em}
 html body #hist #hBody .stt td.sn b{flex:none;width:12px;height:12px;border-radius:50%;background:var(--pc)}
-html body #hist #hBody .stt td.sn span{overflow:hidden;text-overflow:ellipsis;text-transform:uppercase;white-space:nowrap;line-height:1.1}
-html body #hist #hBody .stt tbody tr:first-child td.sn span{font-size:18px}
+html body #hist #hBody .stt td.sn span{overflow:hidden;text-overflow:ellipsis;text-transform:uppercase;white-space:nowrap;line-height:1.1;font-size:calc(16px*var(--fz,1))}
+html body #hist #hBody .stt tbody tr:first-child td.sn span{font-size:calc(18px*var(--fz,1))}
+html body #hist #hBody .stn2{display:flex;align-items:center;gap:8px}html body #hist #hBody .stn2 .stn{flex:1}
+html body #hist #hBody .stsb{flex:none;width:40px;height:40px;border-radius:50%;border:0;background:transparent;box-shadow:inset 0 0 0 2px var(--ol,#111);font-size:18px}
+html body #hist #hBody .stsb svg{width:22px;height:22px;fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round}
+html body #hist #hBody .stsb.on{background:var(--accent)}html body #hist #hBody .stsb.on svg{stroke:var(--btx,#fff)}
+html body #hist #hBody .stset{display:flex;flex-direction:column;gap:6px;padding:12px 14px;border-radius:18px;background:var(--m-cell,#fff);box-shadow:inset 0 0 0 2px var(--ol,#111);flex:none}
+html body #hist #hBody .stset p{margin:6px 0 0;font:400 11px "Lbl",sans-serif;text-transform:uppercase;letter-spacing:.04em;color:var(--mute)}
+html body #hist #hBody .stset label{display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:center;font:400 14px "Lbl",sans-serif;color:var(--ink)}
+html body #hist #hBody .stset label b{font:400 13px "Lbl",sans-serif;color:var(--mute)}
+html body #hist #hBody .stset input{grid-column:1/-1;width:100%;accent-color:var(--accent);margin:0}
+html body #hist #hBody .stres{align-self:flex-start;margin-top:8px;border:0;border-radius:99px;padding:8px 14px;background:transparent;box-shadow:inset 0 0 0 2px var(--ol,#111);font:400 13px "Lbl",sans-serif;color:var(--ink)}
 /* menu : Statistiques + Historique côte à côte */
 #home .hrow2{display:grid;grid-template-columns:1fr 1fr;gap:3vw;width:100%}
 #home .hrow2>.big{width:100%!important;margin:0!important}
@@ -3441,12 +3456,16 @@ html body :is(#game#game#game#game,#x01#x01#x01#x01,#killer#killer#killer#killer
 #info .stt td.sn b{flex:none;width:12px;height:12px;border-radius:50%;background:var(--pc)}
 #info .stt td.sn span{overflow:hidden;text-overflow:ellipsis;text-transform:uppercase;white-space:nowrap;line-height:1.1}
 #prof .stt td.pk b{display:block;font-weight:400}#prof .stt td.pk small{display:block;font:400 9.5px "Lbl",sans-serif;color:var(--mute);white-space:normal}
+#roster .rname{flex:1;min-width:0;text-align:left;border:0;background:transparent;font:400 22px "Fun",sans-serif;text-transform:uppercase;padding:8px 4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #roster .rprof{flex:none;width:40px;height:40px;border:0;border-radius:50%;background:transparent;font-size:20px}
 .skinpick .skn .skprof{flex:1}
 #prof{gap:12px;overflow-y:auto;background:var(--page,#f7f2e5)!important}
 #prof .prb{border:0;background:transparent;font:400 18px "Fun",sans-serif;color:var(--ink);padding:6px 0}
 #prof .prl{display:flex;flex-direction:column;gap:8px}
 #prof .prl button{display:flex;align-items:center;gap:12px;border:0;border-radius:18px;padding:14px 16px;background:var(--m-cell,#fff);box-shadow:inset 0 0 0 2px var(--ol,#111);font:400 20px "Fun",sans-serif;color:var(--ink);text-transform:uppercase;text-align:left}
+#prof .prh .prc{margin-left:auto;flex:none;width:44px;height:44px;border-radius:50%;border:0;background:transparent;box-shadow:inset 0 0 0 2px var(--ol,#111);font-size:20px}
+#prof .prl button i{margin-left:auto;font:400 12px "Lbl",sans-serif;font-style:normal;color:var(--mute);text-transform:none}
+#prof .prl b+b,#prof .prh b+b{margin-left:-8px}
 #prof .prl b,#prof .prh b{flex:none;width:16px;height:16px;border-radius:50%;background:var(--pc)}
 #prof .prh{display:flex;align-items:center;gap:12px}#prof .prh h2{margin:0;font:400 30px "Fun",sans-serif;color:var(--ink);text-transform:uppercase}
 #prof .prs{margin:8px 2px 0;font:400 18px "Fun",sans-serif;color:var(--ink);display:flex;justify-content:space-between}#prof .prs i{font:400 13px "Lbl",sans-serif;font-style:normal;color:var(--mute)}
@@ -3665,7 +3684,7 @@ html body #hist #hBody .h2last small{font:400 11px "Lbl",sans-serif;color:var(--
 <div class="ov" id="roster">
   <div class="ovh"><h2>Joueurs</h2>
     <button class="circ" id="rClose" aria-label="Fermer"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
-  <p class="note">Touche la pastille pour changer la couleur du joueur. Ces joueurs apparaissent dans « Nouvelle partie » pour remplir les noms d'un geste.</p>
+  <p class="note">Touche un joueur pour ouvrir son profil : couleur (🎨), musique de victoire, trophées. Ces joueurs apparaissent dans « Nouvelle partie » pour remplir les noms d'un geste.</p>
   <div id="rList"></div>
   <button class="big dark" id="rAdd">+ Ajouter un joueur</button>
 </div>
@@ -5150,8 +5169,9 @@ function renderRoster(){
     inp.addEventListener('input',()=>{r.name=inp.value.toUpperCase();store.set(K_R,ROSTER)});
     const del=el('button','rdel','✕');del.setAttribute('aria-label','Supprimer');
     del.addEventListener('click',()=>{ROSTER.splice(i,1);store.set(K_R,ROSTER);SFX.back();renderRoster()});
-    const pf=el('button','rprof','👤');pf.setAttribute('aria-label','Profil');pf.addEventListener('click',()=>{if(r.name.trim())profOpen(r.name.trim())});
-    row.append(dot,inp,pf,del);box.append(row);
+    if(r.name.trim()){const nb=el('button','rname',esc(r.name));nb.style.color=r.color;const op=()=>{haptic();profOpen(r.name.trim())};nb.addEventListener('click',op);
+      const dd=el('button','rdot');dd.style.background=r.color;dd.addEventListener('click',op);const ar=el('button','rprof','›');ar.addEventListener('click',op);row.append(dd,nb,ar,del)}
+    else row.append(dot,inp,del);box.append(row);
   });
 }
 $('hRoster').addEventListener('click',()=>{haptic();SFX.open();renderRoster();$('roster').classList.add('on')});
@@ -6914,7 +6934,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-315';   // à changer avec VERSION dans sw.js
+const APPV='lf-316';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -7031,10 +7051,19 @@ const sgn=(v,d)=>(v>.004?'+':v<-.004?'−':'')+(d?fr(Math.abs(v)):fr2(Math.abs(v
 /* statistiques : un onglet par jeu + un onglet Général (parties jouées / gagnées) ;
    une ligne par joueur, classée par la colonne touchée (toucher encore = ordre inverse) */
 const STS={g:'all',sort:{}};
+/* mise en page des stats : ordre des colonnes (appui long + glisser), taille du texte par colonne, hauteur des lignes, largeurs */
+let STL={};try{STL=JSON.parse(localStorage.getItem('darts.stlay')||'{}')||{}}catch(e){}
+const stlSave=()=>{try{localStorage.setItem('darts.stlay',JSON.stringify(STL))}catch(e){}};
+const stFz=k=>((STL.fs||{})[k]||100)/100;
+function stlApply(){const b=$('hBody');if(!b)return;b.style.setProperty('--stRH',(STL.rh||100)/100);b.style.setProperty('--stCW',(STL.cw||100)/100);b.style.setProperty('--stNW',(STL.nw||100)/100)}
+function stSet(C){const sl=(lab,a,v,mn,mx)=>`<label><span>${esc(lab)}</span><b>${v} %</b><input type="range" ${a} min="${mn}" max="${mx}" step="5" value="${v}"></label>`;
+  return`<div class="stset"><p>Lignes et colonnes</p>${sl('Hauteur des lignes','data-sv="rh"',STL.rh||100,50,200)}${sl('Largeur des colonnes','data-sv="cw"',STL.cw||100,60,200)}${sl('Largeur de la colonne nom','data-sv="nw"',STL.nw||100,60,200)}
+    <p>Taille du texte de chaque colonne</p>${sl('Noms','data-sf="_n"',Math.round(stFz('_n')*100),50,200)}${C.map(c=>sl(c[0],`data-sf="${esc(c[0])}"`,Math.round(stFz(c[0])*100),50,200)).join('')}
+    <button class="stres" data-sreset>Remettre l’affichage d’origine</button></div>`}
 function memSt(r,k,game){const T=(r.log||[]).filter(e=>e[1]===k);if(!T.length)return null;const y={darts:0,hits:0,spews:0,triple:0,best:0,pts:0,n180:0,n140:0,n100:0};
   T.forEach(e=>{const D=e[2]||[];y.darts+=D.length;y.spews+=D.filter(d=>d[0]===0).length;if(D.length===3&&D.every(d=>d[0]===0))y.triple++;
     if(game==='cricket'){const m=D.reduce((a,d)=>a+(d[2]||0),0);y.hits+=m;y.best=Math.max(y.best,m)}
-    else{if(D.some(d=>d[3]))y.busts=(y.busts||0)+1;const v=D.some(d=>d[3])?0:D.reduce((a,d)=>a+(d[2]||0),0);y.pts+=v;y.best=Math.max(y.best,v);if(v===180)y.n180++;else if(v>=140)y.n140++;else if(v>=100)y.n100++}});return y}
+    else{if(D.some(d=>d[3]))y.busts=(y.busts||0)+1;const v=D.some(d=>d[3])?0:D.reduce((a,d)=>a+(d[2]||0),0);if(e[3]===0&&v)y.co=Math.max(y.co||0,v);y.pts+=v;y.best=Math.max(y.best,v);if(v===180)y.n180++;else if(v>=140)y.n140++;else if(v>=100)y.n100++}});return y}
 const nmH=n=>esc(n).split(' &amp; ').join(' &amp;<br>');   /* équipe : un coéquipier par ligne, jamais coupé */
 function stAgg(game,team){const L=HIST.filter(r=>r.game===game&&(!team||r.teams)).sort((a,b)=>a.date-b.date),M={};
   L.forEach(r=>stEnts(r,team).forEach(([k,x,solo])=>{const a=M[k]||(M[k]={name:k,first:k.split(' & ')[0],wins:0,g:0,d:0,h:0,top:0,sp:0,xd:0,xp:0,n180:0,co:0,k:0,best:0,sh:0,hv:0,
@@ -7063,7 +7092,7 @@ function stCols(game,team){const mpr=a=>a.d?a.h*3/a.d:null,pc=a=>a.g?a.wins*100/
     killer:[['Vies prises',a=>a.k],['Devenu killer',a=>a.kil],['Tirs sur soi',a=>a.self,null,1],['MPR moyen',mpr,fr],...SP,SER,['Victoire la plus rapide (tours)',a=>a.fast,null,1]],
     clock:[['Réussite',a=>a.d?a.h*100/a.d:null,x=>Math.round(x)+' %'],['Tour le plus rapide (fléch.)',a=>a.fastD,null,1],SER],
     shanghai:[['MPR moyen',mpr,fr],['Record',a=>a.best||null],['Shanghai',a=>a.sh],SER],
-    halveit:[['Record',a=>a.best||null],['Fois ÷ 2',a=>a.hv,null,1],SER]}[game]);
+    halveit:[['Record',a=>a.best||null],['Fois ÷ 2',a=>a.hv,null,1],SER]}[game]||[]);
   const K=C.findIndex((c,i)=>i>2&&/^(MPR moyen|Moyenne|Vies prises|Réussite|Record)$/.test(c[0]));if(K>2)C.splice(1,0,C.splice(K,1)[0]);   /* stat clé en 2e colonne */
   const B=stBets(game,team);Object.keys(B).sort((a,b)=>(b==='€')-(a==='€')).forEach(u=>C.push([u==='€'?'Paris €':'Paris '+u,a=>B[u][a.name]!==undefined?B[u][a.name]:null,v=>sgn(v)]));
   return C}
@@ -7071,7 +7100,9 @@ function stView(team){const G0=STS.g,games=G0==='all'?STG:[G0];let E,n=0;
   if(G0==='all'){const M={};games.forEach(g=>{const r=stAgg(g,team);n+=r.n;r.E.forEach(a=>{const m=M[a.name]||(M[a.name]={name:a.name,first:a.first,wins:0,g:0,run:0,str:0});m.wins+=a.wins;m.g+=a.g})});
     HIST.filter(r=>STG.includes(r.game)&&(!team||r.teams)).sort((a,b)=>a.date-b.date).forEach(r=>stEnts(r,team).forEach(([k,x])=>{const m=M[k];if(!m)return;m.run=x.win?m.run+1:0;m.str=Math.max(m.str,m.run)}));E=Object.values(M)}
   else{const r=stAgg(G0,team);E=r.E;n=r.n}
-  const C=stCols(G0,team).filter((c,i)=>i<4||E.some(a=>c[1](a)!==null)),so=STS.sort[G0]||{c:0,inv:false},ci=Math.min(so.c,C.length-1),[,f,,low]=C[ci],dir=(low?1:-1)*(so.inv?-1:1);
+  const C=stCols(G0,team).filter((c,i)=>i<4||E.some(a=>c[1](a)!==null)),O=(STL.ord||{})['st:'+G0];
+  if(O)C.sort((a,b)=>{const i=O.indexOf(a[0]),j=O.indexOf(b[0]);return(i<0?999:i)-(j<0?999:j)});
+  const so=STS.sort[G0]||{k:'Victoires',inv:false},ci=Math.max(0,C.findIndex(c=>c[0]===so.k)),[,f,,low]=C[ci]||C[0],dir=(low?1:-1)*(so.inv?-1:1);
   E.sort((a,b)=>{const x=f(a),y=f(b);if(x===null&&y===null)return b.wins-a.wins;if(x===null)return 1;if(y===null)return-1;return(x-y)*dir||b.wins-a.wins||a.name.localeCompare(b.name)});
   const col=(a,i)=>{const c=pcol(a.first);return /^#[0-9a-f]{6}$/i.test(c||'')?c:PFB[i%PFB.length]};
   const tabs=`<div class="stg">${['all','h2h',...STG].map(g=>`<button data-sg="${g}" class="${g===G0?'on':''}">${g==='all'?'Général':g==='h2h'?'Face-à-face':GNAME[g]}</button>`).join('')}</div>`;
@@ -7083,14 +7114,42 @@ function stView(team){const G0=STS.g,games=G0==='all'?STG:[G0];let E,n=0;
       ${R.last.length?`<div class="h2last">${R.last.map(x=>`<i style="--pc:${x==='a'?pColor(A):x==='b'?pColor(B):'#bbb'}"></i>`).join('')}<small>dernières parties</small></div>`:''}</div>`+
       (R.n?`<div class="stw"><table class="stt"><thead><tr><th class="sn">Jeu</th><th>${esc(A)}</th><th>${esc(B)}</th><th>Parties</th></tr></thead><tbody>${Object.entries(R.by).map(([g,v])=>`<tr><td class="sn">${GNAME[g]||g}</td><td class="${v.a>v.b?'on':''}">${v.a}</td><td class="${v.b>v.a?'on':''}">${v.b}</td><td>${v.n}</td></tr>`).join('')}</tbody></table></div>`:'<p class="hempty">Ils ne se sont jamais affrontés.</p>')}
   if(!E.length)return tabs+`<p class="hempty">${team?'Aucune partie en équipes ici pour l\'instant.':'Aucune partie ici pour l\'instant.'}</p>`;
-  let h=tabs+`<p class="stn">${n} partie${n>1?'s':''}${G0==='all'?' · tous jeux confondus':''} · touche un titre de colonne pour classer</p><div class="stw"><table class="stt"><thead><tr><th class="sn">${team?'Équipe':'Joueur'}</th>`+
-    C.map((c,i)=>`<th data-sc="${i}" class="${i===ci?'on':''}">${esc(c[0])}${i===ci?(dir<0?' ▼':' ▲'):''}</th>`).join('')+'</tr></thead><tbody>';
-  E.forEach((a,r)=>{h+=`<tr><td class="sn"><div><i>${r+1}</i><b style="--pc:${col(a,r)}"></b><span>${nmH(a.name)}</span></div></td>`+C.map((c,i)=>{const v=c[1](a);return`<td class="${i===ci?'on':''}">${v===null?'–':c[2]?c[2](v):v}</td>`}).join('')+'</tr>'});
-  return h+'</tbody></table></div>'}
-$('hBody').addEventListener('click',e=>{if(HMODE!=='stats')return;const g=e.target.closest('[data-sg]'),c=e.target.closest('[data-sc]');
+  const fz=k=>` style="--fz:${stFz(k)}"`;
+  let h=tabs+`<div class="stn2"><p class="stn">${n} partie${n>1?'s':''}${G0==='all'?' · tous jeux':''} · touche un titre pour classer, reste appuyé pour le déplacer · touche un nom pour son profil</p><button class="stsb${STS.set?' on':''}" data-sset aria-label="Réglages d’affichage"><svg viewBox="0 0 24 24"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg></button></div><div class="stw"><table class="stt" data-ok="st:${G0}"><thead><tr><th class="sn"${fz('_n')}>${team?'Équipe':'Joueur'}</th>`+
+    C.map((c,i)=>`<th data-sc="${esc(c[0])}" data-cn="${esc(c[0])}" class="${i===ci?'on':''}"${fz(c[0])}>${esc(c[0])}${i===ci?(dir<0?' ▼':' ▲'):''}</th>`).join('')+'</tr></thead><tbody>';
+  E.forEach((a,r)=>{h+=`<tr data-pn="${esc(a.name)}"><td class="sn"${fz('_n')}><div><i>${r+1}</i><b style="--pc:${col(a,r)}"></b><span>${nmH(a.name)}</span></div></td>`+C.map((c,i)=>{const v=c[1](a);return`<td data-cn="${esc(c[0])}" class="${i===ci?'on':''}"${fz(c[0])}>${v===null?'–':c[2]?c[2](v):v}</td>`}).join('')+'</tr>'});
+  return h+'</tbody></table></div>'+(STS.set?stSet(C):'')}   /* réglages sous le tableau : on voit l'effet en direct */
+$('hBody').addEventListener('click',e=>{if(HMODE!=='stats')return;if(performance.now()-STDR.end<500)return;const g=e.target.closest('[data-sg]'),c=e.target.closest('[data-sc]');
   const h2=e.target.closest('[data-h2]');if(h2){STS[h2.dataset.h2]=h2.dataset.n;SFX.ui();renderHist();return}
+  if(e.target.closest('[data-sset]')){haptic();SFX.tick();STS.set=!STS.set;renderHist();return}
+  if(e.target.closest('[data-sreset]')){haptic();SFX.back();STL={};stlSave();stlApply();renderHist();return}
+  if(e.target.closest('.stset'))return;
   if(g){STS.g=g.dataset.sg;SFX.ui();renderHist()}
-  else if(c){const k=+c.dataset.sc,o=STS.sort[STS.g]||{c:0,inv:false};STS.sort[STS.g]=o.c===k?{c:k,inv:!o.inv}:{c:k,inv:false};SFX.tick();renderHist()}});
+  else if(c){const k=c.dataset.sc,o=STS.sort[STS.g]||{k:'Victoires',inv:false};STS.sort[STS.g]=o.k===k?{k,inv:!o.inv}:{k,inv:false};SFX.tick();renderHist()}
+  else{const pr=e.target.closest('tr[data-pn]');if(pr){haptic();profOpen(pr.dataset.pn)}}});
+$('hBody').addEventListener('input',e=>{const r=e.target;if(!r.matches||!r.matches('.stset input'))return;const v=+r.value;r.previousElementSibling.textContent=v+' %';
+  if(r.dataset.sv){STL[r.dataset.sv]=v;stlApply()}
+  else{const k=r.dataset.sf;(STL.fs=STL.fs||{})[k]=v;$('hBody').querySelectorAll(k==='_n'?'.stt .sn':'.stt [data-cn]').forEach(x=>{if(k==='_n'||x.dataset.cn===k)x.style.setProperty('--fz',v/100)})}
+  clearTimeout(stlSave._t);stlSave._t=setTimeout(stlSave,300)});
+/* appui long sur un titre de colonne puis glisser : change l'ordre des colonnes */
+const STDR={d:null,end:0};
+{const B=$('hBody');
+ const endD=ok=>{const D=STDR.d;if(!D)return;clearTimeout(D.t);STDR.d=null;if(!D.on)return;STDR.end=performance.now();const tb=D.th.closest('table');tb.classList.remove('stdrag');D.th.classList.remove('drg');
+   tb.querySelectorAll('[data-cn].drg').forEach(x=>x.classList.remove('drg'));
+   if(ok){(STL.ord=STL.ord||{})[tb.dataset.ok]=[...tb.querySelectorAll('thead th[data-cn]')].map(h=>h.dataset.cn);stlSave();SFX.ui()}};
+ const mark=(tb,cn)=>tb.querySelectorAll('[data-cn]').forEach(x=>x.classList.toggle('drg',x.dataset.cn===cn));
+ B.addEventListener('pointerdown',e=>{const th=e.target.closest&&e.target.closest('.stt[data-ok] th[data-cn]');if(!th||HMODE!=='stats')return;
+   STDR.d={th,x0:e.clientX,y0:e.clientY,on:false,t:setTimeout(()=>{const D=STDR.d;if(!D)return;D.on=true;haptic();SFX.tick();const tb=th.closest('table');tb.classList.add('stdrag');mark(tb,th.dataset.cn)},380)}});
+ B.addEventListener('pointermove',e=>{const D=STDR.d;if(!D)return;
+   if(!D.on){if(Math.hypot(e.clientX-D.x0,e.clientY-D.y0)>8){clearTimeout(D.t);STDR.d=null}return}
+   const tb=D.th.closest('table'),w=tb.closest('.stw'),wr=w.getBoundingClientRect();
+   if(e.clientX>wr.right-36)w.scrollLeft+=10;else if(e.clientX<wr.left+36+(tb.querySelector('th.sn').offsetWidth))w.scrollLeft-=10;
+   const ths=[...tb.querySelectorAll('thead th[data-cn]')],cur=ths.indexOf(D.th);
+   const tg=ths.findIndex(h=>{const r=h.getBoundingClientRect();return e.clientX>=r.left&&e.clientX<r.right});if(tg<0||tg===cur)return;
+   tb.querySelectorAll('tr').forEach(tr=>{const cells=tr.children,c=cells[cur+1],ref=tg>cur?cells[tg+1].nextSibling:cells[tg+1];if(c)tr.insertBefore(c,ref)});haptic()});
+ B.addEventListener('touchmove',e=>{if(STDR.d&&STDR.d.on)e.preventDefault()},{passive:false});
+ B.addEventListener('pointerup',()=>endD(1));B.addEventListener('pointercancel',()=>endD(1));
+ B.addEventListener('contextmenu',e=>{if(e.target.closest&&e.target.closest('.stt th'))e.preventDefault()})}
 function hgCard(r){const P=r.p,w=P[r.w]||{};
   const sub=r.game==='cricket'?(r.mode==='cut'?'coupe-gorge':'standard'):r.game==='x01'?(r.start||501)+' · '+(['simple','double','master'][r.outR]||'double')+' out':r.game==='shanghai'?(r.shr||7)+' tours':r.game==='halveit'?((r.hiseq||HI_CLASSIC).length)+' manches':r.game==='killer'&&r.manche>1?'manche '+r.manche:'';
   const val=x=>r.game==='cricket'?x.score:r.game==='x01'?(r.legsTo>1?(x.legs||0)+' m.':(x.win?0:(x.rem!==undefined?x.rem:''))):r.game==='killer'?(x.lives?x.lives+' ♥':'💀'):r.game==='clock'?clkLbl(x.tgt):x.rem;
@@ -7118,7 +7177,7 @@ function hgView(r){const P=r.p,C=hgCols(r),ci=Math.min(HGS.c,C.length-1),[,f,,lo
     <p class="stn">touche un titre de colonne pour classer</p><div class="stw"><table class="stt"><thead><tr><th class="sn">${r.teams?'Équipe':'Joueur'}</th>`+C.map((k,i)=>`<th data-hc="${i}" class="${i===ci?'on':''}">${esc(k[0])}${i===ci?(dir<0?' ▼':' ▲'):''}</th>`).join('')+'</tr></thead><tbody>';
   ord.forEach((i,rk)=>{const x=P[i];h+=`<tr><td class="sn"><div><i>${i===r.w?'🏆':rk+1}</i><b style="--pc:${c(x)}"></b><span>${nmH(x.name)}</span></div></td>`+C.map((k,j)=>{const v=k[1](x);return`<td class="${j===ci?'on':''}">${v===null||v===undefined?'–':k[2]?k[2](v):v}</td>`}).join('')+'</tr>';
     if(x.members&&x.members.length>1&&(r.game==='cricket'||r.game==='x01'))x.members.forEach(m=>{const y=memSt(r,m,r.game);if(!y)return;   /* une ligne par coéquipier */
-      h+=`<tr class="hgmb"><td class="sn"><div><i></i><b style="--pc:${c({name:m})}"></b><span>${esc(m)}</span></div></td>`+C.map((k,j)=>{const v=/^(Score|Reste|Manches|Finish)$/.test(k[0])?null:k[1](y);return`<td class="${j===ci?'on':''}">${v===null||v===undefined?'–':k[2]?k[2](v):v}</td>`}).join('')+'</tr>'})});
+      h+=`<tr class="hgmb"><td class="sn"><div><i></i><b style="--pc:${c({name:m})}"></b><span>${esc(m)}</span></div></td>`+C.map((k,j)=>{const v=/^(Score|Reste|Manches)$/.test(k[0])?null:k[1](y);return`<td class="${j===ci?'on':''}">${v===null||v===undefined?'–':k[2]?k[2](v):v}</td>`}).join('')+'</tr>'})});
   h+='</tbody></table></div>';
   if(r.log&&r.log.length){const N=P.length;h+=`<h3 class="hgsec">Tour par tour</h3><div class="hglog">`;
     r.log.forEach((L,k)=>{const[pi,mb,ds,after]=L,x=P[pi]||{},rd=Math.floor(k/N)+1;if(k%N===0)h+=`<div class="hgr">Tour ${rd}</div>`;
@@ -7182,8 +7241,23 @@ function winExtras(rec){const box=$('wExtra')||(()=>{const d=el('div','');d.id='
   const before=trAll(HIST.filter(r=>r.id!==rec.id)),after=trAll(),got=[];
   Object.keys(after).forEach(n=>Object.keys(after[n]).forEach(id=>{const k=after[n][id]-((before[n]||{})[id]||0);if(k>0){const t=TROPH.find(x=>x[0]===id);got.push(`<span>${t[3]} <b>${esc(t[1])}</b> · ${esc(n)}${id==='ser'?` <i>${after[n][id]} d’affilée</i>`:after[n][id]>1?` <i>×${after[n][id]}</i>`:''}</span>`)}}));
   const E=rec.p.map(x=>x.members?x.members[0]:x.name).filter(n=>!isBot(n));let hh='';
+  if(rec.teams){const b2=trTeams(HIST.filter(r=>r.id!==rec.id)),a2=trTeams();Object.keys(a2).forEach(k=>Object.keys(a2[k]).forEach(id=>{const d=a2[k][id]-((b2[k]||{})[id]||0);if(d>0){const t=TTR.find(x=>x[0]===id);got.push(`<span>${t[3]} <b>${esc(t[1])}</b> · ${esc(k)}</span>`)}}))}
   if(E.length===2&&!rec.teams)hh=h2hLine(E[0],E[1],rec.game)||'';
   box.innerHTML=(got.length?`<div class="wtro"><div class="wtt">Trophées gagnés</div>${got.join('')}</div>`:'')+(hh?`<div class="wh2h">${hh}</div>`:'')}
+/* ---------- trophées d'équipe ---------- */
+const TTR=[['tw1','Première victoire','Le duo gagne sa première partie ensemble','🥂'],['ins','Inséparables','10 parties jouées ensemble (×1 tous les 10)','🔗'],['duo3','Duo infernal','3 victoires d’affilée ensemble','😈'],['dream','Dream team','Plus de 60 % de victoires sur 10 parties ou plus','🌟'],
+  ['carry','Porté à bout de bras','Victoire où un joueur fait 70 % ou plus des marques (Cricket) ou des points (501) de l’équipe','🏋️'],['eq','Équilibre parfait','Victoire où les joueurs ont un MPR à moins de 0,3 d’écart (Cricket)','⚖️'],
+  ['fus','Fusion','Tous les joueurs de l’équipe font 2 de MPR ou plus dans la même partie (Cricket)','⚛️'],['rem2','Remontada à deux','Victoire en équipe après 50 points de retard ou plus (Cricket)','🔥']];
+function trTeams(list){const M={},inc=(k,id,v)=>{const o=M[k]=M[k]||{};o[id]=v!==undefined?v:(o[id]||0)+1},st={};
+  (list||HIST).filter(r=>r.teams&&r.w!=null&&r.w>=0&&r.p).slice().sort((a,b)=>a.date-b.date).forEach(r=>{let tr=null;
+    r.p.forEach((x,j)=>{if(!x.members||x.members.length<2)return;const k=tKey(x),s=st[k]=st[k]||{n:0,w:0,run:0},win=j===r.w;
+      s.n++;if(win)s.w++;s.run=win?s.run+1:0;if(win&&s.w===1)inc(k,'tw1');if(s.n%10===0)inc(k,'ins');if(s.run===3)inc(k,'duo3');
+      const Y=(r.game==='cricket'||r.game==='x01')&&r.log&&r.log.length?x.members.map(m=>memSt(r,m,r.game)):[];
+      if(win&&Y.length&&Y.every(Boolean)){const v=Y.map(y=>r.game==='cricket'?y.hits:y.pts),t=v.reduce((a,b)=>a+b,0);if(t>0&&Math.max(...v)>=t*.7)inc(k,'carry')}
+      if(r.game==='cricket'&&Y.length&&Y.every(y=>y&&y.darts>=9)){const m=Y.map(y=>y.hits*3/y.darts);if(win&&Math.max(...m)-Math.min(...m)<.3)inc(k,'eq');if(m.every(v=>v>=2))inc(k,'fus')}
+      if(win&&r.game==='cricket'){tr=tr||trOf(r);if(tr.some(t=>t[1]==='remo'))inc(k,'rem2')}})});
+  Object.entries(st).forEach(([k,s])=>{if(s.n>=10&&s.w/s.n>.6)inc(k,'dream',1)});return M}
+function teamsOf(n){const M={};STG.forEach(g=>stAgg(g,true).E.forEach(a=>{if(!n||a.name.split(' & ').includes(n)){const m=M[a.name]=M[a.name]||{g:0,w:0};m.g+=a.g;m.w+=a.wins}}));return Object.entries(M).sort((a,b)=>b[1].g-a[1].g)}
 /* ---------- profils ---------- */
 function allPeople(){const S0=new Set(ROSTER.map(r=>r.name).filter(Boolean));HIST.forEach(r=>r.p&&rPeople(r).forEach(n=>{if(!isBot(n))S0.add(n)}));return[...S0]}
 /* ---------- son de victoire de chaque joueur (musiques du banc de sons, fichier vic.js chargé à la demande) ---------- */
@@ -7204,22 +7278,34 @@ function vsHtml(n){const cur=VSND[n],open=VSO===n;
     Object.entries(G).map(([g,a])=>`<p class="prvg">${esc(g)}</p><div class="prvc">${a.map(x=>`<button data-vs="${esc(x.id)}" class="${cur===x.id?'on':''}">${esc(x.n)}</button>`).join('')}</div>`).join('')+'</div>'}
 let VSO=null;
 function profOpen(name){SFX.open();let o=$('prof');if(o)o.remove();o=el('div','ov');o.id='prof';document.body.append(o);
-  const draw=n=>{if(!n){const L=allPeople();o.innerHTML=`<div class="ovh"><h2>Profils</h2><button class="circ" data-x aria-label="Fermer"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>`+
-      (L.length?`<div class="prl">${L.map(x=>`<button data-p="${esc(x)}"><b style="--pc:${pColor(x)}"></b>${esc(x)}</button>`).join('')}</div>`:'<p class="hempty">Aucun joueur pour l’instant.</p>');return}
-    o.dataset.n=n;const T=trAll()[n]||{},rows=[];
+  const draw=n=>{if(!n){const L=allPeople(),TL=teamsOf();o.innerHTML=`<div class="ovh"><h2>Profils</h2><button class="circ" data-x aria-label="Fermer"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>`+
+      (L.length?`<div class="prl">${L.map(x=>`<button data-p="${esc(x)}"><b style="--pc:${pColor(x)}"></b>${esc(x)}</button>`).join('')}</div>`:'<p class="hempty">Aucun joueur pour l’instant.</p>')+
+      (TL.length?`<h3 class="prs">Équipes</h3><div class="prl">${TL.map(([k,v])=>`<button data-p="${esc(k)}">${k.split(' & ').map(m=>`<b style="--pc:${pColor(m)}"></b>`).join('')}${nmH(k)}<i>${v.g} partie${v.g>1?'s':''}</i></button>`).join('')}</div>`:'');return}
+    if(n.includes(' & ')){o.dataset.n=n;const T=trTeams()[n]||{},M=n.split(' & '),rows=[];
+      STG.forEach(g=>{const a=stAgg(g,true).E.find(x=>x.name===n);if(!a||!a.g)return;const key={cricket:['MPR moyen',a.d?fr(a.h*3/a.d):'–'],x01:['Moyenne',a.xd?fr(a.xp*3/a.xd):'–'],killer:['Vies prises',a.k],shanghai:['Record',a.best||'–'],halveit:['Record',a.best||'–']}[g]||['',''];
+        rows.push(`<tr><td class="sn">${GNAME[g]}</td><td>${a.g}</td><td>${a.wins}</td><td>${Math.round(a.wins*100/a.g)} %</td><td class="pk">${key[0]?`<b>${key[1]}</b><small>${key[0]}</small>`:''}</td></tr>`)});
+      o.innerHTML=`<div class="ovh"><button class="prb" data-back>‹ Profils</button><button class="circ" data-x aria-label="Fermer"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+        <div class="prh">${M.map(m=>`<b style="--pc:${pColor(m)}"></b>`).join('')}<h2>${nmH(n)}</h2></div>
+        <div class="prl prm">${M.map(m=>`<button data-p="${esc(m)}"><b style="--pc:${pColor(m)}"></b>${esc(m)}<i>profil ›</i></button>`).join('')}</div>
+        <h3 class="prs">Trophées d’équipe <i>${Object.keys(T).length}/${TTR.length}</i></h3><div class="prt">${TTR.map(t=>`<div class="${T[t[0]]?'on':''}" title="${esc(t[2])}"><span>${t[3]}</span><b>${esc(t[1])}</b><em>${T[t[0]]&&t[0]!=='dream'?'×'+T[t[0]]:''}</em><small>${esc(t[2])}</small></div>`).join('')}</div>
+        <h3 class="prs">Par jeu</h3>${rows.length?`<div class="stw"><table class="stt"><thead><tr><th class="sn">Jeu</th><th>Parties</th><th>Victoires</th><th>%</th><th>Stat clé</th></tr></thead><tbody>${rows.join('')}</tbody></table></div>`:'<p class="hempty">Pas encore de partie.</p>'}`;return}
+    o.dataset.n=n;const T=trAll()[n]||{},rows=[],TM=teamsOf(n);
     STG.forEach(g=>{const a=stAgg(g,false).E.find(x=>x.name===n);if(!a||!a.g)return;const key={cricket:['MPR moyen',a.d?fr(a.h*3/a.d):'–'],x01:['Moyenne',a.xd?fr(a.xp*3/a.xd):'–'],killer:['Vies prises',a.k],clock:['Réussite',a.d?Math.round(a.h*100/a.d)+' %':'–'],shanghai:['Record',a.best||'–'],halveit:['Record',a.best||'–']}[g]||['',''];
       rows.push(`<tr><td class="sn">${GNAME[g]}</td><td>${a.g}</td><td>${a.wins}</td><td>${Math.round(a.wins*100/a.g)} %</td><td class="pk">${key[0]?`<b>${key[1]}</b><small>${key[0]}</small>`:''}</td></tr>`)});
     const ck=stAgg('cricket',false).E.find(x=>x.name===n)||{},xo=stAgg('x01',false).E.find(x=>x.name===n)||{};let str=0;STG.forEach(g=>{const a=stAgg(g,false).E.find(x=>x.name===n);if(a)str=Math.max(str,a.str||0)});
     const rec=[['Meilleur MPR (Cricket)',ck.top?fr(ck.top):'–'],['Meilleur tour (Cricket)',ck.turn?ck.turn+' marques':'–'],['Meilleur finish (501)',xo.co||'–'],['180 (501)',xo.n180||0],['Plus longue série de victoires',str||'–']];
     o.innerHTML=`<div class="ovh"><button class="prb" data-back>‹ Profils</button><button class="circ" data-x aria-label="Fermer"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
-      <div class="prh"><b style="--pc:${pColor(n)}"></b><h2>${esc(n)}</h2></div>
+      <div class="prh"><b style="--pc:${pColor(n)}"></b><h2>${esc(n)}</h2>${isBot(n)?'':'<button class="prc" data-pc aria-label="Couleur et nom">🎨</button>'}</div>
       ${isBot(n)?'':`<h3 class="prs">Son de victoire</h3><div class="prv">${vsHtml(n)}</div>`}
       <h3 class="prs">Trophées <i>${Object.keys(T).length}/${TROPH.length}</i></h3><div class="prt">${TROPH.map(t=>`<div class="${T[t[0]]?'on':''}" title="${esc(t[2])}"><span>${t[3]}</span><b>${esc(t[1])}</b><em>${T[t[0]]?(t[0]==='ser'?T[t[0]]+' d’affilée':'×'+T[t[0]]):''}</em><small>${esc(t[2])}</small></div>`).join('')}</div>
       <h3 class="prs">Par jeu</h3>${rows.length?`<div class="stw"><table class="stt"><thead><tr><th class="sn">Jeu</th><th>Parties</th><th>Victoires</th><th>%</th><th>Stat clé</th></tr></thead><tbody>${rows.join('')}</tbody></table></div>`:'<p class="hempty">Pas encore de partie.</p>'}
-      <h3 class="prs">Records</h3><div class="prr">${rec.map(([k,v])=>`<div><span>${k}</span><b>${v}</b></div>`).join('')}</div>`};
+      <h3 class="prs">Records</h3><div class="prr">${rec.map(([k,v])=>`<div><span>${k}</span><b>${v}</b></div>`).join('')}</div>
+      ${TM.length?`<h3 class="prs">Ses équipes</h3><div class="prl">${TM.map(([k,v])=>`<button data-p="${esc(k)}">${k.split(' & ').map(m=>`<b style="--pc:${pColor(m)}"></b>`).join('')}${nmH(k)}<i>${v.g} p. · ${Math.round(v.w*100/v.g)} %</i></button>`).join('')}</div>`:''}`};
   VSO=null;draw(name);requestAnimationFrame(()=>o.classList.add('on'));
   o.addEventListener('click',e=>{const t=e.target;if(t.closest('[data-x]')){o.classList.remove('on');setTimeout(()=>o.remove(),300);return}if(t.closest('[data-back]')){SFX.back();VSO=null;draw(null);return}
     const vb=o.querySelector('.prv'),n=o.dataset.n,vr=()=>{if(vb)vb.innerHTML=vsHtml(n)};
+    const pcb=t.closest('[data-pc]');if(pcb){haptic();openColorsFor(n,pcb);const cp=$('cpick'),inp=cp&&cp.querySelector('.cpn');if(!cp)return;
+      const iv=setInterval(()=>{if(document.body.contains(cp))return;clearInterval(iv);const nw=inp.value.trim().toUpperCase();draw(ROSTER.some(r=>r.name===nw)?nw:n);if($('roster').classList.contains('on'))renderRoster()},150);return}
     if(t.closest('[data-vt]')){haptic();SFX.tick();VSO=VSO===n?null:n;vr();if(VSO&&!(window.VIC&&VIC.ready()))vicLoad().then(()=>{if(VSO===n)vr()});return}
     const vs=t.closest('[data-vs]');if(vs){haptic();audioInit();const id=vs.dataset.vs;if(id)VSND[n]=id;else delete VSND[n];vsSave();vr();
       if(!id)SFX.win();else if(S.sound)VIC.play(id);return}const b=t.closest('[data-p]');if(b){haptic();SFX.ui();draw(b.dataset.p);o.scrollTop=0}})}
@@ -7236,7 +7322,7 @@ function infoRender(){const b=$('stats');if(!b)return;const r=infoRec();if(!r){b
 function noteCard(n,cur){const D=betDebts(betNet(n.list));
   return`<div class="hg note"><div class="hgt"><b>🧾 ${cur?'Note en cours':'Note réglée'}</b><em>${n.list.length} partie${n.list.length>1?'s':''}</em></div><div class="hgm">${cur?'pas encore envoyée':fdate(n.date)}</div>
     <div class="hgp">${D.length?D.map(x=>`<span>${esc(x.from)} → ${esc(x.to)} <i>${betTxt(x.v,x.u)}</i></span>`).join(''):'<span>Personne ne doit rien</span>'}</div>${cur?'<button class="big" id="bNote">Voir la note 🧾</button>':''}</div>`}
-renderHist=function(){const h=$('hist'),b=$('hBody');
+renderHist=function(){const h=$('hist'),b=$('hBody');stlApply();
   h.classList.toggle('hm-games',HMODE==='games');h.classList.toggle('hm-stats',HMODE==='stats');h.classList.remove('tbets');
   h.querySelector('.ovh h2').textContent=HMODE==='games'?'Historique':'Statistiques';
   document.querySelectorAll('#hTabs button').forEach(x=>x.classList.toggle('sel',x.dataset.v===HSEL.tab));
