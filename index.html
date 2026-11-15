@@ -3459,6 +3459,10 @@ html body :is(#game#game#game#game,#x01#x01#x01#x01,#killer#killer#killer#killer
 #hgd .hgd em.ok{background:rgba(var(--acc-rgb,224,84,111),.18)}
 #hgd .hgd em.sp{background:rgba(0,157,244,.18)}
 #hgd .hgd em.bu{background:#c0392b;color:#fff}
+#hgd .hgd em.sp{background:var(--spew,#009df4);color:#fff}
+#hgd .hgd em.m2{background:var(--silver);color:#111}
+#hgd .hgd em.m3{background:var(--gold);color:#111}
+#hgd .hgd em.no:not(.sp){opacity:.45}
 #hgd .hgx{font:400 calc(12px*var(--lgt,1)) "Lbl",sans-serif;color:var(--mute);min-width:56px;text-align:right}
 #hBody .hg[data-hid]{cursor:pointer}
 /* lot 1 : trophées, face-à-face, profils, infos partie */
@@ -7017,7 +7021,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-319';   // à changer avec VERSION dans sw.js
+const APPV='lf-320';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -7247,7 +7251,7 @@ function hgCard(r){const P=r.p,w=P[r.w]||{};
     <button class="hdel" data-id="${r.id}" aria-label="Supprimer">✕</button></div>`}
 /* fiche d'une partie : stats par joueur (même tableau que les statistiques) + déroulé tour par tour */
 const HGS={c:0,inv:false};let HGID=null;
-const dLbl=(n,m)=>n===0?'✕':n===25?(m===2?'DB':'B'):(m===3?'T':m===2?'D':'')+n;
+const dLbl=(n,m)=>n===0?'S':n===25?(m===2?'DB':'B'):(m===3?'T':m===2?'D':'')+n;
 function hgCols(r){const pc=(a,b)=>b?a*100/b:null,f0=x=>Math.round(x)+' %',mpr=x=>x.darts?x.hits*3/x.darts:null,spp=x=>x.darts&&x.spews!==undefined?x.spews*100/x.darts:null;
   return{cricket:[['Score',x=>x.score],['MPR',mpr,fr],['Marques',x=>x.hits],['Meilleur tour',x=>x.best||null],['Spews',x=>x.spews,null,1],['% Spew',spp,x=>fr(x)+' %',1],['Triples Spew',x=>x.triple||0,null,1],['Fléchettes',x=>x.darts]],
     x01:[[r.legsTo>1?'Manches':'Reste',x=>r.legsTo>1?(x.legs||0):(x.win?0:x.rem),null,r.legsTo>1?0:1],['Moyenne',x=>x.darts?x.pts*3/x.darts:null,fr],['Meilleure volée',x=>x.best||null],['180',x=>x.n180||0],['140 +',x=>x.n140||0],['100 +',x=>x.n100||0],['Finish',x=>x.co||null],['Busts',x=>x.busts||0,null,1],['Fléchettes',x=>x.darts]],
@@ -7272,7 +7276,7 @@ function hgView(r){const P=r.p,C0=hgCols(r),O=(STL.hord||{})[r.game],C=O?C0.slic
     <button class="stres" data-greset>Remettre l’affichage d’origine</button></div>`;
   if(r.log&&r.log.length){const N=P.length,ACC={},cum=r.game==='cricket'||r.game==='x01';h+=`<h3 class="hgsec">Tour par tour${cum?`<small>${r.game==='cricket'?'MPR':'moyenne'} depuis le début</small>`:''}</h3><div class="hglog">`;
     r.log.forEach((L,k)=>{const[pi,mb,ds,after]=L,x=P[pi]||{},rd=Math.floor(k/N)+1;if(k%N===0)h+=`<div class="hgr">Tour ${rd}</div>`;
-      const darts=ds.map(d=>{const lb=dLbl(d[0],d[1]),cls=d[0]===0?'sp':r.game==='cricket'?(d[2]?'ok':'no'):r.game==='x01'?(d[3]?'bu':d[2]?'ok':'no'):r.game==='killer'?(d[2]==='miss'||/^no|spew/.test(d[2])?'no':'ok'):'ok';return`<em class="${cls}">${lb}</em>`}).join('');
+      const darts=ds.map(d=>{const lb=dLbl(d[0],d[1]),cls=d[0]===0?'sp':r.game==='cricket'?(d[2]?'ok':'no'):r.game==='x01'?(d[3]?'bu':d[2]?'ok':'no'):r.game==='killer'?(d[2]==='miss'||/^no|spew/.test(d[2])?'no':'ok'):'ok';return`<em class="${cls}${d[0]&&d[1]===3?' m3':d[0]&&d[1]===2?' m2':''}">${lb}</em>`}).join('');   /* comme en jeu : S bleu, doubles argent, triples or */
       const extra=r.game==='cricket'?(()=>{const m=ds.reduce((a,d)=>a+d[2],0),pt=ds.reduce((a,d)=>a+d[3],0);return(m?m+' m.':'')+(pt?' · +'+pt:'')})():r.game==='x01'?(ds.some(d=>d[3])?'BUST':'reste '+after):r.game==='killer'?after+' ♥':'';
       let run='';if(cum){const q=ACC[mb||x.name]=ACC[mb||x.name]||{d:0,v:0};q.d+=ds.length;q.v+=r.game==='cricket'?ds.reduce((a,d)=>a+(d[2]||0),0):ds.some(d=>d[3])?0:ds.reduce((a,d)=>a+(d[2]||0),0);
         if(q.d)run=r.game==='cricket'?fr(q.v*3/q.d):String(Math.round(q.v*30/q.d)/10).replace('.',',')}
