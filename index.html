@@ -7021,7 +7021,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-320';   // à changer avec VERSION dans sw.js
+const APPV='lf-321';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -7302,15 +7302,15 @@ const TROPH=[['win','Victoire','Gagner une partie','🏅','Tous jeux'],['close',
   ['crush','Écrasante','Gagner sans que l’adversaire ait fermé plus de 2 numéros (Cricket) ou quand il lui restait 200 ou plus (501)','💪','Cricket · 501'],
   ['ser','Série record','Ta plus longue série de victoires, tous jeux confondus (2 minimum)','📈','Tous jeux'],['clean','Intouchable','Finir une partie de coupe-gorge avec 0 point','🛡️','Cricket'],
   ['day5','Soirée fléchettes','5 parties jouées dans la même soirée','🍻','Tous jeux'],['day10','Marathon','10 parties jouées dans la même soirée','🏃','Tous jeux'],
-  ['bad','Jour sans','Une soirée d’au moins 3 parties sans en gagner aucune','🥶','Tous jeux'],
+  ['bad','Jour sans','Une soirée (de 10 h à 10 h) sans gagner une seule partie','🥶','Tous jeux'],
   ['hat','Hat trick','3 bulles dans le même tour','🎩','Cricket'],['remo','Remontada','Gagner après 50 points ou plus de retard','🔥','Cricket'],['mpr2','MPR 2 et +','Finir une partie avec un MPR de 2 ou plus','🎯','Cricket'],
   ['t180','180','Le maximum en une volée','💯','501'],['bigfin','Gros finish','Finir une manche avec 100 points ou plus','💥','501'],
   ['mass','Massacre','2 éliminations ou plus en un seul tour','☠️','Killer'],['last','Dernier souffle','Gagner avec un seul cœur','💗','Killer'],['sav','Sauveur d’équipe','Lancer la fléchette qui fait gagner son équipe','🦸','Équipes'],
   ['ser5','Série de 5','5 victoires d’affilée','⚡','Tous jeux'],['rev','Revanche réussie','Gagner la revanche juste après avoir perdu','🔁','Tous jeux'],['tsp','Triple Spew','3 Spews dans le même tour','🤡','Tous jeux']];
 const pers=x=>x.members&&x.members.length?x.members:[x.name];
 const rPeople=r=>r.p.flatMap(pers);
-/* une soirée va de 6 h du matin à 6 h le lendemain : une partie jouée à 1 h compte dans la soirée de la veille */
-const soirK=t=>{const d=new Date(t-6*3600e3);return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()};
+/* une soirée va de 10 h à 10 h le lendemain : une partie jouée à 2 h du matin compte dans la soirée de la veille */
+const soirK=t=>{const d=new Date(t-10*3600e3);return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()};
 /* trophées propres à une partie (sans contexte) : [[personne,id],…] */
 function trOf(r){const O=[],add=(n,id)=>{if(n&&!isBot(n))O.push([n,id])},P=r.p,L=r.log||[],W=P[r.w];
   const who=e=>e[1]||(P[e[0]]?P[e[0]].name:'');
@@ -7335,7 +7335,7 @@ function trAll(list){const H=(list||HIST).filter(r=>r.w!=null&&r.w>=0&&r.p).slic
     rPeople(r).forEach(n=>{if(isBot(n))return;run[n]=win.has(n)?(run[n]||0)+1:0;if(run[n]===5)inc(n,'ser5');if(run[n]>=2&&run[n]>((M[n]||{}).ser||0))(M[n]=M[n]||{}).ser=run[n];
       const dk=n+'|'+soirK(r.date);day[dk]=(day[dk]||0)+1;if(day[dk]===5)inc(n,'day5');if(day[dk]===10)inc(n,'day10');if(win.has(n))dwin[dk]=1});
     const key=x=>x.game+'|'+rPeople(x).slice().sort().join(',');for(let j=k-1;j>=0;j--){const q=H[j];if(key(q)!==key(r))continue;if(r.date-q.date<4*3600e3){const lost=new Set(rPeople(q).filter(n=>!pers(q.p[q.w]).includes(n)));win.forEach(n=>{if(lost.has(n))inc(n,'rev')})}break}});
-  Object.entries(day).forEach(([dk,c])=>{if(c>=3&&!dwin[dk])inc(dk.split('|')[0],'bad')});   /* jour sans : soirée d'au moins 3 parties, aucune gagnée */
+  Object.entries(day).forEach(([dk,c])=>{if(c>=1&&!dwin[dk])inc(dk.split('|')[0],'bad')});   /* jour sans : soirée sans aucune victoire */
   return M}
 /* trophées classés : tous jeux d'abord, puis par jeu */
 const TRCAT=['Tous jeux','Cricket','Cricket · 501','501','Killer','Équipes'];
