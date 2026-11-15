@@ -2244,7 +2244,8 @@ html body #game#game.sk.p2.pn.curR #scores>.sc.act{grid-template-columns:calc(va
 #cpick .cpc2 button.on{background:var(--accent);color:var(--btx,#fff);box-shadow:inset 0 0 0 1.5px var(--m-strong,var(--ol,#111))}#cpick .cpc2 button.on::before{content:'✓ '}
 #cpick .cptr{border-top:1.5px dashed rgba(0,0,0,.15);padding-top:6px}
 #cpick .cptl{display:flex;flex-wrap:wrap;gap:5px}
-#cpick .cptl span{padding:5px 9px;border-radius:99px;background:rgba(var(--acc-rgb,224,84,111),.14);font:400 12px "Lbl",sans-serif;color:var(--ink)}#cpick .cptl b{font-weight:700}
+#cpick .cptl span{padding:5px 9px;border-radius:99px;background:rgba(var(--acc-rgb,224,84,111),.14);font:400 12px "Lbl",sans-serif;color:var(--ink)}#cpick .cptl b{font-weight:700}#cpick .cptl span{cursor:pointer}#cpick .cptl span.on{background:var(--accent);color:var(--btx,#fff)}
+#cpick .cph{font-size:11.5px}#cpick .cpl2{margin-top:6px;font-size:10px;opacity:.85}#cpick .cpx{margin:6px 0 0;padding:8px 10px;border-radius:12px;background:var(--m-cell,#fff);box-shadow:inset 0 0 0 1.5px var(--m-strong,var(--ol,#111));font:400 13px/1.35 "Lbl",sans-serif;color:var(--ink)}#cpick .cpx i{color:var(--mute);font-style:normal}
 #cpick .cpe{margin:0;font:400 13px "Lbl",sans-serif;color:var(--mute)}
 /* --- tirage : un seul switch Relancer / C'est parti --- */
 #draw .dsw{position:relative;display:grid;grid-template-columns:1fr 1fr;border-radius:99px;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong);height:calc(min(1dvh,1.7vw)*7);align-self:stretch}
@@ -3509,6 +3510,16 @@ html body :is(#game#game#game#game,#x01#x01#x01#x01,#killer#killer#killer#killer
 #prof .prt>div{display:grid;grid-template-columns:auto 1fr auto;grid-template-rows:auto auto;column-gap:8px;align-items:center;padding:10px 12px;border-radius:16px;background:var(--m-cell,#fff);box-shadow:inset 0 0 0 2px rgba(0,0,0,.12);opacity:.45;filter:grayscale(1)}
 #prof .prt>div.on{opacity:1;filter:none;box-shadow:inset 0 0 0 2px var(--ol,#111)}
 #prof .prt span{grid-row:1/3;font-size:24px}
+#prof .prt .prtc{grid-column:1/-1;margin:8px 2px 0;font:400 11px "Lbl",sans-serif;text-transform:uppercase;letter-spacing:.05em;color:var(--mute)}#prof .prt .prtc:first-child{margin-top:0}
+#prof .prt>div[data-tr]{cursor:pointer}#prof .prt>div.open{opacity:1;filter:none;box-shadow:inset 0 0 0 2px var(--accent)}#prof .prt>div.open small{font-size:12.5px;color:var(--ink)}
+#prof .prgl{display:flex;flex-direction:column;gap:6px}
+#prof .prg{display:flex;flex-direction:column;align-items:stretch;gap:2px;text-align:left;border:0;border-radius:16px;padding:10px 14px;background:var(--m-cell,#fff);box-shadow:inset 0 0 0 2px rgba(0,0,0,.12);color:var(--ink)}
+#prof .prg.w{box-shadow:inset 0 0 0 2px var(--accent)}
+#prof .prg1{display:flex;justify-content:space-between;align-items:baseline;gap:8px}#prof .prg1 b{font:400 16px "Fun",sans-serif}#prof .prg1 i{font:400 12px "Lbl",sans-serif;font-style:normal;color:var(--mute)}
+#prof .prg2{font:400 14px "Lbl",sans-serif}#prof .prg.w .prg2{color:var(--accent)}
+#prof .prg small{font:400 12px "Lbl",sans-serif;color:var(--mute);text-transform:uppercase;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#prof .prmore{align-self:center;border:0;border-radius:99px;padding:8px 16px;background:transparent;box-shadow:inset 0 0 0 2px var(--ol,#111);font:400 14px "Lbl",sans-serif;color:var(--ink)}
+#prof>#hgd{position:fixed;z-index:40}
 #prof .prt b{font:400 14px/1.1 "Fun",sans-serif;color:var(--ink)}
 #prof .prt em{font:400 13px "Fun",sans-serif;font-style:normal;color:var(--accent)}
 #prof .prt>div:not(.on) em{color:var(--mute);font:400 10px "Lbl",sans-serif}
@@ -6331,7 +6342,9 @@ function placeHead(){
      const G={},cu=VSND[name];VIC.list.forEach(x=>(G[x.g]=G[x.g]||[]).push(x));
      mu.innerHTML=`<p class="cpl">Touche pour écouter et choisir</p><div class="cpc2"><button data-vs="" class="${cu?'':'on'}">Classique</button></div>`+Object.entries(G).map(([k,a])=>`<p class="cpl">${esc(k)}</p><div class="cpc2">${a.map(x=>`<button data-vs="${esc(x.id)}" class="${cu===x.id?'on':''}">${esc(x.n)}</button>`).join('')}</div>`).join('')};
    const T=trAll()[name]||{},own=TROPH.filter(t=>T[t[0]]);
-   const tr=el('div','cptr',`<p class="cpl">Trophées <i>${own.length}/${TROPH.length}</i></p>`+(own.length?`<div class="cptl">${own.map(t=>`<span title="${esc(t[2])}">${t[3]} ${esc(t[1])}${t[0]==='ser'?` <b>${T[t[0]]} d’affilée</b>`:T[t[0]]>1?` <b>×${T[t[0]]}</b>`:''}</span>`).join('')}</div>`:'<p class="cpe">Pas encore de trophée.</p>'));
+   const tr=el('div','cptr',`<p class="cpl">Trophées <i>${own.length}/${TROPH.length}</i></p>`+(own.length?'<p class="cpe cph">Touche un trophée pour son explication.</p>'+trByCat().map(([c,L])=>{const o2=L.filter(t=>T[t[0]]);return o2.length?`<p class="cpl cpl2">${esc(c)}</p><div class="cptl">${o2.map(t=>`<span data-tx="${t[0]}">${t[3]} ${esc(t[1])}${t[0]==='ser'?` <b>${T[t[0]]} d’affilée</b>`:T[t[0]]>1?` <b>×${T[t[0]]}</b>`:''}</span>`).join('')}</div>`:''}).join('')+'<p class="cpx" hidden></p>':'<p class="cpe">Pas encore de trophée.</p>'));
+   tr.addEventListener('click',e=>{const b=e.target.closest('[data-tx]');if(!b)return;haptic();SFX.tick();const x=tr.querySelector('.cpx'),t=TROPH.find(q=>q[0]===b.dataset.tx),same=!x.hidden&&x.dataset.id===t[0];
+     tr.querySelectorAll('[data-tx]').forEach(q=>q.classList.toggle('on',!same&&q===b));x.hidden=same;x.dataset.id=t[0];x.innerHTML=`${t[3]} <b>${esc(t[1])}</b> · ${esc(t[2])} <i>(${esc(t[4])})</i>`;b.parentNode.after(x);place()});
    tb.addEventListener('click',e=>{const b=e.target.closest('[data-ct]');if(!b)return;haptic();SFX.tick();
      if(b.dataset.ct==='c'){g.hidden=!g.hidden;mu.hidden=true}else{mu.hidden=!mu.hidden;g.hidden=true;if(!mu.hidden)drawMu()}
      tb.querySelectorAll('[data-ct]').forEach(x=>x.classList.toggle('on',x.dataset.ct==='c'?!g.hidden:!mu.hidden));place()});
@@ -7004,7 +7017,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-318';   // à changer avec VERSION dans sw.js
+const APPV='lf-319';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -7267,14 +7280,14 @@ function hgView(r){const P=r.p,C0=hgCols(r),O=(STL.hord||{})[r.game],C=O?C0.slic
     h+='</div>'}else h+=`<p class="stn">Le détail tour par tour est enregistré pour les parties jouées à partir de cette version.</p>`;
   return h}
 function hgApply(o){const G=STL.hg||{};[['--stRH','rh'],['--stCW','cw'],['--stNW','nw'],['--lgt','lt'],['--lgr','lr']].forEach(([v,k])=>o.style.setProperty(v,(G[k]||100)/100))}
-function hgOpen(id){HGID=id;const r=HIST.find(x=>x.id==id);if(!r)return;let o=$('hgd');if(!o){o=el('div','');o.id='hgd';$('hist').append(o);
+function hgOpen(id,host){HGID=id;const r=HIST.find(x=>x.id==id);if(!r)return;let o=$('hgd');if(!o){o=el('div','');o.id='hgd';
     o.addEventListener('input',e=>{const t=e.target;if(!t.matches('.stset input'))return;const v=+t.value,G=STL.hg=STL.hg||{};t.previousElementSibling.textContent=v+' %';
       if(t.dataset.gv){G[t.dataset.gv]=v;hgApply(o)}else{const k=t.dataset.gf;(G.fs=G.fs||{})[k]=v;o.querySelectorAll(k==='_n'?'.stt td.sn':'.stt td[data-cn]').forEach(x=>{if(k==='_n'||x.dataset.cn===k)x.style.setProperty('--fz',v/100)})}
       clearTimeout(stlSave._t);stlSave._t=setTimeout(stlSave,300)});
     o.addEventListener('click',e=>{if(e.target.closest('.hgback')){SFX.back();o.classList.remove('on');return}
-      if(e.target.closest('[data-gset]')){haptic();SFX.tick();HGS.set=!HGS.set;const y=o.scrollTop;o.innerHTML=hgView(HIST.find(x=>x.id==HGID));o.scrollTop=y;return}
+      if(e.target.closest('[data-gset]')){haptic();SFX.tick();HGS.set=!HGS.set;const y=o.scrollTop;o.innerHTML=hgView(HIST.find(x=>x.id==HGID));o.scrollTop=y;if(o.classList.contains('inprof'))o.querySelector('.hgback').textContent='‹ Profil';return}
       if(e.target.closest('[data-greset]')){haptic();SFX.back();STL.hg={};stlSave();hgApply(o);const y=o.scrollTop;o.innerHTML=hgView(HIST.find(x=>x.id==HGID));o.scrollTop=y;return}const c=e.target.closest('[data-hc]');if(c){const k=+c.dataset.hc;HGS.inv=HGS.c===k?!HGS.inv:false;HGS.c=k;SFX.tick();o.innerHTML=hgView(HIST.find(x=>x.id==HGID))}})}
-  HGS.c=0;HGS.inv=false;HGS.set=false;hgApply(o);o.innerHTML=hgView(r);o.scrollTop=0;requestAnimationFrame(()=>o.classList.add('on'));SFX.open()}
+  host=host||$('hist');if(o.parentNode!==host)host.append(o);o.classList.toggle('inprof',host.id==='prof');HGS.c=0;HGS.inv=false;HGS.set=false;hgApply(o);o.innerHTML=hgView(r);if(host.id==='prof'){const bb=o.querySelector('.hgback');if(bb)bb.textContent='‹ Profil'}o.scrollTop=0;requestAnimationFrame(()=>o.classList.add('on'));SFX.open()}
 $('hBody').addEventListener('click',e=>{if(HMODE!=='games')return;
   if(e.target.closest('[data-hset]')){haptic();SFX.tick();HSEL.set=!HSEL.set;renderHist();return}
   if(e.target.closest('[data-hreset]')){haptic();SFX.back();STL.hl={};stlSave();stlApply();renderHist();return}});
@@ -7284,14 +7297,16 @@ $('hBody').addEventListener('click',e=>{if(HMODE!=='games'||e.target.closest('.h
 const TROPH=[['win','Victoire','Gagner une partie','🏅','Tous jeux'],['close','Au finish','Gagner de 10 points ou moins (Cricket) ou quand l’adversaire était à 40 ou moins (501)','😅','Cricket · 501'],
   ['crush','Écrasante','Gagner sans que l’adversaire ait fermé plus de 2 numéros (Cricket) ou quand il lui restait 200 ou plus (501)','💪','Cricket · 501'],
   ['ser','Série record','Ta plus longue série de victoires, tous jeux confondus (2 minimum)','📈','Tous jeux'],['clean','Intouchable','Finir une partie de coupe-gorge avec 0 point','🛡️','Cricket'],
-  ['day5','Soirée fléchettes','5 parties jouées le même jour','🍻','Tous jeux'],['day10','Marathon','10 parties jouées le même jour','🏃','Tous jeux'],
-  ['bad','Jour sans','Finir une partie avec moins de 1 de MPR (Cricket, Killer) ou moins de 30 de moyenne (501)','🥶','Tous jeux'],
+  ['day5','Soirée fléchettes','5 parties jouées dans la même soirée','🍻','Tous jeux'],['day10','Marathon','10 parties jouées dans la même soirée','🏃','Tous jeux'],
+  ['bad','Jour sans','Une soirée d’au moins 3 parties sans en gagner aucune','🥶','Tous jeux'],
   ['hat','Hat trick','3 bulles dans le même tour','🎩','Cricket'],['remo','Remontada','Gagner après 50 points ou plus de retard','🔥','Cricket'],['mpr2','MPR 2 et +','Finir une partie avec un MPR de 2 ou plus','🎯','Cricket'],
   ['t180','180','Le maximum en une volée','💯','501'],['bigfin','Gros finish','Finir une manche avec 100 points ou plus','💥','501'],
   ['mass','Massacre','2 éliminations ou plus en un seul tour','☠️','Killer'],['last','Dernier souffle','Gagner avec un seul cœur','💗','Killer'],['sav','Sauveur d’équipe','Lancer la fléchette qui fait gagner son équipe','🦸','Équipes'],
   ['ser5','Série de 5','5 victoires d’affilée','⚡','Tous jeux'],['rev','Revanche réussie','Gagner la revanche juste après avoir perdu','🔁','Tous jeux'],['tsp','Triple Spew','3 Spews dans le même tour','🤡','Tous jeux']];
 const pers=x=>x.members&&x.members.length?x.members:[x.name];
 const rPeople=r=>r.p.flatMap(pers);
+/* une soirée va de 6 h du matin à 6 h le lendemain : une partie jouée à 1 h compte dans la soirée de la veille */
+const soirK=t=>{const d=new Date(t-6*3600e3);return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()};
 /* trophées propres à une partie (sans contexte) : [[personne,id],…] */
 function trOf(r){const O=[],add=(n,id)=>{if(n&&!isBot(n))O.push([n,id])},P=r.p,L=r.log||[],W=P[r.w];
   const who=e=>e[1]||(P[e[0]]?P[e[0]].name:'');
@@ -7309,15 +7324,18 @@ function trOf(r){const O=[],add=(n,id)=>{if(n&&!isBot(n))O.push([n,id])},P=r.p,L
     if(L.length){const cl=P.map(()=>({}));L.forEach(e=>e[2].forEach(d=>{if(d[0]>0)cl[e[0]][d[0]]=(cl[e[0]][d[0]]||0)+d[1]}));if(P.every((x,j)=>j===r.w||Object.values(cl[j]).filter(v=>v>=3).length<=2))pers(W).forEach(n=>add(n,'crush'))}
     if(r.mode==='cut')P.forEach(x=>{if(x.score===0)pers(x).forEach(n=>add(n,'clean'))})}
   if(W&&r.game==='x01'&&!(r.legsTo>1)){const o=P.filter((_,j)=>j!==r.w).map(x=>x.rem);if(o.length){if(Math.min(...o)<=40)pers(W).forEach(n=>add(n,'close'));if(Math.min(...o)>=200)pers(W).forEach(n=>add(n,'crush'))}}
-  P.forEach(x=>{if((x.darts||0)<9)return;const bad=(r.game==='cricket'||r.game==='killer')?x.hits*3/x.darts<1:r.game==='x01'?x.pts*3/x.darts<30:false;if(bad)pers(x).forEach(n=>add(n,'bad'))});
   return O}
 /* tous les trophées de l'historique (avec le contexte : séries, revanches) — map[personne][id]=nombre */
-function trAll(list){const H=(list||HIST).filter(r=>r.w!=null&&r.w>=0&&r.p).slice().sort((a,b)=>a.date-b.date),M={},inc=(n,id)=>{(M[n]=M[n]||{})[id]=(M[n][id]||0)+1},run={},day={};
+function trAll(list){const H=(list||HIST).filter(r=>r.w!=null&&r.w>=0&&r.p).slice().sort((a,b)=>a.date-b.date),M={},inc=(n,id)=>{(M[n]=M[n]||{})[id]=(M[n][id]||0)+1},run={},day={},dwin={};
   H.forEach((r,k)=>{trOf(r).forEach(([n,id])=>inc(n,id));const win=new Set(pers(r.p[r.w]));
     rPeople(r).forEach(n=>{if(isBot(n))return;run[n]=win.has(n)?(run[n]||0)+1:0;if(run[n]===5)inc(n,'ser5');if(run[n]>=2&&run[n]>((M[n]||{}).ser||0))(M[n]=M[n]||{}).ser=run[n];
-      const dk=n+'|'+new Date(r.date).toDateString();day[dk]=(day[dk]||0)+1;if(day[dk]===5)inc(n,'day5');if(day[dk]===10)inc(n,'day10')});
+      const dk=n+'|'+soirK(r.date);day[dk]=(day[dk]||0)+1;if(day[dk]===5)inc(n,'day5');if(day[dk]===10)inc(n,'day10');if(win.has(n))dwin[dk]=1});
     const key=x=>x.game+'|'+rPeople(x).slice().sort().join(',');for(let j=k-1;j>=0;j--){const q=H[j];if(key(q)!==key(r))continue;if(r.date-q.date<4*3600e3){const lost=new Set(rPeople(q).filter(n=>!pers(q.p[q.w]).includes(n)));win.forEach(n=>{if(lost.has(n))inc(n,'rev')})}break}});
+  Object.entries(day).forEach(([dk,c])=>{if(c>=3&&!dwin[dk])inc(dk.split('|')[0],'bad')});   /* jour sans : soirée d'au moins 3 parties, aucune gagnée */
   return M}
+/* trophées classés : tous jeux d'abord, puis par jeu */
+const TRCAT=['Tous jeux','Cricket','Cricket · 501','501','Killer','Équipes'];
+const trByCat=()=>TRCAT.map(c=>[c,TROPH.filter(t=>t[4]===c)]).filter(x=>x[1].length);
 /* face-à-face entre deux personnes (adversaires, pas coéquipiers) */
 function h2h(a,b,game){const R={a:0,b:0,n:0,last:[],by:{}};HIST.filter(r=>r.w!=null&&r.w>=0&&(!game||r.game===game)).sort((x,y)=>x.date-y.date).forEach(r=>{
     const ia=r.p.findIndex(x=>pers(x).includes(a)),ib=r.p.findIndex(x=>pers(x).includes(b));if(ia<0||ib<0||ia===ib)return;
@@ -7348,6 +7366,13 @@ function trTeams(list){const M={},inc=(k,id,v)=>{const o=M[k]=M[k]||{};o[id]=v!=
   Object.entries(st).forEach(([k,s])=>{if(s.n>=10&&s.w/s.n>.6)inc(k,'dream',1)});return M}
 function teamsOf(n){const M={};STG.forEach(g=>stAgg(g,true).E.forEach(a=>{if(!n||a.name.split(' & ').includes(n)){const m=M[a.name]=M[a.name]||{g:0,w:0};m.g+=a.g;m.w+=a.wins}}));return Object.entries(M).sort((a,b)=>b[1].g-a[1].g)}
 /* ---------- profils ---------- */
+let PGN=20;   /* nombre de parties affichées dans l'historique d'un profil */
+function pgHist(n){const team=n.includes(' & '),L=HIST.filter(r=>r.p&&(team?r.p.some(x=>x.members&&tKey(x)===n):rPeople(r).includes(n))).sort((a,b)=>b.date-a.date);if(!L.length)return'';
+  const row=r=>{const i=r.p.findIndex(x=>team?x.members&&tKey(x)===n:pers(x).includes(n)),x=r.p[i]||{},win=i===r.w&&r.w>=0,y=team||!x.members?x:memSt(r,n,r.game)||{};
+    const k=r.game==='cricket'&&y.darts?'MPR '+fr(y.hits*3/y.darts):r.game==='x01'&&y.darts?'moy. '+String(Math.round(y.pts*30/y.darts)/10).replace('.',','):r.game==='killer'&&x.lives!=null?x.lives+' ♥':'';
+    const opp=r.p.filter((_,j)=>j!==i).map(q=>q.name).join(', ');
+    return`<button class="prg${win?' w':''}" data-hg="${r.id}"><span class="prg1"><b>${GNAME[r.game]||r.game}</b><i>${fdate(r.date)}</i></span><span class="prg2">${win?'🏆 Victoire':r.w>=0?'Défaite':'—'}${k?` · ${k}`:''}</span><small>contre ${esc(opp)}${x.members&&!team?` · avec ${esc(x.members.filter(m=>m!==n).join(', '))}`:''}</small></button>`};
+  return`<h3 class="prs">Historique des parties <i>${L.length}</i></h3><div class="prgl">${L.slice(0,PGN).map(row).join('')}</div>${L.length>PGN?`<button class="prmore" data-more>Voir ${Math.min(20,L.length-PGN)} de plus</button>`:''}`}
 function allPeople(){const S0=new Set(ROSTER.map(r=>r.name).filter(Boolean));HIST.forEach(r=>r.p&&rPeople(r).forEach(n=>{if(!isBot(n))S0.add(n)}));return[...S0]}
 /* ---------- son de victoire de chaque joueur (musiques du banc de sons, fichier vic.js chargé à la demande) ---------- */
 let VSND={};try{VSND=JSON.parse(localStorage.getItem('darts.vicsnd')||'{}')||{}}catch(e){}
@@ -7377,7 +7402,7 @@ function profOpen(name){SFX.open();let o=$('prof');if(o)o.remove();o=el('div','o
         <div class="prh">${M.map(m=>`<b style="--pc:${pColor(m)}"></b>`).join('')}<h2>${nmH(n)}</h2></div>
         <div class="prl prm">${M.map(m=>`<button data-p="${esc(m)}"><b style="--pc:${pColor(m)}"></b>${esc(m)}<i>profil ›</i></button>`).join('')}</div>
         <h3 class="prs">Trophées d’équipe <i>${Object.keys(T).length}/${TTR.length}</i></h3><div class="prt">${TTR.map(t=>`<div class="${T[t[0]]?'on':''}" title="${esc(t[2])}"><span>${t[3]}</span><b>${esc(t[1])}</b><em>${T[t[0]]&&t[0]!=='dream'?'×'+T[t[0]]:''}</em><small>${esc(t[2])}</small></div>`).join('')}</div>
-        <h3 class="prs">Par jeu</h3>${rows.length?`<div class="stw"><table class="stt"><thead><tr><th class="sn">Jeu</th><th>Parties</th><th>Victoires</th><th>%</th><th>Stat clé</th></tr></thead><tbody>${rows.join('')}</tbody></table></div>`:'<p class="hempty">Pas encore de partie.</p>'}`;return}
+        <h3 class="prs">Par jeu</h3>${rows.length?`<div class="stw"><table class="stt"><thead><tr><th class="sn">Jeu</th><th>Parties</th><th>Victoires</th><th>%</th><th>Stat clé</th></tr></thead><tbody>${rows.join('')}</tbody></table></div>`:'<p class="hempty">Pas encore de partie.</p>'}${pgHist(n)}`;return}
     o.dataset.n=n;const T=trAll()[n]||{},rows=[],TM=teamsOf(n);
     STG.forEach(g=>{const a=stAgg(g,false).E.find(x=>x.name===n);if(!a||!a.g)return;const key={cricket:['MPR moyen',a.d?fr(a.h*3/a.d):'–'],x01:['Moyenne',a.xd?fr(a.xp*3/a.xd):'–'],killer:['Vies prises',a.k],clock:['Réussite',a.d?Math.round(a.h*100/a.d)+' %':'–'],shanghai:['Record',a.best||'–'],halveit:['Record',a.best||'–']}[g]||['',''];
       rows.push(`<tr><td class="sn">${GNAME[g]}</td><td>${a.g}</td><td>${a.wins}</td><td>${Math.round(a.wins*100/a.g)} %</td><td class="pk">${key[0]?`<b>${key[1]}</b><small>${key[0]}</small>`:''}</td></tr>`)});
@@ -7386,18 +7411,22 @@ function profOpen(name){SFX.open();let o=$('prof');if(o)o.remove();o=el('div','o
     o.innerHTML=`<div class="ovh"><button class="prb" data-back>‹ Profils</button><button class="circ" data-x aria-label="Fermer"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
       <div class="prh"><b style="--pc:${pColor(n)}"></b><h2>${esc(n)}</h2>${isBot(n)?'':'<button class="prc" data-pc aria-label="Couleur et nom">🎨</button>'}</div>
       ${isBot(n)?'':`<h3 class="prs">Son de victoire</h3><div class="prv">${vsHtml(n)}</div>`}
-      <h3 class="prs">Trophées <i>${Object.keys(T).length}/${TROPH.length}</i></h3><div class="prt">${TROPH.map(t=>`<div class="${T[t[0]]?'on':''}" title="${esc(t[2])}"><span>${t[3]}</span><b>${esc(t[1])}</b><em>${T[t[0]]?(t[0]==='ser'?T[t[0]]+' d’affilée':'×'+T[t[0]]):''}</em><small>${esc(t[2])}</small></div>`).join('')}</div>
+      <h3 class="prs">Trophées <i>${Object.keys(T).filter(k=>TROPH.some(t=>t[0]===k)).length}/${TROPH.length}</i></h3><div class="prt">${trByCat().map(([c,L])=>`<p class="prtc">${esc(c)}</p>`+L.map(t=>`<div class="${T[t[0]]?'on':''}" data-tr="${t[0]}"><span>${t[3]}</span><b>${esc(t[1])}</b><em>${T[t[0]]?(t[0]==='ser'?T[t[0]]+' d’affilée':'×'+T[t[0]]):''}</em><small>${esc(t[2])}</small></div>`).join('')).join('')}</div>
       <h3 class="prs">Par jeu</h3>${rows.length?`<div class="stw"><table class="stt"><thead><tr><th class="sn">Jeu</th><th>Parties</th><th>Victoires</th><th>%</th><th>Stat clé</th></tr></thead><tbody>${rows.join('')}</tbody></table></div>`:'<p class="hempty">Pas encore de partie.</p>'}
       <h3 class="prs">Records</h3><div class="prr">${rec.map(([k,v])=>`<div><span>${k}</span><b>${v}</b></div>`).join('')}</div>
+      ${pgHist(n)}
       ${TM.length?`<h3 class="prs">Ses équipes</h3><div class="prl">${TM.map(([k,v])=>`<button data-p="${esc(k)}">${k.split(' & ').map(m=>`<b style="--pc:${pColor(m)}"></b>`).join('')}${nmH(k)}<i>${v.g} p. · ${Math.round(v.w*100/v.g)} %</i></button>`).join('')}</div>`:''}`};
-  VSO=null;draw(name);requestAnimationFrame(()=>o.classList.add('on'));
-  o.addEventListener('click',e=>{const t=e.target;if(t.closest('[data-x]')){o.classList.remove('on');setTimeout(()=>o.remove(),300);return}if(t.closest('[data-back]')){SFX.back();VSO=null;draw(null);return}
+  VSO=null;PGN=20;draw(name);requestAnimationFrame(()=>o.classList.add('on'));
+  o.addEventListener('click',e=>{const t=e.target;if(t.closest('[data-x]')){o.classList.remove('on');setTimeout(()=>o.remove(),300);return}if(t.closest('[data-back]')){SFX.back();VSO=null;PGN=20;draw(null);return}
+    const hg=t.closest('[data-hg]');if(hg){haptic();hgOpen(hg.dataset.hg,o);return}
+    if(t.closest('[data-more]')){haptic();SFX.tick();PGN+=20;const y=o.scrollTop;draw(o.dataset.n);o.scrollTop=y;return}
+    const trd=t.closest('.prt>div[data-tr]');if(trd){haptic();SFX.tick();trd.classList.toggle('open');return}
     const vb=o.querySelector('.prv'),n=o.dataset.n,vr=()=>{if(vb)vb.innerHTML=vsHtml(n)};
     const pcb=t.closest('[data-pc]');if(pcb){haptic();openColorsFor(n,pcb,'pal');const cp=$('cpick'),inp=cp&&cp.querySelector('.cpn');if(!cp)return;
       const iv=setInterval(()=>{if(document.body.contains(cp))return;clearInterval(iv);const nw=inp.value.trim().toUpperCase();draw(ROSTER.some(r=>r.name===nw)?nw:n);if($('roster').classList.contains('on'))renderRoster()},150);return}
     if(t.closest('[data-vt]')){haptic();SFX.tick();VSO=VSO===n?null:n;vr();if(VSO&&!(window.VIC&&VIC.ready()))vicLoad().then(()=>{if(VSO===n)vr()});return}
     const vs=t.closest('[data-vs]');if(vs){haptic();audioInit();const id=vs.dataset.vs;if(id)VSND[n]=id;else delete VSND[n];vsSave();vr();
-      if(!id)SFX.win();else if(S.sound)VIC.play(id);return}const b=t.closest('[data-p]');if(b){haptic();SFX.ui();draw(b.dataset.p);o.scrollTop=0}})}
+      if(!id)SFX.win();else if(S.sound)VIC.play(id);return}const b=t.closest('[data-p]');if(b){haptic();SFX.ui();PGN=20;draw(b.dataset.p);o.scrollTop=0}})}
 /* ---------- infos partie : stats en direct (même tableau que l'historique) + face-à-face ---------- */
 const INF={c:0,inv:false};
 renderStats=function(){infoRender()};xStats=function(){infoRender()};kStats=function(){infoRender()};
