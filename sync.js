@@ -82,18 +82,19 @@ async function groupsSync(){if(!SY.me)return;for(const c of SY.gr){const g=await
 const pinH=(h,c)=>{let x=2166136261;for(const ch of 'cm|'+h+'|'+c){x^=ch.charCodeAt(0);x=Math.imul(x,16777619)>>>0}return x.toString(16)};
 const prot=h=>!!(SY.pc[h]&&SY.pc[h].pin)&&!(SY.me&&SY.me.h===h);
 const unlocked=(h,t)=>{const f=SY.fr[h]||{};return!prot(h)||(f.histTo&&t<=f.histTo)||!!(f.unl&&f.unl[soirK(t)])};
-function pinAsk(h,txt){return new Promise(ok=>{const o=el('div','');o.id='sypin';const nm=SY.fr[h]?SY.fr[h].local:h.toUpperCase();
+function pinAsk(h,txt,no){return new Promise(ok=>{const o=el('div','');o.id='sypin';const nm=SY.fr[h]?SY.fr[h].local:h.toUpperCase();
   o.innerHTML=`<div class="sypb"><p class="sypt">🔒 <b>${esc(nm)}</b> · @${esc(h)}</p><p class="syhint">${txt}</p><input type="password" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="••••"><p class="syerr"></p>
-    <div class="sybtns"><button class="sybt" data-no>Jouer en invité</button><button class="sybt acc" data-ok>Valider</button></div></div>`;document.body.append(o);const i=o.querySelector('input');setTimeout(()=>i.focus(),50);
+    <div class="sybtns"><button class="sybt" data-no>${no||'Annuler'}</button><button class="sybt acc" data-ok>Valider</button></div></div>`;document.body.append(o);const i=o.querySelector('input');setTimeout(()=>i.focus(),50);
   const end=v=>{o.remove();ok(v)};
   const val=()=>{if(pinH(h,i.value)===SY.pc[h].pin){haptic();SFX.ui();end(true)}else{SFX.err();o.querySelector('.syerr').textContent='Code faux';i.value='';o.querySelector('.sypb').animate([{transform:'translateX(-8px)'},{transform:'translateX(8px)'},{transform:'none'}],{duration:240})}};
   o.addEventListener('click',e=>{if(e.target.closest('[data-ok]'))val();else if(e.target.closest('[data-no]'))end(false)});
   i.addEventListener('input',()=>{i.value=i.value.replace(/\D/g,'');if(i.value.length===4)val()})})}
 /* avant de lancer une partie : code des joueurs protégés, une fois par soirée */
 {const _l=launchNew;launchNew=async function(){const a=arguments,now=Date.now(),k=soirK(now),hs=[];
-   S.names.slice(0,S.n).forEach(n=>{const h=linkOf((n||'').trim().toUpperCase());if(h&&!hs.includes(h)&&prot(h)&&!unlocked(h,now)&&!((SY.fr[h]||{}).gst===k))hs.push(h)});
-   for(const h of hs){const okp=await pinAsk(h,'Tape son code pour que la partie compte sur son profil. Une fois par soirée sur ce téléphone.');const f=SY.fr[h];if(!f)continue;
-     if(okp){(f.unl=f.unl||{})[k]=1}else f.gst=k;sySave()}
+   S.names.slice(0,S.n).forEach(n=>{const h=linkOf((n||'').trim().toUpperCase());if(h&&!hs.includes(h)&&prot(h)&&!unlocked(h,now))hs.push(h)});
+   for(const h of hs){const okp=await pinAsk(h,'Profil protégé : tape son code pour jouer avec ce joueur. Une fois par soirée sur ce téléphone.');const f=SY.fr[h];if(!f)continue;
+     if(!okp){toast('CODE REQUIS POUR '+f.local,'🔒',true);return}   /* pas de code : pas de partie avec ce joueur */
+     (f.unl=f.unl||{})[k]=1;sySave()}
    return _l.apply(this,a)}}
 /* ---------- synchro complète ---------- */
 let busy=false,again=false;
@@ -189,7 +190,7 @@ async function onClick(e){const t=e.target,o=$('sync'),q=s=>t.closest(s);
   if(q('[data-scan]')){haptic();scan(k=>handleCode(k));return}
   if(q('[data-cancel]')){haptic();V={step:null,q:'',found:null,err:''};draw();return}
   if(q('[data-find]')){V.q=(($('syF')||{}).value||'').toLowerCase().replace(/^@/,'');await find();return}
-  if((b=q('[data-lk]'))){const f=V.found;if(!f)return;addFriend(f.h,b.dataset.lk||null);if(prot(f.h)){const okp=await pinAsk(f.h,'Son profil est protégé : tape son code pour que ses anciennes parties sur ce téléphone rejoignent son profil.');if(okp){SY.fr[f.h].histTo=Date.now();SY.fr[f.h].unl={[soirK(Date.now())]:1};sySave()}}haptic();SFX.lead();toast((b.dataset.lk||SY.fr[f.h].local)+' = @'+f.h.toUpperCase(),'',true);V={step:null,q:'',found:null,err:''};draw();sync(true);return}
+  if((b=q('[data-lk]'))){const f=V.found;if(!f)return;addFriend(f.h,b.dataset.lk||null);if(prot(f.h)){const okp=await pinAsk(f.h,'Son profil est protégé : tape son code pour que ses anciennes parties sur ce téléphone rejoignent son profil.','Plus tard');if(okp){SY.fr[f.h].histTo=Date.now();SY.fr[f.h].unl={[soirK(Date.now())]:1};sySave()}}haptic();SFX.lead();toast((b.dataset.lk||SY.fr[f.h].local)+' = @'+f.h.toUpperCase(),'',true);V={step:null,q:'',found:null,err:''};draw();sync(true);return}
   if((b=q('[data-rl]'))){haptic();V.rl=V.rl===b.dataset.rl?null:b.dataset.rl;draw();return}
   if((b=q('[data-rlk]'))){const h=V.rl;if(!h||!SY.fr[h])return;SY.fr[h].local=b.dataset.rlk;SY.fr[h].ov={};sySave();haptic();SFX.lead();toast(b.dataset.rlk+' = @'+h.toUpperCase(),'',true);V.rl=null;extInject();draw();sync(true);return}
   if((b=q('[data-rm]'))){const h=b.dataset.rm;if(!confirmTap(b))return;delete SY.fr[h];sySave();haptic();SFX.back();draw();return}
