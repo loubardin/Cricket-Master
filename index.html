@@ -2231,6 +2231,21 @@ html body #game#game.sk.p2.pn.curR #scores>.sc.act{grid-template-columns:calc(va
 #cpick .cpn{display:block;width:100%;box-sizing:border-box;margin:0 0 10px;padding:6px 10px;border:1.5px solid var(--m-strong,var(--ol,#111));border-radius:99px;background:#fff;color:var(--ink);
   font:400 17px "Fun",sans-serif;text-align:center;letter-spacing:.04em;outline:none}
 #cpick .cpn:focus{box-shadow:0 0 0 3px var(--accent)}
+#cpick.full{width:min(300px,88vw);box-sizing:border-box;display:flex;flex-direction:column;gap:10px}#cpick.full .cpn{margin:0}
+#cpick.full .cpg{justify-content:center}#cpick [hidden]{display:none!important}
+#cpick .cpt{display:grid;grid-template-columns:auto 1fr;gap:8px}
+#cpick .cpt button{display:flex;align-items:center;justify-content:center;gap:6px;min-width:0;height:38px;padding:0 12px;border:0;border-radius:99px;background:transparent;box-shadow:inset 0 0 0 1.5px var(--m-strong,var(--ol,#111));font:400 14px "Lbl",sans-serif;color:var(--ink)}
+#cpick .cpt button span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#cpick .cpt button i{flex:none;width:16px;height:16px;border-radius:50%;border:1.5px solid var(--m-strong,var(--ol,#111))}
+#cpick .cpt button.on{background:var(--accent);color:var(--btx,#fff)}
+#cpick .cpl{margin:4px 2px 4px;font:400 11px "Lbl",sans-serif;text-transform:uppercase;letter-spacing:.04em;color:var(--mute);display:flex;justify-content:space-between}#cpick .cpl i{font-style:normal}
+#cpick .cpc2{display:flex;flex-wrap:wrap;gap:5px}
+#cpick .cpc2 button{border:0;border-radius:99px;padding:6px 10px;background:transparent;box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.2);font:400 12px "Lbl",sans-serif;color:var(--ink)}
+#cpick .cpc2 button.on{background:var(--accent);color:var(--btx,#fff);box-shadow:inset 0 0 0 1.5px var(--m-strong,var(--ol,#111))}#cpick .cpc2 button.on::before{content:'✓ '}
+#cpick .cptr{border-top:1.5px dashed rgba(0,0,0,.15);padding-top:6px}
+#cpick .cptl{display:flex;flex-wrap:wrap;gap:5px}
+#cpick .cptl span{padding:5px 9px;border-radius:99px;background:rgba(var(--acc-rgb,224,84,111),.14);font:400 12px "Lbl",sans-serif;color:var(--ink)}#cpick .cptl b{font-weight:700}
+#cpick .cpe{margin:0;font:400 13px "Lbl",sans-serif;color:var(--mute)}
 /* --- tirage : un seul switch Relancer / C'est parti --- */
 #draw .dsw{position:relative;display:grid;grid-template-columns:1fr 1fr;border-radius:99px;box-shadow:inset 0 0 0 var(--bub-bw) var(--m-strong);height:calc(min(1dvh,1.7vw)*7);align-self:stretch}
 #draw .dsw:has(#drawGo[style*="hidden"]){visibility:hidden}
@@ -6289,14 +6304,14 @@ function placeHead(){
 {let LP=null,LPdone=0;
  const nameOf=e=>{const s=e.closest('.nslot:not(.ph)');if(s){const n=s.querySelector('.pname');return n?n.textContent.trim():''}const c=e.closest('.rchip');return c?c.textContent.trim():''};
  const refresh=()=>{if(typeof renderSetup==='function'&&$('setup').classList.contains('on'))renderSetup();if($('ppick').classList.contains('on')){openPick(1);$('ppick').classList.remove('pop')}};
- function renamePlayer(old,nw){nw=(nw||'').trim().toUpperCase().slice(0,8);if(!nw||nw===old)return old;
+ function renamePlayer(old,nw){nw=(nw||'').trim().toUpperCase().slice(0,8);if(!nw||nw===old)return old;if(typeof VSND!=='undefined'&&VSND[old]&&!isBot(nw)&&!ROSTER.some(r=>r.name===nw)){VSND[nw]=VSND[old];delete VSND[old];vsSave()}
    if(isBot(nw)||ROSTER.some(r=>r.name===nw)||S.names.includes(nw)){toast('NOM DÉJÀ PRIS','',true);SFX.err();return old}
    const r=ROSTER.find(q=>q.name===old);if(r)r.name=nw;else ROSTER.push({name:nw,color:PCOLS[0]});store.set(K_R,ROSTER);
    S.names=S.names.map(n=>n===old?nw:n);store.set(K_S,S);return nw}
  const close=()=>{const p=$('cpick');if(!p)return;const inp=p.querySelector('.cpn');if(inp&&inp.value.trim().toUpperCase()!==p.dataset.n){renamePlayer(p.dataset.n,inp.value);p.remove();refresh();return}p.remove()};
- window.openColorsFor=(n,a)=>openColors(n,a);
- function openColors(name,anchor){
-   close();const r0=anchor.getBoundingClientRect(),cur=pcol(name);
+ window.openColorsFor=(n,a,m)=>openColors(n,a,m);
+ function openColors(name,anchor,mode){
+   close();const r0=anchor.getBoundingClientRect(),cur=pcol(name),full=mode!=='pal';   /* fenêtre du joueur : couleur (bouton), musique (bouton), trophées */
    const p=el('div','',`<input class="cpn" maxlength="8" spellcheck="false" autocomplete="off" value="${esc(name)}">`);p.id='cpick';p.dataset.n=name;const g=el('div','cpg');
    const inp=p.querySelector('.cpn');inp.addEventListener('input',()=>{inp.value=inp.value.toUpperCase()});
    inp.addEventListener('keydown',e=>{if(e.key==='Enter'){inp.blur();close()}});
@@ -6304,10 +6319,25 @@ function placeHead(){
      b.addEventListener('click',()=>{const nm=renamePlayer(name,inp.value);let r=ROSTER.find(q=>q.name===nm);if(!r){r={name:nm,color:c};ROSTER.push(r)}r.color=c;store.set(K_R,ROSTER);haptic();SFX.ui();
        p.dataset.n=nm;inp.value=nm;p.remove();refresh()});
      g.append(b)});
-   p.append(g);document.body.append(p);
-   const mh=innerHeight-24;if(p.offsetHeight>mh){p.style.maxHeight=mh+'px';p.style.overflowY='auto'}
-   const w=p.offsetWidth,h=p.offsetHeight,top=Math.max(12,Math.min(innerHeight-h-12,r0.top-h-12>8?r0.top-h-12:r0.bottom+12));
-   p.style.left=Math.max(12,Math.min(innerWidth-w-12,r0.left+r0.width/2-w/2))+'px';p.style.top=top+'px';
+   const place=()=>{p.style.maxHeight='';p.style.overflowY='';const mh=innerHeight-24;if(p.offsetHeight>mh){p.style.maxHeight=mh+'px';p.style.overflowY='auto'}
+     const w=p.offsetWidth,h=p.offsetHeight,top=Math.max(12,Math.min(innerHeight-h-12,r0.top-h-12>8?r0.top-h-12:r0.bottom+12));
+     p.style.left=Math.max(12,Math.min(innerWidth-w-12,r0.left+r0.width/2-w/2))+'px';p.style.top=top+'px'};
+   if(!full||isBot(name)){p.append(g);document.body.append(p);place();return}
+   p.classList.add('full');g.hidden=true;
+   const mName=()=>{const id=VSND[name];if(!id)return'Classique';const x=window.VIC&&VIC.list.find(y=>y.id===id);return x?x.n:'Choisie'};
+   const tb=el('div','cpt',`<button data-ct="c"><i style="background:${cur||'var(--accent)'}"></i>Couleur</button><button data-ct="m">🎵 <span>${esc(mName())}</span></button>`);
+   const mu=el('div','cpm');mu.hidden=true;
+   const drawMu=()=>{if(!window.VIC||!VIC.ready()){mu.innerHTML='<p class="cpl">Chargement des musiques…</p>';vicLoad().then(()=>{if(!mu.hidden){drawMu();place()}});return}
+     const G={},cu=VSND[name];VIC.list.forEach(x=>(G[x.g]=G[x.g]||[]).push(x));
+     mu.innerHTML=`<p class="cpl">Touche pour écouter et choisir</p><div class="cpc2"><button data-vs="" class="${cu?'':'on'}">Classique</button></div>`+Object.entries(G).map(([k,a])=>`<p class="cpl">${esc(k)}</p><div class="cpc2">${a.map(x=>`<button data-vs="${esc(x.id)}" class="${cu===x.id?'on':''}">${esc(x.n)}</button>`).join('')}</div>`).join('')};
+   const T=trAll()[name]||{},own=TROPH.filter(t=>T[t[0]]);
+   const tr=el('div','cptr',`<p class="cpl">Trophées <i>${own.length}/${TROPH.length}</i></p>`+(own.length?`<div class="cptl">${own.map(t=>`<span title="${esc(t[2])}">${t[3]} ${esc(t[1])}${t[0]==='ser'?` <b>${T[t[0]]} d’affilée</b>`:T[t[0]]>1?` <b>×${T[t[0]]}</b>`:''}</span>`).join('')}</div>`:'<p class="cpe">Pas encore de trophée.</p>'));
+   tb.addEventListener('click',e=>{const b=e.target.closest('[data-ct]');if(!b)return;haptic();SFX.tick();
+     if(b.dataset.ct==='c'){g.hidden=!g.hidden;mu.hidden=true}else{mu.hidden=!mu.hidden;g.hidden=true;if(!mu.hidden)drawMu()}
+     tb.querySelectorAll('[data-ct]').forEach(x=>x.classList.toggle('on',x.dataset.ct==='c'?!g.hidden:!mu.hidden));place()});
+   mu.addEventListener('click',e=>{const b=e.target.closest('[data-vs]');if(!b)return;haptic();audioInit();const id=b.dataset.vs;if(id)VSND[name]=id;else delete VSND[name];vsSave();
+     if(!id)SFX.win();else if(S.sound)VIC.play(id);const y=mu.scrollTop,py=p.scrollTop;drawMu();p.scrollTop=py;tb.querySelector('[data-ct="m"] span').textContent=mName()});
+   p.append(tb,g,mu,tr);document.body.append(p);place();
  }
  document.addEventListener('pointerdown',e=>{
    const pp=$('cpick');if(pp&&!e.target.closest('#cpick')){close()}
@@ -6974,7 +7004,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-317';   // à changer avec VERSION dans sw.js
+const APPV='lf-318';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -7363,7 +7393,7 @@ function profOpen(name){SFX.open();let o=$('prof');if(o)o.remove();o=el('div','o
   VSO=null;draw(name);requestAnimationFrame(()=>o.classList.add('on'));
   o.addEventListener('click',e=>{const t=e.target;if(t.closest('[data-x]')){o.classList.remove('on');setTimeout(()=>o.remove(),300);return}if(t.closest('[data-back]')){SFX.back();VSO=null;draw(null);return}
     const vb=o.querySelector('.prv'),n=o.dataset.n,vr=()=>{if(vb)vb.innerHTML=vsHtml(n)};
-    const pcb=t.closest('[data-pc]');if(pcb){haptic();openColorsFor(n,pcb);const cp=$('cpick'),inp=cp&&cp.querySelector('.cpn');if(!cp)return;
+    const pcb=t.closest('[data-pc]');if(pcb){haptic();openColorsFor(n,pcb,'pal');const cp=$('cpick'),inp=cp&&cp.querySelector('.cpn');if(!cp)return;
       const iv=setInterval(()=>{if(document.body.contains(cp))return;clearInterval(iv);const nw=inp.value.trim().toUpperCase();draw(ROSTER.some(r=>r.name===nw)?nw:n);if($('roster').classList.contains('on'))renderRoster()},150);return}
     if(t.closest('[data-vt]')){haptic();SFX.tick();VSO=VSO===n?null:n;vr();if(VSO&&!(window.VIC&&VIC.ready()))vicLoad().then(()=>{if(VSO===n)vr()});return}
     const vs=t.closest('[data-vs]');if(vs){haptic();audioInit();const id=vs.dataset.vs;if(id)VSND[n]=id;else delete VSND[n];vsSave();vr();
