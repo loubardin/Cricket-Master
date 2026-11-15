@@ -31,7 +31,7 @@ function extInject(){HIST=HIST.filter(r=>!r.ext);Object.entries(EXT).forEach(([g
 extInject();
 
 /* ---------- envoi des parties de ce téléphone ---------- */
-function hmOf(r){const out=[];const seen=new Set();(r.p||[]).forEach(x=>(x.members&&x.members.length?x.members:[x.name]).forEach(n=>{const h=linkOf(n);if(h&&!seen.has(n)){seen.add(n);out.push([n,h])}}));return out}
+function hmOf(r){const out=[];const seen=new Set();(r.p||[]).forEach(x=>(x.members&&x.members.length?x.members:[x.name]).forEach(n=>{const h=linkOf(n);if(h&&!seen.has(n)&&unlocked(h,r.date||0)){seen.add(n);out.push([n,h])}}));return out}
 async function pushGames(){const todo=HIST.filter(r=>!r.ext&&r.p&&r.w!=null).map(r=>{const hm=hmOf(r);return{r,hm,sig:JSON.stringify(hm)+'|'+r.w+'|'+(r.log?r.log.length:0)}}).filter(x=>x.hm.length&&SY.up[x.r.id]!==x.sig);
   for(const x of todo){const gid=SY.ph+'-'+x.r.id,{r}=x;
     await api('games/'+gid,'PUT',{j:JSON.stringify(r),hm:x.hm,src:SY.ph,by:SY.me?SY.me.h:null,t:Date.now(),d:r.date||Date.now()});
@@ -55,7 +55,7 @@ async function pushMe(){if(!SY.me)return;const n=SY.me.local;
   await api('profiles/'+SY.me.h,'PATCH',{name:SY.me.h.toUpperCase().slice(0,8),color:pcol(n)||'',music:VSND[n]||'',upd:Date.now(),s:JSON.stringify(mySum())})}
 let pmT=null;window.syMeChanged=()=>{clearTimeout(pmT);pmT=setTimeout(()=>pushMe().catch(()=>{}),1500)};
 async function pullProfiles(){const hs=new Set(Object.keys(SY.fr));Object.values(EXT).forEach(r=>(r.hm||[]).forEach(([,h])=>hs.add(h)));if(SY.me)hs.delete(SY.me.h);
-  const L=[...hs];for(let i=0;i<L.length;i+=6)await Promise.all(L.slice(i,i+6).map(h=>api('profiles/'+h).then(p=>{if(p)SY.pc[h]={name:p.name,color:p.color,music:p.music,upd:p.upd,s:p.s}}).catch(()=>{})));
+  const L=[...hs];for(let i=0;i<L.length;i+=6)await Promise.all(L.slice(i,i+6).map(h=>api('profiles/'+h).then(p=>{if(p)SY.pc[h]={name:p.name,color:p.color,music:p.music,upd:p.upd,s:p.s,pin:p.pin||''}}).catch(()=>{})));
   /* couleur et musique officielles, sauf si on les a changées sur ce téléphone */
   let ch=0;Object.entries(SY.fr).forEach(([h,f])=>{const p=SY.pc[h];if(!p)return;f.ov=f.ov||{};
     if(!f.ov.color&&p.color){let r=ROSTER.find(q=>q.name===f.local);if(!r){r={name:f.local,color:p.color};ROSTER.push(r);ch=1}if(r.color!==p.color){r.color=p.color;ch=1}}
@@ -73,9 +73,28 @@ function addFriend(h,local){if(SY.me&&SY.me.h===h)return;const p=SY.pc[h]||{};co
   SY.fr[h]={local:nm,ov:{},t:Date.now()};sySave()}
 async function groupsSync(){if(!SY.me)return;for(const c of SY.gr){const g=await api('groups/'+c).catch(()=>null);if(!g)continue;SY.gn=SY.gn||{};SY.gn[c]=g.name||c;
     if(!g.members||!g.members[SY.me.h])await api('groups/'+c+'/members','PATCH',{[SY.me.h]:true}).catch(()=>{});
-    for(const h of Object.keys(g.members||{})){if(h===SY.me.h||SY.fr[h])continue;const p=await api('profiles/'+h).catch(()=>null);if(p)SY.pc[h]={name:p.name,color:p.color,music:p.music,upd:p.upd,s:p.s};addFriend(h)}}
+    for(const h of Object.keys(g.members||{})){if(h===SY.me.h||SY.fr[h])continue;const p=await api('profiles/'+h).catch(()=>null);if(p)SY.pc[h]={name:p.name,color:p.color,music:p.music,upd:p.upd,s:p.s,pin:p.pin||''};addFriend(h)}}
   sySave()}
 
+/* ---------- code de protection (facultatif) ----------
+   Un profil protégé n'est rattaché à une partie jouée sur le téléphone d'un autre que si son code a été tapé
+   sur ce téléphone pendant la soirée (10 h → 10 h). Sinon il joue en invité : la partie ne va pas sur son profil. */
+const pinH=(h,c)=>{let x=2166136261;for(const ch of 'cm|'+h+'|'+c){x^=ch.charCodeAt(0);x=Math.imul(x,16777619)>>>0}return x.toString(16)};
+const prot=h=>!!(SY.pc[h]&&SY.pc[h].pin)&&!(SY.me&&SY.me.h===h);
+const unlocked=(h,t)=>{const f=SY.fr[h]||{};return!prot(h)||(f.histTo&&t<=f.histTo)||!!(f.unl&&f.unl[soirK(t)])};
+function pinAsk(h,txt){return new Promise(ok=>{const o=el('div','');o.id='sypin';const nm=SY.fr[h]?SY.fr[h].local:h.toUpperCase();
+  o.innerHTML=`<div class="sypb"><p class="sypt">🔒 <b>${esc(nm)}</b> · @${esc(h)}</p><p class="syhint">${txt}</p><input type="password" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="••••"><p class="syerr"></p>
+    <div class="sybtns"><button class="sybt" data-no>Jouer en invité</button><button class="sybt acc" data-ok>Valider</button></div></div>`;document.body.append(o);const i=o.querySelector('input');setTimeout(()=>i.focus(),50);
+  const end=v=>{o.remove();ok(v)};
+  const val=()=>{if(pinH(h,i.value)===SY.pc[h].pin){haptic();SFX.ui();end(true)}else{SFX.err();o.querySelector('.syerr').textContent='Code faux';i.value='';o.querySelector('.sypb').animate([{transform:'translateX(-8px)'},{transform:'translateX(8px)'},{transform:'none'}],{duration:240})}};
+  o.addEventListener('click',e=>{if(e.target.closest('[data-ok]'))val();else if(e.target.closest('[data-no]'))end(false)});
+  i.addEventListener('input',()=>{i.value=i.value.replace(/\D/g,'');if(i.value.length===4)val()})})}
+/* avant de lancer une partie : code des joueurs protégés, une fois par soirée */
+{const _l=launchNew;launchNew=async function(){const a=arguments,now=Date.now(),k=soirK(now),hs=[];
+   S.names.slice(0,S.n).forEach(n=>{const h=linkOf((n||'').trim().toUpperCase());if(h&&!hs.includes(h)&&prot(h)&&!unlocked(h,now)&&!((SY.fr[h]||{}).gst===k))hs.push(h)});
+   for(const h of hs){const okp=await pinAsk(h,'Tape son code pour que la partie compte sur son profil. Une fois par soirée sur ce téléphone.');const f=SY.fr[h];if(!f)continue;
+     if(okp){(f.unl=f.unl||{})[k]=1}else f.gst=k;sySave()}
+   return _l.apply(this,a)}}
 /* ---------- synchro complète ---------- */
 let busy=false,again=false;
 async function sync(manual){if(busy){again=true;return}if(!navigator.onLine&&!manual)return;busy=true;setSt('Synchronisation…');
@@ -121,7 +140,9 @@ function draw(){const o=$('sync');if(!o)return;const me=SY.me,F=Object.entries(S
       <p class="syhint">Qui es-tu parmi les joueurs de ce téléphone ?</p><div class="sych">${R.map(r=>`<button data-meis="${esc(r.name)}" class="${V.mel===r.name?'on':''}" style="--pc:${r.color}"><b></b>${esc(r.name)}</button>`).join('')}</div>
       ${V.err?`<p class="syerr">${esc(V.err)}</p>`:''}<button class="sybt acc" data-mk>Créer mon profil</button></div>`}
   else{h+=`<div class="sybox syme"><div class="symh"><b style="--pc:${pcol(me.local)||'var(--accent)'}"></b><div><strong>@${esc(me.h)}</strong><small>${esc(me.local)} sur ce téléphone</small></div><button class="sysm" data-myqr>${V.step==='myqr'?'Fermer':'Mon QR'}</button></div>
-      ${V.step==='myqr'?`<div class="syqr" id="syQR"></div><p class="syhint">Tes amis scannent ce code dans Amis → Ajouter.</p>`:''}</div>
+      ${V.step==='myqr'?`<div class="syqr" id="syQR"></div><p class="syhint">Tes amis scannent ce code dans Amis → Ajouter.</p>`:''}
+      <div class="sypin"><span>🔒 Code de protection : <b>${SY.myPin?'activé':'désactivé'}</b></span><button class="sysm" data-pin>${V.step==='pin'?'Fermer':SY.myPin?'Changer':'Activer'}</button></div>
+      ${V.step==='pin'?`<p class="syhint">4 chiffres. Jamais demandé sur ton téléphone ; sur celui d’un autre, on le tape une fois par soirée (10 h → 10 h) pour que les parties comptent sur ton profil.</p><div class="syrow"><input id="syP" type="password" inputmode="numeric" maxlength="4" placeholder="••••"><button class="sysm" data-pinok>Enregistrer</button>${SY.myPin?'<button class="sysm" data-pinoff>Désactiver</button>':''}</div>`:''}</div>
     <h3 class="sysec">Mes amis <i>${F.length}</i></h3>
     ${V.step==='add'?addHtml():`<div class="sybtns"><button class="sybt" data-add>+ Ajouter un ami</button><button class="sybt" data-scan>📷 Scanner</button></div>`}
     <div class="syl">${F.map(([k,f])=>`<div class="syf"><b style="--pc:${pcol(f.local)||'#999'}"></b><div><strong>${esc(f.local)}</strong><small>@${esc(k)}${SY.pc[k]&&SY.pc[k].name&&SY.pc[k].name!==f.local?' · '+esc(SY.pc[k].name):''}</small></div><button class="sysm" data-rl="${esc(k)}">${V.rl===k?'Fermer':'Relier'}</button><button class="sysm" data-rm="${esc(k)}">Retirer</button></div>${V.rl===k?`<div class="sybox"><p class="syhint">C’est quel joueur sur ce téléphone ?</p><div class="sych">${ROSTER.filter(r=>r.name&&(!linkOf(r.name)||r.name===f.local)).map(r=>`<button data-rlk="${esc(r.name)}" class="${r.name===f.local?'on':''}" style="--pc:${r.color}"><b></b>${esc(r.name)}</button>`).join('')}</div></div>`:''}`).join('')||'<p class="syhint">Aucun ami pour l’instant.</p>'}</div>
@@ -148,7 +169,7 @@ async function handleCode(k){if(!SY.me){toast('CRÉE D’ABORD TON PROFIL','',tr
   if(k.f){V.step='add';V.q=k.f;await find()}
   else if(k.g){await joinGroup(k.g)}}
 async function find(){V.err='';const h=(V.q||'').toLowerCase();if(!hOk(h)){V.err='Pseudo invalide';draw();return}if(SY.me&&h===SY.me.h){V.err='C’est toi !';draw();return}if(SY.fr[h]){V.err='Déjà dans tes amis';draw();return}
-  try{const p=await api('profiles/'+h);if(!p){V.err='Aucun profil @'+h;draw();return}SY.pc[h]={name:p.name,color:p.color,music:p.music,upd:p.upd,s:p.s};V.found={h,p};draw()}catch(e){V.err='Pas de connexion';draw()}}
+  try{const p=await api('profiles/'+h);if(!p){V.err='Aucun profil @'+h;draw();return}SY.pc[h]={name:p.name,color:p.color,music:p.music,upd:p.upd,s:p.s,pin:p.pin||''};V.found={h,p};draw()}catch(e){V.err='Pas de connexion';draw()}}
 async function joinGroup(c){c=String(c||'').toUpperCase();V.err='';try{const g=await api('groups/'+c);if(!g){V.err='Aucun groupe '+c;V.step='join';draw();return}
     if(!SY.gr.includes(c))SY.gr.push(c);sySave();await api('groups/'+c+'/members','PATCH',{[SY.me.h]:true});await groupsSync();V.step=null;toast('GROUPE REJOINT','',true);SFX.lead();draw();sync()}
   catch(e){V.err='Pas de connexion';V.step='join';draw()}}
@@ -159,12 +180,16 @@ async function onClick(e){const t=e.target,o=$('sync'),q=s=>t.closest(s);
   if(q('[data-mk]')){const h=(($('syH')||{}).value||'').toLowerCase();V.q=h;V.err='';if(!hOk(h)){V.err='Pseudo : 2 à 15 caractères, lettres, chiffres ou _';draw();return}if(!V.mel){V.err='Choisis qui tu es';draw();return}
     try{const ex=await api('profiles/'+h);if(ex){V.err='@'+h+' est déjà pris';draw();return}SY.me={h,local:V.mel};delete SY.fr[h];sySave();await pushMe();haptic();SFX.lead();toast('PROFIL @'+h.toUpperCase()+' CRÉÉ','',true);draw();sync(true)}
     catch(err){SY.me=null;V.err='Pas de connexion';draw()}return}
+  if(q('[data-pin]')){haptic();V.step=V.step==='pin'?null:'pin';draw();const i=$('syP');if(i)i.focus();return}
+  if(q('[data-pinok]')){const c=(($('syP')||{}).value||'').replace(/\D/g,'');if(c.length!==4){toast('4 CHIFFRES','',true);SFX.err();return}
+    try{await api('profiles/'+SY.me.h,'PATCH',{pin:pinH(SY.me.h,c)});SY.myPin=1;sySave();V.step=null;haptic();SFX.lead();toast('PROFIL PROTÉGÉ','🔒',true);draw()}catch(e){toast('PAS DE CONNEXION','',true)}return}
+  if(q('[data-pinoff]')){try{await api('profiles/'+SY.me.h+'/pin','DELETE');SY.myPin=0;sySave();V.step=null;haptic();SFX.back();toast('CODE DÉSACTIVÉ','',true);draw()}catch(e){toast('PAS DE CONNEXION','',true)}return}
   if(q('[data-myqr]')){haptic();V.step=V.step==='myqr'?null:'myqr';draw();return}
   if(q('[data-add]')){haptic();V={step:'add',q:'',found:null,err:''};draw();const i=$('syF');if(i)i.focus();return}
   if(q('[data-scan]')){haptic();scan(k=>handleCode(k));return}
   if(q('[data-cancel]')){haptic();V={step:null,q:'',found:null,err:''};draw();return}
   if(q('[data-find]')){V.q=(($('syF')||{}).value||'').toLowerCase().replace(/^@/,'');await find();return}
-  if((b=q('[data-lk]'))){const f=V.found;if(!f)return;addFriend(f.h,b.dataset.lk||null);haptic();SFX.lead();toast((b.dataset.lk||SY.fr[f.h].local)+' = @'+f.h.toUpperCase(),'',true);V={step:null,q:'',found:null,err:''};draw();sync(true);return}
+  if((b=q('[data-lk]'))){const f=V.found;if(!f)return;addFriend(f.h,b.dataset.lk||null);if(prot(f.h)){const okp=await pinAsk(f.h,'Son profil est protégé : tape son code pour que ses anciennes parties sur ce téléphone rejoignent son profil.');if(okp){SY.fr[f.h].histTo=Date.now();SY.fr[f.h].unl={[soirK(Date.now())]:1};sySave()}}haptic();SFX.lead();toast((b.dataset.lk||SY.fr[f.h].local)+' = @'+f.h.toUpperCase(),'',true);V={step:null,q:'',found:null,err:''};draw();sync(true);return}
   if((b=q('[data-rl]'))){haptic();V.rl=V.rl===b.dataset.rl?null:b.dataset.rl;draw();return}
   if((b=q('[data-rlk]'))){const h=V.rl;if(!h||!SY.fr[h])return;SY.fr[h].local=b.dataset.rlk;SY.fr[h].ov={};sySave();haptic();SFX.lead();toast(b.dataset.rlk+' = @'+h.toUpperCase(),'',true);V.rl=null;extInject();draw();sync(true);return}
   if((b=q('[data-rm]'))){const h=b.dataset.rm;if(!confirmTap(b))return;delete SY.fr[h];sySave();haptic();SFX.back();draw();return}
@@ -209,6 +234,12 @@ document.head.append(el('style','',`
 #sync .sysm{flex:none;border:0;border-radius:99px;padding:7px 12px;background:transparent;box-shadow:inset 0 0 0 2px var(--ol,#111);font:400 13px "Lbl",sans-serif;color:var(--ink)}
 #sync .sysm.sure{background:#c0392b;color:#fff;box-shadow:none}
 #sync .syqr{align-self:center;background:#fff;padding:8px;border-radius:12px}#sync .syqr svg{display:block;width:min(60vw,240px);height:auto}
+#sync .sypin{display:flex;align-items:center;justify-content:space-between;gap:8px;font:400 14px "Lbl",sans-serif;color:var(--ink)}
+#sypin{position:fixed;inset:0;z-index:320;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:20px}
+#sypin .sypb{width:min(340px,100%);display:flex;flex-direction:column;gap:10px;padding:18px;border-radius:24px;background:var(--m-home,#f7f2e5);box-shadow:0 0 0 5px var(--accent),0 12px 30px rgba(0,0,0,.3)}
+#sypin .sypt{margin:0;font:400 20px "Fun",sans-serif;color:var(--ink)}#sypin .syhint{margin:0;font:400 13px/1.35 "Lbl",sans-serif;color:var(--mute)}#sypin .syerr{margin:0;min-height:1em;font:400 13px "Lbl",sans-serif;color:#c0392b}
+#sypin input{padding:12px;border-radius:14px;border:2px solid var(--ol,#111);background:#fff;color:#111;font:400 28px "Lbl",sans-serif;text-align:center;letter-spacing:.5em}
+#sypin .sybtns{display:flex;gap:8px}#sypin .sybt{flex:1}
 #prof .prtag{margin:-6px 0 0 28px;font:400 13px "Lbl",sans-serif;color:var(--mute)}
 #syscan{position:fixed;inset:0;z-index:300;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:20px}
 #syscan video{width:100%;max-width:420px;border-radius:20px}#syscan p{color:#fff;font:400 16px "Lbl",sans-serif}
