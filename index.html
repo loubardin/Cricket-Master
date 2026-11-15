@@ -2924,6 +2924,11 @@ html body #hist #hBody .stset p{margin:6px 0 0;font:400 11px "Lbl",sans-serif;te
 html body #hist #hBody .stset label{display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:center;font:400 14px "Lbl",sans-serif;color:var(--ink)}
 html body #hist #hBody .stset label b{font:400 13px "Lbl",sans-serif;color:var(--mute)}
 html body #hist #hBody .stset input{grid-column:1/-1;width:100%;accent-color:var(--accent);margin:0}
+#knEd .kne{display:flex;flex-direction:column;gap:6px;width:min(92vw,420px);margin:0 auto 10px}#knEd p{margin:4px 0 0;font:400 12px "Lbl",sans-serif;text-transform:uppercase;letter-spacing:.05em;color:var(--mute)}
+#knEd .kne>div{display:flex;flex-wrap:wrap;gap:6px}#knEd button{display:inline-flex;align-items:center;gap:6px;border:0;border-radius:99px;padding:8px 12px;background:var(--m-cell,#fff);box-shadow:inset 0 0 0 2px var(--ol,#111);font:400 15px "Fun",sans-serif;color:var(--ink);text-transform:uppercase}#knEd button b{width:12px;height:12px;border-radius:50%;background:var(--pc)}#knEd button.ad{box-shadow:inset 0 0 0 2px rgba(0,0,0,.2)}#knEd button[disabled]{opacity:1}
+html body #setup#setup#setup:not(.more) .sect.s2 .adv{display:none!important}html body #setup#setup#setup:not(.more2) .sect.s1 .opt.adv2{display:none!important}
+#setup #moreOpt2{order:0;flex:none}#setup .moreopt{order:999;flex:0 0 100%;display:flex;flex-direction:column;align-items:flex-start;gap:2px;width:100%;border:0;background:transparent;padding:8px 2px;text-align:left;color:var(--ink)}#setup .moreopt b{font:400 15px "Lbl",sans-serif;font-weight:700}#setup .moreopt small{font:400 12px "Lbl",sans-serif;color:var(--mute)}
+html body #hist #hBody .stbt,#hgd .stbt{display:flex;flex-wrap:wrap;gap:8px}
 html body #hist #hBody .stres{align-self:flex-start;margin-top:8px;border:0;border-radius:99px;padding:8px 14px;background:transparent;box-shadow:inset 0 0 0 2px var(--ol,#111);font:400 13px "Lbl",sans-serif;color:var(--ink)}
 /* menu : Statistiques + Historique côte à côte */
 #home .hrow2{display:grid;grid-template-columns:1fr 1fr;gap:3vw;width:100%}
@@ -3503,6 +3508,8 @@ html body :is(#game#game#game#game,#x01#x01#x01#x01,#killer#killer#killer#killer
 #prof{gap:12px;overflow-y:auto;background:var(--page,#f7f2e5)!important}
 #prof .prb{border:0;background:transparent;font:400 18px "Fun",sans-serif;color:var(--ink);padding:6px 0}
 #prof .prl{display:flex;flex-direction:column;gap:8px}
+#prof .prami{display:flex;align-items:center;gap:10px;border:0;border-radius:18px;padding:14px 16px;background:var(--accent);color:var(--btx,#fff);font:400 19px "Fun",sans-serif}#prof .prami i{margin-left:auto;font-style:normal}
+.skinpick .skadv{display:flex;justify-content:space-between;width:100%;border:0;background:transparent;padding:10px 2px 4px;font:400 15px "Lbl",sans-serif;font-weight:700;color:var(--ink)}.skinpick .skadv i{font-style:normal}
 #prof .prl button{display:flex;align-items:center;gap:12px;border:0;border-radius:18px;padding:14px 16px;background:var(--m-cell,#fff);box-shadow:inset 0 0 0 2px var(--ol,#111);font:400 20px "Fun",sans-serif;color:var(--ink);text-transform:uppercase;text-align:left}
 #prof .prh .prc{margin-left:auto;flex:none;width:44px;height:44px;border-radius:50%;border:0;background:transparent;box-shadow:inset 0 0 0 2px var(--ol,#111);font-size:20px}
 #prof .prl button i{margin-left:auto;font:400 12px "Lbl",sans-serif;font-style:normal;color:var(--mute);text-transform:none}
@@ -3697,9 +3704,11 @@ html body #hist #hBody .h2last small{font:400 11px "Lbl",sans-serif;color:var(--
 <div class="ov" id="knext">
   <div class="k">MANCHE SUIVANTE</div>
   <div class="d" id="knextD"></div>
+  <div id="knEd"></div>
   <button class="big acc" id="knKeep">Garder les numéros</button>
   <button class="big dark" id="knDraw">Nouveaux numéros : tirage</button>
   <button class="big dark" id="knThrow">Nouveaux numéros : 1er lancer</button>
+  <button class="big dark" id="knEdit">Ajouter / retirer des joueurs</button>
   <button class="big dark" id="knCancel">Retour</button>
 </div>
 
@@ -3754,6 +3763,7 @@ html body #hist #hBody .h2last small{font:400 11px "Lbl",sans-serif;color:var(--
   <div class="d" id="wDet"></div>
   <div id="wBet"></div>
   <button class="big acc" id="bRematch">Revanche</button>
+  <button class="big dark" id="bWinPl">Changer les joueurs</button>
   <button class="big dark" id="bWinInfo">Infos partie</button>
   <button class="big dark" id="bWinUndo">Annuler la dernière fléchette</button>
   <button class="big dark" id="bWinMenu">Accueil</button>
@@ -5088,7 +5098,7 @@ $('bRematch').addEventListener('click',()=>{
   if(onX01()){xRematch();return}
   if(onKiller()){const w=KG.players[KG.winner];
     $('knextD').innerHTML='Ordre : '+kRank().map((i,k)=>(k+1)+'. '+esc(KG.players[i].name)).join(' · ')+(KG.opt.carry?'<br>+1 ♥ pour '+esc(w.name):'');
-    $('win').classList.remove('on');$('knext').classList.add('on');return}
+    KED=null;$('knEd').innerHTML='';$('knEdit').style.display=KG.teams?'none':'';$('win').classList.remove('on');$('knext').classList.add('on');return}
   let names=G.players.map(p=>p.name),start=(G.start+1)%names.length,teams=G.teams?G.players.map(p=>p.members):null;
   if(!cMatchOver())CARRY={legsTo:G.legsTo,legs:cLegs(),leg:(G.leg||1)+1};
   if(names.length===2&&start===1){names.reverse();if(teams)teams.reverse();if(CARRY&&CARRY.legs)CARRY.legs.reverse();start=0}   /* à 2 : celui qui commence est toujours en premier */
@@ -5097,6 +5107,7 @@ $('bRematch').addEventListener('click',()=>{
 $('bWinInfo').addEventListener('click',()=>{if(onX01())xStats();else if(onKiller())kStats();else renderStats();$('win').classList.remove('on');$('info').dataset.fromWin=1;$('info').classList.add('on')});
 $('bWinUndo').addEventListener('click',()=>{if(onX01())xUndo();else if(onKiller())kUndo();else undo()});
 $('bWinMenu').addEventListener('click',()=>{$('win').classList.remove('on');goHome()});
+$('bWinPl').addEventListener('click',()=>{haptic();$('win').classList.remove('on');CARRY=null;renderSetup();show('setup');setupPage(2)});   /* mêmes réglages, on change juste les joueurs / équipes */
 
 /* bloque zoom et rebond */
 document.addEventListener('gesturestart',e=>e.preventDefault());
@@ -5457,11 +5468,18 @@ function kRank(){
   const rest=known?out.slice().reverse():dead.sort((a,b)=>P[b].darts-P[a].darts||out.indexOf(b)-out.indexOf(a));
   return[w,...rest];
 }
+let KED=null;   /* joueurs de la manche suivante si on en ajoute / retire (dans l'ordre) */
+const knNames=()=>KED?KED.slice():kRank().map(i=>KG.players[i].name);
 function kNext(nums){
-  const P=KG.players,r=kRank(),w=0,tm=KG.teams?Object.fromEntries(P.map(p=>[p.name,p.members])):null;
-  KG=newKiller(r.map(i=>P[i].name),nums||r.map(i=>P[i].num),0,KG.lives,r.map(i=>P[i].wins),KG.manche+1,0);kTeamsOn(tm);
+  const P=KG.players,r=kRank(),tm=KG.teams?Object.fromEntries(P.map(p=>[p.name,p.members])):null,L=r.map(i=>P[i]);
+  let names=L.map(p=>p.name),nm=nums||L.map(p=>p.num),wins=L.map(p=>p.wins),w=0;
+  if(KED){const keep=KED.map(n=>L.find(p=>p.name===n)).filter(Boolean),add=KED.filter(n=>!L.some(p=>p.name===n));
+    names=KED.slice();wins=KED.map(n=>{const p=L.find(q=>q.name===n);return p?p.wins:0});
+    if(!nums){const used=new Set(keep.map(p=>p.num));nm=KED.map(n=>{const p=L.find(q=>q.name===n);if(p)return p.num;let x;do{x=1+Math.floor(Math.random()*20)}while(used.has(x));used.add(x);return x})}
+    w=KED[0]===L[0].name?0:-1;KED=null}   /* le gagnant reste en tête et garde son cœur */
+  KG=newKiller(names,nm,0,KG.lives,wins,KG.manche+1,w);kTeamsOn(tm);
   KH=[];kSave();showKiller();SFX.start();
-  if(KG.opt.carry&&w!==null){setTimeout(()=>{toast('+1 ♥ '+esc(KG.players[0].name));const h=R2(w)&&R2(w).querySelectorAll('.h');if(h&&h.length)anim(h[h.length-1],'gain',800)},300)}
+  if(KG.opt.carry&&w===0){setTimeout(()=>{toast('+1 ♥ '+esc(KG.players[0].name));const h=R2(w)&&R2(w).querySelectorAll('.h');if(h&&h.length)anim(h[h.length-1],'gain',800)},300)}
 }
 
 /* une fléchette */
@@ -5661,9 +5679,16 @@ function kRender(){
 /* taper une case = toucher le numéro de ce joueur */
 const knClose=()=>$('knext').classList.remove('on');
 $('knKeep').addEventListener('click',()=>{knClose();$('win').classList.remove('on');kNext()});
-$('knDraw').addEventListener('click',()=>{knClose();$('win').classList.remove('on');NUMCB=nums=>kNext(nums);runNumDraw(kRank().map(i=>KG.players[i].name))});
-$('knThrow').addEventListener('click',()=>{knClose();$('win').classList.remove('on');NUMCB=nums=>kNext(nums);runNumThrow(kRank().map(i=>KG.players[i].name))});
-$('knCancel').addEventListener('click',()=>{knClose();$('win').classList.add('on')});
+$('knDraw').addEventListener('click',()=>{knClose();$('win').classList.remove('on');NUMCB=nums=>kNext(nums);runNumDraw(knNames())});
+$('knThrow').addEventListener('click',()=>{knClose();$('win').classList.remove('on');NUMCB=nums=>kNext(nums);runNumThrow(knNames())});
+$('knCancel').addEventListener('click',()=>{KED=null;$('knEd').innerHTML='';knClose();$('win').classList.add('on')});
+function knEdDraw(){const cur=knNames(),w=KG.players[KG.winner],free=ROSTER.map(r=>r.name).filter(n=>n&&!cur.includes(n));
+  $('knEd').innerHTML=`<div class="kne"><p>Dans la manche</p><div>${cur.map(n=>`<button data-krm="${esc(n)}" style="--pc:${pcol(n)||'#999'}"${w&&n===w.name?' disabled':''}><b></b>${esc(n)}${w&&n===w.name?' ♥':' ✕'}</button>`).join('')}</div>
+    ${free.length?`<p>Ajouter</p><div>${free.map(n=>`<button data-kadd="${esc(n)}" class="ad" style="--pc:${pcol(n)||'#999'}"><b></b>+ ${esc(n)}</button>`).join('')}</div>`:''}</div>`;
+  $('knextD').innerHTML='Ordre : '+cur.map((n,k)=>(k+1)+'. '+esc(n)).join(' · ')+(KG.opt.carry&&w?'<br>+1 ♥ pour '+esc(w.name):'')}
+$('knEdit').addEventListener('click',()=>{haptic();if(!KED)KED=knNames();knEdDraw()});
+$('knEd').addEventListener('click',e=>{const a=e.target.closest('[data-kadd]'),r=e.target.closest('[data-krm]');if(!a&&!r)return;haptic();SFX.tick();
+  if(a)KED.push(a.dataset.kadd);else if(KED.length>2)KED=KED.filter(n=>n!==r.dataset.krm);else{toast('2 JOUEURS MINIMUM','',true);return}knEdDraw()});
 $('kUndo').addEventListener('click',()=>{if(BARON){if(XG)xUndo();return}if(KG&&KG.winner===null)kUndo()});
 $('kInfo').addEventListener('click',()=>{haptic();SFX.open();if(BARON)xStats();else kStats();$('info').classList.add('on')});
 function kStats(){
@@ -6126,6 +6151,22 @@ document.querySelectorAll('#setup .sect.s2 .opt').forEach(o=>{const b=[...o.quer
 
 /* menu en deux pages : 1. jeu + règles → 2. joueurs */
 const SU=$('setup');
+/* options avancées repliées : seule l'option principale de chaque jeu reste visible ; l'enjeu se déplie à part */
+{const MAIN=['Mode','Score','Vies','Tours','Double / triple','Cibles'];
+ SU.querySelectorAll('.sect.s2 .opt, .sect.s2 .kpair').forEach(o=>{if(o.classList.contains('kpair')){o.classList.add('adv');return}if(o.closest('.kpair'))return;const l=((o.querySelector('span')||{}).textContent||'').trim();if(!MAIN.includes(l))o.classList.add('adv')});
+ SU.querySelectorAll('.sect.s1 .betrow').forEach(o=>o.classList.add('adv2'));
+ const b1=el('button','moreopt');b1.id='moreOpt';SU.querySelector('.sect.s2').append(b1);
+ const b2=el('button','moreopt');b2.id='moreOpt2';SU.querySelector('.sect.s1 .ordopt').after(b2);
+ b1.addEventListener('click',()=>{haptic();SFX.tick();SU.classList.toggle('more');moreUpd()});
+ b2.addEventListener('click',()=>{haptic();SFX.tick();SU.classList.toggle('more2');moreUpd()});
+ window.moreUpd=()=>{const g={cricket:'ck',x01:'xo',killer:'kl',shanghai:'sho',clock:'clo',halveit:'hio'}[S.game]||'ck';
+   const DEFV={seq:0,clegs:1,xin:0,xout:1,xlegs:1,xhint:1,xrep:1,kbonus:1,kdef:1,kcarry:1,clkm:0,clkb:1,clkr:0,hid:3,hip:1};
+   const A=[...SU.querySelectorAll('.sect.s2 .opt.'+g)].filter(o=>o.classList.contains('adv')||o.closest('.kpair.adv'));
+   const L=A.map(o=>{const sg=o.querySelector('.seg[data-k]'),b=o.querySelector('.seg button.sel');if(!sg||!b||!(sg.dataset.k in DEFV)||+S[sg.dataset.k]===DEFV[sg.dataset.k])return'';
+     return(o.querySelector('span')||{}).textContent.trim().replace(/\s*[:?=]$/,'')+' : '+b.textContent.trim()}).filter(Boolean);   /* seulement ce qui diffère des réglages de base */
+   const on=SU.classList.contains('more');b1.style.display=A.length?'':'none';b1.innerHTML=`<b>${on?'Moins d’options ▴':'Plus d’options ▾'}</b>${on?'':`<small>${L.length?esc(L.join(' · ')):'Réglages de base'}</small>`}`;
+   if(S.bet)SU.classList.add('more2');const on2=SU.classList.contains('more2');b2.style.display=S.bet?'none':'';b2.innerHTML=`<b>${on2?'Enjeu ▴':'Enjeu ▾'}</b>${on2?'':'<small>Sans</small>'}`};
+ const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{moreUpd()}catch(e){}return r};}
 function setupPage(n,anim){if(typeof noInertia==='function')noInertia();
   if(anim){const old=[...SU.querySelectorAll(':scope>.grp')].filter(g=>g.offsetHeight);old.forEach(g=>{const r=g.getBoundingClientRect(),c=g.cloneNode(true);
     c.querySelectorAll('[id]').forEach(e=>e.removeAttribute('id'));c.removeAttribute('id');c.classList.add('gghost');
@@ -7021,16 +7062,19 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-324';   // à changer avec VERSION dans sw.js
+const APPV='lf-325';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
   const p=el('div','');p.id='xpick';p.classList.add('skinpick');document.body.append(p);
-  const draw=()=>{p.innerHTML=`<div class="skn"><button class="skgo" data-go="hStats">Statistiques</button><button class="skgo" data-go="hHist">Historique</button><button class="skprof">Profils</button><button class="skprof skami">Amis</button></div><div class="skp skjeux"><span>Mise en page des jeux</span></div><div class="skdemo"><button data-d="ck2">Cricket 1v1</button><button data-d="ck3">Cricket 3</button><button data-d="ck4">Cricket 4</button><button data-d="ck5">Cricket 5+</button><button data-d="x2">501 1v1</button><button data-d="xn">501 3+</button><button data-d="kl">Killer 6</button><button data-d="kl7">Killer 7+</button><button data-d="clk">Horloge</button></div><div class="skp"><span>Son</span><div class="sksw sksnd"><button data-s="1" class="${S.sound?'on':''}">Oui</button><button data-s="0" class="${S.sound?'':'on'}">Non</button></div></div>`+`<div class="skp"><span>Annonces vocales</span><div class="sksw skvox"><button data-v="1" class="${S.voice!==false?'on':''}">Oui</button><button data-v="0" class="${S.voice===false?'on':''}">Non</button></div></div><div class="skp"><span>Couleurs des joueurs</span><div class="sksw"><button data-p="1" class="${S.pcolOff?'':'on'}">Oui</button><button data-p="0" class="${S.pcolOff?'on':''}">Non</button></div></div>`+colMenu()+`<button class="skdanger">Effacer des données…</button><div class="skv">version ${APPV}</div>`;if(p.style.top)p.style.top=Math.max(12,Math.min(parseFloat(p.style.top),innerHeight-p.offsetHeight-12))+'px'};
+  const draw=()=>{p.innerHTML=`<div class="skn"><button class="skgo" data-go="hStats">Statistiques</button><button class="skgo" data-go="hHist">Historique</button><button class="skprof">Joueurs</button></div><div class="skp"><span>Son</span><div class="sksw sksnd3"><button data-s="0" class="${S.sound?'':'on'}">Non</button><button data-s="1" class="${S.sound&&S.voice===false?'on':''}">Effets</button><button data-s="2" class="${S.sound&&S.voice!==false?'on':''}">+ Voix</button></div></div><div class="skp"><span>Couleurs des joueurs</span><div class="sksw"><button data-p="1" class="${S.pcolOff?'':'on'}">Oui</button><button data-p="0" class="${S.pcolOff?'on':''}">Non</button></div></div>`+colMenu()+`<button class="skadv">Avancé <i>${SKADV?'▴':'▾'}</i></button>${SKADV?`<div class="skp skjeux"><span>Mise en page des jeux</span></div><div class="skdemo"><button data-d="ck2">Cricket 1v1</button><button data-d="ck3">Cricket 3</button><button data-d="ck4">Cricket 4</button><button data-d="ck5">Cricket 5+</button><button data-d="x2">501 1v1</button><button data-d="xn">501 3+</button><button data-d="kl">Killer 6</button><button data-d="kl7">Killer 7+</button><button data-d="clk">Horloge</button></div><div class="skp skjeux"><span>Affichage des tableaux</span></div><div class="skdemo skdisp"><button data-ds="st">Statistiques</button><button data-ds="hl">Historique</button><button data-ds="hg">Fiche de partie</button></div><button class="skdanger">Effacer des données…</button>`:''}<div class="skv">version ${APPV}</div>`;if(p.style.top)p.style.top=Math.max(12,Math.min(parseFloat(p.style.top),innerHeight-p.offsetHeight-12))+'px'};
   const colMenu=()=>{const C=colGet(),dot=v=>`<i style="background:${v}"></i>`;return `<button class="crow cmain"><span>Apparence de l'appli</span><b>${dot(colAcc())}${dot(C.ol==='acc'?colAcc():C.ol)}${dot(C.bg)}</b></button>`};
   draw();p.style.left=Math.max(12,(innerWidth-p.offsetWidth)/2)+'px';p.style.top=Math.max(12,Math.min(innerHeight-p.offsetHeight-12,e.currentTarget.getBoundingClientRect().bottom+10))+'px';
   p.addEventListener('click',ev=>{ev.stopPropagation();const go=ev.target.closest('.skgo');if(go){p.remove();$(go.dataset.go).dispatchEvent(new MouseEvent('click',{bubbles:true}));return}
+    if(ev.target.closest('.skadv')){haptic();SFX.tick();SKADV=!SKADV;draw();return}
+    const ds=ev.target.closest('.skdisp button');if(ds){haptic();p.remove();dispOpen(ds.dataset.ds);return}
+    const s3=ev.target.closest('.sksnd3 button');if(s3){haptic();const v=+s3.dataset.s;if((v>0)!==!!S.sound)$('sndT').dispatchEvent(new MouseEvent('click',{bubbles:true}));S.voice=v===2;store.set(K_S,S);draw();if(v===2)say('Annonces activées');return}
     const dm=ev.target.closest('.skdemo button');if(dm){haptic();p.remove();demoStart(dm.dataset.d);return}
     if(ev.target.closest('.cmain')){haptic();p.remove();colOpen();return}
     if(ev.target.closest('.skdanger')){haptic();p.remove();dangerOpen();return}
@@ -7098,6 +7142,11 @@ function statBoard(H){
     v.forEach((x,i)=>{h+=x===null?`<div class="cv nil">–</div>`:`<div class="cv${best!==null&&uniq&&x===best&&x>0?' best':''}" style="--pc:${col(H[i],i)}"><span>${dec?fr(x):x}${suf||''}</span></div>`})});
   return h+'</div>'}
 
+let SKADV=false;   /* menu ⚙︎ : section « Avancé » ouverte ou non */
+/* Avancé → Affichage des tableaux : ouvre l'écran avec ses réglages déjà dépliés */
+function dispOpen(k){if(k==='st'){$('hStats').dispatchEvent(new MouseEvent('click',{bubbles:true}));STS.set=true;renderHist()}
+  else{$('hHist').dispatchEvent(new MouseEvent('click',{bubbles:true}));if(k==='hl'){HSEL.set=true;renderHist()}
+    else{const r=HIST.slice().sort((a,b)=>b.date-a.date)[0];if(!r){toast('AUCUNE PARTIE','',true);return}hgOpen(r.id);HGS.set=true;const o=$('hgd');o.innerHTML=hgView(r)}}}
 /* ===== Effacer des données : 3 niveaux, chacun confirmé en tapant EFFACER ===== */
 function dangerOpen(){SFX.open();let o=$('danger');if(o)o.remove();o=el('div','ov');o.id='danger';document.body.append(o);
   const A=[['stats','Remettre les statistiques à zéro','Efface l’historique des parties, les statistiques, les records et les paris. Les joueurs, la partie en cours et tes réglages restent.'],
@@ -7149,7 +7198,7 @@ const stSl=(lab,a,v,mn,mx)=>`<label><span>${esc(lab)}</span><b>${v} %</b><input 
 function stSet(C){const sl=stSl;
   return`<div class="stset"><p>Lignes et colonnes</p>${sl('Hauteur des lignes','data-sv="rh"',STL.rh||100,50,200)}${sl('Largeur des colonnes','data-sv="cw"',STL.cw||100,60,200)}${sl('Largeur de la colonne nom','data-sv="nw"',STL.nw||100,60,200)}
     <p>Taille du texte de chaque colonne</p>${sl('Noms','data-sf="_n"',Math.round(stFz('_n')*100),50,200)}${C.map(c=>sl(c[0],`data-sf="${esc(c[0])}"`,Math.round(stFz(c[0])*100),50,200)).join('')}
-    <button class="stres" data-sreset>Remettre l’affichage d’origine</button></div>`}
+    <div class="stbt"><button class="stres" data-sreset>Remettre l’affichage d’origine</button><button class="stres" data-sset>Fermer</button></div></div>`}
 function memSt(r,k,game){const T=(r.log||[]).filter(e=>e[1]===k);if(!T.length)return null;const y={darts:0,hits:0,spews:0,triple:0,best:0,pts:0,n180:0,n140:0,n100:0};
   T.forEach(e=>{const D=e[2]||[];y.darts+=D.length;y.spews+=D.filter(d=>d[0]===0).length;if(D.length===3&&D.every(d=>d[0]===0))y.triple++;
     if(game==='cricket'){const m=D.reduce((a,d)=>a+(d[2]||0),0);y.hits+=m;y.best=Math.max(y.best,m)}
@@ -7195,7 +7244,7 @@ function stView(team){const G0=STS.g,games=G0==='all'?STG:[G0];let E,n=0;
   const so=STS.sort[G0]||{k:'Victoires',inv:false},ci=Math.max(0,C.findIndex(c=>c[0]===so.k)),[,f,,low]=C[ci]||C[0],dir=(low?1:-1)*(so.inv?-1:1);
   E.sort((a,b)=>{const x=f(a),y=f(b);if(x===null&&y===null)return b.wins-a.wins;if(x===null)return 1;if(y===null)return-1;return(x-y)*dir||b.wins-a.wins||a.name.localeCompare(b.name)});
   const col=(a,i)=>{const c=pcol(a.first);return /^#[0-9a-f]{6}$/i.test(c||'')?c:PFB[i%PFB.length]};
-  const tabs=`<div class="stg">${['all','h2h',...STG].map(g=>`<button data-sg="${g}" class="${g===G0?'on':''}">${g==='all'?'Général':g==='h2h'?'Face-à-face':GNAME[g]}</button>`).join('')}</div>`;
+  const tabs=`<div class="stg">${['all','h2h',...STG.filter(g=>g===G0||HIST.some(r=>r.game===g))].map(g=>`<button data-sg="${g}" class="${g===G0?'on':''}">${g==='all'?'Général':g==='h2h'?'Face-à-face':GNAME[g]}</button>`).join('')}</div>`;
   if(G0==='h2h'){const L=allPeople().filter(n=>!isBot(n));if(!STS.a||!L.includes(STS.a)||!STS.b||!L.includes(STS.b)){let best=[L[0],L[1]],bn=-1;for(let i=0;i<L.length;i++)for(let j=i+1;j<L.length;j++){const n=h2h(L[i],L[j]).n;if(n>bn){bn=n;best=[L[i],L[j]]}}STS.a=best[0];STS.b=best[1]}   /* par défaut : le duo qui a le plus joué ensemble */
     const A=STS.a,B=STS.b&&STS.b!==A?STS.b:L.find(x=>x!==A);STS.b=B;
     const pick=(k,v)=>`<div class="h2p">${L.map(n=>`<button data-h2="${k}" data-n="${esc(n)}" class="${n===v?'on':''}" style="--pc:${pColor(n)}">${esc(n)}</button>`).join('')}</div>`;
@@ -7205,7 +7254,7 @@ function stView(team){const G0=STS.g,games=G0==='all'?STG:[G0];let E,n=0;
       (R.n?`<div class="stw"><table class="stt"><thead><tr><th class="sn">Jeu</th><th>${esc(A)}</th><th>${esc(B)}</th><th>Parties</th></tr></thead><tbody>${Object.entries(R.by).map(([g,v])=>`<tr><td class="sn">${GNAME[g]||g}</td><td class="${v.a>v.b?'on':''}">${v.a}</td><td class="${v.b>v.a?'on':''}">${v.b}</td><td>${v.n}</td></tr>`).join('')}</tbody></table></div>`:'<p class="hempty">Ils ne se sont jamais affrontés.</p>')}
   if(!E.length)return tabs+`<p class="hempty">${team?'Aucune partie en équipes ici pour l\'instant.':'Aucune partie ici pour l\'instant.'}</p>`;
   const fz=k=>` style="--fz:${stFz(k)}"`;
-  let h=tabs+`<div class="stn2"><p class="stn">${n} partie${n>1?'s':''}${G0==='all'?' · tous jeux':''} · touche un titre pour classer, reste appuyé pour le déplacer · touche un nom pour son profil</p><button class="stsb${STS.set?' on':''}" data-sset aria-label="Réglages d’affichage"><svg viewBox="0 0 24 24"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg></button></div><div class="stw"><table class="stt" data-ok="st:${G0}"><thead><tr><th class="sn"${fz('_n')}>${team?'Équipe':'Joueur'}</th>`+
+  let h=tabs+`<div class="stn2"><p class="stn">${n} partie${n>1?'s':''}${G0==='all'?' · tous jeux':''} · touche un titre pour classer, reste appuyé pour le déplacer · touche un nom pour son profil</p></div><div class="stw"><table class="stt" data-ok="st:${G0}"><thead><tr><th class="sn"${fz('_n')}>${team?'Équipe':'Joueur'}</th>`+
     C.map((c,i)=>`<th data-sc="${esc(c[0])}" data-cn="${esc(c[0])}" class="${i===ci?'on':''}"${fz(c[0])}>${esc(c[0])}${i===ci?(dir<0?' ▼':' ▲'):''}</th>`).join('')+'</tr></thead><tbody>';
   E.forEach((a,r)=>{h+=`<tr data-pn="${esc(a.name)}"><td class="sn"${fz('_n')}><div><i>${r+1}</i><b style="--pc:${col(a,r)}"></b><span>${nmH(a.name)}</span></div></td>`+C.map((c,i)=>{const v=c[1](a);return`<td data-cn="${esc(c[0])}" class="${i===ci?'on':''}"${fz(c[0])}>${v===null?'–':c[2]?c[2](v):v}</td>`}).join('')+'</tr>'});
   return h+'</tbody></table></div>'+(STS.set?stSet(C):'')}   /* réglages sous le tableau : on voit l'effet en direct */
@@ -7265,7 +7314,7 @@ function hgView(r){const P=r.p,C0=hgCols(r),O=(STL.hord||{})[r.game],C=O?C0.slic
   const sub=[GNAME[r.game]||r.game,r.game==='cricket'?(r.mode==='cut'?'coupe-gorge':'standard'):r.game==='x01'?(r.start||501)+' · '+(['simple','double','master'][r.outR]||'double')+' out':'',r.teams?'équipes':''].filter(Boolean).join(' · ');
   const meta=[fdate(r.date),r.rounds?r.rounds+' tours':'',r.dur>60000?Math.round(r.dur/60000)+' min':''].filter(Boolean).join(' · ');
   const G=STL.hg||{},fz=k=>` style="--fz:${((G.fs||{})[k]||100)/100}"`;
-  let h=`<div class="hgdh"><button class="hgback">‹ Historique</button><button class="stsb${HGS.set?' on':''}" data-gset aria-label="Réglages d’affichage">${SLD_SVG}</button></div><div class="hgdt"><b>${esc(sub)}</b><span>${meta}</span>${P[r.w]?`<span class="hgdw" style="--pc:${c(P[r.w])}">🏆 ${esc(P[r.w].name)}${r.fin&&r.teams?` · fléchette gagnante : ${esc(r.fin)}`:''}</span>`:''}</div>
+  let h=`<div class="hgdh"><button class="hgback">‹ Historique</button></div><div class="hgdt"><b>${esc(sub)}</b><span>${meta}</span>${P[r.w]?`<span class="hgdw" style="--pc:${c(P[r.w])}">🏆 ${esc(P[r.w].name)}${r.fin&&r.teams?` · fléchette gagnante : ${esc(r.fin)}`:''}</span>`:''}</div>
     <p class="stn">touche un titre de colonne pour classer</p><div class="stw"><table class="stt"><thead><tr><th class="sn">${r.teams?'Équipe':'Joueur'}</th>`+C.map((k,i)=>`<th data-hc="${i}" class="${i===ci?'on':''}">${esc(k[0])}${i===ci?(dir<0?' ▼':' ▲'):''}</th>`).join('')+'</tr></thead><tbody>';
   ord.forEach((i,rk)=>{const x=P[i];h+=`<tr><td class="sn"${fz('_n')}><div><i>${i===r.w?'🏆':rk+1}</i><b style="--pc:${c(x)}"></b><span>${nmH(x.name)}</span></div></td>`+C.map((k,j)=>{const v=k[1](x);return`<td data-cn="${esc(k[0])}" class="${j===ci?'on':''}"${fz(k[0])}>${v===null||v===undefined?'–':k[2]?k[2](v):v}</td>`}).join('')+'</tr>';
     if(x.members&&x.members.length>1&&(r.game==='cricket'||r.game==='x01'))x.members.forEach(m=>{const y=memSt(r,m,r.game);if(!y)return;   /* une ligne par coéquipier */
@@ -7274,7 +7323,7 @@ function hgView(r){const P=r.p,C0=hgCols(r),O=(STL.hord||{})[r.game],C=O?C0.slic
   if(HGS.set&&!HGS.inf)h+=`<div class="stset">${stSl('Hauteur des lignes','data-gv="rh"',G.rh||100,50,200)}${stSl('Largeur des colonnes','data-gv="cw"',G.cw||100,60,200)}${stSl('Largeur de la colonne nom','data-gv="nw"',G.nw||100,60,200)}
     <p>Taille du texte de chaque colonne</p>${stSl('Noms','data-gf="_n"',(G.fs||{})._n||100,50,200)}${C.map(k=>stSl(k[0],`data-gf="${esc(k[0])}"`,(G.fs||{})[k[0]]||100,50,200)).join('')}
     <p>Tour par tour</p>${stSl('Taille du texte','data-gv="lt"',G.lt||100,60,200)}${stSl('Hauteur des lignes','data-gv="lr"',G.lr||100,50,250)}
-    <button class="stres" data-greset>Remettre l’affichage d’origine</button></div>`;
+    <div class="stbt"><button class="stres" data-greset>Remettre l’affichage d’origine</button><button class="stres" data-gset>Fermer</button></div></div>`;
   if(r.log&&r.log.length){const N=P.length,ACC={},cum=r.game==='cricket'||r.game==='x01';h+=`<h3 class="hgsec">Tour par tour${cum?`<small>${r.game==='cricket'?'MPR':'moyenne'} depuis le début</small>`:''}</h3><div class="hglog">`;
     r.log.forEach((L,k)=>{const[pi,mb,ds,after]=L,x=P[pi]||{},rd=Math.floor(k/N)+1;if(k%N===0)h+=`<div class="hgr">Tour ${rd}</div>`;
       const darts=ds.map(d=>{const lb=dLbl(d[0],d[1]),cls=d[0]===0?'sp':r.game==='cricket'?(d[2]?'ok':'no'):r.game==='x01'?(d[3]?'bu':d[2]?'ok':'no'):r.game==='killer'?(d[2]==='miss'||/^no|spew/.test(d[2])?'no':'ok'):'ok';return`<em class="${cls}${d[0]&&d[1]===3?' m3':d[0]&&d[1]===2?' m2':''}">${lb}</em>`}).join('');   /* comme en jeu : S bleu, doubles argent, triples or */
@@ -7397,8 +7446,8 @@ function vsHtml(n){const cur=VSND[n],open=VSO===n;
     Object.entries(G).map(([g,a])=>`<p class="prvg">${esc(g)}</p><div class="prvc">${a.map(x=>`<button data-vs="${esc(x.id)}" class="${cur===x.id?'on':''}">${esc(x.n)}</button>`).join('')}</div>`).join('')+'</div>'}
 let VSO=null;
 function profOpen(name){SFX.open();let o=$('prof');if(o)o.remove();o=el('div','ov');o.id='prof';document.body.append(o);
-  const draw=n=>{if(!n){const L=allPeople(),TL=teamsOf();o.innerHTML=`<div class="ovh"><h2>Profils</h2><button class="circ" data-x aria-label="Fermer"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>`+
-      (L.length?`<div class="prl">${L.map(x=>`<button data-p="${esc(x)}"><b style="--pc:${pColor(x)}"></b>${esc(x)}</button>`).join('')}</div>`:'<p class="hempty">Aucun joueur pour l’instant.</p>')+
+  const draw=n=>{if(!n){const L=allPeople(),TL=teamsOf();o.innerHTML=`<div class="ovh"><h2>Joueurs</h2><button class="circ" data-x aria-label="Fermer"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>`+
+      '<button class="prami" data-ami>👥 Amis et groupes<i>›</i></button>'+(L.length?`<div class="prl">${L.map(x=>`<button data-p="${esc(x)}"><b style="--pc:${pColor(x)}"></b>${esc(x)}</button>`).join('')}</div>`:'<p class="hempty">Aucun joueur pour l’instant.</p>')+
       (TL.length?`<h3 class="prs">Équipes</h3><div class="prl">${TL.map(([k,v])=>`<button data-p="${esc(k)}">${k.split(' & ').map(m=>`<b style="--pc:${pColor(m)}"></b>`).join('')}${nmH(k)}<i>${v.g} partie${v.g>1?'s':''}</i></button>`).join('')}</div>`:'');return}
     if(n.includes(' & ')){o.dataset.n=n;const T=trTeams()[n]||{},M=n.split(' & '),rows=[];
       STG.forEach(g=>{const a=stAgg(g,true).E.find(x=>x.name===n);if(!a||!a.g)return;const key={cricket:['MPR moyen',a.d?fr(a.h*3/a.d):'–'],x01:['Moyenne',a.xd?fr(a.xp*3/a.xd):'–'],killer:['Vies prises',a.k],shanghai:['Record',a.best||'–'],halveit:['Record',a.best||'–']}[g]||['',''];
@@ -7424,6 +7473,7 @@ function profOpen(name){SFX.open();let o=$('prof');if(o)o.remove();o=el('div','o
       ${TM.length?`<h3 class="prs">Ses équipes</h3><div class="prl">${TM.map(([k,v])=>`<button data-p="${esc(k)}">${k.split(' & ').map(m=>`<b style="--pc:${pColor(m)}"></b>`).join('')}${nmH(k)}<i>${v.g} p. · ${Math.round(v.w*100/v.g)} %</i></button>`).join('')}</div>`:''}`};
   VSO=null;PGN=20;draw(name);requestAnimationFrame(()=>o.classList.add('on'));
   o.addEventListener('click',e=>{const t=e.target;if(t.closest('[data-x]')){o.classList.remove('on');setTimeout(()=>o.remove(),300);return}if(t.closest('[data-back]')){SFX.back();VSO=null;PGN=20;draw(null);return}
+    if(t.closest('[data-ami]')){haptic();if(window.syOpen)syOpen();return}
     const hg=t.closest('[data-hg]');if(hg){haptic();hgOpen(hg.dataset.hg,o);return}
     if(t.closest('[data-more]')){haptic();SFX.tick();PGN+=20;const y=o.scrollTop;draw(o.dataset.n);o.scrollTop=y;return}
     const trd=t.closest('.prt>div[data-tr]');if(trd){haptic();SFX.tick();trd.classList.toggle('open');return}
@@ -7455,8 +7505,8 @@ renderHist=function(){const h=$('hist'),b=$('hBody');stlApply();
     const L=histFilter().map(r=>({t:r.date,h:hgCard(r)}));
     if(HSEL.game==='all')BETH.forEach(n=>L.push({t:n.date,h:noteCard(n,false)}));
     L.sort((a,b)=>b.t-a.t);
-    const HL=STL.hl||{},hd=L.length?`<div class="stn2"><p class="stn">${histFilter().length} partie${histFilter().length>1?'s':''} · touche une partie pour la revoir</p><button class="stsb${HSEL.set?' on':''}" data-hset aria-label="Réglages d’affichage">${SLD_SVG}</button></div>`+
-      (HSEL.set?`<div class="stset">${stSl('Taille du texte','data-lv="tz"',HL.tz||100,60,180)}${stSl('Espacement dans les cartes','data-lv="pd"',HL.pd||100,40,200)}${stSl('Écart entre les cartes','data-lv="gp"',HL.gp||100,0,300)}<button class="stres" data-hreset>Remettre l’affichage d’origine</button></div>`:''):'';
+    const HL=STL.hl||{},hd=L.length?`<div class="stn2"><p class="stn">${histFilter().length} partie${histFilter().length>1?'s':''} · touche une partie pour la revoir</p></div>`+
+      (HSEL.set?`<div class="stset">${stSl('Taille du texte','data-lv="tz"',HL.tz||100,60,180)}${stSl('Espacement dans les cartes','data-lv="pd"',HL.pd||100,40,200)}${stSl('Écart entre les cartes','data-lv="gp"',HL.gp||100,0,300)}<div class="stbt"><button class="stres" data-hreset>Remettre l’affichage d’origine</button><button class="stres" data-hset>Fermer</button></div></div>`:''):'';
     b.innerHTML=hd+(BET.length&&HSEL.game==='all'?noteCard({list:BET},true):'')+L.map(x=>x.h).join('')||'<p class="hempty">Aucune partie enregistrée pour l\'instant.<br>Chaque partie terminée s\'ajoute ici automatiquement.</p>'}
   else{b.innerHTML=stView(HSEL.tab==='teams');requestAnimationFrame(()=>{const th=b.querySelector('.stt th.on'),w=th&&th.closest('.stw'),sn=b.querySelector('.stt th.sn');if(w&&th.offsetLeft+th.offsetWidth>w.clientWidth)w.scrollLeft=th.offsetLeft-(sn?sn.offsetWidth:0)-8;const tb=b.querySelector('.stg button.on');if(tb)tb.scrollIntoView({inline:'center',block:'nearest'})})}   /* colonne choisie et onglet visibles */
   requestAnimationFrame(placeThumbs)};
