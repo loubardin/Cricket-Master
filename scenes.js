@@ -22,31 +22,38 @@ const MK=n=>`<svg viewBox="0 0 24 24"><path d="M5 19 19 5"/>${n>=2?'<path d="M5 
 const marks=(ts,T,end)=>ts.map((t,k)=>`<i class="ilm" style="${win(t,k<ts.length-1?ts[k+1]:end,T)}">${MK(k+1)}</i>`).join('');
 const nums=(vals,T)=>vals.map(([v,t0,t1])=>`<span style="${win(t0,t1,T)}">${v}</span>`).join('');
 
-function illHtml(){const g=S.game||'cricket',A=PN(0),B=PN(1),C=PN(2),a=PC(0),b=PC(1),c=PC(2);
-  if(g==='cricket'){const T=8,cut=S.mode==='cut';
-    const row=(n,ts,on)=>`<div class="ilr"><span class="ilmk">${ts.length?marks(ts,T,7.5):''}</span><b class="iln" style="${on?bump(ts,T):''}">${n}</b></div>`;
-    return`<div class="il ilck"><div class="ilcards"><div class="ilc act" style="--pc:${a}"><small>${esc(A)}</small><b class="ils">${cut?'0':nums([['0',0,5.2],['20',5.2,7.5]],T)}</b></div>
-      <div class="ilc" style="--pc:${b}"><small>${esc(B)}</small><b class="ils">${cut?nums([['0',0,5.2],['20',5.2,7.5]],T):'0'}</b></div></div>
-      <div class="ilrows">${row(20,[.6,1.3,2],1)}${row(19,[2.8,3.4],1)}${row(18,[4],1)}</div><b class="ilfly" style="${win(4.6,5.3,T)}">+20</b></div>`}
-  if(g==='x01'){const T=7,st=S.xstart||501;
-    return`<div class="il ilx"><div class="ilc act big" style="--pc:${a}"><small>${esc(A)}</small><b class="ils">${nums([[st,0,2],[st-180,2,6.6]],T)}</b>
-        <div class="ilch"><i class="g" style="${win(.5,6.6,T)}">T20</i><i class="g" style="${win(1,6.6,T)}">T20</i><i class="g" style="${win(1.5,6.6,T)}">T20</i></div></div>
-      <div class="ilc big" style="--pc:${b}"><small>${esc(B)}</small><b class="ils">${st}</b></div>
-      <div class="ilkeys">${[1,2,3,4,5].map(n=>`<span>${n}</span>`).join('')}<span class="on" style="${bump([.5,1,1.5],T)}">20</span></div></div>`}
-  if(g==='killer'){const T=7,L=Math.min(S.klives||3,5);
-    const card=(n,num,col,act,lose)=>`<div class="ilk${act?' act':''}" style="--pc:${col}"><div class="ilh">${Array.from({length:L},(_,j)=>{const t=lose.find(x=>x[0]===j);return`<i style="${t?win(0,t[1],T):''}">♥</i>`}).join('')}</div><small>${esc(n)}</small><b class="ils" style="${act?bump([1.6,3.4],T):''}">${num}</b></div>`;
-    return`<div class="il ilkl">${card(A,20,a,1,[])}${card(B,19,b,0,[[L-1,2]])}${card(C,18,c,0,[[L-1,3.8],[L-2,5.4]])}</div>`}
-  if(g==='clock'){const T=7;
-    return`<div class="il ilclk"><div class="ilc act big" style="--pc:${a}"><small>${esc(A)}</small><b class="ils">${nums([[1,0,1.4],[2,1.4,2.8],[3,2.8,4.2],[4,4.2,5.6],[5,5.6,7]],T)}</b>
-      <div class="ilslot">${[0,1,2].map(k=>`<i><em style="${win(.6+k*.45,1.4,T)}">${k===0?'1':'·'}</em></i>`).join('')}</div></div>
-      <div class="ilring">${Array.from({length:20},(_,i)=>{const an=i/20*2*Math.PI-Math.PI/2;return`<span style="left:${50+42*Math.cos(an)}%;top:${50+42*Math.sin(an)}%">${i+1}${i<5?`<em style="${win(1.4*(i+1)-.01,7,T)}">${i+1}</em>`:''}</span>`}).join('')}</div></div>`}
-  if(g==='shanghai'){const T=7;
-    return`<div class="il ilsh"><div class="ilc act big" style="--pc:${a}"><small>${esc(A)} · tour <span class="iltour">${nums([[1,0,2],[2,2,4],[3,4,7]],T)}</span></small><b class="ils">${nums([[0,0,1],[1,1,2],[1,2,3],[5,3,4],[5,4,5.6],[23,5.6,7]],T)}</b>
-      <div class="ilch"><i style="${win(4.4,6.8,T)}">3</i><i class="s" style="${win(4.9,6.8,T)}">D3</i><i class="g" style="${win(5.4,6.8,T)}">T3</i></div></div><b class="ilbig" style="${win(5.8,6.8,T)}">SHANGHAI !</b></div>`}
+/* emblème de chaque jeu : abstrait, quelques codes de son tableau, couleur des bulles de l'appli */
+const anim=(n,T,d)=>`animation:${n} ${T}s ${d||'ease-in-out'} infinite`;
+kf('gbob','0%,100%{transform:rotate(-14deg) translateY(0)}50%{transform:rotate(-8deg) translateY(-4px)}');
+kf('gspin','to{transform:rotate(360deg)}');
+kf('gbeat','0%,100%{transform:scale(1)}12%{transform:scale(1.16)}24%{transform:scale(1)}');
+function illHtml(){const g=S.game||'cricket',A=PN(0);
+  if(g==='cricket'){const T=6;
+    return`<div class="il ile ilck2"><div class="ilc act big" style="--pc:var(--accent)"><i class="ilcrown" style="${anim('gbob',3)}">👑</i><small>${esc(A)}</small><b class="ils">${nums([[0,0,1.5],[20,1.5,3],[40,3,4.5],[60,4.5,6]],T)}</b></div>
+      <div class="ilbub"><b class="iln" style="${bump([1.4,2.9,4.4],T)}">20</b><span class="ilmk3">${marks([.3,.7,1.1],T,5.6)}</span></div></div>`}
+  if(g==='x01'){const T=6,st=S.xstart||501;
+    return`<div class="il ile"><div class="ilc act big" style="--pc:var(--accent)"><small>${esc(A)}</small><b class="ils">${nums([[st,0,1.6],[st-180,1.6,3.2],[40,3.2,4.6],[0,4.6,6]],T)}</b>
+      <div class="ilch"><i class="g">T20</i><i class="g">T20</i><i class="g">T20</i></div></div>
+      <b class="ilstamp" style="${win(.9,2.6,T)}">180 !</b><i class="ildbl" style="${win(4.2,5.8,T)}">D20</i></div>`}
+  if(g==='killer'){const T=6;
+    return`<div class="il ile ilkl2"><i class="ilgun l" style="${bump([1,3.4],T)}"><b>🔫</b></i>
+      <div class="ilk act" style="--pc:var(--accent)"><div class="ilh"><i>♥</i><i>♥</i><span class="ilbrk"><i style="${win(0,1.2,T)}">♥</i><i class="b" style="${win(1.2,2.6,T)}">💔</i></span></div><small>${esc(A)}</small><b class="ils">20</b><em class="ilkk">🔫 KILLER</em></div>
+      <i class="ilgun r" style="${bump([2.2,4.6],T)}"><b>🔫</b></i><i class="ilskull" style="${win(4.7,5.9,T)}">💀</i></div>`}
+  if(g==='clock'){const T=8;
+    return`<div class="il ile"><div class="ilring dial">${Array.from({length:20},(_,i)=>{const an=i/20*2*Math.PI-Math.PI/2;return`<span style="left:${50+42*Math.cos(an)}%;top:${50+42*Math.sin(an)}%">${i+1}</span>`}).join('')}
+      <i class="ilhand" style="${anim('gspin',T,'steps(20,end)')}"><b></b></i><i class="ilhub"></i></div></div>`}
+  if(g==='shanghai'){const T=6;
+    return`<div class="il ile ilsh2"><b class="iln big" style="${bump([.8,1.6,2.4],T)}">3</b>
+      <i class="ilo o1" style="${win(.6,5,T)}">3</i><i class="ilo o2 s" style="${win(1.4,5,T)}">D3</i><i class="ilo o3 g" style="${win(2.2,5,T)}">T3</i>
+      <b class="ilstamp" style="${win(3,5,T)}">SHANGHAI !</b></div>`}
   /* halve-it */
-  const T=8,q=(S.hiseq&&S.hiseq.length?S.hiseq:HI_CLASSIC).slice(0,5),lb=x=>x==='D'?'D':x==='T'?'T':x==='B'?'B':x;
-  return`<div class="il ilhi"><div class="ilt">${q.map((x,k)=>`<span style="${bump([k*1.5+.2],T)}"><em style="${win(k*1.5+.2,k*1.5+1.7,T)}"></em>${lb(x)}</span>`).join('')}</div>
-    <div class="ilc act big" style="--pc:${a}"><small>${esc(A)}</small><b class="ils">${nums([[0,0,.8],[45,.8,2.3],[93,2.3,3.8],[93,3.8,4.6],[46,4.6,6.2],[80,6.2,8]],T)}</b><i class="ilhalf" style="${win(4.1,5.4,T)}">÷ 2</i></div></div>`}
+  const T=6;
+  return`<div class="il ile ilhi2"><div class="ilsplit"><div class="ilc act big ha" style="--pc:var(--accent);animation:ghalfL ${T}s ease-in-out infinite"><small>${esc(A)}</small><b class="ils">120</b></div>
+    <div class="ilc act big hb" style="--pc:var(--accent);animation:ghalfR ${T}s ease-in-out infinite"><small>${esc(A)}</small><b class="ils">120</b></div></div>
+    <i class="ilsci" style="animation:gsci ${T}s ease-in-out infinite">✂️</i><b class="ilstamp red" style="${win(2,3.6,T)}">÷ 2</b></div>`}
+kf('ghalfL','0%,25%{transform:translateX(0)}35%,60%{transform:translateX(-16px) rotate(-6deg)}70%,100%{transform:translateX(0)}');
+kf('ghalfR','0%,25%{transform:translateX(0)}35%,60%{transform:translateX(16px) rotate(6deg)}70%,100%{transform:translateX(0)}');
+kf('gsci','0%,8%{transform:translate(-50%,-90px) rotate(90deg);opacity:0}12%{opacity:1}30%{transform:translate(-50%,70px) rotate(90deg);opacity:1}36%,100%{transform:translate(-50%,90px) rotate(90deg);opacity:0}');
 
 /* ---------- « Plus d'infos » : onglets avec une animation et l'explication de chaque principe ---------- */
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
@@ -197,6 +204,35 @@ document.head.append(el('style','',`
 .il .ilhalf{position:absolute;right:-14px;top:-10px;font:400 14px "Fun",sans-serif;font-style:normal;color:#fff;background:#e4251a;border-radius:99px;padding:3px 8px;box-shadow:inset 0 0 0 1.5px var(--ol,#111)}
 .il .ilhalf[style*="animation"]{opacity:0}
 .il .iltr{position:absolute;top:-18px;right:-12px;font-style:normal;font-size:26px}
+
+/* emblèmes du menu */
+.ile{gap:18px}
+.il .ilcrown{position:absolute;top:-24px;left:-14px;font-size:30px;font-style:normal;transform:rotate(-14deg)}
+.ilck2{gap:58px}.ilck2 .ilbub{position:relative;transform:rotate(-6deg)}
+.ilck2 .iln{display:inline-flex;align-items:center;justify-content:center;width:92px;height:52px;border-radius:99px;background:var(--accent);box-shadow:inset 0 0 0 2.5px var(--ol,#111);font:400 30px "Fun",sans-serif;color:var(--btx,#fff)}
+.ilck2 .ilmk3{position:absolute;left:-46px;top:8px;display:grid;width:36px;height:36px}.ilck2 .ilmk3>*{grid-area:1/1;opacity:0}
+.ilck2 .ilmk3 svg{width:36px;height:36px;fill:none;stroke:var(--ink);stroke-width:2.6;stroke-linecap:round}
+.il .ilstamp{position:absolute;right:6%;top:8%;transform:rotate(12deg);font:400 26px "Fun",sans-serif;color:var(--btx,#fff);background:var(--accent);padding:4px 12px;border-radius:12px;box-shadow:inset 0 0 0 2.5px var(--ol,#111);opacity:0}
+.il .ilstamp.red{background:#e4251a}
+.il .ildbl{position:absolute;right:12%;bottom:12%;font:400 16px "FunTxt","Fun",sans-serif;font-style:normal;color:#111;background:var(--silver);padding:4px 10px;border-radius:99px;box-shadow:inset 0 0 0 1.5px var(--ol,#111);opacity:0}
+.ilkl2 .ilk{flex:0 0 108px;padding-top:22px}.ilkl2 .ilk .ils{font-size:40px}
+.ilkl2 .ilh i{font-size:22px}.ilkl2 .ilbrk{display:grid}.ilkl2 .ilbrk>*{grid-area:1/1;opacity:0}.ilkl2 .ilbrk i.b{font-size:20px;text-shadow:none}
+.il .ilgun{font-size:38px;font-style:normal;display:inline-block}.il .ilgun b{display:inline-block;font-weight:400}.il .ilgun.l b{transform:scaleX(-1)}
+.il .ilskull{position:absolute;right:14%;top:10%;font-size:30px;font-style:normal;opacity:0}
+.il .ilring.dial{position:relative;width:min(170px,44vw);height:min(170px,44vw)}
+.il .ilring.dial span{position:absolute;transform:translate(-50%,-50%);width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:400 11px "Fun",sans-serif;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ol,#111);background:var(--m-cell,#fff)}
+.il .ilhand{position:absolute;left:50%;top:50%;width:0;height:0}
+.il .ilhand b{position:absolute;left:-2.5px;bottom:0;width:5px;height:58px;border-radius:99px;background:var(--accent);box-shadow:0 0 0 1.5px var(--ol,#111);transform-origin:50% 100%}
+.il .ilhand b::after{content:'';position:absolute;top:-6px;left:-5px;width:15px;height:15px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 1.5px var(--ol,#111)}
+.il .ilhub{position:absolute;left:50%;top:50%;width:14px;height:14px;margin:-7px;border-radius:50%;background:var(--ol,#111)}
+.ilsh2 .iln.big{display:inline-flex;align-items:center;justify-content:center;width:110px;height:64px;border-radius:99px;background:var(--accent);box-shadow:inset 0 0 0 2.5px var(--ol,#111);font:400 40px "Fun",sans-serif;color:var(--btx,#fff)}
+.il .ilo{position:absolute;font:400 15px "FunTxt","Fun",sans-serif;font-style:normal;color:#111;background:var(--m-cell,#fff);padding:4px 10px;border-radius:99px;box-shadow:inset 0 0 0 1.5px var(--ol,#111);opacity:0}
+.il .ilo.s{background:var(--silver)}.il .ilo.g{background:var(--gold)}
+.il .ilo.o1{left:22%;top:16%}.il .ilo.o2{right:22%;top:20%}.il .ilo.o3{left:50%;bottom:8%;margin-left:-20px}
+.ilsh2 .ilstamp{right:2%;top:4%}
+.ilhi2 .ilsplit{position:relative;display:grid}.ilhi2 .ilsplit>*{grid-area:1/1}
+.ilhi2 .ha{clip-path:inset(-10px 50% -10px -10px)}.ilhi2 .hb{clip-path:inset(-10px -10px -10px 50%)}
+.il .ilsci{position:absolute;left:50%;top:50%;font-size:30px;font-style:normal;opacity:0}
 /* écran « Plus d'infos » */
 #rinfo{gap:10px;background:var(--page,#f7f2e5)!important}
 #rinfo .rtabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;flex:none;padding:2px}#rinfo .rtabs::-webkit-scrollbar{display:none}
