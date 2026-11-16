@@ -5,7 +5,7 @@
      le dernier onglet = toutes les règles. */
 (function(){
 const SU=$('setup'),R=$('gRules');if(!SU||!R)return;
-const ill=el('div','gill');ill.id='gIll';R.after(ill);
+const ill=el('div','gill');ill.id='gIll';R.before(ill);   /* l'emblème au-dessus, « Le but » en dessous */
 const PN=i=>{const n=((S.names||[])[i]||'').trim().toUpperCase();return(!n||/^J\d$/.test(n))?['LOU','TONE','ZOÉ'][i]:n};
 const PC=i=>{const c=pcol(PN(i));return/^#[0-9a-f]{6}$/i.test(c||'')?c:PFB[i%PFB.length]};
 
@@ -22,42 +22,49 @@ const MK=n=>`<svg viewBox="0 0 24 24"><path d="M5 19 19 5"/>${n>=2?'<path d="M5 
 const marks=(ts,T,end)=>ts.map((t,k)=>`<i class="ilm" style="${win(t,k<ts.length-1?ts[k+1]:end,T)}">${MK(k+1)}</i>`).join('');
 const nums=(vals,T)=>vals.map(([v,t0,t1])=>`<span style="${win(t0,t1,T)}">${v}</span>`).join('');
 
-/* ===== emblèmes « affiche » : aplats de couleur, peu de contours, la croix noire de l'appli pour les fléchettes ===== */
+/* ===== emblèmes « affiche » : aplats de couleur, la marque de l'accueil (bulle + croix) comme signature ===== */
 const ACC='var(--accent)',INK='var(--ol,#111)',RED='#ff2d3a';
-/* la fléchette = la croix de l'appli (deux traits ronds), plantée avec le « tampon » du jeu */
-const cross=(x,y,s,cls,st)=>`<g transform="translate(${x.toFixed?x.toFixed(1):x} ${y.toFixed?y.toFixed(1):y})"><g class="afx ${cls||''}" style="${st||''}"><path d="M${-s} ${-s}L${s} ${s}M${s} ${-s}L${-s} ${s}" stroke="${INK}" stroke-width="${s*.55}" stroke-linecap="round"/></g></g>`;
+/* la fléchette = la croix de l'appli (deux traits ronds) */
+const cross=(x,y,s,cls,st)=>`<g transform="translate(${(+x).toFixed(1)} ${(+y).toFixed(1)})"><g class="afx ${cls||''}" style="${st||''}"><path d="M${-s} ${-s}L${s} ${s}M${s} ${-s}L${-s} ${s}" stroke="${INK}" stroke-width="${(s*.55).toFixed(1)}" stroke-linecap="round"/></g></g>`;
 const HEART='M50 90C22 70 4 52 4 31C4 15 16 4 30 4C40 4 47 10 50 18C53 10 60 4 70 4C84 4 96 15 96 31C96 52 78 70 50 90Z';
 const ZIG='50,18 43,36 55,49 45,63 53,76 50,90';
+/* marque de l'accueil : bulle r=62, croix de ±60 (dépasse de la bulle), traits de 15 — mise à l'échelle k */
+const mark=(cx,cy,k,cls)=>`<g class="${cls||''}"><circle class="mkd" cx="${cx}" cy="${cy}" r="${62*k}" fill="${ACC}"/><path class="mk1" d="M${cx-60*k} ${cy+60*k}L${cx+60*k} ${cy-60*k}" stroke="${INK}" stroke-width="${15*k}" stroke-linecap="round"/><path class="mk2" d="M${cx-60*k} ${cy-60*k}L${cx+60*k} ${cy+60*k}" stroke="${INK}" stroke-width="${15*k}" stroke-linecap="round"/></g>`;
 function illHtml(){const g=S.game||'cricket';
-  if(g==='cricket')return`<svg class="aff afck" viewBox="0 0 240 170"><g class="afbub"><circle cx="120" cy="90" r="58" fill="${ACC}"/></g>
-      <g class="afm m1"><path d="M84 126L156 54" stroke="${INK}" stroke-width="15" stroke-linecap="round"/></g><g class="afm m2"><path d="M84 54L156 126" stroke="${INK}" stroke-width="15" stroke-linecap="round"/></g>
-      <g class="afm m3"><circle cx="120" cy="90" r="70" fill="none" stroke="${INK}" stroke-width="9"/></g>
-      <g class="afcrown"><path d="M92 26L98 4L110 16L120 -2L130 16L142 4L148 26Z" fill="#ffc21a"/><rect x="92" y="26" width="56" height="7" rx="3" fill="#ffc21a"/></g></svg>`;
+  if(g==='cricket')return`<svg class="aff afck" viewBox="0 0 240 180">${mark(120,96,1,'afmk')}
+      <g class="afcrown"><path d="M94 30L100 8L112 20L120 2L128 20L140 8L146 30Z" fill="#ffc21a"/><rect x="94" y="30" width="52" height="7" rx="3" fill="#ffc21a"/></g></svg>`;
   if(g==='x01')return x01Html();
-  if(g==='killer')return`<svg class="aff afkl" viewBox="0 0 250 170"><defs><clipPath id="afhl"><polygon points="-20,-20 50,-20 ${ZIG} 50,120 -20,120"/></clipPath><clipPath id="afhr"><polygon points="120,-20 50,-20 ${ZIG} 50,120 120,120"/></clipPath></defs>
-      <g class="afgun"><path d="M6 52H74Q80 52 80 58V66H40L35 92Q34 96 30 96H18Q14 96 15 92L20 66H6Q2 66 2 62V56Q2 52 6 52Z" fill="${INK}"/><rect x="74" y="55" width="16" height="6" rx="2" fill="${INK}"/></g>
-      <g class="afflash"><polygon points="96,58 112,46 108,58 124,58 108,66 112,78 96,66" fill="${ACC}"/></g>
-      <g transform="translate(140 30)"><g class="afhL" clip-path="url(#afhl)"><path d="${HEART}" fill="${RED}"/></g><g class="afhR" clip-path="url(#afhr)"><path d="${HEART}" fill="${RED}"/></g>
-        <polygon class="afsh s1" points="48,40 56,44 50,50" fill="${RED}"/><polygon class="afsh s2" points="50,62 57,60 54,68" fill="${RED}"/></g></svg>`;
-  if(g==='clock')return`<svg class="aff afclk" viewBox="0 0 240 170"><circle cx="120" cy="85" r="66" fill="${ACC}"/>
-      ${Array.from({length:20},(_,i)=>{const a=i/20*2*Math.PI-Math.PI/2;return`<circle cx="${(120+54*Math.cos(a)).toFixed(1)}" cy="${(85+54*Math.sin(a)).toFixed(1)}" r="${i===19?5:3.4}" fill="#fff" opacity="${i===19?1:.75}"/>`}).join('')}
-      <g class="afhand"><rect x="116" y="38" width="8" height="52" rx="4" fill="${INK}"/></g><circle cx="120" cy="85" r="9" fill="${INK}"/></svg>`;
-  if(g==='shanghai')return`<svg class="aff afsh2" viewBox="0 0 250 170"><defs><linearGradient id="afgd" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe58a"/><stop offset=".5" stop-color="#f2b705"/><stop offset="1" stop-color="#c48a00"/></linearGradient><linearGradient id="afsv" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#eef1f4"/><stop offset=".55" stop-color="#a9b1ba"/><stop offset="1" stop-color="#808a95"/></linearGradient></defs>
-      ${[['3','#fff',30],['D3','url(#afsv)',100],['T3','url(#afgd)',170]].map(([t,f,x],k)=>`<g class="afp p${k+1}"><rect x="${x}" y="58" width="56" height="40" rx="20" fill="${f}"/><text x="${x+28}" y="86" text-anchor="middle" font-family="Fun" font-size="22" fill="#111">${t}</text></g>${cross(x+48,60,8,'x'+(k+1))}`).join('')}
-      <g class="afban"><rect x="38" y="112" width="174" height="38" rx="10" fill="${INK}"/><text x="125" y="139" text-anchor="middle" font-family="Fun" font-size="24" fill="${ACC}">SHANGHAI !</text></g></svg>`;
-  /* halve-it */
-  const half=(id,side)=>`<g class="afh2 ${side}" clip-path="url(#${id})"><circle cx="120" cy="88" r="60" fill="${ACC}"/><text class="v1" x="120" y="104" text-anchor="middle" font-family="Fun" font-size="46" fill="#fff">120</text><text class="v2" x="120" y="104" text-anchor="middle" font-family="Fun" font-size="46" fill="#fff">60</text></g>`;
-  return`<svg class="aff afhi" viewBox="0 0 240 170"><defs><clipPath id="afcl"><rect x="0" y="0" width="120" height="170"/></clipPath><clipPath id="afcr"><rect x="120" y="0" width="120" height="170"/></clipPath></defs>
-    ${half('afcl','l')}${half('afcr','r')}${cross(206,40,12,'xm')}<g class="afdiv"><rect x="96" y="6" width="48" height="26" rx="13" fill="${INK}"/><text x="120" y="25" text-anchor="middle" font-family="Fun" font-size="17" fill="#fff">÷ 2</text></g></svg>`}
-/* 501 : le score choisi, 3 fléchettes (croix) qui se plantent et retirent une valeur au hasard */
-const X01V=[20,19,18,60,57,40,25,50,5,1,17,54,38,3,12];
-function x01Html(){const st=S.xstart||501,v=[0,1,2].map(()=>X01V[Math.floor(Math.random()*X01V.length)]),L=String(st).length,fs=L>3?64:78,T=5.4,t=[.7,1.6,2.5];
-  const w=fs*.62*L,x0=125-w/2,sc=[st,st-v[0],st-v[0]-v[1],st-v[0]-v[1]-v[2]];
-  const pos=v.map((_,k)=>[x0+w*(.2+.3*k)+Math.random()*10-5,62+Math.random()*30]);
+  if(g==='killer'){/* la marque tournée d'un quart de tour = un viseur ; il vise le cœur rouge (blanc dans le viseur), tire, le cœur se brise */
+    return`<svg class="aff afkl" viewBox="0 0 250 180"><defs><clipPath id="afhl"><polygon points="-20,-20 50,-20 ${ZIG} 50,120 -20,120"/></clipPath><clipPath id="afhr"><polygon points="120,-20 50,-20 ${ZIG} 50,120 120,120"/></clipPath></defs>
+      <g transform="translate(156 61) scale(.6)" style="transform-box:view-box;transform-origin:0 0"><g class="afhL" clip-path="url(#afhl)"><path d="${HEART}" fill="${RED}"/></g><g class="afhR" clip-path="url(#afhr)"><path d="${HEART}" fill="${RED}"/></g>
+        <polygon class="afsh s1" points="44,38 56,44 48,52" fill="${RED}"/><polygon class="afsh s2" points="50,62 60,58 56,70" fill="${RED}"/></g>
+      <g class="afscope"><circle cx="186" cy="88" r="40" fill="${ACC}"/><g transform="translate(156 61) scale(.6)" style="transform-box:view-box;transform-origin:0 0"><path class="afwh" d="${HEART}" fill="#fff"/></g>
+        <path d="M186 40V136M138 88H234" stroke="${INK}" stroke-width="10" stroke-linecap="round"/></g></svg>`}
+  if(g==='clock')/* la marque devient une horloge : les deux traits de la croix sont les aiguilles */
+    return`<svg class="aff afclk" viewBox="0 0 240 180"><circle cx="120" cy="92" r="62" fill="${ACC}"/>
+      ${Array.from({length:20},(_,i)=>{const a=i/20*2*Math.PI-Math.PI/2;return`<circle cx="${(120+50*Math.cos(a)).toFixed(1)}" cy="${(92+50*Math.sin(a)).toFixed(1)}" r="${i===19?5:3}" fill="#fff" opacity="${i===19?1:.7}"/>`}).join('')}
+      <g class="afhm"><path d="M120 92L120 28" stroke="${INK}" stroke-width="12" stroke-linecap="round"/></g><g class="afhh"><path d="M120 92L156 92" stroke="${INK}" stroke-width="15" stroke-linecap="round"/></g><circle cx="120" cy="92" r="10" fill="${INK}"/></svg>`;
+  if(g==='shanghai'){/* une pagode : simple, double, triple qui s'empilent, chacun avec son toit */
+    const tier=(y,w,f,t,k)=>`<g class="aft t${k}"><path d="M${120-w/2-14} ${y}Q120 ${y-16} ${120+w/2+14} ${y}Z" fill="${INK}"/><rect x="${120-w/2}" y="${y}" width="${w}" height="30" rx="8" fill="${f}"/><text x="120" y="${y+22}" text-anchor="middle" font-family="Fun" font-size="18" fill="${k===1?'#fff':'#111'}">${t}</text></g>`;
+    return`<svg class="aff afpg" viewBox="0 0 240 180"><defs><linearGradient id="afgd" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe58a"/><stop offset=".5" stop-color="#f2b705"/><stop offset="1" stop-color="#c48a00"/></linearGradient><linearGradient id="afsv" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#eef1f4"/><stop offset=".55" stop-color="#a9b1ba"/><stop offset="1" stop-color="#808a95"/></linearGradient></defs>
+      ${tier(136,120,ACC,'SIMPLE',1)}${tier(96,90,'url(#afsv)','DOUBLE',2)}${tier(56,62,'url(#afgd)','TRIPLE',3)}
+      <g class="afspire"><path d="M120 12V40" stroke="${INK}" stroke-width="6" stroke-linecap="round"/><circle cx="120" cy="14" r="7" fill="${ACC}"/></g></svg>`}
+  /* halve-it : la croix tombe comme une lame, la bulle se coupe en deux et rétrécit de moitié */
+  return`<svg class="aff afhi" viewBox="0 0 240 180"><defs><clipPath id="afcl"><rect x="0" y="0" width="120" height="180"/></clipPath><clipPath id="afcr"><rect x="120" y="0" width="120" height="180"/></clipPath></defs>
+    <g class="afwhole"><g class="afh2 l" clip-path="url(#afcl)"><circle cx="120" cy="96" r="62" fill="${ACC}"/></g><g class="afh2 r" clip-path="url(#afcr)"><circle cx="120" cy="96" r="62" fill="${ACC}"/></g></g>
+    <g class="afblade"><path d="M120 10V182" stroke="${INK}" stroke-width="14" stroke-linecap="round"/></g>
+    <g class="afdiv"><rect x="160" y="18" width="56" height="30" rx="15" fill="${INK}"/><text x="188" y="40" text-anchor="middle" font-family="Fun" font-size="19" fill="#fff">÷ 2</text></g></svg>`}
+/* 501 : le score choisi ; 3 fléchettes se plantent autour (jamais sur les chiffres) et retirent une valeur au hasard */
+const X01V=[20,19,18,60,57,40,25,50,5,1,17,54,38,3,12,45,36];
+function x01Html(){const st=S.xstart||501,v=[0,1,2].map(()=>X01V[Math.floor(Math.random()*X01V.length)]),L=String(st).length,fs=L>3?62:76,T=5.4,t=[.7,1.6,2.5];
+  const w=fs*.72*L,nx0=125-w/2-26,nx1=125+w/2+30,ny0=96-fs*.62-24,ny1=96+fs*.4+16,sc=[st,st-v[0],st-v[0]-v[1],st-v[0]-v[1]-v[2]];
+  const pos=[];let guard=0;while(pos.length<3&&guard++<400){const x=18+Math.random()*214,y=18+Math.random()*144;
+    if(x>nx0&&x<nx1&&y>ny0&&y<ny1)continue;if(pos.some(([a,b])=>Math.hypot(a-x,b-y)<44))continue;pos.push([x,y])}
+  while(pos.length<3)pos.push([30+pos.length*90,26]);
   const tw=(a,b)=>win(a,b,T);
-  return`<svg class="aff afx01" viewBox="0 0 250 170"><g class="afnum">${sc.map((s,k)=>`<g style="${tw(k?t[k-1]:0,k<3?t[k]:T-.35)}"><text x="129" y="${100+fs*.3}" text-anchor="middle" font-family="Fun" font-size="${fs}" fill="${INK}" opacity=".9">${s}</text><text x="125" y="${96+fs*.3}" text-anchor="middle" font-family="Fun" font-size="${fs}" fill="${ACC}">${s}</text></g>`).join('')}</g>
-    ${pos.map(([x,y],k)=>cross(x,y,11,'xp',tw(t[k],T-.35))).join('')}
-    ${pos.map(([x,y],k)=>`<text class="afmin" x="${x+10}" y="${y-14}" font-family="Fun" font-size="20" fill="${INK}" style="${tw(t[k]+.05,t[k]+.85)}">−${v[k]}</text>`).join('')}
+  return`<svg class="aff afx01" viewBox="0 0 250 180"><g class="afnum">${sc.map((s,k)=>`<g style="${tw(k?t[k-1]:0,k<3?t[k]:T-.35)}"><text x="129" y="${96+fs*.32+4}" text-anchor="middle" font-family="Fun" font-size="${fs}" fill="${INK}">${s}</text><text x="125" y="${96+fs*.32}" text-anchor="middle" font-family="Fun" font-size="${fs}" fill="${ACC}">${s}</text></g>`).join('')}</g>
+    ${pos.map(([x,y],k)=>cross(x,y,10,'xp',tw(t[k],T-.35))).join('')}
+    ${pos.map(([x,y],k)=>{const up=y<ny0||y<40?false:y>ny1?true:true,ly=y<ny0?(y<40?y+30:y-14):y>ny1?(y>150?y-14:y+30):(y-16),lx=Math.min(222,Math.max(28,x));return`<text class="afmin" x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="middle" font-family="Fun" font-size="18" fill="${INK}" style="${tw(t[k]+.05,t[k]+.85)}">−${v[k]}</text>`}).join('')}
     <rect class="afclock" width="1" height="1" fill="none" style="animation:gtick ${T}s linear infinite"/></svg>`}
 kf('gtick','0%,100%{opacity:0}');
 
@@ -213,61 +220,51 @@ document.head.append(el('style','',`
 .il .iltr{position:absolute;top:-18px;right:-12px;font-style:normal;font-size:26px}
 
 /* emblèmes « affiche » */
-#setup .gill{height:clamp(150px,22vh,190px)}
+#setup .gill{height:clamp(150px,22vh,190px);margin:12px 0 6px}
 .aff{width:100%;height:100%;overflow:visible}
-.aff *{transform-box:fill-box;transform-origin:center}
-.afx .afxi{transform-box:fill-box}
-/* tampon du jeu : arrive gros puis se pose avec un rebond */
-@keyframes afStamp{0%{transform:scale(2.2);opacity:0}60%{transform:scale(.88);opacity:1}100%{transform:scale(1);opacity:1}}
-/* cricket */
-.afck .afbub{animation:afBub 5s infinite}
-@keyframes afBub{0%,100%{transform:scale(1)}10%{transform:scale(1)}13%{transform:scale(.9,1.08)}17%{transform:scale(1)}26%{transform:scale(1)}29%{transform:scale(1.08,.9)}33%{transform:scale(1)}42%{transform:scale(1)}45%{transform:scale(.92)}50%{transform:scale(1)}}
-.afck .afm{opacity:0}.afck .m1{animation:afM1 5s infinite}.afck .m2{animation:afM2 5s infinite}.afck .m3{animation:afM3 5s infinite}
-@keyframes afM1{0%,9%{opacity:0;transform:scale(2)}13%{opacity:1;transform:scale(.9)}16%,88%{opacity:1;transform:scale(1)}94%,100%{opacity:0;transform:scale(1)}}
-@keyframes afM2{0%,25%{opacity:0;transform:scale(2)}29%{opacity:1;transform:scale(.9)}32%,88%{opacity:1;transform:scale(1)}94%,100%{opacity:0;transform:scale(1)}}
-@keyframes afM3{0%,41%{opacity:0;transform:scale(1.5)}45%{opacity:1;transform:scale(.95)}48%,88%{opacity:1;transform:scale(1)}94%,100%{opacity:0;transform:scale(1)}}
+.aff g,.aff path,.aff circle,.aff rect,.aff text,.aff polygon{transform-box:fill-box;transform-origin:center}
+/* cricket : la marque de l'accueil se plante trait par trait, la bulle s'écrase comme en jeu, la couronne arrive */
+.afck .afmk .mkd{animation:afBub 5s infinite}
+@keyframes afBub{0%,12%{transform:scale(1)}15%{transform:scale(.88,1.08)}19%{transform:scale(1)}28%{transform:scale(1)}31%{transform:scale(1.08,.88)}35%,100%{transform:scale(1)}}
+.afck .mk1{opacity:0;animation:afS1 5s infinite}.afck .mk2{opacity:0;animation:afS2 5s infinite}
+@keyframes afS1{0%,11%{opacity:0;transform:scale(1.8)}15%{opacity:1;transform:scale(.92)}18%,88%{opacity:1;transform:scale(1)}94%,100%{opacity:0}}
+@keyframes afS2{0%,27%{opacity:0;transform:scale(1.8)}31%{opacity:1;transform:scale(.92)}34%,88%{opacity:1;transform:scale(1)}94%,100%{opacity:0}}
 .afck .afcrown{opacity:0;animation:afCrown 5s infinite;transform-origin:50% 100%}
-@keyframes afCrown{0%,55%{opacity:0;transform:translateY(16px) scale(.3)}61%{opacity:1;transform:translateY(-4px) scale(1.12) rotate(-10deg)}66%,88%{opacity:1;transform:rotate(-10deg)}94%,100%{opacity:0;transform:rotate(-10deg)}}
+@keyframes afCrown{0%,44%{opacity:0;transform:translateY(18px) scale(.3)}50%{opacity:1;transform:translateY(-4px) scale(1.12) rotate(-10deg)}55%,88%{opacity:1;transform:rotate(-10deg)}94%,100%{opacity:0;transform:rotate(-10deg)}}
 /* 501 */
-.afx01 .afnum g{opacity:0}
-.afx01 .afx{opacity:0}
-.afx01 .afmin{opacity:0}
-/* killer */
-.afkl .afgun{animation:afRecoil 4.5s infinite;transform-origin:20% 70%}
-@keyframes afRecoil{0%,20%{transform:none}22%{transform:translateX(-8px) rotate(-12deg)}30%,100%{transform:none}}
-.afkl .afflash{opacity:0;animation:afFlash 4.5s infinite}
-@keyframes afFlash{0%,20%{opacity:0;transform:scale(.4)}22%{opacity:1;transform:scale(1.2)}27%,100%{opacity:0;transform:scale(1)}}
-.afkl .afhL{animation:afHL 4.5s infinite;transform-origin:50% 100%}.afkl .afhR{animation:afHR 4.5s infinite;transform-origin:50% 100%}
-@keyframes afHL{0%,24%{transform:none}30%{transform:translate(-9px,-4px) rotate(-16deg)}40%,78%{transform:translate(-12px,10px) rotate(-22deg)}88%,100%{transform:none}}
-@keyframes afHR{0%,24%{transform:none}30%{transform:translate(9px,-4px) rotate(16deg)}40%,78%{transform:translate(12px,10px) rotate(22deg)}88%,100%{transform:none}}
-.afkl .afsh{opacity:0}.afkl .s1{animation:afSh1 4.5s infinite}.afkl .s2{animation:afSh2 4.5s infinite}
-@keyframes afSh1{0%,24%{opacity:0;transform:none}27%{opacity:1}45%,100%{opacity:0;transform:translate(-30px,-26px) rotate(-90deg)}}
-@keyframes afSh2{0%,24%{opacity:0;transform:none}27%{opacity:1}45%,100%{opacity:0;transform:translate(30px,24px) rotate(120deg)}}
-/* horloge */
-.afclk .afhand{transform-box:view-box;transform-origin:120px 85px;animation:afTick 8s steps(20,end) infinite}
-@keyframes afTick{to{transform:rotate(360deg)}}
-/* shanghai */
-.afsh2 .afx{opacity:0}.afsh2 .x1{animation:afX1 5.5s infinite}.afsh2 .x2{animation:afX2 5.5s infinite}.afsh2 .x3{animation:afX3 5.5s infinite}
-@keyframes afX1{0%,10%{opacity:0;transform:scale(2)}14%{opacity:1;transform:scale(.9)}17%,88%{opacity:1;transform:scale(1)}94%,100%{opacity:0}}
-@keyframes afX2{0%,24%{opacity:0;transform:scale(2)}28%{opacity:1;transform:scale(.9)}31%,88%{opacity:1;transform:scale(1)}94%,100%{opacity:0}}
-@keyframes afX3{0%,38%{opacity:0;transform:scale(2)}42%{opacity:1;transform:scale(.9)}45%,88%{opacity:1;transform:scale(1)}94%,100%{opacity:0}}
-.afsh2 .afp{animation:afP 5.5s infinite}.afsh2 .p1{animation-delay:0s}
-.afsh2 .p1{animation-name:afP1}.afsh2 .p2{animation-name:afP2}.afsh2 .p3{animation-name:afP3}
-@keyframes afP1{0%,12%,18%,100%{transform:scale(1)}14%{transform:scale(.9,1.1)}}
-@keyframes afP2{0%,26%,32%,100%{transform:scale(1)}28%{transform:scale(.9,1.1)}}
-@keyframes afP3{0%,40%,46%,100%{transform:scale(1)}42%{transform:scale(.9,1.1)}}
-.afsh2 .afban{opacity:0;animation:afBan 5.5s infinite}
-@keyframes afBan{0%,50%{opacity:0;transform:translateY(20px) rotate(-6deg) scale(.6)}56%{opacity:1;transform:rotate(-6deg) scale(1.08)}60%,88%{opacity:1;transform:rotate(-6deg)}94%,100%{opacity:0;transform:rotate(-6deg)}}
-/* halve-it */
-.afhi .afx{opacity:0;animation:afXm 5s infinite}
-@keyframes afXm{0%,10%{opacity:0;transform:scale(2)}14%{opacity:1;transform:scale(.9)}17%,80%{opacity:1;transform:scale(1)}88%,100%{opacity:0}}
+.afx01 .afnum g,.afx01 .afx,.afx01 .afmin{opacity:0}
+/* killer : le viseur arrive, se cale, tire ; le cœur se brise */
+.afkl .afscope{animation:afScope 5s infinite}
+@keyframes afScope{0%{transform:translate(-150px,40px);opacity:0}8%{opacity:1}22%{transform:translate(-30px,-24px)}32%{transform:translate(8px,10px)}40%,46%{transform:translate(0,0)}48%{transform:translate(0,0) scale(1.12)}52%{transform:scale(1);opacity:1}58%,100%{transform:scale(.6);opacity:0}}
+.afkl .afwh{opacity:0;animation:afWh 5s infinite}
+@keyframes afWh{0%,38%{opacity:0}42%,52%{opacity:1}56%,100%{opacity:0}}
+.afkl .afhL{animation:afHL 5s infinite;transform-origin:50% 100%}.afkl .afhR{animation:afHR 5s infinite;transform-origin:50% 100%}
+@keyframes afHL{0%,48%{transform:none}54%{transform:translate(-9px,-4px) rotate(-16deg)}64%,82%{transform:translate(-14px,12px) rotate(-24deg)}92%,100%{transform:none}}
+@keyframes afHR{0%,48%{transform:none}54%{transform:translate(9px,-4px) rotate(16deg)}64%,82%{transform:translate(14px,12px) rotate(24deg)}92%,100%{transform:none}}
+.afkl .afsh{opacity:0}.afkl .s1{animation:afSh1 5s infinite}.afkl .s2{animation:afSh2 5s infinite}
+@keyframes afSh1{0%,48%{opacity:0;transform:none}51%{opacity:1}68%,100%{opacity:0;transform:translate(-34px,-28px) rotate(-90deg)}}
+@keyframes afSh2{0%,48%{opacity:0;transform:none}51%{opacity:1}68%,100%{opacity:0;transform:translate(34px,26px) rotate(120deg)}}
+/* horloge : la croix devient deux aiguilles */
+.afclk .afhm{transform-box:view-box;transform-origin:120px 92px;animation:afSpin 6s steps(20,end) infinite}
+.afclk .afhh{transform-box:view-box;transform-origin:120px 92px;animation:afSpin 60s linear infinite}
+@keyframes afSpin{to{transform:rotate(360deg)}}
+/* shanghai : la pagode s'empile étage par étage */
+.afpg .aft,.afpg .afspire{opacity:0}
+.afpg .t1{animation:afT1 5.5s infinite}.afpg .t2{animation:afT2 5.5s infinite}.afpg .t3{animation:afT3 5.5s infinite}.afpg .afspire{animation:afT4 5.5s infinite}
+@keyframes afT1{0%,4%{opacity:0;transform:translateY(-50px)}11%{opacity:1;transform:translateY(0) scale(1.06,.9)}15%,86%{opacity:1;transform:none}92%,100%{opacity:0}}
+@keyframes afT2{0%,18%{opacity:0;transform:translateY(-50px)}25%{opacity:1;transform:translateY(0) scale(1.06,.9)}29%,86%{opacity:1;transform:none}92%,100%{opacity:0}}
+@keyframes afT3{0%,32%{opacity:0;transform:translateY(-50px)}39%{opacity:1;transform:translateY(0) scale(1.06,.9)}43%,86%{opacity:1;transform:none}92%,100%{opacity:0}}
+@keyframes afT4{0%,46%{opacity:0;transform:translateY(-30px)}52%{opacity:1;transform:translateY(0) scale(1.2)}56%,86%{opacity:1;transform:none}92%,100%{opacity:0}}
+/* halve-it : la lame tombe, la bulle se coupe, rétrécit de moitié puis revient */
+.afhi .afblade{opacity:0;animation:afBlade 5s infinite}
+@keyframes afBlade{0%,10%{opacity:0;transform:translateY(-150px)}14%{opacity:1}24%{transform:translateY(0);opacity:1}30%{opacity:0;transform:translateY(20px)}100%{opacity:0}}
 .afhi .afh2.l{animation:afSpL 5s infinite}.afhi .afh2.r{animation:afSpR 5s infinite}
-@keyframes afSpL{0%,22%{transform:none}30%,56%{transform:translate(-16px,6px) rotate(-8deg)}66%,100%{transform:none}}
-@keyframes afSpR{0%,22%{transform:none}30%,56%{transform:translate(16px,6px) rotate(8deg)}66%,100%{transform:none}}
-.afhi .v1{animation:afV1 5s infinite}.afhi .v2{opacity:0;animation:afV2 5s infinite}
-@keyframes afV1{0%,58%{opacity:1}62%,100%{opacity:0}}@keyframes afV2{0%,58%{opacity:0}62%,92%{opacity:1}97%,100%{opacity:0}}
+@keyframes afSpL{0%,24%{transform:none}32%,50%{transform:translate(-18px,8px) rotate(-10deg)}60%,100%{transform:none}}
+@keyframes afSpR{0%,24%{transform:none}32%,50%{transform:translate(18px,8px) rotate(10deg)}60%,100%{transform:none}}
+.afhi .afwhole{transform-box:view-box;transform-origin:120px 96px;animation:afShrink 5s infinite}
+@keyframes afShrink{0%,52%{transform:scale(1)}60%,82%{transform:scale(.71)}90%,100%{transform:scale(1)}}
 .afhi .afdiv{opacity:0;animation:afDiv 5s infinite}
-@keyframes afDiv{0%,26%{opacity:0;transform:scale(.4)}31%{opacity:1;transform:scale(1.15)}35%,58%{opacity:1;transform:scale(1)}64%,100%{opacity:0}}
+@keyframes afDiv{0%,28%{opacity:0;transform:scale(.4)}33%{opacity:1;transform:scale(1.15)}37%,80%{opacity:1;transform:scale(1)}86%,100%{opacity:0}}
 /* écran « Plus d'infos » */
 #rinfo{gap:10px;background:var(--page,#f7f2e5)!important}
 #rinfo .rtabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;flex:none;padding:2px}#rinfo .rtabs::-webkit-scrollbar{display:none}
