@@ -22,38 +22,44 @@ const MK=n=>`<svg viewBox="0 0 24 24"><path d="M5 19 19 5"/>${n>=2?'<path d="M5 
 const marks=(ts,T,end)=>ts.map((t,k)=>`<i class="ilm" style="${win(t,k<ts.length-1?ts[k+1]:end,T)}">${MK(k+1)}</i>`).join('');
 const nums=(vals,T)=>vals.map(([v,t0,t1])=>`<span style="${win(t0,t1,T)}">${v}</span>`).join('');
 
-/* emblème de chaque jeu : abstrait, quelques codes de son tableau, couleur des bulles de l'appli */
-const anim=(n,T,d)=>`animation:${n} ${T}s ${d||'ease-in-out'} infinite`;
-kf('gbob','0%,100%{transform:rotate(-14deg) translateY(0)}50%{transform:rotate(-8deg) translateY(-4px)}');
-kf('gspin','to{transform:rotate(360deg)}');
-kf('gbeat','0%,100%{transform:scale(1)}12%{transform:scale(1.16)}24%{transform:scale(1)}');
-function illHtml(){const g=S.game||'cricket',A=PN(0);
-  if(g==='cricket'){const T=6;
-    return`<div class="il ile ilck2"><div class="ilc act big" style="--pc:var(--accent)"><i class="ilcrown" style="${anim('gbob',3)}">👑</i><small>${esc(A)}</small><b class="ils">${nums([[0,0,1.5],[20,1.5,3],[40,3,4.5],[60,4.5,6]],T)}</b></div>
-      <div class="ilbub"><b class="iln" style="${bump([1.4,2.9,4.4],T)}">20</b><span class="ilmk3">${marks([.3,.7,1.1],T,5.6)}</span></div></div>`}
-  if(g==='x01'){const T=6,st=S.xstart||501;
-    return`<div class="il ile"><div class="ilc act big" style="--pc:var(--accent)"><small>${esc(A)}</small><b class="ils">${nums([[st,0,1.6],[st-180,1.6,3.2],[40,3.2,4.6],[0,4.6,6]],T)}</b>
-      <div class="ilch"><i class="g">T20</i><i class="g">T20</i><i class="g">T20</i></div></div>
-      <b class="ilstamp" style="${win(.9,2.6,T)}">180 !</b><i class="ildbl" style="${win(4.2,5.8,T)}">D20</i></div>`}
-  if(g==='killer'){const T=6;
-    return`<div class="il ile ilkl2"><i class="ilgun l" style="${bump([1,3.4],T)}"><b>🔫</b></i>
-      <div class="ilk act" style="--pc:var(--accent)"><div class="ilh"><i>♥</i><i>♥</i><span class="ilbrk"><i style="${win(0,1.2,T)}">♥</i><i class="b" style="${win(1.2,2.6,T)}">💔</i></span></div><small>${esc(A)}</small><b class="ils">20</b><em class="ilkk">🔫 KILLER</em></div>
-      <i class="ilgun r" style="${bump([2.2,4.6],T)}"><b>🔫</b></i><i class="ilskull" style="${win(4.7,5.9,T)}">💀</i></div>`}
-  if(g==='clock'){const T=8;
-    return`<div class="il ile"><div class="ilring dial">${Array.from({length:20},(_,i)=>{const an=i/20*2*Math.PI-Math.PI/2;return`<span style="left:${50+42*Math.cos(an)}%;top:${50+42*Math.sin(an)}%">${i+1}</span>`}).join('')}
-      <i class="ilhand" style="${anim('gspin',T,'steps(20,end)')}"><b></b></i><i class="ilhub"></i></div></div>`}
-  if(g==='shanghai'){const T=6;
-    return`<div class="il ile ilsh2"><b class="iln big" style="${bump([.8,1.6,2.4],T)}">3</b>
-      <i class="ilo o1" style="${win(.6,5,T)}">3</i><i class="ilo o2 s" style="${win(1.4,5,T)}">D3</i><i class="ilo o3 g" style="${win(2.2,5,T)}">T3</i>
-      <b class="ilstamp" style="${win(3,5,T)}">SHANGHAI !</b></div>`}
+/* ===== emblèmes « affiche » : aplats de couleur, peu de contours, la croix noire de l'appli pour les fléchettes ===== */
+const ACC='var(--accent)',INK='var(--ol,#111)',RED='#ff2d3a';
+/* la fléchette = la croix de l'appli (deux traits ronds), plantée avec le « tampon » du jeu */
+const cross=(x,y,s,cls,st)=>`<g transform="translate(${x.toFixed?x.toFixed(1):x} ${y.toFixed?y.toFixed(1):y})"><g class="afx ${cls||''}" style="${st||''}"><path d="M${-s} ${-s}L${s} ${s}M${s} ${-s}L${-s} ${s}" stroke="${INK}" stroke-width="${s*.55}" stroke-linecap="round"/></g></g>`;
+const HEART='M50 90C22 70 4 52 4 31C4 15 16 4 30 4C40 4 47 10 50 18C53 10 60 4 70 4C84 4 96 15 96 31C96 52 78 70 50 90Z';
+const ZIG='50,18 43,36 55,49 45,63 53,76 50,90';
+function illHtml(){const g=S.game||'cricket';
+  if(g==='cricket')return`<svg class="aff afck" viewBox="0 0 240 170"><g class="afbub"><circle cx="120" cy="90" r="58" fill="${ACC}"/></g>
+      <g class="afm m1"><path d="M84 126L156 54" stroke="${INK}" stroke-width="15" stroke-linecap="round"/></g><g class="afm m2"><path d="M84 54L156 126" stroke="${INK}" stroke-width="15" stroke-linecap="round"/></g>
+      <g class="afm m3"><circle cx="120" cy="90" r="70" fill="none" stroke="${INK}" stroke-width="9"/></g>
+      <g class="afcrown"><path d="M92 26L98 4L110 16L120 -2L130 16L142 4L148 26Z" fill="#ffc21a"/><rect x="92" y="26" width="56" height="7" rx="3" fill="#ffc21a"/></g></svg>`;
+  if(g==='x01')return x01Html();
+  if(g==='killer')return`<svg class="aff afkl" viewBox="0 0 250 170"><defs><clipPath id="afhl"><polygon points="-20,-20 50,-20 ${ZIG} 50,120 -20,120"/></clipPath><clipPath id="afhr"><polygon points="120,-20 50,-20 ${ZIG} 50,120 120,120"/></clipPath></defs>
+      <g class="afgun"><path d="M6 52H74Q80 52 80 58V66H40L35 92Q34 96 30 96H18Q14 96 15 92L20 66H6Q2 66 2 62V56Q2 52 6 52Z" fill="${INK}"/><rect x="74" y="55" width="16" height="6" rx="2" fill="${INK}"/></g>
+      <g class="afflash"><polygon points="96,58 112,46 108,58 124,58 108,66 112,78 96,66" fill="${ACC}"/></g>
+      <g transform="translate(140 30)"><g class="afhL" clip-path="url(#afhl)"><path d="${HEART}" fill="${RED}"/></g><g class="afhR" clip-path="url(#afhr)"><path d="${HEART}" fill="${RED}"/></g>
+        <polygon class="afsh s1" points="48,40 56,44 50,50" fill="${RED}"/><polygon class="afsh s2" points="50,62 57,60 54,68" fill="${RED}"/></g></svg>`;
+  if(g==='clock')return`<svg class="aff afclk" viewBox="0 0 240 170"><circle cx="120" cy="85" r="66" fill="${ACC}"/>
+      ${Array.from({length:20},(_,i)=>{const a=i/20*2*Math.PI-Math.PI/2;return`<circle cx="${(120+54*Math.cos(a)).toFixed(1)}" cy="${(85+54*Math.sin(a)).toFixed(1)}" r="${i===19?5:3.4}" fill="#fff" opacity="${i===19?1:.75}"/>`}).join('')}
+      <g class="afhand"><rect x="116" y="38" width="8" height="52" rx="4" fill="${INK}"/></g><circle cx="120" cy="85" r="9" fill="${INK}"/></svg>`;
+  if(g==='shanghai')return`<svg class="aff afsh2" viewBox="0 0 250 170"><defs><linearGradient id="afgd" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe58a"/><stop offset=".5" stop-color="#f2b705"/><stop offset="1" stop-color="#c48a00"/></linearGradient><linearGradient id="afsv" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#eef1f4"/><stop offset=".55" stop-color="#a9b1ba"/><stop offset="1" stop-color="#808a95"/></linearGradient></defs>
+      ${[['3','#fff',30],['D3','url(#afsv)',100],['T3','url(#afgd)',170]].map(([t,f,x],k)=>`<g class="afp p${k+1}"><rect x="${x}" y="58" width="56" height="40" rx="20" fill="${f}"/><text x="${x+28}" y="86" text-anchor="middle" font-family="Fun" font-size="22" fill="#111">${t}</text></g>${cross(x+48,60,8,'x'+(k+1))}`).join('')}
+      <g class="afban"><rect x="38" y="112" width="174" height="38" rx="10" fill="${INK}"/><text x="125" y="139" text-anchor="middle" font-family="Fun" font-size="24" fill="${ACC}">SHANGHAI !</text></g></svg>`;
   /* halve-it */
-  const T=6;
-  return`<div class="il ile ilhi2"><div class="ilsplit"><div class="ilc act big ha" style="--pc:var(--accent);animation:ghalfL ${T}s ease-in-out infinite"><small>${esc(A)}</small><b class="ils">120</b></div>
-    <div class="ilc act big hb" style="--pc:var(--accent);animation:ghalfR ${T}s ease-in-out infinite"><small>${esc(A)}</small><b class="ils">120</b></div></div>
-    <i class="ilsci" style="animation:gsci ${T}s ease-in-out infinite">✂️</i><b class="ilstamp red" style="${win(2,3.6,T)}">÷ 2</b></div>`}
-kf('ghalfL','0%,25%{transform:translateX(0)}35%,60%{transform:translateX(-16px) rotate(-6deg)}70%,100%{transform:translateX(0)}');
-kf('ghalfR','0%,25%{transform:translateX(0)}35%,60%{transform:translateX(16px) rotate(6deg)}70%,100%{transform:translateX(0)}');
-kf('gsci','0%,8%{transform:translate(-50%,-90px) rotate(90deg);opacity:0}12%{opacity:1}30%{transform:translate(-50%,70px) rotate(90deg);opacity:1}36%,100%{transform:translate(-50%,90px) rotate(90deg);opacity:0}');
+  const half=(id,side)=>`<g class="afh2 ${side}" clip-path="url(#${id})"><circle cx="120" cy="88" r="60" fill="${ACC}"/><text class="v1" x="120" y="104" text-anchor="middle" font-family="Fun" font-size="46" fill="#fff">120</text><text class="v2" x="120" y="104" text-anchor="middle" font-family="Fun" font-size="46" fill="#fff">60</text></g>`;
+  return`<svg class="aff afhi" viewBox="0 0 240 170"><defs><clipPath id="afcl"><rect x="0" y="0" width="120" height="170"/></clipPath><clipPath id="afcr"><rect x="120" y="0" width="120" height="170"/></clipPath></defs>
+    ${half('afcl','l')}${half('afcr','r')}${cross(206,40,12,'xm')}<g class="afdiv"><rect x="96" y="6" width="48" height="26" rx="13" fill="${INK}"/><text x="120" y="25" text-anchor="middle" font-family="Fun" font-size="17" fill="#fff">÷ 2</text></g></svg>`}
+/* 501 : le score choisi, 3 fléchettes (croix) qui se plantent et retirent une valeur au hasard */
+const X01V=[20,19,18,60,57,40,25,50,5,1,17,54,38,3,12];
+function x01Html(){const st=S.xstart||501,v=[0,1,2].map(()=>X01V[Math.floor(Math.random()*X01V.length)]),L=String(st).length,fs=L>3?64:78,T=5.4,t=[.7,1.6,2.5];
+  const w=fs*.62*L,x0=125-w/2,sc=[st,st-v[0],st-v[0]-v[1],st-v[0]-v[1]-v[2]];
+  const pos=v.map((_,k)=>[x0+w*(.2+.3*k)+Math.random()*10-5,62+Math.random()*30]);
+  const tw=(a,b)=>win(a,b,T);
+  return`<svg class="aff afx01" viewBox="0 0 250 170"><g class="afnum">${sc.map((s,k)=>`<g style="${tw(k?t[k-1]:0,k<3?t[k]:T-.35)}"><text x="129" y="${100+fs*.3}" text-anchor="middle" font-family="Fun" font-size="${fs}" fill="${INK}" opacity=".9">${s}</text><text x="125" y="${96+fs*.3}" text-anchor="middle" font-family="Fun" font-size="${fs}" fill="${ACC}">${s}</text></g>`).join('')}</g>
+    ${pos.map(([x,y],k)=>cross(x,y,11,'xp',tw(t[k],T-.35))).join('')}
+    ${pos.map(([x,y],k)=>`<text class="afmin" x="${x+10}" y="${y-14}" font-family="Fun" font-size="20" fill="${INK}" style="${tw(t[k]+.05,t[k]+.85)}">−${v[k]}</text>`).join('')}
+    <rect class="afclock" width="1" height="1" fill="none" style="animation:gtick ${T}s linear infinite"/></svg>`}
+kf('gtick','0%,100%{opacity:0}');
 
 /* ---------- « Plus d'infos » : onglets avec une animation et l'explication de chaque principe ---------- */
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
@@ -132,6 +138,7 @@ const _sr=showRules;showRules=function(){const r=_sr.apply(this,arguments);
   R.innerHTML=(g?g.outerHTML:'')+'<button class="rmore">Plus d’infos ›</button>';R.style.minHeight='';
   const key=[S.game,S.mode,S.xstart,S.klives,S.hiseq&&S.hiseq.join(),(S.names||[]).slice(0,3).join(),ROSTER.map(x=>x.color).join()].join('|');
   if(key!==LAST){LAST=key;ill.innerHTML=illHtml()}return r};
+ill.addEventListener('animationiteration',e=>{if(e.target.classList&&e.target.classList.contains('afclock')&&S.game==='x01')ill.innerHTML=illHtml()});   /* 501 : nouvelles fléchettes à chaque tour */
 R.addEventListener('click',e=>{if(e.target.closest('.rmore')){haptic();openInfo()}});
 ill.addEventListener('click',()=>{haptic();openInfo()});
 try{showRules()}catch(e){}
@@ -205,34 +212,62 @@ document.head.append(el('style','',`
 .il .ilhalf[style*="animation"]{opacity:0}
 .il .iltr{position:absolute;top:-18px;right:-12px;font-style:normal;font-size:26px}
 
-/* emblèmes du menu */
-.ile{gap:18px}
-.il .ilcrown{position:absolute;top:-24px;left:-14px;font-size:30px;font-style:normal;transform:rotate(-14deg)}
-.ilck2{gap:58px}.ilck2 .ilbub{position:relative;transform:rotate(-6deg)}
-.ilck2 .iln{display:inline-flex;align-items:center;justify-content:center;width:92px;height:52px;border-radius:99px;background:var(--accent);box-shadow:inset 0 0 0 2.5px var(--ol,#111);font:400 30px "Fun",sans-serif;color:var(--btx,#fff)}
-.ilck2 .ilmk3{position:absolute;left:-46px;top:8px;display:grid;width:36px;height:36px}.ilck2 .ilmk3>*{grid-area:1/1;opacity:0}
-.ilck2 .ilmk3 svg{width:36px;height:36px;fill:none;stroke:var(--ink);stroke-width:2.6;stroke-linecap:round}
-.il .ilstamp{position:absolute;right:6%;top:8%;transform:rotate(12deg);font:400 26px "Fun",sans-serif;color:var(--btx,#fff);background:var(--accent);padding:4px 12px;border-radius:12px;box-shadow:inset 0 0 0 2.5px var(--ol,#111);opacity:0}
-.il .ilstamp.red{background:#e4251a}
-.il .ildbl{position:absolute;right:12%;bottom:12%;font:400 16px "FunTxt","Fun",sans-serif;font-style:normal;color:#111;background:var(--silver);padding:4px 10px;border-radius:99px;box-shadow:inset 0 0 0 1.5px var(--ol,#111);opacity:0}
-.ilkl2 .ilk{flex:0 0 108px;padding-top:22px}.ilkl2 .ilk .ils{font-size:40px}
-.ilkl2 .ilh i{font-size:22px}.ilkl2 .ilbrk{display:grid}.ilkl2 .ilbrk>*{grid-area:1/1;opacity:0}.ilkl2 .ilbrk i.b{font-size:20px;text-shadow:none}
-.il .ilgun{font-size:38px;font-style:normal;display:inline-block}.il .ilgun b{display:inline-block;font-weight:400}.il .ilgun.l b{transform:scaleX(-1)}
-.il .ilskull{position:absolute;right:14%;top:10%;font-size:30px;font-style:normal;opacity:0}
-.il .ilring.dial{position:relative;width:min(170px,44vw);height:min(170px,44vw)}
-.il .ilring.dial span{position:absolute;transform:translate(-50%,-50%);width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:400 11px "Fun",sans-serif;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ol,#111);background:var(--m-cell,#fff)}
-.il .ilhand{position:absolute;left:50%;top:50%;width:0;height:0}
-.il .ilhand b{position:absolute;left:-2.5px;bottom:0;width:5px;height:58px;border-radius:99px;background:var(--accent);box-shadow:0 0 0 1.5px var(--ol,#111);transform-origin:50% 100%}
-.il .ilhand b::after{content:'';position:absolute;top:-6px;left:-5px;width:15px;height:15px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 1.5px var(--ol,#111)}
-.il .ilhub{position:absolute;left:50%;top:50%;width:14px;height:14px;margin:-7px;border-radius:50%;background:var(--ol,#111)}
-.ilsh2 .iln.big{display:inline-flex;align-items:center;justify-content:center;width:110px;height:64px;border-radius:99px;background:var(--accent);box-shadow:inset 0 0 0 2.5px var(--ol,#111);font:400 40px "Fun",sans-serif;color:var(--btx,#fff)}
-.il .ilo{position:absolute;font:400 15px "FunTxt","Fun",sans-serif;font-style:normal;color:#111;background:var(--m-cell,#fff);padding:4px 10px;border-radius:99px;box-shadow:inset 0 0 0 1.5px var(--ol,#111);opacity:0}
-.il .ilo.s{background:var(--silver)}.il .ilo.g{background:var(--gold)}
-.il .ilo.o1{left:22%;top:16%}.il .ilo.o2{right:22%;top:20%}.il .ilo.o3{left:50%;bottom:8%;margin-left:-20px}
-.ilsh2 .ilstamp{right:2%;top:4%}
-.ilhi2 .ilsplit{position:relative;display:grid}.ilhi2 .ilsplit>*{grid-area:1/1}
-.ilhi2 .ha{clip-path:inset(-10px 50% -10px -10px)}.ilhi2 .hb{clip-path:inset(-10px -10px -10px 50%)}
-.il .ilsci{position:absolute;left:50%;top:50%;font-size:30px;font-style:normal;opacity:0}
+/* emblèmes « affiche » */
+#setup .gill{height:clamp(150px,22vh,190px)}
+.aff{width:100%;height:100%;overflow:visible}
+.aff *{transform-box:fill-box;transform-origin:center}
+.afx .afxi{transform-box:fill-box}
+/* tampon du jeu : arrive gros puis se pose avec un rebond */
+@keyframes afStamp{0%{transform:scale(2.2);opacity:0}60%{transform:scale(.88);opacity:1}100%{transform:scale(1);opacity:1}}
+/* cricket */
+.afck .afbub{animation:afBub 5s infinite}
+@keyframes afBub{0%,100%{transform:scale(1)}10%{transform:scale(1)}13%{transform:scale(.9,1.08)}17%{transform:scale(1)}26%{transform:scale(1)}29%{transform:scale(1.08,.9)}33%{transform:scale(1)}42%{transform:scale(1)}45%{transform:scale(.92)}50%{transform:scale(1)}}
+.afck .afm{opacity:0}.afck .m1{animation:afM1 5s infinite}.afck .m2{animation:afM2 5s infinite}.afck .m3{animation:afM3 5s infinite}
+@keyframes afM1{0%,9%{opacity:0;transform:scale(2)}13%{opacity:1;transform:scale(.9)}16%,88%{opacity:1;transform:scale(1)}94%,100%{opacity:0;transform:scale(1)}}
+@keyframes afM2{0%,25%{opacity:0;transform:scale(2)}29%{opacity:1;transform:scale(.9)}32%,88%{opacity:1;transform:scale(1)}94%,100%{opacity:0;transform:scale(1)}}
+@keyframes afM3{0%,41%{opacity:0;transform:scale(1.5)}45%{opacity:1;transform:scale(.95)}48%,88%{opacity:1;transform:scale(1)}94%,100%{opacity:0;transform:scale(1)}}
+.afck .afcrown{opacity:0;animation:afCrown 5s infinite;transform-origin:50% 100%}
+@keyframes afCrown{0%,55%{opacity:0;transform:translateY(16px) scale(.3)}61%{opacity:1;transform:translateY(-4px) scale(1.12) rotate(-10deg)}66%,88%{opacity:1;transform:rotate(-10deg)}94%,100%{opacity:0;transform:rotate(-10deg)}}
+/* 501 */
+.afx01 .afnum g{opacity:0}
+.afx01 .afx{opacity:0}
+.afx01 .afmin{opacity:0}
+/* killer */
+.afkl .afgun{animation:afRecoil 4.5s infinite;transform-origin:20% 70%}
+@keyframes afRecoil{0%,20%{transform:none}22%{transform:translateX(-8px) rotate(-12deg)}30%,100%{transform:none}}
+.afkl .afflash{opacity:0;animation:afFlash 4.5s infinite}
+@keyframes afFlash{0%,20%{opacity:0;transform:scale(.4)}22%{opacity:1;transform:scale(1.2)}27%,100%{opacity:0;transform:scale(1)}}
+.afkl .afhL{animation:afHL 4.5s infinite;transform-origin:50% 100%}.afkl .afhR{animation:afHR 4.5s infinite;transform-origin:50% 100%}
+@keyframes afHL{0%,24%{transform:none}30%{transform:translate(-9px,-4px) rotate(-16deg)}40%,78%{transform:translate(-12px,10px) rotate(-22deg)}88%,100%{transform:none}}
+@keyframes afHR{0%,24%{transform:none}30%{transform:translate(9px,-4px) rotate(16deg)}40%,78%{transform:translate(12px,10px) rotate(22deg)}88%,100%{transform:none}}
+.afkl .afsh{opacity:0}.afkl .s1{animation:afSh1 4.5s infinite}.afkl .s2{animation:afSh2 4.5s infinite}
+@keyframes afSh1{0%,24%{opacity:0;transform:none}27%{opacity:1}45%,100%{opacity:0;transform:translate(-30px,-26px) rotate(-90deg)}}
+@keyframes afSh2{0%,24%{opacity:0;transform:none}27%{opacity:1}45%,100%{opacity:0;transform:translate(30px,24px) rotate(120deg)}}
+/* horloge */
+.afclk .afhand{transform-box:view-box;transform-origin:120px 85px;animation:afTick 8s steps(20,end) infinite}
+@keyframes afTick{to{transform:rotate(360deg)}}
+/* shanghai */
+.afsh2 .afx{opacity:0}.afsh2 .x1{animation:afX1 5.5s infinite}.afsh2 .x2{animation:afX2 5.5s infinite}.afsh2 .x3{animation:afX3 5.5s infinite}
+@keyframes afX1{0%,10%{opacity:0;transform:scale(2)}14%{opacity:1;transform:scale(.9)}17%,88%{opacity:1;transform:scale(1)}94%,100%{opacity:0}}
+@keyframes afX2{0%,24%{opacity:0;transform:scale(2)}28%{opacity:1;transform:scale(.9)}31%,88%{opacity:1;transform:scale(1)}94%,100%{opacity:0}}
+@keyframes afX3{0%,38%{opacity:0;transform:scale(2)}42%{opacity:1;transform:scale(.9)}45%,88%{opacity:1;transform:scale(1)}94%,100%{opacity:0}}
+.afsh2 .afp{animation:afP 5.5s infinite}.afsh2 .p1{animation-delay:0s}
+.afsh2 .p1{animation-name:afP1}.afsh2 .p2{animation-name:afP2}.afsh2 .p3{animation-name:afP3}
+@keyframes afP1{0%,12%,18%,100%{transform:scale(1)}14%{transform:scale(.9,1.1)}}
+@keyframes afP2{0%,26%,32%,100%{transform:scale(1)}28%{transform:scale(.9,1.1)}}
+@keyframes afP3{0%,40%,46%,100%{transform:scale(1)}42%{transform:scale(.9,1.1)}}
+.afsh2 .afban{opacity:0;animation:afBan 5.5s infinite}
+@keyframes afBan{0%,50%{opacity:0;transform:translateY(20px) rotate(-6deg) scale(.6)}56%{opacity:1;transform:rotate(-6deg) scale(1.08)}60%,88%{opacity:1;transform:rotate(-6deg)}94%,100%{opacity:0;transform:rotate(-6deg)}}
+/* halve-it */
+.afhi .afx{opacity:0;animation:afXm 5s infinite}
+@keyframes afXm{0%,10%{opacity:0;transform:scale(2)}14%{opacity:1;transform:scale(.9)}17%,80%{opacity:1;transform:scale(1)}88%,100%{opacity:0}}
+.afhi .afh2.l{animation:afSpL 5s infinite}.afhi .afh2.r{animation:afSpR 5s infinite}
+@keyframes afSpL{0%,22%{transform:none}30%,56%{transform:translate(-16px,6px) rotate(-8deg)}66%,100%{transform:none}}
+@keyframes afSpR{0%,22%{transform:none}30%,56%{transform:translate(16px,6px) rotate(8deg)}66%,100%{transform:none}}
+.afhi .v1{animation:afV1 5s infinite}.afhi .v2{opacity:0;animation:afV2 5s infinite}
+@keyframes afV1{0%,58%{opacity:1}62%,100%{opacity:0}}@keyframes afV2{0%,58%{opacity:0}62%,92%{opacity:1}97%,100%{opacity:0}}
+.afhi .afdiv{opacity:0;animation:afDiv 5s infinite}
+@keyframes afDiv{0%,26%{opacity:0;transform:scale(.4)}31%{opacity:1;transform:scale(1.15)}35%,58%{opacity:1;transform:scale(1)}64%,100%{opacity:0}}
 /* écran « Plus d'infos » */
 #rinfo{gap:10px;background:var(--page,#f7f2e5)!important}
 #rinfo .rtabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;flex:none;padding:2px}#rinfo .rtabs::-webkit-scrollbar{display:none}
