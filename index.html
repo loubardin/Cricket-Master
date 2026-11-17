@@ -3584,7 +3584,8 @@ html body.skin-casino #game#game#game#game.p2 #grid .num.dead{border-image-sourc
 html body.skin-casino #game#game#game#game.p2 #grid .num.bnc{border-image:none!important}
 html body.skin-casino #game#game#game#game.p2 footer::after{border-color:transparent!important;background:url(skins/tropical2/barre.webp) 0 0/100% 100% no-repeat!important;z-index:0!important;inset:-5.1px -6.2px -4.5px -6.2px!important}
 html body.skin-casino #game#game#game#game.p2 .fthumb{background:transparent!important;box-shadow:none!important}
-html body.skin-casino #game#game#game#game.p2 .fthumb::before{content:'';position:absolute;inset:-7.7px -11.2px -7.7px -11.2px;background:url(skins/tropical2/curseur.webp) 0 0/100% 100% no-repeat;pointer-events:none}
+html body.skin-casino #game#game#game#game.p2 .fthumb{border-style:solid!important;border-width:0!important;border-image:url(skins/tropical2/curseur.webp) 0 118 fill / 0 calc(var(--th,63.5px)*.621) / calc(var(--th,63.5px)*.121) calc(var(--th,63.5px)*.06) stretch!important}   /* curseur : bouts ronds jamais déformés, quelle que soit sa largeur (Double / Spew / Triple) */
+html body.skin-casino.m2 #game#game#game#game.p2 .fthumb{border-image-outset:calc(var(--th,63.5px)*.121) 23px calc(var(--th,63.5px)*.121) 0!important}   /* en Double, la boîte du curseur est 11 pt à gauche du mot « Double » : on recentre la bulle sur le mot */
 html body.skin-casino #game#game#game#game.p2 .mw{position:relative;isolation:isolate}
 html body.skin-casino #game#game#game#game.p2 .mw .disc{opacity:0!important}
 html body.skin-casino #game#game#game#game.p2 .mw.k3::before{content:'';position:absolute;left:21%;top:21%;width:58%;height:58%;background:url(skins/tropical2/disque.webp) center/contain no-repeat;z-index:-1;animation:skpop .28s cubic-bezier(.3,1.6,.5,1)}
@@ -3861,6 +3862,7 @@ const el=(tag,cls,html)=>{const e=document.createElement(tag);if(cls)e.className
 let S=Object.assign({mode:'cut',n:2,names:['LOU','TONE','J3','J4','J5','J6'],sound:true,theme:'bar',game:'cricket',klives:3,kmarks:3,knum:'draw',kbonus:1,kdef:1,kcarry:1,seq:0,teams:0,kgrid:1,order:'fixed',last:'cricket',xstart:501,xin:0,xout:1,xlegs:1,xhint:1,xrep:1,clegs:1,bet:0,betk:0,betv:5,betl:'',shr:7,shw:1,shb:100,clkm:0,clkb:1,clkr:0,lastBar:'killer',hiseq:[15,16,'D',17,18,'T',19,20,'B'],hid:3,hip:1},store.get(K_S,{}));
 S.theme='pure';   // un seul style
 /* style : « pure » = version de référence ; les autres styles sont des couches CSS par-dessus (body.theme-…) */
+try{const th=document.querySelector('#game .fthumb');if(th&&window.ResizeObserver)new ResizeObserver(()=>th.style.setProperty('--th',th.offsetHeight+'px')).observe(th)}catch(e){}
 const applyTheme=()=>{document.body.classList.add('theme-color');document.body.classList.toggle('skin-casino',S.skin==='casino')};
 while(S.names.length<6)S.names.push('J'+(S.names.length+1));
 let G=store.get(K_G,null);
@@ -7102,7 +7104,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-349';   // à changer avec VERSION dans sw.js
+const APPV='lf-350';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
