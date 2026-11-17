@@ -1,8 +1,9 @@
 TÂCHE : redessiner une planche d'assets de jeu mobile (compteur de fléchettes, Cricket à 2 joueurs). Tu ne crées PAS une nouvelle composition : tu repeins chaque élément de l'image 1 exactement à l'endroit où il se trouve, à la même taille.
 
 IMAGES JOINTES
-- Image 1 = la planche à redessiner (27 éléments). C'est elle que tu modifies.
-- Image 2 = 4 écrans du jeu assemblés avec ces éléments, pour comprendre leur rôle : (a) tour du joueur 1, (b) Double armé, (c) Triple armé, (d) tour du joueur 2. Ne la redessine pas.
+- Image 1 = la planche à redessiner (27 éléments, sans texte). C'est ELLE que tu modifies et renvoies.
+- Image 2 = la MÊME planche avec le numéro et le nom de chaque élément écrits dessous (1. Carte J1, 2. Carte J2, … 27. Curseur Triple allumé). Elle sert uniquement à savoir quel élément est quoi : ne recopie JAMAIS ces étiquettes dans ta réponse.
+- Image 3 = 4 écrans du jeu assemblés avec ces éléments, pour comprendre leur rôle : (a) tour du joueur 1, (b) Double armé, (c) Triple armé, (d) tour du joueur 2. Ne la redessine pas.
 
 STYLE À APPLIQUER : [écris ici ton style]
 COULEUR JOUEUR 1 : [ex. rouge]   ·   COULEUR JOUEUR 2 : [ex. bleu]
@@ -13,7 +14,7 @@ FORMAT DE SORTIE
 - Fond uni #F7F2E5 parfaitement plat : pas de texture, de dégradé, d'ombre portée, de vignettage, de cadre ni de décor.
 
 INTERDICTIONS ABSOLUES
-1. Aucun texte, aucune lettre, aucun chiffre, nulle part.
+1. Aucun texte, aucune lettre, aucun chiffre, aucune étiquette, nulle part (les noms de l'image 2 ne doivent pas apparaître).
 2. Aucun élément ajouté, aucun supprimé : exactement 27.
 3. Ne déplace aucun élément, ne change ni sa taille ni son rapport largeur/hauteur. Chaque élément reste entièrement DANS sa case.
 4. Ne fusionne pas deux éléments, ne les fais pas se toucher : du fond vide reste visible entre chacun.
