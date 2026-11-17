@@ -4,6 +4,48 @@
    - « Plus d'infos » : un écran à onglets ; chaque onglet = une animation + l'explication d'un principe,
      le dernier onglet = toutes les règles. */
 (function(){
+/* ===== mode « scène » : l'appli tourne dans une petite fenêtre (onglets « Plus d'infos ») et joue toute seule
+   une situation de jeu avec les vrais écrans et les vrais effets. Rien n'est enregistré (stockage neutralisé). ===== */
+if(window.EMBED){(function(){
+  const [g,st]=(new URLSearchParams(location.search).get('scene')||'cricket:0').split(':'),k=+st||0;
+  document.documentElement.classList.add('embed');
+  S.sound=false;S.voice=false;S.bet=0;S.teams=0;S.order='fixed';S.game=g;S.xrep=0;
+  const sl=ms=>new Promise(r=>setTimeout(r,ms)),W=950;
+  const N=[0,1,2].map(i=>{const n=((S.names||[])[i]||'').trim().toUpperCase();return(!n||/^J\d$/.test(n))?['LOU','TONE','ZOÉ'][i]:n});
+  const closeWin=()=>{['win','knext'].forEach(id=>{const e=$(id);if(e)e.classList.remove('on')})};
+  /* lance une partie neuve du jeu, avec n joueurs */
+  const start=n=>{closeWin();S.n=n;S.names=N.slice(0,n);if(g==='killer')startKiller(N.slice(0,n),[20,19,18].slice(0,n));else launchNew()};
+  const c=(t,m)=>{G.mult=m||1;throwDart(t)};                       /* cricket */
+  const x=(t,m)=>{XG.mult=m||1;xThrow(t,m||1)};                    /* 501 et mini-jeux */
+  const kk=(t,m)=>{KG.mult=m||1;kThrow(t)};                        /* killer */
+  const rx=()=>{if(XG.mode)showX01();else xRender()};
+  const hiHit=()=>{const t=hiT();if(t==='D')x(16,2);else if(t==='T')x(20,3);else if(t==='B'||t===25)x(25,1);else x(+t,1)};
+  const S3={
+    cricket:[async()=>{start(2);for(let i=0;i<3;i++){await sl(W);c(20)}await sl(2600)},
+      async()=>{start(2);await sl(W);c(20,3);await sl(W);c(20);await sl(W);c(20);await sl(2800)},
+      async()=>{start(2);const A=G.players[0],B=G.players[1];TARGETS.forEach(t=>{if(t!==25)A.marks[t]=3});[20,19,18,17].forEach(t=>B.marks[t]=2);
+        if(G.mode==='cut')B.score=60;else A.score=60;render();await sl(W);c(25);await sl(W);c(25,2);await sl(4200)}],
+    x01:[async()=>{start(2);for(let i=0;i<3;i++){await sl(W);x(20,3)}await sl(2600)},
+      async()=>{start(2);const p=XG.players[0];p.rem=40;XG.ts=40;rx();await sl(W);if(XG.outR)x(20,2);else{x(20,1);await sl(W);x(20,1)}await sl(4200)},
+      async()=>{start(2);const p=XG.players[0];p.rem=32;XG.ts=32;rx();await sl(W);x(20,1);await sl(W);x(19,1);await sl(3000)}],
+    killer:[async()=>{start(3);for(let i=0;i<3;i++){await sl(W);kk(20)}await sl(2600)},
+      async()=>{start(3);const p=KG.players[0];p.marks=3;p.killer=true;kRender();await sl(W);kk(19);await sl(W);kk(18,2);await sl(W);kk(19);await sl(2600)},
+      async()=>{start(3);const P=KG.players;P[0].marks=3;P[0].killer=true;P[1].lives=1;P[2].lives=1;kRender();await sl(W);kk(19);await sl(W);kk(18);await sl(4200)}],
+    clock:[async()=>{start(2);for(const t of [1,2,3]){await sl(W);x(t,1)}await sl(2600)},
+      async()=>{start(2);XG.players[0].tgt=4;rx();await sl(W);x(4,XG.clkm?2:1);await sl(W);x(XG.clkm?6:5,XG.clkm?3:1);await sl(W);x(0,1);await sl(2600)},
+      async()=>{start(2);const p=XG.players[0],e=XG.clkb?25:20;p.tgt=e===25?19:18;rx();for(const t of (e===25?[19,20,25]:[18,19,20])){await sl(W);x(t,1)}await sl(4200)}],
+    shanghai:[async()=>{start(2);for(const m of [1,2,1]){await sl(W);x(1,m)}await sl(1800)},
+      async()=>{start(2);XG.round=3;rx();await sl(W);x(3,1);await sl(W);x(3,2);await sl(W);x(3,3);await sl(4200)},
+      async()=>{start(2);XG.round=XG.shr;XG.players[0].rem=80;XG.players[1].rem=74;rx();for(const t of [XG.shr,XG.shr,0]){await sl(W);x(t,1)}await sl(1600);for(let i=0;i<3;i++){await sl(W*.7);x(0,1)}await sl(4200)}],
+    halveit:[async()=>{start(2);for(let i=0;i<3;i++){await sl(W);hiHit()}await sl(2600)},
+      async()=>{start(2);XG.players[0].rem=120;rx();for(let i=0;i<(XG.hid||3);i++){await sl(W);x(0,1)}await sl(3000)},
+      async()=>{start(2);XG.round=XG.hiseq.length;XG.players[0].rem=180;XG.players[1].rem=150;rx();for(let i=0;i<(XG.hid||3);i++){await sl(W);hiHit()}await sl(1600);for(let i=0;i<(XG.hid||3);i++){await sl(W*.7);x(0,1)}await sl(4200)}]};
+  const run=(S3[g]||S3.cricket)[k]||S3.cricket[0];
+  (async()=>{await sl(400);for(;;){try{await run()}catch(e){console.warn(e);await sl(1500)}}})();
+  document.querySelectorAll('footer,#fbar2,#fbar3').forEach(f=>f.style.setProperty('visibility','hidden','important'));
+  document.head.append(el('style','',`html.embed .toastx,html.embed #sync,html.embed #win button,html.embed #win #wBet,html.embed #win #wExtra{display:none!important}html.embed body{pointer-events:none}`));
+})();return}
+
 const SU=$('setup'),R=$('gRules');if(!SU||!R)return;
 const ill=el('div','gill');ill.id='gIll';R.before(ill);   /* l'emblème au-dessus, « Le but » en dessous */
 const PN=i=>{const n=((S.names||[])[i]||'').trim().toUpperCase();return(!n||/^J\d$/.test(n))?['LOU','TONE','ZOÉ'][i]:n};
@@ -25,11 +67,11 @@ const nums=(vals,T)=>vals.map(([v,t0,t1])=>`<span style="${win(t0,t1,T)}">${v}</
 /* ===== emblèmes « affiche » : aplats de couleur, la marque de l'accueil (bulle + croix) comme signature ===== */
 const ACC='var(--accent)',INK='var(--ol,#111)',RED='#ff2d3a';
 /* la fléchette = la croix de l'appli (deux traits ronds) */
-const cross=(x,y,s,cls,st)=>`<g transform="translate(${(+x).toFixed(1)} ${(+y).toFixed(1)})"><g class="afx ${cls||''}" style="${st||''}"><path d="M${-s} ${-s}L${s} ${s}M${s} ${-s}L${-s} ${s}" stroke="${INK}" stroke-width="${(s*.55).toFixed(1)}" stroke-linecap="round"/></g></g>`;
+const cross=(x,y,s,cls,st)=>`<g transform="translate(${(+x).toFixed(1)} ${(+y).toFixed(1)})"><g class="afx ${cls||''}" style="${st||''}"><path d="M${-s} ${-s}L${s} ${s}M${s} ${-s}L${-s} ${s}" stroke="${INK}" stroke-width="${(s*.4).toFixed(1)}" stroke-linecap="round"/></g></g>`;
 const HEART='M50 90C22 70 4 52 4 31C4 15 16 4 30 4C40 4 47 10 50 18C53 10 60 4 70 4C84 4 96 15 96 31C96 52 78 70 50 90Z';
 const ZIG='50,18 43,36 55,49 45,63 53,76 50,90';
 /* marque de l'accueil : bulle r=62, croix de ±60 (dépasse de la bulle), traits de 15 — mise à l'échelle k */
-const mark=(cx,cy,k,cls)=>`<g class="${cls||''}"><circle class="mkd" cx="${cx}" cy="${cy}" r="${62*k}" fill="${ACC}"/><path class="mk1" d="M${cx-60*k} ${cy+60*k}L${cx+60*k} ${cy-60*k}" stroke="${INK}" stroke-width="${15*k}" stroke-linecap="round"/><path class="mk2" d="M${cx-60*k} ${cy-60*k}L${cx+60*k} ${cy+60*k}" stroke="${INK}" stroke-width="${15*k}" stroke-linecap="round"/></g>`;
+const mark=(cx,cy,k,cls)=>`<g class="${cls||''}"><circle class="mkd" cx="${cx}" cy="${cy}" r="${62*k}" fill="${ACC}" fill-opacity=".55"/><path class="mk1" d="M${cx-60*k} ${cy+60*k}L${cx+60*k} ${cy-60*k}" stroke="${INK}" stroke-width="${10*k}" stroke-linecap="round"/><path class="mk2" d="M${cx-60*k} ${cy-60*k}L${cx+60*k} ${cy+60*k}" stroke="${INK}" stroke-width="${10*k}" stroke-linecap="round"/></g>`;
 function illHtml(){const g=S.game||'cricket';
   if(g==='cricket')return`<svg class="aff afck" viewBox="0 0 240 180">${mark(120,96,1,'afmk')}
       <g class="afcrown"><path d="M94 30L100 8L112 20L120 2L128 20L140 8L146 30Z" fill="#ffc21a"/><rect x="94" y="30" width="52" height="7" rx="3" fill="#ffc21a"/></g></svg>`;
@@ -38,25 +80,25 @@ function illHtml(){const g=S.game||'cricket';
     return`<svg class="aff afkl" viewBox="0 0 250 180"><defs><clipPath id="afhl"><polygon points="-20,-20 50,-20 ${ZIG} 50,120 -20,120"/></clipPath><clipPath id="afhr"><polygon points="120,-20 50,-20 ${ZIG} 50,120 120,120"/></clipPath></defs>
       <g transform="translate(156 61) scale(.6)" style="transform-box:view-box;transform-origin:0 0"><g class="afhL" clip-path="url(#afhl)"><path d="${HEART}" fill="${RED}"/></g><g class="afhR" clip-path="url(#afhr)"><path d="${HEART}" fill="${RED}"/></g>
         <polygon class="afsh s1" points="44,38 56,44 48,52" fill="${RED}"/><polygon class="afsh s2" points="50,62 60,58 56,70" fill="${RED}"/></g>
-      <g class="afscope"><circle cx="186" cy="88" r="40" fill="${ACC}"/><g transform="translate(156 61) scale(.6)" style="transform-box:view-box;transform-origin:0 0"><path class="afwh" d="${HEART}" fill="#fff"/></g>
-        <path d="M186 40V136M138 88H234" stroke="${INK}" stroke-width="10" stroke-linecap="round"/></g></svg>`}
+      <g class="afscope"><circle cx="186" cy="88" r="40" fill="${ACC}" fill-opacity=".55"/><g transform="translate(156 61) scale(.6)" style="transform-box:view-box;transform-origin:0 0"><path class="afwh" d="${HEART}" fill="#fff"/></g>
+        <path d="M186 40V136M138 88H234" stroke="${INK}" stroke-width="6.5" stroke-linecap="round"/></g></svg>`}
   if(g==='clock')/* la marque devient une horloge : les deux traits de la croix sont les aiguilles */
-    return`<svg class="aff afclk" viewBox="0 0 240 180"><circle cx="120" cy="92" r="62" fill="${ACC}"/>
+    return`<svg class="aff afclk" viewBox="0 0 240 180"><circle cx="120" cy="92" r="62" fill="${ACC}" fill-opacity=".55"/>
       ${Array.from({length:20},(_,i)=>{const a=i/20*2*Math.PI-Math.PI/2;return`<circle cx="${(120+50*Math.cos(a)).toFixed(1)}" cy="${(92+50*Math.sin(a)).toFixed(1)}" r="${i===19?5:3}" fill="#fff" opacity="${i===19?1:.7}"/>`}).join('')}
-      <g class="afhm"><path d="M120 92L120 28" stroke="${INK}" stroke-width="12" stroke-linecap="round"/></g><g class="afhh"><path d="M120 92L156 92" stroke="${INK}" stroke-width="15" stroke-linecap="round"/></g><circle cx="120" cy="92" r="10" fill="${INK}"/></svg>`;
+      <g class="afhm"><path d="M120 92L120 28" stroke="${INK}" stroke-width="8" stroke-linecap="round"/></g><g class="afhh"><path d="M120 92L156 92" stroke="${INK}" stroke-width="10" stroke-linecap="round"/></g><circle cx="120" cy="92" r="7" fill="${INK}"/></svg>`;
   if(g==='shanghai'){/* une pagode : simple, double, triple qui s'empilent, chacun avec son toit */
     const tier=(y,w,f,t,k)=>`<g class="aft t${k}"><path d="M${120-w/2-14} ${y}Q120 ${y-16} ${120+w/2+14} ${y}Z" fill="${INK}"/><rect x="${120-w/2}" y="${y}" width="${w}" height="30" rx="8" fill="${f}"/><text x="120" y="${y+22}" text-anchor="middle" font-family="Fun" font-size="18" fill="${k===1?'#fff':'#111'}">${t}</text></g>`;
     return`<svg class="aff afpg" viewBox="0 0 240 180"><defs><linearGradient id="afgd" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe58a"/><stop offset=".5" stop-color="#f2b705"/><stop offset="1" stop-color="#c48a00"/></linearGradient><linearGradient id="afsv" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#eef1f4"/><stop offset=".55" stop-color="#a9b1ba"/><stop offset="1" stop-color="#808a95"/></linearGradient></defs>
       ${tier(136,120,ACC,'SIMPLE',1)}${tier(96,90,'url(#afsv)','DOUBLE',2)}${tier(56,62,'url(#afgd)','TRIPLE',3)}
-      <g class="afspire"><path d="M120 12V40" stroke="${INK}" stroke-width="6" stroke-linecap="round"/><circle cx="120" cy="14" r="7" fill="${ACC}"/></g></svg>`}
+      <g class="afspire"><path d="M120 12V40" stroke="${INK}" stroke-width="4" stroke-linecap="round"/><circle cx="120" cy="14" r="7" fill="${ACC}" fill-opacity=".55"/></g></svg>`}
   /* halve-it : la croix tombe comme une lame, la bulle se coupe en deux et rétrécit de moitié */
   return`<svg class="aff afhi" viewBox="0 0 240 180"><defs><clipPath id="afcl"><rect x="0" y="0" width="120" height="180"/></clipPath><clipPath id="afcr"><rect x="120" y="0" width="120" height="180"/></clipPath></defs>
-    <g class="afwhole"><g class="afh2 l" clip-path="url(#afcl)"><circle cx="120" cy="96" r="62" fill="${ACC}"/></g><g class="afh2 r" clip-path="url(#afcr)"><circle cx="120" cy="96" r="62" fill="${ACC}"/></g></g>
-    <g class="afblade"><path d="M120 10V182" stroke="${INK}" stroke-width="14" stroke-linecap="round"/></g>
+    <g class="afwhole"><g class="afh2 l" clip-path="url(#afcl)"><circle cx="120" cy="96" r="62" fill="${ACC}" fill-opacity=".55"/></g><g class="afh2 r" clip-path="url(#afcr)"><circle cx="120" cy="96" r="62" fill="${ACC}" fill-opacity=".55"/></g></g>
+    <g class="afblade"><path d="M120 10V182" stroke="${INK}" stroke-width="9" stroke-linecap="round"/></g>
     <g class="afdiv"><rect x="160" y="18" width="56" height="30" rx="15" fill="${INK}"/><text x="188" y="40" text-anchor="middle" font-family="Fun" font-size="19" fill="#fff">÷ 2</text></g></svg>`}
 /* 501 : le score choisi ; 3 fléchettes se plantent autour (jamais sur les chiffres) et retirent une valeur au hasard */
 const X01V=[20,19,18,60,57,40,25,50,5,1,17,54,38,3,12,45,36];
-function x01Html(){const st=S.xstart||501,v=[0,1,2].map(()=>X01V[Math.floor(Math.random()*X01V.length)]),L=String(st).length,fs=L>3?62:76,T=5.4,t=[.7,1.6,2.5];
+function x01Html(){const st=S.xstart||501,v=[0,1,2].map(()=>X01V[Math.floor(Math.random()*X01V.length)]),L=String(st).length,fs=L>3?62:76,T=10.8,t=[1.4,3.2,5];
   const w=fs*.72*L,nx0=125-w/2-26,nx1=125+w/2+30,ny0=96-fs*.62-24,ny1=96+fs*.4+16,sc=[st,st-v[0],st-v[0]-v[1],st-v[0]-v[1]-v[2]];
   const pos=[];let guard=0;while(pos.length<3&&guard++<400){const x=18+Math.random()*214,y=18+Math.random()*144;
     if(x>nx0&&x<nx1&&y>ny0&&y<ny1)continue;if(pos.some(([a,b])=>Math.hypot(a-x,b-y)<44))continue;pos.push([x,y])}
@@ -64,7 +106,7 @@ function x01Html(){const st=S.xstart||501,v=[0,1,2].map(()=>X01V[Math.floor(Math
   const tw=(a,b)=>win(a,b,T);
   return`<svg class="aff afx01" viewBox="0 0 250 180"><g class="afnum">${sc.map((s,k)=>`<g style="${tw(k?t[k-1]:0,k<3?t[k]:T-.35)}"><text x="129" y="${96+fs*.32+4}" text-anchor="middle" font-family="Fun" font-size="${fs}" fill="${INK}">${s}</text><text x="125" y="${96+fs*.32}" text-anchor="middle" font-family="Fun" font-size="${fs}" fill="${ACC}">${s}</text></g>`).join('')}</g>
     ${pos.map(([x,y],k)=>cross(x,y,10,'xp',tw(t[k],T-.35))).join('')}
-    ${pos.map(([x,y],k)=>{const up=y<ny0||y<40?false:y>ny1?true:true,ly=y<ny0?(y<40?y+30:y-14):y>ny1?(y>150?y-14:y+30):(y-16),lx=Math.min(222,Math.max(28,x));return`<text class="afmin" x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="middle" font-family="Fun" font-size="18" fill="${INK}" style="${tw(t[k]+.05,t[k]+.85)}">−${v[k]}</text>`}).join('')}
+    ${pos.map(([x,y],k)=>{const up=y<ny0||y<40?false:y>ny1?true:true,ly=y<ny0?(y<40?y+30:y-14):y>ny1?(y>150?y-14:y+30):(y-16),lx=Math.min(222,Math.max(28,x));return`<text class="afmin" x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="middle" font-family="Fun" font-size="18" fill="${INK}" style="${tw(t[k]+.1,t[k]+1.7)}">−${v[k]}</text>`}).join('')}
     <rect class="afclock" width="1" height="1" fill="none" style="animation:gtick ${T}s linear infinite"/></svg>`}
 kf('gtick','0%,100%{opacity:0}');
 
@@ -127,16 +169,19 @@ function openInfo(){const P=pages(),my=++GEN,dead=()=>my!==GEN,gn={cricket:'Cric
   const o=el('div','ov');o.id='rinfo';
   o.innerHTML=`<div class="ovh"><h2>${esc(gn)}</h2><button class="circ" data-x aria-label="Fermer"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
     <div class="rtabs">${P.map((p,i)=>`<button data-t="${i}">${esc(p.t)}</button>`).join('')}<button data-t="${P.length}">Règles</button></div>
-    <div class="rpages">${P.map(p=>`<section><div class="gst"></div><h3>${esc(p.cap)}</h3><p>${esc(p.txt)}</p></section>`).join('')}<section class="rall"><p class="rgoal2">${TXT.goal}</p>${TXT.ps.map(x=>`<p>${x}</p>`).join('')}</section></div>`;
+    <div class="rpages">${P.map(p=>`<section><div class="gfr"></div><h3>${esc(p.cap)}</h3><p>${esc(p.txt)}</p></section>`).join('')}<section class="rall"><p class="rgoal2">${TXT.goal}</p>${TXT.ps.map(x=>`<p>${x}</p>`).join('')}</section></div>`;
   document.body.append(o);requestAnimationFrame(()=>o.classList.add('on'));SFX.open();
   const box=q(o,'.rpages'),tabs=[...o.querySelectorAll('.rtabs button')],secs=[...o.querySelectorAll('.rpages section')];
-  P.forEach((p,i)=>{q(secs[i],'.gst').innerHTML=p.html()});
   let cur=0;const mark=()=>tabs.forEach((t,i)=>t.classList.toggle('on',i===cur));mark();
   box.addEventListener('scroll',()=>{const k=Math.round(box.scrollLeft/box.clientWidth);if(k!==cur){cur=k;mark();const t=tabs[k];if(t)t.scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'})}},{passive:true});
   o.addEventListener('click',e=>{if(e.target.closest('[data-x]')){GEN++;o.classList.remove('on');setTimeout(()=>o.remove(),300);SFX.back();return}
     const t=e.target.closest('[data-t]');if(t){haptic();box.scrollTo({left:+t.dataset.t*box.clientWidth,behavior:'smooth'})}});
-  (async()=>{while(!dead()){const k=cur;if(k>=P.length){await sleep(300);continue}const st=q(secs[k],'.gst');st.innerHTML=P[k].html();
-      try{await P[k].run(st,()=>dead()||cur!==k)}catch(e){}if(dead())return;await sleep(cur===k?600:50)}})()}
+  /* l'onglet affiché fait tourner la vraie partie dans une petite fenêtre (un seul à la fois) */
+  const VW=393,VH=720,VC=612,fit=f=>{const b=f.parentNode,k=b.clientHeight/VC;   /* la barre du bas (masquée) est hors cadre */
+  f.style.transform=`scale(${k})`;if(k>0)b.style.width=Math.round(VW*k)+'px'};
+  const show=()=>{secs.forEach((sc,i)=>{const b=q(sc,'.gfr');if(!b)return;if(i===cur){if(!q(b,'iframe')){const f=document.createElement('iframe');f.src='index.html?scene='+S.game+':'+i;f.setAttribute('tabindex','-1');f.style.width=VW+'px';f.style.height=VH+'px';b.append(f);fit(f);requestAnimationFrame(()=>fit(f));f.onload=()=>fit(f)}}else b.innerHTML=''})};
+  show();box.addEventListener('scroll',()=>{clearTimeout(box._t);box._t=setTimeout(show,180)},{passive:true});
+  addEventListener('resize',()=>o.querySelectorAll('.gfr iframe').forEach(fit))}
 
 /* ---------- « Le but » + « Plus d'infos » ---------- */
 let LAST='';
@@ -224,46 +269,46 @@ document.head.append(el('style','',`
 .aff{width:100%;height:100%;overflow:visible}
 .aff g,.aff path,.aff circle,.aff rect,.aff text,.aff polygon{transform-box:fill-box;transform-origin:center}
 /* cricket : la marque de l'accueil se plante trait par trait, la bulle s'écrase comme en jeu, la couronne arrive */
-.afck .afmk .mkd{animation:afBub 5s infinite}
+.afck .afmk .mkd{animation:afBub 10s infinite}
 @keyframes afBub{0%,12%{transform:scale(1)}15%{transform:scale(.88,1.08)}19%{transform:scale(1)}28%{transform:scale(1)}31%{transform:scale(1.08,.88)}35%,100%{transform:scale(1)}}
-.afck .mk1{opacity:0;animation:afS1 5s infinite}.afck .mk2{opacity:0;animation:afS2 5s infinite}
+.afck .mk1{opacity:0;animation:afS1 10s infinite}.afck .mk2{opacity:0;animation:afS2 10s infinite}
 @keyframes afS1{0%,11%{opacity:0;transform:scale(1.8)}15%{opacity:1;transform:scale(.92)}18%,88%{opacity:1;transform:scale(1)}94%,100%{opacity:0}}
 @keyframes afS2{0%,27%{opacity:0;transform:scale(1.8)}31%{opacity:1;transform:scale(.92)}34%,88%{opacity:1;transform:scale(1)}94%,100%{opacity:0}}
-.afck .afcrown{opacity:0;animation:afCrown 5s infinite;transform-origin:50% 100%}
+.afck .afcrown{opacity:0;animation:afCrown 10s infinite;transform-origin:50% 100%}
 @keyframes afCrown{0%,44%{opacity:0;transform:translateY(18px) scale(.3)}50%{opacity:1;transform:translateY(-4px) scale(1.12) rotate(-10deg)}55%,88%{opacity:1;transform:rotate(-10deg)}94%,100%{opacity:0;transform:rotate(-10deg)}}
 /* 501 */
 .afx01 .afnum g,.afx01 .afx,.afx01 .afmin{opacity:0}
 /* killer : le viseur arrive, se cale, tire ; le cœur se brise */
-.afkl .afscope{animation:afScope 5s infinite}
+.afkl .afscope{animation:afScope 10s infinite}
 @keyframes afScope{0%{transform:translate(-150px,40px);opacity:0}8%{opacity:1}22%{transform:translate(-30px,-24px)}32%{transform:translate(8px,10px)}40%,46%{transform:translate(0,0)}48%{transform:translate(0,0) scale(1.12)}52%{transform:scale(1);opacity:1}58%,100%{transform:scale(.6);opacity:0}}
-.afkl .afwh{opacity:0;animation:afWh 5s infinite}
+.afkl .afwh{opacity:0;animation:afWh 10s infinite}
 @keyframes afWh{0%,38%{opacity:0}42%,52%{opacity:1}56%,100%{opacity:0}}
-.afkl .afhL{animation:afHL 5s infinite;transform-origin:50% 100%}.afkl .afhR{animation:afHR 5s infinite;transform-origin:50% 100%}
+.afkl .afhL{animation:afHL 10s infinite;transform-origin:50% 100%}.afkl .afhR{animation:afHR 10s infinite;transform-origin:50% 100%}
 @keyframes afHL{0%,48%{transform:none}54%{transform:translate(-9px,-4px) rotate(-16deg)}64%,82%{transform:translate(-14px,12px) rotate(-24deg)}92%,100%{transform:none}}
 @keyframes afHR{0%,48%{transform:none}54%{transform:translate(9px,-4px) rotate(16deg)}64%,82%{transform:translate(14px,12px) rotate(24deg)}92%,100%{transform:none}}
-.afkl .afsh{opacity:0}.afkl .s1{animation:afSh1 5s infinite}.afkl .s2{animation:afSh2 5s infinite}
+.afkl .afsh{opacity:0}.afkl .s1{animation:afSh1 10s infinite}.afkl .s2{animation:afSh2 10s infinite}
 @keyframes afSh1{0%,48%{opacity:0;transform:none}51%{opacity:1}68%,100%{opacity:0;transform:translate(-34px,-28px) rotate(-90deg)}}
 @keyframes afSh2{0%,48%{opacity:0;transform:none}51%{opacity:1}68%,100%{opacity:0;transform:translate(34px,26px) rotate(120deg)}}
 /* horloge : la croix devient deux aiguilles */
-.afclk .afhm{transform-box:view-box;transform-origin:120px 92px;animation:afSpin 6s steps(20,end) infinite}
-.afclk .afhh{transform-box:view-box;transform-origin:120px 92px;animation:afSpin 60s linear infinite}
+.afclk .afhm{transform-box:view-box;transform-origin:120px 92px;animation:afSpin 12s steps(20,end) infinite}
+.afclk .afhh{transform-box:view-box;transform-origin:120px 92px;animation:afSpin 120s linear infinite}
 @keyframes afSpin{to{transform:rotate(360deg)}}
 /* shanghai : la pagode s'empile étage par étage */
 .afpg .aft,.afpg .afspire{opacity:0}
-.afpg .t1{animation:afT1 5.5s infinite}.afpg .t2{animation:afT2 5.5s infinite}.afpg .t3{animation:afT3 5.5s infinite}.afpg .afspire{animation:afT4 5.5s infinite}
+.afpg .t1{animation:afT1 11s infinite}.afpg .t2{animation:afT2 11s infinite}.afpg .t3{animation:afT3 11s infinite}.afpg .afspire{animation:afT4 11s infinite}
 @keyframes afT1{0%,4%{opacity:0;transform:translateY(-50px)}11%{opacity:1;transform:translateY(0) scale(1.06,.9)}15%,86%{opacity:1;transform:none}92%,100%{opacity:0}}
 @keyframes afT2{0%,18%{opacity:0;transform:translateY(-50px)}25%{opacity:1;transform:translateY(0) scale(1.06,.9)}29%,86%{opacity:1;transform:none}92%,100%{opacity:0}}
 @keyframes afT3{0%,32%{opacity:0;transform:translateY(-50px)}39%{opacity:1;transform:translateY(0) scale(1.06,.9)}43%,86%{opacity:1;transform:none}92%,100%{opacity:0}}
 @keyframes afT4{0%,46%{opacity:0;transform:translateY(-30px)}52%{opacity:1;transform:translateY(0) scale(1.2)}56%,86%{opacity:1;transform:none}92%,100%{opacity:0}}
 /* halve-it : la lame tombe, la bulle se coupe, rétrécit de moitié puis revient */
-.afhi .afblade{opacity:0;animation:afBlade 5s infinite}
+.afhi .afblade{opacity:0;animation:afBlade 10s infinite}
 @keyframes afBlade{0%,10%{opacity:0;transform:translateY(-150px)}14%{opacity:1}24%{transform:translateY(0);opacity:1}30%{opacity:0;transform:translateY(20px)}100%{opacity:0}}
-.afhi .afh2.l{animation:afSpL 5s infinite}.afhi .afh2.r{animation:afSpR 5s infinite}
+.afhi .afh2.l{animation:afSpL 10s infinite}.afhi .afh2.r{animation:afSpR 10s infinite}
 @keyframes afSpL{0%,24%{transform:none}32%,50%{transform:translate(-18px,8px) rotate(-10deg)}60%,100%{transform:none}}
 @keyframes afSpR{0%,24%{transform:none}32%,50%{transform:translate(18px,8px) rotate(10deg)}60%,100%{transform:none}}
-.afhi .afwhole{transform-box:view-box;transform-origin:120px 96px;animation:afShrink 5s infinite}
+.afhi .afwhole{transform-box:view-box;transform-origin:120px 96px;animation:afShrink 10s infinite}
 @keyframes afShrink{0%,52%{transform:scale(1)}60%,82%{transform:scale(.71)}90%,100%{transform:scale(1)}}
-.afhi .afdiv{opacity:0;animation:afDiv 5s infinite}
+.afhi .afdiv{opacity:0;animation:afDiv 10s infinite}
 @keyframes afDiv{0%,28%{opacity:0;transform:scale(.4)}33%{opacity:1;transform:scale(1.15)}37%,80%{opacity:1;transform:scale(1)}86%,100%{opacity:0}}
 /* écran « Plus d'infos » */
 #rinfo{gap:10px;background:var(--page,#f7f2e5)!important}
@@ -272,6 +317,8 @@ document.head.append(el('style','',`
 #rinfo .rtabs button.on{background:var(--accent);color:var(--btx,#fff)}
 #rinfo .rpages{flex:1;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;min-height:0}#rinfo .rpages::-webkit-scrollbar{display:none}
 #rinfo section{flex:0 0 100%;scroll-snap-align:center;overflow-y:auto;display:flex;flex-direction:column;gap:12px;padding:6px 4px 20px;box-sizing:border-box}
+#rinfo .gfr{position:relative;flex:none;align-self:center;height:min(470px,56vh);aspect-ratio:393/612;border-radius:26px;overflow:hidden;box-shadow:0 0 0 2px rgba(0,0,0,.12);background:var(--page,#f7f2e5)}
+#rinfo .gfr iframe{position:absolute;left:0;top:0;border:0;transform-origin:0 0;pointer-events:none}
 #rinfo .gst{position:relative;flex:none;height:min(300px,40vh);border-radius:24px;background:var(--m-cell,#fff);box-shadow:inset 0 0 0 2.5px var(--ol,#111);display:flex;align-items:center;justify-content:center;overflow:visible}
 #rinfo .gst .il{--b:3px;zoom:1.2}
 #rinfo h3{margin:4px 2px 0;font:400 22px/1.2 "Fun",sans-serif;color:var(--ink)}

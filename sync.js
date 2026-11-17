@@ -4,7 +4,7 @@
    - chaque téléphone voit : ses propres parties + celles où son propriétaire a joué ailleurs
    - le profil officiel (nom, couleur, musique, bilan complet) est publié par le téléphone de son propriétaire
    - groupes : un code (QR) ; le rejoindre ajoute tous les membres en amis, et les membres ajoutent le nouveau venu */
-(function(){
+(function(){if(window.EMBED)return;   /* pas de synchro dans les fenêtres de démonstration */
 const DB='https://loubard-cricket-master-default-rtdb.europe-west1.firebasedatabase.app';
 const K_SY='darts.sync.v1',K_EXT='darts.sync.ext.v1';
 const rid=n=>{const a='abcdefghjkmnpqrstuvwxyz23456789';let s='';for(let i=0;i<n;i++)s+=a[Math.floor(Math.random()*a.length)];return s};
