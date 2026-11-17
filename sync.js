@@ -39,7 +39,9 @@ async function pushGames(){const todo=HIST.filter(r=>!r.ext&&r.p&&r.w!=null).map
   return todo.length}
 
 /* ---------- réception : parties où j'ai joué sur d'autres téléphones ---------- */
-async function pullGames(){if(!SY.me)return 0;const ix=await api('idx/'+SY.me.h,'GET',undefined,'?shallow=true')||{};let n=0;
+/* plus de confidentialité : on récupère toutes les parties où jouent soi-même ou ses amis, d'où qu'elles viennent */
+async function pullGames(){if(!SY.me)return 0;const hs=[SY.me.h,...Object.keys(SY.fr)],ix={};let n=0;
+  for(let i=0;i<hs.length;i+=6)(await Promise.all(hs.slice(i,i+6).map(h=>api('idx/'+h,'GET',undefined,'?shallow=true').catch(()=>null)))).forEach(o=>Object.assign(ix,o||{}));
   const want=Object.keys(ix).filter(g=>!g.startsWith(SY.ph+'-')&&!EXT[g]&&!SY.del[g]);
   for(let i=0;i<want.length;i+=6){const part=await Promise.all(want.slice(i,i+6).map(g=>api('games/'+g).then(v=>[g,v]).catch(()=>[g,null])));
     part.forEach(([g,v])=>{if(v&&v.j){EXT[g]={j:v.j,hm:v.hm||[],src:v.src};n++}})}
@@ -71,6 +73,10 @@ function rosterEnsure(name,color){name=String(name||'').toUpperCase().slice(0,8)
   if(!ROSTER.some(r=>r.name===nm)){ROSTER.push({name:nm,color:color||PCOLS[ROSTER.length%PCOLS.length]});store.set(K_R,ROSTER)}return nm}
 function addFriend(h,local){if(SY.me&&SY.me.h===h)return;const p=SY.pc[h]||{};const nm=local||(ROSTER.some(r=>r.name===(p.name||'').toUpperCase())&&!linkOf((p.name||'').toUpperCase())?(p.name||'').toUpperCase():rosterEnsure(p.name||h,p.color));
   SY.fr[h]={local:nm,ov:{},t:Date.now()};sySave()}
+/* ajout d'ami réciproque : celui qu'on ajoute nous retrouve automatiquement dans ses amis à sa prochaine synchro */
+async function invSync(){if(!SY.me)return;const inv=await api('profiles/'+SY.me.h+'/inv').catch(()=>null)||{};
+  for(const h of Object.keys(inv)){if(h!==SY.me.h&&!SY.fr[h]){const p=await api('profiles/'+h).catch(()=>null);if(p){SY.pc[h]={name:p.name,color:p.color,music:p.music,upd:p.upd,s:p.s,pin:p.pin||''};addFriend(h);toast('@'+h.toUpperCase()+' T’A AJOUTÉ EN AMI','👥',true)}}
+    await api('profiles/'+SY.me.h+'/inv/'+h,'DELETE').catch(()=>{})}sySave()}
 async function groupsSync(){if(!SY.me)return;for(const c of SY.gr){const g=await api('groups/'+c).catch(()=>null);if(!g)continue;SY.gn=SY.gn||{};SY.gn[c]=g.name||c;
     if(!g.members||!g.members[SY.me.h])await api('groups/'+c+'/members','PATCH',{[SY.me.h]:true}).catch(()=>{});
     for(const h of Object.keys(g.members||{})){if(h===SY.me.h||SY.fr[h])continue;const p=await api('profiles/'+h).catch(()=>null);if(p)SY.pc[h]={name:p.name,color:p.color,music:p.music,upd:p.upd,s:p.s,pin:p.pin||''};addFriend(h)}}
@@ -99,7 +105,7 @@ function pinAsk(h,txt,no){return new Promise(ok=>{const o=el('div','');o.id='syp
 /* ---------- synchro complète ---------- */
 let busy=false,again=false;
 async function sync(manual){if(busy){again=true;return}if(!navigator.onLine&&!manual)return;busy=true;setSt('Synchronisation…');
-  try{await groupsSync();const up=await pushGames();const dn=await pullGames();await pullProfiles();if(dn)extInject();if(SY.me)await pushMe();SY.last=Date.now();SY.err='';sySave();
+  try{await groupsSync();await invSync();const up=await pushGames();const dn=await pullGames();await pullProfiles();if(dn)extInject();if(SY.me)await pushMe();SY.last=Date.now();SY.err='';sySave();
     setSt(`À jour · ${hmT(SY.last)}`+(up?` · ${up} envoyée${up>1?'s':''}`:'')+(dn?` · ${dn} reçue${dn>1?'s':''}`:''));
     if(dn||up){try{if($('hist').classList.contains('on'))renderHist()}catch(e){}}if(dn&&manual)toast(dn+' PARTIE'+(dn>1?'S':'')+' REÇUE'+(dn>1?'S':''),'',true)}
   catch(e){SY.err=String(e.message||e);sySave();setSt('Pas de connexion · réessai plus tard')}
@@ -153,7 +159,7 @@ function draw(){const o=$('sync');if(!o)return;const me=SY.me,F=Object.entries(S
      :`<div class="sybtns"><button class="sybt" data-grp>+ Créer un groupe</button><button class="sybt" data-join>Rejoindre</button></div>`}
     <div class="syl">${SY.gr.map(c=>`<div class="syf syg"><div><strong>${esc((SY.gn||{})[c]||c)}</strong><small>code ${esc(c)}</small></div><button class="sysm" data-gqr="${esc(c)}">${V.gq===c?'Fermer':'QR'}</button><button class="sysm" data-gleave="${esc(c)}">Quitter</button></div>${V.gq===c?`<div class="syqr" id="syGQ"></div><p class="syhint">Scanner ce code (ou taper ${esc(c)}) ajoute tout le groupe en amis.</p>`:''}`).join('')}</div>
     <button class="sybt" data-now>Synchroniser maintenant</button>
-    <p class="syhint">Ce téléphone voit ses propres parties et celles où tu as joué sur d’autres téléphones. Le profil d’un ami affiche son bilan officiel complet.</p>`}
+    <p class="syhint">Ajouter un ami est réciproque : tu apparais aussi dans ses amis. Tu vois toutes les parties de tes amis, même celles jouées sans toi.</p>`}
   o.innerHTML=h;
   if(V.step==='myqr'&&me)qrSvg($('syQR'),appURL()+'?ami='+me.h);
   if(V.gq)qrSvg($('syGQ'),appURL()+'?g='+V.gq);
@@ -190,7 +196,7 @@ async function onClick(e){const t=e.target,o=$('sync'),q=s=>t.closest(s);
   if(q('[data-scan]')){haptic();scan(k=>handleCode(k));return}
   if(q('[data-cancel]')){haptic();V={step:null,q:'',found:null,err:''};draw();return}
   if(q('[data-find]')){V.q=(($('syF')||{}).value||'').toLowerCase().replace(/^@/,'');await find();return}
-  if((b=q('[data-lk]'))){const f=V.found;if(!f)return;addFriend(f.h,b.dataset.lk||null);if(prot(f.h)){const okp=await pinAsk(f.h,'Son profil est protégé : tape son code pour que ses anciennes parties sur ce téléphone rejoignent son profil.','Plus tard');if(okp){SY.fr[f.h].histTo=Date.now();SY.fr[f.h].unl={[soirK(Date.now())]:1};sySave()}}haptic();SFX.lead();toast((b.dataset.lk||SY.fr[f.h].local)+' = @'+f.h.toUpperCase(),'',true);V={step:null,q:'',found:null,err:''};draw();sync(true);return}
+  if((b=q('[data-lk]'))){const f=V.found;if(!f)return;addFriend(f.h,b.dataset.lk||null);api('profiles/'+f.h+'/inv','PATCH',{[SY.me.h]:Date.now()}).catch(()=>{});if(prot(f.h)){const okp=await pinAsk(f.h,'Son profil est protégé : tape son code pour que ses anciennes parties sur ce téléphone rejoignent son profil.','Plus tard');if(okp){SY.fr[f.h].histTo=Date.now();SY.fr[f.h].unl={[soirK(Date.now())]:1};sySave()}}haptic();SFX.lead();toast((b.dataset.lk||SY.fr[f.h].local)+' = @'+f.h.toUpperCase(),'',true);V={step:null,q:'',found:null,err:''};draw();sync(true);return}
   if((b=q('[data-rl]'))){haptic();V.rl=V.rl===b.dataset.rl?null:b.dataset.rl;draw();return}
   if((b=q('[data-rlk]'))){const h=V.rl;if(!h||!SY.fr[h])return;SY.fr[h].local=b.dataset.rlk;SY.fr[h].ov={};sySave();haptic();SFX.lead();toast(b.dataset.rlk+' = @'+h.toUpperCase(),'',true);V.rl=null;extInject();draw();sync(true);return}
   if((b=q('[data-rm]'))){const h=b.dataset.rm;if(!confirmTap(b))return;delete SY.fr[h];sySave();haptic();SFX.back();draw();return}
