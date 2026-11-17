@@ -1,0 +1,279 @@
+{
+ "echelle_px_par_pt": 3,
+ "toile_pt": [
+  816,
+  544
+ ],
+ "composants": {
+  "carte_j1": {
+   "n": 1,
+   "planche_pt": [
+    24,
+    24
+   ],
+   "w": 258.0,
+   "h": 151.33333333333334,
+   "desc": "CARTE JOUEUR 1 (joueur dont c'est le tour, couleur J1 rouge #D4494C). Rectangle aux coins très arrondis, contour noir fin à l'intérieur. Nom, score et moyenne s'écrivent dessus à gauche, 3 pastilles à droite : centre calme."
+  },
+  "carte_j2": {
+   "n": 2,
+   "planche_pt": [
+    306,
+    24
+   ],
+   "w": 258.0,
+   "h": 151.33333333333334,
+   "desc": "CARTE JOUEUR 2 : même carte, couleur J2 rouge sombre #B12B28. Quand c'est J2 qui joue, la carte est à droite de l'écran et ses textes sont inversés (pastilles à gauche) : décor symétrique ou inversé gauche/droite."
+  },
+  "couronne": {
+   "n": 3,
+   "planche_pt": [
+    588,
+    24
+   ],
+   "w": 50.666666666666664,
+   "h": 39.666666666666664,
+   "desc": "COURONNE posée sur le bord haut de la carte du joueur en tête."
+  },
+  "trait_1": {
+   "n": 4,
+   "planche_pt": [
+    668,
+    24
+   ],
+   "w": 53.666666666666664,
+   "h": 53.666666666666664,
+   "desc": "TRAIT « / » (1re touche d'un numéro), centré dans sa case."
+  },
+  "trait_2": {
+   "n": 5,
+   "planche_pt": [
+    740,
+    24
+   ],
+   "w": 53.666666666666664,
+   "h": 53.666666666666664,
+   "desc": "TRAIT « \\ » : superposé au n°4 il forme un X (2e touche). Même épaisseur et longueur."
+  },
+  "disque_j1": {
+   "n": 6,
+   "planche_pt": [
+    588,
+    96
+   ],
+   "w": 53.666666666666664,
+   "h": 53.666666666666664,
+   "desc": "DISQUE J1 (rouge #D4494C) : sous le X quand J1 a fermé le numéro (3 touches)."
+  },
+  "disque_j2": {
+   "n": 7,
+   "planche_pt": [
+    660,
+    96
+   ],
+   "w": 53.666666666666664,
+   "h": 53.666666666666664,
+   "desc": "DISQUE J2 (rouge sombre #B12B28) : idem pour J2."
+  },
+  "icone_accueil": {
+   "n": 8,
+   "planche_pt": [
+    736,
+    112
+   ],
+   "w": 21.333333333333332,
+   "h": 20.0,
+   "desc": "ICÔNE ACCUEIL (maison)."
+  },
+  "icone_annuler": {
+   "n": 9,
+   "planche_pt": [
+    774,
+    112
+   ],
+   "w": 20.0,
+   "h": 20.0,
+   "desc": "ICÔNE ANNULER (flèche retour)."
+  },
+  "pastille_triple": {
+   "n": 10,
+   "planche_pt": [
+    24,
+    200
+   ],
+   "w": 71.0,
+   "h": 31.333333333333332,
+   "desc": "PASTILLE TRIPLE (or) : fléchette en triple, sur la carte."
+  },
+  "pastille_double": {
+   "n": 11,
+   "planche_pt": [
+    111,
+    200
+   ],
+   "w": 71.0,
+   "h": 31.333333333333332,
+   "desc": "PASTILLE DOUBLE (argent)."
+  },
+  "pastille_simple": {
+   "n": 12,
+   "planche_pt": [
+    198,
+    200
+   ],
+   "w": 71.0,
+   "h": 31.333333333333332,
+   "desc": "PASTILLE SIMPLE (bleu clair)."
+  },
+  "pastille_vide": {
+   "n": 13,
+   "planche_pt": [
+    285,
+    200
+   ],
+   "w": 71.0,
+   "h": 31.333333333333332,
+   "desc": "PASTILLE VIDE (fléchette pas encore lancée) : très pâle, posée sur la carte."
+  },
+  "pastille_ratee": {
+   "n": 14,
+   "planche_pt": [
+    372,
+    200
+   ],
+   "w": 71.0,
+   "h": 31.333333333333332,
+   "desc": "PASTILLE RATÉE (fléchette hors cible) : très pâle."
+  },
+  "petite_simple": {
+   "n": 15,
+   "planche_pt": [
+    470,
+    203
+   ],
+   "w": 39.0,
+   "h": 25.333333333333332,
+   "desc": "PETITE PASTILLE SIMPLE (blanche) : fléchettes de l'adversaire, sous son score, sur le fond."
+  },
+  "petite_double": {
+   "n": 16,
+   "planche_pt": [
+    527,
+    203
+   ],
+   "w": 39.0,
+   "h": 25.333333333333332,
+   "desc": "PETITE PASTILLE DOUBLE (argent)."
+  },
+  "petite_triple": {
+   "n": 17,
+   "planche_pt": [
+    584,
+    203
+   ],
+   "w": 39.0,
+   "h": 25.333333333333332,
+   "desc": "PETITE PASTILLE TRIPLE (or)."
+  },
+  "petite_ratee": {
+   "n": 18,
+   "planche_pt": [
+    641,
+    203
+   ],
+   "w": 39.0,
+   "h": 25.333333333333332,
+   "desc": "PETITE PASTILLE RATÉE / VIDE (presque couleur du fond)."
+  },
+  "rail_ligne": {
+   "n": 19,
+   "planche_pt": [
+    24,
+    268
+   ],
+   "w": 248.0,
+   "h": 52.0,
+   "desc": "RAIL DE LIGNE : case allongée où glisse la bulle du numéro ; les marques / X s'affichent dedans. Intérieur calme."
+  },
+  "bulle_j1": {
+   "n": 20,
+   "planche_pt": [
+    296,
+    263
+   ],
+   "w": 139.0,
+   "h": 62.0,
+   "desc": "BULLE NUMÉRO J1 (rouge #D4494C) : le nombre (20, 19…, « Bulle ») s'écrit dessus en blanc. TOUJOURS PLUS GROSSE que le rail n°19 : c'est son anneau qui dépasse."
+  },
+  "bulle_j2": {
+   "n": 21,
+   "planche_pt": [
+    459,
+    263
+   ],
+   "w": 139.0,
+   "h": 62.0,
+   "desc": "BULLE NUMÉRO J2 (rouge sombre #B12B28) : même bulle quand c'est J2 qui joue."
+  },
+  "bulle_fermee": {
+   "n": 22,
+   "planche_pt": [
+    622,
+    263
+   ],
+   "w": 139.0,
+   "h": 63.0,
+   "desc": "BULLE FERMÉE (gris beige #D2CCC1) : numéro fermé par les deux joueurs, ou Bulle quand on vise un triple."
+  },
+  "rail_barre": {
+   "n": 23,
+   "planche_pt": [
+    24,
+    356
+   ],
+   "w": 365.0,
+   "h": 63.0,
+   "desc": "RAIL DE LA BARRE DU BAS : Double / Spew / Triple s'écrivent dedans (texte noir)."
+  },
+  "curseur_j1": {
+   "n": 24,
+   "planche_pt": [
+    413,
+    351
+   ],
+   "w": 141.0,
+   "h": 73.0,
+   "desc": "CURSEUR SPEW J1 (rouge #D4494C) : glisse dans le rail n°23, au milieu par défaut ; « Spew » s'écrit dessus en blanc. Plus haut que le rail."
+  },
+  "curseur_j2": {
+   "n": 25,
+   "planche_pt": [
+    578,
+    351
+   ],
+   "w": 141.0,
+   "h": 73.0,
+   "desc": "CURSEUR SPEW J2 (rouge sombre #B12B28)."
+  },
+  "curseur_double": {
+   "n": 26,
+   "planche_pt": [
+    24,
+    446
+   ],
+   "w": 125.0,
+   "h": 73.0,
+   "desc": "CURSEUR DOUBLE ALLUMÉ (argent brillant) : quand on arme le Double, il glisse à gauche sous « Double »."
+  },
+  "curseur_triple": {
+   "n": 27,
+   "planche_pt": [
+    173,
+    446
+   ],
+   "w": 125.0,
+   "h": 73.0,
+   "desc": "CURSEUR TRIPLE ALLUMÉ (or brillant) : quand on arme le Triple, il glisse à droite sous « Triple »."
+  }
+ }
+}

@@ -1,0 +1,91 @@
+TÂCHE : redessiner une planche d'assets de jeu mobile (compteur de fléchettes, Cricket à 2 joueurs). Tu ne crées PAS une nouvelle composition : tu repeins chaque élément de l'image 1 exactement à l'endroit où il se trouve, à la même taille.
+
+IMAGES JOINTES
+- Image 1 = la planche à redessiner (27 éléments). C'est elle que tu modifies.
+- Image 2 = 4 écrans du jeu assemblés avec ces éléments, pour comprendre leur rôle : (a) tour du joueur 1, (b) Double armé, (c) Triple armé, (d) tour du joueur 2. Ne la redessine pas.
+
+STYLE À APPLIQUER : [écris ici ton style]
+COULEUR JOUEUR 1 : [ex. rouge]   ·   COULEUR JOUEUR 2 : [ex. bleu]
+(Les éléments marqués J1 prennent la couleur du joueur 1, ceux marqués J2 la couleur du joueur 2. Tout le reste est identique pour les deux joueurs.)
+
+FORMAT DE SORTIE
+- Une seule image paysage 1536 × 1024 pixels.
+- Fond uni #F7F2E5 parfaitement plat : pas de texture, de dégradé, d'ombre portée, de vignettage, de cadre ni de décor.
+
+INTERDICTIONS ABSOLUES
+1. Aucun texte, aucune lettre, aucun chiffre, nulle part.
+2. Aucun élément ajouté, aucun supprimé : exactement 27.
+3. Ne déplace aucun élément, ne change ni sa taille ni son rapport largeur/hauteur. Chaque élément reste entièrement DANS sa case.
+4. Ne fusionne pas deux éléments, ne les fais pas se toucher : du fond vide reste visible entre chacun.
+5. Pas de perspective : tout est vu de face, à plat.
+
+ZONES PROTÉGÉES (des textes s'écrivent sur ces pièces)
+- Pastilles 10 à 18, bulles 20 à 22 et curseurs 24 à 27 : bordure de 6 px maximum, aucun rivet ni ornement dessus, matière lisse ; centre lisible sur au moins 75 % de la hauteur.
+- Cartes 1 et 2 : cadre de 14 px maximum ; ornements uniquement dans le cadre, jamais dans la surface intérieure (le nom, le score et la moyenne s'y écrivent).
+- Rails 19 et 23 : bordure de 6 px maximum, intérieur calme ; aucun ornement aux extrémités gauche et droite (les marques et les mots Double / Triple s'y placent).
+
+RÈGLES DE COHÉRENCE
+- Les familles ont exactement la même forme et le même style entre elles : cartes 1-2 ; pastilles 10-14 ; petites pastilles 15-18 ; bulles 20-22 ; curseurs 24-27 ; rails 19 et 23 ; disques 6-7.
+- Seule la couleur change entre J1 et J2.
+- La bulle (20-22) et le curseur (24-27) sont toujours plus épais que le rail dans lequel ils glissent (19 et 23).
+- Garde : or = triple, argent = double, bleu clair = simple.
+- Lisible en petit sur iPhone : contours nets, rien de flou, aucun détail plus petit que 4 px.
+
+LISTE DES 27 ÉLÉMENTS (coordonnées en pixels sur l'image 1536 × 1024 : coin haut-gauche de la case, puis largeur × hauteur)
+1. CARTE JOUEUR 1 (joueur dont c'est le tour, couleur J1 rouge #D4494C). Rectangle aux coins très arrondis, contour noir fin à l'intérieur. Nom, score et moyenne s'écrivent dessus à gauche, 3 pastilles à droite : centre calme.
+   Case : x45 y45, 486×285.
+2. CARTE JOUEUR 2 : même carte, couleur J2 rouge sombre #B12B28. Quand c'est J2 qui joue, la carte est à droite de l'écran et ses textes sont inversés (pastilles à gauche) : décor symétrique ou inversé gauche/droite.
+   Case : x576 y45, 486×285.
+3. COURONNE posée sur le bord haut de la carte du joueur en tête.
+   Case : x1107 y45, 95×75.
+4. TRAIT « / » (1re touche d'un numéro), centré dans sa case.
+   Case : x1257 y45, 101×101.
+5. TRAIT « \ » : superposé au n°4 il forme un X (2e touche). Même épaisseur et longueur.
+   Case : x1393 y45, 101×101.
+6. DISQUE J1 (rouge #D4494C) : sous le X quand J1 a fermé le numéro (3 touches).
+   Case : x1107 y181, 101×101.
+7. DISQUE J2 (rouge sombre #B12B28) : idem pour J2.
+   Case : x1242 y181, 101×101.
+8. ICÔNE ACCUEIL (maison).
+   Case : x1385 y211, 40×38.
+9. ICÔNE ANNULER (flèche retour).
+   Case : x1457 y211, 38×38.
+10. PASTILLE TRIPLE (or) : fléchette en triple, sur la carte.
+   Case : x45 y376, 134×59.
+11. PASTILLE DOUBLE (argent).
+   Case : x209 y376, 134×59.
+12. PASTILLE SIMPLE (bleu clair).
+   Case : x373 y376, 134×59.
+13. PASTILLE VIDE (fléchette pas encore lancée) : très pâle, posée sur la carte.
+   Case : x536 y376, 134×59.
+14. PASTILLE RATÉE (fléchette hors cible) : très pâle.
+   Case : x700 y376, 134×59.
+15. PETITE PASTILLE SIMPLE (blanche) : fléchettes de l'adversaire, sous son score, sur le fond.
+   Case : x885 y382, 73×48.
+16. PETITE PASTILLE DOUBLE (argent).
+   Case : x992 y382, 73×48.
+17. PETITE PASTILLE TRIPLE (or).
+   Case : x1099 y382, 73×48.
+18. PETITE PASTILLE RATÉE / VIDE (presque couleur du fond).
+   Case : x1207 y382, 73×48.
+19. RAIL DE LIGNE : case allongée où glisse la bulle du numéro ; les marques / X s'affichent dedans. Intérieur calme.
+   Case : x45 y504, 467×98.
+20. BULLE NUMÉRO J1 (rouge #D4494C) : le nombre (20, 19…, « Bulle ») s'écrit dessus en blanc. TOUJOURS PLUS GROSSE que le rail n°19 : c'est son anneau qui dépasse.
+   Case : x557 y495, 262×117.
+21. BULLE NUMÉRO J2 (rouge sombre #B12B28) : même bulle quand c'est J2 qui joue.
+   Case : x864 y495, 262×117.
+22. BULLE FERMÉE (gris beige #D2CCC1) : numéro fermé par les deux joueurs, ou Bulle quand on vise un triple.
+   Case : x1171 y495, 262×119.
+23. RAIL DE LA BARRE DU BAS : Double / Spew / Triple s'écrivent dedans (texte noir).
+   Case : x45 y670, 687×119.
+24. CURSEUR SPEW J1 (rouge #D4494C) : glisse dans le rail n°23, au milieu par défaut ; « Spew » s'écrit dessus en blanc. Plus haut que le rail.
+   Case : x777 y661, 265×137.
+25. CURSEUR SPEW J2 (rouge sombre #B12B28).
+   Case : x1088 y661, 265×137.
+26. CURSEUR DOUBLE ALLUMÉ (argent brillant) : quand on arme le Double, il glisse à gauche sous « Double ».
+   Case : x45 y840, 235×137.
+27. CURSEUR TRIPLE ALLUMÉ (or brillant) : quand on arme le Triple, il glisse à droite sous « Triple ».
+   Case : x326 y840, 235×137.
+
+VÉRIFICATION AVANT DE RÉPONDRE
+Compte : 27 éléments, chacun dans sa case, aucun texte, fond uni #F7F2E5, rien d'ajouté, J1 et J2 de couleurs différentes. Corrige avant d'envoyer si un point ne va pas.
