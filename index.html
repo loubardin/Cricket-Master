@@ -3563,7 +3563,7 @@ html body #hist #hBody .h2last small{font:400 11px "Lbl",sans-serif;color:var(--
 /* ===== habillage « Tropical » (Cricket 1 contre 1 ; clé interne « casino ») : images dessinées par Loubi, découpées depuis sa planche ; « Base » = rendu normal ===== */
 html body.skin-casino #game#game#game#game.p2 .sc.act{background:transparent!important;box-shadow:none!important}
 html body.skin-casino #game#game#game#game.p2 .sc.act::after{opacity:0!important}
-html body.skin-casino #game#game#game#game.p2 .sc.act::before{content:'';position:absolute;inset:-8.5px -8.5px -8.5px -8.5px;background:url(skins/casino/carte.webp) 0 0/100% 100% no-repeat;z-index:-1;pointer-events:none}
+html body.skin-casino #game#game#game#game.p2 .sc.act::before{content:'';position:absolute;inset:-9.6px -9.6px -9.6px -9.6px;background:url(skins/casino/carte.webp) 0 0/100% 100% no-repeat;z-index:-1;pointer-events:none}
 html body.skin-casino #game#game#game#game.p2 .sc .pill:not(.undo){background:transparent 0 0/100% 100% no-repeat!important;box-shadow:none!important;opacity:1!important;border-color:transparent!important;position:relative;isolation:isolate}
 html body.skin-casino #game#game#game#game.p2 .sc .pill:not(.undo)::before{content:'';position:absolute;inset:-3px -5px;background:inherit;background-size:100% 100%!important;z-index:-1;pointer-events:none}
 html body.skin-casino #game#game#game#game.p2 .sc:not(.act) .pill:not(.undo)::before{inset:-2px -3px}
@@ -3577,13 +3577,13 @@ html body.skin-casino #game#game#game#game.p2 .sc:not(.act) .pill.d{background-i
 html body.skin-casino #game#game#game#game.p2 .sc:not(.act) .pill.t{background-image:url(skins/casino/pa_t.webp)!important}
 html body.skin-casino #game#game#game#game.p2 .sc:not(.act) .pill.e,html body.skin-casino #game#game#game#game.p2 .sc:not(.act) .pill.z{background-image:url(skins/casino/pa_z.webp)!important}
 html body.skin-casino #game#game#game#game.p2 .rtrackb{border-color:transparent!important;background:none!important;z-index:0!important}
-html body.skin-casino #game#game#game#game.p2 .rtrackb::before{content:'';position:absolute;inset:-3.7px -4.6px -3.7px -4.2px;background:url(skins/casino/rail.webp) 0 0/100% 100% no-repeat;pointer-events:none}
+html body.skin-casino #game#game#game#game.p2 .rtrackb::before{content:'';position:absolute;inset:-4.2px -5.1px -3.7px -5.1px;background:url(skins/casino/rail.webp) 0 0/100% 100% no-repeat;pointer-events:none}
 html body.skin-casino #game#game#game#game.p2 #grid .num{background:transparent!important;box-shadow:none!important}
-html body.skin-casino #game#game#game#game.p2 #grid .num::before{content:'';position:absolute;inset:-5px -6px;background:url(skins/casino/num.webp) 0 0/100% 100% no-repeat;z-index:-1;pointer-events:none}
+html body.skin-casino #game#game#game#game.p2 #grid .num::before{content:'';position:absolute;inset:-7.1px -10.1px -7.1px -10.1px;background:url(skins/casino/num.webp) 0 0/100% 100% no-repeat;z-index:-1;pointer-events:none}
 html body.skin-casino #game#game#game#game.p2 #grid .num.dead::before{background-image:url(skins/casino/num_mort.webp)}
-html body.skin-casino #game#game#game#game.p2 footer::after{border-color:transparent!important;background:url(skins/casino/barre.webp) 0 0/100% 100% no-repeat!important;z-index:0!important;inset:-3.5px -4.8px -3.1px -4.4px!important}
+html body.skin-casino #game#game#game#game.p2 footer::after{border-color:transparent!important;background:url(skins/casino/barre.webp) 0 0/100% 100% no-repeat!important;z-index:0!important;inset:-5.1px -6.2px -4.5px -6.2px!important}
 html body.skin-casino #game#game#game#game.p2 .fthumb{background:transparent!important;box-shadow:none!important}
-html body.skin-casino #game#game#game#game.p2 .fthumb::before{content:'';position:absolute;inset:-4.8px;background:url(skins/casino/curseur.webp) 0 0/100% 100% no-repeat;pointer-events:none}
+html body.skin-casino #game#game#game#game.p2 .fthumb::before{content:'';position:absolute;inset:-7.7px -11.2px -7.7px -11.2px;background:url(skins/casino/curseur.webp) 0 0/100% 100% no-repeat;pointer-events:none}
 html body.skin-casino #game#game#game#game.p2 .mw{position:relative;isolation:isolate}
 html body.skin-casino #game#game#game#game.p2 .mw .disc{opacity:0!important}
 html body.skin-casino #game#game#game#game.p2 .mw.k3::before{content:'';position:absolute;left:21%;top:21%;width:58%;height:58%;background:url(skins/casino/disque.webp) center/contain no-repeat;z-index:-1;animation:skpop .28s cubic-bezier(.3,1.6,.5,1)}
@@ -7101,7 +7101,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-344';   // à changer avec VERSION dans sw.js
+const APPV='lf-345';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
