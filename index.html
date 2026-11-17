@@ -3579,8 +3579,9 @@ html body.skin-casino #game#game#game#game.p2 .sc:not(.act) .pill.e,html body.sk
 html body.skin-casino #game#game#game#game.p2 .rtrackb{border-color:transparent!important;background:none!important;z-index:0!important}
 html body.skin-casino #game#game#game#game.p2 .rtrackb::before{content:'';position:absolute;inset:-4.2px -5.1px -3.7px -5.1px;background:url(skins/tropical2/rail.webp) 0 0/100% 100% no-repeat;pointer-events:none}
 html body.skin-casino #game#game#game#game.p2 #grid .num{background:transparent!important;box-shadow:none!important}
-html body.skin-casino #game#game#game#game.p2 #grid .num::before{content:''!important;display:block!important;animation:none!important;transform:none!important;filter:none!important;width:auto!important;height:auto!important;position:absolute!important;inset:-7.1px -10.1px -7.1px -10.1px;background:url(skins/tropical2/num.webp) 0 0/100% 100% no-repeat!important;z-index:-1!important;pointer-events:none;opacity:1!important}
-html body.skin-casino #game#game#game#game.p2 #grid .num.dead::before{background-image:url(skins/tropical2/num_mort.webp)!important}
+html body.skin-casino #game#game#game#game.p2 #grid .num{border-style:solid!important;border-width:0!important;border-image:url(skins/tropical2/num.webp) 0 100 fill / 0 33.4px / 7.1px 10.1px stretch!important}
+html body.skin-casino #game#game#game#game.p2 #grid .num.dead{border-image-source:url(skins/tropical2/num_mort.webp)!important}
+html body.skin-casino #game#game#game#game.p2 #grid .num.bnc{border-image:none!important}
 html body.skin-casino #game#game#game#game.p2 footer::after{border-color:transparent!important;background:url(skins/tropical2/barre.webp) 0 0/100% 100% no-repeat!important;z-index:0!important;inset:-5.1px -6.2px -4.5px -6.2px!important}
 html body.skin-casino #game#game#game#game.p2 .fthumb{background:transparent!important;box-shadow:none!important}
 html body.skin-casino #game#game#game#game.p2 .fthumb::before{content:'';position:absolute;inset:-7.7px -11.2px -7.7px -11.2px;background:url(skins/tropical2/curseur.webp) 0 0/100% 100% no-repeat;pointer-events:none}
@@ -7101,7 +7102,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-347';   // à changer avec VERSION dans sw.js
+const APPV='lf-348';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
