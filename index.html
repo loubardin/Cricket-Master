@@ -3574,7 +3574,7 @@ html body.skin-casino #game#game#game#game.p2 .sc:not(.act) .pill:not(.undo){bac
 html body.skin-casino #game#game#game#game.p2 .sc:not(.act) .pill.d{background-image:url(skins/casino/pa_d.webp)!important}
 html body.skin-casino #game#game#game#game.p2 .sc:not(.act) .pill.t{background-image:url(skins/casino/pa_t.webp)!important}
 html body.skin-casino #game#game#game#game.p2 .sc:not(.act) .pill.e,html body.skin-casino #game#game#game#game.p2 .sc:not(.act) .pill.z{background-image:url(skins/casino/pa_z.webp)!important}
-html body.skin-casino #game#game#game#game.p2 .rtrackb{border-color:transparent!important;background:url(skins/casino/rail.webp) 0 0/100% 100% no-repeat!important;z-index:4!important}
+html body.skin-casino #game#game#game#game.p2 .rtrackb{border-color:transparent!important;background:url(skins/casino/rail.webp) 0 0/100% 100% no-repeat!important;z-index:1!important}
 html body.skin-casino #game#game#game#game.p2 #grid .num{background:transparent!important;box-shadow:none!important}
 html body.skin-casino #game#game#game#game.p2 #grid .num::before{content:'';position:absolute;inset:0;background:url(skins/casino/num.webp) 0 0/100% 100% no-repeat;z-index:-1;pointer-events:none}
 html body.skin-casino #game#game#game#game.p2 #grid .num.dead::before{background-image:url(skins/casino/num_mort.webp)}
@@ -7095,7 +7095,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-339';   // à changer avec VERSION dans sw.js
+const APPV='lf-340';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
