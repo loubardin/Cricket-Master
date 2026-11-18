@@ -66,6 +66,9 @@ async function pullProfiles(){const hs=new Set(Object.keys(SY.fr));Object.values
   if(ch)store.set(K_R,ROSTER);sySave()}
 /* changement de couleur / musique sur ce téléphone */
 window.syTouch=(n,kind)=>{if(SY.me&&SY.me.local===n){window.syMeChanged();return}const h=linkOf(n);if(h){(SY.fr[h].ov=SY.fr[h].ov||{})[kind]=1;sySave()}};
+/* oublier un ami (depuis sa fiche profil) : fin de l'amitié + ses stats et parties reçues effacées de ce téléphone (celles où je joue restent) */
+window.syForget=n=>{const h=linkOf(n);if(!h||(SY.me&&SY.me.h===h))return false;delete SY.fr[h];delete SY.pc[h];
+  for(const gid in EXT){const hm=(EXT[gid]&&EXT[gid].hm)||[];if(hm.some(x=>x[1]===h)&&!(SY.me&&hm.some(x=>x[1]===SY.me.h)))delete EXT[gid]}extSave();sySave();extInject();return true};
 window.syRename=(o,nw)=>{if(SY.me&&SY.me.local===o){SY.me.local=nw;window.syMeChanged()}for(const h in SY.fr)if(SY.fr[h].local===o)SY.fr[h].local=nw;sySave()};
 
 /* ---------- amis ---------- */

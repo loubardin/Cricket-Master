@@ -3866,6 +3866,9 @@ html body #draw#draw .slot{border-radius:var(--mn-cr,30px)!important;box-shadow:
 html body #draw#draw .slot.lock{background:color-mix(in srgb,var(--pc,var(--accent)) var(--mn-cbg,100%),transparent)!important;box-shadow:inset 0 0 0 var(--mn-cbw,2px) var(--mn-cbc,#111)!important}
 html body #draw#draw .slot.lock span{color:var(--mn-nc,#fff)!important;-webkit-text-stroke:calc(var(--mn-ns,3px)*1.3) var(--mn-nsc,#111);paint-order:stroke fill}
 html body #draw#draw .slot.lock b{color:#fff!important;-webkit-text-stroke:2.5px #111;paint-order:stroke fill}
+#prof .prfg{display:block;margin:26px auto 4px;border:0;border-radius:99px;padding:9px 18px;background:transparent;box-shadow:inset 0 0 0 2px #c0271c;color:#c0271c;font:400 14px "Fun",sans-serif}
+#prof .prfg.arm{background:#c0271c;color:#fff}
+#prof .prfgn{text-align:center;font:400 11px "Lbl","Lexend",sans-serif;opacity:.65;margin:0 0 16px}
 </style>
 </head>
 <body>
@@ -5150,10 +5153,7 @@ function openPick(silent){
     const w=el('span','rchipw');
     const b=el('button','rchip',esc(r.name));b.style.setProperty('--pc',r.color);
     b.addEventListener('click',()=>{addPlayer(r.name)});
-    // ✕ : retirer ce joueur de la liste enregistrée (deux appuis pour confirmer)
-    const x=el('button','rchipx','✕');x.setAttribute('aria-label','Oublier ce joueur');
-    x.addEventListener('click',e=>{e.stopPropagation();if(x.classList.contains('arm')){ROSTER=ROSTER.filter(q=>q.name!==r.name);store.set(K_R,ROSTER);SFX.back();openPick()}else{x.classList.add('arm');x.textContent='Oublier ?';setTimeout(()=>{x.classList.remove('arm');x.textContent='✕'},2500)}});
-    w.append(b,x);box.append(w)});
+    w.append(b);box.append(w)});   /* lf-408 : plus d'oubli ici — seulement depuis la fiche profil */
   {const pl=el('button','pplus','+');pl.setAttribute('aria-label','Nouveau joueur');pl.addEventListener('click',()=>{haptic();SFX.ui();$('ppick').classList.add('typing');$('pNew').value='';setTimeout(()=>$('pNew').focus(),30)});box.append(pl)}
   const need=S.teams&&(S.game==='cricket'||S.game==='x01')&&!teamsOK()?3-S.n:0;
   $('pTitle').textContent=need>0?`Équipes : il manque ${need} joueur${need>1?'s':''}`:'Ajouter un joueur';
@@ -5166,6 +5166,7 @@ function addPlayer(n){
   if(isBot(n)){const b=botBase(n);let k=1;n=b;while(S.names.includes(n))n=b+' '+(++k)}   // le même ordi autant de fois qu'on veut : MEC CHAUD, MEC CHAUD 2…
   if(S.names.includes(n))return;
   if(!isBot(n)&&!ROSTER.some(r=>r.name===n)){ROSTER.push({name:n,color:PCOLS[ROSTER.length%PCOLS.length]});store.set(K_R,ROSTER)}
+  if(S.forgot)S.forgot=S.forgot.filter(x=>x!==n);
   S.names.push(n);S.n=S.names.length;store.set(K_S,S);SFX.ui();renderSetup();
   if(S.n<maxP())requestAnimationFrame(()=>{openPick(1);$('ppick').classList.remove('pop')});else $('ppick').classList.remove('on');   // la fenêtre reste ouverte pour enchaîner
   // équipes : on continue tant qu'il manque des joueurs
@@ -7452,7 +7453,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-407';   // à changer avec VERSION dans sw.js
+const APPV='lf-408';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -7821,7 +7822,7 @@ function pgHist(n){const team=n.includes(' & '),L=HIST.filter(r=>r.p&&(team?r.p.
     const opp=r.p.filter((_,j)=>j!==i).map(q=>q.name).join(', ');
     return`<button class="prg${win?' w':''}" data-hg="${r.id}"><span class="prg1"><b>${GNAME[r.game]||r.game}</b><i>${fdate(r.date)}</i></span><span class="prg2">${win?'🏆 Victoire':r.w>=0?'Défaite':'—'}${k?` · ${k}`:''}</span><small>contre ${esc(opp)}${x.members&&!team?` · avec ${esc(x.members.filter(m=>m!==n).join(', '))}`:''}</small></button>`};
   return`<h3 class="prs">Historique des parties <i>${L.length}</i></h3><div class="prgl">${L.slice(0,PGN).map(row).join('')}</div>${L.length>PGN?`<button class="prmore" data-more>Voir ${Math.min(20,L.length-PGN)} de plus</button>`:''}`}
-function allPeople(){const S0=new Set(ROSTER.map(r=>r.name).filter(Boolean));HIST.forEach(r=>r.p&&rPeople(r).forEach(n=>{if(!isBot(n))S0.add(n)}));return[...S0]}
+function allPeople(){const S0=new Set(ROSTER.map(r=>r.name).filter(Boolean)),F=new Set(S.forgot||[]);HIST.forEach(r=>r.p&&rPeople(r).forEach(n=>{if(!isBot(n)&&!F.has(n))S0.add(n)}));return[...S0]}
 /* ---------- son de victoire de chaque joueur (musiques du banc de sons, fichier vic.js chargé à la demande) ---------- */
 let VSND={};try{VSND=JSON.parse(localStorage.getItem('darts.vicsnd')||'{}')||{}}catch(e){}
 const vsSave=()=>{try{localStorage.setItem('darts.vicsnd',JSON.stringify(VSND))}catch(e){}};
@@ -7864,9 +7865,14 @@ function profOpen(name){SFX.open();let o=$('prof');if(o)o.remove();o=el('div','o
       ${pgHist(n)}
       ${TM.length?`<h3 class="prs">Ses équipes</h3><div class="prl">${TM.map(([k,v])=>`<button data-p="${esc(k)}">${k.split(' & ').map(m=>`<b style="--pc:${pColor(m)}"></b>`).join('')}${nmH(k)}<i>${v.g} p. · ${Math.round(v.w*100/v.g)} %</i></button>`).join('')}</div>`:''}
       ${isBot(n)?'':`<h3 class="prs">Son de victoire</h3><div class="prv">${vsHtml(n)}</div>`}
+      ${isBot(n)||(typeof SY!=='undefined'&&SY.me&&SY.me.local===n)?'':(()=>{const fr=window.syHandle&&syHandle(n);return`<button class="prfg" data-forget>Oublier ce joueur</button><p class="prfgn">${fr?'Retire l’amitié avec @'+esc(fr)+' et ses stats de ce téléphone.':'Le retire des joueurs de ce téléphone. Les parties déjà jouées restent dans l’historique.'}</p>`})()}
       ${typeof SY!=='undefined'&&SY.me&&SY.me.local===n?`<h3 class="prs">Réglages</h3><div class="prl"><button data-ami>👥 Amis et groupes<i>›</i></button><button data-app>⚙︎ Réglages de l’appli<i>›</i></button></div>`:''}`};
   VSO=null;PGN=20;draw(name);requestAnimationFrame(()=>o.classList.add('on'));
   o.addEventListener('click',e=>{const t=e.target;if(t.closest('[data-x]')){o.classList.remove('on');setTimeout(()=>o.remove(),300);try{if($('setup').classList.contains('on'))renderSetup()}catch(x){}return}
+    const fg=t.closest('[data-forget]');if(fg){haptic();if(!fg.classList.contains('arm')){fg.classList.add('arm');fg.textContent='Toucher encore pour oublier';SFX.tick();setTimeout(()=>{if(document.body.contains(fg)){fg.classList.remove('arm');fg.textContent='Oublier ce joueur'}},3000);return}
+      const n=o.dataset.n;try{window.syForget&&syForget(n)}catch(x){}ROSTER=ROSTER.filter(q=>q.name!==n);store.set(K_R,ROSTER);if(VSND[n]){delete VSND[n];vsSave()}
+      S.forgot=[...new Set([...(S.forgot||[]),n])];S.names=S.names.filter(x=>x!==n);S.n=S.names.length;store.set(K_S,S);SFX.back();toast(n+' OUBLIÉ','',true);
+      draw(null);o.scrollTop=0;try{if($('setup').classList.contains('on'))renderSetup()}catch(x){}return}
     if(t.closest('[data-app]')){o.classList.remove('on');setTimeout(()=>o.remove(),300);setTimeout(()=>$('skinT').click(),320);return}if(t.closest('[data-back]')){SFX.back();VSO=null;PGN=20;draw(null);return}
     if(t.closest('[data-ami]')){haptic();if(window.syOpen)syOpen();return}
     const hg=t.closest('[data-hg]');if(hg){haptic();hgOpen(hg.dataset.hg,o);return}
