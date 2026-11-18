@@ -3787,6 +3787,21 @@ html body:is(.m2,.m3) #killer:not(.bron) #pkl .pkng,html body:is(.m2,.m3) #kille
 .fcb .fcsc{display:flex;align-items:center;gap:8px;padding:3px 0;border-bottom:1.5px solid rgba(0,0,0,.2)}.fcb .fcsc>b{font-size:22px;min-width:30px;text-align:center}
 .fcb .fcsc div{display:flex;flex-direction:column;align-items:stretch;gap:0;padding:0;flex:1;border:0}.fcb .fcsc span{font:400 13px "Fun",sans-serif;display:flex;justify-content:space-between}.fcb .fcsc span i{font-style:normal}.fcb .fcsc small{font:400 9.5px "Lbl","Lexend",sans-serif;opacity:.75}
 .fcb .fcnote{font:400 9.5px "Lbl","Lexend",sans-serif;opacity:.7;text-align:center;margin-top:4px}
+/* menu : bulles joueurs pleines à la couleur du joueur, nom en blanc ; rond métal = note générale (→ profil) */
+#setup.b2 .nslot:not(.bot):not(.ph),#setup.b2 .nslot:not(.bot):not(.ph)+.nslot,#setup.b2 .nslot.drag:not(.bot){background:var(--pc,#cfc9be)!important}
+#setup.b2 .nslot:not(.bot):not(.ph) :is(.pname,b,.pdel){color:#fff!important;opacity:1}
+#setup.b2 .pcol.ptr{width:calc(var(--u)*3.4)!important;height:calc(var(--u)*3.4)!important;display:grid;place-items:center;padding:0;color:#fff;font:400 calc(var(--u)*1.75) "Fun",sans-serif!important;line-height:1;
+  text-shadow:0 1px 1.5px rgba(0,0,0,.55);background:radial-gradient(circle at 32% 28%,var(--g0) 0%,var(--g1) 45%,var(--g2) 100%)!important;box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.3),0 0 0 2px rgba(255,255,255,.85)!important}
+.ptr.bz{--g0:#e2a774;--g1:#a8683a;--g2:#6d3f1d}.ptr.ar{--g0:#dfe3e8;--g1:#9aa2ac;--g2:#626b76}.ptr.or{--g0:#f6d55a;--g1:#d4a017;--g2:#8a5c04}.ptr.di{--g0:#c9f2fc;--g1:#5fc3e6;--g2:#2a7fb8}
+#setup.b2 .nslot.bot .pcol.ptr{color:#fff}
+/* page Joueurs : petites cartes façon Killer à 8, couleur du joueur, note générale en gros */
+#prof .prk{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0 18px}
+#prof .prk button{position:relative;border:0;border-radius:22px;background:var(--pc,#cfc9be);box-shadow:inset 0 0 0 2.5px #111;padding:12px 6px 10px;display:flex;flex-direction:column;align-items:center;gap:4px;color:#fff;transition:transform .15s}
+#prof .prk button:active{transform:scale(.95)}
+#prof .prk span{font:400 19px "Fun",sans-serif;text-transform:uppercase;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.35)}
+#prof .prk b{font:400 54px/1 "Fun",sans-serif;color:#fff;-webkit-text-stroke:2.5px #111;paint-order:stroke fill;text-shadow:3px 3px 0 rgba(0,0,0,.35)}
+#prof .prk i{font:400 12px "Fun",sans-serif;font-style:normal;color:#fff;padding:3px 10px;border-radius:99px;background:radial-gradient(circle at 32% 28%,var(--g0) 0%,var(--g1) 45%,var(--g2) 100%);box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.3);text-shadow:0 1px 1.5px rgba(0,0,0,.55)}
+#prof .prk small{font:400 11px "Lbl","Lexend",sans-serif;opacity:.9}
 </style>
 </head>
 <body>
@@ -5037,7 +5052,8 @@ function renderSetup(){
     if(teamsOn&&starts.has(i)){TB=el('div','tbub');TB.dataset.t=[...starts].indexOf(i);TB.append(el('div','tlab','Équipe '+([...starts].indexOf(i)+1)));box.append(TB)}
     const slot=el('div','nslot');slot.dataset.i=i;
     const nm=el('span','pname',esc(S.names[i]));nm.style.color=pcol(S.names[i])||'';
-    const cdot=el('button','pcol');cdot.setAttribute('aria-label','Couleur');
+    const cdot=el('button','pcol ptr');cdot.setAttribute('aria-label','Profil');
+    {const D=fcData(S.names[i]);cdot.classList.add(fcTier(D));cdot.textContent=D.ovr??'–'}
     cdot.addEventListener('click',()=>{if(isBot(S.names[i]))return;let r=ROSTER.find(q=>q.name===S.names[i]);if(!r){r={name:S.names[i],color:PCOLS[0]};ROSTER.push(r)}
       r.color=PCOLS[(PCOLS.indexOf(r.color)+1)%PCOLS.length];store.set(K_R,ROSTER);haptic();SFX.ui();renderSetup()});
     slot.style.setProperty('--pc',pcol(S.names[i])||'#cfc9be');
@@ -6940,8 +6956,8 @@ function gunReload(){if(!S.sound||!AC)return;[0,.17].forEach((t,i)=>{noise(.035,
 {const _k=kRender;kRender=function(){try{if(KG)KG.players.forEach(p=>{if(p.gold>0&&p._pl!==undefined&&p.lives<p._pl)p.gold=Math.max(0,p.gold-(p._pl-p.lives));if(p.gold>p.lives)p.gold=p.lives;p._pl=p.lives})}catch(e){}return _k.apply(this,arguments)}}
 /* liste des joueurs : appui simple = fenêtre du joueur ; appui tenu = le joueur « pop » et peut être déplacé */
 document.addEventListener('click',e=>{const sl=e.target.closest&&e.target.closest('#names .nslot:not(.ph):not(.drag)');if(!sl||e.target.closest('.pdel'))return;
-  if(typeof DRAGGED!=='undefined'&&performance.now()-DRAGGED<400)return;const nm=(sl.querySelector('.pname')||{}).textContent;if(!nm||isBot(nm.trim()))return;
-  e.stopPropagation();e.preventDefault();haptic();SFX.ui();openColorsFor(nm.trim(),sl)},true);
+  if(typeof DRAGGED!=='undefined'&&performance.now()-DRAGGED<400)return;const nm=(sl.querySelector('.pname')||{}).textContent;if(!nm)return;
+  e.stopPropagation();e.preventDefault();haptic();profOpen(nm.trim())},true);
 document.addEventListener('pointerdown',e=>{const sl=e.target.closest&&e.target.closest('#names .nslot:not(.ph)');if(!sl||e.target.closest('.pdel'))return;
   const x=e.clientX,y=e.clientY;let moved=false;const mv=ev=>{if(Math.hypot(ev.clientX-x,ev.clientY-y)>6)moved=true};
   document.addEventListener('pointermove',mv,true);
@@ -7371,7 +7387,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-393';   // à changer avec VERSION dans sw.js
+const APPV='lf-394';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -7760,7 +7776,7 @@ function vsHtml(n){const cur=VSND[n],open=VSO===n;
 let VSO=null;
 function profOpen(name){SFX.open();let o=$('prof');if(o)o.remove();o=el('div','ov');o.id='prof';document.body.append(o);
   const draw=n=>{if(!n){const L=allPeople(),TL=teamsOf();o.innerHTML=`<div class="ovh"><h2>Joueurs</h2><button class="circ" data-x aria-label="Fermer"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>`+
-      '<button class="prami" data-ami>👥 Amis et groupes<i>›</i></button>'+(L.length?`<div class="prl">${L.map(x=>`<button data-p="${esc(x)}"><b style="--pc:${pColor(x)}"></b>${esc(x)}</button>`).join('')}</div>`:'<p class="hempty">Aucun joueur pour l’instant.</p>')+
+      '<button class="prami" data-ami>👥 Amis et groupes<i>›</i></button>'+(L.length?`<div class="prk">${L.map(x=>{const D=fcData(x),t=fcTier(D);return`<button data-p="${esc(x)}" style="--pc:${pColor(x)}"><span>${esc(x)}</span><b>${D.ovr??'?'}</b><i class="ptr ${t}">${FC_TN[t]}</i><small>${D.g?D.g+' partie'+(D.g>1?'s':''):'Pas encore joué'}</small></button>`}).join('')}</div>`:'<p class="hempty">Aucun joueur pour l’instant.</p>')+
       (TL.length?`<h3 class="prs">Équipes</h3><div class="prl">${TL.map(([k,v])=>`<button data-p="${esc(k)}">${k.split(' & ').map(m=>`<b style="--pc:${pColor(m)}"></b>`).join('')}${nmH(k)}<i>${v.g} partie${v.g>1?'s':''}</i></button>`).join('')}</div>`:'');return}
     if(n.includes(' & ')){o.dataset.n=n;const T=trTeams()[n]||{},M=n.split(' & '),rows=[];
       STG.forEach(g=>{const a=stAgg(g,true).E.find(x=>x.name===n);if(!a||!a.g)return;const key={cricket:['MPR moyen',a.d?fr(a.h*3/a.d):'–'],x01:['Moyenne',a.xd?fr(a.xp*3/a.xd):'–'],killer:['Vies prises',a.k],shanghai:['Record',a.best||'–'],halveit:['Record',a.best||'–']}[g]||['',''];
@@ -7779,14 +7795,14 @@ function profOpen(name){SFX.open();let o=$('prof');if(o)o.remove();o=el('div','o
     o.innerHTML=`<div class="ovh"><button class="prb" data-back>‹ Profils</button><button class="circ" data-x aria-label="Fermer"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
       <div class="prh"><b style="--pc:${pColor(n)}"></b><h2>${esc(n)}</h2>${isBot(n)?'':'<button class="prc" data-pc aria-label="Couleur et nom">🎨</button>'}</div>${window.syTag?syTag(n):''}
       ${fcHtml(n)}
-      ${isBot(n)?'':`<h3 class="prs">Son de victoire</h3><div class="prv">${vsHtml(n)}</div>`}
-      <h3 class="prs">Trophées <i>${Object.keys(T).filter(k=>TROPH.some(t=>t[0]===k)).length}/${TROPH.length}</i></h3><div class="prt">${trByCat().map(([c,L])=>`<p class="prtc">${esc(c)}</p>`+L.map(t=>`<div class="${T[t[0]]?'on':''}" data-tr="${t[0]}"><span>${t[3]}</span><b>${esc(t[1])}</b><em>${T[t[0]]?(t[0]==='ser'?T[t[0]]+' d’affilée':'×'+T[t[0]]):''}</em><small>${esc(t[2])}</small></div>`).join('')).join('')}</div>
       <h3 class="prs">Par jeu</h3>${rows.length?`<div class="stw"><table class="stt"><thead><tr><th class="sn">Jeu</th><th>Parties</th><th>Victoires</th><th>%</th><th>Stat clé</th></tr></thead><tbody>${rows.join('')}</tbody></table></div>`:'<p class="hempty">Pas encore de partie.</p>'}
-      <h3 class="prs">Records</h3><div class="prr">${rec.map(([k,v])=>`<div><span>${k}</span><b>${v}</b></div>`).join('')}</div>
       ${pgHist(n)}
-      ${TM.length?`<h3 class="prs">Ses équipes</h3><div class="prl">${TM.map(([k,v])=>`<button data-p="${esc(k)}">${k.split(' & ').map(m=>`<b style="--pc:${pColor(m)}"></b>`).join('')}${nmH(k)}<i>${v.g} p. · ${Math.round(v.w*100/v.g)} %</i></button>`).join('')}</div>`:''}`};
+      ${TM.length?`<h3 class="prs">Ses équipes</h3><div class="prl">${TM.map(([k,v])=>`<button data-p="${esc(k)}">${k.split(' & ').map(m=>`<b style="--pc:${pColor(m)}"></b>`).join('')}${nmH(k)}<i>${v.g} p. · ${Math.round(v.w*100/v.g)} %</i></button>`).join('')}</div>`:''}
+      ${isBot(n)?'':`<h3 class="prs">Son de victoire</h3><div class="prv">${vsHtml(n)}</div>`}
+      ${typeof SY!=='undefined'&&SY.me&&SY.me.local===n?`<h3 class="prs">Réglages</h3><div class="prl"><button data-ami>👥 Amis et groupes<i>›</i></button><button data-app>⚙︎ Réglages de l’appli<i>›</i></button></div>`:''}`};
   VSO=null;PGN=20;draw(name);requestAnimationFrame(()=>o.classList.add('on'));
-  o.addEventListener('click',e=>{const t=e.target;if(t.closest('[data-x]')){o.classList.remove('on');setTimeout(()=>o.remove(),300);return}if(t.closest('[data-back]')){SFX.back();VSO=null;PGN=20;draw(null);return}
+  o.addEventListener('click',e=>{const t=e.target;if(t.closest('[data-x]')){o.classList.remove('on');setTimeout(()=>o.remove(),300);try{if($('setup').classList.contains('on'))renderSetup()}catch(x){}return}
+    if(t.closest('[data-app]')){o.classList.remove('on');setTimeout(()=>o.remove(),300);setTimeout(()=>$('skinT').click(),320);return}if(t.closest('[data-back]')){SFX.back();VSO=null;PGN=20;draw(null);return}
     if(t.closest('[data-ami]')){haptic();if(window.syOpen)syOpen();return}
     const hg=t.closest('[data-hg]');if(hg){haptic();hgOpen(hg.dataset.hg,o);return}
     if(t.closest('[data-fcard]'))return;   // la carte tourne au toucher / glissé (géré à part)
