@@ -3588,7 +3588,7 @@ html body.skin-casino #game#game#game#game.p2 .fthumb{border-style:solid!importa
 html body.skin-casino.m2 #game#game#game#game.p2 .fthumb{border-image-outset:calc(var(--th,63.5px)*0.100) 23px calc(var(--th,63.5px)*0.100) 0!important}   /* en Double, la boîte du curseur est 11 pt à gauche du mot « Double » : on recentre la bulle sur le mot */
 html body.skin-casino #game#game#game#game.p2 .mw{position:relative;isolation:isolate}
 html body.skin-casino #game#game#game#game.p2 .mw .disc{opacity:0!important}
-html body.skin-casino #game#game#game#game.p2 .mw.k3::before{content:'';position:absolute;left:21%;top:21%;width:58%;height:58%;background:url(skins/katana/disque.webp) center/contain no-repeat;z-index:-1;animation:skpop .28s cubic-bezier(.3,1.6,.5,1)}
+html body.skin-casino #game#game#game#game.p2 .mw.k3::before{content:'';position:absolute;left:21%;top:21%;width:58%;height:58%;background:url(skins/katana/disque.webp) center/contain no-repeat;z-index:-1;scale:var(--mkz,1);animation:skpop .28s cubic-bezier(.3,1.6,.5,1)}
 @keyframes skpop{from{transform:scale(.2)}}
 html body.skin-casino #game#game#game#game#game.sk.p2.curR #grid .num .lbl,html body.skin-casino #game#game#game#game#game.sk.p2.curR .sc.act .nm,html body.skin-casino #game#game#game#game#game.sk.p2.curR .sc.act .pts,html body.skin-casino #game#game#game#game#game.sk.p2.curR .sc.act .mpr,html body.skin-casino #game#game#game#game#game.sk.p2.curR #bS::after{filter:drop-shadow(1px 0 0 #000) drop-shadow(-1px 0 0 #000) drop-shadow(0 1px 0 #000) drop-shadow(0 -1px 0 #000)!important}   /* J2 jaune : textes blancs détourés de noir */
 /* Katana : deux couleurs de joueur (J1 = colonne de gauche, J2 = droite ; #game.curR = c'est J2 qui joue) */
@@ -3602,13 +3602,25 @@ html body.skin-casino #game#game#game#game.p2 #grid .row>div.mk:last-of-type .mw
 
 html body.skin-casino #game#game#game#game#game.sk.p2 .sc.act .nm,html body.skin-casino #game#game#game#game#game.sk.p2 .sc.act .pts,html body.skin-casino #game#game#game#game#game.sk.p2 .sc.act .mpr,html body.skin-casino #game#game#game#game#game.sk.p2 .sc.act .mpr b{text-shadow:0 0 8px #000,0 0 3px #000,0 0 1px #000!important}   /* lisibles sur la cible */
 html body.skin-casino #game#game#game#game.p2 .mw svg path{opacity:0!important}
-html body.skin-casino #game#game#game#game.p2 .mw.k1::after,html body.skin-casino #game#game#game#game.p2 .mw.k2::after,html body.skin-casino #game#game#game#game.p2 .mw.k3::after{content:'';position:absolute;left:20%;top:20%;width:60%;height:60%;background:url(skins/katana/trait1.webp) center/contain no-repeat;pointer-events:none;animation:skpop .22s ease-out}
+html body.skin-casino #game#game#game#game.p2 .mw.k1::after,html body.skin-casino #game#game#game#game.p2 .mw.k2::after,html body.skin-casino #game#game#game#game.p2 .mw.k3::after{content:'';position:absolute;left:20%;top:20%;width:60%;height:60%;background:url(skins/katana/trait1.webp) center/contain no-repeat;pointer-events:none;animation:skpop .22s ease-out;scale:var(--mkz,1)}
 html body.skin-casino #game#game#game#game.p2 .mw.k2::after,html body.skin-casino #game#game#game#game.p2 .mw.k3::after{background:url(skins/katana/trait1.webp) center/contain no-repeat,url(skins/katana/trait2.webp) center/contain no-repeat}
 html body.skin-casino #game#game#game#game.p2 svg.hat path{opacity:0!important}
 html body.skin-casino #game#game#game#game.p2 svg.hat{background:url(skins/katana/couronne.webp) center/contain no-repeat;overflow:visible}
 html body.skin-casino #game#game#game#game.p2 #fMenu svg *,html body.skin-casino #game#game#game#game.p2 #fUndo svg *{opacity:0!important}
 html body.skin-casino #game#game#game#game.p2 #fMenu svg{background:url(skins/katana/accueil.webp) center/contain no-repeat}
 html body.skin-casino #game#game#game#game.p2 #fUndo svg{background:url(skins/katana/annuler.webp) center/contain no-repeat}
+/* marques : écart symétrique par rapport au centre (J1 vers la gauche, J2 vers la droite) */
+html body #game #grid .row>.mk:nth-child(2) .mw{left:calc(var(--mkX,0px)*-1)}
+html body #game #grid .row>.mk:nth-child(4) .mw{left:var(--mkX,0px)}
+/* « Double » / « Triple » : contour du texte et écart symétrique par rapport au centre */
+html body :is(#game,#x01,#killer):is(#game,#x01,#killer):is(#game,#x01,#killer) footer :is(#b2,#b3)::after{--o:var(--dtsw,0px);--on:calc(var(--dtsw,0px)*-1);--d:calc(var(--dtsw,0px)*.71);--dn:calc(var(--dtsw,0px)*-.71);
+  text-shadow:var(--o) 0 0 var(--tol,#111),var(--on) 0 0 var(--tol,#111),0 var(--o) 0 var(--tol,#111),0 var(--on) 0 var(--tol,#111),var(--d) var(--d) 0 var(--tol,#111),var(--dn) var(--d) 0 var(--tol,#111),var(--d) var(--dn) 0 var(--tol,#111),var(--dn) var(--dn) 0 var(--tol,#111)!important}
+html body footer #b2::after{translate:calc(var(--dtX,0px)*-1) 0}
+html body footer #b3::after{translate:var(--dtX,0px) 0}
+/* Double / Triple armés : plus d'effet sur les numéros du tableau (ni métal, ni tremblement), dans tous les habillages */
+html body:is(.m2,.m3) #game#game#game#game#game #grid .num .lbl{animation:none!important}
+html body:is(.m2,.m3) #game#game#game#game#game #grid .num .lbl::after,html body:is(.m2,.m3) #game#game#game#game#game #grid .num .lbl::before{content:none!important;display:none!important}
+
 </style>
 </head>
 <body>
@@ -6307,7 +6319,7 @@ function layoutSk(){
   const g=$('game');if(!skp2())return;
   const L=lyGet(lyCk()),H=innerHeight,u=H/100,g0=innerWidth*.035,G0=g0*1.8,gp=L.gL*u,G=G0;lyBlocks().forEach(e=>e&&e.style.removeProperty('translate'));
   g.style.setProperty('--g',gp.toFixed(2)+'px');g.style.setProperty('--G',G.toFixed(2)+'px');g.classList.remove('barT');
-  g.style.setProperty('--lytop',(g0*1.4).toFixed(2)+'px');g.style.setProperty('--nfz',L.nfz);g.style.setProperty('--mkz',L.mkz);g.style.setProperty('--mksw',L.mksw);
+  g.style.setProperty('--lytop',(g0*1.4).toFixed(2)+'px');g.style.setProperty('--nfz',L.nfz);g.style.setProperty('--mkz',L.mkz);g.style.setProperty('--mksw',L.mksw);g.style.setProperty('--mkX',(L.mkX||0)+'px');
   g.style.setProperty('--bw',L.bw+'px');g.style.setProperty('--zMp',L.zMp);['iNP','iPM','iPMo','iY','iPl','paW','paH','poW','poH','zPo','poG','poY','crZ','crY','scR','dtZ','spZ'].forEach(k=>g.style.setProperty('--'+k,L[k]));
   if(lyCk()==='ck2')g.style.setProperty('--midw',(33.333*L.nW).toFixed(3)+'vw');else g.style.removeProperty('--midw');g.style.setProperty('--zPl',L.zPl);g.style.setProperty('--bub-bw',L.bw+'px');lyRoot();
   {const ring=(w,c)=>w>0?Array.from({length:16},(_,i)=>{const a=i*Math.PI/8;return `${(Math.cos(a)*w).toFixed(2)}px ${(Math.sin(a)*w).toFixed(2)}px 0 ${c}`}).join(','):'none';
@@ -7115,7 +7127,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-355';   // à changer avec VERSION dans sw.js
+const APPV='lf-356';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -7755,10 +7767,10 @@ function popOutl(root){if(!root)return;root.querySelectorAll('text.w').forEach(t
 addEventListener('resize',()=>{try{if(KG&&PKL.k&&$('killer').classList.contains('on'))pklSync()}catch(e){}});
 
 /* ===== Mise en page du Cricket à 2 (Bulle) : hauteurs, écarts, barre Accueil · infos · Annuler en haut ou en bas ===== */
-const LY_D={klH:1,klGX:0,klGY:0,klW:1,klHY:0,klHO:1,tmZ:1,pbw:1,xsw:0,xcH:1,xpT:1,xgPK:1.2,xgKF:2.8,tmL:0,klZ:1,klY:0,klHZ:1,klKZ:1,klNY:0,klNoY:0,klKY:0,klPY:0,xoN:0,xoS:0,xoM:0,xoH:0,xoC:0,xpW:1,xpH:1,xpG:1,xcG:1,xnZ:1,xrZ:1,xsZ:1,xcoZ:1,xhZ:1,xkz:1,xkh:1,xkg:1,xbh:1,paW:1,paH:1,poW:1,poH:1,zPo:1.05,poG:1,poY:0,crZ:1,crY:0,scR:1,hZ:1,nW:1,icZ:0.95,ifZ:0.9,dtZ:0.7,spZ:0.8,fbw:0,barTop:0,iNP:0.1,iPM:0.14,iPMo:0.14,iY:0,iPl:0.1,zNm:1.2,zSc:1.6,zMp:1.25,zPl:1.05,nfz:1.1,nsw:0,scsw:0,bw:2,mkz:0.95,mksw:4,scK:1.1,rowK:1.05,ftK:1.3,brK:1,mT:4.1,gSN:1.1,gL:1.8,gNF:1.5,gFB:1.9,mB:2.3,nA:0};   // « Pop » : les réglages de base
+const LY_D={mkX:0,dtsw:0,dtX:0,klH:1,klGX:0,klGY:0,klW:1,klHY:0,klHO:1,tmZ:1,pbw:1,xsw:0,xcH:1,xpT:1,xgPK:1.2,xgKF:2.8,tmL:0,klZ:1,klY:0,klHZ:1,klKZ:1,klNY:0,klNoY:0,klKY:0,klPY:0,xoN:0,xoS:0,xoM:0,xoH:0,xoC:0,xpW:1,xpH:1,xpG:1,xcG:1,xnZ:1,xrZ:1,xsZ:1,xcoZ:1,xhZ:1,xkz:1,xkh:1,xkg:1,xbh:1,paW:1,paH:1,poW:1,poH:1,zPo:1.05,poG:1,poY:0,crZ:1,crY:0,scR:1,hZ:1,nW:1,icZ:0.95,ifZ:0.9,dtZ:0.7,spZ:0.8,fbw:0,barTop:0,iNP:0.1,iPM:0.14,iPMo:0.14,iY:0,iPl:0.1,zNm:1.2,zSc:1.6,zMp:1.25,zPl:1.05,nfz:1.1,nsw:0,scsw:0,bw:2,mkz:0.95,mksw:4,scK:1.1,rowK:1.05,ftK:1.3,brK:1,mT:4.1,gSN:1.1,gL:1.8,gNF:1.5,gFB:1.9,mB:2.3,nA:0};   // « Pop » : les réglages de base
 if(S.lay&&!S.lay.v3){S.lay={v3:1};try{store.set(K_S,S)}catch(e){}}
 /* un profil de réglages par jeu ; les contours (et les polices) sont communs à toute l'appli */
-const LY_GLOB=['bw','fbw','nsw','scsw','brK','ftK','gFB','mB','icZ','ifZ','dtZ','spZ','barTop'];   // contours et boutons du bas : un seul réglage pour toute l'appli
+const LY_GLOB=['dtsw','dtX','bw','fbw','nsw','scsw','brK','ftK','gFB','mB','icZ','ifZ','dtZ','spZ','barTop'];   // contours et boutons du bas : un seul réglage pour toute l'appli
 /* réglages « Pop » (envoyés par Loubi, lf-258) : Shanghai / Halve-it reprennent le Cricket, l'Horloge reprend le Killer */
 const LY_POP={   /* réglages « Pop » de Loubi (lf-336) = réglages par défaut */
   ck2:{mT:5,gSN:1.6,gL:1.5,rowK:1,scK:1.1,nA:0,zNm:1,zSc:1.05,zMp:1.45,zPl:1.6,gNF:0,iNP:0.08,iPM:0.12,iPMo:0.12,iY:0.04,iPl:0.18,mkz:0.75,mksw:3.75,crY:-0.14,crZ:1,poW:1.3,poG:0.3,poH:1.35,zPo:1.2,paH:1.25,paW:1,nW:0.99,el:{lbl:{z:0.92,x:0,y:0},nmA:{z:1,x:-0.1,y:0},nmO:{z:1,x:-0.1,y:0}},poY:0.16,pbw:0,hZ:1,scR:1.45,nfz:1.1},
@@ -7800,7 +7812,7 @@ const LY_K={
   poW:['Largeur des bulles',.5,4,.05,'%'],poH:['Hauteur des bulles',.5,2,.05,'%'],zPo:['Taille du texte',.5,2,.05,'%'],poG:['Écart',0,3,.05,'%'],poY:['Décaler (− haut, + bas)',-1,1,.02,'x'],
   klHY:['Position',-30,80,.5,'pc'],klHO:['Contour',0,3,.05,'%'],klW:['Largeur des cartes',.6,1.5,.01,'%'],klH:['Hauteur des cartes',.6,1.6,.01,'%'],klGX:['Écart horizontal entre les cartes',-20,40,.5,'pc'],klGY:['Écart vertical entre les cartes',-20,40,.5,'pc'],crZ:['Taille',.4,1.8,.05,'%'],crY:['Décaler (− haut, + bas)',-1,1,.02,'x'],
   rowK:['Hauteur des bulles',.6,1.6,.05,'%'],nW:['Largeur des bulles (et du Spew)',.7,1.3,.01,'%'],gL:['Écart entre les lignes',0,5,.1,'pc'],gNF:['Écart avec le Spew (au moins)',0,8,.1,'pc'],
-  nfz:['Nombres',.6,1.5,.05,'%'],mkz:['Taille',.5,1.5,.05,'%'],mksw:['Épaisseur',1,10,.25,''],
+  nfz:['Nombres',.6,1.5,.05,'%'],mkz:['Taille',.5,1.5,.05,'%'],mksw:['Épaisseur (version de base)',1,10,.25,''],mkX:['Écart du centre (− rapproche, + éloigne)',-30,30,1,''],dtsw:['Contour du texte',0,6,.25,''],dtX:['Écart du centre (− rapproche, + éloigne)',-40,40,1,''],
   xcG:['Écart entre les cases',0,3,.05,'%'],xnZ:['Nom',.5,2,.05,'%'],xrZ:['Score',.5,2,.05,'%'],xsZ:['Moyenne',.5,2.5,.05,'%'],xcoZ:['Finish proposé',.5,2.5,.05,'%'],xhZ:['Historique',.5,2.5,.05,'%'],
   xoN:['Nom',-20,20,.1,'pc'],xoS:['Score',-20,20,.1,'pc'],xoM:['Moyenne',-20,20,.1,'pc'],xoH:['Historique',-20,20,.1,'pc'],xoC:['Finish proposé',-20,20,.1,'pc'],
   xpW:['Largeur des bulles',.5,2.5,.05,'%'],xpH:['Hauteur des bulles',.4,3,.05,'%'],xpG:['Écart',0,4,.05,'%'],
@@ -7832,9 +7844,9 @@ const LY_B={
           ['Cœurs',[['klHZ','Taille'],'klHY','klHO']],
           ['Marques K (MPR à l\'Horloge)',[['klKZ','Taille'],['klKY','Position']]],
           ['Historique des fléchettes',[['klPY','Position'],'paW','paH','zPl','iPl']]]},
-  nb:{ck:[['Bulles des nombres',['rowK','nW','gL','gNF']],['Nombres',[['nfz','Taille'],'nsw','@x:lbl']],['Marques',['mkz','mksw','@x:mk']]],
+  nb:{ck:[['Bulles des nombres',['rowK','nW','gL','gNF']],['Nombres',[['nfz','Taille'],'nsw','@x:lbl']],['Marques',['mkz','mksw','mkX','@x:mk']]],
       x:[['Touches',['xkh','xbh','xkg','xgPK','xgKF']],['Chiffres',[['xkz','Taille'],'@x:xkl']]]},
-  bas:{all:[['Bloc',['ftK','brK','gFB','mB']],['Textes',['dtZ','spZ','icZ','ifZ']],['Contour du texte « Spew »',['fbw']]]}};
+  bas:{all:[['Bloc',['ftK','brK','gFB','mB']],['Textes',['dtZ','spZ','icZ','ifZ']],['Contour du texte « Spew »',['fbw']],['« Double » et « Triple »',['dtsw','dtX']]]}};
 const LY_TABS={ck:[['pl','Cases joueur'],['nb','Tableau'],['bas','Bas']],x:[['pl','Cases joueur'],['nb','Touches'],['bas','Bas']],kl:[['pl','Cartes'],['bas','Bas']],ot:[['bas','Bas']]};
 /* ===== éditeur en direct : appui long sur n'importe quel élément → sa taille et sa place (gauche/droite, haut/bas) ===== */
 const ED_ABS=['crn','xco'];   // éléments placés en absolu : on les décale par la marge, sans changer leur mode de placement
@@ -7869,7 +7881,7 @@ function lyKeys(L){const k=$('xkeys'),x=$('x01');if(!k||!x.classList.contains('o
 {const _x=xRender;xRender=function(){const r=_x.apply(this,arguments);try{if($('x01').classList.contains('on')&&!xRender._k){xRender._k=1;requestAnimationFrame(()=>{xRender._k=0;lyKeys(lyGet())})}}catch(e){}return r}}
 function lyRoot(){const L=lyGet(lyCur()),st=document.documentElement.style,u=innerHeight/100;st.setProperty('--bub-bw',L.bw+'px');st.setProperty('--bw',L.bw+'px');
   try{edApply()}catch(e){}
-  st.setProperty('--lyF',L.ftK);['tmZ','pbw','xcH','xpT','xgPK','xgKF','tmL','dtZ','spZ','xnZ','xrZ','xsZ','xcoZ','xhZ','xkz','xkg','xoN','xoS','xoM','xoH','xoC','xpW','xpH','xpG','xcG'].forEach(k=>st.setProperty('--'+k,L[k]));lyKeys(L);st.setProperty('--icZ',L.icZ);{const w=L.xsw;document.documentElement.classList.toggle('xsw',w>0);if(w>0)st.setProperty('--xsts',Array.from({length:16},(_,i)=>{const a=i*Math.PI/8;return`${(Math.cos(a)*w).toFixed(2)}px ${(Math.sin(a)*w).toFixed(2)}px 0 var(--tol,#111)`}).join(','))}st.setProperty('--ifZ',L.ifZ);st.setProperty('--fbw',L.fbw+'px');st.setProperty('--lyB',L.brK);st.setProperty('--lyGFB',(L.gFB*u).toFixed(1)+'px');st.setProperty('--lyMB',(L.mB*u).toFixed(1)+'px')}
+  st.setProperty('--lyF',L.ftK);['tmZ','pbw','xcH','xpT','xgPK','xgKF','tmL','dtZ','spZ','xnZ','xrZ','xsZ','xcoZ','xhZ','xkz','xkg','xoN','xoS','xoM','xoH','xoC','xpW','xpH','xpG','xcG'].forEach(k=>st.setProperty('--'+k,L[k]));lyKeys(L);st.setProperty('--icZ',L.icZ);{const w=L.xsw;document.documentElement.classList.toggle('xsw',w>0);if(w>0)st.setProperty('--xsts',Array.from({length:16},(_,i)=>{const a=i*Math.PI/8;return`${(Math.cos(a)*w).toFixed(2)}px ${(Math.sin(a)*w).toFixed(2)}px 0 var(--tol,#111)`}).join(','))}st.setProperty('--ifZ',L.ifZ);st.setProperty('--fbw',L.fbw+'px');st.setProperty('--dtsw',(L.dtsw||0)+'px');st.setProperty('--dtX',(L.dtX||0)+'px');st.setProperty('--lyB',L.brK);st.setProperty('--lyGFB',(L.gFB*u).toFixed(1)+'px');st.setProperty('--lyMB',(L.mB*u).toFixed(1)+'px')}
 lyRoot();
 {const _s=show;show=function(){const r=_s.apply(this,arguments);try{lyRoot()}catch(e){}return r}}
 function lyApply(){lyRoot();try{if(KG&&PKL.k&&$('killer').classList.contains('on')){PKL.k.querySelectorAll('g.kin').forEach(g=>{g._h=null});PKL.k.querySelectorAll('text').forEach(t=>{t._h=null});pklSync()}}catch(e){}try{if(G&&R&&$('game').classList.contains('on')){layoutSk();if(typeof fitSk==='function')fitSk();render()}}catch(e){}}
