@@ -2,7 +2,6 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" crossorigin href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Pirata+One&display=swap">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -3580,13 +3579,13 @@ html body.skin-casino #game#game#game#game.p2 .sc:not(.act) .pill.e,html body.sk
 html body.skin-casino #game#game#game#game.p2 .rtrackb{border-color:transparent!important;background:none!important;z-index:0!important}
 html body.skin-casino #game#game#game#game.p2 .rtrackb::before{content:'';position:absolute;inset:-2.0px -4.5px -5.7px -5.7px;background:url(skins/royal/rail.webp) 0 0/100% 100% no-repeat;pointer-events:none}
 html body.skin-casino #game#game#game#game.p2 #grid .num{background:transparent!important;box-shadow:none!important}
-html body.skin-casino #game#game#game#game.p2 #grid .num{border-style:solid!important;border-width:0!important;border-image:url(skins/royal/num.webp) 0 105 fill / 0 calc(var(--r,52.6px)*0.669) / calc(var(--r,52.6px)*0.169) calc(var(--r,52.6px)*0.205) stretch!important}   /* débord proportionnel à la hauteur de ligne (--r) */
+html body.skin-casino #game#game#game#game.p2 #grid .num{border-style:solid!important;border-width:0!important;border-image:url(skins/royal/num.webp) 0 105 fill / 0 calc(var(--r,52.6px)*0.669) / calc(var(--r,52.6px)*0.125) calc(var(--r,52.6px)*0.196) calc(var(--r,52.6px)*0.213) calc(var(--r,52.6px)*0.213) stretch!important}   /* débord proportionnel à la hauteur de ligne (--r) */
 html body.skin-casino #game#game#game#game.p2 #grid .num.dead{border-image-source:url(skins/royal/num_mort.webp)!important}
 html body.skin-casino #game#game#game#game.p2 #grid .num.bnc{border-image:none!important}
 html body.skin-casino #game#game#game#game.p2 footer::after{border-color:transparent!important;background:url(skins/royal/barre.webp) 0 0/100% 100% no-repeat!important;z-index:0!important;inset:-1.4px -6.3px -6.8px -6.3px!important}
 html body.skin-casino #game#game#game#game.p2 .fthumb{background:transparent!important;box-shadow:none!important}
-html body.skin-casino #game#game#game#game.p2 .fthumb{border-style:solid!important;border-width:0!important;border-image:url(skins/royal/curseur.webp) 0 125 fill / 0 calc(var(--th,63.5px)*0.657) / calc(var(--th,63.5px)*0.109) calc(var(--th,63.5px)*.06) stretch!important}   /* curseur : bouts ronds jamais déformés, quelle que soit sa largeur (Double / Spew / Triple) */
-html body.skin-casino.m2 #game#game#game#game.p2 .fthumb{border-image-outset:calc(var(--th,63.5px)*0.109) 23px calc(var(--th,63.5px)*0.109) 0!important}   /* en Double, la boîte du curseur est 11 pt à gauche du mot « Double » : on recentre la bulle sur le mot */
+html body.skin-casino #game#game#game#game.p2 .fthumb{border-style:solid!important;border-width:0!important;border-image:url(skins/royal/curseur.webp) 0 125 fill / 0 calc(var(--th,63.5px)*0.657) / calc(var(--th,63.5px)*0.109) calc(var(--th,63.5px)*.06) calc(var(--th,63.5px)*0.205) stretch!important}   /* curseur : bouts ronds jamais déformés, quelle que soit sa largeur (Double / Spew / Triple) */
+html body.skin-casino.m2 #game#game#game#game.p2 .fthumb{border-image-outset:calc(var(--th,63.5px)*0.109) 23px calc(var(--th,63.5px)*0.205) 0!important}   /* en Double, la boîte du curseur est 11 pt à gauche du mot « Double » : on recentre la bulle sur le mot */
 html body.skin-casino #game#game#game#game.p2 .mw{position:relative;isolation:isolate}
 html body.skin-casino #game#game#game#game.p2 .mw .disc{opacity:0!important}
 html body.skin-casino #game#game#game#game.p2 .mw.k3::before{content:'';position:absolute;left:21%;top:21%;width:58%;height:58%;background:url(skins/royal/disque.webp) center/contain no-repeat;z-index:-1;scale:var(--mkz,1);animation:skpop .28s cubic-bezier(.3,1.6,.5,1)}
@@ -3622,9 +3621,10 @@ html body footer #b3::after{translate:var(--dtX,0px) 0}
 html body:is(.m2,.m3) #game#game#game#game#game #grid .num .lbl{animation:none!important}
 html body:is(.m2,.m3) #game#game#game#game#game #grid .num .lbl::after,html body:is(.m2,.m3) #game#game#game#game#game #grid .num .lbl::before{content:none!important;display:none!important}
 
-/* Royal : polices de l'habillage (chargées depuis Google Fonts, gardées en cache hors ligne) */
-html body.skin-casino #game#game#game#game#game.sk.p2 #grid .num .lbl,html body.skin-casino #game#game#game#game#game.sk.p2 .sc .pts,html body.skin-casino #game#game#game#game#game.sk.p2 .sc .mpr,html body.skin-casino #game#game#game#game#game.sk.p2 .sc .mpr b,html body.skin-casino #game#game#game#game#game.sk.p2 .sc .pill{font-family:"Cinzel",Georgia,serif!important;font-weight:900!important;letter-spacing:0!important}
-html body.skin-casino #game#game#game#game#game.sk.p2 .sc .nm,html body.skin-casino #game#game#game#game#game.sk.p2 footer>button,html body.skin-casino #game#game#game#game#game.sk.p2 footer>button::after,html body.skin-casino #game#game#game#game#game.sk.p2 footer>button .bt,html body.skin-casino #game#game#game#game#game.sk.p2 #fMode b{font-family:"Pirata One","Fun",serif!important;font-weight:400!important;letter-spacing:.02em!important}
+/* habillage : polices réglables (Mise en page → Polices) ; chargées depuis Google Fonts, gardées en cache hors ligne */
+html body.skin-casino #game#game#game#game#game.sk.p2 #grid .num .lbl:not(#q1):not(#q2):not(#q3):not(#q4):not(#q5):not(#q6):not(#q7),html body.skin-casino #game#game#game#game#game.sk.p2 .sc .pts:not(#q1):not(#q2):not(#q3):not(#q4):not(#q5):not(#q6):not(#q7),html body.skin-casino #game#game#game#game#game.sk.p2 .sc .mpr:not(#q1):not(#q2):not(#q3):not(#q4):not(#q5):not(#q6):not(#q7),html body.skin-casino #game#game#game#game#game.sk.p2 .sc .mpr b:not(#q1):not(#q2):not(#q3):not(#q4):not(#q5):not(#q6):not(#q7),html body.skin-casino #game#game#game#game#game.sk.p2 .sc .pill:not(#q1):not(#q2):not(#q3):not(#q4):not(#q5):not(#q6):not(#q7){font-family:var(--sN,"Cinzel"),"Fun",serif!important;letter-spacing:0!important;font-synthesis:none!important}
+html body.skin-casino #game#game#game#game#game.sk.p2 footer>button:not(#q1):not(#q2):not(#q3):not(#q4):not(#q5):not(#q6):not(#q7),html body.skin-casino #game#game#game#game#game.sk.p2 footer>button:not(#q1):not(#q2):not(#q3):not(#q4):not(#q5):not(#q6):not(#q7)::after,html body.skin-casino #game#game#game#game#game.sk.p2 footer>button .bt:not(#q1):not(#q2):not(#q3):not(#q4):not(#q5):not(#q6):not(#q7),html body.skin-casino #game#game#game#game#game.sk.p2 #fMode b:not(#q1):not(#q2):not(#q3):not(#q4):not(#q5):not(#q6):not(#q7){font-family:var(--sB,"Pirata One"),"Fun",serif!important;font-synthesis:none!important}
+html body.skin-casino #game#game#game#game#game.sk.p2 .sc .nm:not(#q1):not(#q2):not(#q3):not(#q4):not(#q5):not(#q6):not(#q7){font-family:var(--sM,"Pirata One"),"Fun",serif!important;font-synthesis:none!important}
 </style>
 </head>
 <body>
@@ -7131,7 +7131,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-357';   // à changer avec VERSION dans sw.js
+const APPV='lf-358';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -7851,7 +7851,7 @@ const LY_B={
   nb:{ck:[['Bulles des nombres',['rowK','nW','gL','gNF']],['Nombres',[['nfz','Taille'],'nsw','@x:lbl']],['Marques',['mkz','mksw','mkX','@x:mk']]],
       x:[['Touches',['xkh','xbh','xkg','xgPK','xgKF']],['Chiffres',[['xkz','Taille'],'@x:xkl']]]},
   bas:{all:[['Bloc',['ftK','brK','gFB','mB']],['Textes',['dtZ','spZ','icZ','ifZ']],['Contour du texte « Spew »',['fbw']],['« Double » et « Triple »',['dtsw','dtX']]]}};
-const LY_TABS={ck:[['pl','Cases joueur'],['nb','Tableau'],['bas','Bas']],x:[['pl','Cases joueur'],['nb','Touches'],['bas','Bas']],kl:[['pl','Cartes'],['bas','Bas']],ot:[['bas','Bas']]};
+const LY_TABS={ck:[['pl','Cases joueur'],['nb','Tableau'],['bas','Bas'],['pol','Polices']],x:[['pl','Cases joueur'],['nb','Touches'],['bas','Bas'],['pol','Polices']],kl:[['pl','Cartes'],['bas','Bas'],['pol','Polices']],ot:[['bas','Bas'],['pol','Polices']]};
 /* ===== éditeur en direct : appui long sur n'importe quel élément → sa taille et sa place (gauche/droite, haut/bas) ===== */
 const ED_ABS=['crn','xco'];   // éléments placés en absolu : on les décale par la marge, sans changer leur mode de placement
 const ED_REG={ck:[['crn','Couronne','#scores .hat'],['nmA','Nom (joueur en cours)','#scores .sc.act>.nm'],['nmO','Nom (adversaire)','#scores .sc:not(.act)>.nm'],['ptA','Score (joueur en cours)','#scores .sc.act>.pts'],['ptO','Score (adversaire)','#scores .sc:not(.act)>.pts'],
@@ -7925,7 +7925,7 @@ function lyOpen(mode,elId,sec){const old=$('lyp');const up0=old?old.classList.co
   const BAS=['brK','ftK','gFB','mB','icZ','ifZ','dtZ','spZ','fbw','barTop'];
   const draw=()=>{const L=lyGet(CX);p.classList.toggle('up',up);const tn=(tabs.find(t=>t[0]===mode)||[,''])[1];
     const groups=mode==='pol'?[]:((LY_B[mode]||{})[mode==='bas'?'all':cx]||[]),no=(LY_NO[CX]||'').split(' ');
-    p.innerHTML=`<div class="lyh"><b>${mode==='bas'?'Bas de l\'écran':mode==='pol'?'Polices':tn}<small>${mode==='bas'?'identique dans tous les jeux':mode==='pol'?'toute l\'appli':LY_NAME[CX]}</small></b><button class="lyd" aria-label="Déplacer le panneau">${up?'↓':'↑'}</button><button class="lyx" aria-label="Fermer">✕</button></div>
+    p.innerHTML=`<div class="lyh"><b>${mode==='bas'?'Bas de l\'écran':mode==='pol'?'Polices':tn}<small>${mode==='bas'?'identique dans tous les jeux':mode==='pol'?(S.skin?'habillage illustré (Cricket 1v1)':'toute l\'appli'):LY_NAME[CX]}</small></b><button class="lyd" aria-label="Déplacer le panneau">${up?'↓':'↑'}</button><button class="lyx" aria-label="Fermer">✕</button></div>
       <div class="lyt">${tabs.map(([m,t])=>`<button data-m="${m}" class="${m===mode?'on':''}">${t}</button>`).join('')}</div>
       ${mode==='el'?(()=>{const v=Object.assign({z:1,x:0,y:0},((LY_PD[CX]||{}).el||{})[elId]||{},(((S.lays||{})[CX]||{}).el||{})[elId]||{});const r=edReg(cx,elId);
         return `<i class="lyg">${r[1]}</i><p class="lyel">Appui long sur un autre élément pour le régler à son tour.</p>`+[['z','Taille',.4,2.5,.02,'%'],['x','Gauche ← → droite (en % de l\'écran)',-25,25,.1,'pc'],['y','Haut ↑ ↓ bas (en % de l\'écran)',-25,25,.1,'pc']].map(([k,l,a,b,st,u])=>`<label><span>${l}</span><b data-v="el_${k}">${lyFmt(v[k],u)}</b><input type="range" data-e="${k}" data-u="${u}" min="${a}" max="${b}" step="${st}" value="${v[k]}"></label>`).join('')})():''}
@@ -7935,7 +7935,7 @@ function lyOpen(mode,elId,sec){const old=$('lyp');const up0=old?old.classList.co
         return rows?`<i class="lyg" data-g="${gt}">${gt}</i>${rows}`:''}).join('')}
       ${mode==='nb'&&cx==='ck'?`<div class="lyb"><span>Nombres dans la place libre</span><div class="sw">${['En haut','Au centre','En bas'].map((t,i)=>`<button data-a="${i}" class="${(L.nA|0)===i?'on':''}">${t}</button>`).join('')}</div></div>`:''}
       ${mode==='bas'?`<div class="lyb"><span>Barre Accueil · infos · Annuler (Cricket)</span><div class="sw">${['En bas','En haut'].map((t,i)=>`<button data-bt="${i}" class="${(L.barTop|0)===i?'on':''}">${t}</button>`).join('')}</div></div>`:''}
-      ${mode==='pol'?`<div class="lyf"><button data-f="fN">Nombres<b style="font-family:'${esc(fcCur('fN'))}','Fun'">${esc(fcName(fcCur('fN')))}</b></button><button data-f="fT">Textes<b style="font-family:'${esc(fcCur('fT'))}','Fun'">${esc(fcName(fcCur('fT')))}</b></button></div>`:''}
+      ${mode==='pol'?`<div class="lyf">${(S.skin?[['sN','Chiffres'],['sM','Noms'],['sB','Double · Spew · Triple']]:[['fN','Nombres'],['fT','Textes']]).map(([k,t])=>`<button data-f="${k}">${t}<b style="font-family:'${esc(fcCur(k))}','Fun'">${esc(fcName(fcCur(k)))}</b></button>`).join('')}</div>`:''}
       <button class="lyr">Revenir à Pop pour ${mode==='el'?'cet élément':mode==='bas'?'le bas de l\'écran':mode==='pol'?'les polices':'ce bloc'}</button><button class="lyra">Tout remettre en Pop (tous les jeux)</button><button class="lyc">Copier mes réglages (pour Claude)</button>`};
   draw();hl();
   if(sec){const g=[...p.querySelectorAll('.lyg')].find(x=>x.dataset.g===sec);if(g){p.scrollTop=g.offsetTop-p.querySelector('.lyt').offsetHeight-6;g.classList.add('flash');setTimeout(()=>g.classList.remove('flash'),1200)}}
@@ -7952,7 +7952,7 @@ function lyOpen(mode,elId,sec){const old=$('lyp');const up0=old?old.classList.co
     if(ev.target.closest('.lyra')){haptic();S.lays={};S.lay={v3:1,v4:1};delete S.fN;delete S.fT;done();return}
     if(ev.target.closest('.lyr')){haptic();
       if(mode==='el'){const E=((S.lays||{})[CX]||{}).el;if(E)delete E[elId]}
-      else if(mode==='pol'){delete S.fN;delete S.fT}
+      else if(mode==='pol'){if(S.skin){if(S.skf)delete S.skf[S.skin]}else{delete S.fN;delete S.fT}}
       else{const ks=mode==='bas'?BAS:lyBlockKeys(mode,cx).concat(mode==='nb'&&cx==='ck'?['nA']:[]);S.lays=S.lays||{};S.lay=S.lay||{v3:1,v4:1};
         ks.forEach(k=>{if(LY_GLOB.includes(k))delete S.lay[k];else if(S.lays[CX])delete S.lays[CX][k]});
         const E=S.lays[CX]&&S.lays[CX].el;if(E)((LY_B[mode]||{})[cx]||[]).forEach(g=>g[1].forEach(x=>{if(typeof x==='string'&&x.startsWith('@x:'))x.slice(3).split(',').forEach(id=>delete E[id])}))}
@@ -7966,26 +7966,27 @@ function lyOpen(mode,elId,sec){const old=$('lyp');const up0=old?old.classList.co
     const b=p.querySelector(`b[data-v="${k}"]`);if(b)b.textContent=lyFmt(v,r.dataset.u);cancelAnimationFrame(p._raf);p._raf=requestAnimationFrame(lyApply);clearTimeout(p._sv);p._sv=setTimeout(()=>store.set(K_S,S),400)})}
 
 /* ===== Polices : une pour les nombres (bulles, scores, fléchettes, Killer), une pour tous les textes ===== */
-const FC_LIST=[['Alfa Slab One'],['Anton'],['Archivo',800],['Archivo Black'],['Bagel Fat One'],['Baloo 2',800],['Bangers'],['Barlow Condensed',800],['Barriecito'],['Bebas Neue'],['Big Shoulders Display',800],['Black Han Sans'],['Black Ops One'],['Bowlby One'],['Bricolage Grotesque',800],['Bungee'],['Carter One'],['Changa One'],['Chango'],['Chewy'],['Climate Crisis'],['Coiny'],['Comfortaa',700],['Concert One'],['DM Sans',800],['Darker Grotesque',800],['Days One'],['Dela Gothic One'],['DynaPuff',700],['Familjen Grotesk',700],['Figtree',800],['Fredoka',700],['Fugaz One'],['Gabarito',800],['Gluten',800],['Gochi Hand'],['Grandstander',800],['Instrument Sans',700],['Josefin Sans',700],['Jua'],['Kanit',800],['Knewave'],['Kode Mono',700],['Krona One'],['Lalezar'],['Lexend Mega',800],['Lexend Zetta',800],['Lobster'],['Londrina Solid',900],['Luckiest Guy'],['Manrope',800],['Mochiy Pop One'],['Modak'],['Montserrat',800],['Mouse Memoirs'],['Nunito',800],['Onest',800],['Oswald',700],['Outfit',800],['Pacifico'],['Passion One',700],['Paytone One'],['Permanent Marker'],['Plus Jakarta Sans',800],['Poppins',800],['Quicksand',700],['Racing Sans One'],['Rammetto One'],['Rampart One'],['Rethink Sans',800],['Righteous'],['Rubik',800],['Rubik Bubbles'],['Rubik Mono One'],['Russo One'],['Schibsted Grotesk',800],['Shrikhand'],['Sigmar One'],['Sniglet',800],['Sora',800],['Sour Gummy',800],['Space Grotesk',700],['Syne',800],['Titan One'],['Ultra'],['Unbounded',800],['Urbanist',800],['Varela Round']];
+const FC_LIST=[['Cinzel',900],['Cinzel Decorative',900],['Pirata One'],['UnifrakturCook',700],['MedievalSharp'],['IM Fell English SC'],['Uncial Antiqua'],['Almendra',700],['Metamorphous'],['Grenze Gotisch',800],['New Rocker'],['Germania One'],['Alfa Slab One'],['Anton'],['Archivo',800],['Archivo Black'],['Bagel Fat One'],['Baloo 2',800],['Bangers'],['Barlow Condensed',800],['Barriecito'],['Bebas Neue'],['Big Shoulders Display',800],['Black Han Sans'],['Black Ops One'],['Bowlby One'],['Bricolage Grotesque',800],['Bungee'],['Carter One'],['Changa One'],['Chango'],['Chewy'],['Climate Crisis'],['Coiny'],['Comfortaa',700],['Concert One'],['DM Sans',800],['Darker Grotesque',800],['Days One'],['Dela Gothic One'],['DynaPuff',700],['Familjen Grotesk',700],['Figtree',800],['Fredoka',700],['Fugaz One'],['Gabarito',800],['Gluten',800],['Gochi Hand'],['Grandstander',800],['Instrument Sans',700],['Josefin Sans',700],['Jua'],['Kanit',800],['Knewave'],['Kode Mono',700],['Krona One'],['Lalezar'],['Lexend Mega',800],['Lexend Zetta',800],['Lobster'],['Londrina Solid',900],['Luckiest Guy'],['Manrope',800],['Mochiy Pop One'],['Modak'],['Montserrat',800],['Mouse Memoirs'],['Nunito',800],['Onest',800],['Oswald',700],['Outfit',800],['Pacifico'],['Passion One',700],['Paytone One'],['Permanent Marker'],['Plus Jakarta Sans',800],['Poppins',800],['Quicksand',700],['Racing Sans One'],['Rammetto One'],['Rampart One'],['Rethink Sans',800],['Righteous'],['Rubik',800],['Rubik Bubbles'],['Rubik Mono One'],['Russo One'],['Schibsted Grotesk',800],['Shrikhand'],['Sigmar One'],['Sniglet',800],['Sora',800],['Sour Gummy',800],['Space Grotesk',700],['Syne',800],['Titan One'],['Ultra'],['Unbounded',800],['Urbanist',800],['Varela Round']];
 const FC_K='lf-fonts',FC_ON={Lexend:1,Fun:1};
-const FC_DEF={fN:'Fun',fT:'Lexend'},fcCur=k=>S[k]||FC_DEF[k],fcName=f=>f==='Fun'?'Lilita One':f;
+const FC_DEF={fN:'Fun',fT:'Lexend',sN:'Cinzel',sM:'Pirata One',sB:'Pirata One'},FC_LBL={fN:'nombres',fT:'textes',sN:'chiffres (habillage)',sM:'noms (habillage)',sB:'Double / Spew / Triple (habillage)'};
+const fcCur=k=>(k[0]==='s'?((S.skf||{})[S.skin]||{})[k]:S[k])||FC_DEF[k],fcName=f=>f==='Fun'?'Lilita One':f;
 const fcStore=()=>{try{return JSON.parse(localStorage.getItem(FC_K)||'{}')}catch(e){return{}}};
 const fcUrl=l=>'https://fonts.googleapis.com/css2?'+l.map(([f,w])=>'family='+f.replace(/ /g,'+')+(w?':wght@'+w:'')).join('&')+'&display=swap';
 function fcEnsure(f){if(!f||FC_ON[f])return;FC_ON[f]=1;const imp=fcStore()[f];
   if(imp){try{new FontFace(f,`url(${imp})`).load().then(x=>{document.fonts.add(x);fcRefit()}).catch(()=>{})}catch(e){}return}
-  const g=FC_LIST.find(x=>x[0]===f);if(!g)return;const l=document.createElement('link');l.rel='stylesheet';l.href=fcUrl([g]);document.head.append(l)}
+  const g=FC_LIST.find(x=>x[0]===f);if(!g)return;const l=document.createElement('link');l.rel='stylesheet';l.crossOrigin='anonymous';l.href=fcUrl([g]);document.head.append(l)}
 function fcRefit(){try{if(G&&R&&$('game').classList.contains('on')){layoutSk();fitSk();render()}}catch(e){}try{if(KG&&PKL.k){PKL.k.querySelectorAll('g.kin').forEach(g=>{g._h=null});pklSync()}}catch(e){}}
-function fcApply(){const h=document.documentElement,st=h.style;[['fN','--pfN','pfN'],['fT','--pfT','pfT']].forEach(([k,v,c])=>{const f=fcCur(k),on=f!=='Fun';h.classList.toggle(c,on);if(on){st.setProperty(v,`"${f}"`);fcEnsure(f)}else st.removeProperty(v)});
+function fcApply(){const h=document.documentElement,st=h.style;if(S.skin){['sN','sM','sB'].forEach(k=>{const f=fcCur(k);st.setProperty('--'+k,`"${f}"`);fcEnsure(f)})}else['sN','sM','sB'].forEach(k=>st.removeProperty('--'+k));[['fN','--pfN','pfN'],['fT','--pfT','pfT']].forEach(([k,v,c])=>{const f=fcCur(k),on=f!=='Fun';h.classList.toggle(c,on);if(on){st.setProperty(v,`"${f}"`);fcEnsure(f)}else st.removeProperty(v)});
   try{document.fonts.ready.then(fcRefit)}catch(e){}try{bootSave()}catch(e){}}
 function fcOpen(k,back){const old=$('fch');if(old)old.remove();haptic();const p=el('div','');p.id='fch';document.body.append(p);
   {FC_LIST.forEach(g=>{if(FC_ON['_'+g[0]])return;FC_ON['_'+g[0]]=1;const l=document.createElement('link');l.rel='stylesheet';l.href=fcUrl([g]);document.head.append(l)});Object.keys(fcStore()).forEach(fcEnsure)}
   const smp='20 Bulle Spew';
-  const draw=()=>{const cur=fcCur(k),all=[['Fun','Lilita One'+(FC_DEF[k]==='Fun'?' (Pop)':'')],['Lexend','Lexend'+(FC_DEF[k]==='Lexend'?' (Pop)':'')]].concat(Object.keys(fcStore()).map(n=>[n,n+' (importée)']),FC_LIST.filter(x=>x[0]!=='Lexend'&&x[0]!=='Lilita One').map(x=>[x[0],x[0]]));
-    p.innerHTML=`<div class="fch"><b>Police des ${k==='fN'?'nombres':'textes'}</b><button class="fcx" aria-label="Fermer">✕</button></div>
+  const draw=()=>{const cur=fcCur(k),all=(k[0]==='s'?[[FC_DEF[k],FC_DEF[k]+' (habillage)']]:[]).concat([['Fun','Lilita One'+(FC_DEF[k]==='Fun'?' (Pop)':'')]]),_a=[['Lexend','Lexend'+(FC_DEF[k]==='Lexend'?' (Pop)':'')]].concat(Object.keys(fcStore()).map(n=>[n,n+' (importée)']),FC_LIST.filter(x=>x[0]!=='Lexend'&&x[0]!=='Lilita One').map(x=>[x[0],x[0]]));all.push(..._a.filter(x=>!(k[0]==='s'&&x[0]===FC_DEF[k])));
+    p.innerHTML=`<div class="fch"><b>Police des ${FC_LBL[k]||'textes'}</b><button class="fcx" aria-label="Fermer">✕</button></div>
       <div class="fcl">${all.map(([f,l])=>`<button data-f="${esc(f)}" class="${f===cur?'on':''}"><span style="font-family:'${esc(f)}','Fun'">${smp}</span><small>${esc(l)}</small></button>`).join('')}</div>
       <button class="fci">Importer un fichier (.otf, .ttf, .woff)</button><input type="file" hidden>`};
   draw();
-  const set=f=>{if(f&&f!==FC_DEF[k])S[k]=f;else delete S[k];store.set(K_S,S);fcApply();draw();if(back)back()};
+  const set=f=>{if(k[0]==='s'){S.skf=S.skf||{};const o=S.skf[S.skin]=S.skf[S.skin]||{};if(f&&f!==FC_DEF[k])o[k]=f;else delete o[k]}else if(f&&f!==FC_DEF[k])S[k]=f;else delete S[k];store.set(K_S,S);fcApply();draw();if(back)back()};
   p.addEventListener('click',ev=>{ev.stopPropagation();if(ev.target.closest('.fcx')){p.remove();return}
     const b=ev.target.closest('.fcl button');if(b){haptic();set(b.dataset.f);return}
     if(ev.target.closest('.fci'))p.querySelector('input[type=file]').click()});
