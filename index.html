@@ -3725,6 +3725,8 @@ html body.m3 #game#game#game#game#game#game #grid .num:not(.dead):not(.bull) .lb
 #sbx .sbg{display:flex;flex-wrap:wrap;gap:6px;padding:9px 2px 4px}
 #sbx .sbg button{padding:7px 11px;font-size:13px}#sbx .sbg button.def{box-shadow:inset 0 0 0 2px #111,0 0 0 2px #ffd400}
 #sbx .sbg button.on{background:#ff3b3f;color:#fff;box-shadow:inset 0 0 0 2px #111}
+#sbx .sbg .sbf{flex-basis:100%;font:400 12px "Lexend",sans-serif;font-style:normal;opacity:.6;margin:8px 2px 0;text-transform:uppercase;letter-spacing:.05em}
+#sbx .sbg .sbfr{flex-basis:100%;display:flex;align-items:center;gap:6px}#sbx .sbg .sbfr span{flex:1;font-size:14px}#sbx .sbg .sbfr button{width:46px;padding:7px 0}
 </style>
 </head>
 <body>
@@ -6917,15 +6919,39 @@ const SB_EV=[['Marques',[['mk1','Marque simple','single'],['mk2','Marque double'
   ['Points (Cricket)',[['ptsMe','Points marqués pour nous','gun'],['ptsOpp','Points chez les adversaires (coupe-gorge)','gun']]],
   ['Barre du bas',[['arm2','Armer le double','shing'],['arm3','Armer le triple','ignite'],['arm1','Désarmer','tick'],['spew','Spew','spew']]],
   ['Partie',[['turn','Changement de joueur','turn'],['undo','Annuler','undo']]]];
-const SB_ARG=Object.fromEntries(SB_LIB.filter(x=>x[2]).map(x=>[x[0],x[2]]));
+
+/* ===== nouveaux sons, en familles ×1 / ×2 / ×3 (un « coup » répété en montant) ===== */
+const SB_FAM=[
+ ['cl','Cloches claires',.13,(i,d)=>{const k=[1,1.26,1.5][i];tone(130,.12,'sine',.3,d,60);tone(784*k,.22,'triangle',.14,d,0,.4);tone(1175*k,.3,'triangle',.14,d+.09,0,.5);tone(2350*k,.15,'sine',.04,d+.09,0,.4)}],
+ ['gu','Coup de feu',.42,(i,d)=>setTimeout(()=>SFX0.gun(1),d*1000)],
+ ['ma','Marimba',.12,(i,d)=>{const f=[523,659,784][i];tone(f,.32,'sine',.22,d,0,.25);tone(f*4,.06,'sine',.06,d);tone(f*2,.12,'triangle',.05,d)}],
+ ['co','Pièce d\'arcade',.11,(i,d)=>{const f=[988,1175,1397][i];tone(f,.06,'square',.07,d);tone(f*1.335,.22,'square',.07,d+.06)}],
+ ['bo','Ressort',.16,(i,d)=>{const f=[180,220,270][i];tone(f,.28,'sine',.22,d,f*3.2);tone(f*2,.2,'triangle',.05,d+.03,f*5)}],
+ ['po','Pop',.09,(i,d)=>{blop([500,620,760][i],[1900,2300,2800][i],.07,.32,d,.15);noise(.015,.12,3000,d)}],
+ ['gl','Glockenspiel',.12,(i,d)=>{const f=[1568,1976,2349][i];fm(f,3.5,1.6,.7,.1,d,.4);tone(f,.5,'sine',.06,d,0,.4)}],
+ ['ta','Tambour',.13,(i,d)=>{const f=[150,180,220][i];tone(f,.22,'sine',.5,d,f*.5);noise(.05,.22,1800,d)}],
+ ['za','Zap',.11,(i,d)=>{const f=[1800,2200,2700][i];tone(f,.13,'square',.06,d,260);tone(f*1.01,.13,'sawtooth',.04,d,250)}],
+ ['st','Steel drum',.13,(i,d)=>{const f=[587,698,880][i];tone(f,.4,'triangle',.18,d,0,.3);tone(f*2.76,.18,'sine',.05,d);tone(f*1.5,.25,'sine',.05,d)}],
+ ['ar','Arcade 8-bit',.07,(i,d)=>{const b=[523,659,784][i];[b,b*1.26,b*1.5].forEach((f,j)=>tone(f,.07,'square',.06,d+j*.045))}],
+ ['wh','Whoosh-claque',.2,(i,d)=>{sweep(.16,.1,d);noise(.03,.35,[1500,2500,3500][i],d+.15);tone(120,.08,'sine',.3,d+.15,60)}],
+ ['ki','Kick',.14,(i,d)=>{tone(160,.18,'sine',.6,d,45);noise(.02,.2,[2000,3000,4500][i],d)}],
+ ['bu','Bulles',.1,(i,d)=>{blop([250,330,420][i],[1000,1300,1700][i],.14,.42,d)}],
+ ['la','Laser',.14,(i,d)=>setTimeout(()=>{if(!S.sound||!AC)return;const t0=AC.currentTime,o=AC.createOscillator(),g=AC.createGain(),f=[2600,3000,3400][i];o.type='square';o.frequency.setValueAtTime(f,t0);o.frequency.exponentialRampToValueAtTime(150,t0+.25);g.gain.setValueAtTime(.0001,t0);g.gain.exponentialRampToValueAtTime(.12,t0+.008);g.gain.exponentialRampToValueAtTime(.0001,t0+.28);o.connect(g);send(g,.3);o.start(t0);o.stop(t0+.3)},d*1000)],
+ ['ch','Chœur « ah »',.16,(i,d)=>{const b=[392,494,587][i];[b,b*1.25,b*1.5].forEach(f=>brass([f],d,.32,.025));tone(b*2,.3,'sine',.05,d,0,.5)}],
+];
+SB_FAM.forEach(([id,n,gap,f])=>[1,2,3].forEach(c=>{SFX0['n'+id+c]=()=>{for(let i=0;i<c;i++)f(i,i*gap)}}));
+SB_LIB.unshift(...SB_FAM.flatMap(([id,n])=>[['#',n]].concat([1,2,3].map(c=>['n'+id+c,c===1?'×1':'×'+c,null,n])))),SB_LIB.unshift(['#','Nouveaux sons']);
+const SB_ARG=Object.fromEntries(SB_LIB.filter(x=>x[0]!=='#'&&x[2]).map(x=>[x[0],x[2]]));
 function snd(ev,def,arg){const k=(S.sbx||{})[ev]||def;if(k==='none')return;const f=SFX0[k]||SFX0[def];if(!f)return;try{f(k===def&&arg!==undefined?arg:(arg!==undefined&&SB_ARG[k]?arg:SB_ARG[k]))}catch(e){}}
 /* les sons existants passent par la boîte (tous les jeux) */
 [['single','mk1'],['double','mk2'],['triple','mk3'],['bull','bull'],['dbull','dbull'],['close','close'],['dead','dead'],['bolt','kill'],['spew','spew'],['turn','turn'],['undo','undo']]
   .forEach(([k,ev])=>{SFX[k]=(...a)=>snd(ev,k,a[0])});
 function sbxOpen(){const old=$('sbx');if(old)old.remove();haptic();const p=el('div','');p.id='sbx';document.body.append(p);let open=null;
-  const nm=k=>k==='none'?'Aucun son':((SB_LIB.find(x=>x[0]===k)||[0,k])[1]);
+  const nm=k=>{if(k==='none')return'Aucun son';const x=SB_LIB.find(x=>x[0]===k)||[0,k];return x[3]?x[3]+' '+x[1]:x[1]};
   const draw=()=>{p.innerHTML=`<div class="sbh"><b>Boîte à sons</b><button class="sbx0">Tout remettre</button><button class="sbxx">OK</button></div><div class="sbl">${SB_EV.map(([g,L])=>`<h4>${g}</h4>`+L.map(([ev,t,def])=>{const cur=(S.sbx||{})[ev]||def;
-      return `<div class="sbr${open===ev?' on':''}"><button class="sbe" data-ev="${ev}"><span>${t}</span><b>${esc(nm(cur))}${cur!==def?' ✎':''}</b></button>${open===ev?`<div class="sbg">${[['none','Aucun son']].concat(SB_LIB).map(([k,n])=>`<button data-k="${k}" class="${k===cur?'on':''}${k===def?' def':''}">${esc(n)}</button>`).join('')}</div>`:''}</div>`}).join('')).join('')}</div>`};
+      return `<div class="sbr${open===ev?' on':''}"><button class="sbe" data-ev="${ev}"><span>${t}</span><b>${esc(nm(cur))}${cur!==def?' ✎':''}</b></button>${open===ev?`<div class="sbg">${(()=>{const B=(k,n)=>`<button data-k="${k}" class="${k===cur?'on':''}${k===def?' def':''}">${esc(n)}</button>`;
+        return B('none','Aucun son')+'<i class="sbf">Nouveaux sons</i>'+SB_FAM.map(([id,n])=>`<div class="sbfr"><span>${esc(n)}</span>${[1,2,3].map(c=>B('n'+id+c,'×'+c)).join('')}</div>`).join('')
+          +'<i class="sbf">Sons de l\'appli</i>'+SB_LIB.filter(x=>x[0]!=='#'&&!x[3]).map(([k,n])=>B(k,n)).join('')})()}</div>`:''}</div>`}).join('')).join('')}</div>`};
   draw();
   p.addEventListener('click',e=>{if(e.target.closest('.sbxx')){haptic();p.remove();return}
     if(e.target.closest('.sbx0')){haptic();delete S.sbx;store.set(K_S,S);draw();return}
@@ -7261,7 +7287,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-377';   // à changer avec VERSION dans sw.js
+const APPV='lf-378';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
