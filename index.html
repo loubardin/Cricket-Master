@@ -3696,9 +3696,17 @@ html body #game#game#game#game#game#game #scores .sc.act>.pts.pop:not(#q1):not(#
 #grid .row .nfxo span{position:absolute;left:0;top:0;translate:-50% -50%;white-space:nowrap;line-height:1;transform-origin:50% 55%}
 html body #game#game#game#game#game#game #grid .row[data-nh] .num .lbl:not(#q1):not(#q2):not(#q3){visibility:hidden!important}
 html body #game#game#game#game#game#game #grid .row[data-nh] .num .lbl:not(#q1):not(#q2):not(#q3)::before,html body #game#game#game#game#game#game #grid .row[data-nh] .num .lbl:not(#q1):not(#q2):not(#q3)::after{content:none!important}
-#grid .nfxo.m1 .fr{animation:fxL1 .49s cubic-bezier(.2,1.4,.4,1) both}#grid .nfxo.m1 .c1{animation:fxH1 .49s cubic-bezier(.2,1.4,.4,1) both}
-#grid .nfxo.m2 .fr{animation:fxL2 .51s cubic-bezier(.25,1.2,.4,1) both}#grid .nfxo.m2 .c1{animation:fxB1 .51s cubic-bezier(.25,1.2,.4,1) both}#grid .nfxo.m2 .c2{animation:fxB2 .51s cubic-bezier(.25,1.2,.4,1) both}
-#grid .nfxo.m3 .fr{animation:fxL3 .56s cubic-bezier(.25,1.2,.4,1) both}#grid .nfxo.m3 .c1{animation:fxT1 .56s cubic-bezier(.25,1.2,.4,1) both}#grid .nfxo.m3 .c2{animation:fxT2 .56s cubic-bezier(.25,1.2,.4,1) both}
+#grid .nfxo .fr{-webkit-text-stroke:max(5px,.15em) #111;paint-order:stroke fill}   /* contour sous le remplissage : pas de traits parasites des polices à contours superposés */
+#grid .nfxo span{will-change:transform}
+#grid .nfxo.m1 .fr{animation:fxF .49s cubic-bezier(.25,1.25,.4,1) both}#grid .nfxo.m1 .c1{animation:fxS1 .49s cubic-bezier(.25,1.25,.4,1) both}
+#grid .nfxo.m2 .fr{animation:fxF .51s cubic-bezier(.25,1.25,.4,1) both}#grid .nfxo.m2 .c1{animation:fxD1x .51s cubic-bezier(.25,1.25,.4,1) both}#grid .nfxo.m2 .c2{animation:fxD2 .51s cubic-bezier(.25,1.25,.4,1) both}
+#grid .nfxo.m3 .fr{animation:fxF .56s cubic-bezier(.25,1.25,.4,1) both}#grid .nfxo.m3 .c1{animation:fxE1 .56s cubic-bezier(.25,1.25,.4,1) both}#grid .nfxo.m3 .c2{animation:fxE2 .56s cubic-bezier(.25,1.25,.4,1) both}
+@keyframes fxF{0%{transform:scale(1)}16%{transform:scale(2)}64%{transform:scale(1.85)}100%{transform:scale(1)}}
+@keyframes fxS1{0%{transform:scale(1)}16%{transform:scale(2.7,2.45)}64%{transform:scale(2.45,2.25)}100%{transform:scale(1)}}
+@keyframes fxD1x{0%{transform:scale(1)}16%{transform:scale(2) translate(.09em,.08em)}64%{transform:scale(1.85) translate(.09em,.08em)}100%{transform:scale(1)}}
+@keyframes fxD2{0%{transform:scale(1)}16%{transform:scale(2) translate(-.2em,-.17em)}64%{transform:scale(1.85) translate(-.2em,-.17em)}100%{transform:scale(1)}}
+@keyframes fxE1{0%{transform:scale(1)}16%{transform:scale(2) translate(.12em,.11em) rotate(-3deg)}64%{transform:scale(1.85) translate(.12em,.11em) rotate(-3deg)}100%{transform:scale(1)}}
+@keyframes fxE2{0%{transform:scale(1)}16%{transform:scale(2.05) translate(-.24em,-.2em) rotate(5deg)}64%{transform:scale(1.9) translate(-.24em,-.2em) rotate(5deg)}100%{transform:scale(1)}}
 </style>
 </head>
 <body>
@@ -7207,7 +7215,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-371';   // à changer avec VERSION dans sw.js
+const APPV='lf-372';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -8162,10 +8170,10 @@ function numFx(t,m){const b=R&&R.num&&R.num[t];if(!b)return;const row=b.parentEl
   const o=document.createElement('div');o.className='nfxo m'+m;
   const C=m===3?['#fff200','#ff2bd6']:m===2?['#ffffff','#00e5ff']:['#ffffff',null];
   const mk=(cls,col,front)=>{const e=document.createElement('span');e.className=cls;e.textContent=txt;
-    ['fontFamily','fontSize','fontWeight','letterSpacing','fontStyle'].forEach(k=>e.style[k]=cs[k]);
-    if(front){e.style.color=cs.color;e.style.webkitTextFillColor=cs.webkitTextFillColor;e.style.textShadow=cs.textShadow;e.style.webkitTextStroke=cs.webkitTextStroke}
+    ['fontFamily','fontSize','fontWeight','letterSpacing','fontStyle'].forEach(k=>e.style[k]=cs[k])
+    if(front){e.style.color=C[0];e.style.webkitTextFillColor=C[0];e.style.textShadow='none'}
     else{e.style.color=col;e.style.webkitTextFillColor=col}return e};
-  if(C[1])o.append(mk('c2',C[1]));o.append(mk('c1',C[0]),mk('fr',null,true));row.append(o);
+  if(C[1])o.append(mk('c2',C[1]));if(m===1)o.append(mk('c1',C[0]));o.append(mk('fr',null,true));row.append(o);
   row.dataset.nh=m;const t0=performance.now(),D=m===3?560:m===2?510:490;
   const place=()=>{const l=src();if(!l)return;const r=l.getBoundingClientRect(),q=row.getBoundingClientRect();o.style.left=(r.left-q.left+r.width/2)+'px';o.style.top=(r.top-q.top+r.height/2)+'px'};
   place();const step=()=>{if(!o.isConnected)return;if(performance.now()-t0>D){o.remove();if(!row.querySelector('.nfxo'))delete row.dataset.nh;return}place();requestAnimationFrame(step)};requestAnimationFrame(step)}
