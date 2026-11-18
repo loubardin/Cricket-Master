@@ -5088,7 +5088,8 @@ function ftPlace(){document.querySelectorAll('footer').forEach(f=>{const t=f.que
   const F=f.getBoundingClientRect(),B=b.getBoundingClientRect(),m=b.id==='b2'?-1:b.id==='b3'?1:0;let dx=0;try{dx=m*(+lyGet().dtX||0)}catch(e){}   /* la bulle suit le mot (réglage « écart du centre » de Double / Triple) */
   f.style.setProperty('--tbL',(B.left-F.left-f.clientLeft+dx).toFixed(1)+'px');f.style.setProperty('--tbW',B.width.toFixed(1)+'px')})}
 new MutationObserver(()=>requestAnimationFrame(ftPlace)).observe(document.body,{attributes:true,attributeFilter:['class']});addEventListener('resize',()=>requestAnimationFrame(ftPlace));try{const ro=new ResizeObserver(()=>ftPlace());document.querySelectorAll('footer,footer #b2,footer #bS,footer #b3').forEach(e=>ro.observe(e))}catch(e){}
-function show(id){requestAnimationFrame(ftPlace);document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));requestAnimationFrame(topColor);if(id==='home'&&typeof placeHome==='function')requestAnimationFrame(placeHome)}
+function show(id){requestAnimationFrame(ftPlace);document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));requestAnimationFrame(topColor);if(id==='home'&&typeof placeHome==='function')requestAnimationFrame(placeHome);
+  if(id==='home'&&window.sySync){clearTimeout(show._sy);show._sy=setTimeout(()=>{try{sySync()}catch(e){}},400)}}   /* lf-411 : synchro automatique à chaque retour au menu principal */
 
 function startGame(mode,names,start=0,teams=null){noFear();
   if(HOLD){clearTimeout(HOLD.t);HOLD=null}
@@ -7458,7 +7459,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-410';   // à changer avec VERSION dans sw.js
+const APPV='lf-411';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
