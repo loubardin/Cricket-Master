@@ -3618,7 +3618,7 @@ html body :is(#game,#x01,#killer):is(#game,#x01,#killer):is(#game,#x01,#killer) 
 html body :is(#game,#x01,#killer):is(#game,#x01,#killer):is(#game,#x01,#killer) footer #b3::after{translate:var(--dtX,0px) 0!important}   /* le mot reste au centre de sa bulle, armé ou non (l'ancien décalage de 6 pt est retiré) */
 /* Double / Triple armés : plus d'effet sur les numéros du tableau (ni métal, ni tremblement), dans tous les habillages */
 html body:is(.m2,.m3) #game#game#game#game#game #grid .num .lbl{animation:none!important}
-html body:is(.m2,.m3) #game#game#game#game#game #grid .num .lbl::after,html body:is(.m2,.m3) #game#game#game#game#game #grid .num .lbl::before{content:none!important;display:none!important}
+html:not(.nfxC):not(.nfxD) body:is(.m2,.m3) #game#game#game#game#game #grid .num .lbl::after,html:not(.nfxC):not(.nfxD) body:is(.m2,.m3) #game#game#game#game#game #grid .num .lbl::before{content:none!important;display:none!important}
 
 /* habillage : polices réglables (Mise en page → Polices) ; chargées depuis Google Fonts, gardées en cache hors ligne */
 html body.skin-casino #game#game#game#game#game.sk.p2 #grid .num .lbl:not(#q1):not(#q2):not(#q3):not(#q4):not(#q5):not(#q6):not(#q7),html body.skin-casino #game#game#game#game#game.sk.p2 .sc .pts:not(#q1):not(#q2):not(#q3):not(#q4):not(#q5):not(#q6):not(#q7),html body.skin-casino #game#game#game#game#game.sk.p2 .sc .mpr:not(#q1):not(#q2):not(#q3):not(#q4):not(#q5):not(#q6):not(#q7),html body.skin-casino #game#game#game#game#game.sk.p2 .sc .mpr b:not(#q1):not(#q2):not(#q3):not(#q4):not(#q5):not(#q6):not(#q7),html body.skin-casino #game#game#game#game#game.sk.p2 .sc .pill:not(#q1):not(#q2):not(#q3):not(#q4):not(#q5):not(#q6):not(#q7){font-family:var(--sN,"Cinzel"),"Fun",serif!important;letter-spacing:0!important;font-synthesis:none!important}
@@ -3638,6 +3638,17 @@ html body.skin-casino #game#game#game#game#game.sk.p2 .sc .nm:not(#q1):not(#q2):
 #stu .stuhint{margin:0;font:400 11.5px "Lexend",sans-serif;opacity:.7}
 html.stu #game footer,html.stu #game #grid,html.stu #game #scores{touch-action:none}
 .skinpick .skstu{width:100%;border:0;border-radius:99px;background:#111;color:#fff;font:400 15px "Fun",sans-serif;padding:10px;margin:2px 0 6px}
+/* style des nombres des bulles : contour noir vide + aplat de couleur dessous (C : double impression, D : gonflé et tourné) */
+html.nfx body #game#game#game#game#game#game #grid .num:not(.dead) .lbl{position:relative!important;color:transparent!important;-webkit-text-fill-color:transparent!important;-webkit-text-stroke:max(2.5px,.065em) #111!important;text-shadow:none!important;background:none!important;animation:none!important;isolation:isolate}
+html.nfx body #game#game#game#game#game#game #grid .num:not(.dead) .lbl::before,html.nfx body #game#game#game#game#game#game #grid .num:not(.dead) .lbl::after{content:attr(data-t)!important;display:block!important;position:absolute!important;inset:0!important;z-index:-1!important;-webkit-text-stroke:0!important;text-shadow:none!important;background:none!important;animation:none!important;white-space:nowrap;text-box:inherit;pointer-events:none}
+html.nfx body #game#game#game#game#game#game #grid .num:not(.dead) .lbl::before{color:var(--nfc,#fff)!important;-webkit-text-fill-color:var(--nfc,#fff)!important}
+html.nfxC body #game#game#game#game#game#game #grid .num:not(.dead) .lbl::before{transform:translate(.07em,.07em)!important}
+html.nfxC body #game#game#game#game#game#game #grid .num:not(.dead) .lbl::after{color:var(--nfc2,#00e5ff)!important;-webkit-text-fill-color:var(--nfc2,#00e5ff)!important;transform:translate(-.065em,-.05em)!important;z-index:-2!important}
+html.nfxD body #game#game#game#game#game#game #grid .num:not(.dead) .lbl::before{transform:translate(.02em,.03em) scale(1.12) rotate(-5deg)!important}
+html.nfxD body #game#game#game#game#game#game #grid .num:not(.dead) .lbl::after{content:none!important}
+html.nfx:not(.pfN) body #game#game#game#game#game#game #grid .num:not(.dead):not(#q1):not(#q2):not(#q3) .lbl,html.nfx:not(.pfN) body #game#game#game#game#game#game #grid .num:not(.dead) .lbl::before,html.nfx:not(.pfN) body #game#game#game#game#game#game #grid .num:not(.dead) .lbl::after{font-family:"Fun",sans-serif!important;font-weight:400!important}
+#stu .stunfx button.on{background:#111;color:#fff}
+#stu .stucol button{width:34px;height:34px;padding:0;border-radius:50%}#stu .stucol button.on{box-shadow:inset 0 0 0 2px #111,0 0 0 3px #fff,0 0 0 5px #111}
 </style>
 </head>
 <body>
@@ -7146,7 +7157,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-362';   // à changer avec VERSION dans sw.js
+const APPV='lf-363';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -8020,6 +8031,12 @@ function fcOpen(k,back){const old=$('fch');if(old)old.remove();haptic();const p=
       .catch(()=>{try{mkToast('','Fichier de police illisible',2200)}catch(e){}})};rd.readAsDataURL(f)})}
 fcApply();
 
+/* style des nombres : S.nfx = {s:'C'|'D', c:couleur} */
+const NFX_COL=[['#ffffff','Blanc'],['#fff200','Jaune'],['#00e5ff','Cyan'],['#ff2bd6','Rose'],['#39ff14','Vert'],['#ff6a00','Orange']];
+function nfxApply(){const h=document.documentElement,f=S.nfx||{},st=f.s||'';h.classList.toggle('nfx',!!st);h.classList.toggle('nfxC',st==='C');h.classList.toggle('nfxD',st==='D');
+  const c=f.c||'#ffffff';h.style.setProperty('--nfc',c);h.style.setProperty('--nfc2',c==='#00e5ff'?'#ff2bd6':'#00e5ff');try{lyLbl()}catch(e){}}
+nfxApply();
+
 /* ===== Studio : sur l'écran de jeu, toucher un élément → le régler en direct (police, taille, contour) et le faire glisser pour le placer ===== */
 let STU=null;
 const STU_FT={nmA:'M',nmO:'M',ptA:'N',ptO:'N',mpA:'N',mpO:'N',hiA:'N',hiO:'N',lbl:'N',xnA:'M',xnO:'M',xrA:'N',xrO:'N',xsA:'N',xsO:'N',xhA:'N',xhO:'N',xkl:'N',dt:'B',sp:'B'};
@@ -8042,11 +8059,14 @@ function stuDraw(){const p=$('stu');if(!p)return;const r=STU.sel;p.classList.tog
    ${r?`<div class="stur">${ft?`<button class="stuf">Police<b style="font-family:'${esc(fcCur(stuFK(ft)))}','Fun'">${esc(fcName(fcCur(stuFK(ft))))}</b></button>`:''}
      <div class="stus"><span>Taille</span><button data-z="-1">−</button><button data-z="1">+</button></div>
      ${sw?`<div class="stus"><span>Contour</span><button data-w="-1">−</button><button data-w="1">+</button></div>`:''}
-     <button class="stu0">Remettre</button></div><p class="stuhint">Fais glisser l'élément sur l'écran pour le placer${r.id==='mk'||r.id==='dt'?' (symétrique de part et d\'autre du centre)':''}.</p>`:''}`}
+     <button class="stu0">Remettre</button></div>
+     ${r.id==='lbl'?`<div class="stur stunfx"><span>Style</span>${[['','Normal'],['C','Double'],['D','Gonflé']].map(([k,t])=>`<button data-nfx="${k}" class="${((S.nfx||{}).s||'')===k?'on':''}">${t}</button>`).join('')}</div>
+       ${(S.nfx||{}).s?`<div class="stur stucol">${NFX_COL.map(([c,t])=>`<button data-nfc="${c}" aria-label="${t}" class="${((S.nfx||{}).c||'#ffffff')===c?'on':''}" style="background:${c}"></button>`).join('')}</div>`:''}`:''}<p class="stuhint">Fais glisser l'élément sur l'écran pour le placer${r.id==='mk'||r.id==='dt'?' (symétrique de part et d\'autre du centre)':''}.</p>`:''}`}
 function stuOn(){if(STU)return;STU={sel:null};document.documentElement.classList.add('stu');const old=$('lyp');if(old)old.remove();
   const p=el('div','');p.id='stu';document.body.append(p);stuDraw();stuHL();
   p.addEventListener('click',ev=>{ev.stopPropagation();const r=STU.sel;
     if(ev.target.closest('.stux')){stuOff();return}if(!r)return;
+    const nb=ev.target.closest('[data-nfx]'),nc=ev.target.closest('[data-nfc]');if(nb||nc){haptic();S.nfx=Object.assign({},S.nfx||{});if(nb)S.nfx.s=nb.dataset.nfx;if(nc)S.nfx.c=nc.dataset.nfc;if(!S.nfx.s)delete S.nfx.s;nfxApply();stuSave();stuDraw();return}
     if(ev.target.closest('.stuf')){fcOpen(stuFK(STU_FT[r.id]),()=>{stuRe();stuDraw()});return}
     const L=lyGet(),zb=ev.target.closest('[data-z]'),wb=ev.target.closest('[data-w]');haptic();
     if(zb){const d=+zb.dataset.z;if(r.id==='mk')lySet('mkz',Math.max(.4,Math.min(2.2,+(L.mkz+d*.05).toFixed(2))));else if(r.id==='dt')lySet('dtZ',Math.max(.4,+(L.dtZ+d*.05).toFixed(2)));else if(r.id==='sp')lySet('spZ',Math.max(.4,+(L.spZ+d*.05).toFixed(2)));else{const e=stuEl(r.id);e.z=Math.max(.3,+((e.z||1)+d*.05).toFixed(2))}}
