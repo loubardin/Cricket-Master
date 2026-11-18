@@ -3858,6 +3858,14 @@ html body #setup#setup .sh .mnbtn{position:absolute!important;left:auto!importan
 html body #setup#setup.b2 #names .pcol.ptr{background:rgba(255,255,255,.22)!important;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.55),0 0 0 var(--mn-rbw,0px) var(--mn-rbc,#111)!important;text-shadow:none}
 /* lf-405 : plus de bulle de rang dans les capsules du menu */
 html body #setup#setup.b2 #names .pcol{display:none!important}
+/* lf-407 : « Ajouter un joueur » et tirage au sort = mêmes capsules que le menu (couleur du joueur, nom blanc contour noir, cadre noir) */
+html body #ppick#ppick .rchip{position:relative;background:color-mix(in srgb,var(--pc,#cfc9be) var(--mn-cbg,100%),transparent)!important;border-radius:var(--mn-cr,30px)!important;
+  box-shadow:inset 0 0 0 var(--mn-cbw,2px) var(--mn-cbc,#111)!important;color:var(--mn-nc,#fff)!important;-webkit-text-stroke:var(--mn-ns,3px) var(--mn-nsc,#111);paint-order:stroke fill;text-transform:uppercase;font-size:calc(16px*var(--mn-nz,1.2))!important;padding:.5em 1.1em!important;letter-spacing:.02em}
+html body #ppick#ppick .rchip::before{content:none!important}
+html body #draw#draw .slot{border-radius:var(--mn-cr,30px)!important;box-shadow:inset 0 0 0 var(--mn-cbw,2px) var(--mn-cbc,#111)!important}
+html body #draw#draw .slot.lock{background:color-mix(in srgb,var(--pc,var(--accent)) var(--mn-cbg,100%),transparent)!important;box-shadow:inset 0 0 0 var(--mn-cbw,2px) var(--mn-cbc,#111)!important}
+html body #draw#draw .slot.lock span{color:var(--mn-nc,#fff)!important;-webkit-text-stroke:calc(var(--mn-ns,3px)*1.3) var(--mn-nsc,#111);paint-order:stroke fill}
+html body #draw#draw .slot.lock b{color:#fff!important;-webkit-text-stroke:2.5px #111;paint-order:stroke fill}
 </style>
 </head>
 <body>
@@ -3906,7 +3914,7 @@ html body #setup#setup.b2 #names .pcol{display:none!important}
       <div id="names"></div>
       <div id="rchips"></div>
       <div class="opt kl knopt"><span>Numéros</span><div class="seg mini" id="segKn"><button data-v="draw">Tirage</button><button data-v="throw">1er lancer</button></div></div>
-      <div class="opt ck xk ordopt"><span>Départ</span><div class="seg mini" id="segOrd"><button data-v="fixed">Ordre saisi</button><button data-v="draw">Tirage</button></div></div>
+      <div class="opt ck xk ordopt"><span>Qui commence ?</span><div class="seg mini" id="segOrd"><button data-v="fixed">Ordre saisi</button><button data-v="draw">Hasard</button></div></div>
       <div class="opt teamopt betrow"><span>Enjeu</span><div class="seg mini" id="segBet"><button data-v="0" id="betNo">Sans</button><button data-v="1" class="betcus">On joue…</button></div></div>
       <div class="opt teamopt betrow betx betsl"><span>Combien&nbsp;?</span><div class="bsl"><i class="bfill"><b id="betVv"></b></i><input type="range" id="betV" min="1" max="100" step="1" aria-label="Combien ?"></div></div>
     </div>
@@ -7444,7 +7452,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-406';   // à changer avec VERSION dans sw.js
+const APPV='lf-407';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -7912,15 +7920,16 @@ const MN=[
  ['Nom'],
  ['nz','Taille',.6,1.6,.05,1.2,''],['ns','Contour',0,7,.25,3,'px'],['nc','Couleur',MN_COL,'Blanc'],['nsc','Couleur du contour',MN_COL,'Noir'],['nx','Position ← →',-20,40,1,14,'px'],['ny','Position ↑ ↓',-10,10,.5,0,'px'],
  ['Croix'],
- ['xf','Taille',8,30,.5,9.5,'px'],['xr','Marge à droite',0,30,1,13,'px'],['xy','Position ↑ ↓',-10,10,.5,0,'px'],['xc','Couleur',MN_COL,'Noir'],
+ ['xf','Taille',8,30,.5,14,'px'],['xr','Marge à droite',0,30,1,3,'px'],['xy','Position ↑ ↓',-10,10,.5,0,'px'],['xc','Couleur',MN_COL,'Noir'],
  ['Autres éléments (tailles)'],
- ['gz','Choix du jeu (Cricket / 501…)',.6,1.4,.02,1,''],['oz','Options (Mode, Équipes…)',.6,1.4,.02,1,''],['lz','Titres des options',.6,1.5,.02,1,''],['pz','Bouton +',.5,1.6,.02,1,''],['bz','Bouton du bas',.6,1.3,.02,1,'']];
+ ['gz','Choix du jeu (Cricket / 501…)',.6,1.4,.02,1,''],['oz','Options (Mode, Équipes…)',.6,1.4,.02,1,''],['lz','Titres des options',.6,1.5,.02,1,''],['pz','Bouton +',.5,1.6,.02,1.02,''],['bz','Bouton du bas',.6,1.3,.02,1,'']];
 S.mnu=S.mnu||{};
-if(!S.mnuV){const B={"cw": 51, "cph": 0, "cbw": 2, "cbg": 100, "rz": 49, "rx": -4, "rf": 16.5, "rs": 0, "rbw": 0, "nz": 1.2, "nc": "Blanc", "xf": 9.5, "xr": 13, "xy": 0, "gz": 1};for(const k in B)if(S.mnu[k]===B[k])delete S.mnu[k];S.mnuV=1;try{store.set(K_S,S)}catch(e){}}   /* lf-403 : réglages de Loubi = base */
+if(!S.mnuV){const B={"cw": 51, "cph": 0, "cbw": 2, "cbg": 100, "rz": 49, "rx": -4, "rf": 16.5, "rs": 0, "rbw": 0, "nz": 1.2, "nc": "Blanc", "xf": 9.5, "xr": 13, "xy": 0, "gz": 1};for(const k in B)if(S.mnu[k]===B[k])delete S.mnu[k];S.mnuV=1;try{store.set(K_S,S)}catch(e){}}
+if(S.mnuV<2){const B={cw:51,cr:30,nz:1.2,cph:0,cbw:2,ns:3,xf:14,xy:0,xr:3,pz:1.02};for(const k in B)if(S.mnu[k]===B[k])delete S.mnu[k];['rz','rf','ry','rx','rs','rbw','rbc'].forEach(k=>delete S.mnu[k]);S.mnuV=2;try{store.set(K_S,S)}catch(e){}}   /* lf-407 : réglages de Loubi (lf-406) = base */   /* lf-403 : réglages de Loubi = base */
 function mnApply(){/* variables posées dans une feuille de style sur #setup ET sur chaque capsule : « couleur du joueur » (var(--pc)) se résout ainsi sur la capsule elle-même */
   const st=$('setup').style;let css='';MN.forEach(d=>{if(d.length<2)return;const k=d[0],v=S.mnu[k]??(Array.isArray(d[2])?d[3]:d[5]);st.removeProperty('--mn-'+k);
     if(Array.isArray(d[2])){const c=d[2].find(x=>x[0]===v);if(c)css+=`--mn-${k}:${c[1]};`}else css+=`--mn-${k}:${v}${d[6]};`});
-  let t=$('mnst');if(!t){t=document.createElement('style');t.id='mnst';document.head.append(t)}t.textContent=`#setup,#setup #names .nslot{${css}}`}
+  let t=$('mnst');if(!t){t=document.createElement('style');t.id='mnst';document.head.append(t)}t.textContent=`#setup,#setup #names .nslot,#ppick,#ppick .rchip,#draw,#draw .slot{${css}}`}
 function mnFit(){try{renderSetup()}catch(e){}try{placeThumbs()}catch(e){}}
 function mnDraw(){const p=$('mnp');const fv=(d,v)=>(d[6]===''?String(Math.round(v*100)/100):String(v)+(d[6]==='%'?' %':' px')).replace('.',',');
   p.innerHTML=`<div class="mnh"><b>Menu</b><button class="lt" data-mnr>Rétablir</button><button class="lt" data-mncp>Copier</button><button data-mnx>OK</button></div>`+
