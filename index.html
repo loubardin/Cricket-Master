@@ -4389,25 +4389,18 @@ function throwDart(t){
     flash(t,who);
     const kills=!wasDead&&dead(t);            // cette fléchette tue le numéro : seul le clap joue
     if(d.eff===0&&!kills)SFX.dead();
-    else if(!kills){
-      const pointsOnly=d.pts&&d.pre>=3;          // numéro déjà fermé : la fléchette ne fait que des points
-      if(!pointsOnly){
-        // même règle pour toutes les marques : le son dépend du multiplicateur (bulle pour le Bull)
-        // le son suit les marques réellement posées (ex. il en manque 1 et on fait un double : son de simple + 1 coup de feu)
-        const u=Math.min(m,Math.max(0,3-(d.pre||0)));
-        if(d.cl)SFX.close();                     // la fléchette qui ferme le numéro : seulement le son « numéro fermé »
-        else if(t===25)(u===2?SFX.dbull:SFX.bull)();
-        else if(u===3)SFX.triple();else if(u===2)SFX.double();else SFX.single();   // l'accord attend la fin du son de double / triple       // + petit accord quand la fléchette ferme le numéro
-      }
-      if(d.pts){                                 // des points : coup de feu
-        if(pointsOnly&&t===25)(m===2?SFX.dbull:SFX.bull)();   // Bull : la bulle d'abord, le coup de feu juste après
-        const u=Math.min(m,Math.max(0,3-(d.pre||0))),dl=pointsOnly?(t===25?260:0):(d.cl?300:u>=2?560:t===25?260:180);
-        setTimeout(()=>sndN(G.mode==='cut'?'ptsOpp':'ptsMe','gun',Math.round(d.pts/t)),dl);   // le son des points choisi, joué 2 ou 3 fois en double / triple   // des points (pour soi ou pour les autres) : coup de feu
-      }
+    else{
+      /* le son = une suite de sons simples, un par marque : chaque marque posée → « marque » (bulle au Bull),
+         chaque marque en trop qui compte → un coup de points ; la marque qui ferme → « numéro fermé » seulement si rien ne suit.
+         ex. 1 marque + triple : marque, marque, coup de feu · si l'adversaire l'avait fermé : marque, numéro fermé */
+      const u=Math.min(m,Math.max(0,3-(d.pre||0))),np=d.pts?Math.round(d.pts/t):0,Q=[];
+      for(let i=0;i<u;i++)Q.push(d.cl&&i===u-1&&!np?'cl':'mk');
+      for(let i=0;i<np;i++)Q.push('pt');
+      sndSeq(Q,t===25);
     }
     if(d.cl){pulse(t);anim(R.mk[t][who],'closing',600);busy(600)}
     if(m>=2)ripple(t,m-1);
-    if(!wasDead&&dead(t)){busy(950+1300);setTimeout(()=>killRow(t),950);SFX.bolt()}
+    if(!wasDead&&dead(t)){busy(950+1300);setTimeout(()=>killRow(t),950)}   // numéro fermé par tous : le son reste « marque… numéro fermé »
   }
   if(t===0){
     anim($('bS'),'shk',450);
@@ -6918,8 +6911,8 @@ const SB_LIB=[['single','Cloches claires'],['double','Cloche + craquement'],['tr
   ['big','Gamme',3],['twinkle','Scintillement'],['sparkle','Paillettes'],['lead','Montée'],['ice','Glaçon'],['fire','En feu'],['epic','Fanfare'],['win','Arpège'],
   ['start','Départ'],['open','Ouverture'],['neon','Néon'],['spew','Spew'],['meh','Bof'],['sad','Triste'],['dying','Agonie'],['loser','Perdant',2],
   ['turn','Ding-dong'],['undo','Retour'],['err','Buzz'],['ui','Clic'],['back','Clic arrière']];
-const SB_EV=[['Marques',[['mk1','Marque simple','single'],['mk2','Marque double','double'],['mk3','Marque triple','triple'],['bull','Bulle','bull'],['dbull','Double bulle','dbull'],['close','Numéro fermé (3e marque)','close'],['dead','Marque dans un numéro fermé','dead'],['kill','Numéro fermé par tous','bolt']]],
-  ['Points (Cricket)',[['ptsMe','Points marqués pour nous','gun'],['ptsOpp','Points chez les adversaires (coupe-gorge)','gun']]],
+const SB_EV=[['Marques',[['mk1','Marque','single'],['bull','Marque au Bull','bull'],['close','Numéro fermé (3e marque)','close'],['dead','Marque dans un numéro fermé','dead']]],
+  ['Points (Cricket)',[['ptsMe','Point marqué pour nous','gun'],['ptsOpp','Point chez les adversaires (coupe-gorge)','gun']]],
   ['Barre du bas',[['arm2','Armer le double','shing'],['arm3','Armer le triple','ignite'],['arm1','Désarmer','tick'],['spew','Spew','spew']]],
   ['Partie',[['turn','Changement de joueur','turn'],['undo','Annuler','undo']]]];
 
@@ -6945,22 +6938,27 @@ const SB_FAM=[
 SB_FAM.forEach(([id,n,gap,f])=>[1,2,3].forEach(c=>{SFX0['n'+id+c]=()=>{for(let i=0;i<c;i++)f(i,i*gap)}}));
 SB_LIB.unshift(...SB_FAM.flatMap(([id,n])=>[['#',n]].concat([1,2,3].map(c=>['n'+id+c,c===1?'×1':'×'+c,null,n])))),SB_LIB.unshift(['#','Nouveaux sons']);
 const SB_ARG=Object.fromEntries(SB_LIB.filter(x=>x[0]!=='#'&&x[2]).map(x=>[x[0],x[2]]));
-const SB_MIX={mk2:1.7,mk3:1.8,dbull:1.3,close:1.3,ptsMe:.7,ptsOpp:.7,kill:.8};   /* double et triple passent devant, les sons d'accompagnement derrière */
-function snd(ev,def,arg){const k=(S.sbx||{})[ev]||def;if(k==='none')return;const f=SFX0[k]||SFX0[def];if(!f)return;VK=SB_MIX[ev]||1;try{f(k===def&&arg!==undefined?arg:(arg!==undefined&&SB_ARG[k]?arg:SB_ARG[k]))}catch(e){}VK=1}
+const SB_MIX={kill:.8};   /* double et triple passent devant, les sons d'accompagnement derrière */
+function snd(ev,def,arg){let k=(S.sbx||{})[ev]||def;if(/^n..[23]$/.test(k))k=k.slice(0,3)+'1';if(k==='none')return;const f=SFX0[k]||SFX0[def];if(!f)return;VK=SB_MIX[ev]||1;try{f(k===def&&arg!==undefined?arg:(arg!==undefined&&SB_ARG[k]?arg:SB_ARG[k]))}catch(e){}VK=1}
 /* les sons existants passent par la boîte (tous les jeux) */
-[['single','mk1'],['double','mk2'],['triple','mk3'],['bull','bull'],['dbull','dbull'],['close','close'],['dead','dead'],['bolt','kill'],['spew','spew'],['turn','turn'],['undo','undo']]
+[['single','mk1'],['bull','bull'],['close','close'],['dead','dead'],['bolt','kill'],['spew','spew'],['turn','turn'],['undo','undo']]
   .forEach(([k,ev])=>{SFX[k]=(...a)=>snd(ev,k,a[0])});
+SFX.double=()=>sndSeq(['mk','mk']);SFX.triple=()=>sndSeq(['mk','mk','mk']);SFX.dbull=()=>sndSeq(['mk','mk'],true);   /* plus de sons « doubles » : la marque simple répétée */
 
 /* son d'un moment joué n fois (points en double / triple) : famille → sa version ×n, son à nombre (coup de feu…) → n, sinon répété */
 function sndN(ev,def,n){n=Math.max(1,Math.min(3,n||1));const k=(S.sbx||{})[ev]||def;if(k==='none')return;const fam=/^n(..)[123]$/.exec(k);
   if(fam){const kk='n'+fam[1]+n;VK=SB_MIX[ev]||1;try{SFX0[kk]()}catch(e){}VK=1;return}
   if(SB_ARG[k]||k==='gun'){snd(ev,def,n);return}
   for(let i=0;i<n;i++)setTimeout(()=>snd(ev,def),i*230)}
+
+/* suite de sons simples (marques, fermeture, points), espacés pour qu'on les compte */
+function sndSeq(Q,bull){let at=0;Q.forEach((k,i)=>{const go=()=>{if(k==='mk')snd(bull?'bull':'mk1',bull?'bull':'single');else if(k==='cl')snd('close','close');else snd(G&&G.mode==='cut'?'ptsOpp':'ptsMe','gun',1)};
+    if(at===0)go();else setTimeout(go,at);at+=k==='pt'?300:190})}
 function sbxOpen(){const old=$('sbx');if(old)old.remove();haptic();const p=el('div','');p.id='sbx';document.body.append(p);let open=null;
-  const nm=k=>{if(k==='none')return'Aucun son';const x=SB_LIB.find(x=>x[0]===k)||[0,k];return x[3]?x[3]+' '+x[1]:x[1]};
+  const nm=k=>{if(k==='none')return'Aucun son';const x=SB_LIB.find(x=>x[0]===k)||[0,k];return x[3]||x[1]};
   const draw=()=>{p.innerHTML=`<div class="sbh"><b>Boîte à sons</b><button class="sbx0">Tout remettre</button><button class="sbxx">OK</button></div><div class="sbl">${SB_EV.map(([g,L])=>`<h4>${g}</h4>`+L.map(([ev,t,def])=>{const cur=(S.sbx||{})[ev]||def;
       return `<div class="sbr${open===ev?' on':''}"><button class="sbe" data-ev="${ev}"><span>${t}</span><b>${esc(nm(cur))}${cur!==def?' ✎':''}</b></button>${open===ev?`<div class="sbg">${(()=>{const B=(k,n)=>`<button data-k="${k}" class="${k===cur?'on':''}${k===def?' def':''}">${esc(n)}</button>`;
-        return B('none','Aucun son')+'<i class="sbf">Nouveaux sons</i>'+SB_FAM.map(([id,n])=>`<div class="sbfr"><span>${esc(n)}</span>${[1,2,3].map(c=>B('n'+id+c,'×'+c)).join('')}</div>`).join('')
+        return B('none','Aucun son')+'<i class="sbf">Nouveaux sons</i>'+SB_FAM.filter(x=>x[0]!=='cl'&&x[0]!=='gu').map(([id,n])=>B('n'+id+'1',n)).join('')
           +'<i class="sbf">Sons de l\'appli</i>'+SB_LIB.filter(x=>x[0]!=='#'&&!x[3]).map(([k,n])=>B(k,n)).join('')})()}</div>`:''}</div>`}).join('')).join('')}</div>`};
   draw();
   p.addEventListener('click',e=>{if(e.target.closest('.sbxx')){haptic();p.remove();return}
@@ -7297,7 +7295,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-383';   // à changer avec VERSION dans sw.js
+const APPV='lf-384';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
