@@ -3649,6 +3649,21 @@ html.nfxD body #game#game#game#game#game#game #grid .num:not(.dead) .lbl::after{
 html.nfx:not(.pfN) body #game#game#game#game#game#game #grid .num:not(.dead):not(#q1):not(#q2):not(#q3) .lbl,html.nfx:not(.pfN) body #game#game#game#game#game#game #grid .num:not(.dead) .lbl::before,html.nfx:not(.pfN) body #game#game#game#game#game#game #grid .num:not(.dead) .lbl::after{font-family:"Fun",sans-serif!important;font-weight:400!important}
 #stu .stunfx button.on{background:#111;color:#fff}
 #stu .stucol button{width:34px;height:34px;padding:0;border-radius:50%}#stu .stucol button.on{box-shadow:inset 0 0 0 2px #111,0 0 0 3px #fff,0 0 0 5px #111}
+/* Double / Triple : au toucher d'un nombre, le chiffre se dédouble en contour noir + aplats fluo qui claquent en rythme (2 temps / 3 temps) */
+html body #game#game#game#game#game#game #grid .num .lbl[data-nh="2"]:not(#q1):not(#q2):not(#q3),html body #game#game#game#game#game#game #grid .num .lbl[data-nh="3"]:not(#q1):not(#q2):not(#q3){position:relative!important;color:transparent!important;-webkit-text-fill-color:transparent!important;-webkit-text-stroke:max(2.5px,.065em) #111!important;text-shadow:none!important;background:none!important;isolation:isolate;font-family:"Fun",sans-serif!important;font-weight:400!important}
+html body #game#game#game#game#game#game #grid .num .lbl[data-nh="2"]:not(#q1):not(#q2):not(#q3)::before,html body #game#game#game#game#game#game #grid .num .lbl[data-nh="2"]:not(#q1):not(#q2):not(#q3)::after,html body #game#game#game#game#game#game #grid .num .lbl[data-nh="3"]:not(#q1):not(#q2):not(#q3)::before,html body #game#game#game#game#game#game #grid .num .lbl[data-nh="3"]:not(#q1):not(#q2):not(#q3)::after{content:attr(data-t)!important;display:block!important;position:absolute!important;inset:0!important;-webkit-text-stroke:0!important;text-shadow:none!important;background:none!important;white-space:nowrap;text-box:inherit;pointer-events:none;font-family:"Fun",sans-serif!important}
+html body #game#game#game#game#game#game #grid .num .lbl[data-nh="2"]:not(#q1):not(#q2):not(#q3)::before{color:#fff!important;-webkit-text-fill-color:#fff!important;z-index:-1!important;animation:nhB2 .62s cubic-bezier(.2,1.4,.4,1) both!important}
+html body #game#game#game#game#game#game #grid .num .lbl[data-nh="2"]:not(#q1):not(#q2):not(#q3)::after{color:#00e5ff!important;-webkit-text-fill-color:#00e5ff!important;z-index:-2!important;animation:nhA2 .62s cubic-bezier(.2,1.4,.4,1) both!important}
+html body #game#game#game#game#game#game #grid .num .lbl[data-nh="3"]:not(#q1):not(#q2):not(#q3)::before{color:#fff200!important;-webkit-text-fill-color:#fff200!important;z-index:-1!important;animation:nhB3 .78s cubic-bezier(.2,1.5,.4,1) both!important}
+html body #game#game#game#game#game#game #grid .num .lbl[data-nh="3"]:not(#q1):not(#q2):not(#q3)::after{color:#ff2bd6!important;-webkit-text-fill-color:#ff2bd6!important;z-index:-2!important;animation:nhA3 .78s cubic-bezier(.2,1.5,.4,1) both!important}
+html body #game#game#game#game#game#game #grid .num .lbl[data-nh="2"]:not(#q1):not(#q2):not(#q3){animation:nhL2 .62s ease-out both!important}
+html body #game#game#game#game#game#game #grid .num .lbl[data-nh="3"]:not(#q1):not(#q2):not(#q3){animation:nhL3 .78s ease-out both!important}
+@keyframes nhL2{0%{transform:scale(1)}12%{transform:scale(1.28)}30%{transform:scale(1)}48%{transform:scale(1.18)}66%,100%{transform:scale(1)}}
+@keyframes nhB2{0%{transform:translate(0,0)}12%{transform:translate(.13em,.12em)}30%{transform:translate(.03em,.03em)}48%{transform:translate(.1em,.09em)}66%{transform:translate(.05em,.05em)}100%{transform:translate(0,0)}}
+@keyframes nhA2{0%{transform:translate(0,0);opacity:0}12%{transform:translate(-.12em,-.1em);opacity:1}30%{transform:translate(-.03em,-.02em)}48%{transform:translate(-.09em,-.08em)}66%{transform:translate(-.04em,-.03em);opacity:1}100%{transform:translate(0,0);opacity:0}}
+@keyframes nhL3{0%{transform:scale(1) rotate(0)}9%{transform:scale(1.3) rotate(-6deg)}24%{transform:scale(1) rotate(0)}38%{transform:scale(1.24) rotate(6deg)}53%{transform:scale(1) rotate(0)}67%{transform:scale(1.32) rotate(-4deg)}82%,100%{transform:scale(1) rotate(0)}}
+@keyframes nhB3{0%{transform:translate(0,0) scale(1)}9%{transform:translate(.14em,.12em) scale(1.08) rotate(-5deg)}24%{transform:translate(.03em,.03em)}38%{transform:translate(-.12em,.12em) scale(1.08) rotate(5deg)}53%{transform:translate(0,.03em)}67%{transform:translate(.15em,.14em) scale(1.14) rotate(-6deg)}82%{transform:translate(.05em,.05em)}100%{transform:translate(0,0)}}
+@keyframes nhA3{0%{transform:translate(0,0);opacity:0}9%{transform:translate(-.13em,-.11em);opacity:1}24%{transform:translate(-.03em,-.02em)}38%{transform:translate(.12em,-.11em)}53%{transform:translate(0,-.03em)}67%{transform:translate(-.15em,-.13em) scale(1.06)}82%{transform:translate(-.05em,-.04em);opacity:1}100%{transform:translate(0,0);opacity:0}}
 </style>
 </head>
 <body>
@@ -7157,7 +7172,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-363';   // à changer avec VERSION dans sw.js
+const APPV='lf-364';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -8035,7 +8050,7 @@ fcApply();
 const NFX_COL=[['#ffffff','Blanc'],['#fff200','Jaune'],['#00e5ff','Cyan'],['#ff2bd6','Rose'],['#39ff14','Vert'],['#ff6a00','Orange']];
 function nfxApply(){const h=document.documentElement,f=S.nfx||{},st=f.s||'';h.classList.toggle('nfx',!!st);h.classList.toggle('nfxC',st==='C');h.classList.toggle('nfxD',st==='D');
   const c=f.c||'#ffffff';h.style.setProperty('--nfc',c);h.style.setProperty('--nfc2',c==='#00e5ff'?'#ff2bd6':'#00e5ff');try{lyLbl()}catch(e){}}
-nfxApply();
+if(S.nfx){delete S.nfx;try{store.set(K_S,S)}catch(e){}}nfxApply();
 
 /* ===== Studio : sur l'écran de jeu, toucher un élément → le régler en direct (police, taille, contour) et le faire glisser pour le placer ===== */
 let STU=null;
@@ -8060,8 +8075,7 @@ function stuDraw(){const p=$('stu');if(!p)return;const r=STU.sel;p.classList.tog
      <div class="stus"><span>Taille</span><button data-z="-1">−</button><button data-z="1">+</button></div>
      ${sw?`<div class="stus"><span>Contour</span><button data-w="-1">−</button><button data-w="1">+</button></div>`:''}
      <button class="stu0">Remettre</button></div>
-     ${r.id==='lbl'?`<div class="stur stunfx"><span>Style</span>${[['','Normal'],['C','Double'],['D','Gonflé']].map(([k,t])=>`<button data-nfx="${k}" class="${((S.nfx||{}).s||'')===k?'on':''}">${t}</button>`).join('')}</div>
-       ${(S.nfx||{}).s?`<div class="stur stucol">${NFX_COL.map(([c,t])=>`<button data-nfc="${c}" aria-label="${t}" class="${((S.nfx||{}).c||'#ffffff')===c?'on':''}" style="background:${c}"></button>`).join('')}</div>`:''}`:''}<p class="stuhint">Fais glisser l'élément sur l'écran pour le placer${r.id==='mk'||r.id==='dt'?' (symétrique de part et d\'autre du centre)':''}.</p>`:''}`}
+<p class="stuhint">Fais glisser l'élément sur l'écran pour le placer${r.id==='mk'||r.id==='dt'?' (symétrique de part et d\'autre du centre)':''}.</p>`:''}`}
 function stuOn(){if(STU)return;STU={sel:null};document.documentElement.classList.add('stu');const old=$('lyp');if(old)old.remove();
   const p=el('div','');p.id='stu';document.body.append(p);stuDraw();stuHL();
   p.addEventListener('click',ev=>{ev.stopPropagation();const r=STU.sel;
@@ -8104,6 +8118,11 @@ lyLP($('fMode'),'bas',()=>['game','killer','x01'].some(id=>$(id).classList.conta
 const TURNLOCK_MS=750;let TURNLOCK=0;
 const turnLocked=()=>performance.now()<TURNLOCK||!!HOLD||!!KHOLD||(typeof XHOLD!=='undefined'&&!!XHOLD);   // tant que le joueur n'a pas changé à l'écran
 {const _t=throwDart;throwDart=function(){if(turnLocked())return;const h=HOLD;const r=_t.apply(this,arguments);if(HOLD&&HOLD!==h)TURNLOCK=performance.now()+TURNLOCK_MS;return r}}
+
+/* Double / Triple touchés : animation du nombre (2 ou 3 temps) */
+function numFx(t,m){const b=R&&R.num&&R.num[t];if(!b)return;const l=b.querySelector('.lbl');if(l){const x=l.textContent.trim();if(l.dataset.t!==x)l.dataset.t=x}
+  if(!l)return;delete l.dataset.nh;void l.offsetWidth;l.dataset.nh=m;clearTimeout(l._nh);l._nh=setTimeout(()=>{delete l.dataset.nh},m===3?820:660)}
+{const _t=throwDart;throwDart=function(t){const m=G&&G.mult,ok=$('game').classList.contains('on');const r=_t.apply(this,arguments);if(ok&&(m===2||m===3))try{numFx(t,m)}catch(e){}return r}}
 {const _k=kThrow;kThrow=function(n,quiet){if(!quiet&&turnLocked())return;const h=KHOLD;const r=_k.apply(this,arguments);if(KHOLD&&KHOLD!==h)TURNLOCK=performance.now()+TURNLOCK_MS;return r}}
 {const _x=xThrow;xThrow=function(n,m,quiet){const p=XG&&!XG.mode&&XG.winner===null&&XG.legW===null?XG.players[XG.cur]:null,l0=p&&p.last;const r=_x.apply(this,arguments);
   try{if(p&&p.last!==l0&&XG.legW===null&&XG.winner===null){const L=p.last||[];say(L.some(d=>d.type==='bust')?'Bust':String(L.reduce((a,d)=>a+(d.eff||0),0)),350)}}catch(e){}return r}}
