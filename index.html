@@ -3776,6 +3776,12 @@ html body:is(.m2,.m3) #killer:not(.bron) #pkl .pkng,html body:is(.m2,.m3) #kille
 .fcard.di .fcf::after{background-image:linear-gradient(115deg,transparent 25%,rgba(255,255,255,.9) 42%,rgba(190,240,255,.6) 50%,transparent 62%);animation-duration:2.4s}
 @keyframes fcshine{0%{background-position:150% 0}100%{background-position:-100% 0}}
 .fcsh{border:0;border-radius:99px;background:#111;color:#fff;font:400 14px "Fun",sans-serif;padding:8px 16px}
+.fcard{touch-action:pan-y}
+.fcb{justify-content:flex-start;padding:9% 9% 14%!important;gap:6px!important}
+.fcb .fcbs{width:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;flex:1;display:flex;flex-direction:column;gap:2px;padding-bottom:30px}
+.fcb .fcbs p{margin:8px 0 2px;font:400 15px "Fun",sans-serif;border-bottom:2px solid #111;padding-bottom:1px}
+.fcb .fcbs div{display:flex;justify-content:space-between;gap:8px;padding:1px 0}.fcb .fcbs span{font:400 11.5px "Lbl","Lexend",sans-serif}.fcb .fcbs b{font-weight:400;font-size:13.5px;white-space:nowrap}
+.fcb .fcbs .fcst{background:rgba(0,0,0,.12);border-radius:8px;padding:4px 8px}.fcb .fcbs em{font:400 12px "Lbl",sans-serif;font-style:normal;opacity:.7;text-align:center}
 </style>
 </head>
 <body>
@@ -7360,7 +7366,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-390';   // à changer avec VERSION dans sw.js
+const APPV='lf-391';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -7778,7 +7784,7 @@ function profOpen(name){SFX.open();let o=$('prof');if(o)o.remove();o=el('div','o
   o.addEventListener('click',e=>{const t=e.target;if(t.closest('[data-x]')){o.classList.remove('on');setTimeout(()=>o.remove(),300);return}if(t.closest('[data-back]')){SFX.back();VSO=null;PGN=20;draw(null);return}
     if(t.closest('[data-ami]')){haptic();if(window.syOpen)syOpen();return}
     const hg=t.closest('[data-hg]');if(hg){haptic();hgOpen(hg.dataset.hg,o);return}
-    const fcd=t.closest('[data-fcard]');if(fcd){haptic();SFX.tick();fcd.classList.toggle('flip');return}
+    if(t.closest('[data-fcard]'))return;   // la carte tourne au toucher / glissé (géré à part)
     if(t.closest('[data-fcshare]')){haptic();fcShare(o.dataset.n);return}
     if(t.closest('[data-more]')){haptic();SFX.tick();PGN+=20;const y=o.scrollTop;draw(o.dataset.n);o.scrollTop=y;return}
     const trd=t.closest('.prt>div[data-tr]');if(trd){haptic();SFX.tick();trd.classList.toggle('open');return}
@@ -7828,9 +7834,10 @@ function fcData(n){const own=r=>r.p&&r.p.findIndex(x=>pers(x).includes(n));
     if(y&&y.darts){if(r.game==='x01'){xd+=y.darts;xp+=y.pts||0;co=Math.max(co,y.co||0)}else{d+=y.darts;h+=y.hits||0;if(y.darts>=9)per.push(y.hits*3/y.darts)}}
     (r.log||[]).forEach(e=>{const P=r.p[e[0]];if(!P)return;if(e[1]?e[1]!==n:!pers(P).includes(n))return;(e[2]||[]).forEach(q=>{td++;if(q[1]===3&&q[0]>0)t3++})})});
   const mean=per.length?per.reduce((a,b)=>a+b,0)/per.length:0,sd=per.length>2?Math.sqrt(per.reduce((a,b)=>a+(b-mean)**2,0)/per.length):null;
-  const A=[d>=9?fcRate(h*3/d,0,4):null, xd>=9?fcRate(xp*3/xd,0,90):null, co?fcRate(co,0,140):null, td>=15?fcRate(t3*100/td,0,22):null,
-    sd!==null&&mean>0?fcRate(1-sd/mean,.3,.92):null, g?fcRate(w*100/g,0,75):null];
-  const got=A.filter(v=>v!==null),ovr=got.length?Math.round(A.reduce((a,b)=>a+(b===null?45:b),0)/A.length):null;   /* un attribut jamais joué compte 45 : pas joué = pas prouvé */
+  /* barèmes « niveau de bande » : 1,5 de MPR ≈ 68 · 35 de moyenne ≈ 66 · 5 % de triples ≈ 61 · 1 victoire sur 2 ≈ 82 */
+  const A=[d>=9?fcRate(h*3/d,.5,2.6):null, xd>=9?fcRate(xp*3/xd,15,60):null, co?fcRate(co,20,100):null, td>=15?fcRate(t3*100/td,1,12):null,
+    sd!==null&&mean>0?fcRate(1-sd/mean,.3,.9):null, g?fcRate(w*100/g,0,70):null];
+  const got=A.filter(v=>v!==null),ovr=got.length?Math.round(got.reduce((a,b)=>a+b,0)/got.length):null;   /* un jeu jamais joué (ex. pas de 501) ne compte pas */
   const top=Object.entries(fav).sort((a,b)=>b[1]-a[1])[0];
   return{n,g,w,A,ovr,fav:top?top[0]:null,raw:{mpr:d?h*3/d:0,moy:xd?xp*3/xd:0,co,tri:td?t3*100/td:0,vic:g?w*100/g:0}}}
 function fcTier(D){if(D.ovr==null)return'bz';return D.ovr>=82?'di':D.ovr>=72?'or':D.ovr>=62?'ar':'bz'}
@@ -7842,10 +7849,27 @@ function fcHtml(n){const D=fcData(n),t=fcTier(D),T=trAll()[n]||{},tro=TROPH.filt
       <div class="fca"><span>${esc(ini)}</span></div><div class="fcn">${esc(n)}</div>
       <div class="fcs">${FC_ATT.map((a,i)=>`<div><b>${D.A[i]??'–'}</b><span>${a}</span></div>`).join('')}</div>
       <div class="fcg">${D.g} partie${D.g>1?'s':''} · ${D.w} victoire${D.w>1?'s':''}</div></div>
-    <div class="fcb"><div class="fcbt">Trophées <b>${tro.length}/${TROPH.length}</b></div><div class="fcbi">${tro.slice(0,12).map(x=>`<span title="${esc(x[1])}">${x[3]}</span>`).join('')||'<em>Pas encore de trophée</em>'}</div>
-      <div class="fcbr"><div><span>MPR</span><b>${D.raw.mpr?fr(D.raw.mpr):'–'}</b></div><div><span>Moyenne 501</span><b>${D.raw.moy?fr(D.raw.moy):'–'}</b></div><div><span>Meilleur finish</span><b>${D.raw.co||'–'}</b></div><div><span>Triples</span><b>${D.raw.tri?fr(D.raw.tri)+' %':'–'}</b></div><div><span>Victoires</span><b>${D.g?Math.round(D.raw.vic)+' %':'–'}</b></div></div>
-      <div class="fcg">touche pour retourner</div></div>
+    <div class="fcb"><div class="fcbt">Records</div><div class="fcbs">${fcRecs(n)}</div></div>
   </div></div><button class="fcsh" data-fcshare>Partager la carte</button></div>`}
+
+/* dos de la carte : les records du joueur, rangés par jeu (seulement les jeux joués) */
+function fcRecs(n){const out=[],nb=v=>v||v===0?v:null;let str=0;
+  const L={cricket:a=>[['Parties',a.g+' · '+Math.round(a.wins*100/a.g)+' % vict.'],['MPR moyen',a.d?fr(a.h*3/a.d):null],['Meilleur MPR',a.top?fr(a.top):null],['Meilleur tour',a.turn?a.turn+' marques':null],['Victoire la + rapide',a.fast?a.fast+' tours':null]],
+    x01:a=>[['Parties',a.g+' · '+Math.round(a.wins*100/a.g)+' % vict.'],['Moyenne',a.xd?fr(a.xp*3/a.xd):null],['Meilleur finish',nb(a.co)||null],['Meilleure volée',a.vol||null],['180',a.n180||null],['Manche la + courte',a.leg?a.leg+' fléchettes':null]],
+    killer:a=>[['Parties',a.g+' · '+Math.round(a.wins*100/a.g)+' % vict.'],['Vies prises',a.k||null],['Devenu killer',a.kil?a.kil+' fois':null]],
+    clock:a=>[['Parties',a.g+' · '+Math.round(a.wins*100/a.g)+' % vict.'],['Réussite',a.d?Math.round(a.h*100/a.d)+' %':null],['Tour le + rapide',a.fastD?a.fastD+' fléchettes':null]],
+    shanghai:a=>[['Parties',a.g+' · '+Math.round(a.wins*100/a.g)+' % vict.'],['Record',a.best||null],['Shanghai réussis',a.sh||null]],
+    halveit:a=>[['Parties',a.g+' · '+Math.round(a.wins*100/a.g)+' % vict.'],['Record',a.best||null],['Moitiés subies',a.hv||null]]};
+  STG.forEach(g=>{const a=stAgg(g,false).E.find(x=>x.name===n);if(!a||!a.g)return;str=Math.max(str,a.str||0);const R=(L[g]||(()=>[]))(a).filter(x=>x[1]!==null&&x[1]!==undefined);
+    out.push(`<p>${GNAME[g]||g}</p>`+R.map(([k,v])=>`<div><span>${k}</span><b>${v}</b></div>`).join(''))});
+  if(str>1)out.unshift(`<div class="fcst"><span>Plus longue série de victoires</span><b>${str}</b></div>`);
+  return out.join('')||'<em>Pas encore de partie</em>'}
+/* retournement : touche à gauche / à droite, ou glisse le doigt d'un côté ou de l'autre : la carte tourne dans ce sens */
+document.addEventListener('pointerdown',e=>{const c=e.target.closest&&e.target.closest('[data-fcard]');if(!c)return;const x0=e.clientX,y0=e.clientY,t0=performance.now();
+  const up=u=>{removeEventListener('pointerup',up,true);const dx=u.clientX-x0,dy=u.clientY-y0;let dir=0;
+    if(Math.abs(dx)>25&&Math.abs(dx)>Math.abs(dy))dir=dx>0?1:-1;else if(Math.abs(dx)<10&&Math.abs(dy)<10&&performance.now()-t0<500){const r=c.getBoundingClientRect();dir=u.clientX<r.left+r.width/2?-1:1}
+    if(!dir)return;c._a=(c._a||0)+dir*180;c.querySelector('.fcin').style.transform=`rotateY(${c._a}deg)`;c._skip=performance.now();try{haptic();SFX.tick()}catch(x){}};
+  addEventListener('pointerup',up,true)},true);
 /* image de la carte (dessinée en canvas) pour le partage */
 async function fcShare(n){const D=fcData(n),t=fcTier(D),W=600,H=860,c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');
   const G={bz:['#f0c39a','#a8683a','#6d3f1d'],ar:['#f4f6f8','#b9c0c8','#7d8691'],or:['#fff1a8','#e6b422','#9c6b06'],di:['#f2fdff','#9fe3f7','#4aa3d6']}[t];
