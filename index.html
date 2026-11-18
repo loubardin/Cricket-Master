@@ -3391,7 +3391,7 @@ html body :is(#game,#x01,#killer):is(#game,#x01,#killer):is(#game,#x01,#killer) 
 /* lf-293 : colonne du joueur en cours (case, numéros, marques) épinglée au premier plan quand on fait défiler — voir pnStick */
 html body #game#game#game.pn #grid>.row>.rtrack.pnf{z-index:7!important;background-color:var(--pnbg,var(--page))!important}
 html body #game#game#game.pn #grid>.row>.mk.pnf{z-index:8!important}
-html body #game#game#game.pn #grid>.row>.rtrackb.pnf{z-index:10!important}
+html body #game#game#game.pn #grid>.row>.rtrackb,html body #game#game#game.pn #grid>.row>.rtrackb.pnf{z-index:10!important}   /* dès le début de la partie (avant la 1re marque, la classe pnf n'est pas encore posée) */
 html body #game#game#game.pn #grid>.row>.num{z-index:9!important}   /* le cadre noir (rtrackb) passe par-dessus la bulle, comme avant */
 html body #game#game#game.pn #scores>.sc.pnf{z-index:5!important}
 /* lf-304 : bulle du switch Double / Spew / Triple — une seule règle de position pour tous les jeux.
@@ -3807,6 +3807,11 @@ html body #setup.b2 #names .pcol.ptr{position:relative;z-index:1;width:50px!impo
   background:radial-gradient(circle at 32% 28%,var(--g0) 0%,var(--g1) 45%,var(--g2) 100%);box-shadow:inset 0 0 0 2px rgba(0,0,0,.3),inset 0 3px 6px rgba(255,255,255,.35),0 0 0 3px #fff,0 0 0 5.5px #111,0 5px 0 4px rgba(0,0,0,.18)}
 #prof .prk i{font:400 13px "Fun",sans-serif;font-style:normal;color:#fff;margin-top:6px;text-shadow:0 1px 2px rgba(0,0,0,.35)}
 #prof .prk small{font:400 11px "Lbl","Lexend",sans-serif;opacity:.9}
+/* Spew choisi : même reflet qui balaie la bulle que Double / Triple armés (il est sélectionnable comme eux) */
+html body :is(#game,#x01,#killer) footer .fthumb{overflow:hidden;isolation:isolate}
+html body :is(#game,#x01,#killer) footer:not(.armed2):not(.armed3) .fthumb::before{content:"";position:absolute;top:-20%;bottom:-20%;width:35%;left:-50%;z-index:1;pointer-events:none;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.6),transparent);transform:skewX(-18deg);animation:shine 1.8s ease-in-out infinite}
+html body :is(#game,#x01,#killer) footer:not(.armed2):not(.armed3) .fthumb{animation:gold 1.4s ease-in-out infinite alternate}
 </style>
 </head>
 <body>
@@ -7392,7 +7397,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-396';   // à changer avec VERSION dans sw.js
+const APPV='lf-398';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
