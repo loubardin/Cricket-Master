@@ -3585,7 +3585,6 @@ html body.skin-casino #game#game#game#game.p2 #grid .num.bnc{border-image:none!i
 html body.skin-casino #game#game#game#game.p2 footer::after{border-color:transparent!important;background:url(skins/royal/barre.webp) 0 0/100% 100% no-repeat!important;z-index:0!important;inset:-1.4px -6.3px -6.8px -6.3px!important}
 html body.skin-casino #game#game#game#game.p2 .fthumb{background:transparent!important;box-shadow:none!important}
 html body.skin-casino #game#game#game#game.p2 .fthumb{border-style:solid!important;border-width:0!important;border-image:url(skins/royal/curseur.webp) 0 125 fill / 0 calc(var(--th,63.5px)*0.657) / calc(var(--th,63.5px)*0.109) calc(var(--th,63.5px)*.06) calc(var(--th,63.5px)*0.205) stretch!important}   /* curseur : bouts ronds jamais déformés, quelle que soit sa largeur (Double / Spew / Triple) */
-html body.skin-casino.m2 #game#game#game#game.p2 .fthumb{border-image-outset:calc(var(--th,63.5px)*0.109) 23px calc(var(--th,63.5px)*0.205) 0!important}   /* en Double, la boîte du curseur est 11 pt à gauche du mot « Double » : on recentre la bulle sur le mot */
 html body.skin-casino #game#game#game#game.p2 .mw{position:relative;isolation:isolate}
 html body.skin-casino #game#game#game#game.p2 .mw .disc{opacity:0!important}
 html body.skin-casino #game#game#game#game.p2 .mw.k3::before{content:'';position:absolute;left:21%;top:21%;width:58%;height:58%;background:url(skins/royal/disque.webp) center/contain no-repeat;z-index:-1;scale:var(--mkz,1);animation:skpop .28s cubic-bezier(.3,1.6,.5,1)}
@@ -3615,8 +3614,8 @@ html body #game #grid .row>.mk:nth-child(4) .mw{left:var(--mkX,0px)}
 /* « Double » / « Triple » : contour du texte et écart symétrique par rapport au centre */
 html body :is(#game,#x01,#killer):is(#game,#x01,#killer):is(#game,#x01,#killer) footer :is(#b2,#b3)::after{--o:var(--dtsw,0px);--on:calc(var(--dtsw,0px)*-1);--d:calc(var(--dtsw,0px)*.71);--dn:calc(var(--dtsw,0px)*-.71);
   text-shadow:var(--o) 0 0 var(--tol,#111),var(--on) 0 0 var(--tol,#111),0 var(--o) 0 var(--tol,#111),0 var(--on) 0 var(--tol,#111),var(--d) var(--d) 0 var(--tol,#111),var(--dn) var(--d) 0 var(--tol,#111),var(--d) var(--dn) 0 var(--tol,#111),var(--dn) var(--dn) 0 var(--tol,#111)!important}
-html body footer #b2::after{translate:calc(var(--dtX,0px)*-1) 0}
-html body footer #b3::after{translate:var(--dtX,0px) 0}
+html body :is(#game,#x01,#killer):is(#game,#x01,#killer):is(#game,#x01,#killer) footer #b2::after{translate:calc(var(--dtX,0px)*-1) 0!important}
+html body :is(#game,#x01,#killer):is(#game,#x01,#killer):is(#game,#x01,#killer) footer #b3::after{translate:var(--dtX,0px) 0!important}   /* le mot reste au centre de sa bulle, armé ou non (l'ancien décalage de 6 pt est retiré) */
 /* Double / Triple armés : plus d'effet sur les numéros du tableau (ni métal, ni tremblement), dans tous les habillages */
 html body:is(.m2,.m3) #game#game#game#game#game #grid .num .lbl{animation:none!important}
 html body:is(.m2,.m3) #game#game#game#game#game #grid .num .lbl::after,html body:is(.m2,.m3) #game#game#game#game#game #grid .num .lbl::before{content:none!important;display:none!important}
@@ -4853,7 +4852,8 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 function topColor(){try{const sc=document.querySelector('.screen.on');if(!sc)return;const h=sc.querySelector('header,.sh')||sc;let c=getComputedStyle(h).backgroundColor;if(!c||c==='rgba(0, 0, 0, 0)')c=getComputedStyle(sc).backgroundColor;document.querySelector('meta[name=theme-color]').content=c}catch(e){}}
 function ftPlace(){document.querySelectorAll('footer').forEach(f=>{const t=f.querySelector('.fthumb');if(!t||!f.offsetWidth)return;
   const b=f.querySelector(document.body.classList.contains('m2')?'#b2':document.body.classList.contains('m3')?'#b3':'#bS');if(!b)return;
-  const F=f.getBoundingClientRect(),B=b.getBoundingClientRect();f.style.setProperty('--tbL',(B.left-F.left-f.clientLeft).toFixed(1)+'px');f.style.setProperty('--tbW',B.width.toFixed(1)+'px')})}
+  const F=f.getBoundingClientRect(),B=b.getBoundingClientRect(),m=b.id==='b2'?-1:b.id==='b3'?1:0;let dx=0;try{dx=m*(+lyGet().dtX||0)}catch(e){}   /* la bulle suit le mot (réglage « écart du centre » de Double / Triple) */
+  f.style.setProperty('--tbL',(B.left-F.left-f.clientLeft+dx).toFixed(1)+'px');f.style.setProperty('--tbW',B.width.toFixed(1)+'px')})}
 new MutationObserver(()=>requestAnimationFrame(ftPlace)).observe(document.body,{attributes:true,attributeFilter:['class']});addEventListener('resize',()=>requestAnimationFrame(ftPlace));try{const ro=new ResizeObserver(()=>ftPlace());document.querySelectorAll('footer,footer #b2,footer #bS,footer #b3').forEach(e=>ro.observe(e))}catch(e){}
 function show(id){requestAnimationFrame(ftPlace);document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));requestAnimationFrame(topColor);if(id==='home'&&typeof placeHome==='function')requestAnimationFrame(placeHome)}
 
@@ -7145,7 +7145,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-359';   // à changer avec VERSION dans sw.js
+const APPV='lf-360';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -7900,7 +7900,7 @@ function lyKeys(L){const k=$('xkeys'),x=$('x01');if(!k||!x.classList.contains('o
 {const _x=xRender;xRender=function(){const r=_x.apply(this,arguments);try{if($('x01').classList.contains('on')&&!xRender._k){xRender._k=1;requestAnimationFrame(()=>{xRender._k=0;lyKeys(lyGet())})}}catch(e){}return r}}
 function lyRoot(){const L=lyGet(lyCur()),st=document.documentElement.style,u=innerHeight/100;st.setProperty('--bub-bw',L.bw+'px');st.setProperty('--bw',L.bw+'px');
   try{edApply()}catch(e){}
-  st.setProperty('--lyF',L.ftK);['tmZ','pbw','xcH','xpT','xgPK','xgKF','tmL','dtZ','spZ','xnZ','xrZ','xsZ','xcoZ','xhZ','xkz','xkg','xoN','xoS','xoM','xoH','xoC','xpW','xpH','xpG','xcG'].forEach(k=>st.setProperty('--'+k,L[k]));lyKeys(L);st.setProperty('--icZ',L.icZ);{const w=L.xsw;document.documentElement.classList.toggle('xsw',w>0);if(w>0)st.setProperty('--xsts',Array.from({length:16},(_,i)=>{const a=i*Math.PI/8;return`${(Math.cos(a)*w).toFixed(2)}px ${(Math.sin(a)*w).toFixed(2)}px 0 var(--tol,#111)`}).join(','))}st.setProperty('--ifZ',L.ifZ);st.setProperty('--fbw',L.fbw+'px');st.setProperty('--dtsw',(L.dtsw||0)+'px');st.setProperty('--dtX',(L.dtX||0)+'px');st.setProperty('--lyB',L.brK);st.setProperty('--lyGFB',(L.gFB*u).toFixed(1)+'px');st.setProperty('--lyMB',(L.mB*u).toFixed(1)+'px')}
+  st.setProperty('--lyF',L.ftK);['tmZ','pbw','xcH','xpT','xgPK','xgKF','tmL','dtZ','spZ','xnZ','xrZ','xsZ','xcoZ','xhZ','xkz','xkg','xoN','xoS','xoM','xoH','xoC','xpW','xpH','xpG','xcG'].forEach(k=>st.setProperty('--'+k,L[k]));lyKeys(L);st.setProperty('--icZ',L.icZ);{const w=L.xsw;document.documentElement.classList.toggle('xsw',w>0);if(w>0)st.setProperty('--xsts',Array.from({length:16},(_,i)=>{const a=i*Math.PI/8;return`${(Math.cos(a)*w).toFixed(2)}px ${(Math.sin(a)*w).toFixed(2)}px 0 var(--tol,#111)`}).join(','))}st.setProperty('--ifZ',L.ifZ);st.setProperty('--fbw',L.fbw+'px');st.setProperty('--dtsw',(L.dtsw||0)+'px');st.setProperty('--dtX',(L.dtX||0)+'px');requestAnimationFrame(()=>{try{ftPlace()}catch(e){}});st.setProperty('--lyB',L.brK);st.setProperty('--lyGFB',(L.gFB*u).toFixed(1)+'px');st.setProperty('--lyMB',(L.mB*u).toFixed(1)+'px')}
 lyRoot();
 {const _s=show;show=function(){const r=_s.apply(this,arguments);try{lyRoot()}catch(e){}return r}}
 function lyApply(){lyRoot();try{if(KG&&PKL.k&&$('killer').classList.contains('on')){PKL.k.querySelectorAll('g.kin').forEach(g=>{g._h=null});PKL.k.querySelectorAll('text').forEach(t=>{t._h=null});pklSync()}}catch(e){}try{if(G&&R&&$('game').classList.contains('on')){layoutSk();if(typeof fitSk==='function')fitSk();render()}}catch(e){}}
