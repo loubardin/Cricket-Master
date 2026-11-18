@@ -3664,7 +3664,7 @@ html body #game#game#game#game#game#game #grid .row[data-nh="2"] .num:not(.dead)
 html body #game#game#game#game#game#game #grid .row[data-nh="3"] .num:not(.dead) .lbl:not(#q1):not(#q2):not(#q3)::before{color:#fff200!important;-webkit-text-fill-color:#fff200!important;z-index:-1!important;animation:fxT1 .55s cubic-bezier(.25,1.2,.4,1) both!important}
 html body #game#game#game#game#game#game #grid .row[data-nh="3"] .num:not(.dead) .lbl:not(#q1):not(#q2):not(#q3)::after{color:#ff2bd6!important;-webkit-text-fill-color:#ff2bd6!important;z-index:-2!important;animation:fxT2 .55s cubic-bezier(.25,1.2,.4,1) both!important}
 @keyframes fxW1{0%,100%{transform:translate(.07em,.07em) scale(1)}50%{transform:translate(.07em,.07em) scale(1.06)}}
-@keyframes fxW2{0%,100%{transform:translate(-.06em,-.05em) scale(1)}50%{transform:translate(-.06em,-.05em) scale(1.06)}}
+@keyframes fxW2{0%,100%{transform:translate(-.17em,-.14em)}50%{transform:translate(-.21em,-.18em)}}
 @keyframes fxB1{0%{transform:translate(.07em,.07em)}12%,70%{transform:translate(.32em,.3em)}100%{transform:translate(.07em,.07em)}}
 @keyframes fxB2{0%{transform:translate(-.06em,-.05em)}12%,70%{transform:translate(-.31em,-.27em)}100%{transform:translate(-.06em,-.05em)}}
 @keyframes fxT1{0%{transform:translate(.07em,.07em)}10%,72%{transform:translate(.44em,.42em)}100%{transform:translate(.07em,.07em)}}
@@ -3681,7 +3681,7 @@ html body.m3 #game#game#game#game#game#game #grid .num:not(.dead):not(.bull) .lb
 html body:is(.m2,.m3) #game#game#game#game#game#game #grid .row:nth-child(1) .num .lbl:not(#q1):not(#q2):not(#q3){animation-delay:-0.13s!important}html body:is(.m2,.m3) #game#game#game#game#game#game #grid .row:nth-child(2) .num .lbl:not(#q1):not(#q2):not(#q3){animation-delay:-0.26s!important}html body:is(.m2,.m3) #game#game#game#game#game#game #grid .row:nth-child(3) .num .lbl:not(#q1):not(#q2):not(#q3){animation-delay:-0.39s!important}html body:is(.m2,.m3) #game#game#game#game#game#game #grid .row:nth-child(4) .num .lbl:not(#q1):not(#q2):not(#q3){animation-delay:-0.52s!important}html body:is(.m2,.m3) #game#game#game#game#game#game #grid .row:nth-child(5) .num .lbl:not(#q1):not(#q2):not(#q3){animation-delay:-0.65s!important}html body:is(.m2,.m3) #game#game#game#game#game#game #grid .row:nth-child(6) .num .lbl:not(#q1):not(#q2):not(#q3){animation-delay:-0.78s!important}html body:is(.m2,.m3) #game#game#game#game#game#game #grid .row:nth-child(7) .num .lbl:not(#q1):not(#q2):not(#q3){animation-delay:-0.91s!important}
 html body #game#game#game#game#game#game #grid .row[data-nh="2"] .num .lbl:not(#q1):not(#q2):not(#q3){animation:fxL2 .5s cubic-bezier(.25,1.2,.4,1) both!important}
 html body #game#game#game#game#game#game #grid .row[data-nh="3"] .num .lbl:not(#q1):not(#q2):not(#q3){animation:fxL3 .55s cubic-bezier(.25,1.2,.4,1) both!important}
-@keyframes fxL0{0%,100%{scale:1}50%{scale:1.06}}
+@keyframes fxL0{0%,100%{scale:1.14}50%{scale:1.24}}
 @keyframes fxL2{0%{scale:1}14%{scale:1.4}70%{scale:1.3}100%{scale:1}}
 @keyframes fxL3{0%{scale:1}12%{scale:1.55}72%{scale:1.4}100%{scale:1}}
 /* Spew : blanc normal au repos ; à l'appui, explosion maximale (son contour réglé reste) */
@@ -3707,6 +3707,9 @@ html body #game#game#game#game#game#game #grid .row[data-nh] .num .lbl:not(#q1):
 @keyframes fxD2{0%{transform:scale(1)}16%{transform:scale(2) translate(-.2em,-.17em)}64%{transform:scale(1.85) translate(-.2em,-.17em)}100%{transform:scale(1)}}
 @keyframes fxE1{0%{transform:scale(1)}16%{transform:scale(2) translate(.12em,.11em) rotate(-3deg)}64%{transform:scale(1.85) translate(.12em,.11em) rotate(-3deg)}100%{transform:scale(1)}}
 @keyframes fxE2{0%{transform:scale(1)}16%{transform:scale(2.05) translate(-.24em,-.2em) rotate(5deg)}64%{transform:scale(1.9) translate(-.24em,-.2em) rotate(5deg)}100%{transform:scale(1)}}
+/* Double / Triple armés : c'est le nombre lui-même qui change (plus gros, Triple en jaune), une seule copie de couleur décalée derrière */
+html body:is(.m2,.m3) #game#game#game#game#game#game #grid .num:not(.dead) .lbl:not(#q1):not(#q2):not(#q3)::before{content:none!important}
+html body.m3 #game#game#game#game#game#game #grid .num:not(.dead):not(.bull) .lbl:not(#q1):not(#q2):not(#q3){color:#fff200!important;-webkit-text-fill-color:#fff200!important}
 </style>
 </head>
 <body>
@@ -7215,7 +7218,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-373';   // à changer avec VERSION dans sw.js
+const APPV='lf-374';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
