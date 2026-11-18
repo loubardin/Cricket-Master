@@ -33,10 +33,12 @@ extInject();
 
 /* ---------- envoi des parties de ce téléphone ---------- */
 function hmOf(r){const out=[];const seen=new Set();(r.p||[]).forEach(x=>(x.members&&x.members.length?x.members:[x.name]).forEach(n=>{const h=linkOf(n);if(h&&!seen.has(n)&&unlocked(h,r.date||0)){seen.add(n);out.push([n,h])}}));return out}
-async function pushGames(){const todo=HIST.filter(r=>!r.ext&&r.p&&r.w!=null).map(r=>{const hm=hmOf(r);return{r,hm,sig:JSON.stringify(hm)+'|'+r.w+'|'+(r.log?r.log.length:0)}}).filter(x=>x.hm.length&&SY.up[x.r.id]!==x.sig);
+/* lf-410 : TOUTES les parties du téléphone sont partagées (même sans joueur relié) et indexées aussi sous le profil du propriétaire,
+   pour que les amis synchronisés aient exactement les mêmes classements statistiques */
+async function pushGames(){const own=SY.me?SY.me.h:null;const todo=HIST.filter(r=>!r.ext&&r.p&&r.w!=null).map(r=>{const hm=hmOf(r);return{r,hm,sig:'v2|'+(own||'')+'|'+JSON.stringify(hm)+'|'+r.w+'|'+(r.log?r.log.length:0)}}).filter(x=>(x.hm.length||own)&&SY.up[x.r.id]!==x.sig);
   for(const x of todo){const gid=SY.ph+'-'+x.r.id,{r}=x;
     await api('games/'+gid,'PUT',{j:JSON.stringify(r),hm:x.hm,src:SY.ph,by:SY.me?SY.me.h:null,t:Date.now(),d:r.date||Date.now()});
-    const ix={},tu=Date.now();x.hm.forEach(([,h])=>ix[h+'/'+gid]=tu);   /* l'index garde l'heure d'envoi : une partie renvoyée (joueur relié depuis) est re-téléchargée */await api('idx','PATCH',ix);SY.up[r.id]=x.sig;sySave()}
+    const ix={},tu=Date.now();x.hm.forEach(([,h])=>ix[h+'/'+gid]=tu);if(own)ix[own+'/'+gid]=tu;   /* l'index garde l'heure d'envoi : une partie renvoyée (joueur relié depuis) est re-téléchargée */await api('idx','PATCH',ix);SY.up[r.id]=x.sig;sySave()}
   return todo.length}
 
 /* ---------- réception : parties où j'ai joué sur d'autres téléphones ---------- */
