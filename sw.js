@@ -1,7 +1,7 @@
 /* Loubard Fléchard — hors ligne + mises à jour automatiques.
    Page : réseau d'abord (version la plus récente), cache si pas de réseau.
    Change VERSION à chaque mise à jour publiée. */
-const VERSION='lf-354';
+const VERSION='lf-355';
 const FILES=['./','index.html','sync.js','scenes.js','manifest.json','art/lexend.woff','art/ui-300.woff','art/ui-600.woff','art/ui-750.woff','art/ui-900.woff','art/fun.woff','art/funl.woff','art/funtxt.woff','art/lbl.woff','icon-180.png','icon-192.png','icon-512.png','skins/katana/accueil.webp','skins/katana/annuler.webp','skins/katana/barre.webp','skins/katana/carte.webp','skins/katana/carte_j2.webp','skins/katana/couronne.webp','skins/katana/curseur.webp','skins/katana/curseur_d.webp','skins/katana/curseur_j2.webp','skins/katana/curseur_t.webp','skins/katana/disque.webp','skins/katana/disque_j2.webp','skins/katana/num.webp','skins/katana/num_j2.webp','skins/katana/num_mort.webp','skins/katana/p_d.webp','skins/katana/p_e.webp','skins/katana/p_s.webp','skins/katana/p_t.webp','skins/katana/p_z.webp','skins/katana/pa.webp','skins/katana/pa_d.webp','skins/katana/pa_t.webp','skins/katana/pa_z.webp','skins/katana/rail.webp','skins/katana/trait1.webp','skins/katana/trait2.webp'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(VERSION)
   .then(c=>Promise.all(FILES.map(f=>fetch(f,{cache:'reload'}).then(r=>r.ok&&c.put(f,r)).catch(()=>{}))))

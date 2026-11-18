@@ -7115,7 +7115,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-354';   // à changer avec VERSION dans sw.js
+const APPV='lf-355';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -7126,7 +7126,7 @@ $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   draw();p.style.left=Math.max(12,(innerWidth-p.offsetWidth)/2)+'px';p.style.top=Math.max(12,Math.min(innerHeight-p.offsetHeight-12,e.currentTarget.getBoundingClientRect().bottom+10))+'px';
   p.addEventListener('click',ev=>{ev.stopPropagation();const go=ev.target.closest('.skgo');if(go){p.remove();$(go.dataset.go).dispatchEvent(new MouseEvent('click',{bubbles:true}));return}
     if(ev.target.closest('.skadv')){haptic();SFX.tick();SKADV=!SKADV;draw();return}
-    const sk=ev.target.closest('.sksk button');if(sk){haptic();S.skin=sk.dataset.k||'';store.set(K_S,S);applyTheme();draw();return}   /* habillage : Base / Casino */
+    const sk=ev.target.closest('.sksk button');if(sk){haptic();S.skin=sk.dataset.k||'';store.set(K_S,S);applyTheme();try{dispatchEvent(new Event('resize'))}catch(e){}draw();return}   /* habillage : Base / Casino */
     const ds=ev.target.closest('.skdisp button');if(ds){haptic();p.remove();dispOpen(ds.dataset.ds);return}
     const s3=ev.target.closest('.sksnd3 button');if(s3){haptic();const v=+s3.dataset.s;if((v>0)!==!!S.sound)$('sndT').dispatchEvent(new MouseEvent('click',{bubbles:true}));S.voice=v===2;store.set(K_S,S);draw();if(v===2)say('Annonces activées');return}
     const dm=ev.target.closest('.skdemo button');if(dm){haptic();p.remove();demoStart(dm.dataset.d);return}
@@ -7783,7 +7783,10 @@ const lyCk=()=>((typeof BARC!=='undefined'&&BARC&&XG&&XG.mode)?XG.mode:'ck')+(a=
 const lyCur=()=>$('killer').classList.contains('on')?(BARON&&XG?(XG.mode||'bar')+'K'+lyN(XG.players):lyKl()):$('x01').classList.contains('on')?((XG&&XG.mode)||'x')+lyN(XG&&XG.players):lyCk();
 if(S.lays&&S.lays.x01){S.lays.x2=S.lays.x01;delete S.lays.x01;try{store.set(K_S,S)}catch(e){}}
 if(S.lay&&!S.lays){const o=S.lay,g={v3:1},c={};for(const k in o){if(k==='v3')continue;(LY_GLOB.includes(k)?g:c)[k]=o[k]}S.lay=g;S.lays={ck2:c};try{store.set(K_S,S)}catch(e){}}
-const lyGet=(cx)=>{cx=cx||lyCur();const P=(S.lays&&S.lays[cx])||{},Gl={};LY_GLOB.forEach(k=>{if(S.lay&&S.lay[k]!=null)Gl[k]=S.lay[k]});return Object.assign({},LY_D,LY_PD[cx]||{},P,Gl)};
+/* versions illustrées (habillage ≠ Base) : réglages de Loubi (lf-354) posés par-dessus les réglages par défaut */
+const LY_SKG={nsw:5,fbw:3,scsw:4.75},LY_SKC={ck2:{nfz:1.25,mkz:.85,mksw:6.5}};
+try{if(!(S.lay&&S.lay.v6)){const L=S.lay||{};Object.entries(LY_SKG).forEach(([k,v])=>{if(L[k]===v)delete L[k]});const c=S.lays&&S.lays.ck2;if(c)Object.entries(LY_SKC.ck2).forEach(([k,v])=>{if(c[k]===v)delete c[k]});S.lay=Object.assign(L,{v6:1});store.set(K_S,S)}}catch(e){}
+const lyGet=(cx)=>{cx=cx||lyCur();const P=(S.lays&&S.lays[cx])||{},Gl={};LY_GLOB.forEach(k=>{if(S.lay&&S.lay[k]!=null)Gl[k]=S.lay[k]});const SK=S.skin?Object.assign({},LY_SKG,LY_SKC[cx]||{}):{};return Object.assign({},LY_D,LY_PD[cx]||{},SK,P,Gl)};
 function lySet(k,v,cx){cx=cx||lyCur();if(LY_GLOB.includes(k)){S.lay=Object.assign(S.lay||{v3:1},{[k]:v})}else{S.lays=S.lays||{};S.lays[cx]=Object.assign(S.lays[cx]||{},{[k]:v})}}
 /* ===== réglages rangés par bloc : chaque panneau suit le même ordre (Bloc · Textes : tailles · Textes : placement · Historique · Contours) ===== */
 const LY_K={
@@ -7927,7 +7930,7 @@ function lyOpen(mode,elId,sec){const old=$('lyp');const up0=old?old.classList.co
     const fb=ev.target.closest('.lyf button');if(fb){fcOpen(fb.dataset.f,draw);return}
     const bt=ev.target.closest('.lyb button[data-bt]');if(bt){haptic();lySet('barTop',+bt.dataset.bt,CX);store.set(K_S,S);lyApply();draw();return}
     const ab=ev.target.closest('.lyb button[data-a]');if(ab){haptic();lySet('nA',+ab.dataset.a,CX);store.set(K_S,S);lyPlace();draw();return}
-    if(ev.target.closest('.lyc')){const L=Object.assign({},S.lay||{});delete L.v3;delete L.v4;delete L.v5;const txt='Réglages Pop '+APPV+' : '+JSON.stringify({communs:L,jeux:S.lays||{},fN:S.fN||null,fT:S.fT||null});
+    if(ev.target.closest('.lyc')){const L=Object.assign({},S.lay||{});delete L.v3;delete L.v4;delete L.v5;delete L.v6;const txt='Réglages Pop '+APPV+' : '+JSON.stringify({communs:L,jeux:S.lays||{},fN:S.fN||null,fT:S.fT||null});
       const ok=()=>{try{mkToast('','Réglages copiés : colle-les dans la conversation',2600)}catch(e){}};
       (navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(txt).then(ok):Promise.reject()).catch(()=>{if(navigator.share)navigator.share({text:txt}).catch(()=>{});else prompt('Copie ce texte :',txt)});return}
     if(ev.target.closest('.lyra')){haptic();S.lays={};S.lay={v3:1,v4:1};delete S.fN;delete S.fT;done();return}
