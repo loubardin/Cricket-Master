@@ -3782,6 +3782,11 @@ html body:is(.m2,.m3) #killer:not(.bron) #pkl .pkng,html body:is(.m2,.m3) #kille
 .fcb .fcbs p{margin:8px 0 2px;font:400 15px "Fun",sans-serif;border-bottom:2px solid #111;padding-bottom:1px}
 .fcb .fcbs div{display:flex;justify-content:space-between;gap:8px;padding:1px 0}.fcb .fcbs span{font:400 11.5px "Lbl","Lexend",sans-serif}.fcb .fcbs b{font-weight:400;font-size:13.5px;white-space:nowrap}
 .fcb .fcbs .fcst{background:rgba(0,0,0,.12);border-radius:8px;padding:4px 8px}.fcb .fcbs em{font:400 12px "Lbl",sans-serif;font-style:normal;opacity:.7;text-align:center}
+.fcb .fctb{display:flex;gap:4px;width:100%;justify-content:center}.fcb .fctb button{border:0;border-radius:99px;background:rgba(255,255,255,.55);box-shadow:inset 0 0 0 2px #111;color:#111;font:400 13px "Fun",sans-serif;padding:5px 10px}.fcb .fctb button.on{background:#111;color:#fff}
+.fcb .fcbs[hidden]{display:none}
+.fcb .fcsc{display:flex;align-items:center;gap:8px;padding:3px 0;border-bottom:1.5px solid rgba(0,0,0,.2)}.fcb .fcsc>b{font-size:22px;min-width:30px;text-align:center}
+.fcb .fcsc div{display:flex;flex-direction:column;align-items:stretch;gap:0;padding:0;flex:1;border:0}.fcb .fcsc span{font:400 13px "Fun",sans-serif;display:flex;justify-content:space-between}.fcb .fcsc span i{font-style:normal}.fcb .fcsc small{font:400 9.5px "Lbl","Lexend",sans-serif;opacity:.75}
+.fcb .fcnote{font:400 9.5px "Lbl","Lexend",sans-serif;opacity:.7;text-align:center;margin-top:4px}
 </style>
 </head>
 <body>
@@ -7366,7 +7371,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-392';   // à changer avec VERSION dans sw.js
+const APPV='lf-393';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -7839,7 +7844,7 @@ function fcData(n){const own=r=>r.p&&r.p.findIndex(x=>pers(x).includes(n));
     sd!==null&&mean>0?fcRate(1-sd/mean,.3,.9):null, g?fcRate(w*100/g,0,70):null];
   const got=A.filter(v=>v!==null),ovr=got.length?Math.round(got.reduce((a,b)=>a+b,0)/got.length):null;   /* un jeu jamais joué (ex. pas de 501) ne compte pas */
   const top=Object.entries(fav).sort((a,b)=>b[1]-a[1])[0];
-  return{n,g,w,A,ovr,fav:top?top[0]:null,raw:{mpr:d?h*3/d:0,moy:xd?xp*3/xd:0,co,tri:td?t3*100/td:0,vic:g?w*100/g:0}}}
+  return{n,g,w,A,ovr,fav:top?top[0]:null,raw:{mpr:d?h*3/d:0,moy:xd?xp*3/xd:0,co,tri:td?t3*100/td:0,vic:g?w*100/g:0,cv:sd!==null&&mean>0?sd/mean:null}}}
 function fcTier(D){if(D.ovr==null)return'bz';return D.ovr>=82?'di':D.ovr>=72?'or':D.ovr>=62?'ar':'bz'}
 const FC_TN={bz:'Bronze',ar:'Argent',or:'Or',di:'Diamant'},FC_G={cricket:'CRI',x01:'501',killer:'KIL',clock:'HOR',shanghai:'SHA',halveit:'HAL'};
 function fcHtml(n){const D=fcData(n),t=fcTier(D),T=trAll()[n]||{},tro=TROPH.filter(x=>T[x[0]]);
@@ -7849,7 +7854,7 @@ function fcHtml(n){const D=fcData(n),t=fcTier(D),T=trAll()[n]||{},tro=TROPH.filt
       <div class="fca"><span>${esc(ini)}</span></div><div class="fcn">${esc(n)}</div>
       <div class="fcs">${FC_ATT.map((a,i)=>`<div><b>${D.A[i]??'–'}</b><span>${a}</span></div>`).join('')}</div>
       <div class="fcg">${D.g} partie${D.g>1?'s':''} · ${D.w} victoire${D.w>1?'s':''}</div></div>
-    <div class="fcb"><div class="fcbt">Records</div><div class="fcbs">${fcRecs(n)}</div></div>
+    <div class="fcb"><div class="fctb"><button data-fcv="n" class="on">Notes</button><button data-fcv="r">Records</button><button data-fcv="t">Trophées</button></div><div class="fcbs" data-fcp="n">${fcScale(D)}</div><div class="fcbs" data-fcp="r" hidden>${fcRecs(n)}</div><div class="fcbs" data-fcp="t" hidden>${fcTro(n)}</div></div>
   </div></div><button class="fcsh" data-fcshare>Partager la carte</button></div>`}
 
 /* dos de la carte : les records du joueur, rangés par jeu (seulement les jeux joués) */
@@ -7864,8 +7869,17 @@ function fcRecs(n){const out=[],nb=v=>v||v===0?v:null;let str=0;
     out.push(`<p>${GNAME[g]||g}</p>`+R.map(([k,v])=>`<div><span>${k}</span><b>${v}</b></div>`).join(''))});
   if(str>1)out.unshift(`<div class="fcst"><span>Plus longue série de victoires</span><b>${str}</b></div>`);
   return out.join('')||'<em>Pas encore de partie</em>'}
+
+/* dos de la carte : chaque note du recto expliquée par la vraie stat du joueur et le barème */
+function fcScale(D){const R=D.raw,pc=v=>fr(v)+' %';
+  const L=[['MPR','marques par tour',D.A[0],R.mpr?fr(R.mpr):null,'0,5','2,6'],['Moyenne','au 501, par volée',D.A[1],R.moy?fr(R.moy):null,'15','60'],['Finish','meilleur finish 501',D.A[2],R.co||null,'20','100'],
+    ['Triples','fléchettes en triple',D.A[3],R.tri?pc(R.tri):null,'1 %','12 %'],['Régularité','écart entre parties',D.A[4],R.cv!=null?Math.round(R.cv*100)+' %':null,'70 %','10 %'],['Victoires','parties gagnées',D.A[5],D.g?Math.round(R.vic)+' %':null,'0 %','70 %']];
+  return L.map(([a,sub,v,raw,lo,hi])=>`<div class="fcsc"><b>${v??'–'}</b><div><span>${a} <i>${raw??'pas encore joué'}</i></span><small>${sub} · 40 = ${lo} · 99 = ${hi}</small></div></div>`).join('')+`<small class="fcnote">Note générale = moyenne des attributs joués</small>`}
+function fcTro(n){const T=trAll()[n]||{},L=TROPH.filter(x=>T[x[0]]);return L.length?L.map(x=>`<div><span>${x[3]} ${esc(x[1])}</span><b>${x[0]==='ser'?T[x[0]]+' d’affilée':'×'+T[x[0]]}</b></div>`).join(''):'<em>Pas encore de trophée</em>'}
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-fcv]');if(!b)return;e.stopPropagation();const c=b.closest('.fcb');
+  c.querySelectorAll('[data-fcv]').forEach(x=>x.classList.toggle('on',x===b));c.querySelectorAll('[data-fcp]').forEach(x=>x.hidden=x.dataset.fcp!==b.dataset.fcv);try{haptic();SFX.tick()}catch(x){}},true);
 /* retournement : touche à gauche / à droite, ou glisse le doigt d'un côté ou de l'autre : la carte tourne dans ce sens */
-document.addEventListener('pointerdown',e=>{const c=e.target.closest&&e.target.closest('[data-fcard]');if(!c)return;const x0=e.clientX,y0=e.clientY,t0=performance.now();
+document.addEventListener('pointerdown',e=>{const c=e.target.closest&&e.target.closest('[data-fcard]');if(!c||e.target.closest('[data-fcv]'))return;const x0=e.clientX,y0=e.clientY,t0=performance.now();
   const up=u=>{removeEventListener('pointerup',up,true);const dx=u.clientX-x0,dy=u.clientY-y0;let dir=0;
     if(Math.abs(dx)>25&&Math.abs(dx)>Math.abs(dy))dir=dx>0?1:-1;else if(Math.abs(dx)<10&&Math.abs(dy)<10&&performance.now()-t0<500){const r=c.getBoundingClientRect();dir=u.clientX<r.left+r.width/2?-1:1}
     if(!dir)return;c._a=(c._a||0)+dir*180;c.querySelector('.fcin').style.transform=`rotateY(${c._a}deg)`;c._skip=performance.now();try{haptic();SFX.tick()}catch(x){}};
@@ -8101,7 +8115,7 @@ const LY_GLOB=['dtsw','dtX','bw','fbw','nsw','scsw','brK','ftK','gFB','mB','icZ'
 const LY_POP={   /* réglages « Pop » de Loubi (lf-336) = réglages par défaut */
   ck2:{mT:5,gSN:1.6,gL:1.5,rowK:1,scK:1.1,nA:0,zNm:1,zSc:1.05,zMp:1.45,zPl:1.6,gNF:0,iNP:0.08,iPM:0.12,iPMo:0.12,iY:0.04,iPl:0.18,mkz:0.75,mksw:3.75,crY:-0.14,crZ:1,poW:1.3,poG:0.3,poH:1.35,zPo:1.2,paH:1.25,paW:1,nW:0.99,el:{lbl:{z:0.92,x:0,y:0},nmA:{z:1,x:-0.1,y:0},nmO:{z:1,x:-0.1,y:0}},poY:0.16,pbw:0,hZ:1,scR:1.45,nfz:1.1},
   ckn:{scK:1.1,rowK:1.15,gL:1.4,iNP:0.2,iPM:0.28,iPl:0.09,zNm:1.1,zSc:1.45,zMp:1.2,zPl:1.05,nfz:0.85,mkz:1.1,mksw:4,crZ:0.9,paW:1.75,paH:1.25,poW:1.45,poH:1.6,zPo:1.35,poG:0,poY:0,iY:0,crY:-0.14,scR:1,hZ:0.75,mT:3.2,el:{crn:{z:1,x:0.1,y:-0.7},nmA:{z:1,x:0,y:0}},pbw:0},
-  kl:{zNm:1.6,nfz:1,paW:1.1,paH:1.3,iPl:0,klZ:0.92,klY:-5.1,klHZ:1.2,klKZ:1.2,klNY:-11.5,klNoY:9,klPY:2,klKY:12,zPl:1.15,tmL:1.25,klW:1.11,klHY:36,klHO:0,tmZ:0.9,klH:1.24,klGY:-7,klGX:0},
+  kl:{zNm:1.6,nfz:1,paW:1.1,paH:1.3,iPl:0,klZ:0.92,klY:-5.1,klHZ:1.2,klKZ:1.2,klNY:-11.5,klNoY:9,klPY:11.5,klKY:12,zPl:1.15,tmL:1.25,klW:1.11,klHY:36,klHO:0,tmZ:0.9,klH:1.24,klGY:-7,klGX:0},
   x2:{xnZ:1.3,xrZ:1.3,xsZ:1.65,xhZ:1.5,xcoZ:1.3,xoN:2.5,xoM:2.3,xoH:0.7,xoC:5,xpW:1,xpH:1.1,xpG:0.4,xkz:1.35,xkg:0,xcG:0.8,xoS:0,tmZ:0.9,tmL:-0.45,xsw:2,xcH:0.82,xkh:0.95,xgPK:0,xgKF:2.2,pbw:0.85,xbh:0.95},
   xn:{xrZ:1.3,xsZ:1.55,xnZ:1.15,xcoZ:0.85,xhZ:1.15,xkz:0.95,xbh:0.7,xkg:0.4,xkh:0.75,xoH:2.9,xcG:0,xpG:0.3,xpW:1.5,xpH:1.05,xoM:1.8,xoS:-0.5,xoN:-2,xpT:1.6,xgKF:1.1,xgPK:1.4,el:{xnO:{z:0.98,x:0.2,y:-0.1}},tmL:-0.45,xcH:1,tmZ:1,xsw:3,pbw:0},
   clk:{zNm:1.2,nfz:0.9,paW:1.05,paH:0.95,iPl:0,klZ:1.02,klY:-5.6,klHZ:1.1,klKZ:0.9,klNY:0,klNoY:-1.5,klPY:-0.5,klKY:1,zPl:1,klW:0.94,tmZ:0.8,tmL:0.35,klHO:0},
@@ -8135,6 +8149,11 @@ try{if(!(S.lay&&S.lay.v8)){const L=S.lay||{},Y=S.lays||{};if(L.ftK===1.5)delete 
   const c=Y.ck2;if(c){if(c.nfz===.85)delete c.nfz;if(c.el&&c.el.lbl&&c.el.lbl.z===1.32)delete c.el.lbl}
   const k=Y.kl;if(k)Object.entries({klPY:11.5,klNY:-7,klGY:-17.5,klGX:-5,klH:1.24,klZ:.97,klY:0}).forEach(([a,v])=>{if(k[a]===v)delete k[a]});
   S.lay=Object.assign(L,{v8:1});store.set(K_S,S)}}catch(e){}
+/* lf-393 : export de Loubi (lf-392) = nouveaux réglages de base ; on retire de ses réglages perso ce qui est désormais identique */
+try{if(!(S.lay&&S.lay.v9)){const L=S.lay||{},Y=S.lays||{},k=Y.kl,id=o=>o&&o.z===1&&o.x===0&&o.y===0;
+  if(k){if(k.klPY===11.5)delete k.klPY;if(k.klKY===12)delete k.klKY}
+  if(Y.ck4&&Y.ck4.el&&id(Y.ck4.el.lbl))delete Y.ck4.el.lbl;
+  S.lay=Object.assign(L,{v9:1});store.set(K_S,S)}}catch(e){}
 const lyGet=(cx)=>{cx=cx||lyCur();const P=(S.lays&&S.lays[cx])||{},Gl={};LY_GLOB.forEach(k=>{if(S.lay&&S.lay[k]!=null)Gl[k]=S.lay[k]});const SK=Object.assign({},S.skin?Object.assign({},LY_SKG,LY_SKC[cx]||{}):{},S.ctr!==false?Object.assign({},LY_CTG,LY_CTC[cx]||{}):{});delete SK.el;return Object.assign({},LY_D,LY_PD[cx]||{},SK,P,Gl)};
 function lySet(k,v,cx){cx=cx||lyCur();if(LY_GLOB.includes(k)){S.lay=Object.assign(S.lay||{v3:1},{[k]:v})}else{S.lays=S.lays||{};S.lays[cx]=Object.assign(S.lays[cx]||{},{[k]:v})}}
 /* ===== réglages rangés par bloc : chaque panneau suit le même ordre (Bloc · Textes : tailles · Textes : placement · Historique · Contours) ===== */
@@ -8279,7 +8298,7 @@ function lyOpen(mode,elId,sec){const old=$('lyp');const up0=old?old.classList.co
     const fb=ev.target.closest('.lyf button');if(fb){fcOpen(fb.dataset.f,draw);return}
     const bt=ev.target.closest('.lyb button[data-bt]');if(bt){haptic();lySet('barTop',+bt.dataset.bt,CX);store.set(K_S,S);lyApply();draw();return}
     const ab=ev.target.closest('.lyb button[data-a]');if(ab){haptic();lySet('nA',+ab.dataset.a,CX);store.set(K_S,S);lyPlace();draw();return}
-    if(ev.target.closest('.lyc')){const L=Object.assign({},S.lay||{});delete L.v3;delete L.v4;delete L.v5;delete L.v6;delete L.v7;delete L.v8;const txt='Réglages Pop '+APPV+' : '+JSON.stringify({communs:L,jeux:S.lays||{},fN:S.fN||null,fT:S.fT||null});
+    if(ev.target.closest('.lyc')){const L=Object.assign({},S.lay||{});delete L.v3;delete L.v4;delete L.v5;delete L.v6;delete L.v7;delete L.v8;delete L.v9;const txt='Réglages Pop '+APPV+' : '+JSON.stringify({communs:L,jeux:S.lays||{},fN:S.fN||null,fT:S.fT||null});
       const ok=()=>{try{mkToast('','Réglages copiés : colle-les dans la conversation',2600)}catch(e){}};
       (navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(txt).then(ok):Promise.reject()).catch(()=>{if(navigator.share)navigator.share({text:txt}).catch(()=>{});else prompt('Copie ce texte :',txt)});return}
     if(ev.target.closest('.lyra')){haptic();S.lays={};S.lay={v3:1,v4:1};delete S.fN;delete S.fT;done();return}
