@@ -3698,11 +3698,11 @@ html body #game#game#game#game#game#game #grid .row[data-nh] .num .lbl:not(#q1):
 html body #game#game#game#game#game#game #grid .row[data-nh] .num .lbl:not(#q1):not(#q2):not(#q3)::before,html body #game#game#game#game#game#game #grid .row[data-nh] .num .lbl:not(#q1):not(#q2):not(#q3)::after{content:none!important}
 
 #grid .nfxo span{will-change:transform}
-#grid .nfxo.m1 .fr{--k:1.5;animation:fxF .49s cubic-bezier(.25,1.25,.4,1) both}#grid .nfxo.m1 .c1{animation:fxS1 .49s cubic-bezier(.25,1.25,.4,1) both}
+#grid .nfxo.m1 .fr{--k:2.5;animation:fxF .49s cubic-bezier(.25,1.25,.4,1) both}#grid .nfxo.m1 .c1{animation:fxS1 .49s cubic-bezier(.25,1.25,.4,1) both}
 #grid .nfxo.m2 .fr{animation:fxF .51s cubic-bezier(.25,1.25,.4,1) both}#grid .nfxo.m2 .c1{animation:fxD1x .51s cubic-bezier(.25,1.25,.4,1) both}#grid .nfxo.m2 .c2{animation:fxD2 .51s cubic-bezier(.25,1.25,.4,1) both}
 #grid .nfxo.m3 .fr{--k:3;animation:fxF .56s cubic-bezier(.25,1.25,.4,1) both}#grid .nfxo.m3 .c1{animation:fxE1 .56s cubic-bezier(.25,1.25,.4,1) both}#grid .nfxo.m3 .c2{animation:fxE2 .56s cubic-bezier(.25,1.25,.4,1) both}
 @keyframes fxF{0%{transform:scale(1)}16%{transform:scale(var(--k,2))}64%{transform:scale(calc(var(--k,2)*.93))}100%{transform:scale(1)}}
-@keyframes fxS1{0%{transform:scale(1)}16%{transform:scale(2.05,1.9)}64%{transform:scale(1.85,1.75)}100%{transform:scale(1)}}
+@keyframes fxS1{0%{transform:scale(1)}16%{transform:scale(3.15,2.95)}64%{transform:scale(2.9,2.75)}100%{transform:scale(1)}}
 @keyframes fxD1x{0%{transform:scale(1)}16%{transform:scale(2) translate(.09em,.08em)}64%{transform:scale(1.85) translate(.09em,.08em)}100%{transform:scale(1)}}
 @keyframes fxD2{0%{transform:scale(1)}16%{transform:scale(2) translate(-.2em,-.17em)}64%{transform:scale(1.85) translate(-.2em,-.17em)}100%{transform:scale(1)}}
 @keyframes fxE1{0%{transform:scale(1)}16%{transform:scale(3) translate(.12em,.11em) rotate(-3deg)}64%{transform:scale(2.8) translate(.12em,.11em) rotate(-3deg)}100%{transform:scale(1)}}
@@ -7219,7 +7219,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-375';   // à changer avec VERSION dans sw.js
+const APPV='lf-376';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
