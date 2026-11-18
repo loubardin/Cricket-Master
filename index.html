@@ -3711,6 +3711,20 @@ html body #game#game#game#game#game#game #grid .row[data-nh] .num .lbl:not(#q1):
 html body:is(.m2,.m3) #game#game#game#game#game#game #grid .num:not(.dead) .lbl:not(#q1):not(#q2):not(#q3)::before,html body:is(.m2,.m3) #game#game#game#game#game#game #grid .num:not(.dead) .lbl:not(#q1):not(#q2):not(#q3)::after{content:none!important}
 html body.m2 #game#game#game#game#game#game #grid .num:not(.dead) .lbl:not(#q1):not(#q2):not(#q3){color:#00e5ff!important;-webkit-text-fill-color:#00e5ff!important}
 html body.m3 #game#game#game#game#game#game #grid .num:not(.dead):not(.bull) .lbl:not(#q1):not(#q2):not(#q3){color:#fff200!important;-webkit-text-fill-color:#fff200!important}
+/* Boîte à sons */
+#sbx{position:fixed;inset:0;z-index:400;background:var(--page,#f7f2e5);color:#111;display:flex;flex-direction:column;gap:10px;padding:calc(var(--sat,0px) + 12px) 14px calc(var(--sab,0px) + 10px);font:400 15px "Fun",sans-serif}
+#sbx .sbh{display:flex;align-items:center;gap:8px}#sbx .sbh b{flex:1;font-size:22px;font-weight:400}
+#sbx button{border:0;border-radius:99px;background:#fff;box-shadow:inset 0 0 0 2px #111;color:#111;font:400 14px "Fun",sans-serif;padding:7px 13px}
+#sbx .sbxx{background:#111;color:#fff;padding:7px 18px}
+#sbx .sbl{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;padding-bottom:20px}
+#sbx h4{margin:14px 2px 6px;font:400 13px "Lexend",sans-serif;opacity:.6;text-transform:uppercase;letter-spacing:.06em}
+#sbx .sbr{margin:0 0 7px}
+#sbx .sbe{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;border-radius:16px;padding:11px 14px;text-align:left}
+#sbx .sbe span{font-size:15px}#sbx .sbe b{font:400 12.5px "Lexend",sans-serif;opacity:.75;white-space:nowrap}
+#sbx .sbr.on .sbe{background:#111;color:#fff}
+#sbx .sbg{display:flex;flex-wrap:wrap;gap:6px;padding:9px 2px 4px}
+#sbx .sbg button{padding:7px 11px;font-size:13px}#sbx .sbg button.def{box-shadow:inset 0 0 0 2px #111,0 0 0 2px #ffd400}
+#sbx .sbg button.on{background:#ff3b3f;color:#fff;box-shadow:inset 0 0 0 2px #111}
 </style>
 </head>
 <body>
@@ -4383,7 +4397,7 @@ function throwDart(t){
       if(d.pts){                                 // des points : coup de feu
         if(pointsOnly&&t===25)(m===2?SFX.dbull:SFX.bull)();   // Bull : la bulle d'abord, le coup de feu juste après
         const dl=pointsOnly?(t===25?260:0):(m===3?320:t===25?260:180);
-        setTimeout(()=>SFX.gun(Math.round(d.pts/t)),dl);   // des points (pour soi ou pour les autres) : coup de feu
+        setTimeout(()=>snd(G.mode==='cut'?'ptsOpp':'ptsMe','gun',Math.round(d.pts/t)),dl);   // des points (pour soi ou pour les autres) : coup de feu
       }
     }
     if(d.cl){pulse(t);anim(R.mk[t][who],'closing',600);busy(600)}
@@ -4606,7 +4620,7 @@ function undo(){
   save();render();haptic();SFX.undo();
 }
 function setMult(m){if(onX01()){xSetMult(m);return}if(onKiller()){kSetMult(m);return}G.mult=G.mult===m?1:m;haptic();
-  if(G.mult===3)SFX.ignite();else if(G.mult===2)SFX.shing();else SFX.tick();render()}
+  if(G.mult===3)snd('arm3','ignite');else if(G.mult===2)snd('arm2','shing');else snd('arm1','tick');render()}
 function save(){if(BARC)return;store.set(K_G,G);store.set(K_H,H.slice(-150))}
 
 /* ================= STATS ================= */
@@ -5766,7 +5780,7 @@ function kSpew(){
   KG.mult=1;
   for(let i=0;i<k;i++)kThrow(0,i<k-1);
 }
-function kSetMult(m){KG.mult=KG.mult===m?1:m;haptic();if(KG.mult===3)SFX.ignite();else if(KG.mult===2)SFX.shing();else SFX.tick();kRender()}
+function kSetMult(m){KG.mult=KG.mult===m?1:m;haptic();if(KG.mult===3)snd('arm3','ignite');else if(KG.mult===2)snd('arm2','shing');else snd('arm1','tick');kRender()}
 function kUndo(){kRelease();if(!KH.length){SFX.err();return}KG=JSON.parse(KH.pop());KG.mult=1;kSave();kRender();haptic();SFX.undo()}
 
 /* affichage */
@@ -5896,7 +5910,7 @@ function xBuildKeys(){
   const b=el('button','xk bull','<span class="lbl">Bulle</span>');b.dataset.n=25;k.append(b);
 }
 $('xkeys').addEventListener('click',e=>{const b=e.target.closest('.xk');if(!b||!XG)return;anim(b,'xpress',250);xThrow(+b.dataset.n,XG.mult)});
-function xSetMult(m){if(!XG||XG.winner!==null||XG.legW!==null)return;XG.mult=XG.mult===m?1:m;haptic();if(XG.mult===3)SFX.ignite();else if(XG.mult===2)SFX.shing();else SFX.tick();xRender()}
+function xSetMult(m){if(!XG||XG.winner!==null||XG.legW!==null)return;XG.mult=XG.mult===m?1:m;haptic();if(XG.mult===3)snd('arm3','ignite');else if(XG.mult===2)snd('arm2','shing');else snd('arm1','tick');xRender()}
 const xLeft=()=>XG.rep?XG.rep.darts:(XG.mode==='hi'?XG.hid||3:3);
 function xMiss(){
   if(!XG||XG.winner!==null||XG.legW!==null)return;
@@ -6890,6 +6904,34 @@ if(![301,501,701].includes(S.xstart)){S.xstart=501}delete S.xcustom;
 /* plus aucun bandeau de texte pendant le jeu : on garde les effets (lueur, braises, tirs, confettis, sons) */
 {const _m=mkToast;mkToast=function(cls,html,ms){if(cls==='mini')return _m.apply(this,arguments);
    const e=_m.apply(this,arguments);e.style.visibility='hidden';return e}}
+
+/* ===== Boîte à sons : chaque moment du jeu peut prendre n'importe quel son de l'appli (S.sbx = {moment: son}) ===== */
+const SFX0=Object.assign({},SFX);
+const SB_LIB=[['single','Cloches claires'],['double','Cloche + craquement'],['triple','Laser'],['bull','Bulle'],['dbull','Double bulle'],['close','Petit accord'],
+  ['gun','Coup de feu',2],['mg','Mitraillette'],['whip','Fouet',2],['kaching','Tiroir-caisse'],['thunk','Coup sourd'],['bolt','Éclair'],['clap','Clap'],['horn','Klaxon'],
+  ['shing','Shing'],['ignite','Allumage'],['lock','Verrou'],['tick','Tic'],['count','Pic'],['score','Bip arcade'],['dead','Toc'],['given','Glissade'],
+  ['big','Gamme',3],['twinkle','Scintillement'],['sparkle','Paillettes'],['lead','Montée'],['ice','Glaçon'],['fire','En feu'],['epic','Fanfare'],['win','Arpège'],
+  ['start','Départ'],['open','Ouverture'],['neon','Néon'],['spew','Spew'],['meh','Bof'],['sad','Triste'],['dying','Agonie'],['loser','Perdant',2],
+  ['turn','Ding-dong'],['undo','Retour'],['err','Buzz'],['ui','Clic'],['back','Clic arrière']];
+const SB_EV=[['Marques',[['mk1','Marque simple','single'],['mk2','Marque double','double'],['mk3','Marque triple','triple'],['bull','Bulle','bull'],['dbull','Double bulle','dbull'],['close','Numéro fermé (3e marque)','close'],['dead','Marque dans un numéro fermé','dead'],['kill','Numéro fermé par tous','bolt']]],
+  ['Points (Cricket)',[['ptsMe','Points marqués pour nous','gun'],['ptsOpp','Points chez les adversaires (coupe-gorge)','gun']]],
+  ['Barre du bas',[['arm2','Armer le double','shing'],['arm3','Armer le triple','ignite'],['arm1','Désarmer','tick'],['spew','Spew','spew']]],
+  ['Partie',[['turn','Changement de joueur','turn'],['undo','Annuler','undo']]]];
+const SB_ARG=Object.fromEntries(SB_LIB.filter(x=>x[2]).map(x=>[x[0],x[2]]));
+function snd(ev,def,arg){const k=(S.sbx||{})[ev]||def;if(k==='none')return;const f=SFX0[k]||SFX0[def];if(!f)return;try{f(k===def&&arg!==undefined?arg:(arg!==undefined&&SB_ARG[k]?arg:SB_ARG[k]))}catch(e){}}
+/* les sons existants passent par la boîte (tous les jeux) */
+[['single','mk1'],['double','mk2'],['triple','mk3'],['bull','bull'],['dbull','dbull'],['close','close'],['dead','dead'],['bolt','kill'],['spew','spew'],['turn','turn'],['undo','undo']]
+  .forEach(([k,ev])=>{SFX[k]=(...a)=>snd(ev,k,a[0])});
+function sbxOpen(){const old=$('sbx');if(old)old.remove();haptic();const p=el('div','');p.id='sbx';document.body.append(p);let open=null;
+  const nm=k=>k==='none'?'Aucun son':((SB_LIB.find(x=>x[0]===k)||[0,k])[1]);
+  const draw=()=>{p.innerHTML=`<div class="sbh"><b>Boîte à sons</b><button class="sbx0">Tout remettre</button><button class="sbxx">OK</button></div><div class="sbl">${SB_EV.map(([g,L])=>`<h4>${g}</h4>`+L.map(([ev,t,def])=>{const cur=(S.sbx||{})[ev]||def;
+      return `<div class="sbr${open===ev?' on':''}"><button class="sbe" data-ev="${ev}"><span>${t}</span><b>${esc(nm(cur))}${cur!==def?' ✎':''}</b></button>${open===ev?`<div class="sbg">${[['none','Aucun son']].concat(SB_LIB).map(([k,n])=>`<button data-k="${k}" class="${k===cur?'on':''}${k===def?' def':''}">${esc(n)}</button>`).join('')}</div>`:''}</div>`}).join('')).join('')}</div>`};
+  draw();
+  p.addEventListener('click',e=>{if(e.target.closest('.sbxx')){haptic();p.remove();return}
+    if(e.target.closest('.sbx0')){haptic();delete S.sbx;store.set(K_S,S);draw();return}
+    const b=e.target.closest('.sbe');if(b){haptic();open=open===b.dataset.ev?null:b.dataset.ev;draw();if(open){const r=p.querySelector('.sbr.on');if(r)r.scrollIntoView({block:'nearest',behavior:'smooth'})}return}
+    const k=e.target.closest('.sbg button');if(k&&open){const ev=open,def=SB_EV.flatMap(x=>x[1]).find(x=>x[0]===ev)[2];S.sbx=Object.assign({},S.sbx||{});if(k.dataset.k===def)delete S.sbx[ev];else S.sbx[ev]=k.dataset.k;store.set(K_S,S);
+      const was=S.sound;if(!S.sound)S.sound=true;try{snd(ev,def)}catch(x){}S.sound=was;const sc=p.querySelector('.sbl').scrollTop;draw();p.querySelector('.sbl').scrollTop=sc}})}
 {const _t=toast;toast=function(txt,sub,mini){if(mini)return _t.apply(this,arguments);
    if(!/SYNDICAL|DERNIÈRE|DROIT DE RÉPONSE|RÉPONDU|DÉFENSE|REJOUE/.test(String(txt)))return;
    const sec=document.querySelector('#game.on,#x01.on,#killer.on');const col=sec?(getComputedStyle(sec).getPropertyValue(sec.id==='game'?'--accent':'--pc').trim()||'#ff5a1f'):'#ff5a1f';
@@ -7219,17 +7261,18 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-376';   // à changer avec VERSION dans sw.js
+const APPV='lf-377';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
   const p=el('div','');p.id='xpick';p.classList.add('skinpick');document.body.append(p);
-  const draw=()=>{p.innerHTML=`<div class="skn"><button class="skgo" data-go="hStats">Statistiques</button><button class="skgo" data-go="hHist">Historique</button><button class="skprof">Joueurs</button></div><div class="skp"><span>Son</span><div class="sksw sksnd3"><button data-s="0" class="${S.sound?'':'on'}">Non</button><button data-s="1" class="${S.sound&&S.voice===false?'on':''}">Effets</button><button data-s="2" class="${S.sound&&S.voice!==false?'on':''}">+ Voix</button></div></div><button class="skstu">✎ Studio : modifier l'écran de jeu</button><div class="skp"><span>Contours</span><div class="sksw skctr"><button data-c="1" class="${S.ctr!==false?'on':''}">Contour</button><button data-c="0" class="${S.ctr===false?'on':''}">Sans</button></div></div><div class="skp"><span>Couleurs des joueurs</span><div class="sksw"><button data-p="1" class="${S.pcolOff?'':'on'}">Oui</button><button data-p="0" class="${S.pcolOff?'on':''}">Non</button></div></div>`+colMenu()+`<button class="skadv">Avancé <i>${SKADV?'▴':'▾'}</i></button>${SKADV?`<div class="skp skjeux"><span>Mise en page des jeux</span></div><div class="skdemo"><button data-d="ck2">Cricket 1v1</button><button data-d="ck3">Cricket 3</button><button data-d="ck4">Cricket 4</button><button data-d="ck5">Cricket 5+</button><button data-d="x2">501 1v1</button><button data-d="xn">501 3+</button><button data-d="kl">Killer 6</button><button data-d="kl7">Killer 7+</button><button data-d="clk">Horloge</button></div><div class="skp skjeux"><span>Affichage des tableaux</span></div><div class="skdemo skdisp"><button data-ds="st">Statistiques</button><button data-ds="hl">Historique</button><button data-ds="hg">Fiche de partie</button></div><button class="skdanger">Effacer des données…</button>`:''}<div class="skv">version ${APPV}</div>`;if(p.style.top)p.style.top=Math.max(12,Math.min(parseFloat(p.style.top),innerHeight-p.offsetHeight-12))+'px'};
+  const draw=()=>{p.innerHTML=`<div class="skn"><button class="skgo" data-go="hStats">Statistiques</button><button class="skgo" data-go="hHist">Historique</button><button class="skprof">Joueurs</button></div><div class="skp"><span>Son</span><div class="sksw sksnd3"><button data-s="0" class="${S.sound?'':'on'}">Non</button><button data-s="1" class="${S.sound&&S.voice===false?'on':''}">Effets</button><button data-s="2" class="${S.sound&&S.voice!==false?'on':''}">+ Voix</button></div></div><button class="skstu">✎ Studio : modifier l'écran de jeu</button><button class="skstu sksbx">🔊 Boîte à sons</button><div class="skp"><span>Contours</span><div class="sksw skctr"><button data-c="1" class="${S.ctr!==false?'on':''}">Contour</button><button data-c="0" class="${S.ctr===false?'on':''}">Sans</button></div></div><div class="skp"><span>Couleurs des joueurs</span><div class="sksw"><button data-p="1" class="${S.pcolOff?'':'on'}">Oui</button><button data-p="0" class="${S.pcolOff?'on':''}">Non</button></div></div>`+colMenu()+`<button class="skadv">Avancé <i>${SKADV?'▴':'▾'}</i></button>${SKADV?`<div class="skp skjeux"><span>Mise en page des jeux</span></div><div class="skdemo"><button data-d="ck2">Cricket 1v1</button><button data-d="ck3">Cricket 3</button><button data-d="ck4">Cricket 4</button><button data-d="ck5">Cricket 5+</button><button data-d="x2">501 1v1</button><button data-d="xn">501 3+</button><button data-d="kl">Killer 6</button><button data-d="kl7">Killer 7+</button><button data-d="clk">Horloge</button></div><div class="skp skjeux"><span>Affichage des tableaux</span></div><div class="skdemo skdisp"><button data-ds="st">Statistiques</button><button data-ds="hl">Historique</button><button data-ds="hg">Fiche de partie</button></div><button class="skdanger">Effacer des données…</button>`:''}<div class="skv">version ${APPV}</div>`;if(p.style.top)p.style.top=Math.max(12,Math.min(parseFloat(p.style.top),innerHeight-p.offsetHeight-12))+'px'};
   const colMenu=()=>{const C=colGet(),dot=v=>`<i style="background:${v}"></i>`;return `<button class="crow cmain"><span>Apparence de l'appli</span><b>${dot(colAcc())}${dot(C.ol==='acc'?colAcc():C.ol)}${dot(C.bg)}</b></button>`};
   draw();p.style.left=Math.max(12,(innerWidth-p.offsetWidth)/2)+'px';p.style.top=Math.max(12,Math.min(innerHeight-p.offsetHeight-12,e.currentTarget.getBoundingClientRect().bottom+10))+'px';
   p.addEventListener('click',ev=>{ev.stopPropagation();const go=ev.target.closest('.skgo');if(go){p.remove();$(go.dataset.go).dispatchEvent(new MouseEvent('click',{bubbles:true}));return}
     if(ev.target.closest('.skadv')){haptic();SFX.tick();SKADV=!SKADV;draw();return}
+    if(ev.target.closest('.sksbx')){p.remove();sbxOpen();return}
     if(ev.target.closest('.skstu')){haptic();p.remove();stuStart();return}
     const ct=ev.target.closest('.skctr button');if(ct){haptic();S.ctr=ct.dataset.c==='1';store.set(K_S,S);try{lyApply();edApply();lyPlace();ftPlace()}catch(e){}try{dispatchEvent(new Event('resize'))}catch(e){}draw();return}
     const sk=ev.target.closest('.sksk button');if(sk){haptic();S.skin=sk.dataset.k||'';store.set(K_S,S);applyTheme();try{dispatchEvent(new Event('resize'))}catch(e){}draw();return}   /* habillage : Base / Casino */
