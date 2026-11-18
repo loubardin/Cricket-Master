@@ -3794,7 +3794,7 @@ html body #setup.b2 #names .nslot:not(.bot):not(.ph),html body #setup.b2 #names 
 html body #setup.b2 #names .nslot:not(.ph)::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1.75px var(--m-strong,#111);pointer-events:none;z-index:3}
 html body #setup.b2 #names .nslot:not(.bot):not(.ph) .pname{color:var(--pc,#111)!important;-webkit-text-stroke:3px #111;paint-order:stroke fill;opacity:1}
 html body #setup.b2 #names .nslot:not(.bot):not(.ph) .pdel{color:var(--m-ink,#111)!important}
-html body #setup.b2 #names .pcol.ptr{position:relative;z-index:1;width:46px!important;height:46px!important;margin:-4px 4px -4px -9px!important;display:grid;place-items:center;padding:0;flex:none;
+html body #setup.b2 #names .pcol.ptr{position:relative;z-index:1;width:38px!important;height:38px!important;margin:0 6px 0 5px!important;display:grid;place-items:center;padding:0;flex:none;
   color:#fff;font:400 20px/1 "Fun",sans-serif!important;-webkit-text-stroke:3.5px #111;paint-order:stroke fill;text-shadow:1.5px 1.5px 0 rgba(0,0,0,.25);
   background:radial-gradient(circle at 32% 28%,var(--g0) 0%,var(--g1) 45%,var(--g2) 100%)!important;box-shadow:inset 0 2px 5px rgba(255,255,255,.35)!important}
 .ptr.nc{--g0:#f4f1ea;--g1:#bdb6aa;--g2:#8a8378}.ptr.bz{--g0:#e2a774;--g1:#a8683a;--g2:#6d3f1d}.ptr.ar{--g0:#dfe3e8;--g1:#9aa2ac;--g2:#626b76}.ptr.or{--g0:#f6d55a;--g1:#d4a017;--g2:#8a5c04}.ptr.di{--g0:#c9f2fc;--g1:#5fc3e6;--g2:#2a7fb8}
@@ -3813,10 +3813,11 @@ html body :is(#game,#x01,#killer) footer:not(.armed2):not(.armed3) .fthumb::befo
   background:linear-gradient(100deg,transparent,rgba(255,255,255,.6),transparent);transform:skewX(-18deg);animation:shine 1.8s ease-in-out infinite}
 html body :is(#game,#x01,#killer) footer:not(.armed2):not(.armed3) .fthumb{animation:gold 1.4s ease-in-out infinite alternate}
 /* capsules allongées et toutes de la même longueur (2 par ligne, pleine colonne en équipes) ; le nom n'est jamais coupé (il rétrécit si besoin) */
-html body #setup.b2 #names .nslot:not(.ph),html body #setup.b2 #names .nslot:not(.ph)+.nslot{display:flex!important;align-items:center;box-sizing:border-box;width:calc(50% - 10px)!important;max-width:none!important;padding-right:4px!important;margin-left:5px}
+html body #setup.b2 #names .nslot:not(.ph),html body #setup.b2 #names .nslot:not(.ph)+.nslot{display:flex!important;align-items:center;box-sizing:border-box;width:calc(50% - 10px)!important;max-width:none!important;padding:4px 0!important;margin-left:0}
 html body #setup.b2.teams #names .tbub .nslot:not(.ph){width:100%!important}
 html body #setup.b2 #names .nslot:not(.ph) .pname{flex:1 1 auto;min-width:0;overflow:visible!important;text-overflow:clip!important;white-space:nowrap;padding:0 2px!important;text-align:left}
-html body #setup.b2 #names .nslot:not(.ph) .pdel{flex:none;width:24px!important;font-size:16px;margin-right:2px}
+html body #setup.b2 #names .nslot:not(.ph) .pdel{flex:none;width:24px!important;font-size:16px;margin-right:9px}
+#setup #moreOpt,#setup #moreOpt2{display:none!important}
 </style>
 </head>
 <body>
@@ -6419,6 +6420,7 @@ const SU=$('setup');
  const b2=el('button','moreopt');b2.id='moreOpt2';SU.querySelector('.sect.s1 .ordopt').after(b2);
  b1.addEventListener('click',()=>{haptic();SFX.tick();SU.classList.toggle('more');moreUpd()});
  b2.addEventListener('click',()=>{haptic();SFX.tick();SU.classList.toggle('more2');moreUpd()});
+ SU.classList.add('more','more2');   /* lf-400 : plus de masquage, toutes les options toujours visibles */
  window.moreUpd=()=>{const g={cricket:'ck',x01:'xo',killer:'kl',shanghai:'sho',clock:'clo',halveit:'hio'}[S.game]||'ck';
    const DEFV={seq:0,clegs:1,xin:0,xout:1,xlegs:1,xhint:1,xrep:1,kbonus:1,kdef:1,kcarry:1,clkm:0,clkb:1,clkr:0,hid:3,hip:1};
    const A=[...SU.querySelectorAll('.sect.s2 .opt.'+g)].filter(o=>o.classList.contains('adv')||o.closest('.kpair.adv'));
@@ -7402,7 +7404,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-399';   // à changer avec VERSION dans sw.js
+const APPV='lf-400';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
