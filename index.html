@@ -4393,13 +4393,15 @@ function throwDart(t){
       const pointsOnly=d.pts&&d.pre>=3;          // numéro déjà fermé : la fléchette ne fait que des points
       if(!pointsOnly){
         // même règle pour toutes les marques : le son dépend du multiplicateur (bulle pour le Bull)
-        if(t===25)(m===2?SFX.dbull:SFX.bull)();
-        else if(m===3)SFX.triple();else if(m===2)SFX.double();else SFX.single();
-        if(d.cl)setTimeout(SFX.close,m===3?420:m===2?460:140);   // l'accord attend la fin du son de double / triple       // + petit accord quand la fléchette ferme le numéro
+        // le son suit les marques réellement posées (ex. il en manque 1 et on fait un double : son de simple + 1 coup de feu)
+        const u=Math.min(m,Math.max(0,3-(d.pre||0)));
+        if(t===25)(u===2?SFX.dbull:SFX.bull)();
+        else if(u===3)SFX.triple();else if(u===2)SFX.double();else SFX.single();
+        if(d.cl)setTimeout(SFX.close,u===3?420:u===2?460:140);   // l'accord attend la fin du son de double / triple       // + petit accord quand la fléchette ferme le numéro
       }
       if(d.pts){                                 // des points : coup de feu
         if(pointsOnly&&t===25)(m===2?SFX.dbull:SFX.bull)();   // Bull : la bulle d'abord, le coup de feu juste après
-        const dl=pointsOnly?(t===25?260:0):(m===3?560:m===2?560:t===25?260:180);
+        const u=Math.min(m,Math.max(0,3-(d.pre||0))),dl=pointsOnly?(t===25?260:0):(u>=2?560:t===25?260:d.cl?300:180);
         setTimeout(()=>sndN(G.mode==='cut'?'ptsOpp':'ptsMe','gun',Math.round(d.pts/t)),dl);   // le son des points choisi, joué 2 ou 3 fois en double / triple   // des points (pour soi ou pour les autres) : coup de feu
       }
     }
@@ -7295,7 +7297,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-381';   // à changer avec VERSION dans sw.js
+const APPV='lf-382';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
