@@ -3814,10 +3814,10 @@ html body :is(#game,#x01,#killer) footer:not(.armed2):not(.armed3) .fthumb::befo
   background:linear-gradient(100deg,transparent,rgba(255,255,255,.6),transparent);transform:skewX(-18deg);animation:shine 1.8s ease-in-out infinite}
 html body :is(#game,#x01,#killer) footer:not(.armed2):not(.armed3) .fthumb{animation:gold 1.4s ease-in-out infinite alternate}
 /* capsules allongées et toutes de la même longueur (2 par ligne, pleine colonne en équipes) ; le nom n'est jamais coupé (il rétrécit si besoin) */
-html body #setup.b2 #names .nslot:not(.ph),html body #setup.b2 #names .nslot:not(.ph)+.nslot{display:flex!important;align-items:center;box-sizing:border-box;width:calc(var(--mn-cw,50%) - 10px)!important;max-width:none!important;padding:var(--mn-cph,4px) 0!important;margin-left:0}
+html body #setup.b2 #names .nslot:not(.ph),html body #setup.b2 #names .nslot:not(.ph)+.nslot{display:flex!important;align-items:center;box-sizing:border-box;width:calc(var(--mn-cw,50%) - 10px)!important;max-width:none!important;padding:0!important;margin-left:0;height:calc(var(--bh) + 2*var(--mn-cph,0px))!important;min-height:calc(var(--bh) + 2*var(--mn-cph,0px))!important}
 html body #setup.b2.teams #names .tbub .nslot:not(.ph){width:100%!important}
 html body #setup.b2 #names .nslot:not(.ph) .pname{flex:1 1 auto;min-width:0;overflow:visible!important;text-overflow:clip!important;white-space:nowrap;padding:0 2px!important;text-align:left}
-html body #setup.b2 #names .nslot:not(.ph) .pdel{flex:none;width:24px!important;font-size:var(--mn-xf,16px);margin-right:var(--mn-xr,9px);position:relative;top:var(--mn-xy,0px)}
+html body #setup.b2 #names .nslot:not(.ph) .pdel{flex:none;width:auto!important;min-width:24px;padding:0 4px!important;font-size:var(--mn-xf,16px)!important;margin-right:var(--mn-xr,9px)!important;margin-left:auto!important;position:relative;top:var(--mn-xy,0px);text-align:center}
 #setup #moreOpt,#setup #moreOpt2{display:none!important}
 /* autres éléments du menu : tailles réglables (zoom) */
 html body #setup#setup.b2 .seg.gamepick{zoom:var(--mn-gz,1)}
@@ -7440,7 +7440,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-403';   // à changer avec VERSION dans sw.js
+const APPV='lf-404';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -7904,7 +7904,7 @@ document.addEventListener('click',e=>{const h=e.target.closest&&e.target.closest
 const MN_COL=[['Joueur','var(--pc,#111)'],['Noir','#111'],['Blanc','#fff']];
 const MN=[
  ['Capsule joueur'],
- ['cw','Largeur',30,100,1,51,'%'],['cph','Hauteur',0,14,.5,0,'px'],['cr','Arrondi',0,99,1,48,'px'],['cbw','Contour',0,5,.25,2,'px'],['cbc','Couleur du contour',MN_COL,'Noir'],['cbg','Fond à la couleur du joueur',0,100,5,100,'%'],
+ ['cw','Largeur',30,100,1,51,'%'],['cph','Hauteur',-10,14,.5,0,'px'],['cr','Arrondi',0,30,.5,30,'px'],['cbw','Contour',0,5,.25,2,'px'],['cbc','Couleur du contour',MN_COL,'Noir'],['cbg','Fond à la couleur du joueur',0,100,5,100,'%'],
  ['Rond de la note'],
  ['rz','Taille',24,60,1,49,'px'],['rx','Position ← →',-20,30,1,-4,'px'],['ry','Position ↑ ↓',-15,15,.5,0,'px'],['rf','Taille de la note',10,32,.5,16.5,'px'],['rs','Contour de la note',0,7,.25,0,'px'],['rbw','Contour du rond',0,5,.25,0,'px'],['rbc','Couleur du contour du rond',MN_COL,'Noir'],
  ['Nom'],
@@ -7914,9 +7914,11 @@ const MN=[
  ['Autres éléments (tailles)'],
  ['gz','Choix du jeu (Cricket / 501…)',.6,1.4,.02,1,''],['oz','Options (Mode, Équipes…)',.6,1.4,.02,1,''],['lz','Titres des options',.6,1.5,.02,1,''],['pz','Bouton +',.5,1.6,.02,1,''],['bz','Bouton du bas',.6,1.3,.02,1,'']];
 S.mnu=S.mnu||{};
-if(!S.mnuV){const B={"cw": 51, "cph": 0, "cr": 48, "cbw": 2, "cbg": 100, "rz": 49, "rx": -4, "rf": 16.5, "rs": 0, "rbw": 0, "nz": 1.2, "nc": "Blanc", "xf": 9.5, "xr": 13, "xy": 0, "gz": 1};for(const k in B)if(S.mnu[k]===B[k])delete S.mnu[k];S.mnuV=1;try{store.set(K_S,S)}catch(e){}}   /* lf-403 : réglages de Loubi = base */
-function mnApply(){const st=$('setup').style;MN.forEach(d=>{if(d.length<2)return;const k=d[0],v=S.mnu[k]??(Array.isArray(d[2])?d[3]:d[5]);
-  if(Array.isArray(d[2])){const c=d[2].find(x=>x[0]===v);if(c)st.setProperty('--mn-'+k,c[1]);else st.removeProperty('--mn-'+k)}else st.setProperty('--mn-'+k,v+d[6])})}
+if(!S.mnuV){const B={"cw": 51, "cph": 0, "cbw": 2, "cbg": 100, "rz": 49, "rx": -4, "rf": 16.5, "rs": 0, "rbw": 0, "nz": 1.2, "nc": "Blanc", "xf": 9.5, "xr": 13, "xy": 0, "gz": 1};for(const k in B)if(S.mnu[k]===B[k])delete S.mnu[k];S.mnuV=1;try{store.set(K_S,S)}catch(e){}}   /* lf-403 : réglages de Loubi = base */
+function mnApply(){/* variables posées dans une feuille de style sur #setup ET sur chaque capsule : « couleur du joueur » (var(--pc)) se résout ainsi sur la capsule elle-même */
+  const st=$('setup').style;let css='';MN.forEach(d=>{if(d.length<2)return;const k=d[0],v=S.mnu[k]??(Array.isArray(d[2])?d[3]:d[5]);st.removeProperty('--mn-'+k);
+    if(Array.isArray(d[2])){const c=d[2].find(x=>x[0]===v);if(c)css+=`--mn-${k}:${c[1]};`}else css+=`--mn-${k}:${v}${d[6]};`});
+  let t=$('mnst');if(!t){t=document.createElement('style');t.id='mnst';document.head.append(t)}t.textContent=`#setup,#setup #names .nslot{${css}}`}
 function mnFit(){try{renderSetup()}catch(e){}try{placeThumbs()}catch(e){}}
 function mnDraw(){const p=$('mnp');const fv=(d,v)=>(d[6]===''?String(Math.round(v*100)/100):String(v)+(d[6]==='%'?' %':' px')).replace('.',',');
   p.innerHTML=`<div class="mnh"><b>Menu</b><button class="lt" data-mnr>Rétablir</button><button class="lt" data-mncp>Copier</button><button data-mnx>OK</button></div>`+
