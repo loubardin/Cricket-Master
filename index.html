@@ -7328,7 +7328,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-385';   // à changer avec VERSION dans sw.js
+const APPV='lf-386';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -8008,6 +8008,11 @@ const lyElCt=cx=>S.ctr!==false?((LY_CTC[cx]||{}).el||{}):{};
 try{if(!(S.lay&&S.lay.v7)){const L=S.lay||{};Object.entries(LY_CTG).forEach(([k,v])=>{if(L[k]===v)delete L[k]});const c=S.lays&&S.lays.ck2;
   if(c){Object.entries(LY_CTC.ck2).forEach(([k,v])=>{if(k!=='el'&&c[k]===v)delete c[k]});const m=c.el&&c.el.mk;if(m&&m.z===1&&m.x===.1&&m.y===0)delete c.el.mk}
   S.lay=Object.assign(L,{v7:1});store.set(K_S,S)}}catch(e){}
+/* lf-386 : réglages perso de Loubi remis à Pop, sauf Cricket 4 joueurs (seules les valeurs identiques à son export sont retirées) */
+try{if(!(S.lay&&S.lay.v8)){const L=S.lay||{},Y=S.lays||{};if(L.ftK===1.5)delete L.ftK;
+  const c=Y.ck2;if(c){if(c.nfz===.85)delete c.nfz;if(c.el&&c.el.lbl&&c.el.lbl.z===1.32)delete c.el.lbl}
+  const k=Y.kl;if(k)Object.entries({klPY:11.5,klNY:-7,klGY:-17.5,klGX:-5,klH:1.24,klZ:.97,klY:0}).forEach(([a,v])=>{if(k[a]===v)delete k[a]});
+  S.lay=Object.assign(L,{v8:1});store.set(K_S,S)}}catch(e){}
 const lyGet=(cx)=>{cx=cx||lyCur();const P=(S.lays&&S.lays[cx])||{},Gl={};LY_GLOB.forEach(k=>{if(S.lay&&S.lay[k]!=null)Gl[k]=S.lay[k]});const SK=Object.assign({},S.skin?Object.assign({},LY_SKG,LY_SKC[cx]||{}):{},S.ctr!==false?Object.assign({},LY_CTG,LY_CTC[cx]||{}):{});delete SK.el;return Object.assign({},LY_D,LY_PD[cx]||{},SK,P,Gl)};
 function lySet(k,v,cx){cx=cx||lyCur();if(LY_GLOB.includes(k)){S.lay=Object.assign(S.lay||{v3:1},{[k]:v})}else{S.lays=S.lays||{};S.lays[cx]=Object.assign(S.lays[cx]||{},{[k]:v})}}
 /* ===== réglages rangés par bloc : chaque panneau suit le même ordre (Bloc · Textes : tailles · Textes : placement · Historique · Contours) ===== */
@@ -8152,7 +8157,7 @@ function lyOpen(mode,elId,sec){const old=$('lyp');const up0=old?old.classList.co
     const fb=ev.target.closest('.lyf button');if(fb){fcOpen(fb.dataset.f,draw);return}
     const bt=ev.target.closest('.lyb button[data-bt]');if(bt){haptic();lySet('barTop',+bt.dataset.bt,CX);store.set(K_S,S);lyApply();draw();return}
     const ab=ev.target.closest('.lyb button[data-a]');if(ab){haptic();lySet('nA',+ab.dataset.a,CX);store.set(K_S,S);lyPlace();draw();return}
-    if(ev.target.closest('.lyc')){const L=Object.assign({},S.lay||{});delete L.v3;delete L.v4;delete L.v5;delete L.v6;delete L.v7;const txt='Réglages Pop '+APPV+' : '+JSON.stringify({communs:L,jeux:S.lays||{},fN:S.fN||null,fT:S.fT||null});
+    if(ev.target.closest('.lyc')){const L=Object.assign({},S.lay||{});delete L.v3;delete L.v4;delete L.v5;delete L.v6;delete L.v7;delete L.v8;const txt='Réglages Pop '+APPV+' : '+JSON.stringify({communs:L,jeux:S.lays||{},fN:S.fN||null,fT:S.fT||null});
       const ok=()=>{try{mkToast('','Réglages copiés : colle-les dans la conversation',2600)}catch(e){}};
       (navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(txt).then(ok):Promise.reject()).catch(()=>{if(navigator.share)navigator.share({text:txt}).catch(()=>{});else prompt('Copie ce texte :',txt)});return}
     if(ev.target.closest('.lyra')){haptic();S.lays={};S.lay={v3:1,v4:1};delete S.fN;delete S.fT;done();return}
