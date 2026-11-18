@@ -3749,6 +3749,30 @@ html body:is(.m2,.m3) #killer:not(.bron) #pkl .pkng,html body:is(.m2,.m3) #kille
 #h2o{gap:12px;overflow-y:auto;background:var(--page,#f7f2e5)!important}
 [data-h2a]{cursor:pointer}.h2l[data-h2a]::after{content:'›';margin-left:6px;opacity:.45;font-weight:900}#h2o .h2big::after{content:none}html body #h2o .h2big{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;padding:16px;border-radius:20px;background:var(--m-cell,#fff);box-shadow:inset 0 0 0 2px var(--ol,#111);font:400 18px "Fun",sans-serif;color:var(--ink)}html body #h2o .h2big span{text-transform:uppercase;color:var(--pc);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}html body #h2o .h2big span:last-of-type{text-align:right}html body #h2o .h2big b{font:400 40px "Fun",sans-serif}html body #h2o .h2big em{grid-column:1/-1;text-align:center;font:400 12px "Lbl",sans-serif;font-style:normal;color:var(--mute)}
 #h2o .prgl{display:flex;flex-direction:column;gap:6px}#h2o .prg{display:flex;flex-direction:column;align-items:stretch;gap:2px;text-align:left;border:0;border-radius:16px;padding:10px 14px;background:var(--m-cell,#fff);box-shadow:inset 0 0 0 2px rgba(0,0,0,.12);color:var(--ink)}#h2o .prg.w{box-shadow:inset 0 0 0 2px var(--accent)}#h2o .prg1{display:flex;justify-content:space-between;align-items:baseline;gap:8px}#h2o .prg1 b{font:400 16px "Fun",sans-serif}#h2o .prg1 i{font:400 12px "Lbl",sans-serif;font-style:normal;color:var(--mute)}#h2o .prg2{font:400 14px "Lbl",sans-serif}#h2o .prg.w .prg2{color:var(--accent)}#h2o .prg small{font:400 12px "Lbl",sans-serif;color:var(--mute);text-transform:uppercase;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* carte « FIFA » */
+.fcw{display:flex;flex-direction:column;align-items:center;gap:10px;margin:4px 0 6px}
+.fcard{width:300px;height:430px;flex:none;perspective:1200px;cursor:pointer}
+.fcin{position:relative;width:100%;height:100%;transition:transform .6s cubic-bezier(.3,1.2,.4,1);transform-style:preserve-3d}
+.fcard.flip .fcin{transform:rotateY(180deg)}
+.fcf,.fcb{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;clip-path:path('M 30 20 L 270 20 Q 290 20 290 45 L 290 340 Q 290 385 150 420 Q 10 385 10 340 L 10 45 Q 10 20 30 20 Z');color:#111;font-family:"Fun",sans-serif}
+.fcard .fcf,.fcard .fcb{background:linear-gradient(135deg,var(--g0),var(--g1) 55%,var(--g2))}
+.fcard.bz{--g0:#f0c39a;--g1:#a8683a;--g2:#6d3f1d}.fcard.ar{--g0:#f4f6f8;--g1:#b9c0c8;--g2:#7d8691}.fcard.or{--g0:#fff1a8;--g1:#e6b422;--g2:#9c6b06}.fcard.ic{--g0:#ffffff;--g1:#e9dcc0;--g2:#b49450}
+.fcard::before{content:none}
+.fcb{transform:rotateY(180deg);display:flex;flex-direction:column;align-items:center;padding:14% 9% 0;gap:4%}
+.fcf .fct{position:absolute;left:11%;top:7%;display:flex;flex-direction:column;line-height:.95}
+.fcf .fct b{font-size:clamp(34px,13vw,52px);font-weight:400}.fcf .fct i{font-style:normal;font-size:clamp(14px,5vw,19px)}.fcf .fct small{font:400 11px "Lbl","Lexend",sans-serif;opacity:.75;margin-top:2px}
+.fcf .fca{position:absolute;right:13%;top:8%;width:42%;aspect-ratio:1;border-radius:50%;background:var(--pc);box-shadow:inset 0 0 0 4px #111;display:grid;place-items:center}
+.fcf .fca span{color:#fff;font-size:clamp(26px,11vw,44px);-webkit-text-stroke:0}
+.fcf .fcn{position:absolute;left:0;right:0;top:41%;text-align:center;font-size:clamp(20px,8vw,30px);text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 10%;border-bottom:3px solid #111;margin:0 12%}
+.fcf .fcs{position:absolute;left:12%;right:9%;top:53%;display:grid;grid-template-columns:1fr 1fr;grid-auto-flow:column;grid-template-rows:repeat(3,auto);gap:4px 12px}
+.fcf .fcs div{display:flex;align-items:baseline;gap:6px}.fcf .fcs b{font-size:clamp(18px,6.6vw,26px);font-weight:400;min-width:1.4em}.fcf .fcs span{font:400 clamp(10px,3.4vw,13px) "Lbl","Lexend",sans-serif;white-space:nowrap}
+.fcf .fcg,.fcb .fcg{position:absolute;left:0;right:0;bottom:12%;text-align:center;font:400 11px "Lbl","Lexend",sans-serif;opacity:.75}
+.fcb .fcbt{font-size:20px}.fcb .fcbt b{font-weight:400}
+.fcb .fcbi{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;font-size:22px;min-height:30px}.fcb .fcbi em{font:400 12px "Lbl","Lexend",sans-serif;font-style:normal;opacity:.7}
+.fcb .fcbr{width:100%;display:flex;flex-direction:column;gap:3px}.fcb .fcbr div{display:flex;justify-content:space-between;border-bottom:1.5px solid rgba(0,0,0,.25);padding:2px 0}.fcb .fcbr span{font:400 12px "Lbl","Lexend",sans-serif}.fcb .fcbr b{font-weight:400;font-size:15px}
+.fcard.ic .fcf::after{content:'';position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.7) 45%,transparent 60%);background-size:250% 100%;animation:fcshine 3.2s ease-in-out infinite}
+@keyframes fcshine{0%{background-position:150% 0}100%{background-position:-100% 0}}
+.fcsh{border:0;border-radius:99px;background:#111;color:#fff;font:400 14px "Fun",sans-serif;padding:8px 16px}
 </style>
 </head>
 <body>
@@ -7333,7 +7357,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-388';   // à changer avec VERSION dans sw.js
+const APPV='lf-389';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -7740,6 +7764,7 @@ function profOpen(name){SFX.open();let o=$('prof');if(o)o.remove();o=el('div','o
     const OF=window.syOfficial&&syOfficial(n);if(OF){T=OF.T;rows.length=0;rows.push(...OF.rows);rec=OF.rec}   /* ami relié : bilan officiel publié par son téléphone */
     o.innerHTML=`<div class="ovh"><button class="prb" data-back>‹ Profils</button><button class="circ" data-x aria-label="Fermer"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
       <div class="prh"><b style="--pc:${pColor(n)}"></b><h2>${esc(n)}</h2>${isBot(n)?'':'<button class="prc" data-pc aria-label="Couleur et nom">🎨</button>'}</div>${window.syTag?syTag(n):''}
+      ${fcHtml(n)}
       ${isBot(n)?'':`<h3 class="prs">Son de victoire</h3><div class="prv">${vsHtml(n)}</div>`}
       <h3 class="prs">Trophées <i>${Object.keys(T).filter(k=>TROPH.some(t=>t[0]===k)).length}/${TROPH.length}</i></h3><div class="prt">${trByCat().map(([c,L])=>`<p class="prtc">${esc(c)}</p>`+L.map(t=>`<div class="${T[t[0]]?'on':''}" data-tr="${t[0]}"><span>${t[3]}</span><b>${esc(t[1])}</b><em>${T[t[0]]?(t[0]==='ser'?T[t[0]]+' d’affilée':'×'+T[t[0]]):''}</em><small>${esc(t[2])}</small></div>`).join('')).join('')}</div>
       <h3 class="prs">Par jeu</h3>${rows.length?`<div class="stw"><table class="stt"><thead><tr><th class="sn">Jeu</th><th>Parties</th><th>Victoires</th><th>%</th><th>Stat clé</th></tr></thead><tbody>${rows.join('')}</tbody></table></div>`:'<p class="hempty">Pas encore de partie.</p>'}
@@ -7750,6 +7775,8 @@ function profOpen(name){SFX.open();let o=$('prof');if(o)o.remove();o=el('div','o
   o.addEventListener('click',e=>{const t=e.target;if(t.closest('[data-x]')){o.classList.remove('on');setTimeout(()=>o.remove(),300);return}if(t.closest('[data-back]')){SFX.back();VSO=null;PGN=20;draw(null);return}
     if(t.closest('[data-ami]')){haptic();if(window.syOpen)syOpen();return}
     const hg=t.closest('[data-hg]');if(hg){haptic();hgOpen(hg.dataset.hg,o);return}
+    const fcd=t.closest('[data-fcard]');if(fcd){haptic();SFX.tick();fcd.classList.toggle('flip');return}
+    if(t.closest('[data-fcshare]')){haptic();fcShare(o.dataset.n);return}
     if(t.closest('[data-more]')){haptic();SFX.tick();PGN+=20;const y=o.scrollTop;draw(o.dataset.n);o.scrollTop=y;return}
     const trd=t.closest('.prt>div[data-tr]');if(trd){haptic();SFX.tick();trd.classList.toggle('open');return}
     const vb=o.querySelector('.prv'),n=o.dataset.n,vr=()=>{if(vb)vb.innerHTML=vsHtml(n)};
@@ -7787,6 +7814,51 @@ function h2hOpen(a,b,game){SFX.open();let o=$('h2o');if(o)o.remove();o=el('div',
   o.addEventListener('click',e=>{const t=e.target;if(t.closest('[data-x]')){o.classList.remove('on');setTimeout(()=>o.remove(),300);return}
     const hg=t.closest('[data-hg]');if(hg){haptic();hgOpen(hg.dataset.hg,o)}})}
 document.addEventListener('click',e=>{const h=e.target.closest&&e.target.closest('[data-h2a]');if(!h||e.target.closest('#h2o'))return;e.stopPropagation();haptic();h2hOpen(h.dataset.h2a,h.dataset.h2b,h.dataset.h2g||'')},true);
+
+/* ===== carte « FIFA » du joueur : note générale + 6 attributs, retournable (trophées / records au dos), partageable ===== */
+const FC_ATT=['MPR','Moyenne','Finish','Triples','Régularité','Victoires'];
+function fcRate(v,a,b){return Math.max(30,Math.min(99,Math.round(40+(v-a)*59/(b-a))))}
+function fcData(n){const own=r=>r.p&&r.p.findIndex(x=>pers(x).includes(n));
+  let g=0,w=0,d=0,h=0,xd=0,xp=0,co=0,td=0,t3=0;const per=[],fav={};
+  HIST.forEach(r=>{const i=own(r);if(i==null||i<0)return;const x=r.p[i];g++;fav[r.game]=(fav[r.game]||0)+1;if(r.w===i)w++;
+    const y=x.members?(r.game==='cricket'||r.game==='x01'?memSt(r,n,r.game):null):x;
+    if(y&&y.darts){if(r.game==='x01'){xd+=y.darts;xp+=y.pts||0;co=Math.max(co,y.co||0)}else{d+=y.darts;h+=y.hits||0;if(y.darts>=9)per.push(y.hits*3/y.darts)}}
+    (r.log||[]).forEach(e=>{const P=r.p[e[0]];if(!P)return;if(e[1]?e[1]!==n:!pers(P).includes(n))return;(e[2]||[]).forEach(q=>{td++;if(q[1]===3&&q[0]>0)t3++})})});
+  const mean=per.length?per.reduce((a,b)=>a+b,0)/per.length:0,sd=per.length>2?Math.sqrt(per.reduce((a,b)=>a+(b-mean)**2,0)/per.length):null;
+  const A=[d>=9?fcRate(h*3/d,0,4):null, xd>=9?fcRate(xp*3/xd,0,90):null, co?fcRate(co,0,140):null, td>=15?fcRate(t3*100/td,0,22):null,
+    sd!==null&&mean>0?fcRate(1-sd/mean,.3,.92):null, g?fcRate(w*100/g,0,75):null];
+  const got=A.filter(v=>v!==null),ovr=got.length?Math.round(got.reduce((a,b)=>a+b,0)/got.length):null;
+  const top=Object.entries(fav).sort((a,b)=>b[1]-a[1])[0];
+  return{n,g,w,A,ovr,fav:top?top[0]:null,raw:{mpr:d?h*3/d:0,moy:xd?xp*3/xd:0,co,tri:td?t3*100/td:0,vic:g?w*100/g:0}}}
+function fcTier(D){if(D.ovr==null)return'bz';try{const L=allPeople().filter(x=>!isBot(x)).map(fcData).filter(x=>x.g>=5&&x.ovr!=null).sort((a,b)=>b.ovr-a.ovr);if(L[0]&&L[0].n===D.n&&D.ovr>=60)return'ic'}catch(e){}
+  return D.ovr>=75?'or':D.ovr>=65?'ar':'bz'}
+const FC_TN={bz:'Bronze',ar:'Argent',or:'Or',ic:'Icône'},FC_G={cricket:'CRI',x01:'501',killer:'KIL',clock:'HOR',shanghai:'SHA',halveit:'HAL'};
+function fcHtml(n){const D=fcData(n),t=fcTier(D),T=trAll()[n]||{},tro=TROPH.filter(x=>T[x[0]]);
+  const ini=n.trim().split(/\s+/).map(x=>x[0]).join('').slice(0,2).toUpperCase();
+  return`<div class="fcw"><div class="fcard ${t}" data-fcard style="--pc:${pColor(n)}"><div class="fcin">
+    <div class="fcf"><div class="fct"><b>${D.ovr??'–'}</b><i>${D.fav?FC_G[D.fav]||'':''}</i><small>${FC_TN[t]}</small></div>
+      <div class="fca"><span>${esc(ini)}</span></div><div class="fcn">${esc(n)}</div>
+      <div class="fcs">${FC_ATT.map((a,i)=>`<div><b>${D.A[i]??'–'}</b><span>${a}</span></div>`).join('')}</div>
+      <div class="fcg">${D.g} partie${D.g>1?'s':''} · ${D.w} victoire${D.w>1?'s':''}</div></div>
+    <div class="fcb"><div class="fcbt">Trophées <b>${tro.length}/${TROPH.length}</b></div><div class="fcbi">${tro.slice(0,12).map(x=>`<span title="${esc(x[1])}">${x[3]}</span>`).join('')||'<em>Pas encore de trophée</em>'}</div>
+      <div class="fcbr"><div><span>MPR</span><b>${D.raw.mpr?fr(D.raw.mpr):'–'}</b></div><div><span>Moyenne 501</span><b>${D.raw.moy?fr(D.raw.moy):'–'}</b></div><div><span>Meilleur finish</span><b>${D.raw.co||'–'}</b></div><div><span>Triples</span><b>${D.raw.tri?fr(D.raw.tri)+' %':'–'}</b></div><div><span>Victoires</span><b>${D.g?Math.round(D.raw.vic)+' %':'–'}</b></div></div>
+      <div class="fcg">touche pour retourner</div></div>
+  </div></div><button class="fcsh" data-fcshare>Partager la carte</button></div>`}
+/* image de la carte (dessinée en canvas) pour le partage */
+async function fcShare(n){const D=fcData(n),t=fcTier(D),W=600,H=860,c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');
+  const G={bz:['#f0c39a','#a8683a','#6d3f1d'],ar:['#f4f6f8','#b9c0c8','#7d8691'],or:['#fff1a8','#e6b422','#9c6b06'],ic:['#ffffff','#e9dcc0','#b49450']}[t];
+  try{await document.fonts.load('80px Fun')}catch(e){}
+  const path=()=>{x.beginPath();x.moveTo(60,40);x.lineTo(W-60,40);x.quadraticCurveTo(W-20,40,W-20,90);x.lineTo(W-20,H-180);x.quadraticCurveTo(W-20,H-90,W/2,H-30);x.quadraticCurveTo(20,H-90,20,H-180);x.lineTo(20,90);x.quadraticCurveTo(20,40,60,40);x.closePath()};
+  const gr=x.createLinearGradient(0,0,W,H);gr.addColorStop(0,G[0]);gr.addColorStop(.55,G[1]);gr.addColorStop(1,G[2]);path();x.fillStyle=gr;x.fill();x.lineWidth=10;x.strokeStyle='#111';x.stroke();
+  x.fillStyle='#111';x.textAlign='left';x.font='110px Fun';x.fillText(D.ovr??'–',60,175);x.font='38px Fun';x.fillText(D.fav?FC_G[D.fav]||'':'',66,225);x.font='26px Fun';x.fillText(FC_TN[t],66,262);
+  x.beginPath();x.arc(W/2+60,190,110,0,7);x.fillStyle=pColor(n).startsWith('#')?pColor(n):'#d4494c';x.fill();x.lineWidth=8;x.strokeStyle='#111';x.stroke();
+  x.fillStyle='#fff';x.textAlign='center';x.font='96px Fun';x.fillText(n.trim().split(/\s+/).map(s=>s[0]).join('').slice(0,2).toUpperCase(),W/2+60,225);
+  x.fillStyle='#111';x.font=(n.length>10?52:66)+'px Fun';x.fillText(n.toUpperCase(),W/2,385);x.fillRect(80,410,W-160,5);
+  FC_ATT.forEach((a,i)=>{const cx=i<3?110:W/2+40,cy=480+(i%3)*78;x.textAlign='left';x.font='54px Fun';x.fillText(D.A[i]??'–',cx,cy);x.font='34px Fun';x.fillText(a,cx+82,cy-4)});
+  x.textAlign='center';x.font='26px Fun';x.fillText(`${D.g} parties · ${D.w} victoires`,W/2,H-120);x.font='22px Fun';x.fillText('Cricket Master',W/2,H-82);
+  const blob=await new Promise(r=>c.toBlob(r,'image/png'));const f=new File([blob],'carte-'+n.replace(/\W+/g,'_')+'.png',{type:'image/png'});
+  try{if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:'Carte de '+n});return}}catch(e){if(e&&e.name==='AbortError')return}
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=f.name;document.body.append(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000)}
 function noteCard(n,cur){const D=betDebts(betNetP(n.list,cur?BETP:n.pays));
   return`<div class="hg note"><div class="hgt"><b>🧾 ${cur?'Note en cours':'Note réglée'}</b><em>${n.list.length} partie${n.list.length>1?'s':''}</em></div><div class="hgm">${cur?'pas encore envoyée':fdate(n.date)}</div>
     <div class="hgp">${D.length?D.map(x=>`<span>${esc(x.from)} → ${esc(x.to)} <i>${betTxt(x.v,x.u)}</i></span>`).join(''):'<span>Personne ne doit rien</span>'}</div>${cur?'<button class="big" id="bNote">Voir la note 🧾</button>':''}</div>`}
