@@ -3814,8 +3814,10 @@ html body :is(#game,#x01,#killer) footer:not(.armed2):not(.armed3) .fthumb::befo
   background:linear-gradient(100deg,transparent,rgba(255,255,255,.6),transparent);transform:skewX(-18deg);animation:shine 1.8s ease-in-out infinite}
 html body :is(#game,#x01,#killer) footer:not(.armed2):not(.armed3) .fthumb{animation:gold 1.4s ease-in-out infinite alternate}
 /* capsules allongées et toutes de la même longueur (2 par ligne, pleine colonne en équipes) ; le nom n'est jamais coupé (il rétrécit si besoin) */
-html body #setup.b2 #names .nslot:not(.ph),html body #setup.b2 #names .nslot:not(.ph)+.nslot{display:flex!important;align-items:center;box-sizing:border-box;width:calc(var(--mn-cw,50%) - 10px)!important;max-width:none!important;padding:0!important;margin-left:0;height:calc(var(--bh) + 2*var(--mn-cph,0px))!important;min-height:calc(var(--bh) + 2*var(--mn-cph,0px))!important}
+html body #setup.b2 #names .nslot:not(.ph),html body #setup.b2 #names .nslot:not(.ph)+.nslot{display:flex!important;align-items:center;box-sizing:border-box;width:calc(var(--mn-cw,51)*1% - 10px)!important;max-width:none!important;padding:0!important;margin-left:0;height:calc(var(--bh) + 2*var(--mn-cph,0px))!important;min-height:calc(var(--bh) + 2*var(--mn-cph,0px))!important}
 html body #setup.b2.teams #names .tbub .nslot:not(.ph){width:100%!important}
+/* en équipes, la largeur règle les 2 colonnes (51 = moitié de la largeur) */
+html body #setup#setup.b2.teams #names{grid-template-columns:repeat(2,min(calc(var(--mn-cw,51)*1% - 6px),calc(50vw - 16px)))!important;justify-content:center}
 html body #setup.b2 #names .nslot:not(.ph) .pname{flex:1 1 auto;min-width:0;overflow:visible!important;text-overflow:clip!important;white-space:nowrap;padding:0 2px!important;text-align:left}
 html body #setup.b2 #names .nslot:not(.ph) .pdel{flex:none;width:auto!important;min-width:24px;padding:0 4px!important;font-size:var(--mn-xf,16px)!important;margin-right:var(--mn-xr,9px)!important;margin-left:auto!important;position:relative;top:var(--mn-xy,0px);text-align:center}
 #setup #moreOpt,#setup #moreOpt2{display:none!important}
@@ -7442,7 +7444,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-405';   // à changer avec VERSION dans sw.js
+const APPV='lf-406';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -7906,7 +7908,7 @@ document.addEventListener('click',e=>{const h=e.target.closest&&e.target.closest
 const MN_COL=[['Joueur','var(--pc,#111)'],['Noir','#111'],['Blanc','#fff']];
 const MN=[
  ['Capsule joueur'],
- ['cw','Largeur',30,100,1,51,'%'],['cph','Hauteur',-10,14,.5,0,'px'],['cr','Arrondi',0,30,.5,30,'px'],['cbw','Contour',0,5,.25,2,'px'],['cbc','Couleur du contour',MN_COL,'Noir'],['cbg','Fond à la couleur du joueur',0,100,5,100,'%'],
+ ['cw','Largeur',30,100,1,51,''],['cph','Hauteur',-10,14,.5,0,'px'],['cr','Arrondi',0,30,.5,30,'px'],['cbw','Contour',0,5,.25,2,'px'],['cbc','Couleur du contour',MN_COL,'Noir'],['cbg','Fond à la couleur du joueur',0,100,5,100,'%'],
  ['Nom'],
  ['nz','Taille',.6,1.6,.05,1.2,''],['ns','Contour',0,7,.25,3,'px'],['nc','Couleur',MN_COL,'Blanc'],['nsc','Couleur du contour',MN_COL,'Noir'],['nx','Position ← →',-20,40,1,14,'px'],['ny','Position ↑ ↓',-10,10,.5,0,'px'],
  ['Croix'],
