@@ -7146,18 +7146,19 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-361';   // à changer avec VERSION dans sw.js
+const APPV='lf-362';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
   const old=$('xpick');if(old)old.remove();
   const p=el('div','');p.id='xpick';p.classList.add('skinpick');document.body.append(p);
-  const draw=()=>{p.innerHTML=`<div class="skn"><button class="skgo" data-go="hStats">Statistiques</button><button class="skgo" data-go="hHist">Historique</button><button class="skprof">Joueurs</button></div><div class="skp"><span>Son</span><div class="sksw sksnd3"><button data-s="0" class="${S.sound?'':'on'}">Non</button><button data-s="1" class="${S.sound&&S.voice===false?'on':''}">Effets</button><button data-s="2" class="${S.sound&&S.voice!==false?'on':''}">+ Voix</button></div></div><button class="skstu">✎ Studio : modifier l'écran de jeu</button><div class="skp"><span>Couleurs des joueurs</span><div class="sksw"><button data-p="1" class="${S.pcolOff?'':'on'}">Oui</button><button data-p="0" class="${S.pcolOff?'on':''}">Non</button></div></div>`+colMenu()+`<button class="skadv">Avancé <i>${SKADV?'▴':'▾'}</i></button>${SKADV?`<div class="skp skjeux"><span>Mise en page des jeux</span></div><div class="skdemo"><button data-d="ck2">Cricket 1v1</button><button data-d="ck3">Cricket 3</button><button data-d="ck4">Cricket 4</button><button data-d="ck5">Cricket 5+</button><button data-d="x2">501 1v1</button><button data-d="xn">501 3+</button><button data-d="kl">Killer 6</button><button data-d="kl7">Killer 7+</button><button data-d="clk">Horloge</button></div><div class="skp skjeux"><span>Affichage des tableaux</span></div><div class="skdemo skdisp"><button data-ds="st">Statistiques</button><button data-ds="hl">Historique</button><button data-ds="hg">Fiche de partie</button></div><button class="skdanger">Effacer des données…</button>`:''}<div class="skv">version ${APPV}</div>`;if(p.style.top)p.style.top=Math.max(12,Math.min(parseFloat(p.style.top),innerHeight-p.offsetHeight-12))+'px'};
+  const draw=()=>{p.innerHTML=`<div class="skn"><button class="skgo" data-go="hStats">Statistiques</button><button class="skgo" data-go="hHist">Historique</button><button class="skprof">Joueurs</button></div><div class="skp"><span>Son</span><div class="sksw sksnd3"><button data-s="0" class="${S.sound?'':'on'}">Non</button><button data-s="1" class="${S.sound&&S.voice===false?'on':''}">Effets</button><button data-s="2" class="${S.sound&&S.voice!==false?'on':''}">+ Voix</button></div></div><button class="skstu">✎ Studio : modifier l'écran de jeu</button><div class="skp"><span>Contours</span><div class="sksw skctr"><button data-c="1" class="${S.ctr!==false?'on':''}">Contour</button><button data-c="0" class="${S.ctr===false?'on':''}">Sans</button></div></div><div class="skp"><span>Couleurs des joueurs</span><div class="sksw"><button data-p="1" class="${S.pcolOff?'':'on'}">Oui</button><button data-p="0" class="${S.pcolOff?'on':''}">Non</button></div></div>`+colMenu()+`<button class="skadv">Avancé <i>${SKADV?'▴':'▾'}</i></button>${SKADV?`<div class="skp skjeux"><span>Mise en page des jeux</span></div><div class="skdemo"><button data-d="ck2">Cricket 1v1</button><button data-d="ck3">Cricket 3</button><button data-d="ck4">Cricket 4</button><button data-d="ck5">Cricket 5+</button><button data-d="x2">501 1v1</button><button data-d="xn">501 3+</button><button data-d="kl">Killer 6</button><button data-d="kl7">Killer 7+</button><button data-d="clk">Horloge</button></div><div class="skp skjeux"><span>Affichage des tableaux</span></div><div class="skdemo skdisp"><button data-ds="st">Statistiques</button><button data-ds="hl">Historique</button><button data-ds="hg">Fiche de partie</button></div><button class="skdanger">Effacer des données…</button>`:''}<div class="skv">version ${APPV}</div>`;if(p.style.top)p.style.top=Math.max(12,Math.min(parseFloat(p.style.top),innerHeight-p.offsetHeight-12))+'px'};
   const colMenu=()=>{const C=colGet(),dot=v=>`<i style="background:${v}"></i>`;return `<button class="crow cmain"><span>Apparence de l'appli</span><b>${dot(colAcc())}${dot(C.ol==='acc'?colAcc():C.ol)}${dot(C.bg)}</b></button>`};
   draw();p.style.left=Math.max(12,(innerWidth-p.offsetWidth)/2)+'px';p.style.top=Math.max(12,Math.min(innerHeight-p.offsetHeight-12,e.currentTarget.getBoundingClientRect().bottom+10))+'px';
   p.addEventListener('click',ev=>{ev.stopPropagation();const go=ev.target.closest('.skgo');if(go){p.remove();$(go.dataset.go).dispatchEvent(new MouseEvent('click',{bubbles:true}));return}
     if(ev.target.closest('.skadv')){haptic();SFX.tick();SKADV=!SKADV;draw();return}
     if(ev.target.closest('.skstu')){haptic();p.remove();stuStart();return}
+    const ct=ev.target.closest('.skctr button');if(ct){haptic();S.ctr=ct.dataset.c==='1';store.set(K_S,S);try{lyApply();edApply();lyPlace();ftPlace()}catch(e){}try{dispatchEvent(new Event('resize'))}catch(e){}draw();return}
     const sk=ev.target.closest('.sksk button');if(sk){haptic();S.skin=sk.dataset.k||'';store.set(K_S,S);applyTheme();try{dispatchEvent(new Event('resize'))}catch(e){}draw();return}   /* habillage : Base / Casino */
     const ds=ev.target.closest('.skdisp button');if(ds){haptic();p.remove();dispOpen(ds.dataset.ds);return}
     const s3=ev.target.closest('.sksnd3 button');if(s3){haptic();const v=+s3.dataset.s;if((v>0)!==!!S.sound)$('sndT').dispatchEvent(new MouseEvent('click',{bubbles:true}));S.voice=v===2;store.set(K_S,S);draw();if(v===2)say('Annonces activées');return}
@@ -7818,7 +7819,13 @@ if(S.lay&&!S.lays){const o=S.lay,g={v3:1},c={};for(const k in o){if(k==='v3')con
 /* versions illustrées (habillage ≠ Base) : réglages de Loubi (lf-354) posés par-dessus les réglages par défaut */
 const LY_SKG={nsw:5,fbw:3,scsw:4.75},LY_SKC={ck2:{nfz:1.25,mkz:.85,mksw:6.5}};
 try{if(!(S.lay&&S.lay.v6)){const L=S.lay||{};Object.entries(LY_SKG).forEach(([k,v])=>{if(L[k]===v)delete L[k]});const c=S.lays&&S.lays.ck2;if(c)Object.entries(LY_SKC.ck2).forEach(([k,v])=>{if(c[k]===v)delete c[k]});S.lay=Object.assign(L,{v6:1});store.set(K_S,S)}}catch(e){}
-const lyGet=(cx)=>{cx=cx||lyCur();const P=(S.lays&&S.lays[cx])||{},Gl={};LY_GLOB.forEach(k=>{if(S.lay&&S.lay[k]!=null)Gl[k]=S.lay[k]});const SK=S.skin?Object.assign({},LY_SKG,LY_SKC[cx]||{}):{};return Object.assign({},LY_D,LY_PD[cx]||{},SK,P,Gl)};
+/* mode « Contour » (par défaut) / « Sans contour » : réglages de Loubi (lf-360) posés par-dessus les réglages Pop */
+const LY_CTG={dtX:-7,dtZ:.65,nsw:3,scsw:3,fbw:3},LY_CTC={ck2:{mkz:1.05,mksw:6,mkX:11,el:{mk:{z:1,x:.1,y:0}}}};
+const lyElCt=cx=>S.ctr!==false?((LY_CTC[cx]||{}).el||{}):{};
+try{if(!(S.lay&&S.lay.v7)){const L=S.lay||{};Object.entries(LY_CTG).forEach(([k,v])=>{if(L[k]===v)delete L[k]});const c=S.lays&&S.lays.ck2;
+  if(c){Object.entries(LY_CTC.ck2).forEach(([k,v])=>{if(k!=='el'&&c[k]===v)delete c[k]});const m=c.el&&c.el.mk;if(m&&m.z===1&&m.x===.1&&m.y===0)delete c.el.mk}
+  S.lay=Object.assign(L,{v7:1});store.set(K_S,S)}}catch(e){}
+const lyGet=(cx)=>{cx=cx||lyCur();const P=(S.lays&&S.lays[cx])||{},Gl={};LY_GLOB.forEach(k=>{if(S.lay&&S.lay[k]!=null)Gl[k]=S.lay[k]});const SK=Object.assign({},S.skin?Object.assign({},LY_SKG,LY_SKC[cx]||{}):{},S.ctr!==false?Object.assign({},LY_CTG,LY_CTC[cx]||{}):{});delete SK.el;return Object.assign({},LY_D,LY_PD[cx]||{},SK,P,Gl)};
 function lySet(k,v,cx){cx=cx||lyCur();if(LY_GLOB.includes(k)){S.lay=Object.assign(S.lay||{v3:1},{[k]:v})}else{S.lays=S.lays||{};S.lays[cx]=Object.assign(S.lays[cx]||{},{[k]:v})}}
 /* ===== réglages rangés par bloc : chaque panneau suit le même ordre (Bloc · Textes : tailles · Textes : placement · Historique · Contours) ===== */
 const LY_K={
@@ -7884,7 +7891,7 @@ function edPick(t){const cx=lyCtx(),R=ED_REG[cx],root=ED_ROOT[cx];if(!R||!t||!t.
   for(let e=t;e&&e.id!==root.slice(1);e=e.parentElement){const r=R.find(r=>e.matches(root+' '+r[2]));if(r)return r[0]}return null}
 let ED_HL=null;
 function edApply(){let st=$('edSt');if(!st){st=document.createElement('style');st.id='edSt';document.head.append(st)}
-  const cx=lyCtx(),root=ED_ROOT[cx],E=Object.assign({},(LY_PD[lyCur()]||{}).el||{},((S.lays||{})[lyCur()]||{}).el||{});let css='';
+  const cx=lyCtx(),root=ED_ROOT[cx],E=Object.assign({},(LY_PD[lyCur()]||{}).el||{},lyElCt(lyCur()),((S.lays||{})[lyCur()]||{}).el||{});let css='';
   if(root){const pre='html body '+root.repeat(6)+' ';
     (ED_REG[cx]||[]).forEach(([id,,sel])=>{const v=E[id],q=pre+sel;
       if(v){const abs=ED_ABS.includes(id);
@@ -7962,7 +7969,7 @@ function lyOpen(mode,elId,sec){const old=$('lyp');const up0=old?old.classList.co
     const fb=ev.target.closest('.lyf button');if(fb){fcOpen(fb.dataset.f,draw);return}
     const bt=ev.target.closest('.lyb button[data-bt]');if(bt){haptic();lySet('barTop',+bt.dataset.bt,CX);store.set(K_S,S);lyApply();draw();return}
     const ab=ev.target.closest('.lyb button[data-a]');if(ab){haptic();lySet('nA',+ab.dataset.a,CX);store.set(K_S,S);lyPlace();draw();return}
-    if(ev.target.closest('.lyc')){const L=Object.assign({},S.lay||{});delete L.v3;delete L.v4;delete L.v5;delete L.v6;const txt='Réglages Pop '+APPV+' : '+JSON.stringify({communs:L,jeux:S.lays||{},fN:S.fN||null,fT:S.fT||null});
+    if(ev.target.closest('.lyc')){const L=Object.assign({},S.lay||{});delete L.v3;delete L.v4;delete L.v5;delete L.v6;delete L.v7;const txt='Réglages Pop '+APPV+' : '+JSON.stringify({communs:L,jeux:S.lays||{},fN:S.fN||null,fT:S.fT||null});
       const ok=()=>{try{mkToast('','Réglages copiés : colle-les dans la conversation',2600)}catch(e){}};
       (navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(txt).then(ok):Promise.reject()).catch(()=>{if(navigator.share)navigator.share({text:txt}).catch(()=>{});else prompt('Copie ce texte :',txt)});return}
     if(ev.target.closest('.lyra')){haptic();S.lays={};S.lay={v3:1,v4:1};delete S.fN;delete S.fT;done();return}
@@ -8023,7 +8030,7 @@ const stuRoot=()=>['game','x01'].map($).find(e=>e&&e.classList.contains('on'));
 function stuPick(t){if(!t||!t.closest)return null;const b=t.closest('footer #b2,footer #b3,footer #bS');if(b)return{id:b.id==='bS'?'sp':'dt',side:b.id==='b2'?-1:1};
   const id=edPick(t)||(t.closest('#grid .mk')?'mk':null);if(!id)return null;let side=1;if(id==='mk'){const mk=t.closest('.mk');side=mk&&mk.parentElement&&[...mk.parentElement.children].indexOf(mk)<2?-1:1}return{id,side}}
 function stuEl(id){const CX=lyCur();S.lays=S.lays||{};S.lays[CX]=S.lays[CX]||{};const E=S.lays[CX].el=S.lays[CX].el||{};
-  return E[id]=E[id]||Object.assign({z:1,x:0,y:0},((LY_PD[CX]||{}).el||{})[id]||{})}
+  return E[id]=E[id]||Object.assign({z:1,x:0,y:0},((LY_PD[CX]||{}).el||{})[id]||{},lyElCt(CX)[id]||{})}
 const stuRe=()=>{try{edApply()}catch(e){}lyApply();try{lyPlace()}catch(e){}try{fitSk()}catch(e){}};
 function stuSave(){clearTimeout(STU&&STU.sv);if(STU)STU.sv=setTimeout(()=>store.set(K_S,S),300)}
 function stuHL(){let st=$('stuHL');if(!st){st=document.createElement('style');st.id='stuHL';document.head.append(st)}
