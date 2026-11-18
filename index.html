@@ -3771,10 +3771,10 @@ html body:is(.m2,.m3) #killer:not(.bron) #pkl .pkng,html body:is(.m2,.m3) #kille
 .fcb .fcbi{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;font-size:22px;min-height:30px}.fcb .fcbi em{font:400 12px "Lbl","Lexend",sans-serif;font-style:normal;opacity:.7}
 .fcb .fcbr{width:100%;display:flex;flex-direction:column;gap:3px}.fcb .fcbr div{display:flex;justify-content:space-between;border-bottom:1.5px solid rgba(0,0,0,.25);padding:2px 0}.fcb .fcbr span{font:400 12px "Lbl","Lexend",sans-serif}.fcb .fcbr b{font-weight:400;font-size:15px}
 /* reflet qui passe sur toutes les cartes (plus marqué sur le diamant) */
-.fcard .fcf::after{content:'';pointer-events:none;position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.7) 45%,transparent 60%);background-size:250% 100%;animation:fcshine 3.2s ease-in-out infinite}
+.fcard .fcf::after{content:'';pointer-events:none;position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.7) 45%,transparent 60%);background-size:250% 100%;animation:fcshine 4s cubic-bezier(.45,0,.3,1) infinite}   /* un passage toutes les 4 s, puis un petit reflet qui revient ; jamais de remise à zéro visible */
 
-.fcard.di .fcf::after{background-image:linear-gradient(115deg,transparent 25%,rgba(255,255,255,.9) 42%,rgba(190,240,255,.6) 50%,transparent 62%);animation-duration:2.4s}
-@keyframes fcshine{0%{background-position:150% 0}100%{background-position:-100% 0}}
+.fcard.di .fcf::after{background-image:linear-gradient(115deg,transparent 25%,rgba(255,255,255,.9) 42%,rgba(190,240,255,.6) 50%,transparent 62%)}
+@keyframes fcshine{0%{background-position:140% 0;opacity:0}5%{opacity:1}30%{background-position:-40% 0;opacity:1}36%{background-position:-60% 0;opacity:0}44%{background-position:-60% 0;opacity:0}54%{background-position:10% 0;opacity:.45}64%{background-position:60% 0;opacity:0}100%{background-position:60% 0;opacity:0}}
 .fcsh{border:0;border-radius:99px;background:#111;color:#fff;font:400 14px "Fun",sans-serif;padding:8px 16px}
 .fcard{touch-action:pan-y}
 .fcb{justify-content:flex-start;padding:9% 9% 14%!important;gap:6px!important}
@@ -7366,7 +7366,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-391';   // à changer avec VERSION dans sw.js
+const APPV='lf-392';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
