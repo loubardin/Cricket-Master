@@ -3792,15 +3792,16 @@ html body:is(.m2,.m3) #killer:not(.bron) #pkl .pkng,html body:is(.m2,.m3) #kille
 #setup.b2 .nslot:not(.bot):not(.ph) :is(.pname,b,.pdel){color:#fff!important;opacity:1}
 #setup.b2 .pcol.ptr{width:calc(var(--u)*3.4)!important;height:calc(var(--u)*3.4)!important;display:grid;place-items:center;padding:0;color:#fff;font:400 calc(var(--u)*1.75) "Fun",sans-serif!important;line-height:1;
   text-shadow:0 1px 1.5px rgba(0,0,0,.55);background:radial-gradient(circle at 32% 28%,var(--g0) 0%,var(--g1) 45%,var(--g2) 100%)!important;box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.3),0 0 0 2px rgba(255,255,255,.85)!important}
-.ptr.bz{--g0:#e2a774;--g1:#a8683a;--g2:#6d3f1d}.ptr.ar{--g0:#dfe3e8;--g1:#9aa2ac;--g2:#626b76}.ptr.or{--g0:#f6d55a;--g1:#d4a017;--g2:#8a5c04}.ptr.di{--g0:#c9f2fc;--g1:#5fc3e6;--g2:#2a7fb8}
+.ptr.nc{--g0:#f4f1ea;--g1:#bdb6aa;--g2:#8a8378}.ptr.bz{--g0:#e2a774;--g1:#a8683a;--g2:#6d3f1d}.ptr.ar{--g0:#dfe3e8;--g1:#9aa2ac;--g2:#626b76}.ptr.or{--g0:#f6d55a;--g1:#d4a017;--g2:#8a5c04}.ptr.di{--g0:#c9f2fc;--g1:#5fc3e6;--g2:#2a7fb8}
 #setup.b2 .nslot.bot .pcol.ptr{color:#fff}
 /* page Joueurs : petites cartes façon Killer à 8, couleur du joueur, note générale en gros */
 #prof .prk{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0 18px}
 #prof .prk button{position:relative;border:0;border-radius:22px;background:var(--pc,#cfc9be);box-shadow:inset 0 0 0 2.5px #111;padding:12px 6px 10px;display:flex;flex-direction:column;align-items:center;gap:4px;color:#fff;transition:transform .15s}
 #prof .prk button:active{transform:scale(.95)}
 #prof .prk span{font:400 19px "Fun",sans-serif;text-transform:uppercase;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.35)}
-#prof .prk b{font:400 54px/1 "Fun",sans-serif;color:#fff;-webkit-text-stroke:2.5px #111;paint-order:stroke fill;text-shadow:3px 3px 0 rgba(0,0,0,.35)}
-#prof .prk i{font:400 12px "Fun",sans-serif;font-style:normal;color:#fff;padding:3px 10px;border-radius:99px;background:radial-gradient(circle at 32% 28%,var(--g0) 0%,var(--g1) 45%,var(--g2) 100%);box-shadow:inset 0 0 0 1.5px rgba(0,0,0,.3);text-shadow:0 1px 1.5px rgba(0,0,0,.55)}
+#prof .prk b{width:68px;height:68px;border-radius:50%;display:grid;place-items:center;margin:2px 0;font:400 30px/1 "Fun",sans-serif;color:#fff;text-shadow:0 1.5px 2px rgba(0,0,0,.55);
+  background:radial-gradient(circle at 32% 28%,var(--g0) 0%,var(--g1) 45%,var(--g2) 100%);box-shadow:inset 0 0 0 2px rgba(0,0,0,.3),inset 0 3px 6px rgba(255,255,255,.35),0 0 0 3px #fff,0 0 0 5.5px #111,0 5px 0 4px rgba(0,0,0,.18)}
+#prof .prk i{font:400 13px "Fun",sans-serif;font-style:normal;color:#fff;margin-top:6px;text-shadow:0 1px 2px rgba(0,0,0,.35)}
 #prof .prk small{font:400 11px "Lbl","Lexend",sans-serif;opacity:.9}
 </style>
 </head>
@@ -5053,7 +5054,7 @@ function renderSetup(){
     const slot=el('div','nslot');slot.dataset.i=i;
     const nm=el('span','pname',esc(S.names[i]));nm.style.color=pcol(S.names[i])||'';
     const cdot=el('button','pcol ptr');cdot.setAttribute('aria-label','Profil');
-    {const D=fcData(S.names[i]);cdot.classList.add(fcTier(D));cdot.textContent=D.ovr??'–'}
+    {const D=fcData(S.names[i]);cdot.classList.add(D.ovr==null?'nc':fcTier(D));cdot.textContent=D.ovr??'–'}
     cdot.addEventListener('click',()=>{if(isBot(S.names[i]))return;let r=ROSTER.find(q=>q.name===S.names[i]);if(!r){r={name:S.names[i],color:PCOLS[0]};ROSTER.push(r)}
       r.color=PCOLS[(PCOLS.indexOf(r.color)+1)%PCOLS.length];store.set(K_R,ROSTER);haptic();SFX.ui();renderSetup()});
     slot.style.setProperty('--pc',pcol(S.names[i])||'#cfc9be');
@@ -7387,7 +7388,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-394';   // à changer avec VERSION dans sw.js
+const APPV='lf-395';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -7776,7 +7777,7 @@ function vsHtml(n){const cur=VSND[n],open=VSO===n;
 let VSO=null;
 function profOpen(name){SFX.open();let o=$('prof');if(o)o.remove();o=el('div','ov');o.id='prof';document.body.append(o);
   const draw=n=>{if(!n){const L=allPeople(),TL=teamsOf();o.innerHTML=`<div class="ovh"><h2>Joueurs</h2><button class="circ" data-x aria-label="Fermer"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>`+
-      '<button class="prami" data-ami>👥 Amis et groupes<i>›</i></button>'+(L.length?`<div class="prk">${L.map(x=>{const D=fcData(x),t=fcTier(D);return`<button data-p="${esc(x)}" style="--pc:${pColor(x)}"><span>${esc(x)}</span><b>${D.ovr??'?'}</b><i class="ptr ${t}">${FC_TN[t]}</i><small>${D.g?D.g+' partie'+(D.g>1?'s':''):'Pas encore joué'}</small></button>`}).join('')}</div>`:'<p class="hempty">Aucun joueur pour l’instant.</p>')+
+      '<button class="prami" data-ami>👥 Amis et groupes<i>›</i></button>'+(L.length?`<div class="prk">${L.map(x=>{const D=fcData(x),t=fcTier(D);return`<button data-p="${esc(x)}" style="--pc:${pColor(x)}"><span>${esc(x)}</span><b class="ptr ${D.ovr==null?'nc':t}">${D.ovr??'?'}</b><i>${D.ovr==null?'Sans note':FC_TN[t]}</i><small>${D.g?D.g+' partie'+(D.g>1?'s':''):'Pas encore joué'}</small></button>`}).join('')}</div>`:'<p class="hempty">Aucun joueur pour l’instant.</p>')+
       (TL.length?`<h3 class="prs">Équipes</h3><div class="prl">${TL.map(([k,v])=>`<button data-p="${esc(k)}">${k.split(' & ').map(m=>`<b style="--pc:${pColor(m)}"></b>`).join('')}${nmH(k)}<i>${v.g} partie${v.g>1?'s':''}</i></button>`).join('')}</div>`:'');return}
     if(n.includes(' & ')){o.dataset.n=n;const T=trTeams()[n]||{},M=n.split(' & '),rows=[];
       STG.forEach(g=>{const a=stAgg(g,true).E.find(x=>x.name===n);if(!a||!a.g)return;const key={cricket:['MPR moyen',a.d?fr(a.h*3/a.d):'–'],x01:['Moyenne',a.xd?fr(a.xp*3/a.xd):'–'],killer:['Vies prises',a.k],shanghai:['Record',a.best||'–'],halveit:['Record',a.best||'–']}[g]||['',''];
