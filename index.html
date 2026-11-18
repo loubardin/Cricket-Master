@@ -3696,7 +3696,7 @@ html body #game#game#game#game#game#game #scores .sc.act>.pts.pop:not(#q1):not(#
 #grid .row .nfxo span{position:absolute;left:0;top:0;translate:-50% -50%;white-space:nowrap;line-height:1;transform-origin:50% 55%}
 html body #game#game#game#game#game#game #grid .row[data-nh] .num .lbl:not(#q1):not(#q2):not(#q3){visibility:hidden!important}
 html body #game#game#game#game#game#game #grid .row[data-nh] .num .lbl:not(#q1):not(#q2):not(#q3)::before,html body #game#game#game#game#game#game #grid .row[data-nh] .num .lbl:not(#q1):not(#q2):not(#q3)::after{content:none!important}
-#grid .nfxo .fr{-webkit-text-stroke:max(5px,.15em) #111;paint-order:stroke fill}   /* contour sous le remplissage : pas de traits parasites des polices à contours superposés */
+
 #grid .nfxo span{will-change:transform}
 #grid .nfxo.m1 .fr{animation:fxF .49s cubic-bezier(.25,1.25,.4,1) both}#grid .nfxo.m1 .c1{animation:fxS1 .49s cubic-bezier(.25,1.25,.4,1) both}
 #grid .nfxo.m2 .fr{animation:fxF .51s cubic-bezier(.25,1.25,.4,1) both}#grid .nfxo.m2 .c1{animation:fxD1x .51s cubic-bezier(.25,1.25,.4,1) both}#grid .nfxo.m2 .c2{animation:fxD2 .51s cubic-bezier(.25,1.25,.4,1) both}
@@ -7215,7 +7215,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-372';   // à changer avec VERSION dans sw.js
+const APPV='lf-373';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -8171,7 +8171,7 @@ function numFx(t,m){const b=R&&R.num&&R.num[t];if(!b)return;const row=b.parentEl
   const C=m===3?['#fff200','#ff2bd6']:m===2?['#ffffff','#00e5ff']:['#ffffff',null];
   const mk=(cls,col,front)=>{const e=document.createElement('span');e.className=cls;e.textContent=txt;
     ['fontFamily','fontSize','fontWeight','letterSpacing','fontStyle'].forEach(k=>e.style[k]=cs[k])
-    if(front){e.style.color=C[0];e.style.webkitTextFillColor=C[0];e.style.textShadow='none'}
+    if(front){e.style.color=cs.color;e.style.webkitTextFillColor=cs.webkitTextFillColor;e.style.textShadow=cs.textShadow;e.style.webkitTextStroke=cs.webkitTextStroke}   /* le nombre de base, tel quel (couleur, contour réglé), qu'on anime */
     else{e.style.color=col;e.style.webkitTextFillColor=col}return e};
   if(C[1])o.append(mk('c2',C[1]));if(m===1)o.append(mk('c1',C[0]));o.append(mk('fr',null,true));row.append(o);
   row.dataset.nh=m;const t0=performance.now(),D=m===3?560:m===2?510:490;
