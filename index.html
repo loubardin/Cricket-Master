@@ -3869,6 +3869,11 @@ html body #draw#draw .slot.lock b{color:#fff!important;-webkit-text-stroke:2.5px
 #prof .prfg{display:block;margin:26px auto 4px;border:0;border-radius:99px;padding:9px 18px;background:transparent;box-shadow:inset 0 0 0 2px #c0271c;color:#c0271c;font:400 14px "Fun",sans-serif}
 #prof .prfg.arm{background:#c0271c;color:#fff}
 #prof .prfgn{text-align:center;font:400 11px "Lbl","Lexend",sans-serif;opacity:.65;margin:0 0 16px}
+/* lf-409 : la bulle de couleur déborde un peu de son contour noir (DA bulle) */
+html body #setup#setup.b2 #names .nslot:not(.ph):not(.bot),html body #setup#setup.b2 #names .nslot:not(.ph):not(.bot)+.nslot{box-shadow:0 0 0 var(--mn-cbh,3.5px) color-mix(in srgb,var(--pc,#cfc9be) var(--mn-cbg,100%),transparent)!important}
+html body #ppick#ppick .rchip{box-shadow:inset 0 0 0 var(--mn-cbw,2px) var(--mn-cbc,#111),0 0 0 var(--mn-cbh,3.5px) color-mix(in srgb,var(--pc,#cfc9be) var(--mn-cbg,100%),transparent)!important}
+html body #draw#draw .slot.lock{box-shadow:inset 0 0 0 var(--mn-cbw,2px) var(--mn-cbc,#111),0 0 0 var(--mn-cbh,3.5px) color-mix(in srgb,var(--pc,var(--accent)) var(--mn-cbg,100%),transparent)!important}
+html body #ppick#ppick .rchipw{margin:4px 5px}
 </style>
 </head>
 <body>
@@ -7453,7 +7458,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-408';   // à changer avec VERSION dans sw.js
+const APPV='lf-409';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -7922,7 +7927,7 @@ document.addEventListener('click',e=>{const h=e.target.closest&&e.target.closest
 const MN_COL=[['Joueur','var(--pc,#111)'],['Noir','#111'],['Blanc','#fff']];
 const MN=[
  ['Capsule joueur'],
- ['cw','Largeur',30,100,1,51,''],['cph','Hauteur',-10,14,.5,0,'px'],['cr','Arrondi',0,30,.5,30,'px'],['cbw','Contour',0,5,.25,2,'px'],['cbc','Couleur du contour',MN_COL,'Noir'],['cbg','Fond à la couleur du joueur',0,100,5,100,'%'],
+ ['cw','Largeur',30,100,1,51,''],['cph','Hauteur',-10,14,.5,0,'px'],['cr','Arrondi',0,30,.5,30,'px'],['cbw','Contour',0,5,.25,2,'px'],['cbh','Débord de la bulle',0,10,.25,3.5,'px'],['cbc','Couleur du contour',MN_COL,'Noir'],['cbg','Fond à la couleur du joueur',0,100,5,100,'%'],
  ['Nom'],
  ['nz','Taille',.6,1.6,.05,1.2,''],['ns','Contour',0,7,.25,3,'px'],['nc','Couleur',MN_COL,'Blanc'],['nsc','Couleur du contour',MN_COL,'Noir'],['nx','Position ← →',-20,40,1,14,'px'],['ny','Position ↑ ↓',-10,10,.5,0,'px'],
  ['Croix'],
