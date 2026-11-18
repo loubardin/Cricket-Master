@@ -3728,7 +3728,7 @@ html body.m3 #game#game#game#game#game#game #grid .num:not(.dead):not(.bull) .lb
 #sbx .sbg .sbf{flex-basis:100%;font:400 12px "Lexend",sans-serif;font-style:normal;opacity:.6;margin:8px 2px 0;text-transform:uppercase;letter-spacing:.05em}
 #sbx .sbg .sbfr{flex-basis:100%;display:flex;align-items:center;gap:6px}#sbx .sbg .sbfr span{flex:1;font-size:14px}#sbx .sbg .sbfr button{width:46px;padding:7px 0}
 /* Killer : nom blanc sur la carte du joueur en cours */
-#pkl .kc2.act .pknm{fill:#fff!important}
+#pkl .kc2.act :is(.pknm,.pcnm){fill:#fff!important}
 /* effet au toucher hors Cricket : calque posé sur la page */
 .nfxo.nfxg{position:fixed;width:0;height:0;z-index:300;pointer-events:none}
 .nfxo.nfxg span{position:absolute;left:0;top:0;translate:-50% -50%;white-space:nowrap;line-height:1;transform-origin:50% 55%}
@@ -3742,8 +3742,8 @@ html body:is(.m2,.m3) :is(#x01,#killer):is(#x01,#killer):is(#x01,#killer):is(#x0
 
 /* Killer armé : numéros des cartes dans la couleur de l'effet, qui gonflent ; au toucher, le numéro visé saute */
 #pkl .pkng{transform-box:fill-box;transform-origin:50% 55%}
-html body.m2 #pkl .pkno.pkw{fill:#00e5ff!important}html body.m3 #pkl .pkno.pkw{fill:#fff200!important}
-html body:is(.m2,.m3) #pkl .pkng{animation:fxL0 1.15s ease-in-out infinite}html body.m3 #pkl .pkng{animation-duration:.62s}
+html body.m2 #killer:not(.bron) #pkl .pkno.pkw,html body.m2 #killer.bron #pkl .kc2.act .pkno.pkw{fill:#00e5ff!important}html body.m3 #killer:not(.bron) #pkl .pkno.pkw,html body.m3 #killer.bron #pkl .kc2.act .pkno.pkw{fill:#fff200!important}
+html body:is(.m2,.m3) #killer:not(.bron) #pkl .pkng,html body:is(.m2,.m3) #killer.bron #pkl .kc2.act .pkng{animation:fxL0 1.15s ease-in-out infinite}html body.m3 #killer #pkl .pkng{animation-duration:.62s}   /* horloge : seulement mon chiffre */
 #pkl .pkng.kpop1{animation:kpopA .49s cubic-bezier(.25,1.25,.4,1) both!important;--k:1.35}#pkl .pkng.kpop2{animation:kpopA .51s cubic-bezier(.25,1.25,.4,1) both!important;--k:1.55}#pkl .pkng.kpop3{animation:kpopA .56s cubic-bezier(.25,1.25,.4,1) both!important;--k:1.8}
 @keyframes kpopA{0%{scale:1}16%{scale:var(--k)}64%{scale:calc(var(--k)*.94)}100%{scale:1}}
 </style>
@@ -6983,7 +6983,8 @@ function popFx(src,m,K,colorOf){if(!src)return;const r=src.getBoundingClientRect
   o.append(mk('c2',C[1]));if(m===1)o.lastChild.className='c1';o.append(mk('fr',C[0],true));document.body.append(o);setTimeout(()=>o.remove(),m===3?600:560)}
 /* 501 et jeux de bar : la touche frappée */
 {const _x=xThrow;xThrow=function(n,m){const scr=['x01','killer'].map($).find(e=>e&&e.classList.contains('on'));const r=_x.apply(this,arguments);
-  try{const mm=Math.max(1,Math.min(3,m||1));if(scr&&n>0){const k=[...scr.querySelectorAll('button.xk')].find(b=>n===25?b.classList.contains('bull'):b.textContent.trim()===String(n));if(k)popFx(k.querySelector('.lbl')||k,mm,[2.2,2,2.6])}}catch(e){}return r}}
+  try{const mm=Math.max(1,Math.min(3,m||1));if(BARON&&scr&&scr.id==='killer'&&n>0){const g=scr.querySelector('#pkl .kc2.act .pkng');if(g){g.classList.remove('kpop1','kpop2','kpop3');void g.getBBox();g.classList.add('kpop'+mm);clearTimeout(g._kp);g._kp=setTimeout(()=>g.classList.remove('kpop'+mm),600)}}
+  else if(scr&&n>0){const k=[...scr.querySelectorAll('button.xk')].find(b=>n===25?b.classList.contains('bull'):b.textContent.trim()===String(n));if(k)popFx(k.querySelector('.lbl')||k,mm,[2.2,2,2.6])}}catch(e){}return r}}
 /* Killer : le numéro de la carte visée */
 {const _k=kThrow;kThrow=function(n){const m=KG&&KG.mult||1;const r=_k.apply(this,arguments);
   try{if(n>0){const t=[...document.querySelectorAll('#killer .kc2 text.pkno.pkw')].find(x=>x.textContent.trim()===String(n));if(t){const g=t.closest('.pkng');if(g){g.classList.remove('kpop1','kpop2','kpop3');void g.getBBox();g.classList.add('kpop'+m);clearTimeout(g._kp);g._kp=setTimeout(()=>g.classList.remove('kpop'+m),600)}}}}catch(e){}return r}}
@@ -7301,7 +7302,7 @@ function bcRender(){
   try{fitSk()}catch(e){}
   if(XG.winner!==null)xRender._win=1;
 }
-{const _xr=xRender;xRender=function(){const r=_xr.apply(this,arguments);try{bcRender()}catch(e){console.error(e)}return r}}
+{const _xr=xRender;xRender=function(){const r=_xr.apply(this,arguments);try{$('killer').classList.toggle('bron',!!BARON)}catch(e){}try{bcRender()}catch(e){console.error(e)}return r}}
 let BCIN=false;
 {const _r0=render;render=function(){if(BARC&&!BCIN){bcRender();return}return _r0.apply(this,arguments)}}
 /* toucher la ligne de la cible du joueur en cours (bulle ou sa case) = la toucher */
@@ -7313,6 +7314,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
   {const T=TARGETS[k],mine=R.mk[T]&&R.mk[T][XG.cur];if(!e.target.closest('.num')&&!(mine&&mine.contains(e.target)))return}
   if(lab!==bcTgt(me)){haptic();anim(row.querySelector('.num'),'shake',400);xMiss();return}   // un numéro qui ne sert à rien = spew
   anim(row.querySelector('.num'),'flash',450);
+  {const T=TARGETS[k],mm=lab===25?Math.min(2,XG.mult):(XG.mult||1);try{flashRow(T)}catch(x){}setTimeout(()=>{try{numFx(T,Math.max(1,Math.min(3,mm)))}catch(x){}},0)}   // comme au cricket : la bulle part et revient, le nombre fait son effet
   if(XG.mode==='hi'){if(lab==='D'||lab==='T'){hiPick(lab);return}if(lab==='B'){xThrow(25,Math.min(2,XG.mult));return}}
   xThrow(lab,lab===25?Math.min(2,XG.mult):XG.mult)},true);
 /* faire défiler les lignes au doigt (haut / bas) */
@@ -7328,7 +7330,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-386';   // à changer avec VERSION dans sw.js
+const APPV='lf-387';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
