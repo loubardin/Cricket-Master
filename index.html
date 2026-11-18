@@ -3790,13 +3790,14 @@ html body:is(.m2,.m3) #killer:not(.bron) #pkl .pkng,html body:is(.m2,.m3) #kille
 /* menu : capsules joueurs façon case nombre du Cricket — capsule transparente, rond « carte » (bronze/argent/or/diamant) avec la note
    comme la bulle du 15, nom à la couleur du joueur avec contour noir ; le cadre noir passe devant tout */
 html body #setup.b2 #names .nslot:not(.ph),html body #setup.b2 #names .nslot:not(.ph)+.nslot{position:relative;overflow:visible!important;border-radius:99px!important;padding-left:0!important}
-html body #setup.b2 #names .nslot:not(.bot):not(.ph),html body #setup.b2 #names .nslot:not(.bot):not(.ph)+.nslot,html body #setup.b2 #names .nslot.drag:not(.bot){background:transparent!important}
-html body #setup.b2 #names .nslot:not(.ph)::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1.75px var(--m-strong,#111);pointer-events:none;z-index:3}
-html body #setup.b2 #names .nslot:not(.bot):not(.ph) .pname{color:var(--pc,#111)!important;-webkit-text-stroke:3px #111;paint-order:stroke fill;opacity:1}
-html body #setup.b2 #names .nslot:not(.bot):not(.ph) .pdel{color:var(--m-ink,#111)!important}
-html body #setup.b2 #names .pcol.ptr{position:relative;z-index:1;width:38px!important;height:38px!important;margin:0 6px 0 5px!important;display:grid;place-items:center;padding:0;flex:none;
-  color:#fff;font:400 20px/1 "Fun",sans-serif!important;-webkit-text-stroke:3.5px #111;paint-order:stroke fill;text-shadow:1.5px 1.5px 0 rgba(0,0,0,.25);
-  background:radial-gradient(circle at 32% 28%,var(--g0) 0%,var(--g1) 45%,var(--g2) 100%)!important;box-shadow:inset 0 2px 5px rgba(255,255,255,.35)!important}
+html body #setup.b2 #names .nslot:not(.bot):not(.ph),html body #setup.b2 #names .nslot:not(.bot):not(.ph)+.nslot,html body #setup.b2 #names .nslot.drag:not(.bot){background:color-mix(in srgb,var(--pc,#cfc9be) var(--mn-cbg,0%),transparent)!important}
+html body #setup#setup.b2 #names .nslot:not(.ph),html body #setup#setup.b2 #names .nslot:not(.ph)+.nslot{border-radius:var(--mn-cr,99px)!important}
+html body #setup.b2 #names .nslot:not(.ph)::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 var(--mn-cbw,1.75px) var(--mn-cbc,var(--m-strong,#111));pointer-events:none;z-index:3}
+html body #setup.b2 #names .nslot:not(.bot):not(.ph) .pname{color:var(--mn-nc,var(--pc,#111))!important;-webkit-text-stroke:var(--mn-ns,3px) var(--mn-nsc,#111);paint-order:stroke fill;opacity:1;position:relative;left:var(--mn-nx,0px);top:var(--mn-ny,0px);font-size:calc(var(--u)*2.7*var(--mn-nz,1))!important}
+html body #setup.b2 #names .nslot:not(.bot):not(.ph) .pdel{color:var(--mn-xc,var(--m-ink,#111))!important}
+html body #setup.b2 #names .pcol.ptr{position:relative;z-index:1;width:var(--mn-rz,38px)!important;height:var(--mn-rz,38px)!important;margin:0 6px 0 var(--mn-rx,5px)!important;top:var(--mn-ry,0px);display:grid;place-items:center;padding:0;flex:none;
+  color:#fff;font:400 var(--mn-rf,20px)/1 "Fun",sans-serif!important;-webkit-text-stroke:var(--mn-rs,3.5px) #111;paint-order:stroke fill;text-shadow:1.5px 1.5px 0 rgba(0,0,0,.25);
+  background:radial-gradient(circle at 32% 28%,var(--g0) 0%,var(--g1) 45%,var(--g2) 100%)!important;box-shadow:inset 0 2px 5px rgba(255,255,255,.35),0 0 0 var(--mn-rbw,0px) var(--mn-rbc,#111)!important}
 .ptr.nc{--g0:#f4f1ea;--g1:#bdb6aa;--g2:#8a8378}.ptr.bz{--g0:#e2a774;--g1:#a8683a;--g2:#6d3f1d}.ptr.ar{--g0:#dfe3e8;--g1:#9aa2ac;--g2:#626b76}.ptr.or{--g0:#f6d55a;--g1:#d4a017;--g2:#8a5c04}.ptr.di{--g0:#c9f2fc;--g1:#5fc3e6;--g2:#2a7fb8}
 /* page Joueurs : petites cartes façon Killer à 8, couleur du joueur, note générale en gros */
 #prof .prk{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0 18px}
@@ -3813,11 +3814,36 @@ html body :is(#game,#x01,#killer) footer:not(.armed2):not(.armed3) .fthumb::befo
   background:linear-gradient(100deg,transparent,rgba(255,255,255,.6),transparent);transform:skewX(-18deg);animation:shine 1.8s ease-in-out infinite}
 html body :is(#game,#x01,#killer) footer:not(.armed2):not(.armed3) .fthumb{animation:gold 1.4s ease-in-out infinite alternate}
 /* capsules allongées et toutes de la même longueur (2 par ligne, pleine colonne en équipes) ; le nom n'est jamais coupé (il rétrécit si besoin) */
-html body #setup.b2 #names .nslot:not(.ph),html body #setup.b2 #names .nslot:not(.ph)+.nslot{display:flex!important;align-items:center;box-sizing:border-box;width:calc(50% - 10px)!important;max-width:none!important;padding:4px 0!important;margin-left:0}
+html body #setup.b2 #names .nslot:not(.ph),html body #setup.b2 #names .nslot:not(.ph)+.nslot{display:flex!important;align-items:center;box-sizing:border-box;width:calc(var(--mn-cw,50%) - 10px)!important;max-width:none!important;padding:var(--mn-cph,4px) 0!important;margin-left:0}
 html body #setup.b2.teams #names .tbub .nslot:not(.ph){width:100%!important}
 html body #setup.b2 #names .nslot:not(.ph) .pname{flex:1 1 auto;min-width:0;overflow:visible!important;text-overflow:clip!important;white-space:nowrap;padding:0 2px!important;text-align:left}
-html body #setup.b2 #names .nslot:not(.ph) .pdel{flex:none;width:24px!important;font-size:16px;margin-right:9px}
+html body #setup.b2 #names .nslot:not(.ph) .pdel{flex:none;width:24px!important;font-size:var(--mn-xf,16px);margin-right:var(--mn-xr,9px);position:relative;top:var(--mn-xy,0px)}
 #setup #moreOpt,#setup #moreOpt2{display:none!important}
+/* autres éléments du menu : tailles réglables (zoom) */
+html body #setup#setup.b2 .seg.gamepick{zoom:var(--mn-gz,1)}
+html body #setup#setup.b2 .opt .seg,html body #setup#setup.b2 .sect .seg:not(.gamepick){zoom:var(--mn-oz,1)}
+html body #setup#setup.b2 .gobar{zoom:var(--mn-bz,1)}
+html body #setup#setup.b2 #names .padd{zoom:var(--mn-pz,1)}
+html body #setup#setup.b2 :is(.glab,.opt>span,.opt>label){zoom:var(--mn-lz,1)}
+/* panneau « Réglages du menu » */
+html body #setup#setup .sh .mnbtn{position:absolute!important;left:auto!important;right:0!important;top:50%!important;translate:0 -50%;margin:0!important}
+#mnp{position:fixed;left:0;right:0;bottom:0;z-index:300;max-height:46vh;overflow-y:auto;-webkit-overflow-scrolling:touch;background:var(--m-bg,#f6f1e7);color:var(--m-ink,#111);border-radius:22px 22px 0 0;box-shadow:0 -6px 24px rgba(0,0,0,.25),inset 0 2px 0 #111;
+  padding:10px 16px calc(16px + env(safe-area-inset-bottom));font:400 13px "Lbl","Lexend",sans-serif;transform:translateY(105%);transition:transform .3s cubic-bezier(.3,1.2,.5,1)}
+#mnp.on{transform:none}
+#mnp .mnh{position:sticky;top:-10px;z-index:2;display:flex;align-items:center;gap:6px;background:inherit;padding:6px 0 8px;margin-top:-4px}
+#mnp .mnh b{flex:1;font:400 17px "Fun",sans-serif;white-space:nowrap}
+#mnp .mnh button{border:0;border-radius:99px;padding:6px 11px;font:400 12px "Fun",sans-serif;background:#111;color:#fff}
+#mnp .mnh button.lt{background:transparent;color:#111;box-shadow:inset 0 0 0 1.5px #111}
+#mnp h4{margin:10px 0 2px;font:400 14px "Fun",sans-serif;text-transform:uppercase;letter-spacing:.04em}
+#mnp .mnr{display:grid;grid-template-columns:40% 1fr 54px;align-items:center;gap:6px;padding:3px 0}
+#mnp .mnr input{width:100%;accent-color:#111}
+#mnp .mnr i{font-style:normal;text-align:right;font-variant-numeric:tabular-nums;opacity:.75}
+#mnp .mnr.ch{grid-template-columns:42% 1fr}
+#mnp .mnc{display:flex;gap:4px;flex-wrap:wrap}
+#mnp .mnc button{border:0;border-radius:99px;padding:4px 9px;font:400 12px "Lbl","Lexend",sans-serif;background:transparent;box-shadow:inset 0 0 0 1.5px #111;color:#111}
+#mnp .mnc button.on{background:#111;color:#fff}
+#mnp .mnr.mod span{font-weight:700}
+#mnp .mnr.mod span::after{content:" •";color:var(--accent,#ff5a1f)}
 </style>
 </head>
 <body>
@@ -7404,7 +7430,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-400';   // à changer avec VERSION dans sw.js
+const APPV='lf-401';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -7862,6 +7888,43 @@ function h2hOpen(a,b,game){SFX.open();let o=$('h2o');if(o)o.remove();o=el('div',
     const hg=t.closest('[data-hg]');if(hg){haptic();hgOpen(hg.dataset.hg,o)}})}
 document.addEventListener('click',e=>{const h=e.target.closest&&e.target.closest('[data-h2a]');if(!h||e.target.closest('#h2o'))return;e.stopPropagation();haptic();h2hOpen(h.dataset.h2a,h.dataset.h2b,h.dataset.h2g||'')},true);
 
+
+/* ===== Réglages du menu (⚙︎ en haut à droite de « Nouvelle partie ») : capsules joueurs, rond de note, nom, croix, tailles des autres éléments =====
+   chaque réglage = une variable CSS posée sur #setup ; copiable pour devenir la base */
+const MN_COL=[['Joueur','var(--pc,#111)'],['Noir','#111'],['Blanc','#fff']];
+const MN=[
+ ['Capsule joueur'],
+ ['cw','Largeur',30,100,1,50,'%'],['cph','Hauteur',0,14,.5,4,'px'],['cr','Arrondi',0,99,1,99,'px'],['cbw','Contour',0,5,.25,1.75,'px'],['cbc','Couleur du contour',MN_COL,'Noir'],['cbg','Fond à la couleur du joueur',0,100,5,0,'%'],
+ ['Rond de la note'],
+ ['rz','Taille',24,60,1,38,'px'],['rx','Position ← →',-20,30,1,5,'px'],['ry','Position ↑ ↓',-15,15,.5,0,'px'],['rf','Taille de la note',10,32,.5,20,'px'],['rs','Contour de la note',0,7,.25,3.5,'px'],['rbw','Contour du rond',0,5,.25,0,'px'],['rbc','Couleur du contour du rond',MN_COL,'Noir'],
+ ['Nom'],
+ ['nz','Taille',.6,1.6,.05,1,''],['ns','Contour',0,7,.25,3,'px'],['nc','Couleur',MN_COL,'Joueur'],['nsc','Couleur du contour',MN_COL,'Noir'],['nx','Position ← →',-20,30,1,0,'px'],['ny','Position ↑ ↓',-10,10,.5,0,'px'],
+ ['Croix'],
+ ['xf','Taille',8,30,.5,16,'px'],['xr','Marge à droite',0,30,1,9,'px'],['xy','Position ↑ ↓',-10,10,.5,0,'px'],['xc','Couleur',MN_COL,'Noir'],
+ ['Autres éléments (tailles)'],
+ ['gz','Choix du jeu (Cricket / 501…)',.6,1.4,.02,1,''],['oz','Options (Mode, Équipes…)',.6,1.4,.02,1,''],['lz','Titres des options',.6,1.5,.02,1,''],['pz','Bouton +',.5,1.6,.02,1,''],['bz','Bouton du bas',.6,1.3,.02,1,'']];
+S.mnu=S.mnu||{};
+function mnApply(){const st=$('setup').style;MN.forEach(d=>{if(d.length<2)return;const k=d[0],v=S.mnu[k];
+  if(v===undefined||v===null){st.removeProperty('--mn-'+k);return}
+  if(Array.isArray(d[2])){const c=d[2].find(x=>x[0]===v);if(c)st.setProperty('--mn-'+k,c[1]);else st.removeProperty('--mn-'+k)}else st.setProperty('--mn-'+k,v+d[6])})}
+function mnFit(){try{renderSetup()}catch(e){}try{placeThumbs()}catch(e){}}
+function mnDraw(){const p=$('mnp');const fv=(d,v)=>(d[6]===''?String(Math.round(v*100)/100):String(v)+(d[6]==='%'?' %':' px')).replace('.',',');
+  p.innerHTML=`<div class="mnh"><b>Menu</b><button class="lt" data-mnr>Rétablir</button><button class="lt" data-mncp>Copier</button><button data-mnx>OK</button></div>`+
+   MN.map(d=>{if(d.length<2)return`<h4>${d[0]}</h4>`;const k=d[0],v=S.mnu[k],mod=v!==undefined&&v!==null?' mod':'';
+     if(Array.isArray(d[2])){const cur=v??d[3];return`<div class="mnr ch${mod}"><span>${d[1]}</span><div class="mnc">${d[2].map(c=>`<button data-mnk="${k}" data-mnv="${c[0]}" class="${c[0]===cur?'on':''}">${c[0]}</button>`).join('')}</div></div>`}
+     const cur=v??d[5];return`<div class="mnr${mod}"><span>${d[1]}</span><input type="range" data-mnk="${k}" min="${d[2]}" max="${d[3]}" step="${d[4]}" value="${cur}"><i>${fv(d,cur)}</i></div>`}).join('')}
+function mnOpen(){haptic();SFX.open();let p=$('mnp');if(!p){p=el('div','');p.id='mnp';document.body.append(p);
+    p.addEventListener('input',e=>{const r=e.target.closest('input[data-mnk]');if(!r)return;const d=MN.find(x=>x[0]===r.dataset.mnk);S.mnu[d[0]]=+r.value;mnApply();
+      const row=r.closest('.mnr');row.classList.add('mod');row.querySelector('i').textContent=(d[6]===''?String(Math.round(+r.value*100)/100):r.value+(d[6]==='%'?' %':' px')).replace('.',',');clearTimeout(p._t);p._t=setTimeout(()=>{store.set(K_S,S);mnFit()},120)});
+    p.addEventListener('click',e=>{const t=e.target;
+      const c=t.closest('[data-mnv]');if(c){haptic();SFX.tick();const d=MN.find(x=>x[0]===c.dataset.mnk);S.mnu[d[0]]=c.dataset.mnv===d[3]?undefined:c.dataset.mnv;if(S.mnu[d[0]]===undefined)delete S.mnu[d[0]];store.set(K_S,S);mnApply();mnDraw();return}
+      if(t.closest('[data-mnx]')){SFX.back();p.classList.remove('on');return}
+      if(t.closest('[data-mnr]')){haptic();SFX.back();S.mnu={};store.set(K_S,S);mnApply();mnDraw();mnFit();return}
+      if(t.closest('[data-mncp]')){haptic();const txt='Réglages menu '+APPV+' : '+JSON.stringify(S.mnu);try{navigator.clipboard.writeText(txt).then(()=>toast('RÉGLAGES COPIÉS','',true),()=>prompt('Copie ces réglages',txt))}catch(x){prompt('Copie ces réglages',txt)}}})}
+  if(typeof setupPage==='function'&&!$('setup').classList.contains('p2'))setupPage(2,1);
+  mnDraw();requestAnimationFrame(()=>p.classList.add('on'))}
+{const sh=document.querySelector('#setup .sh');const b=el('button','circ mnbtn');b.setAttribute('aria-label','Réglages du menu');b.innerHTML='<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 13.5a7.6 7.6 0 0 0 0-3l2-1.6-2-3.4-2.4 1a7.4 7.4 0 0 0-2.6-1.5L14 2.5h-4l-.4 2.5A7.4 7.4 0 0 0 7 6.5l-2.4-1-2 3.4 2 1.6a7.6 7.6 0 0 0 0 3l-2 1.6 2 3.4 2.4-1a7.4 7.4 0 0 0 2.6 1.5l.4 2.5h4l.4-2.5a7.4 7.4 0 0 0 2.6-1.5l2.4 1 2-3.4Z"/></svg>';
+ b.addEventListener('click',e=>{e.stopPropagation();mnOpen()});sh.append(b);mnApply()}
 /* ===== carte « FIFA » du joueur : note générale + 6 attributs, retournable (trophées / records au dos), partageable ===== */
 const FC_ATT=['MPR','Moyenne','Finish','Triples','Régularité','Victoires'];
 function fcRate(v,a,b){return Math.max(30,Math.min(99,Math.round(40+(v-a)*59/(b-a))))}
