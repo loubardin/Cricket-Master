@@ -3756,7 +3756,7 @@ html body:is(.m2,.m3) #killer:not(.bron) #pkl .pkng,html body:is(.m2,.m3) #kille
 .fcard.flip .fcin{transform:rotateY(180deg)}
 .fcf,.fcb{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;clip-path:path('M 30 20 L 270 20 Q 290 20 290 45 L 290 340 Q 290 385 150 420 Q 10 385 10 340 L 10 45 Q 10 20 30 20 Z');color:#111;font-family:"Fun",sans-serif}
 .fcard .fcf,.fcard .fcb{background:linear-gradient(135deg,var(--g0),var(--g1) 55%,var(--g2))}
-.fcard.bz{--g0:#f0c39a;--g1:#a8683a;--g2:#6d3f1d}.fcard.ar{--g0:#f4f6f8;--g1:#b9c0c8;--g2:#7d8691}.fcard.or{--g0:#fff1a8;--g1:#e6b422;--g2:#9c6b06}.fcard.ic{--g0:#ffffff;--g1:#e9dcc0;--g2:#b49450}
+.fcard.bz{--g0:#f0c39a;--g1:#a8683a;--g2:#6d3f1d}.fcard.ar{--g0:#f4f6f8;--g1:#b9c0c8;--g2:#7d8691}.fcard.or{--g0:#fff1a8;--g1:#e6b422;--g2:#9c6b06}.fcard.di{--g0:#f2fdff;--g1:#9fe3f7;--g2:#4aa3d6}
 .fcard::before{content:none}
 .fcb{transform:rotateY(180deg);display:flex;flex-direction:column;align-items:center;padding:14% 9% 0;gap:4%}
 .fcf .fct{position:absolute;left:11%;top:7%;display:flex;flex-direction:column;line-height:.95}
@@ -3770,7 +3770,10 @@ html body:is(.m2,.m3) #killer:not(.bron) #pkl .pkng,html body:is(.m2,.m3) #kille
 .fcb .fcbt{font-size:20px}.fcb .fcbt b{font-weight:400}
 .fcb .fcbi{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;font-size:22px;min-height:30px}.fcb .fcbi em{font:400 12px "Lbl","Lexend",sans-serif;font-style:normal;opacity:.7}
 .fcb .fcbr{width:100%;display:flex;flex-direction:column;gap:3px}.fcb .fcbr div{display:flex;justify-content:space-between;border-bottom:1.5px solid rgba(0,0,0,.25);padding:2px 0}.fcb .fcbr span{font:400 12px "Lbl","Lexend",sans-serif}.fcb .fcbr b{font-weight:400;font-size:15px}
-.fcard.ic .fcf::after{content:'';position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.7) 45%,transparent 60%);background-size:250% 100%;animation:fcshine 3.2s ease-in-out infinite}
+/* reflet qui passe sur toutes les cartes (plus marqué sur le diamant) */
+.fcard .fcf::after{content:'';pointer-events:none;position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.7) 45%,transparent 60%);background-size:250% 100%;animation:fcshine 3.2s ease-in-out infinite}
+
+.fcard.di .fcf::after{background-image:linear-gradient(115deg,transparent 25%,rgba(255,255,255,.9) 42%,rgba(190,240,255,.6) 50%,transparent 62%);animation-duration:2.4s}
 @keyframes fcshine{0%{background-position:150% 0}100%{background-position:-100% 0}}
 .fcsh{border:0;border-radius:99px;background:#111;color:#fff;font:400 14px "Fun",sans-serif;padding:8px 16px}
 </style>
@@ -7357,7 +7360,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-389';   // à changer avec VERSION dans sw.js
+const APPV='lf-390';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -7827,12 +7830,11 @@ function fcData(n){const own=r=>r.p&&r.p.findIndex(x=>pers(x).includes(n));
   const mean=per.length?per.reduce((a,b)=>a+b,0)/per.length:0,sd=per.length>2?Math.sqrt(per.reduce((a,b)=>a+(b-mean)**2,0)/per.length):null;
   const A=[d>=9?fcRate(h*3/d,0,4):null, xd>=9?fcRate(xp*3/xd,0,90):null, co?fcRate(co,0,140):null, td>=15?fcRate(t3*100/td,0,22):null,
     sd!==null&&mean>0?fcRate(1-sd/mean,.3,.92):null, g?fcRate(w*100/g,0,75):null];
-  const got=A.filter(v=>v!==null),ovr=got.length?Math.round(got.reduce((a,b)=>a+b,0)/got.length):null;
+  const got=A.filter(v=>v!==null),ovr=got.length?Math.round(A.reduce((a,b)=>a+(b===null?45:b),0)/A.length):null;   /* un attribut jamais joué compte 45 : pas joué = pas prouvé */
   const top=Object.entries(fav).sort((a,b)=>b[1]-a[1])[0];
   return{n,g,w,A,ovr,fav:top?top[0]:null,raw:{mpr:d?h*3/d:0,moy:xd?xp*3/xd:0,co,tri:td?t3*100/td:0,vic:g?w*100/g:0}}}
-function fcTier(D){if(D.ovr==null)return'bz';try{const L=allPeople().filter(x=>!isBot(x)).map(fcData).filter(x=>x.g>=5&&x.ovr!=null).sort((a,b)=>b.ovr-a.ovr);if(L[0]&&L[0].n===D.n&&D.ovr>=60)return'ic'}catch(e){}
-  return D.ovr>=75?'or':D.ovr>=65?'ar':'bz'}
-const FC_TN={bz:'Bronze',ar:'Argent',or:'Or',ic:'Icône'},FC_G={cricket:'CRI',x01:'501',killer:'KIL',clock:'HOR',shanghai:'SHA',halveit:'HAL'};
+function fcTier(D){if(D.ovr==null)return'bz';return D.ovr>=82?'di':D.ovr>=72?'or':D.ovr>=62?'ar':'bz'}
+const FC_TN={bz:'Bronze',ar:'Argent',or:'Or',di:'Diamant'},FC_G={cricket:'CRI',x01:'501',killer:'KIL',clock:'HOR',shanghai:'SHA',halveit:'HAL'};
 function fcHtml(n){const D=fcData(n),t=fcTier(D),T=trAll()[n]||{},tro=TROPH.filter(x=>T[x[0]]);
   const ini=n.trim().split(/\s+/).map(x=>x[0]).join('').slice(0,2).toUpperCase();
   return`<div class="fcw"><div class="fcard ${t}" data-fcard style="--pc:${pColor(n)}"><div class="fcin">
@@ -7846,7 +7848,7 @@ function fcHtml(n){const D=fcData(n),t=fcTier(D),T=trAll()[n]||{},tro=TROPH.filt
   </div></div><button class="fcsh" data-fcshare>Partager la carte</button></div>`}
 /* image de la carte (dessinée en canvas) pour le partage */
 async function fcShare(n){const D=fcData(n),t=fcTier(D),W=600,H=860,c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');
-  const G={bz:['#f0c39a','#a8683a','#6d3f1d'],ar:['#f4f6f8','#b9c0c8','#7d8691'],or:['#fff1a8','#e6b422','#9c6b06'],ic:['#ffffff','#e9dcc0','#b49450']}[t];
+  const G={bz:['#f0c39a','#a8683a','#6d3f1d'],ar:['#f4f6f8','#b9c0c8','#7d8691'],or:['#fff1a8','#e6b422','#9c6b06'],di:['#f2fdff','#9fe3f7','#4aa3d6']}[t];
   try{await document.fonts.load('80px Fun')}catch(e){}
   const path=()=>{x.beginPath();x.moveTo(60,40);x.lineTo(W-60,40);x.quadraticCurveTo(W-20,40,W-20,90);x.lineTo(W-20,H-180);x.quadraticCurveTo(W-20,H-90,W/2,H-30);x.quadraticCurveTo(20,H-90,20,H-180);x.lineTo(20,90);x.quadraticCurveTo(20,40,60,40);x.closePath()};
   const gr=x.createLinearGradient(0,0,W,H);gr.addColorStop(0,G[0]);gr.addColorStop(.55,G[1]);gr.addColorStop(1,G[2]);path();x.fillStyle=gr;x.fill();x.lineWidth=10;x.strokeStyle='#111';x.stroke();
