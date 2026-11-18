@@ -3756,7 +3756,7 @@ html body:is(.m2,.m3) #killer:not(.bron) #pkl .pkng,html body:is(.m2,.m3) #kille
 .fcard.flip .fcin{transform:rotateY(180deg)}
 .fcf,.fcb{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;clip-path:path('M 30 20 L 270 20 Q 290 20 290 45 L 290 340 Q 290 385 150 420 Q 10 385 10 340 L 10 45 Q 10 20 30 20 Z');color:#111;font-family:"Fun",sans-serif}
 .fcard .fcf,.fcard .fcb{background:linear-gradient(135deg,var(--g0),var(--g1) 55%,var(--g2))}
-.fcard.bz{--g0:#f0c39a;--g1:#a8683a;--g2:#6d3f1d}.fcard.ar{--g0:#f4f6f8;--g1:#b9c0c8;--g2:#7d8691}.fcard.or{--g0:#fff1a8;--g1:#e6b422;--g2:#9c6b06}.fcard.di{--g0:#f2fdff;--g1:#9fe3f7;--g2:#4aa3d6}
+.rkS{--g0:#ffe0ff;--g1:#e46bff;--g2:#7a2cff;--rc:#ff4dff}.rkA{--g0:#dcffe9;--g1:#36e27a;--g2:#0f8f45;--rc:#2bff7a}.rkB{--g0:#fff8c8;--g1:#ffd21f;--g2:#c99400;--rc:#ffe600}.rkC{--g0:#ffe6cc;--g1:#ff9a3d;--g2:#c45a00;--rc:#ff8a1f}.rkD{--g0:#ffd8d8;--g1:#ff5a5a;--g2:#b01e1e;--rc:#ff3b3b}.rknc{--g0:#f4f1ea;--g1:#cfc8bb;--g2:#8a8378;--rc:#e8e3da}
 .fcard::before{content:none}
 .fcb{transform:rotateY(180deg);display:flex;flex-direction:column;align-items:center;padding:14% 9% 0;gap:4%}
 .fcf .fct{position:absolute;left:11%;top:7%;display:flex;flex-direction:column;line-height:.95}
@@ -3844,6 +3844,14 @@ html body #setup#setup .sh .mnbtn{position:absolute!important;left:auto!importan
 #mnp .mnc button.on{background:#111;color:#fff}
 #mnp .mnr.mod span{font-weight:700}
 #mnp .mnr.mod span::after{content:" •";color:var(--accent,#ff5a1f)}
+/* rangs S / A / B / C / D : lettre vive, contour noir, petite lueur */
+.rkl{color:var(--rc)!important;-webkit-text-stroke:.16em #111;paint-order:stroke fill;text-shadow:0 0 .35em color-mix(in srgb,var(--rc) 70%,transparent);font-weight:400}
+.rkl.rknc{color:#fff!important;text-shadow:none}
+.fcf .fct .rkl{font-size:clamp(44px,16vw,64px)!important;line-height:.9}
+.fcf .fcs .rkl{font-size:clamp(22px,7.6vw,30px)!important;min-width:1.1em;text-align:center}
+.fcb .fcsc>.rkl{font-size:26px;min-width:30px;text-align:center}
+.fcb .fcsc small.fcth{opacity:.9}.fcb .fcth em{font:400 11px "Fun",sans-serif;font-style:normal;color:var(--rc);-webkit-text-stroke:2.5px #111;paint-order:stroke fill}
+.fcard .fcf::after{background-image:linear-gradient(115deg,transparent 25%,rgba(255,255,255,.85) 42%,rgba(255,255,255,.5) 50%,transparent 62%)}
 </style>
 </head>
 <body>
@@ -5095,7 +5103,7 @@ function renderSetup(){
     const slot=el('div','nslot');slot.dataset.i=i;
     const nm=el('span','pname',esc(S.names[i]));nm.style.color=pcol(S.names[i])||'';
     const cdot=el('button','pcol ptr');cdot.setAttribute('aria-label','Profil');
-    {const D=fcData(S.names[i]);cdot.classList.add(D.ovr==null?'nc':fcTier(D));cdot.textContent=D.ovr??'?'}
+    {const D=fcData(S.names[i]);cdot.classList.add(fcTier(D));cdot.textContent=fcRk(D.ovr)||'?'}
     cdot.addEventListener('click',()=>{if(isBot(S.names[i]))return;let r=ROSTER.find(q=>q.name===S.names[i]);if(!r){r={name:S.names[i],color:PCOLS[0]};ROSTER.push(r)}
       r.color=PCOLS[(PCOLS.indexOf(r.color)+1)%PCOLS.length];store.set(K_R,ROSTER);haptic();SFX.ui();renderSetup()});
     slot.style.setProperty('--pc',pcol(S.names[i])||'#cfc9be');
@@ -7430,7 +7438,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-401';   // à changer avec VERSION dans sw.js
+const APPV='lf-402';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -7819,7 +7827,7 @@ function vsHtml(n){const cur=VSND[n],open=VSO===n;
 let VSO=null;
 function profOpen(name){SFX.open();let o=$('prof');if(o)o.remove();o=el('div','ov');o.id='prof';document.body.append(o);
   const draw=n=>{if(!n){const L=allPeople(),TL=teamsOf();o.innerHTML=`<div class="ovh"><h2>Joueurs</h2><button class="circ" data-x aria-label="Fermer"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>`+
-      '<button class="prami" data-ami>👥 Amis et groupes<i>›</i></button>'+(L.length?`<div class="prk">${L.map(x=>{const D=fcData(x),t=fcTier(D);return`<button data-p="${esc(x)}" style="--pc:${pColor(x)}"><span>${esc(x)}</span><b class="ptr ${D.ovr==null?'nc':t}">${D.ovr??'?'}</b><i>${D.ovr==null?'Sans note':FC_TN[t]}</i><small>${D.g?D.g+' partie'+(D.g>1?'s':''):'Pas encore joué'}</small></button>`}).join('')}</div>`:'<p class="hempty">Aucun joueur pour l’instant.</p>')+
+      '<button class="prami" data-ami>👥 Amis et groupes<i>›</i></button>'+(L.length?`<div class="prk">${L.map(x=>{const D=fcData(x),t=fcTier(D);return`<button data-p="${esc(x)}" style="--pc:${pColor(x)}"><span>${esc(x)}</span><b class="ptr ${t}">${fcRk(D.ovr)||'?'}</b><i>${FC_TN[t]}</i><small>${D.g?D.g+' partie'+(D.g>1?'s':''):'Pas encore joué'}</small></button>`}).join('')}</div>`:'<p class="hempty">Aucun joueur pour l’instant.</p>')+
       (TL.length?`<h3 class="prs">Équipes</h3><div class="prl">${TL.map(([k,v])=>`<button data-p="${esc(k)}">${k.split(' & ').map(m=>`<b style="--pc:${pColor(m)}"></b>`).join('')}${nmH(k)}<i>${v.g} partie${v.g>1?'s':''}</i></button>`).join('')}</div>`:'');return}
     if(n.includes(' & ')){o.dataset.n=n;const T=trTeams()[n]||{},M=n.split(' & '),rows=[];
       STG.forEach(g=>{const a=stAgg(g,true).E.find(x=>x.name===n);if(!a||!a.g)return;const key={cricket:['MPR moyen',a.d?fr(a.h*3/a.d):'–'],x01:['Moyenne',a.xd?fr(a.xp*3/a.xd):'–'],killer:['Vies prises',a.k],shanghai:['Record',a.best||'–'],halveit:['Record',a.best||'–']}[g]||['',''];
@@ -7941,14 +7949,18 @@ function fcData(n){const own=r=>r.p&&r.p.findIndex(x=>pers(x).includes(n));
   const got=A.filter(v=>v!==null),ovr=got.length?Math.round(got.reduce((a,b)=>a+b,0)/got.length):null;   /* un jeu jamais joué (ex. pas de 501) ne compte pas */
   const top=Object.entries(fav).sort((a,b)=>b[1]-a[1])[0];
   return{n,g,w,A,ovr,fav:top?top[0]:null,raw:{mpr:d?h*3/d:0,moy:xd?xp*3/xd:0,co,tri:td?t3*100/td:0,vic:g?w*100/g:0,cv:sd!==null&&mean>0?sd/mean:null}}}
-function fcTier(D){if(D.ovr==null)return'bz';return D.ovr>=82?'di':D.ovr>=72?'or':D.ovr>=62?'ar':'bz'}
-const FC_TN={bz:'Bronze',ar:'Argent',or:'Or',di:'Diamant'},FC_G={cricket:'CRI',x01:'501',killer:'KIL',clock:'HOR',shanghai:'SHA',halveit:'HAL'};
+/* lf-402 : mêmes barèmes, mais affichés en rangs S / A / B / C / D (couleurs vives) au lieu des notes chiffrées */
+const FC_RG={rkS:['#ffe0ff','#e46bff','#7a2cff','#ff4dff'],rkA:['#dcffe9','#36e27a','#0f8f45','#2bff7a'],rkB:['#fff8c8','#ffd21f','#c99400','#ffe600'],rkC:['#ffe6cc','#ff9a3d','#c45a00','#ff8a1f'],rkD:['#ffd8d8','#ff5a5a','#b01e1e','#ff3b3b'],rknc:['#f4f1ea','#cfc8bb','#8a8378','#e8e3da']};
+const fcRk=v=>v==null?null:v>=85?'S':v>=75?'A':v>=65?'B':v>=55?'C':'D';
+const fcL=v=>{const r=fcRk(v);return r?`<b class="rkl rk${r}">${r}</b>`:'<b class="rkl rknc">–</b>'};
+function fcTier(D){return D.ovr==null?'rknc':'rk'+fcRk(D.ovr)}
+const FC_TN={rkS:'Rang S',rkA:'Rang A',rkB:'Rang B',rkC:'Rang C',rkD:'Rang D',rknc:'Sans rang'},FC_G={cricket:'CRI',x01:'501',killer:'KIL',clock:'HOR',shanghai:'SHA',halveit:'HAL'};
 function fcHtml(n){const D=fcData(n),t=fcTier(D),T=trAll()[n]||{},tro=TROPH.filter(x=>T[x[0]]);
   const ini=n.trim().split(/\s+/).map(x=>x[0]).join('').slice(0,2).toUpperCase();
   return`<div class="fcw"><div class="fcard ${t}" data-fcard style="--pc:${pColor(n)}"><div class="fcin">
-    <div class="fcf"><div class="fct"><b>${D.ovr??'–'}</b><i>${D.fav?FC_G[D.fav]||'':''}</i><small>${FC_TN[t]}</small></div>
+    <div class="fcf"><div class="fct">${fcL(D.ovr)}<i>${D.fav?FC_G[D.fav]||'':''}</i><small>${FC_TN[t]}</small></div>
       <div class="fca"><span>${esc(ini)}</span></div><div class="fcn">${esc(n)}</div>
-      <div class="fcs">${FC_ATT.map((a,i)=>`<div><b>${D.A[i]??'–'}</b><span>${a}</span></div>`).join('')}</div>
+      <div class="fcs">${FC_ATT.map((a,i)=>`<div>${fcL(D.A[i])}<span>${a}</span></div>`).join('')}</div>
       <div class="fcg">${D.g} partie${D.g>1?'s':''} · ${D.w} victoire${D.w>1?'s':''}</div></div>
     <div class="fcb"><div class="fctb"><button data-fcv="n" class="on">Notes</button><button data-fcv="r">Records</button><button data-fcv="t">Trophées</button></div><div class="fcbs" data-fcp="n">${fcScale(D)}</div><div class="fcbs" data-fcp="r" hidden>${fcRecs(n)}</div><div class="fcbs" data-fcp="t" hidden>${fcTro(n)}</div></div>
   </div></div><button class="fcsh" data-fcshare>Partager la carte</button></div>`}
@@ -7967,10 +7979,12 @@ function fcRecs(n){const out=[],nb=v=>v||v===0?v:null;let str=0;
   return out.join('')||'<em>Pas encore de partie</em>'}
 
 /* dos de la carte : chaque note du recto expliquée par la vraie stat du joueur et le barème */
-function fcScale(D){const R=D.raw,pc=v=>fr(v)+' %';
-  const L=[['MPR','marques par tour',D.A[0],R.mpr?fr(R.mpr):null,'0,5','2,6'],['Moyenne','au 501, par volée',D.A[1],R.moy?fr(R.moy):null,'15','60'],['Finish','meilleur finish 501',D.A[2],R.co||null,'20','100'],
-    ['Triples','fléchettes en triple',D.A[3],R.tri?pc(R.tri):null,'1 %','12 %'],['Régularité','écart entre parties',D.A[4],R.cv!=null?Math.round(R.cv*100)+' %':null,'70 %','10 %'],['Victoires','parties gagnées',D.A[5],D.g?Math.round(R.vic)+' %':null,'0 %','70 %']];
-  return L.map(([a,sub,v,raw,lo,hi])=>`<div class="fcsc"><b>${v??'–'}</b><div><span>${a} <i>${raw??'pas encore joué'}</i></span><small>${sub} · 40 = ${lo} · 99 = ${hi}</small></div></div>`).join('')+`<small class="fcnote">Note générale = moyenne des attributs joués</small>`}
+function fcScale(D){const R=D.raw,pc=v=>fr(v)+' %',c1=v=>String(Math.round(v*10)/10).replace('.',','),inv=(a,b,r)=>a+(r-40)*(b-a)/59;
+  /* seuils de chaque rang = barème inversé (S dès 85, A dès 75, B dès 65, C dès 55) */
+  const th=(a,b,f,pre)=>[['S',85],['A',75],['B',65],['C',55]].map(([k,r])=>`<em class="rk${k}">${k}</em> ${pre||''}${f(inv(a,b,r))}`).join(' · ');
+  const L=[['MPR','marques par tour',D.A[0],R.mpr?fr(R.mpr):null,th(.5,2.6,c1)],['Moyenne','au 501, par volée',D.A[1],R.moy?fr(R.moy):null,th(15,60,Math.round)],['Finish','meilleur finish 501',D.A[2],R.co||null,th(20,100,Math.round)],
+    ['Triples','fléchettes en triple',D.A[3],R.tri?pc(R.tri):null,th(1,12,v=>c1(v)+' %')],['Régularité','écart entre parties',D.A[4],R.cv!=null?Math.round(R.cv*100)+' %':null,th(.3,.9,v=>Math.round((1-v)*100)+' %','≤ ')],['Victoires','parties gagnées',D.A[5],D.g?Math.round(R.vic)+' %':null,th(0,70,v=>Math.round(v)+' %')]];
+  return L.map(([a,sub,v,raw,t])=>`<div class="fcsc">${fcL(v)}<div><span>${a} <i>${raw??'pas encore joué'}</i></span><small>${sub}</small><small class="fcth">${t}</small></div></div>`).join('')+`<small class="fcnote">Rang général = moyenne des attributs joués</small>`}
 function fcTro(n){const T=trAll()[n]||{},L=TROPH.filter(x=>T[x[0]]);return L.length?L.map(x=>`<div><span>${x[3]} ${esc(x[1])}</span><b>${x[0]==='ser'?T[x[0]]+' d’affilée':'×'+T[x[0]]}</b></div>`).join(''):'<em>Pas encore de trophée</em>'}
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-fcv]');if(!b)return;e.stopPropagation();const c=b.closest('.fcb');
   c.querySelectorAll('[data-fcv]').forEach(x=>x.classList.toggle('on',x===b));c.querySelectorAll('[data-fcp]').forEach(x=>x.hidden=x.dataset.fcp!==b.dataset.fcv);try{haptic();SFX.tick()}catch(x){}},true);
@@ -7982,15 +7996,15 @@ document.addEventListener('pointerdown',e=>{const c=e.target.closest&&e.target.c
   addEventListener('pointerup',up,true)},true);
 /* image de la carte (dessinée en canvas) pour le partage */
 async function fcShare(n){const D=fcData(n),t=fcTier(D),W=600,H=860,c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');
-  const G={bz:['#f0c39a','#a8683a','#6d3f1d'],ar:['#f4f6f8','#b9c0c8','#7d8691'],or:['#fff1a8','#e6b422','#9c6b06'],di:['#f2fdff','#9fe3f7','#4aa3d6']}[t];
+  const G=FC_RG[t],LT=v=>fcRk(v)||'–';
   try{await document.fonts.load('80px Fun')}catch(e){}
   const path=()=>{x.beginPath();x.moveTo(60,40);x.lineTo(W-60,40);x.quadraticCurveTo(W-20,40,W-20,90);x.lineTo(W-20,H-180);x.quadraticCurveTo(W-20,H-90,W/2,H-30);x.quadraticCurveTo(20,H-90,20,H-180);x.lineTo(20,90);x.quadraticCurveTo(20,40,60,40);x.closePath()};
   const gr=x.createLinearGradient(0,0,W,H);gr.addColorStop(0,G[0]);gr.addColorStop(.55,G[1]);gr.addColorStop(1,G[2]);path();x.fillStyle=gr;x.fill();x.lineWidth=10;x.strokeStyle='#111';x.stroke();
-  x.fillStyle='#111';x.textAlign='left';x.font='110px Fun';x.fillText(D.ovr??'–',60,175);x.font='38px Fun';x.fillText(D.fav?FC_G[D.fav]||'':'',66,225);x.font='26px Fun';x.fillText(FC_TN[t],66,262);
+  x.fillStyle='#111';x.textAlign='left';x.font='120px Fun';x.lineWidth=12;x.lineJoin='round';x.strokeStyle='#111';x.strokeText(LT(D.ovr),60,175);x.fillStyle=FC_RG[fcTier(D)][3];x.fillText(LT(D.ovr),60,175);x.fillStyle='#111';x.font='38px Fun';x.fillText(D.fav?FC_G[D.fav]||'':'',66,225);x.font='26px Fun';x.fillText(FC_TN[t],66,262);
   x.beginPath();x.arc(W/2+60,190,110,0,7);x.fillStyle=pColor(n).startsWith('#')?pColor(n):'#d4494c';x.fill();x.lineWidth=8;x.strokeStyle='#111';x.stroke();
   x.fillStyle='#fff';x.textAlign='center';x.font='96px Fun';x.fillText(n.trim().split(/\s+/).map(s=>s[0]).join('').slice(0,2).toUpperCase(),W/2+60,225);
   x.fillStyle='#111';x.font=(n.length>10?52:66)+'px Fun';x.fillText(n.toUpperCase(),W/2,385);x.fillRect(80,410,W-160,5);
-  FC_ATT.forEach((a,i)=>{const cx=i<3?110:W/2+40,cy=480+(i%3)*78;x.textAlign='left';x.font='54px Fun';x.fillText(D.A[i]??'–',cx,cy);x.font='34px Fun';x.fillText(a,cx+82,cy-4)});
+  FC_ATT.forEach((a,i)=>{const cx=i<3?110:W/2+40,cy=480+(i%3)*78;x.textAlign='left';x.font='58px Fun';x.lineWidth=9;x.strokeStyle='#111';x.strokeText(LT(D.A[i]),cx,cy);x.fillStyle=D.A[i]==null?'#ddd':FC_RG['rk'+fcRk(D.A[i])][3];x.fillText(LT(D.A[i]),cx,cy);x.fillStyle='#111';x.font='34px Fun';x.fillText(a,cx+82,cy-4)});
   x.textAlign='center';x.font='26px Fun';x.fillText(`${D.g} parties · ${D.w} victoires`,W/2,H-120);x.font='22px Fun';x.fillText('Cricket Master',W/2,H-82);
   const blob=await new Promise(r=>c.toBlob(r,'image/png'));const f=new File([blob],'carte-'+n.replace(/\W+/g,'_')+'.png',{type:'image/png'});
   try{if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:'Carte de '+n});return}}catch(e){if(e&&e.name==='AbortError')return}
