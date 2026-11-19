@@ -3874,6 +3874,7 @@ html body #setup#setup.b2 #names .nslot:not(.ph):not(.bot),html body #setup#setu
 html body #ppick#ppick .rchip{box-shadow:inset 0 0 0 var(--mn-cbw,2px) var(--mn-cbc,#111),0 0 0 var(--mn-cbh,3.5px) color-mix(in srgb,var(--pc,#cfc9be) var(--mn-cbg,100%),transparent)!important}
 html body #draw#draw .slot.lock{box-shadow:inset 0 0 0 var(--mn-cbw,2px) var(--mn-cbc,#111),0 0 0 var(--mn-cbh,3.5px) color-mix(in srgb,var(--pc,var(--accent)) var(--mn-cbg,100%),transparent)!important}
 html body #ppick#ppick .rchipw{margin:4px 5px}
+#prof .prbadge{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 6px;border-radius:99px;background:var(--accent,#ff5a1f);color:#fff;font:400 12px "Fun",sans-serif;font-style:normal;vertical-align:2px}
 </style>
 </head>
 <body>
@@ -7459,7 +7460,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-411';   // à changer avec VERSION dans sw.js
+const APPV='lf-412';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -7848,7 +7849,7 @@ function vsHtml(n){const cur=VSND[n],open=VSO===n;
 let VSO=null;
 function profOpen(name){SFX.open();let o=$('prof');if(o)o.remove();o=el('div','ov');o.id='prof';document.body.append(o);
   const draw=n=>{if(!n){const L=allPeople(),TL=teamsOf();o.innerHTML=`<div class="ovh"><h2>Joueurs</h2><button class="circ" data-x aria-label="Fermer"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>`+
-      '<button class="prami" data-ami>👥 Amis et groupes<i>›</i></button>'+(L.length?`<div class="prk">${L.map(x=>{const D=fcData(x),t=fcTier(D);return`<button data-p="${esc(x)}" style="--pc:${pColor(x)}"><span>${esc(x)}</span><b class="ptr ${t}">${fcRk(D.ovr)||'?'}</b><i>${FC_TN[t]}</i><small>${D.g?D.g+' partie'+(D.g>1?'s':''):'Pas encore joué'}</small></button>`}).join('')}</div>`:'<p class="hempty">Aucun joueur pour l’instant.</p>')+
+      `<button class="prami" data-ami>👥 Amis${window.syReqN&&syReqN()?` <em class="prbadge">${syReqN()}</em>`:''}<i>›</i></button>`+(L.length?`<div class="prk">${L.map(x=>{const D=fcData(x),t=fcTier(D);return`<button data-p="${esc(x)}" style="--pc:${pColor(x)}"><span>${esc(x)}</span><b class="ptr ${t}">${fcRk(D.ovr)||'?'}</b><i>${FC_TN[t]}</i><small>${D.g?D.g+' partie'+(D.g>1?'s':''):'Pas encore joué'}</small></button>`}).join('')}</div>`:'<p class="hempty">Aucun joueur pour l’instant.</p>')+
       (TL.length?`<h3 class="prs">Équipes</h3><div class="prl">${TL.map(([k,v])=>`<button data-p="${esc(k)}">${k.split(' & ').map(m=>`<b style="--pc:${pColor(m)}"></b>`).join('')}${nmH(k)}<i>${v.g} partie${v.g>1?'s':''}</i></button>`).join('')}</div>`:'');return}
     if(n.includes(' & ')){o.dataset.n=n;const T=trTeams()[n]||{},M=n.split(' & '),rows=[];
       STG.forEach(g=>{const a=stAgg(g,true).E.find(x=>x.name===n);if(!a||!a.g)return;const key={cricket:['MPR moyen',a.d?fr(a.h*3/a.d):'–'],x01:['Moyenne',a.xd?fr(a.xp*3/a.xd):'–'],killer:['Vies prises',a.k],shanghai:['Record',a.best||'–'],halveit:['Record',a.best||'–']}[g]||['',''];
@@ -7871,8 +7872,8 @@ function profOpen(name){SFX.open();let o=$('prof');if(o)o.remove();o=el('div','o
       ${pgHist(n)}
       ${TM.length?`<h3 class="prs">Ses équipes</h3><div class="prl">${TM.map(([k,v])=>`<button data-p="${esc(k)}">${k.split(' & ').map(m=>`<b style="--pc:${pColor(m)}"></b>`).join('')}${nmH(k)}<i>${v.g} p. · ${Math.round(v.w*100/v.g)} %</i></button>`).join('')}</div>`:''}
       ${isBot(n)?'':`<h3 class="prs">Son de victoire</h3><div class="prv">${vsHtml(n)}</div>`}
-      ${isBot(n)||(typeof SY!=='undefined'&&SY.me&&SY.me.local===n)?'':(()=>{const fr=window.syHandle&&syHandle(n);return`<button class="prfg" data-forget>Oublier ce joueur</button><p class="prfgn">${fr?'Retire l’amitié avec @'+esc(fr)+' et ses stats de ce téléphone.':'Le retire des joueurs de ce téléphone. Les parties déjà jouées restent dans l’historique.'}</p>`})()}
-      ${typeof SY!=='undefined'&&SY.me&&SY.me.local===n?`<h3 class="prs">Réglages</h3><div class="prl"><button data-ami>👥 Amis et groupes<i>›</i></button><button data-app>⚙︎ Réglages de l’appli<i>›</i></button></div>`:''}`};
+      ${isBot(n)||(window.syMeName&&syMeName()===n)?'':(()=>{const fr=window.syHandle&&syHandle(n);return`<button class="prfg" data-forget>Oublier ce joueur</button><p class="prfgn">${fr?'Retire l’amitié avec @'+esc(fr)+' et ses stats de ce téléphone.':'Le retire des joueurs de ce téléphone. Les parties déjà jouées restent dans l’historique.'}</p>`})()}
+      ${window.syMeName&&syMeName()===n?`<h3 class="prs">Réglages</h3><div class="prl"><button data-ami>👥 Amis${window.syReqN&&syReqN()?` <em class="prbadge">${syReqN()}</em>`:''}<i>›</i></button><button data-app>⚙︎ Réglages de l’appli<i>›</i></button></div>`:''}`};
   VSO=null;PGN=20;draw(name);requestAnimationFrame(()=>o.classList.add('on'));
   o.addEventListener('click',e=>{const t=e.target;if(t.closest('[data-x]')){o.classList.remove('on');setTimeout(()=>o.remove(),300);try{if($('setup').classList.contains('on'))renderSetup()}catch(x){}return}
     const fg=t.closest('[data-forget]');if(fg){haptic();if(!fg.classList.contains('arm')){fg.classList.add('arm');fg.textContent='Toucher encore pour oublier';SFX.tick();setTimeout(()=>{if(document.body.contains(fg)){fg.classList.remove('arm');fg.textContent='Oublier ce joueur'}},3000);return}
