@@ -1,0 +1,61 @@
+TÂCHE : redessiner une planche d'assets d'appli mobile (compteur de fléchettes « Cricket Master », écrans : Page Joueurs, profil et amis). Tu ne crées PAS une nouvelle composition : tu repeins chaque élément de l'image 1 exactement à l'endroit où il se trouve, à la même taille.
+
+IMAGES JOINTES
+- Image 1 = la planche à redessiner (15 éléments, sans texte). C'est ELLE que tu modifies et renvoies.
+- Image 2 = la MÊME planche avec le numéro et le nom de chaque élément écrits dessous. Elle sert uniquement à savoir quel élément est quoi : ne recopie JAMAIS ces étiquettes.
+- Image 3 = les écrans de l'appli avec leurs textes, pour comprendre le rôle de chaque élément. Ne la redessine pas.
+
+STYLE À APPLIQUER : [écris ici ton style]
+
+FORMAT DE SORTIE
+- Une seule image paysage 1536 × 1024 pixels.
+- Fond uni #F7F2E5 parfaitement plat : pas de texture, de dégradé, d'ombre portée sur le fond, de vignettage, de cadre ni de décor.
+
+INTERDICTIONS ABSOLUES
+1. Aucun texte, aucune lettre, aucun chiffre, aucune étiquette, nulle part (les icônes déjà dessinées — roue crantée, chevron, croix, + — restent).
+2. Aucun élément ajouté, aucun supprimé : exactement 15.
+3. Ne déplace aucun élément, ne change ni sa taille ni son rapport largeur/hauteur. Chaque élément reste entièrement DANS sa case.
+4. Ne fusionne pas deux éléments, ne les fais pas se toucher : du fond vide reste visible entre chacun.
+5. Pas de perspective : tout est vu de face, à plat.
+
+ZONES PROTÉGÉES : des textes s'écrivent sur presque toutes ces pièces. Bordure fine, aucun ornement au centre, matière lisse : le centre reste lisible sur au moins 75 % de la hauteur. Les panneaux, boîtes, cartes et tableaux gardent un intérieur calme ; ornements seulement dans le bord.
+
+RÈGLES DE COHÉRENCE
+- FAMILLES : petites cartes 2-3 ; ronds de rang 4 à 8 (même bille, seule la couleur change : S violet-rose, A vert, B jaune, C orange, D rouge) ; petits boutons 13-14.
+- Garde le principe « bulle » de l'appli : contour noir net, la couleur déborde un peu autour du contour sur les capsules pleines.
+- Lisible en petit sur iPhone : contours nets, rien de flou, aucun détail plus petit que 4 px.
+
+LISTE DES 15 ÉLÉMENTS (coordonnées en pixels sur l'image 1536 × 1024 : coin haut-gauche de la case, puis largeur × hauteur)
+1. BANDEAU « AMIS » : longue capsule orange pleine en haut de la page Joueurs ; « 👥 Amis › » s'écrit dessus en blanc.
+   Case : x776 y436, 577×92.
+2. PETITE CARTE JOUEUR (page Joueurs) : carré aux coins arrondis à la couleur du joueur (ici bleu), contour noir. Nom en haut, rond du rang au milieu, infos en bas.
+   Case : x41 y41, 283×304.
+3. PETITE CARTE JOUEUR : même carte, autre joueur (orange).
+   Case : x373 y41, 281×304.
+4. ROND DU RANG S : bille brillante violet-rose néon, anneau blanc puis contour noir, petite ombre. La lettre s'écrit dessus en blanc.
+   Case : x1329 y41, 135×140.
+5. ROND DU RANG A : même bille, vert vif.
+   Case : x41 y436, 135×140.
+6. ROND DU RANG B : même bille, jaune.
+   Case : x225 y436, 135×140.
+7. ROND DU RANG C : même bille, orange.
+   Case : x409 y436, 135×140.
+8. ROND DU RANG D : même bille, rouge.
+   Case : x592 y436, 135×140.
+9. BOUTON ROND PALETTE : cercle clair contour noir ; l'emoji 🎨 s'écrit dedans.
+   Case : x441 y666, 78×78.
+10. BOUTON NOIR « PARTAGER LA CARTE » : capsule noire pleine, texte blanc.
+   Case : x1194 y666, 263×61.
+11. BOÎTE (page Amis) : rectangle clair aux coins arrondis, contour noir. Titre, champ et boutons se placent dedans.
+   Case : x703 y41, 577×257.
+12. CHAMP DE SAISIE (pseudo) : rectangle blanc aux coins arrondis, contour noir.
+   Case : x41 y666, 351×82.
+13. PETIT BOUTON PLEIN (« Envoyer », « Accepter ») : petite capsule orange pleine.
+   Case : x41 y839, 134×55.
+14. PETIT BOUTON CONTOURÉ (« Activer », « Retirer ») : petite capsule transparente contour noir.
+   Case : x225 y839, 121×55.
+15. GRAND BOUTON CONTOURÉ (« Synchroniser maintenant ») : longue capsule transparente, contour noir fin.
+   Case : x568 y666, 577×78.
+
+VÉRIFICATION AVANT DE RÉPONDRE
+Compte : 15 éléments, chacun dans sa case, aucun texte, fond uni #F7F2E5, rien d'ajouté. Corrige avant d'envoyer si un point ne va pas.

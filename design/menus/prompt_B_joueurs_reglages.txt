@@ -1,0 +1,51 @@
+TÂCHE : redessiner une planche d'assets d'appli mobile (compteur de fléchettes « Cricket Master », écrans : Joueurs de la partie, « Ajouter un joueur », réglages). Tu ne crées PAS une nouvelle composition : tu repeins chaque élément de l'image 1 exactement à l'endroit où il se trouve, à la même taille.
+
+IMAGES JOINTES
+- Image 1 = la planche à redessiner (10 éléments, sans texte). C'est ELLE que tu modifies et renvoies.
+- Image 2 = la MÊME planche avec le numéro et le nom de chaque élément écrits dessous. Elle sert uniquement à savoir quel élément est quoi : ne recopie JAMAIS ces étiquettes.
+- Image 3 = les écrans de l'appli avec leurs textes, pour comprendre le rôle de chaque élément. Ne la redessine pas.
+
+STYLE À APPLIQUER : [écris ici ton style]
+
+FORMAT DE SORTIE
+- Une seule image paysage 1536 × 1024 pixels.
+- Fond uni #F7F2E5 parfaitement plat : pas de texture, de dégradé, d'ombre portée sur le fond, de vignettage, de cadre ni de décor.
+
+INTERDICTIONS ABSOLUES
+1. Aucun texte, aucune lettre, aucun chiffre, aucune étiquette, nulle part (les icônes déjà dessinées — roue crantée, chevron, croix, + — restent).
+2. Aucun élément ajouté, aucun supprimé : exactement 10.
+3. Ne déplace aucun élément, ne change ni sa taille ni son rapport largeur/hauteur. Chaque élément reste entièrement DANS sa case.
+4. Ne fusionne pas deux éléments, ne les fais pas se toucher : du fond vide reste visible entre chacun.
+5. Pas de perspective : tout est vu de face, à plat.
+
+ZONES PROTÉGÉES : des textes s'écrivent sur presque toutes ces pièces. Bordure fine, aucun ornement au centre, matière lisse : le centre reste lisible sur au moins 75 % de la hauteur. Les panneaux, boîtes, cartes et tableaux gardent un intérieur calme ; ornements seulement dans le bord.
+
+RÈGLES DE COHÉRENCE
+- FAMILLES : capsules joueurs 1, 2 et 5 (seule la couleur du joueur change) ; panneaux 4 et 8.
+- Garde le principe « bulle » de l'appli : contour noir net, la couleur déborde un peu autour du contour sur les capsules pleines.
+- Lisible en petit sur iPhone : contours nets, rien de flou, aucun détail plus petit que 4 px.
+
+LISTE DES 10 ÉLÉMENTS (coordonnées en pixels sur l'image 1536 × 1024 : coin haut-gauche de la case, puis largeur × hauteur)
+1. CAPSULE JOUEUR (couleur du joueur, ici bleu #2AA7C9) : nom en blanc contour noir à gauche, petite croix à droite. Contour noir intérieur, la couleur déborde autour. Intérieur lisse.
+   Case : x349 y825, 224×70.
+2. CAPSULE JOUEUR : même capsule, autre joueur (orange #E29F37). Seule la couleur change.
+   Case : x622 y825, 224×70.
+3. BOUTON + (ajouter un joueur) : rond noir avec un + blanc (icône, à garder).
+   Case : x895 y825, 63×62.
+4. FENÊTRE « AJOUTER UN JOUEUR » : panneau blanc aux coins arrondis qui monte du bas, légère ombre. Titre, capsules et ordis se placent dedans : intérieur vide et calme.
+   Case : x549 y41, 506×499.
+5. CAPSULE D'UN JOUEUR ENREGISTRÉ (dans la fenêtre 18) : même famille que les capsules 15-16, plus petite (ici rose #E07AA5).
+   Case : x173 y825, 127×72.
+6. BOUTON + ORANGE (nouveau joueur) : rond orange plein, petite ombre ; un + blanc s'écrit dessus.
+   Case : x41 y825, 83×83.
+7. CAPSULE D'UN ORDI (joueur robot) : capsule métallique (ici bronze-vert), reflet en diagonale ; nom et niveau s'écrivent dessus.
+   Case : x1007 y825, 162×62.
+8. PANNEAU DES RÉGLAGES (roue crantée) : grand panneau clair aux coins arrondis, fin liseré orange. Tous les réglages se placent dedans : intérieur vide.
+   Case : x41 y41, 459×693.
+9. BOUTON ORANGE CONTOURÉ (« Statistiques », « Historique ») : capsule orange, contour noir épais.
+   Case : x1217 y825, 182×59.
+10. BOUTON NOIR (« Studio », « Boîte à sons ») : grande capsule noire pleine, texte blanc dessus.
+   Case : x1104 y41, 369×83.
+
+VÉRIFICATION AVANT DE RÉPONDRE
+Compte : 10 éléments, chacun dans sa case, aucun texte, fond uni #F7F2E5, rien d'ajouté. Corrige avant d'envoyer si un point ne va pas.

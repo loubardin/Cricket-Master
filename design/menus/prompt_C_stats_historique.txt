@@ -1,0 +1,51 @@
+TÂCHE : redessiner une planche d'assets d'appli mobile (compteur de fléchettes « Cricket Master », écrans : Statistiques et historique). Tu ne crées PAS une nouvelle composition : tu repeins chaque élément de l'image 1 exactement à l'endroit où il se trouve, à la même taille.
+
+IMAGES JOINTES
+- Image 1 = la planche à redessiner (10 éléments, sans texte). C'est ELLE que tu modifies et renvoies.
+- Image 2 = la MÊME planche avec le numéro et le nom de chaque élément écrits dessous. Elle sert uniquement à savoir quel élément est quoi : ne recopie JAMAIS ces étiquettes.
+- Image 3 = les écrans de l'appli avec leurs textes, pour comprendre le rôle de chaque élément. Ne la redessine pas.
+
+STYLE À APPLIQUER : [écris ici ton style]
+
+FORMAT DE SORTIE
+- Une seule image paysage 1536 × 1024 pixels.
+- Fond uni #F7F2E5 parfaitement plat : pas de texture, de dégradé, d'ombre portée sur le fond, de vignettage, de cadre ni de décor.
+
+INTERDICTIONS ABSOLUES
+1. Aucun texte, aucune lettre, aucun chiffre, aucune étiquette, nulle part (les icônes déjà dessinées — roue crantée, chevron, croix, + — restent).
+2. Aucun élément ajouté, aucun supprimé : exactement 10.
+3. Ne déplace aucun élément, ne change ni sa taille ni son rapport largeur/hauteur. Chaque élément reste entièrement DANS sa case.
+4. Ne fusionne pas deux éléments, ne les fais pas se toucher : du fond vide reste visible entre chacun.
+5. Pas de perspective : tout est vu de face, à plat.
+
+ZONES PROTÉGÉES : des textes s'écrivent sur presque toutes ces pièces. Bordure fine, aucun ornement au centre, matière lisse : le centre reste lisible sur au moins 75 % de la hauteur. Les panneaux, boîtes, cartes et tableaux gardent un intérieur calme ; ornements seulement dans le bord.
+
+RÈGLES DE COHÉRENCE
+- FAMILLES : puces 3-4 ; pastilles 7-8 ; le curseur 2 est plus épais que le rail 1.
+- Garde le principe « bulle » de l'appli : contour noir net, la couleur déborde un peu autour du contour sur les capsules pleines.
+- Lisible en petit sur iPhone : contours nets, rien de flou, aucun détail plus petit que 4 px.
+
+LISTE DES 10 ÉLÉMENTS (coordonnées en pixels sur l'image 1536 × 1024 : coin haut-gauche de la case, puis largeur × hauteur)
+1. RAIL D'ONGLETS (Joueurs / Équipes, Tout / Cricket / 501…) : capsule claire contour noir fin. Le curseur 2 glisse dedans.
+   Case : x41 y722, 632×71.
+2. CURSEUR D'ONGLET : capsule orange pleine sous l'onglet choisi (texte blanc).
+   Case : x501 y541, 348×89.
+3. PUCE DE FILTRE CHOISIE (Général, Face-à-face, Cricket…) : petite capsule orange pleine.
+   Case : x723 y722, 165×69.
+4. PUCE DE FILTRE NON CHOISIE : même capsule, juste un contour noir.
+   Case : x936 y722, 221×69.
+5. TABLEAU DES CLASSEMENTS : cadre clair aux coins arrondis, contour noir, ligne d'en-tête séparée par un trait, lignes fines entre les joueurs, colonne triée légèrement teintée, pastille de couleur de chaque joueur à gauche. Textes et chiffres s'écrivent dans les cases : garder les cases calmes.
+   Case : x41 y41, 632×409.
+6. CARTE D'UNE PARTIE (historique) : rectangle clair aux coins arrondis, contour noir fin. Jeu, date et joueurs s'écrivent dedans.
+   Case : x723 y41, 632×211.
+7. PASTILLE DU GAGNANT : capsule pleine à la couleur du joueur (ici bleu) ; « 🏆 NOM » s'écrit dessus en blanc.
+   Case : x899 y541, 220×81.
+8. PASTILLE D'UN JOUEUR : capsule claire, contour gris ; le nom s'écrit dessus en noir.
+   Case : x1207 y722, 175×67.
+9. PETIT ROND SUPPRIMER : petit cercle contour noir ; une croix s'écrit dedans.
+   Case : x1431 y722, 60×60.
+10. BOUTON CONTOURÉ (« Exporter une sauvegarde ») : capsule transparente, contour noir.
+   Case : x41 y541, 411×90.
+
+VÉRIFICATION AVANT DE RÉPONDRE
+Compte : 10 éléments, chacun dans sa case, aucun texte, fond uni #F7F2E5, rien d'ajouté. Corrige avant d'envoyer si un point ne va pas.

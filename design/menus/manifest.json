@@ -1,0 +1,626 @@
+{
+ "A_accueil_nouvelle_partie": {
+  "titre": "Accueil et nouvelle partie",
+  "echelle": 0.784,
+  "composants": [
+   {
+    "n": 1,
+    "nom": "logo_cible",
+    "case_px": [
+     41,
+     41,
+     426,
+     426
+    ],
+    "desc": "LOGO DE L'ACCUEIL : grand disque orange #FF5A1F barré d'un X noir épais aux bouts arrondis (la cible). Le titre « CRICKET MASTER » s'écrit dessous, pas dessus."
+   },
+   {
+    "n": 2,
+    "nom": "bouton_principal",
+    "case_px": [
+     757,
+     41,
+     497,
+     93
+    ],
+    "desc": "BOUTON PRINCIPAL (« Jouer », « C'est parti ») : capsule orange pleine, contour noir à l'intérieur, la couleur déborde un peu autour du contour. Texte blanc au centre : intérieur lisse."
+   },
+   {
+    "n": 3,
+    "nom": "rond_reglages",
+    "case_px": [
+     684,
+     733,
+     58,
+     58
+    ],
+    "desc": "BOUTON ROND RÉGLAGES : cercle clair contour noir avec une roue crantée noire (icône, à garder)."
+   },
+   {
+    "n": 4,
+    "nom": "rond_retour",
+    "case_px": [
+     573,
+     733,
+     62,
+     60
+    ],
+    "desc": "BOUTON ROND RETOUR : cercle clair contour noir avec un chevron « ‹ » noir (icône, à garder)."
+   },
+   {
+    "n": 5,
+    "nom": "rond_fermer",
+    "case_px": [
+     809,
+     558,
+     66,
+     66
+    ],
+    "desc": "BOUTON ROND FERMER : cercle clair contour noir avec une croix noire (icône, à garder)."
+   },
+   {
+    "n": 6,
+    "nom": "rail_choix_du_jeu",
+    "case_px": [
+     924,
+     558,
+     482,
+     63
+    ],
+    "desc": "RAIL DU CHOIX DU JEU (Cricket / 501 / Mini jeux) : capsule beige claire, contour noir. Les 3 mots s'écrivent dedans : intérieur calme. Le curseur 7 glisse dedans."
+   },
+   {
+    "n": 7,
+    "nom": "curseur_choix_du_jeu",
+    "case_px": [
+     516,
+     41,
+     192,
+     93
+    ],
+    "desc": "CURSEUR DU CHOIX DU JEU : capsule orange pleine qui glisse dans le rail 6 sous le jeu choisi (texte blanc dessus). PLUS ÉPAIS que le rail : il déborde au-dessus et en dessous."
+   },
+   {
+    "n": 8,
+    "nom": "rail_option",
+    "case_px": [
+     41,
+     886,
+     482,
+     53
+    ],
+    "desc": "RAIL D'OPTION (Standard / Coupe-gorge, Non / Oui…) : même famille que le rail 6, plus fin. Intérieur calme."
+   },
+   {
+    "n": 9,
+    "nom": "curseur_option",
+    "case_px": [
+     41,
+     558,
+     269,
+     85
+    ],
+    "desc": "CURSEUR D'OPTION : capsule orange qui glisse dans le rail 8 (texte blanc dessus). Plus épais que le rail."
+   },
+   {
+    "n": 10,
+    "nom": "rail_chiffres",
+    "case_px": [
+     790,
+     733,
+     482,
+     55
+    ],
+    "desc": "RAIL DES CHIFFRES (manches 1 à 10) : même rail que le 8. Dix chiffres s'écrivent dedans."
+   },
+   {
+    "n": 11,
+    "nom": "curseur_chiffre",
+    "case_px": [
+     359,
+     558,
+     86,
+     83
+    ],
+    "desc": "CURSEUR D'UN CHIFFRE : petite capsule orange presque ronde qui glisse dans le rail 10 sous le chiffre choisi."
+   },
+   {
+    "n": 12,
+    "nom": "barre_du_bas",
+    "case_px": [
+     41,
+     733,
+     482,
+     63
+    ],
+    "desc": "BARRE DU BAS (« Tout bon ? | Suivant → ») : capsule claire contour noir, en bas de l'écran. Intérieur calme."
+   },
+   {
+    "n": 13,
+    "nom": "curseur_barre_du_bas",
+    "case_px": [
+     494,
+     558,
+     266,
+     81
+    ],
+    "desc": "CURSEUR DE LA BARRE DU BAS : capsule orange sous « Tout bon ? », à gauche de la barre 12. Plus épaisse que la barre."
+   },
+   {
+    "n": 14,
+    "nom": "etiquette_du_jeu",
+    "case_px": [
+     573,
+     886,
+     122,
+     41
+    ],
+    "desc": "ÉTIQUETTE DU JEU : petite capsule orange à côté du titre (« Cricket »), texte blanc dessus."
+   }
+  ]
+ },
+ "B_joueurs_reglages": {
+  "titre": "Joueurs de la partie, « Ajouter un joueur », réglages",
+  "echelle": 0.715,
+  "composants": [
+   {
+    "n": 1,
+    "nom": "capsule_joueur_1",
+    "case_px": [
+     349,
+     825,
+     224,
+     70
+    ],
+    "desc": "CAPSULE JOUEUR (couleur du joueur, ici bleu #2AA7C9) : nom en blanc contour noir à gauche, petite croix à droite. Contour noir intérieur, la couleur déborde autour. Intérieur lisse."
+   },
+   {
+    "n": 2,
+    "nom": "capsule_joueur_2",
+    "case_px": [
+     622,
+     825,
+     224,
+     70
+    ],
+    "desc": "CAPSULE JOUEUR : même capsule, autre joueur (orange #E29F37). Seule la couleur change."
+   },
+   {
+    "n": 3,
+    "nom": "bouton_plus",
+    "case_px": [
+     895,
+     825,
+     63,
+     62
+    ],
+    "desc": "BOUTON + (ajouter un joueur) : rond noir avec un + blanc (icône, à garder)."
+   },
+   {
+    "n": 4,
+    "nom": "fenetre_ajouter",
+    "case_px": [
+     549,
+     41,
+     506,
+     499
+    ],
+    "desc": "FENÊTRE « AJOUTER UN JOUEUR » : panneau blanc aux coins arrondis qui monte du bas, légère ombre. Titre, capsules et ordis se placent dedans : intérieur vide et calme."
+   },
+   {
+    "n": 5,
+    "nom": "capsule_enregistree",
+    "case_px": [
+     173,
+     825,
+     127,
+     72
+    ],
+    "desc": "CAPSULE D'UN JOUEUR ENREGISTRÉ (dans la fenêtre 18) : même famille que les capsules 15-16, plus petite (ici rose #E07AA5)."
+   },
+   {
+    "n": 6,
+    "nom": "bouton_plus_orange",
+    "case_px": [
+     41,
+     825,
+     83,
+     83
+    ],
+    "desc": "BOUTON + ORANGE (nouveau joueur) : rond orange plein, petite ombre ; un + blanc s'écrit dessus."
+   },
+   {
+    "n": 7,
+    "nom": "capsule_ordi",
+    "case_px": [
+     1007,
+     825,
+     162,
+     62
+    ],
+    "desc": "CAPSULE D'UN ORDI (joueur robot) : capsule métallique (ici bronze-vert), reflet en diagonale ; nom et niveau s'écrivent dessus."
+   },
+   {
+    "n": 8,
+    "nom": "panneau_reglages",
+    "case_px": [
+     41,
+     41,
+     459,
+     693
+    ],
+    "desc": "PANNEAU DES RÉGLAGES (roue crantée) : grand panneau clair aux coins arrondis, fin liseré orange. Tous les réglages se placent dedans : intérieur vide."
+   },
+   {
+    "n": 9,
+    "nom": "bouton_onglet",
+    "case_px": [
+     1217,
+     825,
+     182,
+     59
+    ],
+    "desc": "BOUTON ORANGE CONTOURÉ (« Statistiques », « Historique ») : capsule orange, contour noir épais."
+   },
+   {
+    "n": 10,
+    "nom": "bouton_noir",
+    "case_px": [
+     1104,
+     41,
+     369,
+     83
+    ],
+    "desc": "BOUTON NOIR (« Studio », « Boîte à sons ») : grande capsule noire pleine, texte blanc dessus."
+   }
+  ]
+ },
+ "C_stats_historique": {
+  "titre": "Statistiques et historique",
+  "echelle": 0.941,
+  "composants": [
+   {
+    "n": 1,
+    "nom": "rail_onglets",
+    "case_px": [
+     41,
+     722,
+     632,
+     71
+    ],
+    "desc": "RAIL D'ONGLETS (Joueurs / Équipes, Tout / Cricket / 501…) : capsule claire contour noir fin. Le curseur 2 glisse dedans."
+   },
+   {
+    "n": 2,
+    "nom": "curseur_onglets",
+    "case_px": [
+     501,
+     541,
+     348,
+     89
+    ],
+    "desc": "CURSEUR D'ONGLET : capsule orange pleine sous l'onglet choisi (texte blanc)."
+   },
+   {
+    "n": 3,
+    "nom": "puce_filtre_active",
+    "case_px": [
+     723,
+     722,
+     165,
+     69
+    ],
+    "desc": "PUCE DE FILTRE CHOISIE (Général, Face-à-face, Cricket…) : petite capsule orange pleine."
+   },
+   {
+    "n": 4,
+    "nom": "puce_filtre",
+    "case_px": [
+     936,
+     722,
+     221,
+     69
+    ],
+    "desc": "PUCE DE FILTRE NON CHOISIE : même capsule, juste un contour noir."
+   },
+   {
+    "n": 5,
+    "nom": "tableau_stats",
+    "case_px": [
+     41,
+     41,
+     632,
+     409
+    ],
+    "desc": "TABLEAU DES CLASSEMENTS : cadre clair aux coins arrondis, contour noir, ligne d'en-tête séparée par un trait, lignes fines entre les joueurs, colonne triée légèrement teintée, pastille de couleur de chaque joueur à gauche. Textes et chiffres s'écrivent dans les cases : garder les cases calmes."
+   },
+   {
+    "n": 6,
+    "nom": "carte_partie",
+    "case_px": [
+     723,
+     41,
+     632,
+     211
+    ],
+    "desc": "CARTE D'UNE PARTIE (historique) : rectangle clair aux coins arrondis, contour noir fin. Jeu, date et joueurs s'écrivent dedans."
+   },
+   {
+    "n": 7,
+    "nom": "pastille_gagnant",
+    "case_px": [
+     899,
+     541,
+     220,
+     81
+    ],
+    "desc": "PASTILLE DU GAGNANT : capsule pleine à la couleur du joueur (ici bleu) ; « 🏆 NOM » s'écrit dessus en blanc."
+   },
+   {
+    "n": 8,
+    "nom": "pastille_joueur",
+    "case_px": [
+     1207,
+     722,
+     175,
+     67
+    ],
+    "desc": "PASTILLE D'UN JOUEUR : capsule claire, contour gris ; le nom s'écrit dessus en noir."
+   },
+   {
+    "n": 9,
+    "nom": "rond_supprimer",
+    "case_px": [
+     1431,
+     722,
+     60,
+     60
+    ],
+    "desc": "PETIT ROND SUPPRIMER : petit cercle contour noir ; une croix s'écrit dedans."
+   },
+   {
+    "n": 10,
+    "nom": "bouton_contour",
+    "case_px": [
+     41,
+     541,
+     411,
+     90
+    ],
+    "desc": "BOUTON CONTOURÉ (« Exporter une sauvegarde ») : capsule transparente, contour noir."
+   }
+  ]
+ },
+ "D_profils_amis": {
+  "titre": "Page Joueurs, profil et amis",
+  "echelle": 0.859,
+  "composants": [
+   {
+    "n": 1,
+    "nom": "bandeau_amis",
+    "case_px": [
+     776,
+     436,
+     577,
+     92
+    ],
+    "desc": "BANDEAU « AMIS » : longue capsule orange pleine en haut de la page Joueurs ; « 👥 Amis › » s'écrit dessus en blanc."
+   },
+   {
+    "n": 2,
+    "nom": "petite_carte_1",
+    "case_px": [
+     41,
+     41,
+     283,
+     304
+    ],
+    "desc": "PETITE CARTE JOUEUR (page Joueurs) : carré aux coins arrondis à la couleur du joueur (ici bleu), contour noir. Nom en haut, rond du rang au milieu, infos en bas."
+   },
+   {
+    "n": 3,
+    "nom": "petite_carte_2",
+    "case_px": [
+     373,
+     41,
+     281,
+     304
+    ],
+    "desc": "PETITE CARTE JOUEUR : même carte, autre joueur (orange)."
+   },
+   {
+    "n": 4,
+    "nom": "rond_rang_S",
+    "case_px": [
+     1329,
+     41,
+     135,
+     140
+    ],
+    "desc": "ROND DU RANG S : bille brillante violet-rose néon, anneau blanc puis contour noir, petite ombre. La lettre s'écrit dessus en blanc."
+   },
+   {
+    "n": 5,
+    "nom": "rond_rang_A",
+    "case_px": [
+     41,
+     436,
+     135,
+     140
+    ],
+    "desc": "ROND DU RANG A : même bille, vert vif."
+   },
+   {
+    "n": 6,
+    "nom": "rond_rang_B",
+    "case_px": [
+     225,
+     436,
+     135,
+     140
+    ],
+    "desc": "ROND DU RANG B : même bille, jaune."
+   },
+   {
+    "n": 7,
+    "nom": "rond_rang_C",
+    "case_px": [
+     409,
+     436,
+     135,
+     140
+    ],
+    "desc": "ROND DU RANG C : même bille, orange."
+   },
+   {
+    "n": 8,
+    "nom": "rond_rang_D",
+    "case_px": [
+     592,
+     436,
+     135,
+     140
+    ],
+    "desc": "ROND DU RANG D : même bille, rouge."
+   },
+   {
+    "n": 9,
+    "nom": "bouton_palette",
+    "case_px": [
+     441,
+     666,
+     78,
+     78
+    ],
+    "desc": "BOUTON ROND PALETTE : cercle clair contour noir ; l'emoji 🎨 s'écrit dedans."
+   },
+   {
+    "n": 10,
+    "nom": "bouton_partager",
+    "case_px": [
+     1194,
+     666,
+     263,
+     61
+    ],
+    "desc": "BOUTON NOIR « PARTAGER LA CARTE » : capsule noire pleine, texte blanc."
+   },
+   {
+    "n": 11,
+    "nom": "boite",
+    "case_px": [
+     703,
+     41,
+     577,
+     257
+    ],
+    "desc": "BOÎTE (page Amis) : rectangle clair aux coins arrondis, contour noir. Titre, champ et boutons se placent dedans."
+   },
+   {
+    "n": 12,
+    "nom": "champ_de_saisie",
+    "case_px": [
+     41,
+     666,
+     351,
+     82
+    ],
+    "desc": "CHAMP DE SAISIE (pseudo) : rectangle blanc aux coins arrondis, contour noir."
+   },
+   {
+    "n": 13,
+    "nom": "petit_bouton_plein",
+    "case_px": [
+     41,
+     839,
+     134,
+     55
+    ],
+    "desc": "PETIT BOUTON PLEIN (« Envoyer », « Accepter ») : petite capsule orange pleine."
+   },
+   {
+    "n": 14,
+    "nom": "petit_bouton_contour",
+    "case_px": [
+     225,
+     839,
+     121,
+     55
+    ],
+    "desc": "PETIT BOUTON CONTOURÉ (« Activer », « Retirer ») : petite capsule transparente contour noir."
+   },
+   {
+    "n": 15,
+    "nom": "grand_bouton_contour",
+    "case_px": [
+     568,
+     666,
+     577,
+     78
+    ],
+    "desc": "GRAND BOUTON CONTOURÉ (« Synchroniser maintenant ») : longue capsule transparente, contour noir fin."
+   }
+  ]
+ },
+ "E_carte_joueur": {
+  "titre": "Carte joueur (5 rangs)",
+  "echelle": 0.527,
+  "composants": [
+   {
+    "n": 1,
+    "nom": "carte_rang_S",
+    "case_px": [
+     41,
+     41,
+     282,
+     401
+    ],
+    "desc": "CARTE JOUEUR, RANG S (violet-rose néon) : écusson façon carte FIFA (haut droit, bas en pointe arrondie), dégradé clair → vif. En haut à gauche : la grosse lettre du rang. En haut à droite : le rond de l'avatar (cercle bleu contour noir). Au milieu : trait noir sous le nom. En bas : 6 attributs (lettre + nom). Ornements seulement sur les bords."
+   },
+   {
+    "n": 2,
+    "nom": "carte_rang_A",
+    "case_px": [
+     373,
+     41,
+     282,
+     401
+    ],
+    "desc": "CARTE JOUEUR, RANG A (vert vif) : même carte."
+   },
+   {
+    "n": 3,
+    "nom": "carte_rang_B",
+    "case_px": [
+     704,
+     41,
+     282,
+     401
+    ],
+    "desc": "CARTE JOUEUR, RANG B (jaune) : même carte."
+   },
+   {
+    "n": 4,
+    "nom": "carte_rang_C",
+    "case_px": [
+     1035,
+     41,
+     282,
+     401
+    ],
+    "desc": "CARTE JOUEUR, RANG C (orange) : même carte."
+   },
+   {
+    "n": 5,
+    "nom": "carte_rang_D",
+    "case_px": [
+     41,
+     533,
+     282,
+     401
+    ],
+    "desc": "CARTE JOUEUR, RANG D (rouge) : même carte."
+   }
+  ]
+ }
+}
