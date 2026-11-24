@@ -75,66 +75,82 @@ const cross=(x,y,s,cls,st)=>`<g transform="translate(${(+x).toFixed(1)} ${(+y).t
 /* éclat : 8 rayons jaunes contour noir */
 const burst=(cx,cy,r,cls,st)=>`<g class="afb ${cls||''}" style="${st||''}">${Array.from({length:8},(_,k)=>{const a=k/8*2*Math.PI+.2,x1=cx+r*.55*Math.cos(a),y1=cy+r*.55*Math.sin(a),x2=cx+r*Math.cos(a),y2=cy+r*Math.sin(a);
   return`<path d="M${x1.toFixed(1)} ${y1.toFixed(1)}L${x2.toFixed(1)} ${y2.toFixed(1)}" stroke="${INK}" stroke-width="7.5" stroke-linecap="round"/><path d="M${x1.toFixed(1)} ${y1.toFixed(1)}L${x2.toFixed(1)} ${y2.toFixed(1)}" stroke="${k%2?SUN:ACC}" stroke-width="3.5" stroke-linecap="round"/>`}).join('')}</g>`;
+/* vraie fléchette illustrée : pointe en (x,y), corps vers le haut à droite, empennage à la couleur f */
+const dart=(x,y,k,cls,st,f)=>`<g transform="translate(${(+x).toFixed(1)} ${(+y).toFixed(1)}) scale(${k||1})"><g class="afd ${cls||''}" style="${st||''}"><g transform="rotate(-38)">
+  <path d="M0 0L9 0" stroke="#8a8f96" stroke-width="2.6" stroke-linecap="round"/><rect x="8" y="-3.6" width="15" height="7.2" rx="3" fill="#3a3f46" stroke="${INK}" stroke-width="2"/><path d="M11 -3.6V3.6M14.5 -3.6V3.6M18 -3.6V3.6" stroke="#8a8f96" stroke-width="1.2"/>
+  <rect x="22" y="-1.8" width="10" height="3.6" rx="1.5" fill="#fff" stroke="${INK}" stroke-width="1.6"/><path d="M30 0L37 -10L45 -10L41 0L45 10L37 10Z" fill="${f||ACC}" stroke="${INK}" stroke-width="2.2" stroke-linejoin="round"/></g></g></g>`;
+/* étincelles qui scintillent */
+const spark=(x,y,r,d,c)=>`<path class="afsp" style="animation-delay:${d}s" d="M${x} ${y-r}Q${x+r*.18} ${y-r*.18} ${x+r} ${y}Q${x+r*.18} ${y+r*.18} ${x} ${y+r}Q${x-r*.18} ${y+r*.18} ${x-r} ${y}Q${x-r*.18} ${y-r*.18} ${x} ${y-r}Z" fill="${c||SUN}" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/>`;
+const shadow=(cx,cy,rx,cls)=>`<ellipse class="${cls||''}" cx="${cx}" cy="${cy}" rx="${rx}" ry="${(rx*.16).toFixed(1)}" fill="#e6dcc4"/>`;
+/* cible illustrée (ordre officiel des secteurs), anneaux rouge / vert */
+const BOARD=[20,1,18,4,13,6,10,15,2,17,3,19,7,16,8,11,14,9,12,5];
+function board(cx,cy,R){const P=(a,r)=>[(cx+r*Math.sin(a)).toFixed(1),(cy-r*Math.cos(a)).toFixed(1)];let o=`<circle cx="${cx}" cy="${cy}" r="${R+7}" fill="#1b1b1b" stroke="${INK}" stroke-width="3"/>`;
+  const ring=(r0,r1,c0,c1)=>BOARD.map((_,i)=>{const a0=(i-.5)/20*2*Math.PI,a1=(i+.5)/20*2*Math.PI,[x0,y0]=P(a0,r1),[x1,y1]=P(a1,r1),[x2,y2]=P(a1,r0),[x3,y3]=P(a0,r0);
+    return`<path d="M${x0} ${y0}A${r1} ${r1} 0 0 1 ${x1} ${y1}L${x2} ${y2}A${r0} ${r0} 0 0 0 ${x3} ${y3}Z" fill="${i%2?c1:c0}"/>`}).join('');
+  o+=ring(R*.1,R*.58,'#f3e7c9','#1f1f1f')+ring(R*.58,R*.66,RED,'#2bb24c')+ring(R*.66,R*.92,'#f3e7c9','#1f1f1f')+ring(R*.92,R,RED,'#2bb24c');
+  o+=`<circle cx="${cx}" cy="${cy}" r="${R*.1}" fill="#2bb24c"/><circle cx="${cx}" cy="${cy}" r="${R*.045}" fill="${RED}"/><circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="${INK}" stroke-width="1.5"/>`;return o}
+const dPos=(cx,cy,R,n,m)=>{const i=n===25?-1:BOARD.indexOf(n),a=i<0?0:i/20*2*Math.PI+(Math.random()-.5)*.25,r=n===25?R*.04:m===3?R*.62:m===2?R*.96:(Math.random()<.5?R*.36:R*.8);return[cx+r*Math.sin(a),cy-r*Math.cos(a)]};
 const conf=(cx,cy,n,cls)=>Array.from({length:n},(_,k)=>{const a=k/n*2*Math.PI,c=[SUN,ACC,'#2bd9ff','#ff4dff','#2bff7a'][k%5];return`<rect class="afcf ${cls||''}" x="${cx-4}" y="${cy-3}" width="8" height="6" rx="1.5" fill="${c}" stroke="${INK}" stroke-width="1.5" style="--dx:${(Math.cos(a)*70).toFixed(0)}px;--dy:${(Math.sin(a)*52-14).toFixed(0)}px;--r:${(k*67)%360}deg"/>`}).join('');
 const HEART='M50 90C22 70 4 52 4 31C4 15 16 4 30 4C40 4 47 10 50 18C53 10 60 4 70 4C84 4 96 15 96 31C96 52 78 70 50 90Z';
 const ZIG='50,18 43,36 55,49 45,63 53,76 50,90';
 const heart=(f)=>`<path d="${HEART}" fill="${f}" stroke="${f}" stroke-width="11" stroke-linejoin="round"/><path d="${HEART}" fill="${f}" stroke="${INK}" stroke-width="5" stroke-linejoin="round"/>`;
 function illHtml(){const g=S.game||'cricket',P1=PC(0);
   if(g==='cricket')/* 3 fléchettes : / puis X puis ⊗ dans la case, la bulle encaisse chaque coup, puis le 20 est fermé : bulle dorée + couronne */
-    return`<svg class="aff afck" viewBox="0 0 240 180">
+    return`<svg class="aff afck" viewBox="0 0 240 180">${shadow(78,158,44)}${spark(22,40,9,0)}${spark(140,30,7,.7,'#2bd9ff')}${spark(226,150,8,1.3,'#ff4dff')}
       <g class="ckB">${bub(78,100,46,ACC)}${bub(78,100,46,GOLD,'ckG')}${tx(78,118,50,'20')}</g>
       ${capR(140,76,84,48,'#fff','ckC')}
       <g class="ckM m1"><path d="M166 112L198 88" stroke="${INK}" stroke-width="7" stroke-linecap="round"/></g>
       <g class="ckM m2"><path d="M166 88L198 112" stroke="${INK}" stroke-width="7" stroke-linecap="round"/></g>
       <g class="ckM m3"><circle cx="182" cy="100" r="19" fill="none" stroke="${INK}" stroke-width="6"/></g>
-      ${cross(182,100,13,'ckD d1')}${cross(182,100,13,'ckD d2')}${cross(182,100,13,'ckD d3')}
+      ${dart(182,100,1.15,'ckD d1')}${dart(182,100,1.15,'ckD d2')}${dart(182,100,1.15,'ckD d3')}
       ${burst(182,100,40,'b1')}${burst(182,100,40,'b2')}${burst(182,100,40,'b3')}
       <g class="ckCr"><path d="M54 52L60 28L71 41L78 22L85 41L96 28L102 52Z" fill="${GOLD}" stroke="${INK}" stroke-width="3.5" stroke-linejoin="round"/></g>${conf(78,70,10,'ckF')}</svg>`;
   if(g==='x01')return x01Html();
-  if(g==='killer')/* le viseur fond sur le cœur, se cale, BANG : le cœur se brise ; puis il repousse */
-    return`<svg class="aff afkl" viewBox="0 0 250 180"><defs><clipPath id="afhl"><polygon points="-20,-20 50,-20 ${ZIG} 50,120 -20,120"/></clipPath><clipPath id="afhr"><polygon points="120,-20 50,-20 ${ZIG} 50,120 120,120"/></clipPath></defs>
-      <g transform="translate(150 50) scale(.72)"><g class="afhL" clip-path="url(#afhl)">${heart(RED)}</g><g class="afhR" clip-path="url(#afhr)">${heart(RED)}</g>
-        <polygon class="afsh s1" points="44,38 58,44 48,54" fill="${RED}" stroke="${INK}" stroke-width="3"/><polygon class="afsh s2" points="50,62 62,58 57,72" fill="${RED}" stroke="${INK}" stroke-width="3"/></g>
-      ${burst(186,86,62,'klB')}
+  if(g==='killer'){/* le viseur fond sur le cœur, se cale, BANG : le cœur explose en éclats ; puis il repousse */
+    const sh=Array.from({length:10},(_,k)=>{const a=k/10*2*Math.PI+.3,d=60+(k%3)*22,x=186+Math.cos(a)*10,y=86+Math.sin(a)*10,z=7+(k%3)*3;
+      return`<polygon class="klS" points="${x},${y-z} ${x+z*.9},${y+z*.6} ${x-z*.8},${y+z*.5}" fill="${k%4?RED:'#ff8a8a'}" stroke="${INK}" stroke-width="2.2" stroke-linejoin="round" style="--dx:${(Math.cos(a)*d).toFixed(0)}px;--dy:${(Math.sin(a)*d*.8).toFixed(0)}px;--r:${(k*77)%360-180}deg"/>`}).join('');
+    return`<svg class="aff afkl" viewBox="0 0 250 180">${shadow(186,160,40,'klSh')}${spark(30,150,8,.4)}${spark(110,24,7,1.1,'#2bd9ff')}
+      <g class="klH"><g transform="translate(150 50) scale(.72)">${heart(RED)}<path d="M28 26Q34 16 44 18" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity=".85"/></g></g>
+      ${[0,1,2].map(k=>`<circle class="klP p${k}" cx="${186+[-18,16,2][k]}" cy="${86+[6,10,-14][k]}" r="${[16,13,12][k]}" fill="#fff" stroke="${INK}" stroke-width="2.5"/>`).join('')}
+      ${burst(186,86,66,'klB')}${sh}
       <g class="afscope"><circle cx="186" cy="86" r="40" fill="none" stroke="${INK}" stroke-width="13"/><circle cx="186" cy="86" r="40" fill="none" stroke="${ACC}" stroke-width="7"/>
         <path d="M186 34V62M186 110V138M134 86H162M210 86H238" stroke="${INK}" stroke-width="6" stroke-linecap="round"/><circle cx="186" cy="86" r="5" fill="${INK}"/></g>
-      <g class="klBang">${tx(70,72,34,'BANG','#fff')}</g></svg>`;
+      <g class="klBang">${tx(70,72,34,'BANG','#fff')}</g></svg>`}
   if(g==='clock'){/* l'aiguille saute de cible en cible ; chaque cible touchée s'allume */
     const dots=Array.from({length:20},(_,i)=>{const a=i/20*2*Math.PI-Math.PI/2,x=(120+50*Math.cos(a)).toFixed(1),y=(92+50*Math.sin(a)).toFixed(1);return`<circle class="cd${i>=1&&i<=5?' c'+i:''}" cx="${x}" cy="${y}" r="${i>=1&&i<=5?6:4}" fill="#fff" stroke="${INK}" stroke-width="2.5"/>`}).join('');
-    return`<svg class="aff afclk" viewBox="0 0 240 180">${bub(120,92,64,ACC)}${dots}
+    return`<svg class="aff afclk" viewBox="0 0 240 180">${shadow(120,166,54)}${spark(36,36,9,0)}${spark(206,140,8,.9,'#2bff7a')}${bub(120,92,64,ACC)}<circle cx="120" cy="92" r="58" fill="none" stroke="#fff" stroke-width="2" opacity=".5"/>${dots}
       <g class="afhand"><path d="M120 92L120 40" stroke="${INK}" stroke-width="10" stroke-linecap="round"/><path d="M120 92L120 40" stroke="#fff" stroke-width="4" stroke-linecap="round"/></g>${bub(120,92,8,SUN)}</svg>`}
   if(g==='shanghai')/* simple, double, triple du même numéro dans la volée → SHANGHAI ! victoire immédiate */
-    return`<svg class="aff afsh2" viewBox="0 0 240 180">
+    return`<svg class="aff afsh2" viewBox="0 0 240 180">${shadow(120,166,104)}${spark(24,30,8,.2,'#2bd9ff')}${spark(216,24,9,1,'#ff4dff')}
       <g class="shC c1">${capR(18,104,60,42,ACC)}${tx(48,135,24,'×1')}</g>
       <g class="shC c2">${capR(90,104,60,42,SILV)}${tx(120,135,24,'×2')}</g>
       <g class="shC c3">${capR(162,104,60,42,GOLD)}${tx(192,135,24,'×3')}</g>
-      ${cross(66,104,10,'shD d1')}${cross(138,104,10,'shD d2')}${cross(210,104,10,'shD d3')}
+      ${dart(56,112,1,'shD d1')}${dart(128,112,1,'shD d2')}${dart(200,112,1,'shD d3')}
       <g class="shStar"><polygon points="${Array.from({length:24},(_,k)=>{const a=k/24*2*Math.PI,r=k%2?44:62;return(120+r*Math.cos(a)*1.45).toFixed(1)+','+(54+r*Math.sin(a)*.72).toFixed(1)}).join(' ')}" fill="${SUN}" stroke="${INK}" stroke-width="3.5" stroke-linejoin="round"/>${tx(120,63,25,'SHANGHAI !')}</g>
       ${conf(120,54,12,'shF')}</svg>`;
   /* halve-it : raté → la lame tombe, la bulle se coupe, et revient deux fois plus petite (64 → 32) */
-  return`<svg class="aff afhi" viewBox="0 0 240 180"><defs><clipPath id="afcl"><rect x="0" y="0" width="120" height="180"/></clipPath><clipPath id="afcr"><rect x="120" y="0" width="120" height="180"/></clipPath></defs>
+  return`<svg class="aff afhi" viewBox="0 0 240 180">${shadow(120,166,56,'hiSh')}${spark(30,36,8,.3)}<defs><clipPath id="afcl"><rect x="0" y="0" width="120" height="180"/></clipPath><clipPath id="afcr"><rect x="120" y="0" width="120" height="180"/></clipPath></defs>
     <g class="afwhole"><g class="afh2 l" clip-path="url(#afcl)">${bub(120,96,58,ACC)}</g><g class="afh2 r" clip-path="url(#afcr)">${bub(120,96,58,ACC)}</g>${tx(120,116,52,'64','#fff','hiA')}${tx(120,116,52,'32','#fff','hiB')}</g>
-    ${cross(206,150,11,'hiD')}<g class="hiNo">${tx(206,128,20,'RATÉ',RED)}</g>
+    ${dart(200,156,1.1,'hiD')}<g class="hiNo">${tx(206,128,20,'RATÉ',RED)}</g>
     <g class="afblade"><path d="M120 6V186" stroke="${INK}" stroke-width="12" stroke-linecap="round"/><path d="M120 6V186" stroke="#fff" stroke-width="4" stroke-linecap="round"/></g>
     <g class="afdiv">${capR(168,16,58,34,INK)}${tx(197,41,22,'÷2')}</g></svg>`}
-/* 501 : le score dans sa capsule ; 3 fléchettes normales (de temps en temps un double ou un triple) : chacune se plante, sa valeur saute dans la capsule et le score descend */
-const X01S=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,20,20,19,5,1,25],X01D=[40,38,36,32,24,50],X01T=[60,57,54,45,39];
-const rv=()=>{const r=Math.random();const A=r<.72?X01S:r<.9?X01D:X01T;return A[Math.floor(Math.random()*A.length)]};
-function x01Html(){const st=S.xstart||501,v=[rv(),rv(),rv()],L=String(st).length,fs=L>3?46:56,T=6,t=[.9,2.3,3.7];
-  const cw=fs*.66*L+44,cx=125,cy=92,ch=fs+18,sc=[st,st-v[0],st-v[0]-v[1],st-v[0]-v[1]-v[2]];
-  const pos=[];let guard=0;while(pos.length<3&&guard++<400){const x=22+Math.random()*206,y=20+Math.random()*140;
-    if(x>cx-cw/2-24&&x<cx+cw/2+24&&y>cy-ch/2-24&&y<cy+ch/2+24)continue;if(pos.some(([a,b])=>Math.hypot(a-x,b-y)<52))continue;pos.push([x,y])}
-  while(pos.length<3)pos.push([34+pos.length*86,26]);
-  /* la valeur part de la fléchette et file dans la capsule */
-  const fly=(k,x,y)=>{const a=+pc(t[k]+.15,T),b=+pc(t[k]+.85,T),dx=(cx-x).toFixed(0),dy=(cy-y).toFixed(0);
-    return`animation:${kf(`gf${k}_${dx}_${dy}`.replace(/-/g,'m'),`0%,${a}%{opacity:0;transform:translate(0,0) scale(.4)}${(a+3).toFixed(2)}%{opacity:1;transform:translate(0,-10px) scale(1.25)}${(b-4).toFixed(2)}%{opacity:1;transform:translate(0,-6px) scale(1)}${b}%{opacity:0;transform:translate(${dx}px,${dy}px) scale(.5)}100%{opacity:0}`)} ${T}s linear infinite`};
-  const land=k=>{const a=+pc(t[k],T);return`animation:${kf('gl'+k+'_'+a.toFixed(0),`0%,${(a-4).toFixed(2)}%{opacity:0;transform:translate(26px,-30px) scale(2) rotate(-40deg)}${a}%{opacity:1;transform:translate(0,0) scale(.85) rotate(0)}${(a+2).toFixed(2)}%{transform:scale(1.15)}${(a+4).toFixed(2)}%,94%{opacity:1;transform:scale(1)}97%,100%{opacity:0}`)} ${T}s linear infinite`};
-  const bst=k=>{const a=+pc(t[k],T);return`animation:${kf('gx'+k+'_'+a.toFixed(0),`0%,${a}%{opacity:0;transform:scale(.3)}${(a+1).toFixed(2)}%{opacity:1}${(a+8).toFixed(2)}%{opacity:0;transform:scale(1.5)}100%{opacity:0}`)} ${T}s linear infinite`};
-  const hit=t.map(x=>x+.85);
-  return`<svg class="aff afx01" viewBox="0 0 250 180"><g style="${bump(hit,T)}">${capR(cx-cw/2,cy-ch/2,cw,ch,ACC)}
-      ${sc.map((v2,k)=>`<g style="${win(k?hit[k-1]:0,k<3?hit[k]:T-.3,T)}">${tx(cx,cy+fs*.36,fs,v2)}</g>`).join('')}</g>
-    ${pos.map(([x,y],k)=>burst(x,y,38,'',bst(k))+cross(x,y,15,'',land(k))).join('')}
-    ${pos.map(([x,y],k)=>`<g style="${fly(k,x,y)}">${tx(x,y-20,28,'−'+v[k],'#fff')}</g>`).join('')}
+/* 501 : vraie cible ; 4 volées de 3 fléchettes lancées vite ; chaque fléchette s'affiche comme dans le jeu (pastille blanche, D argent, T dorée) et le score descend */
+const rdart=()=>{const r=Math.random(),m=r<.68?1:r<.84?3:2,n=m===3?[20,20,19,18,17,20][Math.floor(Math.random()*6)]:Math.random()<.06?25:1+Math.floor(Math.random()*20);return{m:n===25&&m===3?1:m,n}};
+function x01Html(){const st=S.xstart||501,V=4,D=.36,G=.75,BX=66,BY=92,BR=56;let sc=st,t0=.35;const H=[];
+  for(let v=0;v<V;v++){for(let k=0;k<3;k++){let d=rdart(),val=d.m*d.n;if(sc-val<40){d={m:1,n:1+Math.floor(Math.random()*5)};val=d.n}sc-=val;H.push({...d,val,t:t0+k*D,v,k,sc,lab:d.n===25?(d.m===2?'BULL':'25'):(d.m===3?'T':d.m===2?'D':'')+d.n})}t0+=3*D+G}
+  H.forEach(h=>h.p=dPos(BX,BY,BR,h.n,h.m));
+  const T=+(t0+.2).toFixed(2),vEnd=v=>H[v*3+2].t+G-.12,L=String(st).length,fs=L>3?34:40,cx=188,cy=60,cw=fs*.62*L+34,ch=fs+14;
+  const land=(t,te)=>{const a=+pc(t-.12,T),b=+pc(t,T),e=+pc(te,T);return`animation:${kf(`gd${a.toFixed(1)}_${e.toFixed(1)}`.replace(/\./g,'_'),`0%,${a}%{opacity:0;transform:translate(70px,-70px) rotate(-25deg) scale(1.4)}${b}%{opacity:1;transform:none}${(b+1).toFixed(2)}%{transform:rotate(-7deg)}${(b+2).toFixed(2)}%{transform:rotate(5deg)}${(b+3).toFixed(2)}%{transform:rotate(-2deg)}${(b+4).toFixed(2)}%,${e}%{opacity:1;transform:none}${Math.min(100,e+2).toFixed(2)}%,100%{opacity:0;transform:translate(0,-20px)}`)} ${T}s linear infinite`};
+  const pill=(h)=>{const f=h.m===3?'url(#afpt)':h.m===2?'url(#afpd)':'#fff',x=cx-66+h.k*44;return`<g style="${win(h.t,vEnd(h.v),T)}"><rect x="${x}" y="108" width="40" height="24" rx="12" fill="${f}" stroke="${INK}" stroke-width="2"/><text x="${x+20}" y="125" text-anchor="middle" font-family="Fun" font-size="${h.lab.length>3?11:14}" fill="#1d1d1d">${h.lab}</text></g>`};
+  const scs=[{sc:st,t:0},...H.map(h=>({sc:h.sc,t:h.t}))];
+  return`<svg class="aff afx01" viewBox="0 0 250 180"><defs><linearGradient id="afpt" x1="0" y1="0" x2=".4" y2="1"><stop offset="0" stop-color="#ffe07a"/><stop offset=".5" stop-color="#f2bd1a"/><stop offset="1" stop-color="#cf9300"/></linearGradient>
+      <linearGradient id="afpd" x1="0" y1="0" x2=".4" y2="1"><stop offset="0" stop-color="#e3e7ec"/><stop offset=".5" stop-color="#bfc6ce"/><stop offset="1" stop-color="#9ea7b1"/></linearGradient></defs>
+    ${shadow(BX,166,52)}${board(BX,BY,BR)}${spark(140,150,7,.5)}${spark(236,20,8,1.2,'#2bd9ff')}
+    <g style="${bump(H.map(h=>h.t),T)}">${capR(cx-cw/2,cy-ch/2,cw,ch,ACC)}${scs.map((o,k)=>`<g style="${win(o.t,k<scs.length-1?scs[k+1].t:T-.25,T)}">${tx(cx,cy+fs*.36,fs,o.sc)}</g>`).join('')}</g>
+    ${[0,1,2].map(k=>`<rect x="${cx-66+k*44}" y="108" width="40" height="24" rx="12" fill="#efe6d2" stroke="#cfc3a8" stroke-width="1.5"/>`).join('')}
+    ${H.map(pill).join('')}
+    ${H.map(h=>{const[x,y]=h.p;return dart(x,y,.78,'',land(h.t,vEnd(h.v)),PC(0))}).join('')}
+    ${H.filter(h=>h.m>1).map(h=>{const[x,y]=h.p;const a=+pc(h.t,T);return burst(x,y,22,'',`animation:${kf('gx'+a.toFixed(0),`0%,${a}%{opacity:0;transform:scale(.3)}${(a+1).toFixed(2)}%{opacity:1}${(a+7).toFixed(2)}%{opacity:0;transform:scale(1.5)}100%{opacity:0}`)} ${T}s linear infinite`)}).join('')}
     <rect class="afclock" width="1" height="1" fill="none" style="animation:gtick ${T}s linear infinite"/></svg>`}
 kf('gtick','0%,100%{opacity:0}');
 
@@ -322,19 +338,24 @@ document.head.append(el('style','',`
 .aff .afcf{opacity:0}
 .afck .ckF{animation:afCf 4.8s infinite}
 @keyframes afCf{0%,60%{opacity:0;transform:none}62%{opacity:1}80%{opacity:1;transform:translate(var(--dx),var(--dy)) rotate(var(--r))}88%,100%{opacity:0;transform:translate(var(--dx),calc(var(--dy) + 30px)) rotate(var(--r))}}
-/* killer */
+/* killer : le cœur explose */
 .afkl .afscope{animation:afScope 4.4s infinite}
 @keyframes afScope{0%{transform:translate(-160px,50px) rotate(-90deg);opacity:0}8%{opacity:1}24%{transform:translate(-26px,-22px) rotate(-10deg)}33%{transform:translate(10px,9px) rotate(6deg)}40%,46%{transform:none}49%{transform:scale(.8)}53%{transform:scale(1.15)}57%{opacity:1;transform:scale(1)}63%,100%{transform:scale(1.4);opacity:0}}
+.afkl .klH{animation:klH 4.4s infinite}
+@keyframes klH{0%,44%{transform:scale(1);opacity:1}47%{transform:scale(1.12,.9);opacity:1}49%{transform:scale(1.3);opacity:1}50%,84%{transform:scale(0);opacity:0}88%{transform:scale(1.25);opacity:1}92%{transform:scale(.92)}96%,100%{transform:scale(1);opacity:1}}
+.afkl .klSh{animation:klSh 4.4s infinite}
+@keyframes klSh{0%,49%{transform:scale(1)}51%,84%{transform:scale(.3)}90%,100%{transform:scale(1)}}
+.afkl .klS{opacity:0;animation:klS 4.4s infinite;animation-timing-function:cubic-bezier(.15,.7,.3,1)}
+@keyframes klS{0%,49%{opacity:0;transform:none}50%{opacity:1;transform:scale(1.2)}72%{opacity:1;transform:translate(var(--dx),var(--dy)) rotate(var(--r))}80%,100%{opacity:0;transform:translate(var(--dx),calc(var(--dy) + 26px)) rotate(var(--r))}}
+.afkl .klP{opacity:0;animation:klP 4.4s infinite}.afkl .p1{animation-delay:.05s}.afkl .p2{animation-delay:.1s}
+@keyframes klP{0%,49%{opacity:0;transform:scale(.2)}52%{opacity:1;transform:scale(1.1)}64%{opacity:1;transform:scale(1.5)}72%,100%{opacity:0;transform:scale(1.8)}}
 .afkl .klB{animation:klB 4.4s infinite}
-@keyframes klB{0%,48%{opacity:0;transform:scale(.3)}50%{opacity:1;transform:scale(.8)}62%,100%{opacity:0;transform:scale(1.4)}}
+@keyframes klB{0%,48%{opacity:0;transform:scale(.3)}50%{opacity:1;transform:scale(.8)}62%,100%{opacity:0;transform:scale(1.5)}}
 .afkl .klBang{opacity:0;animation:klBg 4.4s infinite}
 @keyframes klBg{0%,48%{opacity:0;transform:scale(.3) rotate(-14deg)}52%{opacity:1;transform:scale(1.3) rotate(-8deg)}56%,72%{opacity:1;transform:scale(1) rotate(-8deg)}78%,100%{opacity:0;transform:scale(.6) rotate(-8deg)}}
-.afkl .afhL{animation:afHL 4.4s infinite;transform-origin:50% 100%}.afkl .afhR{animation:afHR 4.4s infinite;transform-origin:50% 100%}
-@keyframes afHL{0%,49%{transform:none}54%{transform:translate(-14px,-8px) rotate(-22deg)}64%,80%{transform:translate(-20px,16px) rotate(-30deg)}86%{transform:scale(.2);opacity:0}90%{transform:scale(1.15);opacity:1}95%,100%{transform:none}}
-@keyframes afHR{0%,49%{transform:none}54%{transform:translate(14px,-8px) rotate(22deg)}64%,80%{transform:translate(20px,16px) rotate(30deg)}86%{transform:scale(.2);opacity:0}90%{transform:scale(1.15);opacity:1}95%,100%{transform:none}}
-.afkl .afsh{opacity:0}.afkl .s1{animation:afSh1 4.4s infinite}.afkl .s2{animation:afSh2 4.4s infinite}
-@keyframes afSh1{0%,49%{opacity:0;transform:none}52%{opacity:1}70%,100%{opacity:0;transform:translate(-50px,-40px) rotate(-120deg)}}
-@keyframes afSh2{0%,49%{opacity:0;transform:none}52%{opacity:1}70%,100%{opacity:0;transform:translate(50px,36px) rotate(140deg)}}
+/* étincelles */
+.aff .afsp{animation:afSp 2.4s infinite}
+@keyframes afSp{0%,100%{transform:scale(.3) rotate(0);opacity:0}15%{transform:scale(1.25) rotate(25deg);opacity:1}30%{transform:scale(1) rotate(45deg);opacity:1}55%{transform:scale(.4) rotate(90deg);opacity:0}}
 /* horloge : 5 sauts d'aiguille, chaque cible s'allume */
 .afclk .afhand{transform-box:view-box;transform-origin:120px 92px;animation:afHand 4.8s infinite}
 @keyframes afHand{0%,6%{transform:rotate(0)}10%{transform:rotate(24deg)}13%,20%{transform:rotate(18deg)}24%{transform:rotate(42deg)}27%,34%{transform:rotate(36deg)}38%{transform:rotate(60deg)}41%,48%{transform:rotate(54deg)}52%{transform:rotate(78deg)}55%,62%{transform:rotate(72deg)}66%{transform:rotate(96deg)}69%,86%{transform:rotate(90deg)}92%,100%{transform:rotate(360deg)}}
