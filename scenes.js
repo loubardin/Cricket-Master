@@ -7,10 +7,11 @@
 /* ===== mode « scène » : l'appli tourne dans une petite fenêtre (onglets « Plus d'infos ») et joue toute seule
    une situation de jeu avec les vrais écrans et les vrais effets. Rien n'est enregistré (stockage neutralisé). ===== */
 if(window.EMBED){(function(){
-  const [g,st]=(new URLSearchParams(location.search).get('scene')||'cricket:0').split(':'),k=+st||0;
+  const QS=new URLSearchParams(location.search);let [g,st]=(QS.get('scene')||'cricket:0').split(':'),k=+st||0,GEN=0,PAUSE=QS.get('w')==='1';
   document.documentElement.classList.add('embed');
   S.sound=false;S.voice=false;S.bet=0;S.teams=0;S.order='fixed';S.game=g;S.xrep=0;
-  const sl=ms=>new Promise(r=>setTimeout(r,ms)),W=1250;
+  /* chaque attente est annulée si on change de scène (GEN) : la démo en cours s'arrête net */
+  const sl=ms=>new Promise((r,j)=>{const gen=GEN;setTimeout(()=>gen===GEN?r():j(new Error('abort')),ms)}),W=1250;
   /* lf-418 : jamais l'accueil ; fondu entre deux démos ; effets au ralenti pour bien les voir ; l'écran reste sur le joueur qui vient de jouer */
   document.documentElement.style.cssText+=';opacity:0;transition:opacity .35s';
   document.head.append(el('style','','html.embed #home,html.embed #setup{display:none!important}'));
@@ -18,7 +19,9 @@ if(window.EMBED){(function(){
   const freeze=()=>['HOLD','XHOLD','KHOLD'].forEach(n=>{const h=GV(n);if(h&&h.t)clearTimeout(h.t)});
   const unfreeze=()=>{try{(0,eval)('if(XHOLD){clearTimeout(XHOLD.t);XHOLD=null}if(KHOLD){clearTimeout(KHOLD.t);KHOLD=null}if(HOLD){clearTimeout(HOLD.t);HOLD=null}')}catch(e){}};
   const SLOW=.72;setInterval(()=>{try{document.getAnimations().forEach(a=>{if(a.playbackRate!==SLOW)a.playbackRate=SLOW})}catch(e){}},40);
-  const N=[0,1,2].map(i=>{const n=((S.names||[])[i]||'').trim().toUpperCase();return(!n||/^J\d$/.test(n))?['LOU','TONE','ZOÉ'][i]:n});
+  let N=[];const mkN=()=>{N=[0,1,2].map(i=>{const n=((S.names||[])[i]||'').trim().toUpperCase();return(!n||/^J\d$/.test(n))?['LOU','TONE','ZOÉ'][i]:n})};mkN();
+  addEventListener('message',e=>{const m=e.data;if(!m||m.type!=='scene')return;if(m.S){Object.assign(S,m.S);mkN()}S.sound=false;S.voice=false;S.bet=0;S.teams=0;S.order='fixed';S.xrep=0;
+    GEN++;document.documentElement.style.opacity=0;if(m.pause){PAUSE=true;return}PAUSE=false;g=m.g||g;k=+m.k||0;st=String(m.k);S.game=g});
   const closeWin=()=>{['win','knext'].forEach(id=>{const e=$(id);if(e)e.classList.remove('on')})};
   /* lance une partie neuve du jeu, avec n joueurs */
   const start=n=>{closeWin();unfreeze();S.n=n;S.names=N.slice(0,n);if(g==='killer')startKiller(N.slice(0,n),[20,19,18].slice(0,n));else launchNew();unfreeze();
@@ -79,8 +82,11 @@ if(window.EMBED){(function(){
       hiHit();await sl(W*.8);hiHit();await sl(W*.8);x(0,1);await sl(1300);
       hiHit();await sl(W*.8);hiHit();await sl(W*.8);hiHit();await sl(1300);
       for(let i=0;i<(XG.hid||3);i++){x(0,1);await sl(W*.8)}await sl(2400)}};
-  const run=st==='d'?(D[g]||D.cricket):((S3[g]||S3.cricket)[k]||S3.cricket[0]);
-  (async()=>{await sl(300);for(;;){try{await run()}catch(e){console.warn(e);await sl(1500)}document.documentElement.style.opacity=0;await sl(420)}})();
+  const pick=()=>st==='d'?(D[g]||D.cricket):((S3[g]||S3.cricket)[k]||S3.cricket[0]);
+  const rawSl=ms=>new Promise(r=>setTimeout(r,ms));
+  (async()=>{for(;;){if(PAUSE){await rawSl(120);continue}const gen=GEN;S.game=g;
+    try{await pick()()}catch(e){if(e&&e.message==='abort')continue;console.warn(e);await rawSl(1500)}
+    if(gen!==GEN)continue;document.documentElement.style.opacity=0;await rawSl(420)}})();
   document.querySelectorAll('footer,#fbar2,#fbar3').forEach(f=>f.style.setProperty('visibility','hidden','important'));
   document.head.append(el('style','',`html.embed .toastx,html.embed #sync,html.embed #win button,html.embed #win #wBet,html.embed #win #wExtra{display:none!important}html.embed body{pointer-events:none}`));
 })();return}
@@ -275,22 +281,35 @@ const _sr=showRules;showRules=function(){const r=_sr.apply(this,arguments);
   if(key!==LAST){LAST=key;demo()}return r};
 /* lf-416 : l'emblème = une vraie démo du jeu (l'appli joue toute seule dans une fenêtre, avec ses vrais écrans et effets), cadrée sur la zone utile */
 const CROP={cricket:[0,470],x01:[6,490],killer:[0,540],clock:[0,620],shanghai:[0,470],halveit:[0,470]};
-function demoOn(){return SU.classList.contains('on')&&!SU.classList.contains('p2')}
-/* lf-417 : page 1 = une série de petites démos (une par action du jeu) qu'on fait glisser ; seule la démo affichée tourne */
-let DCUR=0;
-function demo(){if(!demoOn()){ill.innerHTML='';return}const P=pages();DCUR=0;
-  ill.innerHTML=`<div class="gcar">${P.map((p,i)=>`<section><div class="gdemo"></div><div class="gcap"><b>${esc(p.cap)}</b><small>${esc(p.txt)}</small></div></section>`).join('')}</div><div class="gdots">${P.map((_,i)=>`<i class="${i?'':'on'}"></i>`).join('')}</div>`;
+function demoOn(){return SU.classList.contains('on')&&!SU.classList.contains('p2')&&!SU.classList.contains('pp')}
+/* lf-419 : UNE fenêtre de démo, chargée une seule fois (préchargée au démarrage) ; on lui envoie la scène à jouer → plus de rechargement */
+let DCUR=0,DF=null,DFok=false,DFq=null;
+const dfSend=m=>{if(DFok&&DF&&DF.contentWindow)DF.contentWindow.postMessage(m,'*');else DFq=m};
+function dfMake(){if(DF)return;const w=el('div','gdemoF');DF=el('iframe');DF.tabIndex=-1;DF.setAttribute('aria-hidden','true');DF.src='index.html?scene='+(S.game||'cricket')+':0&w=1';
+  DF.onload=()=>{DFok=true;if(DFq){const m=DFq;DFq=null;dfSend(m)}};w.append(DF);ill.append(w)}
+const dfS=()=>({names:S.names,mode:S.mode,xstart:S.xstart,xin:S.xin,xout:S.xout,seq:S.seq,lives:S.lives,clkm:S.clkm,clkb:S.clkb,clkr:S.clkr,shr:S.shr,shw:S.shw,hid:S.hid,hip:S.hip,hiseq:S.hiseq,kbonus:S.kbonus,kdef:S.kdef});
+function dfPlay(){dfMake();const w=ill.querySelector('.gdemoF');if(w)w.classList.remove('on');dfSend({type:'scene',g:S.game||'cricket',k:DCUR,S:dfS()});fitDemo();
+  setTimeout(()=>{const w2=ill.querySelector('.gdemoF');if(w2&&demoOn())w2.classList.add('on')},120)}
+function demo(){dfMake();if(!demoOn()){dfSend({type:'scene',pause:true});return}const P=pages();DCUR=0;
+  ill.querySelectorAll('.gcar,.gdots').forEach(x=>x.remove());
+  ill.insertAdjacentHTML('afterbegin',`<div class="gcar">${P.map(p=>`<section><div class="gdemo"></div><div class="gcap"><b>${esc(p.cap)}</b><small>${esc(p.txt)}</small></div></section>`).join('')}</div><div class="gdots">${P.map((_,i)=>`<i class="${i?'':'on'}"></i>`).join('')}</div>`);
   const car=ill.querySelector('.gcar');
-  car.addEventListener('scroll',()=>{const k=Math.round(car.scrollLeft/Math.max(1,car.clientWidth));if(k!==DCUR){DCUR=k;ill.querySelectorAll('.gdots i').forEach((d,i)=>d.classList.toggle('on',i===k))}clearTimeout(car._t);car._t=setTimeout(loadDemo,160)},{passive:true});
+  car.addEventListener('scroll',()=>{const w=ill.querySelector('.gdemoF');if(w)w.classList.remove('on');const k=Math.round(car.scrollLeft/Math.max(1,car.clientWidth));
+    if(k!==DCUR){DCUR=k;ill.querySelectorAll('.gdots i').forEach((d,i)=>d.classList.toggle('on',i===k))}clearTimeout(car._t);car._t=setTimeout(dfPlay,140)},{passive:true});
   ill.querySelectorAll('.gdots i').forEach((d,i)=>d.addEventListener('click',e=>{e.stopPropagation();haptic();car.scrollTo({left:i*car.clientWidth,behavior:'smooth'})}));
-  loadDemo()}
-function loadDemo(){const g=S.game||'cricket';ill.querySelectorAll('.gcar section').forEach((sc,i)=>{const b=sc.querySelector('.gdemo');
-  if(i===DCUR){if(!b.querySelector('iframe')){b.innerHTML=`<iframe tabindex="-1" aria-hidden="true" src="index.html?scene=${g}:${i}"></iframe>`;const f=b.querySelector('iframe');f.onload=fitDemo}}else if(b.firstChild)b.innerHTML=''});fitDemo();requestAnimationFrame(fitDemo)}
-function fitDemo(){const[y0,h]=CROP[S.game]||CROP.cricket;ill.querySelectorAll('.gcar section').forEach(sc=>{const b=sc.querySelector('.gdemo'),f=b.querySelector('iframe'),W=sc.clientWidth,H=sc.clientHeight-(sc.querySelector('.gcap').offsetHeight||0)-6;if(!W||H<=0)return;
-  const k=Math.min(W/393,H/h);b.style.width=Math.round(393*k)+'px';b.style.height=Math.round(h*k)+'px';if(f)f.style.transform=`translateY(${(-y0*k).toFixed(1)}px) scale(${k.toFixed(4)})`})}
+  dfPlay()}
+function fitDemo(){const[y0,h]=CROP[S.game]||CROP.cricket,w=ill.querySelector('.gdemoF'),car=ill.querySelector('.gcar');if(!car)return;let box=null;
+  [...car.children].forEach((sc,i)=>{const b=sc.querySelector('.gdemo'),W=sc.clientWidth,H=sc.clientHeight-(sc.querySelector('.gcap').offsetHeight||0)-6;if(!W||H<=0)return;
+    const k=Math.min(W/393,H/h);b.style.width=Math.round(393*k)+'px';b.style.height=Math.round(h*k)+'px';if(i===DCUR)box=[b,k,sc]});
+  if(w&&box&&DF){const[b,k,sc]=box,R0=ill.getBoundingClientRect(),rb=b.getBoundingClientRect(),rs=sc.getBoundingClientRect();
+    Object.assign(w.style,{left:(rs.left-R0.left+(rs.width-rb.width)/2)+'px',top:(rb.top-R0.top)+'px',width:rb.width+'px',height:rb.height+'px'});
+    DF.style.transform=`translateY(${(-y0*k).toFixed(1)}px) scale(${k.toFixed(4)})`}}
 addEventListener('resize',fitDemo);
-/* la démo ne tourne que sur la page 1 visible */
-new MutationObserver(()=>{const has=!!ill.querySelector('.gcar');if(demoOn()&&!has)demo();else if(!demoOn()&&has)ill.innerHTML=''}).observe(SU,{attributes:true,attributeFilter:['class']});
+/* la démo ne tourne que sur la page 1 visible ; ailleurs elle est en pause (la fenêtre reste chargée) */
+new MutationObserver(()=>{if(demoOn()){if(!ill.querySelector('.gcar'))demo();else dfPlay()}else{const w=ill.querySelector('.gdemoF');if(w)w.classList.remove('on');if(DF)dfSend({type:'scene',pause:true})}}).observe(SU,{attributes:true,attributeFilter:['class']});
+/* préchargement : la fenêtre se charge en douce peu après l'ouverture de l'appli */
+setTimeout(()=>{try{dfMake()}catch(e){}},1500);
+
    /* 501 : nouvelles fléchettes à chaque tour */
 R.addEventListener('click',e=>{if(e.target.closest('.rmore')){haptic();openInfo()}});
 
@@ -367,6 +386,10 @@ document.head.append(el('style','',`
 
 /* emblèmes animés */
 /* démo du jeu (page 1) */
+#setup .gill{position:relative}
+#setup .gill .gdemoF{position:absolute;left:0;top:0;width:10px;height:10px;overflow:hidden;border-radius:22px;opacity:0;pointer-events:none;transition:opacity .2s;-webkit-mask-image:linear-gradient(to bottom,#000 86%,transparent);mask-image:linear-gradient(to bottom,#000 86%,transparent)}
+#setup .gill .gdemoF.on{opacity:1}
+#setup .gill .gdemoF iframe{position:absolute;left:0;top:0;width:393px;height:720px;border:0;transform-origin:0 0;pointer-events:none;background:transparent}
 #setup .gill .gcar{flex:1 1 auto;min-height:0;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;overscroll-behavior-x:contain}
 #setup .gill .gcar::-webkit-scrollbar{display:none}
 #setup .gill .gcar section{flex:0 0 100%;scroll-snap-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:0}
