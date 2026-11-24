@@ -268,16 +268,24 @@ const _sr=showRules;showRules=function(){const r=_sr.apply(this,arguments);
 /* lf-416 : l'emblème = une vraie démo du jeu (l'appli joue toute seule dans une fenêtre, avec ses vrais écrans et effets), cadrée sur la zone utile */
 const CROP={cricket:[0,470],x01:[6,490],killer:[0,540],clock:[0,620],shanghai:[0,470],halveit:[0,470]};
 function demoOn(){return SU.classList.contains('on')&&!SU.classList.contains('p2')}
-function demo(){if(!demoOn()){ill.innerHTML='';return}const g=S.game||'cricket';ill.innerHTML=`<div class="gdemo"><iframe tabindex="-1" aria-hidden="true" src="index.html?scene=${g}:d"></iframe></div>`;
-  const f=ill.querySelector('iframe');f.onload=fitDemo;fitDemo();requestAnimationFrame(fitDemo)}
-function fitDemo(){const b=ill.querySelector('.gdemo'),f=b&&b.querySelector('iframe');if(!f)return;const[y0,h]=CROP[S.game]||CROP.cricket,W=ill.clientWidth,H=ill.clientHeight;if(!W||!H)return;
-  const k=Math.min(W/393,H/h);b.style.width=Math.round(393*k)+'px';b.style.height=Math.round(h*k)+'px';f.style.transform=`translateY(${(-y0*k).toFixed(1)}px) scale(${k.toFixed(4)})`}
+/* lf-417 : page 1 = une série de petites démos (une par action du jeu) qu'on fait glisser ; seule la démo affichée tourne */
+let DCUR=0;
+function demo(){if(!demoOn()){ill.innerHTML='';return}const P=pages();DCUR=0;
+  ill.innerHTML=`<div class="gcar">${P.map((p,i)=>`<section><div class="gdemo"></div><div class="gcap"><b>${esc(p.cap)}</b><small>${esc(p.txt)}</small></div></section>`).join('')}</div><div class="gdots">${P.map((_,i)=>`<i class="${i?'':'on'}"></i>`).join('')}</div>`;
+  const car=ill.querySelector('.gcar');
+  car.addEventListener('scroll',()=>{const k=Math.round(car.scrollLeft/Math.max(1,car.clientWidth));if(k!==DCUR){DCUR=k;ill.querySelectorAll('.gdots i').forEach((d,i)=>d.classList.toggle('on',i===k))}clearTimeout(car._t);car._t=setTimeout(loadDemo,160)},{passive:true});
+  ill.querySelectorAll('.gdots i').forEach((d,i)=>d.addEventListener('click',e=>{e.stopPropagation();haptic();car.scrollTo({left:i*car.clientWidth,behavior:'smooth'})}));
+  loadDemo()}
+function loadDemo(){const g=S.game||'cricket';ill.querySelectorAll('.gcar section').forEach((sc,i)=>{const b=sc.querySelector('.gdemo');
+  if(i===DCUR){if(!b.querySelector('iframe')){b.innerHTML=`<iframe tabindex="-1" aria-hidden="true" src="index.html?scene=${g}:${i}"></iframe>`;const f=b.querySelector('iframe');f.onload=fitDemo}}else if(b.firstChild)b.innerHTML=''});fitDemo();requestAnimationFrame(fitDemo)}
+function fitDemo(){const[y0,h]=CROP[S.game]||CROP.cricket;ill.querySelectorAll('.gcar section').forEach(sc=>{const b=sc.querySelector('.gdemo'),f=b.querySelector('iframe'),W=sc.clientWidth,H=sc.clientHeight-(sc.querySelector('.gcap').offsetHeight||0)-6;if(!W||H<=0)return;
+  const k=Math.min(W/393,H/h);b.style.width=Math.round(393*k)+'px';b.style.height=Math.round(h*k)+'px';if(f)f.style.transform=`translateY(${(-y0*k).toFixed(1)}px) scale(${k.toFixed(4)})`})}
 addEventListener('resize',fitDemo);
 /* la démo ne tourne que sur la page 1 visible */
-new MutationObserver(()=>{const has=!!ill.querySelector('iframe');if(demoOn()&&!has)demo();else if(!demoOn()&&has)ill.innerHTML=''}).observe(SU,{attributes:true,attributeFilter:['class']});
+new MutationObserver(()=>{const has=!!ill.querySelector('.gcar');if(demoOn()&&!has)demo();else if(!demoOn()&&has)ill.innerHTML=''}).observe(SU,{attributes:true,attributeFilter:['class']});
    /* 501 : nouvelles fléchettes à chaque tour */
 R.addEventListener('click',e=>{if(e.target.closest('.rmore')){haptic();openInfo()}});
-ill.addEventListener('click',()=>{haptic();openInfo()});
+
 try{showRules()}catch(e){}
 
 /* ---------- styles : mêmes cases, contours, bulles et polices que les écrans de jeu ---------- */
@@ -351,6 +359,13 @@ document.head.append(el('style','',`
 
 /* emblèmes animés */
 /* démo du jeu (page 1) */
+#setup .gill .gcar{flex:1 1 auto;min-height:0;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;overscroll-behavior-x:contain}
+#setup .gill .gcar::-webkit-scrollbar{display:none}
+#setup .gill .gcar section{flex:0 0 100%;scroll-snap-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:0}
+#setup .gill .gcap{text-align:center;padding:0 6px}#setup .gill .gcap b{display:block;font:400 calc(var(--u,8px)*2.1) "Fun",sans-serif;color:var(--m-ink,#111)}
+#setup .gill .gcap small{display:block;font:400 calc(var(--u,8px)*1.5) "Lbl","Lexend",sans-serif;opacity:.65;line-height:1.25;margin-top:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#setup .gill .gdots{display:flex;justify-content:center;gap:7px;padding:8px 0 0}#setup .gill .gdots i{width:8px;height:8px;border-radius:99px;background:var(--m-ink,#111);opacity:.22;transition:all .25s}
+#setup .gill .gdots i.on{width:22px;opacity:1;background:var(--accent)}
 #setup .gill .gdemo{position:relative;margin:0 auto;overflow:hidden;border-radius:22px;-webkit-mask-image:linear-gradient(to bottom,#000 86%,transparent);mask-image:linear-gradient(to bottom,#000 86%,transparent)}
 #setup .gill .gdemo iframe{position:absolute;left:0;top:0;width:393px;height:720px;border:0;transform-origin:0 0;pointer-events:none;background:transparent}
 #setup .gill{height:clamp(150px,22vh,190px);margin:12px 0 6px}
