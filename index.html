@@ -3883,7 +3883,7 @@ html body #setup#setup.b2.p2>.grp:has(.sect.s2) .glab,html body #setup#setup.b2.
 html body #setup#setup.b2.p2>.gobar{order:3;margin-top:auto!important}
 html body #setup#setup.b2.p2>.sh{order:0}
 html body #setup#setup.b2.p2 .gill{display:none!important}
-html body #setup#setup.b2:not(.p2) .gill{height:clamp(190px,40vh,340px)!important;margin:auto 0 10px!important}
+html body #setup#setup.b2:not(.p2) .gill{flex:1 1 auto;height:auto!important;min-height:200px;max-height:470px;margin:10px 0 8px!important;display:flex;align-items:center;justify-content:center}
 html body #setup#setup.b2:not(.p2) #gRules{margin-bottom:auto!important}
 html body #setup#setup.b2:not(.p2)>.gobar{margin-top:auto!important}
 </style>
@@ -7479,7 +7479,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-415';   // à changer avec VERSION dans sw.js
+const APPV='lf-416';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();

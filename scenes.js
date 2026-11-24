@@ -40,7 +40,38 @@ if(window.EMBED){(function(){
     halveit:[async()=>{start(2);for(let i=0;i<3;i++){await sl(W);hiHit()}await sl(2600)},
       async()=>{start(2);XG.players[0].rem=120;rx();for(let i=0;i<(XG.hid||3);i++){await sl(W);x(0,1)}await sl(3000)},
       async()=>{start(2);XG.round=XG.hiseq.length;XG.players[0].rem=180;XG.players[1].rem=150;rx();for(let i=0;i<(XG.hid||3);i++){await sl(W);hiHit()}await sl(1600);for(let i=0;i<(XG.hid||3);i++){await sl(W*.7);x(0,1)}await sl(4200)}]};
-  const run=(S3[g]||S3.cricket)[k]||S3.cricket[0];
+  /* démos de l'écran « Nouvelle partie » (lf-416) : plusieurs situations du jeu à la suite, avec les vrais effets */
+  const tap=e=>{if(!e)return;try{e.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true}));e.dispatchEvent(new PointerEvent('pointerup',{bubbles:true}))}catch(x){}e.click()};
+  const arm=m=>{const b=$(m===3?'b3':'b2');if(b)b.click()},spew=()=>$('bS').click();
+  const cn=t=>{const RR=(0,eval)('R');return RR&&RR.num&&RR.num[t]};   /* R global de l'appli (masqué ici par le R de ce fichier) */
+  const D={
+    cricket:async()=>{start(2);await sl(700);
+      tap(cn(20));await sl(W);arm(3);await sl(500);tap(cn(20));await sl(W);spew();await sl(1500);
+      tap(cn(19));await sl(W);arm(2);await sl(450);tap(cn(19));await sl(W);tap(cn(25));await sl(1500);
+      arm(3);await sl(450);tap(cn(20));await sl(W);tap(cn(18));await sl(W);arm(2);await sl(450);tap(cn(18));await sl(2200)},
+    x01:async()=>{start(2);await sl(700);
+      x(20,3);await sl(W*.8);x(20,1);await sl(W*.8);x(5,1);await sl(1300);
+      x(19,1);await sl(W*.8);x(19,3);await sl(W*.8);x(0,1);await sl(1300);
+      x(20,3);await sl(W*.8);x(20,3);await sl(W*.8);x(1,1);await sl(1300);
+      x(16,2);await sl(W*.8);x(12,1);await sl(W*.8);x(25,2);await sl(2000)},
+    killer:async()=>{start(3);await sl(700);
+      kk(20);await sl(W);kk(20,2);await sl(1400);
+      kk(19);await sl(W);kk(4);await sl(W);kk(19);await sl(1300);
+      kk(18);await sl(W);kk(18,2);await sl(1300);
+      kk(19);await sl(W);kk(18);await sl(W);kk(19,2);await sl(2200)},
+    clock:async()=>{start(2);await sl(700);
+      x(1,1);await sl(W*.8);x(2,1);await sl(W*.8);x(3,XG.clkm?2:1);await sl(1300);
+      x(1,1);await sl(W*.8);x(0,1);await sl(W*.8);x(2,1);await sl(1300);
+      x(XG.players[0].tgt||4,1);await sl(W*.8);x(XG.players[0].tgt||5,3);await sl(W*.8);x(XG.players[0].tgt||6,1);await sl(2200)},
+    shanghai:async()=>{start(2);await sl(700);
+      x(1,1);await sl(W*.8);x(1,2);await sl(W*.8);x(0,1);await sl(1300);
+      x(1,3);await sl(W*.8);x(1,1);await sl(W*.8);x(1,1);await sl(1300);
+      x(2,1);await sl(W*.8);x(2,2);await sl(W*.8);x(2,3);await sl(3200)},
+    halveit:async()=>{start(2);await sl(700);
+      hiHit();await sl(W*.8);hiHit();await sl(W*.8);x(0,1);await sl(1300);
+      hiHit();await sl(W*.8);hiHit();await sl(W*.8);hiHit();await sl(1300);
+      for(let i=0;i<(XG.hid||3);i++){x(0,1);await sl(W*.8)}await sl(2400)}};
+  const run=st==='d'?(D[g]||D.cricket):((S3[g]||S3.cricket)[k]||S3.cricket[0]);
   (async()=>{await sl(400);for(;;){try{await run()}catch(e){console.warn(e);await sl(1500)}}})();
   document.querySelectorAll('footer,#fbar2,#fbar3').forEach(f=>f.style.setProperty('visibility','hidden','important'));
   document.head.append(el('style','',`html.embed .toastx,html.embed #sync,html.embed #win button,html.embed #win #wBet,html.embed #win #wExtra{display:none!important}html.embed body{pointer-events:none}`));
@@ -233,8 +264,18 @@ const _sr=showRules;showRules=function(){const r=_sr.apply(this,arguments);
   const g=R.querySelector(':scope>.rgoal');TXT={goal:g?g.innerHTML:'',ps:[...R.querySelectorAll(':scope>.rp')].map(x=>x.innerHTML)};
   R.innerHTML=(g?g.outerHTML:'')+'<button class="rmore">Plus d’infos ›</button>';R.style.minHeight='';
   const key=[S.game,S.mode,S.xstart,S.klives,S.hiseq&&S.hiseq.join(),(S.names||[]).slice(0,3).join(),ROSTER.map(x=>x.color).join()].join('|');
-  if(key!==LAST){LAST=key;ill.innerHTML=illHtml()}return r};
-ill.addEventListener('animationiteration',e=>{if(e.target.classList&&e.target.classList.contains('afclock')&&S.game==='x01')ill.innerHTML=illHtml()});   /* 501 : nouvelles fléchettes à chaque tour */
+  if(key!==LAST){LAST=key;demo()}return r};
+/* lf-416 : l'emblème = une vraie démo du jeu (l'appli joue toute seule dans une fenêtre, avec ses vrais écrans et effets), cadrée sur la zone utile */
+const CROP={cricket:[0,470],x01:[6,490],killer:[0,540],clock:[0,620],shanghai:[0,470],halveit:[0,470]};
+function demoOn(){return SU.classList.contains('on')&&!SU.classList.contains('p2')}
+function demo(){if(!demoOn()){ill.innerHTML='';return}const g=S.game||'cricket';ill.innerHTML=`<div class="gdemo"><iframe tabindex="-1" aria-hidden="true" src="index.html?scene=${g}:d"></iframe></div>`;
+  const f=ill.querySelector('iframe');f.onload=fitDemo;fitDemo();requestAnimationFrame(fitDemo)}
+function fitDemo(){const b=ill.querySelector('.gdemo'),f=b&&b.querySelector('iframe');if(!f)return;const[y0,h]=CROP[S.game]||CROP.cricket,W=ill.clientWidth,H=ill.clientHeight;if(!W||!H)return;
+  const k=Math.min(W/393,H/h);b.style.width=Math.round(393*k)+'px';b.style.height=Math.round(h*k)+'px';f.style.transform=`translateY(${(-y0*k).toFixed(1)}px) scale(${k.toFixed(4)})`}
+addEventListener('resize',fitDemo);
+/* la démo ne tourne que sur la page 1 visible */
+new MutationObserver(()=>{const has=!!ill.querySelector('iframe');if(demoOn()&&!has)demo();else if(!demoOn()&&has)ill.innerHTML=''}).observe(SU,{attributes:true,attributeFilter:['class']});
+   /* 501 : nouvelles fléchettes à chaque tour */
 R.addEventListener('click',e=>{if(e.target.closest('.rmore')){haptic();openInfo()}});
 ill.addEventListener('click',()=>{haptic();openInfo()});
 try{showRules()}catch(e){}
@@ -309,6 +350,9 @@ document.head.append(el('style','',`
 .il .iltr{position:absolute;top:-18px;right:-12px;font-style:normal;font-size:26px}
 
 /* emblèmes animés */
+/* démo du jeu (page 1) */
+#setup .gill .gdemo{position:relative;margin:0 auto;overflow:hidden;border-radius:22px;-webkit-mask-image:linear-gradient(to bottom,#000 86%,transparent);mask-image:linear-gradient(to bottom,#000 86%,transparent)}
+#setup .gill .gdemo iframe{position:absolute;left:0;top:0;width:393px;height:720px;border:0;transform-origin:0 0;pointer-events:none;background:transparent}
 #setup .gill{height:clamp(150px,22vh,190px);margin:12px 0 6px}
 .aff{width:100%;height:100%;overflow:visible}
 .aff g,.aff path,.aff circle,.aff rect,.aff text,.aff polygon{transform-box:fill-box;transform-origin:center}
