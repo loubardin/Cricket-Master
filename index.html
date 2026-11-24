@@ -1451,7 +1451,7 @@ html.night .ov{background:rgba(31,37,48,.98)}
 #setup.b2 .nslot,#setup.b2 .nslot+.nslot,#setup.b2 .nslot.drag{border-radius:calc(var(--u)*2.4)!important}
 /* ===== MENU v61 : deux pages (1. règles → 2. joueurs), sans défilement ===== */
 #setup.b2:not(.p2) .grp:has(.sect.s1){display:none!important}
-#setup.b2.p2 .grp:has(.sect.s2),#setup.b2.p2 .seg.gamepick{display:none!important}
+#setup.b2.p2 .seg.gamepick{display:none!important}
 #setup.b2:not(.p2) .grp:has(.sect.s2) .glab{display:none!important}
 #setup.b2.p2 .grp:has(.sect.s1) .glab{display:none!important}
 #setup.b2 .grp:has(.sect.s2),#setup.b2.p2 .grp:has(.sect.s1){margin-top:calc(var(--u)*2.2)!important}
@@ -3875,6 +3875,17 @@ html body #ppick#ppick .rchip{box-shadow:inset 0 0 0 var(--mn-cbw,2px) var(--mn-
 html body #draw#draw .slot.lock{box-shadow:inset 0 0 0 var(--mn-cbw,2px) var(--mn-cbc,#111),0 0 0 var(--mn-cbh,3.5px) color-mix(in srgb,var(--pc,var(--accent)) var(--mn-cbg,100%),transparent)!important}
 html body #ppick#ppick .rchipw{margin:4px 5px}
 #prof .prbadge{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 6px;border-radius:99px;background:var(--accent,#ff5a1f);color:#fff;font:400 12px "Fun",sans-serif;font-style:normal;vertical-align:2px}
+/* lf-415 : page 1 = jeu + animation + règles ; page 2 = paramètres de partie puis joueurs */
+html body #setup#setup.b2:not(.p2)>.grp:has(.sect.s2){display:none!important}
+html body #setup#setup.b2.p2>.grp:has(.sect.s2){order:1;margin-top:calc(var(--u)*1.2)!important;margin-bottom:0!important}
+html body #setup#setup.b2.p2>.grp:has(.sect.s1){order:2;margin-top:calc(var(--u)*2)!important;margin-bottom:auto!important}
+html body #setup#setup.b2.p2>.grp:has(.sect.s2) .glab,html body #setup#setup.b2.p2>.grp:has(.sect.s1) .glab{display:flex!important}
+html body #setup#setup.b2.p2>.gobar{order:3;margin-top:auto!important}
+html body #setup#setup.b2.p2>.sh{order:0}
+html body #setup#setup.b2.p2 .gill{display:none!important}
+html body #setup#setup.b2:not(.p2) .gill{height:clamp(190px,40vh,340px)!important;margin:auto 0 10px!important}
+html body #setup#setup.b2:not(.p2) #gRules{margin-bottom:auto!important}
+html body #setup#setup.b2:not(.p2)>.gobar{margin-top:auto!important}
 </style>
 </head>
 <body>
@@ -6489,10 +6500,18 @@ function setupPage(n,anim){if(typeof noInertia==='function')noInertia();
   if(anim){const old=[...SU.querySelectorAll(':scope>.grp')].filter(g=>g.offsetHeight);old.forEach(g=>{const r=g.getBoundingClientRect(),c=g.cloneNode(true);
     c.querySelectorAll('[id]').forEach(e=>e.removeAttribute('id'));c.removeAttribute('id');c.classList.add('gghost');
     Object.assign(c.style,{position:'fixed',left:r.left+'px',top:r.top+'px',width:r.width+'px',height:r.height+'px',margin:'0',pointerEvents:'none',zIndex:5});SU.append(c);
-    c.animate([{transform:'none'},{transform:`translateX(${n===2?-110:110}%)`}],{duration:520,easing:'cubic-bezier(.65,0,.25,1)',fill:'forwards'}).onfinish=()=>c.remove()})}SU.classList.toggle('p2',n===2);$('go').innerHTML='<span>'+(n===2?'Lancer la partie':'Suivant')+'</span>';
-  SU.querySelector('.sh h1').textContent=n===2?'Joueurs':'Nouvelle partie';SU.scrollTop=0;$('ppick').classList.remove('on');
+    c.animate([{transform:'none'},{transform:`translateX(${n===2?-110:110}%)`}],{duration:520,easing:'cubic-bezier(.65,0,.25,1)',fill:'forwards'}).onfinish=()=>c.remove()})}SU.classList.toggle('p2',n===2);$('go').innerHTML='<span>'+(n===2?'Lancer la partie':'Paramètres de partie')+'</span>';
+  SU.querySelector('.sh h1').textContent=n===2?'Paramètres':'Nouvelle partie';requestAnimationFrame(fitP2);SU.scrollTop=0;$('ppick').classList.remove('on');
   if(typeof placeThumbs==='function')requestAnimationFrame(placeThumbs);
   SU.classList.remove('p1in','p2in');if(anim){void SU.offsetWidth;SU.classList.add(n===2?'p2in':'p1in');clearTimeout(SU._pt);SU._pt=setTimeout(()=>SU.classList.remove('p1in','p2in'),950)}}
+/* lf-415 : page 2 = paramètres de partie + joueurs ; tout tient sans défiler (zoom auto si besoin) */
+function fitP2(){const G=[...SU.querySelectorAll(':scope>.grp')];G.forEach(g=>g.style.zoom='');if(!SU.classList.contains('p2')||!SU.offsetHeight)return;
+  const need=SU.scrollHeight,av=SU.clientHeight;if(need>av+1){const sh=SU.querySelector('.sh'),gb=SU.querySelector('.gobar'),fixed=(sh?sh.offsetHeight:0)+(gb?gb.offsetHeight:0)+24,
+    cont=G.reduce((a,g)=>a+(g.offsetHeight||0),0),z=Math.max(.66,Math.min(1,(av-fixed)/Math.max(1,cont+(need-av>0?0:0))));G.forEach(g=>{if(g.offsetHeight)g.style.zoom=z.toFixed(3)});
+    for(let k=0;k<8&&SU.scrollHeight>SU.clientHeight+1;k++){const zz=Math.max(.6,(+G[0].style.zoom||1)*.96);G.forEach(g=>g.style.zoom=zz.toFixed(3))}}
+  if(typeof placeThumbs==='function')placeThumbs()}
+window.addEventListener('resize',()=>requestAnimationFrame(fitP2));
+{const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);requestAnimationFrame(fitP2);return r}}
 {const _show=show;show=function(id){if(id==='setup'&&!SU.classList.contains('on'))setupPage(1);_show(id)}}
 $('go').addEventListener('click',e=>{if(!SU.classList.contains('p2')){e.stopImmediatePropagation();haptic();SFX.ui();setupPage(2,1)}},true);
 $('sBack').addEventListener('click',e=>{if(SU.classList.contains('p2')){e.stopImmediatePropagation();haptic();SFX.back();setupPage(1,1)}},true);
@@ -7211,8 +7230,8 @@ const bgOf=e=>{const c=getComputedStyle(e).backgroundColor;return c&&c!=='rgba(0
    const two2=two&&!ABAND;sw.classList.toggle('two',two2);if(!two2)$('hResume').style.display='none';sw.classList.remove('new');$('hResume').textContent=two2?'Reprendre':'Reprendre la partie';$('hPlay').textContent=two2?'Nouvelle partie':'Jouer';return r}}
 /* menu : bouton du bas = faux switch « Tout bon ? » → « Suivant → » */
 {const _sp=setupPage;setupPage=function(n,anim){const r=_sp.apply(this,arguments);
-   $('go').innerHTML='<i class="gth"></i><b class="ga">Tout bon ?</b><em>'+(n===2?'C\'est parti':'Suivant')+' →</em>';
-   if(n===2){const h=SU.querySelector('.sh h1'),gn={cricket:'Cricket',x01:String(S.xstart||501),killer:'Killer',clock:'L\'horloge',shanghai:'Shanghai',halveit:'Halve-it'}[S.game]||'';h.innerHTML='Joueurs <span class="gtag">'+gn+'</span>'}return r}}
+   $('go').innerHTML='<i class="gth"></i><b class="ga">Tout bon ?</b><em>'+(n===2?'C\'est parti':'Paramètres')+' →</em>';
+   if(n===2){const h=SU.querySelector('.sh h1'),gn={cricket:'Cricket',x01:String(S.xstart||501),killer:'Killer',clock:'L\'horloge',shanghai:'Shanghai',halveit:'Halve-it'}[S.game]||'';h.innerHTML='Paramètres <span class="gtag">'+gn+'</span>'}return r}}
 {let SKIP=false;const pass=t=>{SKIP=true;try{t.click()}finally{SKIP=false}};
  document.addEventListener('click',e=>{if(SKIP||!e.target.closest)return;const t=e.target.closest('#hPlay,#hResume,#drawGo,#go');if(!t)return;
    if(t.id==='drawGo'&&t.style.visibility==='hidden')return;
@@ -7460,7 +7479,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-414';   // à changer avec VERSION dans sw.js
+const APPV='lf-415';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
