@@ -10,14 +10,22 @@ if(window.EMBED){(function(){
   const [g,st]=(new URLSearchParams(location.search).get('scene')||'cricket:0').split(':'),k=+st||0;
   document.documentElement.classList.add('embed');
   S.sound=false;S.voice=false;S.bet=0;S.teams=0;S.order='fixed';S.game=g;S.xrep=0;
-  const sl=ms=>new Promise(r=>setTimeout(r,ms)),W=950;
+  const sl=ms=>new Promise(r=>setTimeout(r,ms)),W=1250;
+  /* lf-418 : jamais l'accueil ; fondu entre deux démos ; effets au ralenti pour bien les voir ; l'écran reste sur le joueur qui vient de jouer */
+  document.documentElement.style.cssText+=';opacity:0;transition:opacity .35s';
+  document.head.append(el('style','','html.embed #home,html.embed #setup{display:none!important}'));
+  const GV=n=>{try{return(0,eval)(n)}catch(e){return null}};
+  const freeze=()=>['HOLD','XHOLD','KHOLD'].forEach(n=>{const h=GV(n);if(h&&h.t)clearTimeout(h.t)});
+  const unfreeze=()=>{try{(0,eval)('if(XHOLD){clearTimeout(XHOLD.t);XHOLD=null}if(KHOLD){clearTimeout(KHOLD.t);KHOLD=null}if(HOLD){clearTimeout(HOLD.t);HOLD=null}')}catch(e){}};
+  const SLOW=.72;setInterval(()=>{try{document.getAnimations().forEach(a=>{if(a.playbackRate!==SLOW)a.playbackRate=SLOW})}catch(e){}},40);
   const N=[0,1,2].map(i=>{const n=((S.names||[])[i]||'').trim().toUpperCase();return(!n||/^J\d$/.test(n))?['LOU','TONE','ZOÉ'][i]:n});
   const closeWin=()=>{['win','knext'].forEach(id=>{const e=$(id);if(e)e.classList.remove('on')})};
   /* lance une partie neuve du jeu, avec n joueurs */
-  const start=n=>{closeWin();S.n=n;S.names=N.slice(0,n);if(g==='killer')startKiller(N.slice(0,n),[20,19,18].slice(0,n));else launchNew()};
-  const c=(t,m)=>{G.mult=m||1;throwDart(t)};                       /* cricket */
-  const x=(t,m)=>{XG.mult=m||1;xThrow(t,m||1)};                    /* 501 et mini-jeux */
-  const kk=(t,m)=>{KG.mult=m||1;kThrow(t)};                        /* killer */
+  const start=n=>{closeWin();unfreeze();S.n=n;S.names=N.slice(0,n);if(g==='killer')startKiller(N.slice(0,n),[20,19,18].slice(0,n));else launchNew();unfreeze();
+    requestAnimationFrame(()=>requestAnimationFrame(()=>document.documentElement.style.opacity=1))};
+  const c=(t,m)=>{G.mult=m||1;throwDart(t);freeze()};                       /* cricket */
+  const x=(t,m)=>{XG.mult=m||1;xThrow(t,m||1);freeze()};                    /* 501 et mini-jeux */
+  const kk=(t,m)=>{KG.mult=m||1;kThrow(t);freeze()};                        /* killer */
   const rx=()=>{if(XG.mode)showX01();else xRender()};
   const hiHit=()=>{const t=hiT();if(t==='D')x(16,2);else if(t==='T')x(20,3);else if(t==='B'||t===25)x(25,1);else x(+t,1)};
   const S3={
@@ -36,10 +44,10 @@ if(window.EMBED){(function(){
       async()=>{start(2);const p=XG.players[0],e=XG.clkb?25:20;p.tgt=e===25?19:18;rx();for(const t of (e===25?[19,20,25]:[18,19,20])){await sl(W);x(t,1)}await sl(4200)}],
     shanghai:[async()=>{start(2);for(const m of [1,2,1]){await sl(W);x(1,m)}await sl(1800)},
       async()=>{start(2);XG.round=3;rx();await sl(W);x(3,1);await sl(W);x(3,2);await sl(W);x(3,3);await sl(4200)},
-      async()=>{start(2);XG.round=XG.shr;XG.players[0].rem=80;XG.players[1].rem=74;rx();for(const t of [XG.shr,XG.shr,0]){await sl(W);x(t,1)}await sl(1600);for(let i=0;i<3;i++){await sl(W*.7);x(0,1)}await sl(4200)}],
+      async()=>{start(2);XG.round=XG.shr;XG.players[0].rem=80;XG.players[1].rem=74;rx();for(const t of [XG.shr,XG.shr,0]){await sl(W);x(t,1)}await sl(1800);unfreeze();rx();for(let i=0;i<3;i++){await sl(W*.8);x(0,1)}await sl(3600)}],
     halveit:[async()=>{start(2);for(let i=0;i<3;i++){await sl(W);hiHit()}await sl(2600)},
       async()=>{start(2);XG.players[0].rem=120;rx();for(let i=0;i<(XG.hid||3);i++){await sl(W);x(0,1)}await sl(3000)},
-      async()=>{start(2);XG.round=XG.hiseq.length;XG.players[0].rem=180;XG.players[1].rem=150;rx();for(let i=0;i<(XG.hid||3);i++){await sl(W);hiHit()}await sl(1600);for(let i=0;i<(XG.hid||3);i++){await sl(W*.7);x(0,1)}await sl(4200)}]};
+      async()=>{start(2);XG.round=XG.hiseq.length;XG.players[0].rem=180;XG.players[1].rem=150;rx();for(let i=0;i<(XG.hid||3);i++){await sl(W);hiHit()}await sl(1800);unfreeze();rx();for(let i=0;i<(XG.hid||3);i++){await sl(W*.8);x(0,1)}await sl(3600)}]};
   /* démos de l'écran « Nouvelle partie » (lf-416) : plusieurs situations du jeu à la suite, avec les vrais effets */
   const tap=e=>{if(!e)return;try{e.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true}));e.dispatchEvent(new PointerEvent('pointerup',{bubbles:true}))}catch(x){}e.click()};
   const arm=m=>{const b=$(m===3?'b3':'b2');if(b)b.click()},spew=()=>$('bS').click();
@@ -72,7 +80,7 @@ if(window.EMBED){(function(){
       hiHit();await sl(W*.8);hiHit();await sl(W*.8);hiHit();await sl(1300);
       for(let i=0;i<(XG.hid||3);i++){x(0,1);await sl(W*.8)}await sl(2400)}};
   const run=st==='d'?(D[g]||D.cricket):((S3[g]||S3.cricket)[k]||S3.cricket[0]);
-  (async()=>{await sl(400);for(;;){try{await run()}catch(e){console.warn(e);await sl(1500)}}})();
+  (async()=>{await sl(300);for(;;){try{await run()}catch(e){console.warn(e);await sl(1500)}document.documentElement.style.opacity=0;await sl(420)}})();
   document.querySelectorAll('footer,#fbar2,#fbar3').forEach(f=>f.style.setProperty('visibility','hidden','important'));
   document.head.append(el('style','',`html.embed .toastx,html.embed #sync,html.embed #win button,html.embed #win #wBet,html.embed #win #wExtra{display:none!important}html.embed body{pointer-events:none}`));
 })();return}
@@ -262,7 +270,7 @@ function openInfo(){const P=pages(),my=++GEN,dead=()=>my!==GEN,gn={cricket:'Cric
 let LAST='';
 const _sr=showRules;showRules=function(){const r=_sr.apply(this,arguments);
   const g=R.querySelector(':scope>.rgoal');TXT={goal:g?g.innerHTML:'',ps:[...R.querySelectorAll(':scope>.rp')].map(x=>x.innerHTML)};
-  R.innerHTML=(g?g.outerHTML:'')+'<button class="rmore">Plus d’infos ›</button>';R.style.minHeight='';
+  R.innerHTML=(g?g.outerHTML:'');R.style.minHeight='';
   const key=[S.game,S.mode,S.xstart,S.klives,S.hiseq&&S.hiseq.join(),(S.names||[]).slice(0,3).join(),ROSTER.map(x=>x.color).join()].join('|');
   if(key!==LAST){LAST=key;demo()}return r};
 /* lf-416 : l'emblème = une vraie démo du jeu (l'appli joue toute seule dans une fenêtre, avec ses vrais écrans et effets), cadrée sur la zone utile */
