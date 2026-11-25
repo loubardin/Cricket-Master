@@ -6895,42 +6895,36 @@ function showRules(){const e=$('gRules');if(!e)return;const g=S.game||'cricket',
 {const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{showRules()}catch(e){}return r}}
 /* ===== lf-426 (essai) : page 1 = un texte d'explication ; les paramètres choisis y sont en surbrillance, on les touche pour les changer ===== */
 S.story=S.story!==false;
-/* lf-431 : les réglages sont dans les phrases. 1. le but · 2. comment jouer · 3. tes règles (une phrase par réglage) */
+/* lf-432 : l'essentiel, dans l'ordre d'une partie (départ → jeu → fin) ; pastilles courtes, prises dans la phrase */
 const STF={
-  segMode:{standard:'à toi',cut:'à tes adversaires'},
-  clegs:v=>v==1?'en 1 manche':'en '+v+' manches gagnantes',xlegs:v=>v==1?'en 1 manche':'en '+v+' manches gagnantes',
-  seq:{0:'dans l’ordre que tu veux',1:'dans l’ordre, du 15 à la Bulle'},
+  segMode:{standard:'pour toi',cut:'contre les autres'},
+  clegs:v=>v==1?'1 manche':v+' manches',xlegs:v=>v==1?'1 manche':v+' manches',
+  seq:{0:'dans le désordre',1:'dans l’ordre'},
   xstart:()=>String(S.xstart||501),
-  xin:{0:'n’importe quelle case',1:'un double'},xout:{0:'n’importe quelle case',1:'un double'},
-  xrep:{1:'les autres finissent leur tour',0:'il gagne tout de suite'},xhint:{1:'te propose',0:'ne te propose pas'},
-  shr:v=>v+' tours',segShw:{1:'tu gagnes tout de suite',0:'gros bonus'},
-  clkm:{0:'comptent comme un simple',1:'te font avancer de 2 ou 3'},
-  clkr:{0:'jamais',2:'après une bonne volée',3:'après une très bonne volée'},
-  clkb:{0:'jusqu’au 20',1:'jusqu’à la Bulle'},
+  xin:{0:'tout de suite',1:'sur un double'},xout:{0:'où tu veux',1:'sur un double'},
+  xrep:{1:'laisse finir le tour',0:'gagne direct'},xhint:{1:'avec aide',0:'sans aide'},
+  shr:v=>v+' tours',segShw:{1:'victoire',0:'gros bonus'},
+  clkm:{0:'comptent pour 1',1:'font sauter des cases'},
+  clkr:{0:'jamais',2:'dès 2 touches',3:'dès 3 touches'},
+  clkb:{0:'au 20',1:'à la Bulle'},
   segHiSeq:{0:'les classiques',1:'les tiennes'},hid:v=>v+' fléchettes',
-  hip:{1:'ton score est divisé par deux',0:'pas de pénalité'},
-  segLives:v=>v+' vies',kbonus:{1:'tu regagnes une vie',0:'tu ne gagnes rien'},
-  kcarry:{1:'le gagnant garde un avantage',0:'tout le monde repart à égalité'},
-  kdef:{1:'le dernier menacé se défend',0:'pas de dernière chance'}};
+  hip:{1:'score divisé par 2',0:'aucune pénalité'},
+  segLives:v=>v+' vies',kbonus:{1:'rend une vie',0:'ne rapporte rien'},
+  kcarry:{1:'avantage au gagnant',0:'tous à égalité'},
+  kdef:{1:'a une dernière chance',0:'n’en a pas'}};
 const STT={
   cricket:{lead:'Fermer le <b>15 au 20</b> et la <b>Bulle</b> avant les autres.',
-    rules:['Touche un numéro <b>3 fois</b> pour le fermer : simple = 1, double = 2, triple = 3.'],
-    set:['Tu fermes les numéros {seq}.','Une fois fermé chez toi, chaque touche en plus donne des points {segMode}.','La partie se joue {clegs}.']},
-  x01:{lead:'Partir de {xstart} et descendre <b>pile à zéro</b>.',
-    rules:['À ton tour, <b>3 fléchettes</b> : on retire leur total. Trop bas, c’est un <b>bust</b> : ton tour ne compte pas.'],
-    set:['Tu démarres sur {xin} et tu finis sur {xout}.','Quand quelqu’un finit, {xrep}.','Le jeu {xhint} les finishs.','La partie se joue {xlegs}.']},
+    rules:['Chaque numéro se ferme en 3 touches, {seq}.','Une fois fermé, il marque des points {segMode}.','Il faut gagner {clegs}.']},
+  x01:{lead:'Descendre de {xstart} à <b>zéro pile</b>.',
+    rules:['Le compte démarre {xin}.','Chaque volée est retirée du score. Trop bas : <b>bust</b>.','Finis {xout}, {xhint}.','Le premier à zéro {xrep}.','Il faut gagner {xlegs}.']},
   killer:{lead:'Être le <b>dernier en vie</b>.',
-    rules:['Touche <b>ton numéro 3 fois</b> : tu deviens Killer. Ensuite, chaque touche sur le numéro d’un autre lui <b>enlève une vie</b>.'],
-    set:['Chacun commence avec {segLives}.','Quand tu élimines quelqu’un, {kbonus}.','À la manche suivante, {kcarry}.','En fin de partie : {kdef}.']},
-  clock:{lead:'Faire le <b>tour de la cible</b> le premier.',
-    rules:['Touche les numéros <b>dans l’ordre</b>, à partir du 1.'],
-    set:['La course va {clkb}.','Les doubles et triples {clkm}.','Tu rejoues {clkr}.']},
-  shanghai:{lead:'Faire le <b>plus de points</b>.',
-    rules:['À chaque tour, <b>un seul numéro</b> compte : le 1, puis le 2… Simple, double ou triple : <b>1, 2 ou 3 fois</b> sa valeur.'],
-    set:['La partie dure {shr}.','Simple + double + triple du même numéro, c’est un <b>Shanghai</b> : {segShw}.']},
-  halveit:{lead:'Faire le <b>plus de points</b> sans te faire couper en deux.',
-    rules:['Chaque manche a sa <b>cible</b>. Simple, double ou triple : <b>1, 2 ou 3 fois</b> sa valeur.'],
-    set:['Les cibles sont {segHiSeq}.','Tu as {hid} par manche.','Si tu rates la cible : {hip}.']}};
+    rules:['Chacun a son numéro et {segLives}.','3 touches sur le tien : tu deviens <b>Killer</b>. Toucher le numéro d’un autre lui coûte une vie.','Tuer quelqu’un {kbonus}.','Le dernier menacé {kdef}.','Manche suivante : {kcarry}.']},
+  clock:{lead:'Faire le tour de la cible, du 1 {clkb}, le premier.',
+    rules:['Touche les numéros dans l’ordre.','Doubles et triples {clkm}.','Tu rejoues {clkr}.']},
+  shanghai:{lead:'Faire le <b>plus de points</b> en {shr}.',
+    rules:['Un seul numéro compte par tour : le 1, puis le 2…','Simple, double et triple du même numéro : <b>Shanghai</b>, {segShw}.']},
+  halveit:{lead:'Faire le <b>plus de points</b> sans être coupé en deux.',
+    rules:['Une cible par manche, {segHiSeq}. Tu as {hid}.','Cible ratée : {hip}.']}};
 const stSeg=k=>document.getElementById(k)||document.querySelector('#setup .seg[data-k="'+k+'"]');
 const stVal=k=>{const sg=stSeg(k),b=sg&&sg.querySelector('button.sel');return b?b.dataset.v:null};
 const stFrag=(k,v)=>{const f=STF[k];if(!f)return v;const t=typeof f==='function'?f(v):f[v];if(t!=null)return t;const b=stSeg(k)&&stSeg(k).querySelector(`button[data-v="${v}"]`);return b?b.textContent.trim():v};
@@ -6939,8 +6933,7 @@ function storyRender(){const e=$('gRules');if(!e)return;SU.classList.toggle('sto
   const T=STT[S.game]||STT.cricket,nb=x=>x.replace(/ ([:!?;])/g,' $1');
   const tok=x=>nb(x).replace(/\{(\^?)(\w+)\}/g,(_,up,k)=>{let t=stFrag(k,stVal(k));if(up)t=t.charAt(0).toUpperCase()+t.slice(1);return`<span class="stk" role="button" tabindex="0" data-k="${k}">${t}</span>`});
   e.innerHTML='<div class="story"><span class="sth">Le but</span><p class="stlead">'+tok(T.lead)+'</p>'
-    +'<span class="sth">Comment jouer</span>'+T.rules.map(r=>'<p class="strl">'+tok(r)+'</p>').join('')
-    +'<span class="sth">Tes règles</span>'+T.set.map(r=>'<p class="strl">'+tok(r)+'</p>').join('')+'</div>'
+    +'<span class="sth">La partie</span>'+T.rules.map(r=>'<p class="strl">'+tok(r)+'</p>').join('')+'</div>'
     +'<button class="stlist">Voir les réglages en liste ›</button>';
   /* une pastille ne se coupe jamais : si elle ne tient pas à côté de son intitulé, sa police diminue */
   const fit=()=>{const g=$('gRules'),st=g&&g.querySelector(':scope>.story');if(!st)return;st.querySelectorAll('.stk').forEach(k=>{const P=k.parentElement,W=P.clientWidth-8;k.style.removeProperty('font-size');let f=parseFloat(getComputedStyle(k).fontSize),n=0;while(k.offsetWidth>W&&n++<14){f-=.6;k.style.setProperty('font-size',f+'px','important')}})};requestAnimationFrame(fit);setTimeout(fit,300);try{document.fonts.ready.then(fit);const st=$('gRules')&&$('gRules').querySelector(':scope>.story');if(st&&window.ResizeObserver){let w0=0;new ResizeObserver(en=>{const w=Math.round(en[0].contentRect.width);if(w&&w!==w0){w0=w;fit()}}).observe(st)}}catch(x){}}
@@ -7624,7 +7617,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-431';   // à changer avec VERSION dans sw.js
+const APPV='lf-432';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
