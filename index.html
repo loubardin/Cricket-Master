@@ -3911,6 +3911,8 @@ html body #setup#setup.b2>.gobar{margin-top:30px!important}
 html body #setup#setup.b2 .grp:has(.sect.s2)>.sect,html body #setup#setup.b2 .grp:has(.sect.s1)>.sect{margin-bottom:0!important;padding-bottom:0!important}
 /* bouton du bas : texte plus petit */
 html body #setup#setup #go :is(em,.ga){font-size:calc(var(--u)*2.55)!important}
+/* lf-425 : dans les options, la couleur de l'appli devient le gris foncé — plus aucun orange pendant les clics et animations */
+html body #setup#setup.b2 .opt{--accent:#4b4b4b;--acc-rgb:75,75,75;--accimg:none}
 </style>
 </head>
 <body>
@@ -7529,7 +7531,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-424';   // à changer avec VERSION dans sw.js
+const APPV='lf-425';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
