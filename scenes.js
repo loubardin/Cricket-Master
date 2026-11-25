@@ -91,6 +91,8 @@ if(window.EMBED){(function(){
   document.head.append(el('style','',`html.embed .toastx,html.embed #sync,html.embed #win button,html.embed #win #wBet,html.embed #win #wExtra{display:none!important}html.embed body{pointer-events:none}`));
 })();return}
 
+/* lf-420 : retour au menu SANS animation (version d'avant lf-327, la préférée de Loubi) — tout ce qui suit est désactivé */
+return;
 const SU=$('setup'),R=$('gRules');if(!SU||!R)return;
 const ill=el('div','gill');ill.id='gIll';R.before(ill);   /* l'emblème au-dessus, « Le but » en dessous */
 const PN=i=>{const n=((S.names||[])[i]||'').trim().toUpperCase();return(!n||/^J\d$/.test(n))?['LOU','TONE','ZOÉ'][i]:n};

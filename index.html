@@ -3876,13 +3876,11 @@ html body #draw#draw .slot.lock{box-shadow:inset 0 0 0 var(--mn-cbw,2px) var(--m
 html body #ppick#ppick .rchipw{margin:4px 5px}
 #prof .prbadge{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 6px;border-radius:99px;background:var(--accent,#ff5a1f);color:#fff;font:400 12px "Fun",sans-serif;font-style:normal;vertical-align:2px}
 /* lf-417 : 3 pages — 1. le jeu (démos à faire glisser + règles) · 2. paramètres (avec explications) · 3. joueurs */
-html body #setup#setup.b2:not(.p2):not(.pp)>.grp:has(.sect.s2){display:none!important}
 html body #setup#setup.b2.p2>.grp:has(.sect.s2){display:none!important}
 html body #setup#setup.b2.pp :is(.seg.gamepick,#segBar,.gill,#gRules){display:none!important}
 html body #setup#setup.b2.pp>.grp:has(.sect.s2){margin-top:calc(var(--u)*1.5)!important;margin-bottom:auto!important}
 html body #setup#setup.b2:is(.p2,.pp) .gill{display:none!important}
 html body #setup#setup.b2:not(.p2):not(.pp) .gill{flex:1 1 auto;height:auto!important;min-height:220px;max-height:520px;margin:10px 0 4px!important;display:flex;flex-direction:column;align-items:stretch;justify-content:center}
-html body #setup#setup.b2:not(.p2):not(.pp) #gRules{margin-bottom:auto!important}
 html body #setup#setup.b2>.gobar{margin-top:auto!important}
 /* explication sous chaque paramètre */
 #setup .opt .ohelp{display:block;flex-basis:100%;width:100%;margin:5px 2px 0;font:400 calc(var(--u)*1.6) "Lbl","Lexend",sans-serif;line-height:1.25;color:var(--m-ink,#111);opacity:.68;text-align:left}
@@ -6557,8 +6555,8 @@ function optHelp(){document.querySelectorAll('#setup .opt').forEach(o=>{const sg
 document.getElementById('setup').addEventListener('click',()=>setTimeout(()=>{optHelp();fitP2()},30));
 {const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{optHelp()}catch(e){}requestAnimationFrame(fitP2);return r}}
 {const _show=show;show=function(id){if(id==='setup'&&!SU.classList.contains('on'))setupPage(1);_show(id)}}
-$('go').addEventListener('click',e=>{if(!SU.classList.contains('p2')){e.stopImmediatePropagation();haptic();SFX.ui();setupPage(SU.classList.contains('pp')?2:1.5,1)}},true);
-$('sBack').addEventListener('click',e=>{if(SU.classList.contains('p2')||SU.classList.contains('pp')){e.stopImmediatePropagation();haptic();SFX.back();setupPage(SU.classList.contains('p2')?1.5:1,1)}},true);
+$('go').addEventListener('click',e=>{if(!SU.classList.contains('p2')){e.stopImmediatePropagation();haptic();SFX.ui();setupPage(2,1)}},true);
+$('sBack').addEventListener('click',e=>{if(SU.classList.contains('p2')){e.stopImmediatePropagation();haptic();SFX.back();setupPage(1,1)}},true);
 /* panneau « Ajouter un joueur » ouvert : on laisse de la place sous la liste */
 new MutationObserver(()=>SU.classList.toggle('pk',$('ppick').classList.contains('on'))).observe($('ppick'),{attributes:true,attributeFilter:['class']});
 
@@ -7274,7 +7272,7 @@ const bgOf=e=>{const c=getComputedStyle(e).backgroundColor;return c&&c!=='rgba(0
    const two2=two&&!ABAND;sw.classList.toggle('two',two2);if(!two2)$('hResume').style.display='none';sw.classList.remove('new');$('hResume').textContent=two2?'Reprendre':'Reprendre la partie';$('hPlay').textContent=two2?'Nouvelle partie':'Jouer';return r}}
 /* menu : bouton du bas = faux switch « Tout bon ? » → « Suivant → » */
 {const _sp=setupPage;setupPage=function(n,anim){const r=_sp.apply(this,arguments);
-   $('go').innerHTML='<i class="gth"></i><b class="ga">Tout bon ?</b><em>'+(n===2?'C\'est parti':n===1.5?'Joueurs':'Paramètres')+' →</em>';
+   $('go').innerHTML='<i class="gth"></i><b class="ga">Tout bon ?</b><em>'+(n===2?'C\'est parti':'Suivant')+' →</em>';
    if(n===2||n===1.5){const h=SU.querySelector('.sh h1'),gn={cricket:'Cricket',x01:String(S.xstart||501),killer:'Killer',clock:'L\'horloge',shanghai:'Shanghai',halveit:'Halve-it'}[S.game]||'';h.innerHTML=(n===2?'Joueurs':'Paramètres')+' <span class="gtag">'+gn+'</span>'}return r}}
 {let SKIP=false;const pass=t=>{SKIP=true;try{t.click()}finally{SKIP=false}};
  document.addEventListener('click',e=>{if(SKIP||!e.target.closest)return;const t=e.target.closest('#hPlay,#hResume,#drawGo,#go');if(!t)return;
@@ -7523,7 +7521,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-419';   // à changer avec VERSION dans sw.js
+const APPV='lf-420';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
