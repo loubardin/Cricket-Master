@@ -3930,6 +3930,15 @@ html body #setup#setup .stlist,html body #setup#setup .stlink{display:block;marg
 #stpop .stcus{display:flex;gap:6px}#stpop .stcus[hidden]{display:none}#stpop .stcus input{flex:1;min-width:0;border:0;border-radius:12px;box-shadow:inset 0 0 0 1.5px #111;padding:8px 10px;font:400 16px "Fun",sans-serif}
 #stpop .stcus .ok{text-align:center;background:#4b4b4b;color:#fff;box-shadow:none}
 html body #setup#setup.b2.story:not(.p2)>.gobar{margin-top:auto!important}
+/* lf-427 : texte structuré, graisses variées, pastilles orange */
+html body #setup#setup .story .sth{display:block;margin:0 0 3px!important;font:900 12px/1.2 "UI","Fun",sans-serif!important;letter-spacing:.07em;text-transform:uppercase;color:var(--accent)!important}
+html body #setup#setup .story .stp{font:400 16px/1.65 "UI","Lexend",sans-serif!important;margin:0 0 14px!important}
+html body #setup#setup .story .stp b{font-weight:750!important;color:var(--m-ink,#111)!important}
+html body #setup#setup .story .stk{background:var(--accent)!important;box-shadow:0 0 0 2px var(--accent)!important;color:#fff!important;font:400 15.5px/1.5 "Fun",sans-serif!important}
+#stpop button.on{background:var(--accent)!important}#stpop .stcus .ok{background:var(--accent)!important}
+/* la police « texte » choisie s'impose partout (règle html.pfT très prioritaire) : ici on veut plusieurs graisses → « UI » (Inter 300/600/750/900, embarquée) */
+html body #setup#setup#setup#setup#setup#setup#setup#setup#setup .story .stp,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup .story .stp b,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sth{font-family:"UI",sans-serif!important}
+html body #setup#setup#setup#setup#setup#setup#setup#setup#setup .story .stp{font-weight:300!important}html body #setup#setup#setup#setup#setup#setup#setup#setup#setup .story .stp b{font-weight:750!important}html body #setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sth{font-weight:900!important}
 </style>
 </head>
 <body>
@@ -6905,20 +6914,25 @@ const STF={
   segLives:v=>v+' vies',kbonus:{1:'chaque vie enlevée t’en redonne une',0:'enlever une vie ne rapporte rien'},
   kcarry:{1:'le gagnant d’une manche garde un avantage',0:'chaque manche repart à égalité'},
   kdef:{1:'le dernier menacé a une dernière chance',0:'il n’y a pas de dernière chance'}};
+/* lf-427 : textes structurés — un titre par partie, le texte, les mots clés en gras, les réglages en pastilles orange */
 const STT={
-  cricket:'<b>Le but :</b> fermer le 15, 16, 17, 18, 19, 20 et la Bulle avant les autres.|Pour fermer un numéro, touche-le 3 fois : simple = 1, double = 2, triple = 3. Tu fermes {seq}.|Une fois fermé chez toi, chaque touche en plus marque des points : {segMode}.|La partie se joue en {clegs}.',
-  x01:'<b>Le but :</b> partir de {xstart} et descendre pile à zéro.|À ton tour, tu lances 3 fléchettes et on retire leur total. {^xin}, et {xout}. Si tu descends trop bas, c’est un bust.|Quand quelqu’un finit, {xrep}. {^xhint}.|La partie se joue en {xlegs}.',
-  killer:'<b>Le but :</b> être le dernier en vie. Chacun commence avec {segLives}.|Chacun a un numéro : touche le tien 3 fois pour devenir Killer, puis vise les numéros des autres pour leur enlever des vies.|{^kbonus}. {^kcarry}. À la fin, {kdef}.',
-  clock:'<b>Le but :</b> faire le tour de la cible le premier, du 1 {clkb}.|Touche les numéros dans l’ordre : {clkm}.|{^clkr}.',
-  shanghai:'<b>Le but :</b> faire le plus de points en {shr}.|À chaque tour, un seul numéro compte : le 1, puis le 2… Simple, double ou triple : 1, 2 ou 3 fois sa valeur.|Simple, double et triple du même numéro dans la volée : {segShw} !',
-  halveit:'<b>Le but :</b> faire le plus de points avec {segHiSeq}, {hid} par manche.|Simple, double ou triple : 1, 2 ou 3 fois la valeur de la cible.|{^hip}.'};
+  cricket:[['Le but','Fermer le <b>15 au 20</b> et la <b>Bulle</b> avant les autres.'],['Fermer un numéro','Touche-le <b>3 fois</b> : simple = 1, double = 2, triple = 3. Tu fermes {seq}.'],
+    ['Les points','Une fois fermé chez toi, chaque touche en plus <b>marque des points</b> : {segMode}.'],['La partie','Elle se joue en {clegs}.']],
+  x01:[['Le but','Partir de {xstart} et descendre <b>pile à zéro</b>.'],['À ton tour','Tu lances <b>3 fléchettes</b> et on retire leur total. Trop bas : c’est un <b>bust</b>, ton tour ne compte pas.'],
+    ['Début et fin','{^xin}. Pour finir, {xout}.'],['La partie','Quand quelqu’un finit, {xrep}. {^xhint}. Elle se joue en {xlegs}.']],
+  killer:[['Le but','Être le <b>dernier en vie</b>. Chacun commence avec {segLives}.'],['Devenir Killer','Chacun a un numéro : touche <b>le tien 3 fois</b>.'],
+    ['Attaquer','Vise les numéros des autres : chaque touche leur <b>enlève une vie</b>. {^kbonus}.'],['Les manches','{^kcarry}. À la fin, {kdef}.']],
+  clock:[['Le but','Faire le <b>tour de la cible</b> le premier, du 1 {clkb}.'],['Avancer','Touche les numéros <b>dans l’ordre</b> : {clkm}.'],['Ton tour','{^clkr}.']],
+  shanghai:[['Le but','Faire le <b>plus de points</b> en {shr}.'],['À chaque tour','Un seul numéro compte : le 1, puis le 2… Simple, double ou triple : <b>1, 2 ou 3 fois</b> sa valeur.'],
+    ['Le Shanghai','Simple, double et triple du <b>même numéro</b> dans la volée : {segShw} !']],
+  halveit:[['Le but','Faire le <b>plus de points</b>.'],['Les cibles','Tu joues {segHiSeq}, avec {hid} par manche. Simple, double ou triple : <b>1, 2 ou 3 fois</b> la valeur.'],['Attention','{^hip}.']]};
 const stSeg=k=>document.getElementById(k)||document.querySelector('#setup .seg[data-k="'+k+'"]');
 const stVal=k=>{const sg=stSeg(k),b=sg&&sg.querySelector('button.sel');return b?b.dataset.v:null};
 const stFrag=(k,v)=>{const f=STF[k];if(!f)return v;const t=typeof f==='function'?f(v):f[v];if(t!=null)return t;const b=stSeg(k)&&stSeg(k).querySelector(`button[data-v="${v}"]`);return b?b.textContent.trim():v};
 function storyRender(){const e=$('gRules');if(!e)return;SU.classList.toggle('story',!!S.story);if(!S.story){const l=SU.querySelector('.stlink');if(!l){const a=el('button','stlink','Voir en texte ›');a.addEventListener('click',()=>{haptic();S.story=true;store.set(K_S,S);renderSetup()});e.after(a)}return}
   SU.querySelectorAll('.stlink').forEach(x=>x.remove());
   const T=STT[S.game]||STT.cricket;
-  const html=T.split('|').map(p=>'<span class="stp">'+p.replace(/\{(\^?)(\w+)\}/g,(_,up,k)=>{let t=stFrag(k,stVal(k));if(up)t=t.charAt(0).toUpperCase()+t.slice(1);return`<span class="stk" role="button" tabindex="0" data-k="${k}">${t}</span>`})+'</span>').join('');
+  const html=T.map(([h,p])=>'<span class="sth">'+h+'</span><span class="stp">'+p.replace(/\{(\^?)(\w+)\}/g,(_,up,k)=>{let t=stFrag(k,stVal(k));if(up)t=t.charAt(0).toUpperCase()+t.slice(1);return`<span class="stk" role="button" tabindex="0" data-k="${k}">${t}</span>`})+'</span>').join('');
   e.innerHTML='<div class="story">'+html+'</div><button class="stlist">Voir les réglages en liste ›</button>'}
 {const _sr=showRules;showRules=function(){_sr.apply(this,arguments);try{storyRender()}catch(x){console.warn(x)}}}
 /* toucher un mot en surbrillance : petite bulle avec les choix possibles */
@@ -7600,7 +7614,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-426';   // à changer avec VERSION dans sw.js
+const APPV='lf-427';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
