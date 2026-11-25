@@ -3899,16 +3899,18 @@ html body #setup#setup.b2>.gobar{margin-top:auto!important}
 #prof .mcs div{display:flex;flex-direction:column;align-items:center;gap:1px}#prof .mcs .rkl{font-size:22px}#prof .mcs span{font:400 9px "Lbl","Lexend",sans-serif;opacity:.8}
 #prof .mcg2{position:absolute;left:0;right:0;top:172px;text-align:center;font:400 10px "Lbl","Lexend",sans-serif;opacity:.75}
 /* lf-422 : bulles des options secondaires en gris très foncé — seul le choix du jeu (en haut) reste à la couleur de l'appli */
-html body #setup#setup.b2 .opt .seg .thumb{background:#262626!important;background-image:none!important;box-shadow:0 0 0 calc(var(--u)*1.7) #262626,0 6px 14px rgba(0,0,0,.28)!important}
+html body #setup#setup.b2 .opt .seg .thumb{background:#4b4b4b!important;background-image:none!important;box-shadow:0 0 0 calc(var(--u)*1.7) #4b4b4b,0 6px 14px rgba(0,0,0,.22)!important}
 html.night body #setup#setup.b2 .opt .seg .thumb,html[data-th=dark] body #setup#setup.b2 .opt .seg .thumb{background:#4a4a4a!important;box-shadow:0 0 0 calc(var(--u)*1.7) #4a4a4a,0 6px 14px rgba(0,0,0,.35)!important}
 /* lf-423 : explication juste sous le titre du paramètre ; les paramètres sont calés en bas, toujours au même écart du bouton du bas */
-#setup .opt .ohelp{margin:1px 2px 7px!important}
-html body #setup#setup .opt:is(.teamopt,.betrow,.ordopt):has(>.ohelp){grid-template-areas:"l l" "h h" "s b"!important;grid-template-rows:auto auto auto!important;height:auto!important}html body #setup#setup .opt:is(.teamopt,.betrow,.ordopt)>.ohelp{grid-area:h!important}
+#setup .opt .ohelp{margin:6px 2px 0!important}
+html body #setup#setup .opt:is(.teamopt,.betrow,.ordopt):has(>.ohelp){grid-template-areas:"l l" "s b" "h h"!important;grid-template-rows:auto auto auto!important;height:auto!important}html body #setup#setup .opt:is(.teamopt,.betrow,.ordopt)>.ohelp{grid-area:h!important}
 html body #setup#setup.b2 .sect.s1>.opt.knopt{margin:0!important;row-gap:0!important}
-html body #setup .opt>span{order:0}html body #setup .opt>.ohelp{order:1}html body #setup .opt>.seg,html body #setup .opt>:not(span):not(.ohelp){order:2}
+html body #setup .opt>span{order:0}html body #setup .opt>.ohelp{order:3}html body #setup .opt>.seg,html body #setup .opt>:not(span):not(.ohelp){order:2}
 html body #setup#setup.b2:not(.p2)>.grp:has(.sect.s2),html body #setup#setup.b2.p2>.grp:has(.sect.s1){margin-top:auto!important;margin-bottom:0!important;padding-bottom:0!important}
 html body #setup#setup.b2>.gobar{margin-top:30px!important}
 html body #setup#setup.b2 .grp:has(.sect.s2)>.sect,html body #setup#setup.b2 .grp:has(.sect.s1)>.sect{margin-bottom:0!important;padding-bottom:0!important}
+/* bouton du bas : texte plus petit */
+html body #setup#setup #go :is(em,.ga){font-size:calc(var(--u)*2.55)!important}
 </style>
 </head>
 <body>
@@ -7527,7 +7529,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-423';   // à changer avec VERSION dans sw.js
+const APPV='lf-424';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
