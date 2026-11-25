@@ -3898,6 +3898,9 @@ html body #setup#setup.b2>.gobar{margin-top:auto!important}
 #prof .mcs{position:absolute;left:12px;right:12px;top:124px;display:flex;justify-content:space-around}
 #prof .mcs div{display:flex;flex-direction:column;align-items:center;gap:1px}#prof .mcs .rkl{font-size:22px}#prof .mcs span{font:400 9px "Lbl","Lexend",sans-serif;opacity:.8}
 #prof .mcg2{position:absolute;left:0;right:0;top:172px;text-align:center;font:400 10px "Lbl","Lexend",sans-serif;opacity:.75}
+/* lf-422 : bulles des options secondaires en gris très foncé — seul le choix du jeu (en haut) reste à la couleur de l'appli */
+html body #setup#setup.b2 .opt .seg .thumb{background:#262626!important;background-image:none!important;box-shadow:0 0 0 calc(var(--u)*1.7) #262626,0 6px 14px rgba(0,0,0,.28)!important}
+html.night body #setup#setup.b2 .opt .seg .thumb,html[data-th=dark] body #setup#setup.b2 .opt .seg .thumb{background:#4a4a4a!important;box-shadow:0 0 0 calc(var(--u)*1.7) #4a4a4a,0 6px 14px rgba(0,0,0,.35)!important}
 </style>
 </head>
 <body>
@@ -7512,7 +7515,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-421';   // à changer avec VERSION dans sw.js
+const APPV='lf-422';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
