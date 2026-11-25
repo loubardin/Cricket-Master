@@ -6523,32 +6523,31 @@ function fitP2(){const G=[...SU.querySelectorAll(':scope>.grp')];G.forEach(g=>g.
     for(let k=0;k<8&&SU.scrollHeight>SU.clientHeight+1;k++){const zz=Math.max(.6,(+G[0].style.zoom||1)*.96);G.forEach(g=>g.style.zoom=zz.toFixed(3))}}
   if(typeof placeThumbs==='function')placeThumbs()}
 window.addEventListener('resize',()=>requestAnimationFrame(fitP2));
-const OHELP={
-  segMode:{standard:'Tes points s’ajoutent à ton score : le plus haut gagne.',cut:'Tes points vont chez les adversaires : le plus bas gagne.'},
-  clegs:v=>v==1?'Une seule manche décide du vainqueur.':`Le premier à ${v} manches gagnées remporte la partie.`,
-  xlegs:v=>v==1?'Une seule manche décide du vainqueur.':`Le premier à ${v} manches gagnées remporte la partie.`,
-  seq:{0:'Ferme les numéros dans l’ordre que tu veux.',1:'Ferme dans l’ordre : 15, puis 16… jusqu’à la Bulle.'},
-  xstart:v=>v==0?'Score de départ choisi à la main.':`Chacun part de ${v} et doit descendre pile à zéro.`,
-  xin:{0:'Toutes les fléchettes comptent dès le début.',1:'Ton score ne descend qu’après un premier double.'},
-  xout:{0:'On peut finir sur n’importe quelle case.',1:'Il faut finir pile sur un double (ou la Bulle).',2:'Il faut finir sur un double ou un triple.'},
-  xrep:{1:'Si quelqu’un finit, les autres jouent encore leur volée pour égaliser.',0:'Le premier à zéro gagne tout de suite.'},
-  xhint:{1:'L’appli te montre le finish quand il est possible.',0:'Pas d’aide : à toi de compter ton finish.'},
-  shr:v=>`La partie dure ${v} tours : la cible 1, puis 2… jusqu’à ${v}.`,
-  segShw:{1:'Simple + double + triple du numéro dans la volée : victoire immédiate.',0:'Le Shanghai rapporte un bonus de points, la partie continue.'},
-  clkm:{0:'Double ou triple : tu avances d’une seule case.',1:'Un double te fait sauter 2 cases, un triple 3.'},
-  clkr:{0:'Chacun son tour, 3 fléchettes.',2:'Tu rejoues si ta volée vaut au moins 2 marques.',3:'Tu rejoues si ta volée vaut au moins 3 marques.'},
-  clkb:{0:'Le tour se termine sur le 20.',1:'Après le 20, il faut encore toucher la Bulle.'},
-  segHiSeq:{0:'Les cibles classiques, dans l’ordre.',1:'Tes propres cibles, choisies à l’avance.'},
-  hid:v=>`${v} fléchettes par volée.`,
-  hip:{1:'Aucune cible touchée dans ta volée : ton score est coupé en deux.',0:'Pas de pénalité : une volée ratée rapporte juste 0.'},
-  segLives:v=>`Chacun commence avec ${v} vies.`,
-  kbonus:{1:'Quand tu enlèves une vie à quelqu’un, tu en regagnes une.',0:'Enlever une vie ne te rapporte rien.'},
-  kcarry:{1:'Le gagnant d’une manche repart avec une vie de plus.',0:'Tout le monde repart à égalité à chaque manche.'},
-  kdef:{1:'Le dernier menacé a encore une volée pour se défendre.',0:'Plus de défense : la dernière touche termine la manche.'},
-  teams:{0:'Chacun pour soi.',1:'Les joueurs d’une même équipe jouent ensemble et partagent le score.'},
-  segOrd:{fixed:'On joue dans l’ordre de la liste.',draw:'L’appli tire au sort qui commence.'},
-  segKn:{draw:'Chacun reçoit un numéro au hasard.',throw:'Chacun lance une fléchette : son numéro est celui qu’il touche.'},
-  segBet:{0:'Pas d’enjeu.',1:'Le perdant doit l’enjeu choisi : il s’affiche à la victoire.'}};
+const OHELP={   /* lf-421 : courtes et générales */
+  segMode:{standard:'Tes points sont pour toi.',cut:'Tes points vont chez les adversaires.'},
+  clegs:()=>'Le nombre de manches à gagner.',xlegs:()=>'Le nombre de manches à gagner.',
+  seq:{0:'Dans l’ordre que tu veux.',1:'Dans l’ordre, du 15 à la Bulle.'},
+  xstart:()=>'Le score de départ.',
+  xin:{0:'Tout compte dès la première fléchette.',1:'Il faut un double pour commencer.'},
+  xout:{0:'N’importe quelle case pour finir.',1:'Il faut finir sur un double.',2:'Il faut finir sur un double ou un triple.'},
+  xrep:{1:'Les autres finissent leur tour pour égaliser.',0:'Le premier à zéro gagne.'},
+  xhint:{1:'L’appli propose un finish.',0:'Pas d’aide au finish.'},
+  shr:()=>'Le nombre de tours.',
+  segShw:{1:'Simple, double et triple du numéro : victoire.',0:'Simple, double et triple du numéro : gros bonus.'},
+  clkm:{0:'Chaque touche fait avancer d’une case.',1:'Double et triple font sauter des cases.'},
+  clkr:{0:'Chacun son tour.',2:'Une bonne volée te fait rejouer.',3:'Une très bonne volée te fait rejouer.'},
+  clkb:{0:'On s’arrête au 20.',1:'On finit par la Bulle.'},
+  segHiSeq:{0:'Les cibles classiques.',1:'Tes propres cibles.'},
+  hid:()=>'Les fléchettes par manche.',
+  hip:{1:'Une manche ratée coupe ton score en deux.',0:'Pas de pénalité.'},
+  segLives:()=>'Les vies de départ.',
+  kbonus:{1:'Enlever une vie t’en redonne une.',0:'Pas de vie en bonus.'},
+  kcarry:{1:'Le gagnant d’une manche garde un avantage.',0:'Tout le monde repart à égalité.'},
+  kdef:{1:'Une dernière chance pour se défendre.',0:'Pas de dernière chance.'},
+  teams:{0:'Chacun pour soi.',1:'On joue par équipes.'},
+  segOrd:{fixed:'Dans l’ordre de la liste.',draw:'Au hasard.'},
+  segKn:{draw:'Numéros donnés au hasard.',throw:'Chacun lance pour avoir son numéro.'},
+  segBet:{0:'Pas d’enjeu.',1:'Le perdant paie l’enjeu.'}};
 function optHelp(){document.querySelectorAll('#setup .opt').forEach(o=>{const sg=o.querySelector(':scope>.seg');if(!sg)return;const k=sg.id||sg.dataset.k,h=OHELP[k];if(!h)return;
   const b=sg.querySelector('button.sel'),v=b?b.dataset.v:null,t=typeof h==='function'?h(v):h[v];let e=o.querySelector(':scope>.ohelp');
   if(!t){if(e)e.remove();return}if(!e){e=el('small','ohelp');o.append(e)}if(e.textContent!==t)e.textContent=t})}
@@ -6817,35 +6816,27 @@ new MutationObserver(()=>{const w=$('win');if(!w.classList.contains('on'))return
  document.addEventListener('click',e=>{if(performance.now()-done<600&&e.target.closest&&e.target.closest('#xplayers,#kplayers')){e.stopPropagation();e.preventDefault()}},true)}
 /* règles du jeu choisi (page Règles) */
 function showRules(){const e=$('gRules');if(!e)return;const g=S.game||'cricket',st=S.xstart||501;let goal='',ps=[];
+  /* lf-421 : seulement le principe du jeu ; tout ce qui dépend d'un paramètre est expliqué sous ce paramètre, pas ici */
   if(g==='cricket'){goal='Fermer le 15, 16, 17, 18, 19, 20 et la Bulle avant les autres.';
-    const cut=S.mode==='cut';
     ps=['Pour fermer un numéro, touche-le <b>3 fois</b> : simple = 1, double = 2, triple = 3.',
-      cut?'Une fois fermé chez toi, chaque touche en plus <b>donne des points</b> aux adversaires qui ne l\'ont pas fermé : la valeur du numéro × 1, 2 ou 3. Arrose les meilleurs !'
-         :'Une fois fermé chez toi, chaque touche en plus <b>te rapporte des points</b> : la valeur du numéro × 1, 2 ou 3 (triple 20 = 60). Bulle = 25, double Bulle = 50.',
-      'Ça ne marche que tant qu\'un adversaire ne l\'a pas fermé : fermé par tout le monde, un numéro ne rapporte plus rien.',
-      cut?'Tu gagnes quand tu as tout fermé avec <b>le moins de points</b>.':'Tu gagnes quand tu as tout fermé avec <b>au moins autant de points</b> que chacun des autres.']}
+      'Une fois fermé chez toi, chaque touche en plus <b>compte des points</b>, tant qu\'un adversaire ne l\'a pas fermé.',
+      'Fermé par tout le monde, un numéro ne rapporte plus rien.']}
   else if(g==='x01'){goal='Descendre pile à zéro.';
-    ps=['Chacun part de <b>'+st+'</b>. À ton tour, tu lances 3 fléchettes et on retire leur total.',
-      S.xout===0?'Pour finir, il faut tomber <b>exactement sur 0</b>.':'Pour finir, il faut tomber <b>exactement sur 0</b>, avec un '+(S.xout===2?'double ou un triple':'double')+'.',
-      'Si tu dépasses'+(S.xout===0?'':', ou s\'il te reste 1')+' : c\'est un <b>bust</b>, ton tour ne compte pas.']}
-  else if(g==='shanghai'){const n=S.shr||7;goal='Faire le plus de points en '+n+' tours.';
-    ps=['Au tour 1, seul le <b>1</b> compte ; au tour 2, le <b>2</b>… jusqu\'au '+n+'. Les autres numéros ne rapportent rien.',
-      'Un simple rapporte la valeur du numéro, un double 2 fois, un triple <b>3 fois</b>.',
-      S.shw!==0?'<b>Shanghai</b> : un simple, un double et un triple du bon numéro dans le même tour, et tu gagnes tout de suite.':'<b>Shanghai</b> : un simple, un double et un triple du bon numéro dans le même tour rapporte <b>'+(S.shb||100)+' points</b> de bonus.',
-      'Égalité à la fin : prolongation à la Bulle entre les ex æquo.']}
-  else if(g==='halveit'){const q=Array.isArray(S.hiseq)&&S.hiseq.length?S.hiseq:HI_CLASSIC;goal='Faire le plus de points en '+q.length+' manches, sans te faire couper en deux.';
-    ps=['Chaque manche a sa cible : '+q.map(x=>x==='D'?'<b>doubles</b>':x==='T'?'<b>triples</b>':x==='B'?'<b>Bulle</b>':'<b>'+x+'</b>').join(', ')+'.',
-      'Sur un numéro : simple = sa valeur, double × 2, triple × 3. Manche doubles ou triples : seuls les doubles ou les triples comptent. Bulle : 25, double Bulle 50.',
-      'Tu as <b>'+(S.hid||3)+' fléchettes</b> par manche.',
-      ...(S.hip!==0?['Aucune fléchette sur la cible pendant ton tour : ton score total est <b>divisé par deux</b>.']:[]),
-      'Le plus de points à la fin gagne. Égalité : prolongation à la Bulle.']}
+    ps=['À ton tour, tu lances 3 fléchettes et on retire leur total de ton score.',
+      'Si tu descends trop bas : c\'est un <b>bust</b>, ton tour ne compte pas.']}
+  else if(g==='shanghai'){goal='Faire le plus de points.';
+    ps=['À chaque tour, un seul numéro compte : le <b>1</b>, puis le <b>2</b>…',
+      'Simple, double ou triple : 1, 2 ou <b>3 fois</b> la valeur du numéro.',
+      'Égalité à la fin : prolongation à la Bulle.']}
+  else if(g==='halveit'){goal='Faire le plus de points sans te faire couper en deux.';
+    ps=['Chaque manche a sa <b>cible</b>.',
+      'Simple, double ou triple : 1, 2 ou <b>3 fois</b> la valeur.',
+      'Le plus de points à la fin gagne.']}
   else if(g==='clock'){goal='Faire le tour de la cible le premier.';
-    ps=['Touche le <b>1</b>, puis le <b>2</b>, le 3… dans l\'ordre jusqu\'au 20'+(S.clkb!==0?', puis <b>la Bulle</b>.':'.'),
-      S.clkm?'Un double te fait <b>sauter de 2</b> cases, un triple <b>de 3</b>.':'Simple, double ou triple : chaque touche te fait <b>avancer d\'une case</b>.',
-      'Tant que tu n\'as pas touché ton numéro, tu restes dessus. Le premier arrivé gagne.',
-      ...(S.clkr?['<b>Rejoue</b> : si ton MPR du tour (marques en 3 fléchettes) est d\'au moins '+S.clkr+', tu rejoues tout de suite.']:[])]}
+    ps=['Touche les numéros <b>dans l\'ordre</b>, à partir du 1.',
+      'Tant que tu n\'as pas touché ton numéro, tu restes dessus.']}
   else{goal='Être le dernier en vie.';
-    ps=['Chacun reçoit un numéro. Commence par toucher <b>le tien 3 fois</b> : tu deviens Killer.',
+    ps=['Chacun a un numéro. Touche <b>le tien 3 fois</b> : tu deviens Killer.',
       'Ensuite, vise les numéros des autres : chaque touche leur <b>enlève une vie</b>.',
       'Attention : une fois Killer, toucher ton propre numéro te coûte une vie.']}
   // mise en page : un mot de moins de 4 lettres ne reste jamais seul en fin de ligne (espace insécable après)
@@ -7521,7 +7512,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-420';   // à changer avec VERSION dans sw.js
+const APPV='lf-421';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
