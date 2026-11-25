@@ -3901,6 +3901,14 @@ html body #setup#setup.b2>.gobar{margin-top:auto!important}
 /* lf-422 : bulles des options secondaires en gris très foncé — seul le choix du jeu (en haut) reste à la couleur de l'appli */
 html body #setup#setup.b2 .opt .seg .thumb{background:#262626!important;background-image:none!important;box-shadow:0 0 0 calc(var(--u)*1.7) #262626,0 6px 14px rgba(0,0,0,.28)!important}
 html.night body #setup#setup.b2 .opt .seg .thumb,html[data-th=dark] body #setup#setup.b2 .opt .seg .thumb{background:#4a4a4a!important;box-shadow:0 0 0 calc(var(--u)*1.7) #4a4a4a,0 6px 14px rgba(0,0,0,.35)!important}
+/* lf-423 : explication juste sous le titre du paramètre ; les paramètres sont calés en bas, toujours au même écart du bouton du bas */
+#setup .opt .ohelp{margin:1px 2px 7px!important}
+html body #setup#setup .opt:is(.teamopt,.betrow,.ordopt):has(>.ohelp){grid-template-areas:"l l" "h h" "s b"!important;grid-template-rows:auto auto auto!important;height:auto!important}html body #setup#setup .opt:is(.teamopt,.betrow,.ordopt)>.ohelp{grid-area:h!important}
+html body #setup#setup.b2 .sect.s1>.opt.knopt{margin:0!important;row-gap:0!important}
+html body #setup .opt>span{order:0}html body #setup .opt>.ohelp{order:1}html body #setup .opt>.seg,html body #setup .opt>:not(span):not(.ohelp){order:2}
+html body #setup#setup.b2:not(.p2)>.grp:has(.sect.s2),html body #setup#setup.b2.p2>.grp:has(.sect.s1){margin-top:auto!important;margin-bottom:0!important;padding-bottom:0!important}
+html body #setup#setup.b2>.gobar{margin-top:30px!important}
+html body #setup#setup.b2 .grp:has(.sect.s2)>.sect,html body #setup#setup.b2 .grp:has(.sect.s1)>.sect{margin-bottom:0!important;padding-bottom:0!important}
 </style>
 </head>
 <body>
@@ -6553,7 +6561,11 @@ const OHELP={   /* lf-421 : courtes et générales */
   segBet:{0:'Pas d’enjeu.',1:'Le perdant paie l’enjeu.'}};
 function optHelp(){document.querySelectorAll('#setup .opt').forEach(o=>{const sg=o.querySelector(':scope>.seg');if(!sg)return;const k=sg.id||sg.dataset.k,h=OHELP[k];if(!h)return;
   const b=sg.querySelector('button.sel'),v=b?b.dataset.v:null,t=typeof h==='function'?h(v):h[v];let e=o.querySelector(':scope>.ohelp');
-  if(!t){if(e)e.remove();return}if(!e){e=el('small','ohelp');o.append(e)}if(e.textContent!==t)e.textContent=t})}
+  if(!t){if(e)e.remove();return}if(!e){e=el('small','ohelp');const lb=o.querySelector(':scope>span');if(lb)lb.after(e);else o.prepend(e)}if(e.textContent!==t)e.textContent=t});
+  /* deux paramètres côte à côte : leurs explications prennent la même hauteur, pour que les boutons restent alignés */
+  requestAnimationFrame(()=>{const H=[...document.querySelectorAll('#setup .opt>.ohelp')];H.forEach(h=>h.style.minHeight='');const rows={};
+    H.forEach(h=>{const o=h.parentElement;if(!o.offsetHeight)return;const k=Math.round(o.getBoundingClientRect().top);(rows[k]=rows[k]||[]).push(h)});
+    Object.values(rows).forEach(L=>{if(L.length<2)return;const m=Math.max(...L.map(h=>h.offsetHeight));L.forEach(h=>h.style.minHeight=m+'px')})})}
 document.getElementById('setup').addEventListener('click',()=>setTimeout(()=>{optHelp();fitP2()},30));
 {const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{optHelp()}catch(e){}requestAnimationFrame(fitP2);return r}}
 {const _show=show;show=function(id){if(id==='setup'&&!SU.classList.contains('on'))setupPage(1);_show(id)}}
@@ -7515,7 +7527,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-422';   // à changer avec VERSION dans sw.js
+const APPV='lf-423';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
