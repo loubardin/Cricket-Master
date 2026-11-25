@@ -3939,6 +3939,10 @@ html body #setup#setup .story .stk{background:var(--accent)!important;box-shadow
 /* la police « texte » choisie s'impose partout (règle html.pfT très prioritaire) : ici on veut plusieurs graisses → « UI » (Inter 300/600/750/900, embarquée) */
 html body #setup#setup#setup#setup#setup#setup#setup#setup#setup .story .stp,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup .story .stp b,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sth{font-family:"UI",sans-serif!important}
 html body #setup#setup#setup#setup#setup#setup#setup#setup#setup .story .stp{font-weight:300!important}html body #setup#setup#setup#setup#setup#setup#setup#setup#setup .story .stp b{font-weight:750!important}html body #setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sth{font-weight:900!important}
+/* lf-428 : jamais de retour à la ligne dans une pastille ; texte plus gros */
+html body #setup#setup .story .stk{white-space:nowrap!important;font-size:17px!important}
+html body #setup#setup .story .stp{font-size:18px!important;line-height:1.7!important}
+html body #setup#setup .story .sth{font-size:13px!important}
 </style>
 </head>
 <body>
@@ -6896,32 +6900,32 @@ function showRules(){const e=$('gRules');if(!e)return;const g=S.game||'cricket',
 {const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{showRules()}catch(e){}return r}}
 /* ===== lf-426 (essai) : page 1 = un texte d'explication ; les paramètres choisis y sont en surbrillance, on les touche pour les changer ===== */
 S.story=S.story!==false;
-const STF={
-  segMode:{standard:'tes points sont pour toi',cut:'tes points vont chez les adversaires'},
+const STF={   /* lf-428 : courts (jamais coupés en fin de ligne) */
+  segMode:{standard:'tes points sont pour toi',cut:'tes points vont aux adversaires'},
   clegs:v=>v==1?'1 manche':v+' manches gagnantes',xlegs:v=>v==1?'1 manche':v+' manches gagnantes',
-  seq:{0:'dans l’ordre que tu veux',1:'dans l’ordre, du 15 à la Bulle'},
+  seq:{0:'dans l’ordre que tu veux',1:'du 15 à la Bulle, dans l’ordre'},
   xstart:()=>String(S.xstart||501),
-  xin:{0:'tout compte dès la première fléchette',1:'il faut un double pour commencer'},
-  xout:{0:'on peut finir sur n’importe quelle case',1:'il faut finir sur un double'},
-  xrep:{1:'les autres finissent leur tour pour égaliser',0:'il gagne tout de suite'},
-  xhint:{1:'l’appli te propose un finish',0:'pas d’aide au finish'},
+  xin:{0:'n’importe quelle case',1:'un double obligatoire'},
+  xout:{0:'n’importe quelle case',1:'un double obligatoire'},
+  xrep:{1:'les autres finissent leur tour',0:'il gagne tout de suite'},
+  xhint:{1:'l’appli propose un finish',0:'pas d’aide au finish'},
   shr:v=>v+' tours',segShw:{1:'victoire immédiate',0:'gros bonus de points'},
-  clkm:{0:'chaque touche fait avancer d’une case',1:'double et triple font sauter des cases'},
-  clkr:{0:'chacun joue son tour',2:'une bonne volée te fait rejouer',3:'une très bonne volée te fait rejouer'},
+  clkm:{0:'tu avances d’une case',1:'tu sautes avec double et triple'},
+  clkr:{0:'chacun joue son tour',2:'bonne volée = tu rejoues',3:'très bonne volée = tu rejoues'},
   clkb:{0:'jusqu’au 20',1:'jusqu’à la Bulle'},
   segHiSeq:{0:'les cibles classiques',1:'tes propres cibles'},hid:v=>v+' fléchettes',
-  hip:{1:'une manche ratée coupe ton score en deux',0:'une manche ratée ne coûte rien'},
-  segLives:v=>v+' vies',kbonus:{1:'chaque vie enlevée t’en redonne une',0:'enlever une vie ne rapporte rien'},
-  kcarry:{1:'le gagnant d’une manche garde un avantage',0:'chaque manche repart à égalité'},
-  kdef:{1:'le dernier menacé a une dernière chance',0:'il n’y a pas de dernière chance'}};
+  hip:{1:'une manche ratée divise par deux',0:'pas de pénalité'},
+  segLives:v=>v+' vies',kbonus:{1:'tuer te redonne une vie',0:'tuer ne rapporte rien'},
+  kcarry:{1:'le gagnant garde un avantage',0:'chaque manche repart à égalité'},
+  kdef:{1:'le dernier menacé se défend',0:'pas de dernière chance'}};
 /* lf-427 : textes structurés — un titre par partie, le texte, les mots clés en gras, les réglages en pastilles orange */
 const STT={
   cricket:[['Le but','Fermer le <b>15 au 20</b> et la <b>Bulle</b> avant les autres.'],['Fermer un numéro','Touche-le <b>3 fois</b> : simple = 1, double = 2, triple = 3. Tu fermes {seq}.'],
     ['Les points','Une fois fermé chez toi, chaque touche en plus <b>marque des points</b> : {segMode}.'],['La partie','Elle se joue en {clegs}.']],
   x01:[['Le but','Partir de {xstart} et descendre <b>pile à zéro</b>.'],['À ton tour','Tu lances <b>3 fléchettes</b> et on retire leur total. Trop bas : c’est un <b>bust</b>, ton tour ne compte pas.'],
-    ['Début et fin','{^xin}. Pour finir, {xout}.'],['La partie','Quand quelqu’un finit, {xrep}. {^xhint}. Elle se joue en {xlegs}.']],
+    ['Début et fin','Pour commencer : {xin}. Pour finir : {xout}.'],['La partie','Quand quelqu’un finit, {xrep}. Aide : {xhint}. Elle se joue en {xlegs}.']],
   killer:[['Le but','Être le <b>dernier en vie</b>. Chacun commence avec {segLives}.'],['Devenir Killer','Chacun a un numéro : touche <b>le tien 3 fois</b>.'],
-    ['Attaquer','Vise les numéros des autres : chaque touche leur <b>enlève une vie</b>. {^kbonus}.'],['Les manches','{^kcarry}. À la fin, {kdef}.']],
+    ['Attaquer','Vise les numéros des autres : chaque touche leur <b>enlève une vie</b>. Et {kbonus}.'],['Les manches','{^kcarry}. À la fin : {kdef}.']],
   clock:[['Le but','Faire le <b>tour de la cible</b> le premier, du 1 {clkb}.'],['Avancer','Touche les numéros <b>dans l’ordre</b> : {clkm}.'],['Ton tour','{^clkr}.']],
   shanghai:[['Le but','Faire le <b>plus de points</b> en {shr}.'],['À chaque tour','Un seul numéro compte : le 1, puis le 2… Simple, double ou triple : <b>1, 2 ou 3 fois</b> sa valeur.'],
     ['Le Shanghai','Simple, double et triple du <b>même numéro</b> dans la volée : {segShw} !']],
@@ -6932,8 +6936,10 @@ const stFrag=(k,v)=>{const f=STF[k];if(!f)return v;const t=typeof f==='function'
 function storyRender(){const e=$('gRules');if(!e)return;SU.classList.toggle('story',!!S.story);if(!S.story){const l=SU.querySelector('.stlink');if(!l){const a=el('button','stlink','Voir en texte ›');a.addEventListener('click',()=>{haptic();S.story=true;store.set(K_S,S);renderSetup()});e.after(a)}return}
   SU.querySelectorAll('.stlink').forEach(x=>x.remove());
   const T=STT[S.game]||STT.cricket;
-  const html=T.map(([h,p])=>'<span class="sth">'+h+'</span><span class="stp">'+p.replace(/\{(\^?)(\w+)\}/g,(_,up,k)=>{let t=stFrag(k,stVal(k));if(up)t=t.charAt(0).toUpperCase()+t.slice(1);return`<span class="stk" role="button" tabindex="0" data-k="${k}">${t}</span>`})+'</span>').join('');
-  e.innerHTML='<div class="story">'+html+'</div><button class="stlist">Voir les réglages en liste ›</button>'}
+  const html=T.map(([h,p])=>'<span class="sth">'+h+'</span><span class="stp">'+p.replace(/ ([:!?;])/g,'\u00a0$1').replace(/\{(\^?)(\w+)\}/g,(_,up,k)=>{let t=stFrag(k,stVal(k));if(up)t=t.charAt(0).toUpperCase()+t.slice(1);return`<span class="stk" role="button" tabindex="0" data-k="${k}">${t}</span>`})+'</span>').join('');
+  e.innerHTML='<div class="story">'+html+'</div><button class="stlist">Voir les réglages en liste ›</button>';
+  /* petit écran : une pastille plus large que la ligne a le droit de passer à la ligne (sinon elle déborderait) */
+  requestAnimationFrame(()=>{const st=e.querySelector('.story');if(!st)return;const W=st.clientWidth;st.querySelectorAll('.stk').forEach(k=>{if(k.offsetWidth>W)k.style.setProperty('white-space','normal','important')})})}
 {const _sr=showRules;showRules=function(){_sr.apply(this,arguments);try{storyRender()}catch(x){console.warn(x)}}}
 /* toucher un mot en surbrillance : petite bulle avec les choix possibles */
 function stPop(btn){const k=btn.dataset.k,sg=stSeg(k);if(!sg)return;const old=$('stpop');if(old)old.remove();
@@ -7614,7 +7620,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-427';   // à changer avec VERSION dans sw.js
+const APPV='lf-428';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
