@@ -3913,6 +3913,23 @@ html body #setup#setup.b2 .grp:has(.sect.s2)>.sect,html body #setup#setup.b2 .gr
 html body #setup#setup #go :is(em,.ga){font-size:calc(var(--u)*2.55)!important}
 /* lf-425 : dans les options, la couleur de l'appli devient le gris foncé — plus aucun orange pendant les clics et animations */
 html body #setup#setup.b2 .opt{--accent:#4b4b4b;--acc-rgb:75,75,75;--accimg:none}
+/* lf-426 (essai) : page 1 en texte */
+html body #setup#setup.b2.story:not(.p2)>.grp:has(.sect.s2){display:none!important}
+html body #setup#setup .story,html body #setup#setup .story .stp{font:400 17px/1.75 "Lbl","Lexend",sans-serif!important;color:var(--m-ink,#111)!important;margin-top:6px}
+html body #setup#setup .story .stp{display:block;margin:0 0 14px!important}
+html body #setup#setup .story b{color:var(--accent);font:inherit!important;font-weight:700!important}
+html body #setup#setup .story .stk{display:inline;border:0;margin:0 1px;padding:2px 8px 3px;white-space:normal;border-radius:99px;background:#4b4b4b;color:#fff;font:400 16px/1.5 "Fun",sans-serif!important;
+  box-shadow:0 0 0 2px #4b4b4b;-webkit-box-decoration-break:clone;box-decoration-break:clone;cursor:pointer;transition:transform .12s}
+#setup .story .stk:active{transform:scale(.94)}
+html body #setup#setup .stlist,html body #setup#setup .stlink{display:block;margin:6px 0 0;border:0;background:none;padding:4px 0;font:400 13px "Lbl","Lexend",sans-serif!important;color:var(--m-ink,#111);opacity:.55;text-decoration:underline}
+#stpop{position:fixed;z-index:400;display:flex;flex-direction:column;gap:6px;min-width:180px;max-width:calc(100vw - 20px);padding:10px;border-radius:20px;background:#fff;box-shadow:inset 0 0 0 2px #111,0 10px 28px rgba(0,0,0,.25);
+  transform:scale(.85);opacity:0;transition:transform .18s cubic-bezier(.3,1.5,.5,1),opacity .15s}
+#stpop.on{transform:none;opacity:1}
+#stpop button{border:0;border-radius:99px;padding:9px 14px;background:transparent;box-shadow:inset 0 0 0 1.5px #111;color:#111;font:400 15px "Fun",sans-serif;text-align:left}
+#stpop button.on{background:#4b4b4b;color:#fff;box-shadow:none}
+#stpop .stcus{display:flex;gap:6px}#stpop .stcus[hidden]{display:none}#stpop .stcus input{flex:1;min-width:0;border:0;border-radius:12px;box-shadow:inset 0 0 0 1.5px #111;padding:8px 10px;font:400 16px "Fun",sans-serif}
+#stpop .stcus .ok{text-align:center;background:#4b4b4b;color:#fff;box-shadow:none}
+html body #setup#setup.b2.story:not(.p2)>.gobar{margin-top:auto!important}
 </style>
 </head>
 <body>
@@ -6868,6 +6885,58 @@ function showRules(){const e=$('gRules');if(!e)return;const g=S.game||'cricket',
     return out};
   e.innerHTML='<span class="rgoal"><i>Le but</i>'+nb(goal)+'</span>'+ps.map(x=>'<span class="rp">'+nb(x)+'</span>').join('')}
 {const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{showRules()}catch(e){}return r}}
+/* ===== lf-426 (essai) : page 1 = un texte d'explication ; les paramètres choisis y sont en surbrillance, on les touche pour les changer ===== */
+S.story=S.story!==false;
+const STF={
+  segMode:{standard:'tes points sont pour toi',cut:'tes points vont chez les adversaires'},
+  clegs:v=>v==1?'1 manche':v+' manches gagnantes',xlegs:v=>v==1?'1 manche':v+' manches gagnantes',
+  seq:{0:'dans l’ordre que tu veux',1:'dans l’ordre, du 15 à la Bulle'},
+  xstart:()=>String(S.xstart||501),
+  xin:{0:'tout compte dès la première fléchette',1:'il faut un double pour commencer'},
+  xout:{0:'on peut finir sur n’importe quelle case',1:'il faut finir sur un double'},
+  xrep:{1:'les autres finissent leur tour pour égaliser',0:'il gagne tout de suite'},
+  xhint:{1:'l’appli te propose un finish',0:'pas d’aide au finish'},
+  shr:v=>v+' tours',segShw:{1:'victoire immédiate',0:'gros bonus de points'},
+  clkm:{0:'chaque touche fait avancer d’une case',1:'double et triple font sauter des cases'},
+  clkr:{0:'chacun joue son tour',2:'une bonne volée te fait rejouer',3:'une très bonne volée te fait rejouer'},
+  clkb:{0:'jusqu’au 20',1:'jusqu’à la Bulle'},
+  segHiSeq:{0:'les cibles classiques',1:'tes propres cibles'},hid:v=>v+' fléchettes',
+  hip:{1:'une manche ratée coupe ton score en deux',0:'une manche ratée ne coûte rien'},
+  segLives:v=>v+' vies',kbonus:{1:'chaque vie enlevée t’en redonne une',0:'enlever une vie ne rapporte rien'},
+  kcarry:{1:'le gagnant d’une manche garde un avantage',0:'chaque manche repart à égalité'},
+  kdef:{1:'le dernier menacé a une dernière chance',0:'il n’y a pas de dernière chance'}};
+const STT={
+  cricket:'<b>Le but :</b> fermer le 15, 16, 17, 18, 19, 20 et la Bulle avant les autres.|Pour fermer un numéro, touche-le 3 fois : simple = 1, double = 2, triple = 3. Tu fermes {seq}.|Une fois fermé chez toi, chaque touche en plus marque des points : {segMode}.|La partie se joue en {clegs}.',
+  x01:'<b>Le but :</b> partir de {xstart} et descendre pile à zéro.|À ton tour, tu lances 3 fléchettes et on retire leur total. {^xin}, et {xout}. Si tu descends trop bas, c’est un bust.|Quand quelqu’un finit, {xrep}. {^xhint}.|La partie se joue en {xlegs}.',
+  killer:'<b>Le but :</b> être le dernier en vie. Chacun commence avec {segLives}.|Chacun a un numéro : touche le tien 3 fois pour devenir Killer, puis vise les numéros des autres pour leur enlever des vies.|{^kbonus}. {^kcarry}. À la fin, {kdef}.',
+  clock:'<b>Le but :</b> faire le tour de la cible le premier, du 1 {clkb}.|Touche les numéros dans l’ordre : {clkm}.|{^clkr}.',
+  shanghai:'<b>Le but :</b> faire le plus de points en {shr}.|À chaque tour, un seul numéro compte : le 1, puis le 2… Simple, double ou triple : 1, 2 ou 3 fois sa valeur.|Simple, double et triple du même numéro dans la volée : {segShw} !',
+  halveit:'<b>Le but :</b> faire le plus de points avec {segHiSeq}, {hid} par manche.|Simple, double ou triple : 1, 2 ou 3 fois la valeur de la cible.|{^hip}.'};
+const stSeg=k=>document.getElementById(k)||document.querySelector('#setup .seg[data-k="'+k+'"]');
+const stVal=k=>{const sg=stSeg(k),b=sg&&sg.querySelector('button.sel');return b?b.dataset.v:null};
+const stFrag=(k,v)=>{const f=STF[k];if(!f)return v;const t=typeof f==='function'?f(v):f[v];if(t!=null)return t;const b=stSeg(k)&&stSeg(k).querySelector(`button[data-v="${v}"]`);return b?b.textContent.trim():v};
+function storyRender(){const e=$('gRules');if(!e)return;SU.classList.toggle('story',!!S.story);if(!S.story){const l=SU.querySelector('.stlink');if(!l){const a=el('button','stlink','Voir en texte ›');a.addEventListener('click',()=>{haptic();S.story=true;store.set(K_S,S);renderSetup()});e.after(a)}return}
+  SU.querySelectorAll('.stlink').forEach(x=>x.remove());
+  const T=STT[S.game]||STT.cricket;
+  const html=T.split('|').map(p=>'<span class="stp">'+p.replace(/\{(\^?)(\w+)\}/g,(_,up,k)=>{let t=stFrag(k,stVal(k));if(up)t=t.charAt(0).toUpperCase()+t.slice(1);return`<span class="stk" role="button" tabindex="0" data-k="${k}">${t}</span>`})+'</span>').join('');
+  e.innerHTML='<div class="story">'+html+'</div><button class="stlist">Voir les réglages en liste ›</button>'}
+{const _sr=showRules;showRules=function(){_sr.apply(this,arguments);try{storyRender()}catch(x){console.warn(x)}}}
+/* toucher un mot en surbrillance : petite bulle avec les choix possibles */
+function stPop(btn){const k=btn.dataset.k,sg=stSeg(k);if(!sg)return;const old=$('stpop');if(old)old.remove();
+  const B=[...sg.querySelectorAll('button')].filter(b=>!b.classList.contains('xcus')||true);
+  const p=el('div','');p.id='stpop';
+  p.innerHTML=B.map(b=>{const v=b.dataset.v,cus=b.classList.contains('xcus');const lab=cus?'Autre score…':(typeof STF[k]==='function'?STF[k](v):(STF[k]&&STF[k][v])||b.textContent.trim());
+    return`<button data-v="${v}" class="${b.classList.contains('sel')?'on':''}${cus?' cus':''}">${lab.charAt(0).toUpperCase()+lab.slice(1)}</button>`}).join('')+(k==='xstart'?'<div class="stcus" hidden><input type="number" inputmode="numeric" min="2" max="1001" placeholder="2 à 1001"><button class="ok">OK</button></div>':'');
+  document.body.append(p);const r=btn.getBoundingClientRect(),w=p.offsetWidth,h=p.offsetHeight;
+  p.style.left=Math.max(10,Math.min(innerWidth-w-10,r.left+r.width/2-w/2))+'px';p.style.top=(r.bottom+h+10<innerHeight?r.bottom+8:Math.max(10,r.top-h-8))+'px';
+  requestAnimationFrame(()=>p.classList.add('on'));
+  p.addEventListener('click',e=>{e.stopPropagation();const c=e.target.closest('button');if(!c)return;
+    if(c.classList.contains('cus')){p.querySelector('.stcus').hidden=false;p.querySelector('input').focus();return}
+    if(c.classList.contains('ok')){const v=Math.round(+p.querySelector('input').value);if(!(v>=2&&v<=1001)){toast('ENTRE UN SCORE ENTRE 2 ET 1001','',true);return}S.xstart=v;store.set(K_S,S);p.remove();SFX.ui();renderSetup();return}
+    const b=sg.querySelector(`button[data-v="${c.dataset.v}"]`);haptic();if(b&&!b.classList.contains('sel'))b.click();p.remove();setTimeout(()=>{renderSetup()},30)})}
+document.addEventListener('click',e=>{const t=e.target;const k=t.closest&&t.closest('#setup .stk');if(k){e.stopPropagation();haptic();SFX.tick();stPop(k);return}
+  if(t.closest&&t.closest('#setup .stlist')){haptic();S.story=false;store.set(K_S,S);renderSetup();return}
+  const p=$('stpop');if(p&&!t.closest('#stpop'))p.remove()},true);
 /* 501 : score libre (x01) et plus de « Master » */
 if(S.xin===2)S.xin=1;if(S.xout===2)S.xout=1;
 function xcusSync(){const b=document.querySelector('#setup .xcus');if(!b)return;const std=[301,501,701].includes(S.xstart);
@@ -7531,7 +7600,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-425';   // à changer avec VERSION dans sw.js
+const APPV='lf-426';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
