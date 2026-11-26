@@ -3876,7 +3876,6 @@ html body #draw#draw .slot.lock{box-shadow:inset 0 0 0 var(--mn-cbw,2px) var(--m
 html body #ppick#ppick .rchipw{margin:4px 5px}
 #prof .prbadge{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 6px;border-radius:99px;background:var(--accent,#ff5a1f);color:#fff;font:400 12px "Fun",sans-serif;font-style:normal;vertical-align:2px}
 /* lf-417 : 3 pages — 1. le jeu (démos à faire glisser + règles) · 2. paramètres (avec explications) · 3. joueurs */
-html body #setup#setup.b2.p2>.grp:has(.sect.s2){display:none!important}
 html body #setup#setup.b2.pp :is(.seg.gamepick,#segBar,.gill,#gRules){display:none!important}
 html body #setup#setup.b2.pp>.grp:has(.sect.s2){margin-top:calc(var(--u)*1.5)!important;margin-bottom:auto!important}
 html body #setup#setup.b2:is(.p2,.pp) .gill{display:none!important}
@@ -3957,6 +3956,11 @@ html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRule
 ::view-transition-group(*){animation-duration:.32s;animation-timing-function:cubic-bezier(.3,1.25,.5,1)}
 html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup :is(.gpc .gpn,.gpq,.gpgo){font-family:"Fun",sans-serif!important;font-weight:400!important}
 html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .gpc .gpx{font-family:"UI",sans-serif!important;font-weight:750!important}
+
+/* lf-444 : page après le choix du jeu = joueurs (en haut) + options (dessous) */
+html body #setup#setup#setup.b2.p2>.grp:has(.sect.s1){margin-top:calc(var(--u,1dvh)*1.6)!important;margin-bottom:0!important}
+html body #setup#setup#setup.b2.p2>.grp:has(.sect.s2){margin-top:calc(var(--u,1dvh)*3)!important;margin-bottom:auto!important}
+html body #setup#setup#setup.b2.p2>.gobar{margin-top:calc(var(--u,1dvh)*2.4)!important}
 
 </style>
 </head>
@@ -5400,7 +5404,7 @@ function gpRules(){const c=$('gPick')&&$('gPick').querySelector('.gpc.big .gpr')
 setTimeout(()=>{const _s=showRules;showRules=function(){const r=_s.apply(this,arguments);try{gpRules()}catch(x){}return r}},0);
 const gpVT=f=>{if(document.startViewTransition&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.startViewTransition(f);else f()};
 $('gPick').addEventListener('click',e=>{const b=e.target.closest('.gpc');if(!b)return;const g=b.dataset.g;haptic();SFX.ui();
-  if(e.target.closest('.gpgo')){setupPage(1.5,1);return}
+  if(e.target.closest('.gpgo')){setupPage(2,1);return}
   gpVT(()=>{GPO=GPO===g?null:g;if(g!==S.game&&GPO)setGame(g);else gpRender()})});
 /* glisser le doigt vers la gauche / la droite sur la page des règles : jeu suivant / précédent */
 {let sx=null,sy=0,st=0;const SU0=$('setup');
@@ -6613,7 +6617,7 @@ function setupPage(n,anim){if(typeof noInertia==='function')noInertia();
     c.querySelectorAll('[id]').forEach(e=>e.removeAttribute('id'));c.removeAttribute('id');c.classList.add('gghost');
     Object.assign(c.style,{position:'fixed',left:r.left+'px',top:r.top+'px',width:r.width+'px',height:r.height+'px',margin:'0',pointerEvents:'none',zIndex:5});SU.append(c);
     c.animate([{transform:'none'},{transform:`translateX(${fw?-110:110}%)`}],{duration:520,easing:'cubic-bezier(.65,0,.25,1)',fill:'forwards'}).onfinish=()=>c.remove()})}if(!anim)SU._pg=n;SU.classList.toggle('p2',n===2);SU.classList.toggle('pp',n===1.5);SU.classList.toggle('p0',n===0);SU.classList.toggle('p1',n===1);$('go').innerHTML='<span>'+(n===2?'Lancer la partie':n===1.5?'Joueurs':'Paramètres')+'</span>';
-  SU.querySelector('.sh h1').textContent=n===2?'Joueurs':n===1.5?'Paramètres':n===1?'Les règles':'Nouvelle partie';requestAnimationFrame(fitP2);SU.scrollTop=0;$('ppick').classList.remove('on');
+  SU.querySelector('.sh h1').textContent=n===2?'La partie':n===1.5?'Paramètres':n===1?'Les règles':'Nouvelle partie';requestAnimationFrame(fitP2);SU.scrollTop=0;$('ppick').classList.remove('on');
   if(typeof placeThumbs==='function')requestAnimationFrame(placeThumbs);
   SU.classList.remove('p1in','p2in');if(anim){void SU.offsetWidth;SU.classList.add(SU._pg>=1.5&&n>1?'p2in':'p1in');clearTimeout(SU._pt);SU._pt=setTimeout(()=>SU.classList.remove('p1in','p2in'),950)}}
 /* lf-415 : page 2 = paramètres de partie + joueurs ; tout tient sans défiler (zoom auto si besoin) */
@@ -6658,8 +6662,8 @@ function optHelp(){document.querySelectorAll('#setup .opt').forEach(o=>{const sg
 document.getElementById('setup').addEventListener('click',()=>setTimeout(()=>{optHelp();fitP2()},30));
 {const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{optHelp()}catch(e){}requestAnimationFrame(fitP2);return r}}
 {const _show=show;show=function(id){if(id==='setup'&&!SU.classList.contains('on')){GPO=null;try{gpRender()}catch(x){}setupPage(0)}_show(id)}}
-$('go').addEventListener('click',e=>{const p=SU._pg||0;if(p<2){e.stopImmediatePropagation();haptic();SFX.ui();setupPage(p<1.5?1.5:2,1)}},true);
-$('sBack').addEventListener('click',e=>{const p=SU._pg||0;if(p>0){e.stopImmediatePropagation();haptic();SFX.back();setupPage(p>1.5?1.5:0,1)}},true);
+$('go').addEventListener('click',e=>{const p=SU._pg||0;if(p<2){e.stopImmediatePropagation();haptic();SFX.ui();setupPage(2,1)}},true);
+$('sBack').addEventListener('click',e=>{const p=SU._pg||0;if(p>0){e.stopImmediatePropagation();haptic();SFX.back();setupPage(0,1)}},true);
 /* panneau « Ajouter un joueur » ouvert : on laisse de la place sous la liste */
 new MutationObserver(()=>SU.classList.toggle('pk',$('ppick').classList.contains('on'))).observe($('ppick'),{attributes:true,attributeFilter:['class']});
 
@@ -7616,7 +7620,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-443';   // à changer avec VERSION dans sw.js
+const APPV='lf-444';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
