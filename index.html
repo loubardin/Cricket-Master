@@ -3930,7 +3930,7 @@ html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRule
   background:var(--gc);box-shadow:inset 0 0 0 2.5px #111,0 0 0 4px var(--gc);color:#fff;cursor:pointer;text-align:center;-webkit-tap-highlight-color:transparent}
 #setup .gpc:active:not(.big){transform:scale(.96)}
 #setup .gph{display:flex;flex-direction:column;align-items:center;gap:4px}
-#setup .gpb{width:min(17vw,70px);height:min(17vw,70px);overflow:visible;flex:none}
+#setup .gpb{width:min(19vw,80px);height:min(19vw,80px);overflow:visible;flex:none}
 #setup .gpn{font:400 23px/1 "Fun",sans-serif;color:#fff;-webkit-text-stroke:1.4px #111;paint-order:stroke fill;text-shadow:0 2px 0 #111}
 #setup .gpx{font:750 12px/1.2 "UI",sans-serif;color:#fff;opacity:.95}
 /* un jeu ouvert : sa case prend toute la largeur, les autres se font petites */
@@ -3941,9 +3941,9 @@ html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRule
 #setup .gpick.open .gpc:not(.big) .gpn{font-size:18px}
 #setup .gpick.open .gpc:not(.big) .gpx{display:none}
 #setup .gpc.big{grid-column:1/-1;aspect-ratio:auto;align-items:stretch;justify-content:flex-start;gap:8px;padding:16px 18px 18px;text-align:left;cursor:default}
-#setup .gpc.big .gph{flex-direction:row;gap:12px}
-#setup .gpc.big .gpb{width:56px;height:56px}
-#setup .gpc.big .gpn{font-size:30px}
+#setup .gpc.big .gph{flex-direction:row-reverse;justify-content:space-between;align-items:center;gap:12px;margin:-2px 0 2px}
+#setup .gpc.big .gpb{width:74px;height:74px}
+#setup .gpc.big .gpn{font-size:46px;-webkit-text-stroke:2px #111;text-shadow:0 3px 0 #111;letter-spacing:.01em}
 #setup .gpc.big .gpx{display:none}
 #setup .gpr{display:flex;flex-direction:column;gap:6px;color:#fff}
 #setup .gpr .rgoal{display:block;font-size:18px;line-height:1.25;-webkit-text-stroke:.6px #111;paint-order:stroke fill}
@@ -5368,20 +5368,31 @@ $('segBar').addEventListener('click',e=>{const v=e.target.dataset.v;if(v){haptic
 /* lf-440 : choix du jeu en cases façon Killer (dessin + petite info) → page des règles → page des paramètres → joueurs */
 const GPK={cricket:{c:'#1fa2d6',t:'Ferme le 15 au 20'},x01:{c:'#ff8a1f',t:'Descends pile à zéro'},killer:{c:'#ef3b4f',t:'Le dernier en vie gagne'},
   clock:{c:'#7b5cd6',t:'Fais le tour de la cible'},shanghai:{c:'#ff5fa2',t:'Un numéro par tour'},halveit:{c:'#22b573',t:'Rate et tu perds la moitié'}};
-const GPI=(()=>{const K='#111',W='#fff',s=`stroke="${K}" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"`,
-  T=(x,y,t,z,f=W)=>`<text x="${x}" y="${y}" text-anchor="middle" style="font:400 ${z}px Fun,sans-serif!important" fill="${f}"${f===W?` stroke="${K}" stroke-width="2.4" paint-order="stroke"`:''}>${t}</text>`,
-  tl=(x,y,w,h)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="5" fill="${W}" ${s}/>`;
+/* lf-443 : illustrations « bulle » — l'aplat est décalé et dépasse de son contour noir ; trait fin, peu d'éléments */
+const GPI=(()=>{const K='#111',W='#fff',Y='#ffd23f',o=2.2,sw=2.3,
+  /* B : forme en bulle (aplat décalé + contour) ; L : trait seul */
+  B=(d,f=W)=>`<path d="${d}" fill="${f}" transform="translate(${o} ${o})"/><path d="${d}" fill="none" stroke="${K}" stroke-width="${sw}" stroke-linejoin="round" stroke-linecap="round"/>`,
+  L=(d,w=sw)=>`<path d="${d}" fill="none" stroke="${K}" stroke-width="${w}" stroke-linejoin="round" stroke-linecap="round"/>`,
+  C=(cx,cy,r)=>`M${cx-r} ${cy}a${r} ${r} 0 1 0 ${2*r} 0a${r} ${r} 0 1 0 ${-2*r} 0z`,
+  RR=(x,y,w,h,r)=>`M${x+r} ${y}h${w-2*r}a${r} ${r} 0 0 1 ${r} ${r}v${h-2*r}a${r} ${r} 0 0 1 ${-r} ${r}h${-(w-2*r)}a${r} ${r} 0 0 1 ${-r} ${-r}v${-(h-2*r)}a${r} ${r} 0 0 1 ${r} ${-r}z`,
+  T=(x,y,t,z)=>`<text x="${x}" y="${y}" text-anchor="middle" style="font:400 ${z}px Fun,sans-serif!important" fill="${K}">${t}</text>`;
   return{
-   cricket:`<circle cx="20" cy="20" r="16" fill="${W}" ${s}/><path d="M12 12L28 28M28 12L12 28" stroke="${K}" stroke-width="4.6" stroke-linecap="round"/>`,
-   x01:`<path d="M7 33L25 15" stroke="${K}" stroke-width="10" stroke-linecap="round"/><path d="M7 33L25 15" stroke="${W}" stroke-width="5" stroke-linecap="round"/><path d="M23 17l1-13 12 12-13 1z" fill="${W}" ${s}/><path d="M24.5 15.5l6-6" ${s}/><path d="M7 33l-4 4" ${s}/>`,
-   killer:`<path d="M20 37L3 20A10.3 10.3 0 0 1 20 5.7A10.3 10.3 0 0 1 37 20Z" fill="${W}" ${s}/>`,
-   clock:`<circle cx="20" cy="20" r="16" fill="${W}" ${s}/><path d="M20 20V10M20 20l7 4" ${s}/><circle cx="20" cy="20" r="2.2" fill="${K}"/>`,
-   shanghai:tl(2,9,11,22)+tl(14.5,9,11,22)+tl(27,9,11,22)+T(7.5,25,'S',13,'#111')+T(20,25,'D',13,'#111')+T(32.5,25,'T',13,'#111'),
-   halveit:`<circle cx="20" cy="20" r="16" fill="${W}" ${s}/><path d="M20 4a16 16 0 0 0 0 32z" fill="${K}" opacity=".85"/><circle cx="20" cy="20" r="16" fill="none" ${s}/>`}})();
+   /* cricket : les trois marques — une, deux, fermé */
+   cricket:B(RR(1,15,46,19,9.5))+L('M8.5 29l5-10',2.6)+L('M20 19.5l8 9M28 19.5l-8 9',2.6)+L(C(38,24,5.6),2.3)+L('M34.6 20.6l6.8 6.8M41.4 20.6l-6.8 6.8',2.1)+L('M16.5 17v15M31.5 17v15',1.6),
+   /* 501 : une fléchette en vol */
+   x01:B('M7 37l3.5-3.5 17-17 4.5 4.5-17 17L11.5 41.5z')+B('M27.5 16.5l3-13 14 14-13 3z',Y)+L('M31.5 16.5l7-7')+L('M9 39.5l-6 6',2.8)+L('M30 34h12M26 41h10',2.2),
+   /* killer : un cœur dans le viseur */
+   killer:B('M24 38L11 25.5a7.5 7.5 0 0 1 13-8 7.5 7.5 0 0 1 13 8z')+L(C(24,25,17),2)+L('M24 4v6M24 40v6M3 25h6M39 25h6',2.2),
+   /* horloge : cadran, aiguilles, quatre repères */
+   clock:B(C(24,24,17))+L('M24 24V13M24 24l7 5',2.6)+L('M24 9.5v2.5M38.5 24H36M24 38.5V36M9.5 24H12',2)+`<circle cx="24" cy="24" r="2" fill="${K}"/>`,
+   /* shanghai : simple, double, triple — trois cases qui montent */
+   shanghai:B(RR(2,25,13,18,3.5))+B(RR(17.5,15,13,28,3.5))+B(RR(33,5,13,38,3.5),Y)+T(8.5,38,'1',11)+T(24,33,'2',11)+T(39.5,28,'3',11),
+   /* halve-it : la moitié tranchée */
+   halveit:B('M22 7a17 17 0 0 0 0 34z')+L('M27 7a17 17 0 0 1 0 34z')+L('M24.5 3v42',1.8).replace('stroke-linecap="round"','stroke-dasharray="2.5 3"')}})();
 /* lf-442 : DA bulle (couleur qui dépasse du cadre noir) ; toucher un jeu = sa case s'agrandit (règles + « On y va ») */
 let GPO=null;
 const gpCard=(g,i)=>{const P=GPK[g],big=g===GPO,R='';return`<div class="gpc${big?' big':''}" role="button" tabindex="0" data-g="${g}" style="--gc:${P.c};view-transition-name:gp-${g};order:${big?(i-i%2)*2-1:i*2}">`
-  +`<div class="gph"><svg class="gpb" viewBox="0 0 40 40" aria-hidden="true">${GPI[g]}</svg><span class="gpn">${GNAME[g]}</span></div><span class="gpx">${P.t}</span>`
+  +`<div class="gph"><svg class="gpb" viewBox="0 0 48 48" aria-hidden="true">${GPI[g]}</svg><span class="gpn">${GNAME[g]}</span></div><span class="gpx">${P.t}</span>`
   +(big?`<div class="gpr">${R}</div><span class="gpgo" role="button">On y va !</span>`:'')+'</div>'};
 function gpRender(){const P=$('gPick');if(!P)return;P.classList.toggle('open',!!GPO);P.innerHTML='<h2 class="gpq">À quoi on joue ?</h2>'+GAMES.map(gpCard).join('');gpRules()}
 {const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{gpRender()}catch(x){}return r}}
@@ -7605,7 +7616,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-442';   // à changer avec VERSION dans sw.js
+const APPV='lf-443';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
