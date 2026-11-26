@@ -3967,6 +3967,23 @@ html body #setup#setup#setup.b2.p2 .grp:has(.sect.s2) .glab{padding-top:10px!imp
 html body #setup#setup#setup.b2.p2 .opt{row-gap:4px!important}
 html body #setup#setup#setup.b2.p2 .opt .ohelp{margin-top:2px!important}
 html body #setup#setup#setup.b2.p2 .nlab{margin-bottom:-6px!important}
+/* lf-446 : interrupteurs des réglages secondaires (page joueurs + options) */
+#setup .tsw{display:none}
+html body #setup#setup#setup.b2.p2 .opt.istg{order:9!important;flex:1 1 100%!important;width:100%!important;max-width:none!important;grid-template-areas:none!important;grid-template-columns:1fr!important;min-height:0!important;margin:0!important;padding:0!important}
+html body #setup#setup#setup.b2.p2 .opt.istg>.tsw{grid-column:1/-1!important;grid-row:auto!important;grid-area:auto!important}
+html body #setup#setup#setup.b2.p2 .kpair:has(.istg){display:contents!important}html body #setup#setup#setup.b2.p2 .sect>.opt:not(.istg){order:1!important}
+html body #setup#setup#setup.b2.p2 .opt.istg>:not(.tsw){display:none!important}
+html body #setup#setup#setup.b2.p2 .opt.istg>.tsw{display:flex!important;align-items:center;justify-content:space-between;gap:12px;width:100%;margin:0;padding:3px 2px 3px 4px;border:0;background:none;color:var(--m-ink,#111);cursor:pointer;-webkit-tap-highlight-color:transparent}
+html body #setup#setup#setup.b2.p2 .tsw .tsl{font:600 15.5px/1.2 "UI",sans-serif;text-align:left}
+html body #setup#setup#setup.b2.p2 .tsw i{position:relative;flex:none;width:46px;height:27px;border-radius:99px;background:var(--m-cell,#ece5d3);box-shadow:inset 0 0 0 2.5px #111;transition:background .15s}
+html body #setup#setup#setup.b2.p2 .tsw i::after{content:"";position:absolute;left:4px;top:4px;width:19px;height:19px;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 2.5px #111;transition:transform .18s cubic-bezier(.3,1.4,.5,1)}
+html body #setup#setup#setup.b2.p2 .tsw.on i{background:#4b4b4b;box-shadow:inset 0 0 0 2.5px #111,0 0 0 3px #4b4b4b}
+html body #setup#setup#setup.b2.p2 .tsw.on i::after{transform:translateX(19px)}
+html body #setup#setup#setup.b2.p2 .tsw .tsl{opacity:.6}html body #setup#setup#setup.b2.p2 .tsw.on .tsl{opacity:1}
+html body #setup#setup#setup.b2.p2 .sect:has(.opt.istg){row-gap:12px!important}
+html body #setup#setup#setup.b2.p2 .opt.istg+.opt.istg{margin-top:-4px!important}
+html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p2 .tsw .tsl{font-family:"UI",sans-serif!important;font-weight:600!important}
+
 </style>
 </head>
 <body>
@@ -5373,6 +5390,20 @@ function setGame(v){if(v==='bar')v=BARG.includes(S.game)?S.game:(S.lastBar||'kil
   const g=document.querySelector('#setup .grp:has(.sect.s2)');if(g){g.classList.remove('gslideL','gslideR');void g.offsetWidth;g.classList.add(d>0?'gslideL':'gslideR')}}
 $('segGame').addEventListener('click',e=>{const v=e.target.dataset.v;if(v)setGame(v)});
 $('segBar').addEventListener('click',e=>{const v=e.target.dataset.v;if(v){haptic();SFX.ui();setGame(v)}});
+
+/* lf-446 : page joueurs + options — les réglages secondaires (deux choix) deviennent de petits interrupteurs « marqué / pas marqué » ; les importants restent en grand */
+const TOG={'Équipes':['Équipes','1'],'Qui commence ?':['Ordre au hasard','draw'],'Enjeu':['On joue quelque chose','1'],'Mode':['Coupe-gorge','cut'],
+  'Fermeture':['Fermer dans l’ordre (15 → Bulle)','1'],'Entrée':['Entrée sur un double','1'],'Sortie':['Sortie sur un double','1'],'Droit de réponse':['Droit de réponse','1'],
+  'Aide finish':['Aide au finish','1'],'Numéros':['Numéros au hasard','draw'],'Tuer = +1 ♥':['Tuer redonne une vie','1'],'Vainqueur +1 ♥':['Le vainqueur garde +1 vie','1'],
+  'Défense finale':['Défense finale','1'],'Double / triple':['Double et triple font sauter','1'],'Arrivée':['Finir à la Bulle','1'],'Shanghai =':['Shanghai = victoire','1'],
+  'Cibles':['Cibles perso','1'],'Pénalité ÷ 2':['Cible ratée = score ÷ 2','1']};
+function tgSync(){$('setup').querySelectorAll(':scope>.grp .opt').forEach(o=>{const sp=o.querySelector(':scope>span');if(!sp)return;const lab=o.dataset.tl0||sp.textContent.replace(/\s+/g,' ').trim(),t=TOG[lab];if(!t)return;
+  o.dataset.tl0=lab;const sg=o.querySelector('.seg');if(!sg)return;let w=o.querySelector(':scope>.tsw');
+  if(!w){w=document.createElement('button');w.type='button';w.className='tsw';w.innerHTML='<span class="tsl"></span><i></i>';o.appendChild(w);
+    w.addEventListener('click',e=>{e.stopPropagation();const on=w.classList.contains('on'),b=[...sg.querySelectorAll('button')].find(x=>on?x.dataset.v!==t[1]:x.dataset.v===t[1]);if(b)b.click();setTimeout(tgSync,0)})}
+  w.querySelector('.tsl').textContent=t[0];o.classList.add('istg');const sel=sg.querySelector('button.sel');w.classList.toggle('on',!!sel&&sel.dataset.v===t[1])})}
+{const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{tgSync()}catch(x){}return r}}
+setTimeout(()=>{try{tgSync()}catch(x){}},0);
 
 /* lf-440 : choix du jeu en cases façon Killer (dessin + petite info) → page des règles → page des paramètres → joueurs */
 const GPK={cricket:{c:'#1fa2d6',t:'Ferme le 15 au 20'},x01:{c:'#ff8a1f',t:'Descends pile à zéro'},killer:{c:'#ef3b4f',t:'Le dernier en vie gagne'},
@@ -7625,7 +7656,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-445';   // à changer avec VERSION dans sw.js
+const APPV='lf-446';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
