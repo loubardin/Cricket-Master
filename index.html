@@ -3925,33 +3925,28 @@ html body #setup#setup .stlist,html body #setup#setup .stlink{display:block;marg
 #stpop .stcus{display:flex;gap:6px}#stpop .stcus[hidden]{display:none}#stpop .stcus input{flex:1;min-width:0;border:0;border-radius:12px;box-shadow:inset 0 0 0 1.5px #111;padding:8px 10px;font:400 16px "Fun",sans-serif}
 #stpop .stcus .ok{text-align:center;background:#4b4b4b;color:#fff;box-shadow:none}
 html body #setup#setup.b2.story:not(.p2)>.gobar{margin-top:auto!important}
-/* lf-433 : page 1 en cartes à jouer (DA bulle : contour noir, ombre dure, aplats) */
+/* lf-434 : page 1 façon lobby — bandeau but, lignes « intitulé ◀ valeur ▶ », règles en bas */
 #stpop button.on{background:var(--accent)!important}#stpop .stcus .ok{background:var(--accent)!important}
-html body #setup#setup .story{color:var(--m-ink,#111)!important;margin-top:6px;display:flex;flex-direction:column;gap:12px}
-html body #setup#setup .story .sti{display:block;flex:none;width:40px;height:40px;overflow:visible}
-html body #setup#setup .story .sgoal{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:20px;background:var(--accent);box-shadow:inset 0 0 0 2.5px #111,0 4px 0 #111;transform:rotate(-.6deg)}
-html body #setup#setup .story .sgoal .sti{width:54px;height:54px}
+html body #setup#setup .story{color:var(--m-ink,#111)!important;margin-top:6px;display:flex;flex-direction:column;gap:14px}
+html body #setup#setup .story .sti{display:block;flex:none;width:52px;height:52px;overflow:visible}
+html body #setup#setup .story .sgoal{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:20px;background:var(--accent);box-shadow:inset 0 0 0 2.5px #111,0 4px 0 #111}
 html body #setup#setup .story .sgl{display:block;font:700 11px/1 "Txt",sans-serif!important;letter-spacing:.1em;text-transform:uppercase;color:#fff;opacity:.85;margin-bottom:3px}
-html body #setup#setup .story .sgt{margin:0!important;font:400 23px/1.22 "Fun",sans-serif!important;color:#fff!important;text-shadow:0 1.5px 0 rgba(0,0,0,.25)}
+html body #setup#setup .story .sgt{margin:0!important;font:400 23px/1.2 "Fun",sans-serif!important;color:#fff!important;text-shadow:0 1.5px 0 rgba(0,0,0,.25)}
 html body #setup#setup .story .sgt b{font:inherit!important;color:#ffd23f!important}
-html body #setup#setup .story .scards{display:grid;grid-template-columns:1fr 1fr;gap:12px 10px}
-html body #setup#setup .story .scd{display:flex;flex-direction:column;gap:4px;min-width:0;padding:10px 11px 11px;border-radius:18px;background:var(--m-cell,#fff);box-shadow:inset 0 0 0 2.5px #111,0 4px 0 #111;cursor:pointer}
-html body #setup#setup .story .scd:nth-child(odd){transform:rotate(-.8deg)}html body #setup#setup .story .scd:nth-child(even){transform:rotate(.8deg)}
-html body #setup#setup .story .scd:active{transform:translateY(3px);box-shadow:inset 0 0 0 2.5px #111,0 1px 0 #111}
-html body #setup#setup .story .scd.info{cursor:default;background:transparent;box-shadow:inset 0 0 0 2.5px #111;border:0}
-html body #setup#setup .story .scd.info:active{transform:none}
-html body #setup#setup .story .scards>.scd:last-child:nth-child(odd){grid-column:1/-1;transform:rotate(-.4deg);display:grid;grid-template-columns:1fr auto;align-items:center;column-gap:10px}
-html body #setup#setup .story .scards>.scd:last-child:nth-child(odd)>.scx{grid-column:1}html body #setup#setup .story .scards>.scd:last-child:nth-child(odd)>.scv{grid-column:2;grid-row:1/span 2;margin:0;padding:0;justify-content:flex-end}
-html body #setup#setup .story .sch{display:flex;align-items:center;gap:8px;min-height:40px}
-html body #setup#setup .story .sct{font:400 19.5px/1.1 "Fun",sans-serif!important;color:var(--m-ink,#111)}
-html body #setup#setup .story .scx{font:500 14.5px/1.3 "Txt",sans-serif!important;color:var(--m-ink,#111);opacity:.7}
-html body #setup#setup .story .scv{display:flex;flex-wrap:wrap;gap:5px;margin-top:auto;padding-top:4px}
-html body #setup#setup .story .stk{display:inline-block;border:0;margin:0;padding:4px 11px 5px;border-radius:99px;white-space:nowrap!important;max-width:100%;
-  background:var(--accent)!important;color:#fff!important;box-shadow:inset 0 0 0 2px #111!important;font:400 18px/1.2 "Fun",sans-serif!important;cursor:pointer}
-html body #setup#setup .story .sgt .stk{background:#fff!important;color:var(--accent)!important;font-size:inherit!important;padding:0 10px 2px;text-shadow:none}
-#setup .story .stk:active{transform:scale(.94)}
-html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sgt,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sct,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .stk,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sti text{font-family:"Fun",sans-serif!important;font-weight:400!important}
-html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sgl,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .scx{font-family:"Txt",sans-serif!important}html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sgl{font-weight:700!important}html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .scx{font-weight:500!important}
+html body #setup#setup .story .srows{display:flex;flex-direction:column;gap:10px}
+html body #setup#setup .story .srow{display:flex;align-items:center;gap:8px;min-height:54px;padding:6px 7px 6px 14px;border-radius:18px;background:var(--m-cell,#fff);box-shadow:inset 0 0 0 2.5px #111,0 3px 0 #111}
+html body #setup#setup .story .srl{flex:1 1 auto;min-width:0;font:400 17.5px/1.08 "Fun",sans-serif!important;color:var(--m-ink,#111)}
+html body #setup#setup .story .sstep{flex:none;display:flex;align-items:center;gap:4px}
+html body #setup#setup .story .sarr{flex:none;width:34px;height:34px;padding:0;border:0;border-radius:50%;background:var(--accent);box-shadow:inset 0 0 0 2.5px #111,0 2px 0 #111;position:relative;cursor:pointer}
+html body #setup#setup .story .sarr::after{content:"";position:absolute;left:50%;top:50%;width:0;height:0;border-style:solid;border-width:7px 0 7px 11px;border-color:transparent transparent transparent #fff;transform:translate(-35%,-50%)}
+html body #setup#setup .story .sarr[data-d="-1"]::after{transform:translate(-65%,-50%) scaleX(-1)}
+html body #setup#setup .story .sarr:active{transform:translateY(2px);box-shadow:inset 0 0 0 2.5px #111}
+html body #setup#setup .story .stv{display:flex;align-items:center;justify-content:center;width:112px;height:38px;overflow:hidden;cursor:pointer}
+html body #setup#setup .story .stv>i{font:400 19px/1 "Fun",sans-serif!important;font-style:normal!important;white-space:nowrap!important;color:var(--accent)}
+html body #setup#setup .story .srul{margin:0!important;font:500 15.5px/1.45 "Txt",sans-serif!important;color:var(--m-ink,#111);opacity:.8}
+html body #setup#setup .story .srul b{font:inherit!important;font-weight:700!important}
+html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sgt,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .srl,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .stv>i,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sti text{font-family:"Fun",sans-serif!important;font-weight:400!important}
+html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sgl,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .srul,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .srul b{font-family:"Txt",sans-serif!important}html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sgl,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .srul b{font-weight:700!important}html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .srul{font-weight:500!important}
 </style>
 </head>
 <body>
@@ -6909,36 +6904,36 @@ function showRules(){const e=$('gRules');if(!e)return;const g=S.game||'cricket',
 {const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{showRules()}catch(e){}return r}}
 /* ===== lf-426 (essai) : page 1 = un texte d'explication ; les paramètres choisis y sont en surbrillance, on les touche pour les changer ===== */
 S.story=S.story!==false;
-/* lf-433 : page 1 en cartes à jouer — une carte « but » + une carte par règle (pictogramme, titre, réglage en pastille) */
+/* lf-434 : page 1 façon lobby (Mario Kart) — bandeau « but », une ligne par réglage « intitulé ◀ valeur ▶ », règles en bas */
 const STF={
-  segMode:{standard:'pour toi',cut:'contre les autres'},
-  clegs:v=>v==1?'1 manche':v+' manches',xlegs:v=>v==1?'1 manche':v+' manches',
-  seq:{0:'dans le désordre',1:'dans l’ordre'},
+  segMode:{standard:'Pour toi',cut:'Pour les autres'},
+  clegs:v=>String(v),xlegs:v=>String(v),
+  seq:{0:'Désordre',1:'Dans l’ordre'},
   xstart:()=>String(S.xstart||501),
-  xin:{0:'direct',1:'sur un double'},xout:{0:'n’importe où',1:'sur un double'},
-  xrep:{1:'on finit le tour',0:'il gagne direct'},xhint:{1:'avec aide',0:'sans aide'},
-  shr:v=>v+' tours',segShw:{1:'victoire',0:'gros bonus'},
-  clkm:{0:'comptent pour 1',1:'font avancer'},
-  clkr:{0:'jamais',2:'dès 2 touches',3:'dès 3 touches'},
-  clkb:{0:'au 20',1:'à la Bulle'},
-  segHiSeq:{0:'classiques',1:'perso'},hid:v=>v+' fléchettes',
-  hip:{1:'score ÷ 2',0:'aucune pénalité'},
-  segLives:v=>v+' vies',kbonus:{1:'+1 vie',0:'rien'},
-  kcarry:{1:'avantage au gagnant',0:'tous à égalité'},
-  kdef:{1:'peut se défendre',0:'éliminé direct'}};
+  xin:{0:'Direct',1:'Double'},xout:{0:'Libre',1:'Double'},
+  xrep:{1:'Tour fini',0:'Gagne direct'},xhint:{1:'Oui',0:'Non'},
+  shr:v=>String(v),segShw:{1:'Victoire',0:'Gros bonus'},
+  clkm:{0:'Valent 1',1:'Font avancer'},
+  clkr:{0:'Jamais',2:'Dès 2 touches',3:'Dès 3 touches'},
+  clkb:{0:'Au 20',1:'À la Bulle'},
+  segHiSeq:{0:'Classiques',1:'Perso'},hid:v=>String(v),
+  hip:{1:'Score ÷ 2',0:'Aucune'},
+  segLives:v=>String(v),kbonus:{1:'+1 vie',0:'Rien'},
+  kcarry:{1:'Avantage',0:'Égalité'},
+  kdef:{1:'Se défend',0:'Éliminé'}};
 const STC={
-  cricket:{goal:['board','Ferme le <b>15 au 20</b> et la <b>Bulle</b> avant les autres'],cards:[
-    ['marks','Fermer','3 touches par numéro','seq'],['star','Points','sur un numéro fermé','segMode'],['cup','Victoire','','clegs']]},
-  x01:{goal:['zero','Descends de {xstart} à <b>zéro pile</b>'],cards:[
-    ['flag','Départ','','xin'],['boom','Bust','trop bas : volée annulée'],['finish','Finish','','xout','xhint'],['timer','Premier à zéro','','xrep'],['cup','Victoire','','xlegs']]},
-  killer:{goal:['heart','Sois le <b>dernier en vie</b>'],cards:[
-    ['hearts','Vies','','segLives'],['scope','Killer','3 touches sur ton numéro, puis vise les autres'],['heartplus','Élimination','','kbonus'],['shield','Dernier menacé','','kdef'],['again','Manche suivante','','kcarry']]},
-  clock:{goal:['clock','Fais le tour de la cible, du 1 {clkb}'],cards:[
-    ['order','Dans l’ordre','1, 2, 3… sans sauter'],['x23','Double, triple','','clkm'],['again','Rejouer','','clkr']]},
-  shanghai:{goal:['board','Marque le <b>plus de points</b> en {shr}'],cards:[
-    ['one','Un seul numéro','par tour : le 1, puis le 2…'],['sdt','Shanghai','simple + double + triple','segShw']]},
-  halveit:{goal:['half','Marque le <b>plus de points</b> sans être coupé en deux'],cards:[
-    ['board','Cibles','une par manche','segHiSeq'],['dart','Par manche','','hid'],['half','Cible ratée','','hip']]}};
+  cricket:{goal:['board','Ferme le <b>15 au 20</b> et la <b>Bulle</b> avant les autres'],rows:[['Ordre','seq'],['Points','segMode'],['Manches','clegs']],
+    rules:'3 touches ferment un numéro. Une fois fermé, il marque des points.'},
+  x01:{goal:['zero','Descends à <b>zéro pile</b>'],rows:[['Score','xstart'],['Départ','xin'],['Finish','xout'],['Aide','xhint'],['Premier à 0','xrep'],['Manches','xlegs']],
+    rules:'Chaque volée est retirée du score. Trop bas : <b>bust</b>, la volée est annulée.'},
+  killer:{goal:['heart','Sois le <b>dernier en vie</b>'],rows:[['Vies','segLives'],['Élimination','kbonus'],['Dernier menacé','kdef'],['Manche suivante','kcarry']],
+    rules:'3 touches sur ton numéro : tu deviens <b>Killer</b>. Toucher le numéro d’un autre lui coûte une vie.'},
+  clock:{goal:['clock','Fais le <b>tour de la cible</b> le premier'],rows:[['Arrivée','clkb'],['Double, triple','clkm'],['Rejouer','clkr']],
+    rules:'Touche les numéros dans l’ordre, à partir du 1.'},
+  shanghai:{goal:['board','Marque le <b>plus de points</b>'],rows:[['Tours','shr'],['Shanghai','segShw']],
+    rules:'Un seul numéro compte par tour : le 1, puis le 2… Simple + double + triple du même numéro : <b>Shanghai</b>.'},
+  halveit:{goal:['half','Marque le <b>plus de points</b> sans être coupé en deux'],rows:[['Cibles','segHiSeq'],['Fléchettes','hid'],['Cible ratée','hip']],
+    rules:'Chaque manche a sa cible : rate-la et ton score est puni.'}};
 /* pictogrammes 40×40 dans la DA : trait noir, aplats orange / blanc / jaune / rouge */
 const STI=(()=>{const A='var(--accent)',W='#fff',Y='#ffd23f',R='#ff4d5e',K='#111',s=`stroke="${K}" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"`,
   H=(x,y,k,f)=>`<path transform="translate(${x} ${y}) scale(${k})" d="M0 9L-8.5 .5A5 5 0 0 1 0-6.5A5 5 0 0 1 8.5 .5Z" fill="${f}" ${s}/>`,
@@ -6974,15 +6969,13 @@ const stFrag=(k,v)=>{const f=STF[k];if(!f)return v;const t=typeof f==='function'
 function storyRender(){const e=$('gRules');if(!e)return;SU.classList.toggle('story',!!S.story);if(!S.story){const l=SU.querySelector('.stlink');if(!l){const a=el('button','stlink','Voir en texte ›');a.addEventListener('click',()=>{haptic();S.story=true;store.set(K_S,S);renderSetup()});e.after(a)}return}
   SU.querySelectorAll('.stlink').forEach(x=>x.remove());
   const T=STC[S.game]||STC.cricket,nb=x=>x.replace(/ ([:!?;])/g,' $1');
-  const pill=k=>`<span class="stk" role="button" tabindex="0" data-k="${k}">${stFrag(k,stVal(k))}</span>`;
-  const tok=x=>nb(x).replace(/\{(\w+)\}/g,(_,k)=>pill(k));
-  const card=([ic,t,d,k,k2],i)=>`<div class="scd${k?'':' info'}"${k?` data-k="${k}"`:''}><div class="sch">${stIco(ic)}<span class="sct">${nb(t)}</span></div>`
-    +(d?`<span class="scx">${nb(d)}</span>`:'')+(k?`<div class="scv">${pill(k)}${k2?pill(k2):''}</div>`:'')+'</div>';
-  e.innerHTML='<div class="story"><div class="sgoal">'+stIco(T.goal[0])+'<div><span class="sgl">Le but</span><p class="sgt">'+tok(T.goal[1])+'</p></div></div>'
-    +'<div class="scards n'+T.cards.length+'">'+T.cards.map(card).join('')+'</div></div>'
+  const row=([l,k])=>`<div class="srow" data-k="${k}"><span class="srl">${nb(l)}</span><div class="sstep"><button class="sarr" data-d="-1" aria-label="Précédent"></button>`
+    +`<span class="stv" role="button" tabindex="0" data-k="${k}"><i>${stFrag(k,stVal(k))}</i></span><button class="sarr" data-d="1" aria-label="Suivant"></button></div></div>`;
+  e.innerHTML='<div class="story"><div class="sgoal">'+stIco(T.goal[0])+'<div><span class="sgl">Le but</span><p class="sgt">'+nb(T.goal[1])+'</p></div></div>'
+    +'<div class="srows">'+T.rows.map(row).join('')+'</div><p class="srul">'+nb(T.rules)+'</p></div>'
     +'<button class="stlist">Voir les réglages en liste ›</button>';
   /* une pastille ne se coupe jamais : si elle ne tient pas à côté de son intitulé, sa police diminue */
-  const fit=()=>{const g=$('gRules'),st=g&&g.querySelector(':scope>.story');if(!st)return;st.querySelectorAll('.stk').forEach(k=>{const P=k.parentElement,C=k.closest('.scd'),wide=C&&getComputedStyle(C).display==='grid',W=C?(wide?C.clientWidth*.5:C.clientWidth-24):P.clientWidth-8;k.style.removeProperty('font-size');let f=parseFloat(getComputedStyle(k).fontSize),n=0;while(k.offsetWidth>W&&n++<14){f-=.6;k.style.setProperty('font-size',f+'px','important')}})};requestAnimationFrame(fit);setTimeout(fit,300);try{document.fonts.ready.then(fit);const st=$('gRules')&&$('gRules').querySelector(':scope>.story');if(st&&window.ResizeObserver){let w0=0;new ResizeObserver(en=>{const w=Math.round(en[0].contentRect.width);if(w&&w!==w0){w0=w;fit()}}).observe(st)}}catch(x){}}
+  const fit=()=>{const g=$('gRules'),st=g&&g.querySelector(':scope>.story');if(!st)return;st.querySelectorAll('.stv>i').forEach(k=>{const W=k.parentElement.clientWidth-6;k.style.removeProperty('font-size');let f=parseFloat(getComputedStyle(k).fontSize),n=0;while(k.offsetWidth>W&&n++<14){f-=.6;k.style.setProperty('font-size',f+'px','important')}})};requestAnimationFrame(fit);setTimeout(fit,300);try{document.fonts.ready.then(fit);const st=$('gRules')&&$('gRules').querySelector(':scope>.story');if(st&&window.ResizeObserver){let w0=0;new ResizeObserver(en=>{const w=Math.round(en[0].contentRect.width);if(w&&w!==w0){w0=w;fit()}}).observe(st)}}catch(x){}}
 {const _sr=showRules;showRules=function(){_sr.apply(this,arguments);try{storyRender()}catch(x){console.warn(x)}}}
 /* toucher un mot en surbrillance : petite bulle avec les choix possibles */
 function stPop(btn){const k=btn.dataset.k,sg=stSeg(k);if(!sg)return;const old=$('stpop');if(old)old.remove();
@@ -6997,7 +6990,10 @@ function stPop(btn){const k=btn.dataset.k,sg=stSeg(k);if(!sg)return;const old=$(
     if(c.classList.contains('cus')){p.querySelector('.stcus').hidden=false;p.querySelector('input').focus();return}
     if(c.classList.contains('ok')){const v=Math.round(+p.querySelector('input').value);if(!(v>=2&&v<=1001)){toast('ENTRE UN SCORE ENTRE 2 ET 1001','',true);return}S.xstart=v;store.set(K_S,S);p.remove();SFX.ui();renderSetup();return}
     const b=sg.querySelector(`button[data-v="${c.dataset.v}"]`);haptic();if(b&&!b.classList.contains('sel'))b.click();p.remove();setTimeout(()=>{renderSetup()},30)})}
-document.addEventListener('click',e=>{const t=e.target;const k=t.closest&&(t.closest('#setup .stk')||(t.closest('#setup .scd[data-k]')&&t.closest('#setup .scd[data-k]').querySelector('.stk')));if(k){e.stopPropagation();haptic();SFX.tick();stPop(k);return}
+function stStep(k,d){const sg=stSeg(k);if(!sg)return;const B=[...sg.querySelectorAll('button')].filter(b=>!b.classList.contains('xcus')||b.classList.contains('sel'));if(!B.length)return;
+  let i=B.findIndex(b=>b.classList.contains('sel'));i=((i<0?0:i+d)%B.length+B.length)%B.length;haptic();SFX.tick();const b=B[i];if(b.classList.contains('xcus')){stStep(k,d>0?d+1:d-1);return}if(!b.classList.contains('sel'))b.click();setTimeout(()=>{renderSetup()},30)}
+document.addEventListener('click',e=>{const t=e.target;const ar=t.closest&&t.closest('#setup .sarr');if(ar){e.stopPropagation();const r=ar.closest('.srow');if(r)stStep(r.dataset.k,+ar.dataset.d);return}
+  const k=t.closest&&(t.closest('#setup .stv')||(t.closest('#setup .srow')&&t.closest('#setup .srow').querySelector('.stv')));if(k){e.stopPropagation();haptic();SFX.tick();stPop(k);return}
   if(t.closest&&t.closest('#setup .stlist')){haptic();S.story=false;store.set(K_S,S);renderSetup();return}
   const p=$('stpop');if(p&&!t.closest('#stpop'))p.remove()},true);
 /* 501 : score libre (x01) et plus de « Master » */
@@ -7663,7 +7659,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-433';   // à changer avec VERSION dans sw.js
+const APPV='lf-434';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
