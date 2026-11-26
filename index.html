@@ -3952,6 +3952,18 @@ html body #setup#setup .story .sbr:not(.many) .sbo{font-size:16px!important;line
 html body #setup#setup .story .sboard.big{gap:12px}html body #setup#setup .story .sboard.big .sbr{height:62px}html body #setup#setup .story .sboard.big .sbl{font-size:19px!important}html body #setup#setup .story .sboard.big .sbr:not(.many) .sbo{font-size:18px!important}html body #setup#setup .story .sboard.big .sbr.many .sbo{font-size:21px!important}
 html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sgt,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sgl,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sbl,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sbo,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sti text{font-family:"Fun",sans-serif!important;font-weight:400!important}
 html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sgr,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sgr b{font-family:"Txt",sans-serif!important;font-weight:700!important}
+/* lf-438 : barre des jeux — tous les jeux sur une ligne qui défile, la bulle reste au centre et le jeu choisi vient dessous */
+html body #setup#setup #segGame,html body #setup#setup #segBar{display:none!important}
+#setup.b2.p2 #gReel,html body #setup#setup.b2.pp #gReel{display:none!important}
+#gReel{position:relative;flex:none;height:46px;margin:calc(var(--u,1dvh)*1.2) 0 0;border-radius:99px;background:var(--ui-track,transparent);box-shadow:inset 0 0 0 2.5px #111}
+#gReel .grb{position:absolute;left:50%;top:-3px;bottom:-3px;width:128px;transform:translateX(-50%);border-radius:99px;background:var(--accent);box-shadow:inset 0 0 0 2.5px #111;pointer-events:none}
+#gReel .grs{position:relative;z-index:1;height:100%;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;
+  padding:0 calc(50% - 64px);-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 16%,#000 84%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 16%,#000 84%,transparent 100%)}
+#gReel .grs::-webkit-scrollbar{display:none}
+#gReel .grs button{flex:0 0 128px;scroll-snap-align:center;border:0;background:none;padding:0;font:400 21px/1 "Fun",sans-serif;color:var(--m-ink,#111);opacity:.5;cursor:pointer;transition:color .15s,opacity .15s}
+#gReel .grs button.sel{color:#fff;opacity:1;-webkit-text-stroke:1px #111;paint-order:stroke fill;text-shadow:0 1.5px 0 #111}
+html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup #gReel .grs button{font-family:"Fun",sans-serif!important;font-weight:400!important}
+
 </style>
 </head>
 <body>
@@ -3989,6 +4001,7 @@ html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .s
 
   <div class="seg gamepick" id="segGame"><button data-v="cricket">Cricket</button><button data-v="x01">501</button><button data-v="bar">Mini jeux</button></div>
   <div class="seg gamepick barpick" id="segBar"><button data-v="killer">Killer</button><button data-v="clock">L'horloge</button><button data-v="shanghai">Shanghai</button><button data-v="halveit">Halve-it</button></div>
+  <div id="gReel" class="greel"><i class="grb"></i><div class="grs"><button data-v="cricket">Cricket</button><button data-v="x01">501</button><button data-v="killer">Killer</button><button data-v="clock">L’horloge</button><button data-v="shanghai">Shanghai</button><button data-v="halveit">Halve-it</button></div></div>
   <p id="gRules" class="grules"></p>
 
   <div class="grp">
@@ -5356,6 +5369,17 @@ function setGame(v){if(v==='bar')v=BARG.includes(S.game)?S.game:(S.lastBar||'kil
   const g=document.querySelector('#setup .grp:has(.sect.s2)');if(g){g.classList.remove('gslideL','gslideR');void g.offsetWidth;g.classList.add(d>0?'gslideL':'gslideR')}}
 $('segGame').addEventListener('click',e=>{const v=e.target.dataset.v;if(v)setGame(v)});
 $('segBar').addEventListener('click',e=>{const v=e.target.dataset.v;if(v){haptic();SFX.ui();setGame(v)}});
+
+/* lf-438 : barre des jeux qui défile — toucher un jeu ou faire glisser : le jeu au centre est choisi */
+{const RS=$('gReel').querySelector('.grs');
+  const sync=smooth=>{const b=RS.querySelector(`button[data-v="${S.game}"]`);RS.querySelectorAll('button').forEach(x=>x.classList.toggle('sel',x===b));
+    if(b&&RS.clientWidth)RS.scrollTo({left:b.offsetLeft+b.offsetWidth/2-RS.clientWidth/2,behavior:smooth?'smooth':'instant'})};
+  const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{sync(true)}catch(x){}return r};
+  RS.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.dataset.v===S.game)return;haptic();SFX.ui();setGame(b.dataset.v)});
+  RS.addEventListener('scroll',()=>{clearTimeout(RS._t);RS._t=setTimeout(()=>{const c=RS.scrollLeft+RS.clientWidth/2;let best=null,bd=1e9;
+    RS.querySelectorAll('button').forEach(b=>{const d=Math.abs(b.offsetLeft+b.offsetWidth/2-c);if(d<bd){bd=d;best=b}});
+    if(best&&best.dataset.v!==S.game){haptic();SFX.ui();setGame(best.dataset.v)}},140)},{passive:true});
+  if(window.ResizeObserver)new ResizeObserver(()=>sync(false)).observe(RS);}
 /* glisser le doigt vers la gauche / la droite sur la page des règles : jeu suivant / précédent */
 {let sx=null,sy=0,st=0;const SU0=$('setup');
  SU0.addEventListener('touchstart',e=>{if(SU0.classList.contains('p2')||e.touches.length>1){sx=null;return}const t=e.touches[0];sx=t.clientX;sy=t.clientY;st=performance.now()},{passive:true});
@@ -7693,7 +7717,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-437';   // à changer avec VERSION dans sw.js
+const APPV='lf-438';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
