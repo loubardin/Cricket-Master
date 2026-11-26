@@ -3944,7 +3944,8 @@ html body #setup#setup .story .soi{flex:none;display:flex;align-items:center;jus
 html body #setup#setup .story .soi .sti{width:27px;height:27px}
 html body #setup#setup .story .sol{font:400 16px/1.05 "Fun",sans-serif!important}
 html body #setup#setup .story .sot.on,html body #setup#setup .story .soc.on{background:var(--accent);color:#fff;transform:rotate(-2deg) translateY(-2px)}
-html body #setup#setup .story .sot.on::after{content:"✓";position:absolute;top:-9px;right:-7px;width:22px;height:22px;border-radius:50%;background:#ffd23f;box-shadow:inset 0 0 0 2.5px #111;color:#111;font:400 14px/22px "Fun",sans-serif;text-align:center}
+html body #setup#setup .story .sot.on::after,html body #setup#setup .story .soc.on::after{content:"";position:absolute;top:-25px;right:-19px;width:42px;height:42px;background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2040%2040%22%3E%3Cpath%20d%3D%22M8%2032L26%2014%22%20stroke%3D%22%23111%22%20stroke-width%3D%228%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M8%2032L26%2014%22%20stroke%3D%22%23fff%22%20stroke-width%3D%223.4%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M24%2016l1-13%2012%2012-13%201z%22%20fill%3D%22%23ffd23f%22%20stroke%3D%22%23111%22%20stroke-width%3D%222.6%22%20stroke-linejoin%3D%22round%22/%3E%3Cpath%20d%3D%22M25.5%2014.5l6-6%22%20stroke%3D%22%23111%22%20stroke-width%3D%222%22/%3E%3Cpath%20d%3D%22M8%2032l-6%206%22%20stroke%3D%22%23111%22%20stroke-width%3D%223.4%22%20stroke-linecap%3D%22round%22/%3E%3C/svg%3E") center/contain no-repeat;transform:rotate(-8deg);pointer-events:none}
+html body #setup#setup .story .soc{position:relative}html body #setup#setup .story .soc.on::after{width:32px;height:32px;top:-17px;right:-13px}
 html body #setup#setup .story .sot:active,html body #setup#setup .story .soc:active{transform:translateY(2px);box-shadow:inset 0 0 0 2.5px #111}
 html body #setup#setup .story .soc{flex:none;width:46px;height:46px;padding:0;border:0;border-radius:50%;background:#fff;color:var(--m-ink,#111);box-shadow:inset 0 0 0 2.5px #111,0 3px 0 #111;font:400 20px/1 "Fun",sans-serif!important;cursor:pointer}
 html body #setup#setup .story .soc.w{width:auto;padding:0 12px;border-radius:99px;font-size:18px!important}
@@ -3968,6 +3969,22 @@ html body #setup#setup .story .compact .soc{width:44px;height:44px;font-size:19p
 html body #setup#setup .story :is(.smid,.compact) .sopts:has(.sot:nth-child(3)) .soi{display:none}html body #setup#setup .story :is(.smid,.compact) .sopts:has(.sot:nth-child(3)) .sot{justify-content:center;text-align:center;padding:5px 6px}
 html body #setup#setup .story .srul{margin:0!important;text-align:center;font:500 14.5px/1.4 "Txt",sans-serif!important;color:var(--m-ink,#111);opacity:.75}
 html body #setup#setup .story .srul b{font:inherit!important;font-weight:700!important}
+/* lf-436 : identité — bandeau « rayons » façon jeu télé + pastille-emblème qui déborde, questions, fléchette plantée dans le choix, mascotte qui dit les règles */
+html body #setup#setup .story .sgoal{position:relative;margin-left:8px;padding:12px 14px 12px 76px!important;overflow:visible;transform:rotate(-1deg);
+  background:repeating-conic-gradient(from 0deg at 8% 50%,var(--accent) 0 9deg,color-mix(in srgb,var(--accent) 84%,#000) 9deg 18deg)!important}
+html body #setup#setup .story .semb{position:absolute;left:-10px;top:50%;width:76px;height:76px;margin-top:-38px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:#fff;
+  box-shadow:inset 0 0 0 3px #111,0 4px 0 #111;transform:rotate(-10deg)}
+html body #setup#setup .story .semb .sti{width:54px!important;height:54px!important}
+html body #setup#setup .story .sgl{display:inline-block!important;opacity:1!important;color:#111!important;background:#ffd23f;padding:3px 8px 2px;border-radius:99px;box-shadow:inset 0 0 0 2px #111;margin-bottom:5px!important}
+html body #setup#setup .story .sgt{text-shadow:0 2px 0 #111,1px 0 0 #111,-1px 0 0 #111,0 -1px 0 #111!important;letter-spacing:.005em}
+html body #setup#setup .story .sql .sqs{display:none}html body #setup#setup .story .compact .sql .sqs{display:inline}html body #setup#setup .story .compact .sql .sqq{display:none}
+html body #setup#setup .story .sot:not(.on),html body #setup#setup .story .soc:not(.on){opacity:.92}
+html body #setup#setup .story .stip{display:flex;align-items:flex-end;gap:10px;margin-top:2px}
+html body #setup#setup .story .smas{flex:none;width:52px;height:57px;transform:rotate(-6deg)}
+html body #setup#setup .story .stip .srul{position:relative;flex:1;text-align:left!important;opacity:1!important;background:#fff;border-radius:16px;padding:8px 12px;box-shadow:inset 0 0 0 2.5px #111,0 3px 0 #111;font-size:14px!important}
+html body #setup#setup .story .stip .srul::before{content:"";position:absolute;left:-9px;bottom:12px;width:12px;height:14px;background:#111;clip-path:polygon(100% 0,0 100%,100% 100%)}
+html body #setup#setup .story .stip .srul::after{content:"";position:absolute;left:-5px;bottom:14.5px;width:9px;height:9px;background:#fff;clip-path:polygon(100% 0,0 100%,100% 100%)}
+html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sql,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sql span{font-size:18px!important;line-height:1.1!important}html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .compact .sql,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .compact .sql span{font-size:15.5px!important}html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .compact .sol{font-size:15px!important}
 html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sgt,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sql,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sol,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .soc,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sti text{font-family:"Fun",sans-serif!important;font-weight:400!important}
 html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sgl,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .srul,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .srul b{font-family:"Txt",sans-serif!important}html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sgl,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .srul b{font-weight:700!important}html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .srul{font-weight:500!important}
 </style>
@@ -6951,17 +6968,17 @@ const STO={'seq:0':'mess','seq:1':'seq','segMode:standard':'star','segMode:cut':
   'segShw:1':'cup','segShw:0':'star','segHiSeq:0':'board','segHiSeq:1':'pencil','hip:1':'half','hip:0':'shield'};
 const STN=new Set(['clegs','xlegs','segLives','shr','hid','xstart']);
 const STC={
-  cricket:{goal:['board','Ferme le <b>15 au 20</b> et la <b>Bulle</b> avant les autres'],rows:[['Ordre','seq'],['Les points','segMode'],['Manches gagnantes','clegs']],
+  cricket:{goal:['board','Ferme le <b>15 au 20</b> et la <b>Bulle</b> avant les autres'],rows:[['Ordre','seq','Dans quel ordre ?'],['Les points','segMode','Les points, pour qui ?'],['Manches gagnantes','clegs','Combien de manches ?']],
     rules:'3 touches ferment un numéro. Fermé chez toi, il marque des points.'},
   x01:{goal:['zero','Descends à <b>zéro pile</b>'],rows:[['Score de départ','xstart'],['Départ','xin'],['Finish','xout'],['Aide au finish','xhint'],['Premier à zéro','xrep'],['Manches gagnantes','xlegs']],
     rules:'Chaque volée est retirée du score. Trop bas : <b>bust</b>.'},
-  killer:{goal:['heart','Sois le <b>dernier en vie</b>'],rows:[['Vies','segLives'],['Quand tu tues','kbonus'],['Dernier menacé','kdef'],['Manche suivante','kcarry']],
+  killer:{goal:['heart','Sois le <b>dernier en vie</b>'],rows:[['Vies','segLives','Combien de vies ?'],['Quand tu tues','kbonus','Et quand tu tues ?'],['Dernier menacé','kdef','Le dernier menacé…'],['Manche suivante','kcarry','À la manche suivante…']],
     rules:'3 touches sur ton numéro : tu deviens <b>Killer</b>. Chaque touche sur un autre lui coûte une vie.'},
-  clock:{goal:['clock','Fais le <b>tour de la cible</b> le premier'],rows:[['Arrivée','clkb'],['Doubles et triples','clkm'],['Rejouer après','clkr']],
+  clock:{goal:['clock','Fais le <b>tour de la cible</b> le premier'],rows:[['Arrivée','clkb','On s’arrête où ?'],['Doubles et triples','clkm','Doubles et triples…'],['Rejouer après','clkr','On rejoue quand ?']],
     rules:'Touche les numéros dans l’ordre, à partir du 1.'},
-  shanghai:{goal:['board','Marque le <b>plus de points</b>'],rows:[['Tours','shr'],['Shanghai','segShw']],
+  shanghai:{goal:['board','Marque le <b>plus de points</b>'],rows:[['Tours','shr','Combien de tours ?'],['Shanghai','segShw','Un Shanghai, ça donne…']],
     rules:'Un seul numéro compte par tour : le 1, puis le 2… Simple + double + triple du même : <b>Shanghai</b>.'},
-  halveit:{goal:['half','Marque le <b>plus de points</b> sans être coupé en deux'],rows:[['Cibles','segHiSeq'],['Fléchettes par manche','hid'],['Cible ratée','hip']],
+  halveit:{goal:['half','Marque le <b>plus de points</b> sans être coupé en deux'],rows:[['Cibles','segHiSeq','Quelles cibles ?'],['Fléchettes par manche','hid','Fléchettes par manche'],['Cible ratée','hip','Cible ratée ?']],
     rules:'Chaque manche a sa cible : rate-la et tu es puni.'}};
 /* pictogrammes 40×40 dans la DA : trait noir, aplats orange / blanc / jaune / rouge */
 const STI=(()=>{const A='var(--accent)',W='#fff',Y='#ffd23f',R='#ff4d5e',K='#111',s=`stroke="${K}" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"`,
@@ -7006,6 +7023,7 @@ const STI=(()=>{const A='var(--accent)',W='#fff',Y='#ffd23f',R='#ff4d5e',K='#111
   r2:tile(8,8,24,24,A)+T(20,26.5,'2',W,17),r3:tile(8,8,24,24,Y)+T(20,26.5,'3',K,17),
   pencil:`<path d="M9 31l2-7 16-16 5 5-16 16z" fill="${Y}" ${s}/><path d="M24 11l5 5M9 31l7-2" ${s}/>`,
   dart:`<path d="M8 32L26 14" stroke="${K}" stroke-width="6.5" stroke-linecap="round"/><path d="M8 32L26 14" stroke="${W}" stroke-width="2.4" stroke-linecap="round"/><path d="M26 14l2-9 7 7-9 2z" fill="${A}" ${s}/><path d="M8 32l-4 4" ${s}/>`}})();
+const STM='<svg class="smas" viewBox="0 0 60 66" aria-hidden="true"><path d="M19 56l-5 8M41 56l5 8" stroke="#111" stroke-width="4" stroke-linecap="round"/><circle cx="30" cy="31" r="26" fill="#fff" stroke="#111" stroke-width="3"/><circle cx="30" cy="31" r="18.5" fill="var(--accent)" stroke="#111" stroke-width="2.6"/><circle cx="30" cy="31" r="11" fill="#fff" stroke="#111" stroke-width="2.6"/><ellipse cx="25.5" cy="28" rx="2.6" ry="3.8" fill="#111"/><ellipse cx="34.5" cy="28" rx="2.6" ry="3.8" fill="#111"/><circle cx="26.4" cy="26.6" r="1" fill="#fff"/><circle cx="35.4" cy="26.6" r="1" fill="#fff"/><path d="M25.5 34.5q4.5 4.5 9 0" fill="none" stroke="#111" stroke-width="2.2" stroke-linecap="round"/><circle cx="20" cy="34" r="2.2" fill="#ff8fa0" opacity=".8"/><circle cx="40" cy="34" r="2.2" fill="#ff8fa0" opacity=".8"/></svg>';
 const stIco=n=>`<svg class="sti" viewBox="0 0 40 40" aria-hidden="true">${STI[n]||''}</svg>`;
 const stSeg=k=>document.getElementById(k)||document.querySelector('#setup .seg[data-k="'+k+'"]');
 const stVal=k=>{const sg=stSeg(k),b=sg&&sg.querySelector('button.sel');return b?b.dataset.v:null};
@@ -7020,9 +7038,9 @@ function storyRender(){const e=$('gRules');if(!e)return;SU.classList.toggle('sto
       return vis.map(o=>`<button class="soc${k==='xstart'?' w':''}${o.on?' on':''}" data-k="${k}" data-v="${o.v}">${stFrag(k,o.v)}</button>`).join('')
         +(more?`<button class="soc more${k==='xstart'?' w':''}${hid?' on':''}" data-k="${k}">${hid?hid.v:(k==='xstart'?'…':'+')}</button>`:'')}
     return O.map(o=>`<button class="sot${o.on?' on':''}" data-k="${k}" data-v="${o.v}"><span class="soi">${stIco(STO[k+':'+o.v]||'none')}</span><span class="sol">${nb(stFrag(k,o.v))}</span></button>`).join('')};
-  e.innerHTML='<div class="story"><div class="sgoal">'+stIco(T.goal[0])+'<div><span class="sgl">Le but</span><p class="sgt">'+nb(T.goal[1])+'</p></div></div>'
-    +'<div class="srows '+mode+'">'+T.rows.map(([l,k])=>`<div class="sq"><span class="sql">${nb(l)}</span><div class="sopts">${choice(k)}</div></div>`).join('')+'</div>'
-    +'<p class="srul">'+nb(T.rules)+'</p></div>'
+  e.innerHTML='<div class="story"><div class="sgoal"><span class="semb">'+stIco(T.goal[0])+'</span><div><span class="sgl">Le but</span><p class="sgt">'+nb(T.goal[1])+'</p></div></div>'
+    +'<div class="srows '+mode+'">'+T.rows.map(([l,k,q])=>`<div class="sq"><span class="sql"><span class="sqs">${nb(l)}</span><span class="sqq">${nb(q||l)}</span></span><div class="sopts">${choice(k)}</div></div>`).join('')+'</div>'
+    +'<div class="stip">'+STM+'<p class="srul">'+nb(T.rules)+'</p></div></div>'
     +'<button class="stlist">Voir les réglages en liste ›</button>';
   /* si les grandes tuiles débordent sur le bouton du bas : version compacte */
   const fitT=()=>{const R=e.querySelector(':scope>.story .srows'),G=SU.querySelector('.gobar'),L=e.querySelector(':scope>.stlist');if(!R||!G||!L||!L.offsetHeight)return;const over=()=>L.getBoundingClientRect().bottom>G.getBoundingClientRect().top-12;
@@ -7709,7 +7727,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-435';   // à changer avec VERSION dans sw.js
+const APPV='lf-436';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
