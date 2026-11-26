@@ -3913,6 +3913,36 @@ html body #setup#setup.b2 .grp:has(.sect.s2)>.sect,html body #setup#setup.b2 .gr
 html body #setup#setup #go :is(em,.ga){font-size:calc(var(--u)*2.55)!important}
 /* lf-425 : dans les options, la couleur de l'appli devient le gris foncé — plus aucun orange pendant les clics et animations */
 html body #setup#setup.b2 .opt{--accent:#4b4b4b;--acc-rgb:75,75,75;--accimg:none}
+/* lf-440 : pages 0 (jeux) et 1 (règles) */
+#gPick,#gHero{display:none}
+html body #setup#setup.b2.p0>:not(.sh):not(#gPick):not(.gghost){display:none!important}
+html body #setup#setup.b2.p0>#gPick{display:grid!important;grid-template-columns:1fr 1fr;gap:20px 12px;margin:calc(var(--u,1dvh)*3) 0 auto;padding-top:6px}
+html body #setup#setup.b2.p1 :is(.seg.gamepick,#segBar,.gill){display:none!important}
+html body #setup#setup.b2.p1>.grp{display:none!important}
+html body #setup#setup.b2.p1>#gHero{display:block!important;margin:calc(var(--u,1dvh)*2.4) 0 6px}
+html body #setup#setup.b2.p1>#gRules{display:block!important;margin:8px 2px auto!important;width:auto!important;max-width:none!important;padding-right:0!important}
+html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRules .rgoal,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRules .rgoal *{font-size:23px!important;line-height:1.25!important}html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRules .rgoal{display:block!important;margin-bottom:14px!important}
+html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRules .rp,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRules .rp *{font-size:17px!important;line-height:1.45!important}html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRules .rp{display:block!important;position:relative;padding-left:18px;margin:0 0 12px!important;opacity:.85}
+html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRules :is(.rp,.rgoal) *{display:inline!important;white-space:normal!important}html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRules :is(.rp,.rgoal){text-wrap:wrap!important}
+html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRules .rp::before{content:'';position:absolute;left:0;top:.55em;width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 2px #111}
+#setup .gpc{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;width:100%;min-width:0;padding:16px 10px 13px;border:0;border-radius:24px;background:transparent;
+  box-shadow:inset 0 0 0 2.5px #111;color:var(--m-ink,#111);cursor:pointer;font:inherit}
+#setup .gpc.on{background:var(--gc);box-shadow:inset 0 0 0 2.5px #111,0 0 0 4px var(--gc);color:#fff}
+#setup .gpc:active{transform:scale(.97)}
+#setup .gpt{position:absolute;left:50%;top:0;width:88px;height:33px;transform:translate(-50%,-55%);overflow:visible}
+#setup .gpn{font:400 17px/1 "Fun",sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--gc);margin-top:2px}
+#setup .gpc.on .gpn{color:#fff;-webkit-text-stroke:1px #111;paint-order:stroke fill}
+#setup .gpb{width:min(19vw,82px);height:min(19vw,82px);overflow:visible;margin:4px 0 2px}
+#setup .gpx{font:700 12.5px/1.25 "Txt","UI",sans-serif;opacity:.75;text-align:center;min-height:2.5em;display:flex;align-items:center}
+#setup .gpc.on .gpx{opacity:1}
+#setup .gpc.hero{flex-direction:row;flex-wrap:wrap;justify-content:flex-start;column-gap:12px;padding:14px 16px;text-align:left;cursor:default}
+#setup .gpc.hero .gpt{left:auto;right:16px;transform:translateY(-55%)}
+#setup .gpc.hero .gpb{width:64px;height:64px;margin:0;order:-1}
+#setup .gpc.hero .gpn{font-size:26px;flex:1}
+#setup .gpc.hero .gpx{flex:0 0 100%;font-size:14px;min-height:0}
+html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .gpc :is(.gpn){font-family:"Fun",sans-serif!important;font-weight:400!important}
+html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .gpc .gpx{font-family:"UI",sans-serif!important;font-weight:750!important}
+
 </style>
 </head>
 <body>
@@ -3950,6 +3980,8 @@ html body #setup#setup.b2 .opt{--accent:#4b4b4b;--acc-rgb:75,75,75;--accimg:none
 
   <div class="seg gamepick" id="segGame"><button data-v="cricket">Cricket</button><button data-v="x01">501</button><button data-v="bar">Mini jeux</button></div>
   <div class="seg gamepick barpick" id="segBar"><button data-v="killer">Killer</button><button data-v="clock">L'horloge</button><button data-v="shanghai">Shanghai</button><button data-v="halveit">Halve-it</button></div>
+  <div id="gPick" class="gpick"></div>
+  <div id="gHero" class="ghero"></div>
   <p id="gRules" class="grules"></p>
 
   <div class="grp">
@@ -5317,6 +5349,28 @@ function setGame(v){if(v==='bar')v=BARG.includes(S.game)?S.game:(S.lastBar||'kil
   const g=document.querySelector('#setup .grp:has(.sect.s2)');if(g){g.classList.remove('gslideL','gslideR');void g.offsetWidth;g.classList.add(d>0?'gslideL':'gslideR')}}
 $('segGame').addEventListener('click',e=>{const v=e.target.dataset.v;if(v)setGame(v)});
 $('segBar').addEventListener('click',e=>{const v=e.target.dataset.v;if(v){haptic();SFX.ui();setGame(v)}});
+
+/* lf-440 : choix du jeu en cases façon Killer (dessin + petite info) → page des règles → page des paramètres → joueurs */
+const GPK={cricket:{c:'#2aa7c9',t:'Ferme le 15 au 20 et la Bulle'},x01:{c:'#e29f37',t:'Descends pile à zéro'},killer:{c:'#e5484d',t:'Le dernier en vie gagne'},
+  clock:{c:'#6a4c9c',t:'Fais le tour de la cible'},shanghai:{c:'#e07aa5',t:'Un numéro par tour'},halveit:{c:'#3a9d5d',t:'Rate et tu perds la moitié'}};
+const GPI=(()=>{const K='#111',W='#fff',Y='#ffd23f',R='#ff4d5e',s=`stroke="${K}" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"`,
+  H=(x,y,k)=>`<path transform="translate(${x} ${y}) scale(${k})" d="M0 9L-8.5 .5A5 5 0 0 1 0-6.5A5 5 0 0 1 8.5 .5Z" fill="${R}" ${s}/>`,
+  T=(x,y,t,f,z)=>`<text x="${x}" y="${y}" text-anchor="middle" style="font:400 ${z}px Fun,sans-serif!important" fill="${f}" stroke="${K}" stroke-width="1.6" paint-order="stroke">${t}</text>`,
+  tl=(x,y,w,h,f)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="4.5" fill="${f}" ${s}/>`,
+  mk=(x,y,k)=>`<g transform="translate(${x} ${y})">${k==1?'<path d="M-5 5L5-5" '+s+'/>':k==2?'<path d="M-5 5L5-5M-5-5L5 5" '+s+'/>':'<circle r="7" fill="'+W+'" '+s+'/><path d="M-4 4L4-4M-4-4L4 4" '+s+'/>'}</g>`;
+  return{
+   cricket:{big:`<circle cx="20" cy="20" r="16" fill="${W}" ${s}/><path d="M11 11L29 29M29 11L11 29" stroke="${K}" stroke-width="4.5" stroke-linecap="round"/>`,top:mk(-15,0,1)+mk(0,0,2)+mk(15,0,3)},
+   x01:{big:T(20,29,'501',W,19),top:tl(-21,-6,12,12,W)+T(-15,4,'D',K,10)+tl(-6,-6,12,12,Y)+T(0,4,'T',K,10)+tl(9,-6,12,12,W)+T(15,4,'0',K,10)},
+   killer:{big:H(20,19,2.1),top:H(-14,0,.95)+H(0,0,.95)+H(14,0,.95)},
+   clock:{big:`<circle cx="20" cy="20" r="16" fill="${W}" ${s}/><path d="M20 20V9M20 20l7 4" ${s}/><circle cx="20" cy="20" r="2" fill="${K}"/><path d="M20 5.5v2.5M34.5 20H32M20 34.5V32M5.5 20H8" stroke="${K}" stroke-width="2"/>`,top:tl(-21,-6,12,12,W)+T(-15,4,'1',K,10)+tl(-6,-6,12,12,W)+T(0,4,'2',K,10)+tl(9,-6,12,12,W)+T(15,4,'3',K,10)},
+   shanghai:{big:tl(4,9,10,22,W)+tl(15,9,10,22,'#ff9d4d')+tl(26,9,10,22,Y)+T(9,25,'S',K,11)+T(20,25,'D',K,11)+T(31,25,'T',K,11),top:`<path d="M0-7l2.1 4.6 5 .6-3.7 3.4 1 5L0 4.1l-4.4 2.5 1-5L-7-1.8l5-.6z" fill="${Y}" ${s}/>`},
+   halveit:{big:`<circle cx="20" cy="20" r="16" fill="${W}" ${s}/><path d="M20 4a16 16 0 0 1 0 32z" fill="#bbb" ${s}/><path d="M20 1v38" stroke="${K}" stroke-width="2.4" stroke-dasharray="3 3"/>`,top:tl(-10,-6,20,12,W)+T(0,4,'÷2',K,10)}}})();
+const gpCard=(g,hero)=>{const I=GPI[g],P=GPK[g];return`<button class="gpc${g===S.game&&!hero?' on':''}${hero?' hero on':''}" data-g="${g}" style="--gc:${P.c}">`
+  +`<svg class="gpt" viewBox="-24 -9 48 18" aria-hidden="true">${I.top}</svg><span class="gpn">${GNAME[g]}</span>`
+  +`<svg class="gpb" viewBox="0 0 40 40" aria-hidden="true">${I.big}</svg><span class="gpx">${P.t}</span></button>`};
+function gpRender(){const P=$('gPick'),H=$('gHero');if(P)P.innerHTML=GAMES.map(g=>gpCard(g)).join('');if(H)H.innerHTML=gpCard(S.game,1)}
+{const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{gpRender()}catch(x){}return r}}
+$('gPick').addEventListener('click',e=>{const b=e.target.closest('.gpc');if(!b)return;haptic();SFX.ui();if(b.dataset.g!==S.game)setGame(b.dataset.g);gpRender();setupPage(1,1)});
 /* glisser le doigt vers la gauche / la droite sur la page des règles : jeu suivant / précédent */
 {let sx=null,sy=0,st=0;const SU0=$('setup');
  SU0.addEventListener('touchstart',e=>{if(SU0.classList.contains('p2')||e.touches.length>1){sx=null;return}const t=e.touches[0];sx=t.clientX;sy=t.clientY;st=performance.now()},{passive:true});
@@ -6527,8 +6581,8 @@ function setupPage(n,anim){if(typeof noInertia==='function')noInertia();
   if(anim){const old=[...SU.querySelectorAll(':scope>.grp')].filter(g=>g.offsetHeight);const fw=n>(SU._pg||1);SU._pg=n;old.forEach(g=>{const r=g.getBoundingClientRect(),c=g.cloneNode(true);
     c.querySelectorAll('[id]').forEach(e=>e.removeAttribute('id'));c.removeAttribute('id');c.classList.add('gghost');
     Object.assign(c.style,{position:'fixed',left:r.left+'px',top:r.top+'px',width:r.width+'px',height:r.height+'px',margin:'0',pointerEvents:'none',zIndex:5});SU.append(c);
-    c.animate([{transform:'none'},{transform:`translateX(${fw?-110:110}%)`}],{duration:520,easing:'cubic-bezier(.65,0,.25,1)',fill:'forwards'}).onfinish=()=>c.remove()})}if(!anim)SU._pg=n;SU.classList.toggle('p2',n===2);SU.classList.toggle('pp',n===1.5);$('go').innerHTML='<span>'+(n===2?'Lancer la partie':n===1.5?'Joueurs':'Paramètres')+'</span>';
-  SU.querySelector('.sh h1').textContent=n===2?'Joueurs':n===1.5?'Paramètres':'Nouvelle partie';requestAnimationFrame(fitP2);SU.scrollTop=0;$('ppick').classList.remove('on');
+    c.animate([{transform:'none'},{transform:`translateX(${fw?-110:110}%)`}],{duration:520,easing:'cubic-bezier(.65,0,.25,1)',fill:'forwards'}).onfinish=()=>c.remove()})}if(!anim)SU._pg=n;SU.classList.toggle('p2',n===2);SU.classList.toggle('pp',n===1.5);SU.classList.toggle('p0',n===0);SU.classList.toggle('p1',n===1);$('go').innerHTML='<span>'+(n===2?'Lancer la partie':n===1.5?'Joueurs':'Paramètres')+'</span>';
+  SU.querySelector('.sh h1').textContent=n===2?'Joueurs':n===1.5?'Paramètres':n===1?'Les règles':'Nouvelle partie';requestAnimationFrame(fitP2);SU.scrollTop=0;$('ppick').classList.remove('on');
   if(typeof placeThumbs==='function')requestAnimationFrame(placeThumbs);
   SU.classList.remove('p1in','p2in');if(anim){void SU.offsetWidth;SU.classList.add(SU._pg>=1.5&&n>1?'p2in':'p1in');clearTimeout(SU._pt);SU._pt=setTimeout(()=>SU.classList.remove('p1in','p2in'),950)}}
 /* lf-415 : page 2 = paramètres de partie + joueurs ; tout tient sans défiler (zoom auto si besoin) */
@@ -6572,9 +6626,9 @@ function optHelp(){document.querySelectorAll('#setup .opt').forEach(o=>{const sg
     Object.values(rows).forEach(L=>{if(L.length<2)return;const m=Math.max(...L.map(h=>h.offsetHeight));L.forEach(h=>h.style.minHeight=m+'px')})})}
 document.getElementById('setup').addEventListener('click',()=>setTimeout(()=>{optHelp();fitP2()},30));
 {const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{optHelp()}catch(e){}requestAnimationFrame(fitP2);return r}}
-{const _show=show;show=function(id){if(id==='setup'&&!SU.classList.contains('on'))setupPage(1);_show(id)}}
-$('go').addEventListener('click',e=>{if(!SU.classList.contains('p2')){e.stopImmediatePropagation();haptic();SFX.ui();setupPage(2,1)}},true);
-$('sBack').addEventListener('click',e=>{if(SU.classList.contains('p2')){e.stopImmediatePropagation();haptic();SFX.back();setupPage(1,1)}},true);
+{const _show=show;show=function(id){if(id==='setup'&&!SU.classList.contains('on'))setupPage(0);_show(id)}}
+$('go').addEventListener('click',e=>{const p=SU._pg||0;if(p<2){e.stopImmediatePropagation();haptic();SFX.ui();setupPage(p<1?1:p<1.5?1.5:2,1)}},true);
+$('sBack').addEventListener('click',e=>{const p=SU._pg||0;if(p>0){e.stopImmediatePropagation();haptic();SFX.back();setupPage(p>1.5?1.5:p>1?1:0,1)}},true);
 /* panneau « Ajouter un joueur » ouvert : on laisse de la place sous la liste */
 new MutationObserver(()=>SU.classList.toggle('pk',$('ppick').classList.contains('on'))).observe($('ppick'),{attributes:true,attributeFilter:['class']});
 
@@ -7531,7 +7585,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-439';   // à changer avec VERSION dans sw.js
+const APPV='lf-440';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
