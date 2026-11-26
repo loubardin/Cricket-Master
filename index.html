@@ -3925,68 +3925,33 @@ html body #setup#setup .stlist,html body #setup#setup .stlink{display:block;marg
 #stpop .stcus{display:flex;gap:6px}#stpop .stcus[hidden]{display:none}#stpop .stcus input{flex:1;min-width:0;border:0;border-radius:12px;box-shadow:inset 0 0 0 1.5px #111;padding:8px 10px;font:400 16px "Fun",sans-serif}
 #stpop .stcus .ok{text-align:center;background:#4b4b4b;color:#fff;box-shadow:none}
 html body #setup#setup.b2.story:not(.p2)>.gobar{margin-top:auto!important}
-/* lf-435 : page 1 « choix illustrés » — tous les choix visibles, le choix actif en orange avec une coche */
+/* lf-437 : page 1 = tableau de cricket — carte « but » comme la carte joueur, une capsule par réglage, la bulle orange glisse sur le choix */
 #stpop button.on{background:var(--accent)!important}#stpop .stcus .ok{background:var(--accent)!important}
-html body #setup#setup .story{color:var(--m-ink,#111)!important;margin-top:6px;display:flex;flex-direction:column;gap:14px}
-html body #setup#setup .story .sti{display:block;flex:none;width:100%;height:100%;overflow:visible}
-html body #setup#setup .story .sgoal{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:20px;background:var(--accent);box-shadow:inset 0 0 0 2.5px #111,0 4px 0 #111}
-html body #setup#setup .story .sgoal>.sti{width:48px;height:48px}
-html body #setup#setup .story .sgl{display:block;font:700 11px/1 "Txt",sans-serif!important;letter-spacing:.1em;text-transform:uppercase;color:#fff;opacity:.85;margin-bottom:3px}
-html body #setup#setup .story .sgt{margin:0!important;font:400 22px/1.2 "Fun",sans-serif!important;color:#fff!important;text-shadow:0 1.5px 0 rgba(0,0,0,.25)}
-html body #setup#setup .story .sgt b{font:inherit!important;color:#ffd23f!important}
-html body #setup#setup .story .srows{display:flex;flex-direction:column;gap:12px}
-html body #setup#setup .story .sq{display:flex;flex-direction:column;gap:7px}
-html body #setup#setup .story .sql{font:400 18px/1.1 "Fun",sans-serif!important;color:var(--m-ink,#111);padding-left:3px}
-html body #setup#setup .story .sopts{display:flex;gap:9px;align-items:center}
-html body #setup#setup .story .sot{flex:1 1 0;min-width:0;position:relative;display:flex;align-items:center;gap:8px;min-height:50px;padding:6px 10px 6px 7px;border:0;border-radius:16px;background:#fff;color:var(--m-ink,#111);
-  box-shadow:inset 0 0 0 2.5px #111,0 3px 0 #111;text-align:left;cursor:pointer}
-html body #setup#setup .story .soi{flex:none;display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 2px #111}
-html body #setup#setup .story .soi .sti{width:27px;height:27px}
-html body #setup#setup .story .sol{font:400 16px/1.05 "Fun",sans-serif!important}
-html body #setup#setup .story .sot.on,html body #setup#setup .story .soc.on{background:var(--accent);color:#fff;transform:rotate(-2deg) translateY(-2px)}
-html body #setup#setup .story .sot.on::after,html body #setup#setup .story .soc.on::after{content:"";position:absolute;top:-25px;right:-19px;width:42px;height:42px;background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2040%2040%22%3E%3Cpath%20d%3D%22M8%2032L26%2014%22%20stroke%3D%22%23111%22%20stroke-width%3D%228%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M8%2032L26%2014%22%20stroke%3D%22%23fff%22%20stroke-width%3D%223.4%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M24%2016l1-13%2012%2012-13%201z%22%20fill%3D%22%23ffd23f%22%20stroke%3D%22%23111%22%20stroke-width%3D%222.6%22%20stroke-linejoin%3D%22round%22/%3E%3Cpath%20d%3D%22M25.5%2014.5l6-6%22%20stroke%3D%22%23111%22%20stroke-width%3D%222%22/%3E%3Cpath%20d%3D%22M8%2032l-6%206%22%20stroke%3D%22%23111%22%20stroke-width%3D%223.4%22%20stroke-linecap%3D%22round%22/%3E%3C/svg%3E") center/contain no-repeat;transform:rotate(-8deg);pointer-events:none}
-html body #setup#setup .story .soc{position:relative}html body #setup#setup .story .soc.on::after{width:32px;height:32px;top:-17px;right:-13px}
-html body #setup#setup .story .sot:active,html body #setup#setup .story .soc:active{transform:translateY(2px);box-shadow:inset 0 0 0 2.5px #111}
-html body #setup#setup .story .soc{flex:none;width:46px;height:46px;padding:0;border:0;border-radius:50%;background:#fff;color:var(--m-ink,#111);box-shadow:inset 0 0 0 2.5px #111,0 3px 0 #111;font:400 20px/1 "Fun",sans-serif!important;cursor:pointer}
-html body #setup#setup .story .soc.w{width:auto;padding:0 12px;border-radius:99px;font-size:18px!important}
-html body #setup#setup .story .soc.on{transform:rotate(-6deg) translateY(-2px)}
-/* peu de réglages : grandes tuiles verticales, dessin au-dessus */
-html body #setup#setup .story .tall .sot{flex-direction:column;justify-content:center;gap:5px;padding:10px 6px 9px;text-align:center}
-html body #setup#setup .story .tall .soi{width:48px;height:48px}html body #setup#setup .story .tall .soi .sti{width:34px;height:34px}
-html body #setup#setup .story .tall .sol{font-size:17px!important}
-/* beaucoup de réglages : intitulé à gauche, choix à droite */
-/* réglages moyens : intitulé au-dessus, tuiles couchées (dessin à gauche) */
-html body #setup#setup .story .smid .sot{min-height:50px;gap:7px;padding:5px 9px 5px 6px}html body #setup#setup .story .smid .soi{width:36px;height:36px}html body #setup#setup .story .smid .soi .sti{width:27px;height:27px}html body #setup#setup .story .smid .sol{font-size:16px!important}
-html body #setup#setup .story .compact{gap:11px}
-html body #setup#setup .story .compact .sq{flex-direction:row;align-items:center;gap:8px}
-html body #setup#setup .story .compact .sql{flex:0 0 98px;font-size:17px!important}
-html body #setup#setup .story .compact .sopts{flex:1;min-width:0;gap:7px}
-html body #setup#setup .story .compact .sot{min-height:50px;gap:6px;padding:4px 8px 4px 5px}
-html body #setup#setup .story .compact .soi{width:34px;height:34px}html body #setup#setup .story .compact .soi .sti{width:24px;height:24px}
-html body #setup#setup .story .compact .sol{font-size:15.5px!important}
-html body #setup#setup .story .compact .soc{width:44px;height:44px;font-size:19px!important}html body #setup#setup .story .compact .soc.w{width:auto;padding:0 9px;font-size:16px!important}
-/* 3 choix côte à côte : pas de dessin dans les tuiles couchées, sinon le texte ne tient pas */
-html body #setup#setup .story :is(.smid,.compact) .sopts:has(.sot:nth-child(3)) .soi{display:none}html body #setup#setup .story :is(.smid,.compact) .sopts:has(.sot:nth-child(3)) .sot{justify-content:center;text-align:center;padding:5px 6px}
-html body #setup#setup .story .srul{margin:0!important;text-align:center;font:500 14.5px/1.4 "Txt",sans-serif!important;color:var(--m-ink,#111);opacity:.75}
-html body #setup#setup .story .srul b{font:inherit!important;font-weight:700!important}
-/* lf-436 : identité — bandeau « rayons » façon jeu télé + pastille-emblème qui déborde, questions, fléchette plantée dans le choix, mascotte qui dit les règles */
-html body #setup#setup .story .sgoal{position:relative;margin-left:8px;padding:12px 14px 12px 76px!important;overflow:visible;transform:rotate(-1deg);
-  background:repeating-conic-gradient(from 0deg at 8% 50%,var(--accent) 0 9deg,color-mix(in srgb,var(--accent) 84%,#000) 9deg 18deg)!important}
-html body #setup#setup .story .semb{position:absolute;left:-10px;top:50%;width:76px;height:76px;margin-top:-38px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:#fff;
-  box-shadow:inset 0 0 0 3px #111,0 4px 0 #111;transform:rotate(-10deg)}
-html body #setup#setup .story .semb .sti{width:54px!important;height:54px!important}
-html body #setup#setup .story .sgl{display:inline-block!important;opacity:1!important;color:#111!important;background:#ffd23f;padding:3px 8px 2px;border-radius:99px;box-shadow:inset 0 0 0 2px #111;margin-bottom:5px!important}
-html body #setup#setup .story .sgt{text-shadow:0 2px 0 #111,1px 0 0 #111,-1px 0 0 #111,0 -1px 0 #111!important;letter-spacing:.005em}
-html body #setup#setup .story .sql .sqs{display:none}html body #setup#setup .story .compact .sql .sqs{display:inline}html body #setup#setup .story .compact .sql .sqq{display:none}
-html body #setup#setup .story .sot:not(.on),html body #setup#setup .story .soc:not(.on){opacity:.92}
-html body #setup#setup .story .stip{display:flex;align-items:flex-end;gap:10px;margin-top:2px}
-html body #setup#setup .story .smas{flex:none;width:52px;height:57px;transform:rotate(-6deg)}
-html body #setup#setup .story .stip .srul{position:relative;flex:1;text-align:left!important;opacity:1!important;background:#fff;border-radius:16px;padding:8px 12px;box-shadow:inset 0 0 0 2.5px #111,0 3px 0 #111;font-size:14px!important}
-html body #setup#setup .story .stip .srul::before{content:"";position:absolute;left:-9px;bottom:12px;width:12px;height:14px;background:#111;clip-path:polygon(100% 0,0 100%,100% 100%)}
-html body #setup#setup .story .stip .srul::after{content:"";position:absolute;left:-5px;bottom:14.5px;width:9px;height:9px;background:#fff;clip-path:polygon(100% 0,0 100%,100% 100%)}
-html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sql,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sql span{font-size:18px!important;line-height:1.1!important}html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .compact .sql,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .compact .sql span{font-size:15.5px!important}html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .compact .sol{font-size:15px!important}
-html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sgt,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sql,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sol,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .soc,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sti text{font-family:"Fun",sans-serif!important;font-weight:400!important}
-html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sgl,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .srul,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .srul b{font-family:"Txt",sans-serif!important}html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sgl,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .srul b{font-weight:700!important}html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .srul{font-weight:500!important}
+html body #setup#setup .story{color:var(--m-ink,#111)!important;margin-top:4px;display:flex;flex-direction:column;gap:12px}
+html body #setup#setup .story .sti{display:block;width:100%;height:100%;overflow:visible}
+html body #setup#setup .story .sgoal{position:relative;display:flex;align-items:center;gap:10px;padding:14px 14px 14px 18px;border-radius:24px;background:var(--accent);box-shadow:inset 0 0 0 2.5px #111,0 0 0 3px var(--accent)}
+html body #setup#setup .story .sgx{flex:1;min-width:0}
+html body #setup#setup .story .sgl{display:block;font:400 15px/1 "Fun",sans-serif!important;letter-spacing:.08em;text-transform:uppercase;color:#fff;margin-bottom:5px}
+html body #setup#setup .story .sgt{margin:0!important;font:400 25px/1.12 "Fun",sans-serif!important;color:#fff!important;-webkit-text-stroke:1.2px #111;paint-order:stroke fill;text-shadow:0 2px 0 #111}
+html body #setup#setup .story .sgt b{font:inherit!important;color:#fff!important}
+html body #setup#setup .story .sgr{margin:7px 0 0!important;font:700 13.5px/1.35 "Txt",sans-serif!important;color:#fff!important;opacity:.95}
+html body #setup#setup .story .sgr b{font:inherit!important;color:#ffe066!important}
+html body #setup#setup .story .semb{flex:none;width:62px;height:62px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(255,255,255,.28);box-shadow:inset 0 0 0 2.5px #111}
+html body #setup#setup .story .semb .sti{width:46px;height:46px}
+html body #setup#setup .story .sboard{display:flex;flex-direction:column;gap:9px}
+html body #setup#setup .story .sbr{display:flex;align-items:center;height:54px;border-radius:99px;background:transparent;box-shadow:inset 0 0 0 2.5px #111;padding-left:18px}
+html body #setup#setup .story .sbl{flex:0 0 34%;min-width:0;font:400 17px/1.05 "Fun",sans-serif!important;color:var(--m-ink,#111)}
+html body #setup#setup .story .sbt{position:relative;flex:1;align-self:stretch;display:flex}
+html body #setup#setup .story .sbb{position:absolute;top:-3px;bottom:-3px;left:calc((var(--i) + .5)*100%/var(--n));width:max(calc(100%/var(--n)),46px);transform:translateX(-50%);border-radius:99px;background:var(--accent);box-shadow:inset 0 0 0 2.5px #111;
+  transition:left .28s cubic-bezier(.3,1.35,.5,1);pointer-events:none}
+html body #setup#setup .story .sbr .sbb{font-style:normal}
+html body #setup#setup .story .sbo{position:relative;z-index:1;flex:1 1 0;min-width:0;border:0;background:none;padding:0 4px;font:400 17px/1 "Fun",sans-serif!important;color:var(--m-ink,#111);opacity:.5;cursor:pointer;transition:color .2s,opacity .2s}
+html body #setup#setup .story .sbo.on{color:#fff!important;opacity:1;-webkit-text-stroke:1px #111;paint-order:stroke fill;text-shadow:0 1.5px 0 #111}
+html body #setup#setup .story .sbr.many .sbl{flex-basis:30%}html body #setup#setup .story .sbr.many .sbo{font-size:19px!important}
+html body #setup#setup .story .sbr:not(.many) .sbo{font-size:16px!important;line-height:1.05}
+html body #setup#setup .story .sboard.big{gap:12px}html body #setup#setup .story .sboard.big .sbr{height:62px}html body #setup#setup .story .sboard.big .sbl{font-size:19px!important}html body #setup#setup .story .sboard.big .sbr:not(.many) .sbo{font-size:18px!important}html body #setup#setup .story .sboard.big .sbr.many .sbo{font-size:21px!important}
+html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sgt,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sgl,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sbl,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sbo,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sti text{font-family:"Fun",sans-serif!important;font-weight:400!important}
+html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sgr,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sgr b{font-family:"Txt",sans-serif!important;font-weight:700!important}
 </style>
 </head>
 <body>
@@ -6968,9 +6933,9 @@ const STO={'seq:0':'mess','seq:1':'seq','segMode:standard':'star','segMode:cut':
   'segShw:1':'cup','segShw:0':'star','segHiSeq:0':'board','segHiSeq:1':'pencil','hip:1':'half','hip:0':'shield'};
 const STN=new Set(['clegs','xlegs','segLives','shr','hid','xstart']);
 const STC={
-  cricket:{goal:['board','Ferme le <b>15 au 20</b> et la <b>Bulle</b> avant les autres'],rows:[['Ordre','seq','Dans quel ordre ?'],['Les points','segMode','Les points, pour qui ?'],['Manches gagnantes','clegs','Combien de manches ?']],
+  cricket:{goal:['board','Ferme le <b>15 au 20</b> et la <b>Bulle</b> avant les autres'],rows:[['Ordre','seq','Dans quel ordre ?'],['Les points','segMode','Les points, pour qui ?'],['Manches','clegs','Combien de manches ?']],
     rules:'3 touches ferment un numéro. Fermé chez toi, il marque des points.'},
-  x01:{goal:['zero','Descends à <b>zéro pile</b>'],rows:[['Score de départ','xstart'],['Départ','xin'],['Finish','xout'],['Aide au finish','xhint'],['Premier à zéro','xrep'],['Manches gagnantes','xlegs']],
+  x01:{goal:['zero','Descends à <b>zéro pile</b>'],rows:[['Score de départ','xstart'],['Départ','xin'],['Finish','xout'],['Aide au finish','xhint'],['Premier à zéro','xrep'],['Manches','xlegs']],
     rules:'Chaque volée est retirée du score. Trop bas : <b>bust</b>.'},
   killer:{goal:['heart','Sois le <b>dernier en vie</b>'],rows:[['Vies','segLives','Combien de vies ?'],['Quand tu tues','kbonus','Et quand tu tues ?'],['Dernier menacé','kdef','Le dernier menacé…'],['Manche suivante','kcarry','À la manche suivante…']],
     rules:'3 touches sur ton numéro : tu deviens <b>Killer</b>. Chaque touche sur un autre lui coûte une vie.'},
@@ -7030,22 +6995,21 @@ const stVal=k=>{const sg=stSeg(k),b=sg&&sg.querySelector('button.sel');return b?
 const stFrag=(k,v)=>{const f=STF[k];if(!f)return v;const t=typeof f==='function'?f(v):f[v];if(t!=null)return t;const b=stSeg(k)&&stSeg(k).querySelector(`button[data-v="${v}"]`);return b?b.textContent.trim():v};
 function storyRender(){const e=$('gRules');if(!e)return;SU.classList.toggle('story',!!S.story);if(!S.story){const l=SU.querySelector('.stlink');if(!l){const a=el('button','stlink','Voir en texte ›');a.addEventListener('click',()=>{haptic();S.story=true;store.set(K_S,S);renderSetup()});e.after(a)}return}
   SU.querySelectorAll('.stlink').forEach(x=>x.remove());
-  const T=STC[S.game]||STC.cricket,nb=x=>x.replace(/ ([:!?;])/g,' $1'),tall=T.rows.length<=3,mode=T.rows.length<=3?'tall':T.rows.length<=4?'smid':'compact';
+  const T=STC[S.game]||STC.cricket,nb=x=>x.replace(/ ([:!?;])/g,' $1');
   const opts=k=>{const sg=stSeg(k);return sg?[...sg.querySelectorAll('button')].map(b=>({v:b.dataset.v,on:b.classList.contains('sel'),cus:b.classList.contains('xcus')})):[]};
-  const choice=k=>{const O=opts(k);
-    if(STN.has(k)){const max=k==='xstart'?9:tall?5:3,std=O.filter(o=>!o.cus),vis=std.slice(0,max),rest=std.slice(max),cu=O.find(o=>o.cus);
-      const hid=rest.find(o=>o.on)||(cu&&cu.on?{v:String(S.xstart),on:true}:null),more=rest.length||cu;
-      return vis.map(o=>`<button class="soc${k==='xstart'?' w':''}${o.on?' on':''}" data-k="${k}" data-v="${o.v}">${stFrag(k,o.v)}</button>`).join('')
-        +(more?`<button class="soc more${k==='xstart'?' w':''}${hid?' on':''}" data-k="${k}">${hid?hid.v:(k==='xstart'?'…':'+')}</button>`:'')}
-    return O.map(o=>`<button class="sot${o.on?' on':''}" data-k="${k}" data-v="${o.v}"><span class="soi">${stIco(STO[k+':'+o.v]||'none')}</span><span class="sol">${nb(stFrag(k,o.v))}</span></button>`).join('')};
-  e.innerHTML='<div class="story"><div class="sgoal"><span class="semb">'+stIco(T.goal[0])+'</span><div><span class="sgl">Le but</span><p class="sgt">'+nb(T.goal[1])+'</p></div></div>'
-    +'<div class="srows '+mode+'">'+T.rows.map(([l,k,q])=>`<div class="sq"><span class="sql"><span class="sqs">${nb(l)}</span><span class="sqq">${nb(q||l)}</span></span><div class="sopts">${choice(k)}</div></div>`).join('')+'</div>'
-    +'<div class="stip">'+STM+'<p class="srul">'+nb(T.rules)+'</p></div></div>'
+  /* une ligne = une capsule du tableau de cricket : intitulé à gauche, choix à droite, la bulle orange glisse sur le choix */
+  const line=([l,k])=>{const O=opts(k);let C;
+    if(STN.has(k)){const max=k==='xstart'?9:5,std=O.filter(o=>!o.cus),vis=std.slice(0,max),rest=std.slice(max),cu=O.find(o=>o.cus);
+      const hid=rest.find(o=>o.on)||(cu&&cu.on?{v:String(S.xstart),on:true}:null);
+      C=vis.map(o=>({v:o.v,t:stFrag(k,o.v),on:o.on}));if(rest.length||cu)C.push({more:1,t:hid?hid.v:(k==='xstart'?'…':'+'),on:!!hid})}
+    else C=O.map(o=>({v:o.v,t:stFrag(k,o.v),on:o.on}));
+    const i=Math.max(0,C.findIndex(c=>c.on));
+    return `<div class="sbr${C.length>3?' many':''}" data-k="${k}" style="--n:${C.length};--i:${i}"><span class="sbl">${nb(l)}</span><div class="sbt"><i class="sbb"></i>`
+      +C.map((c,j)=>`<button class="sbo${j===i?' on':''}${c.more?' more':''}" data-k="${k}"${c.more?'':` data-v="${c.v}"`} data-j="${j}">${nb(c.t)}</button>`).join('')+'</div></div>'};
+  e.innerHTML='<div class="story"><div class="sgoal"><div class="sgx"><span class="sgl">Le but</span><p class="sgt">'+nb(T.goal[1])+'</p><p class="sgr">'+nb(T.rules)+'</p></div><span class="semb">'+stIco(T.goal[0])+'</span></div>'
+    +'<div class="sboard'+(T.rows.length<=3?' big':'')+'">'+T.rows.map(line).join('')+'</div></div>'
     +'<button class="stlist">Voir les réglages en liste ›</button>';
-  /* si les grandes tuiles débordent sur le bouton du bas : version compacte */
-  const fitT=()=>{const R=e.querySelector(':scope>.story .srows'),G=SU.querySelector('.gobar'),L=e.querySelector(':scope>.stlist');if(!R||!G||!L||!L.offsetHeight)return;const over=()=>L.getBoundingClientRect().bottom>G.getBoundingClientRect().top-12;
-    if(over()&&R.classList.contains('tall'))R.classList.replace('tall','smid');if(over()&&R.classList.contains('smid'))R.classList.replace('smid','compact')};
-  requestAnimationFrame(fitT);setTimeout(fitT,400);if(window.ResizeObserver&&!e._stro){e._stro=new ResizeObserver(()=>{try{e._fitT&&e._fitT()}catch(x){}});e._stro.observe(e)}e._fitT=fitT}
+}
 {const _sr=showRules;showRules=function(){_sr.apply(this,arguments);try{storyRender()}catch(x){console.warn(x)}}}
 /* toucher un mot en surbrillance : petite bulle avec les choix possibles */
 function stPop(btn){const k=btn.dataset.k,sg=stSeg(k);if(!sg)return;const old=$('stpop');if(old)old.remove();
@@ -7060,8 +7024,10 @@ function stPop(btn){const k=btn.dataset.k,sg=stSeg(k);if(!sg)return;const old=$(
     if(c.classList.contains('cus')){p.querySelector('.stcus').hidden=false;p.querySelector('input').focus();return}
     if(c.classList.contains('ok')){const v=Math.round(+p.querySelector('input').value);if(!(v>=2&&v<=1001)){toast('ENTRE UN SCORE ENTRE 2 ET 1001','',true);return}S.xstart=v;store.set(K_S,S);p.remove();SFX.ui();renderSetup();return}
     const b=sg.querySelector(`button[data-v="${c.dataset.v}"]`);haptic();if(b&&!b.classList.contains('sel'))b.click();p.remove();setTimeout(()=>{renderSetup()},30)})}
-document.addEventListener('click',e=>{const t=e.target;const o=t.closest&&t.closest('#setup .sot,#setup .soc');if(o){e.stopPropagation();haptic();SFX.tick();
-    if(o.classList.contains('more')){stPop(o);return}const sg=stSeg(o.dataset.k),b=sg&&sg.querySelector(`button[data-v="${o.dataset.v}"]`);if(b&&!b.classList.contains('sel'))b.click();setTimeout(()=>{renderSetup()},30);return}
+document.addEventListener('click',e=>{const t=e.target;const o=t.closest&&t.closest('#setup .sbo');if(o){e.stopPropagation();haptic();SFX.tick();
+    if(o.classList.contains('more')){stPop(o);return}const r=o.closest('.sbr');if(o.classList.contains('on'))return;
+    r.style.setProperty('--i',o.dataset.j);r.querySelectorAll('.sbo').forEach(x=>x.classList.toggle('on',x===o));
+    setTimeout(()=>{const sg=stSeg(o.dataset.k),b=sg&&sg.querySelector(`button[data-v="${o.dataset.v}"]`);if(b&&!b.classList.contains('sel'))b.click();renderSetup()},290);return}
   if(t.closest&&t.closest('#setup .stlist')){haptic();S.story=false;store.set(K_S,S);renderSetup();return}
   const p=$('stpop');if(p&&!t.closest('#stpop'))p.remove()},true);
 /* 501 : score libre (x01) et plus de « Master » */
@@ -7727,7 +7693,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-436';   // à changer avec VERSION dans sw.js
+const APPV='lf-437';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
