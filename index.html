@@ -3916,7 +3916,7 @@ html body #setup#setup.b2 .opt{--accent:#4b4b4b;--acc-rgb:75,75,75;--accimg:none
 /* lf-440 : pages 0 (jeux) et 1 (règles) */
 #gPick,#gHero{display:none}
 html body #setup#setup.b2.p0>:not(.sh):not(#gPick):not(.gghost){display:none!important}
-html body #setup#setup.b2.p0>#gPick{display:grid!important;grid-template-columns:1fr 1fr;gap:20px 12px;margin:calc(var(--u,1dvh)*3) 0 auto;padding-top:6px}
+html body #setup#setup.b2.p0>#gPick{display:grid!important;grid-template-columns:1fr 1fr;gap:16px 14px;margin:auto 0;padding:4px 2px 10px}
 html body #setup#setup.b2.p1 :is(.seg.gamepick,#segBar,.gill){display:none!important}
 html body #setup#setup.b2.p1>.grp{display:none!important}
 html body #setup#setup.b2.p1>#gHero{display:block!important;margin:calc(var(--u,1dvh)*2.4) 0 6px}
@@ -3925,22 +3925,19 @@ html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRule
 html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRules .rp,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRules .rp *{font-size:17px!important;line-height:1.45!important}html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRules .rp{display:block!important;position:relative;padding-left:18px;margin:0 0 12px!important;opacity:.85}
 html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRules :is(.rp,.rgoal) *{display:inline!important;white-space:normal!important}html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRules :is(.rp,.rgoal){text-wrap:wrap!important}
 html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRules .rp::before{content:'';position:absolute;left:0;top:.55em;width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 2px #111}
-#setup .gpc{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;width:100%;min-width:0;padding:16px 10px 13px;border:0;border-radius:24px;background:transparent;
-  box-shadow:inset 0 0 0 2.5px #111;color:var(--m-ink,#111);cursor:pointer;font:inherit}
-#setup .gpc.on{background:var(--gc);box-shadow:inset 0 0 0 2.5px #111,0 0 0 4px var(--gc);color:#fff}
-#setup .gpc:active{transform:scale(.97)}
-#setup .gpt{position:absolute;left:50%;top:0;width:88px;height:33px;transform:translate(-50%,-55%);overflow:visible}
-#setup .gpn{font:400 17px/1 "Fun",sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--gc);margin-top:2px}
-#setup .gpc.on .gpn{color:#fff;-webkit-text-stroke:1px #111;paint-order:stroke fill}
-#setup .gpb{width:min(19vw,82px);height:min(19vw,82px);overflow:visible;margin:4px 0 2px}
-#setup .gpx{font:700 12.5px/1.25 "Txt","UI",sans-serif;opacity:.75;text-align:center;min-height:2.5em;display:flex;align-items:center}
-#setup .gpc.on .gpx{opacity:1}
-#setup .gpc.hero{flex-direction:row;flex-wrap:wrap;justify-content:flex-start;column-gap:12px;padding:14px 16px;text-align:left;cursor:default}
-#setup .gpc.hero .gpt{left:auto;right:16px;transform:translateY(-55%)}
-#setup .gpc.hero .gpb{width:64px;height:64px;margin:0;order:-1}
-#setup .gpc.hero .gpn{font-size:26px;flex:1}
-#setup .gpc.hero .gpx{flex:0 0 100%;font-size:14px;min-height:0}
-html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .gpc :is(.gpn){font-family:"Fun",sans-serif!important;font-weight:400!important}
+#setup .gpq{grid-column:1/-1;margin:0 0 2px;text-align:center;font:400 27px/1.1 "Fun",sans-serif;color:var(--m-ink,#111)}
+#setup .gpc{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;width:100%;min-width:0;aspect-ratio:1/.92;padding:10px 8px 12px;border:0;border-radius:26px;
+  background:linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,0) 45%),var(--gc);box-shadow:inset 0 0 0 3px #111,0 5px 0 #111;color:#fff;cursor:pointer;font:inherit;transition:transform .08s,box-shadow .08s}
+#setup .gpc:active{transform:translateY(4px);box-shadow:inset 0 0 0 3px #111,0 1px 0 #111}
+#setup .gpb{width:min(17vw,70px);height:min(17vw,70px);overflow:visible;margin-bottom:2px;filter:drop-shadow(0 3px 0 rgba(0,0,0,.25))}
+#setup .gpn{font:400 23px/1 "Fun",sans-serif;color:#fff;-webkit-text-stroke:1.4px #111;paint-order:stroke fill;text-shadow:0 2px 0 #111}
+#setup .gpx{font:750 12px/1.2 "UI",sans-serif;color:#fff;opacity:.95;text-align:center}
+#setup .gpc.hero{flex-direction:row;flex-wrap:wrap;justify-content:flex-start;align-content:center;column-gap:14px;row-gap:2px;aspect-ratio:auto;padding:16px 18px;text-align:left;cursor:default}
+#setup .gpc.hero:active{transform:none;box-shadow:inset 0 0 0 3px #111,0 5px 0 #111}
+#setup .gpc.hero .gpb{width:62px;height:62px;margin:0}
+#setup .gpc.hero .gpn{font-size:30px}
+#setup .gpc.hero .gpx{flex:0 0 100%;font-size:14px;text-align:left}
+html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup :is(.gpc .gpn,.gpq){font-family:"Fun",sans-serif!important;font-weight:400!important}
 html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .gpc .gpx{font-family:"UI",sans-serif!important;font-weight:750!important}
 
 </style>
@@ -5351,24 +5348,21 @@ $('segGame').addEventListener('click',e=>{const v=e.target.dataset.v;if(v)setGam
 $('segBar').addEventListener('click',e=>{const v=e.target.dataset.v;if(v){haptic();SFX.ui();setGame(v)}});
 
 /* lf-440 : choix du jeu en cases façon Killer (dessin + petite info) → page des règles → page des paramètres → joueurs */
-const GPK={cricket:{c:'#2aa7c9',t:'Ferme le 15 au 20 et la Bulle'},x01:{c:'#e29f37',t:'Descends pile à zéro'},killer:{c:'#e5484d',t:'Le dernier en vie gagne'},
-  clock:{c:'#6a4c9c',t:'Fais le tour de la cible'},shanghai:{c:'#e07aa5',t:'Un numéro par tour'},halveit:{c:'#3a9d5d',t:'Rate et tu perds la moitié'}};
-const GPI=(()=>{const K='#111',W='#fff',Y='#ffd23f',R='#ff4d5e',s=`stroke="${K}" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"`,
-  H=(x,y,k)=>`<path transform="translate(${x} ${y}) scale(${k})" d="M0 9L-8.5 .5A5 5 0 0 1 0-6.5A5 5 0 0 1 8.5 .5Z" fill="${R}" ${s}/>`,
-  T=(x,y,t,f,z)=>`<text x="${x}" y="${y}" text-anchor="middle" style="font:400 ${z}px Fun,sans-serif!important" fill="${f}" stroke="${K}" stroke-width="1.6" paint-order="stroke">${t}</text>`,
-  tl=(x,y,w,h,f)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="4.5" fill="${f}" ${s}/>`,
-  mk=(x,y,k)=>`<g transform="translate(${x} ${y})">${k==1?'<path d="M-5 5L5-5" '+s+'/>':k==2?'<path d="M-5 5L5-5M-5-5L5 5" '+s+'/>':'<circle r="7" fill="'+W+'" '+s+'/><path d="M-4 4L4-4M-4-4L4 4" '+s+'/>'}</g>`;
+const GPK={cricket:{c:'#1fa2d6',t:'Ferme le 15 au 20'},x01:{c:'#ff8a1f',t:'Descends pile à zéro'},killer:{c:'#ef3b4f',t:'Le dernier en vie gagne'},
+  clock:{c:'#7b5cd6',t:'Fais le tour de la cible'},shanghai:{c:'#ff5fa2',t:'Un numéro par tour'},halveit:{c:'#22b573',t:'Rate et tu perds la moitié'}};
+const GPI=(()=>{const K='#111',W='#fff',s=`stroke="${K}" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"`,
+  T=(x,y,t,z,f=W)=>`<text x="${x}" y="${y}" text-anchor="middle" style="font:400 ${z}px Fun,sans-serif!important" fill="${f}"${f===W?` stroke="${K}" stroke-width="2.4" paint-order="stroke"`:''}>${t}</text>`,
+  tl=(x,y,w,h)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="5" fill="${W}" ${s}/>`;
   return{
-   cricket:{big:`<circle cx="20" cy="20" r="16" fill="${W}" ${s}/><path d="M11 11L29 29M29 11L11 29" stroke="${K}" stroke-width="4.5" stroke-linecap="round"/>`,top:mk(-15,0,1)+mk(0,0,2)+mk(15,0,3)},
-   x01:{big:T(20,29,'501',W,19),top:tl(-21,-6,12,12,W)+T(-15,4,'D',K,10)+tl(-6,-6,12,12,Y)+T(0,4,'T',K,10)+tl(9,-6,12,12,W)+T(15,4,'0',K,10)},
-   killer:{big:H(20,19,2.1),top:H(-14,0,.95)+H(0,0,.95)+H(14,0,.95)},
-   clock:{big:`<circle cx="20" cy="20" r="16" fill="${W}" ${s}/><path d="M20 20V9M20 20l7 4" ${s}/><circle cx="20" cy="20" r="2" fill="${K}"/><path d="M20 5.5v2.5M34.5 20H32M20 34.5V32M5.5 20H8" stroke="${K}" stroke-width="2"/>`,top:tl(-21,-6,12,12,W)+T(-15,4,'1',K,10)+tl(-6,-6,12,12,W)+T(0,4,'2',K,10)+tl(9,-6,12,12,W)+T(15,4,'3',K,10)},
-   shanghai:{big:tl(4,9,10,22,W)+tl(15,9,10,22,'#ff9d4d')+tl(26,9,10,22,Y)+T(9,25,'S',K,11)+T(20,25,'D',K,11)+T(31,25,'T',K,11),top:`<path d="M0-7l2.1 4.6 5 .6-3.7 3.4 1 5L0 4.1l-4.4 2.5 1-5L-7-1.8l5-.6z" fill="${Y}" ${s}/>`},
-   halveit:{big:`<circle cx="20" cy="20" r="16" fill="${W}" ${s}/><path d="M20 4a16 16 0 0 1 0 32z" fill="#bbb" ${s}/><path d="M20 1v38" stroke="${K}" stroke-width="2.4" stroke-dasharray="3 3"/>`,top:tl(-10,-6,20,12,W)+T(0,4,'÷2',K,10)}}})();
-const gpCard=(g,hero)=>{const I=GPI[g],P=GPK[g];return`<button class="gpc${g===S.game&&!hero?' on':''}${hero?' hero on':''}" data-g="${g}" style="--gc:${P.c}">`
-  +`<svg class="gpt" viewBox="-24 -9 48 18" aria-hidden="true">${I.top}</svg><span class="gpn">${GNAME[g]}</span>`
-  +`<svg class="gpb" viewBox="0 0 40 40" aria-hidden="true">${I.big}</svg><span class="gpx">${P.t}</span></button>`};
-function gpRender(){const P=$('gPick'),H=$('gHero');if(P)P.innerHTML=GAMES.map(g=>gpCard(g)).join('');if(H)H.innerHTML=gpCard(S.game,1)}
+   cricket:`<circle cx="20" cy="20" r="16" fill="${W}" ${s}/><path d="M12 12L28 28M28 12L12 28" stroke="${K}" stroke-width="4.6" stroke-linecap="round"/>`,
+   x01:`<path d="M7 33L25 15" stroke="${K}" stroke-width="10" stroke-linecap="round"/><path d="M7 33L25 15" stroke="${W}" stroke-width="5" stroke-linecap="round"/><path d="M23 17l1-13 12 12-13 1z" fill="${W}" ${s}/><path d="M24.5 15.5l6-6" ${s}/><path d="M7 33l-4 4" ${s}/>`,
+   killer:`<path d="M20 37L3 20A10.3 10.3 0 0 1 20 5.7A10.3 10.3 0 0 1 37 20Z" fill="${W}" ${s}/>`,
+   clock:`<circle cx="20" cy="20" r="16" fill="${W}" ${s}/><path d="M20 20V10M20 20l7 4" ${s}/><circle cx="20" cy="20" r="2.2" fill="${K}"/>`,
+   shanghai:tl(2,9,11,22)+tl(14.5,9,11,22)+tl(27,9,11,22)+T(7.5,25,'S',13,'#111')+T(20,25,'D',13,'#111')+T(32.5,25,'T',13,'#111'),
+   halveit:`<circle cx="20" cy="20" r="16" fill="${W}" ${s}/><path d="M20 4a16 16 0 0 0 0 32z" fill="${K}" opacity=".85"/><circle cx="20" cy="20" r="16" fill="none" ${s}/>`}})();
+const gpCard=(g,hero)=>{const P=GPK[g];return`<button class="gpc${hero?' hero':''}" data-g="${g}" style="--gc:${P.c}">`
+  +`<svg class="gpb" viewBox="0 0 40 40" aria-hidden="true">${GPI[g]}</svg><span class="gpn">${GNAME[g]}</span><span class="gpx">${P.t}</span></button>`};
+function gpRender(){const P=$('gPick'),H=$('gHero');if(P)P.innerHTML='<h2 class="gpq">À quoi on joue ?</h2>'+GAMES.map(g=>gpCard(g)).join('');if(H)H.innerHTML=gpCard(S.game,1)}
 {const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{gpRender()}catch(x){}return r}}
 $('gPick').addEventListener('click',e=>{const b=e.target.closest('.gpc');if(!b)return;haptic();SFX.ui();if(b.dataset.g!==S.game)setGame(b.dataset.g);gpRender();setupPage(1,1)});
 /* glisser le doigt vers la gauche / la droite sur la page des règles : jeu suivant / précédent */
@@ -7585,7 +7579,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-440';   // à changer avec VERSION dans sw.js
+const APPV='lf-441';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
