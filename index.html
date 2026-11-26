@@ -1044,7 +1044,6 @@ html.night .htab td:first-child{color:#f2f4f8}
 @keyframes bosstag{0%{opacity:0;transform:translate(-50%,-60%) scale(.5)}15%{opacity:1;transform:translate(-50%,-115%) scale(1.08)}25%{transform:translate(-50%,-110%) scale(1)}80%{opacity:1;transform:translate(-50%,-120%)}100%{opacity:0;transform:translate(-50%,-140%)}}
 .bspark{position:fixed;z-index:59;pointer-events:none;color:#ffd84a;text-shadow:0 0 6px #ffcc33;line-height:1;opacity:0;animation:bspark .8s ease-out forwards}
 @keyframes bspark{0%{opacity:0;transform:scale(0) rotate(0)}40%{opacity:1;transform:scale(1.2) rotate(60deg)}100%{opacity:0;transform:scale(0) rotate(140deg)}}
-@font-face{font-family:"Txt";font-weight:100 600;font-display:block;src:url("art/txt-500.woff") format("woff")}@font-face{font-family:"Txt";font-weight:601 1000;font-display:block;src:url("art/txt-700.woff") format("woff")}
 @font-face{font-family:"Fun";font-display:block;src:url("art/fun.woff") format("woff")}
 @font-face{font-family:"FunL";font-display:block;src:url("art/funl.woff") format("woff")}
 /* typo cartoon pour l'accueil et le menu */
@@ -3914,56 +3913,6 @@ html body #setup#setup.b2 .grp:has(.sect.s2)>.sect,html body #setup#setup.b2 .gr
 html body #setup#setup #go :is(em,.ga){font-size:calc(var(--u)*2.55)!important}
 /* lf-425 : dans les options, la couleur de l'appli devient le gris foncé — plus aucun orange pendant les clics et animations */
 html body #setup#setup.b2 .opt{--accent:#4b4b4b;--acc-rgb:75,75,75;--accimg:none}
-/* lf-426 (essai) : page 1 en texte */
-html body #setup#setup.b2.story:not(.p2)>.grp:has(.sect.s2){display:none!important}
-html body #setup#setup .stlist,html body #setup#setup .stlink{display:block;margin:6px 0 0;border:0;background:none;padding:4px 0;font:400 13px "Lbl","Lexend",sans-serif!important;color:var(--m-ink,#111);opacity:.55;text-decoration:underline}
-#stpop{position:fixed;z-index:400;display:flex;flex-direction:column;gap:6px;min-width:180px;max-width:calc(100vw - 20px);padding:10px;border-radius:20px;background:#fff;box-shadow:inset 0 0 0 2px #111,0 10px 28px rgba(0,0,0,.25);
-  transform:scale(.85);opacity:0;transition:transform .18s cubic-bezier(.3,1.5,.5,1),opacity .15s}
-#stpop.on{transform:none;opacity:1}
-#stpop button{border:0;border-radius:99px;padding:9px 14px;background:transparent;box-shadow:inset 0 0 0 1.5px #111;color:#111;font:400 15px "Fun",sans-serif;text-align:left}
-#stpop button.on{background:#4b4b4b;color:#fff;box-shadow:none}
-#stpop .stcus{display:flex;gap:6px}#stpop .stcus[hidden]{display:none}#stpop .stcus input{flex:1;min-width:0;border:0;border-radius:12px;box-shadow:inset 0 0 0 1.5px #111;padding:8px 10px;font:400 16px "Fun",sans-serif}
-#stpop .stcus .ok{text-align:center;background:#4b4b4b;color:#fff;box-shadow:none}
-html body #setup#setup.b2.story:not(.p2)>.gobar{margin-top:auto!important}
-/* lf-437 : page 1 = tableau de cricket — carte « but » comme la carte joueur, une capsule par réglage, la bulle orange glisse sur le choix */
-#stpop button.on{background:var(--accent)!important}#stpop .stcus .ok{background:var(--accent)!important}
-html body #setup#setup .story{color:var(--m-ink,#111)!important;margin-top:4px;display:flex;flex-direction:column;gap:12px}
-html body #setup#setup .story .sti{display:block;width:100%;height:100%;overflow:visible}
-html body #setup#setup .story .sgoal{position:relative;display:flex;align-items:center;gap:10px;padding:14px 14px 14px 18px;border-radius:24px;background:var(--accent);box-shadow:inset 0 0 0 2.5px #111,0 0 0 3px var(--accent)}
-html body #setup#setup .story .sgx{flex:1;min-width:0}
-html body #setup#setup .story .sgl{display:block;font:400 15px/1 "Fun",sans-serif!important;letter-spacing:.08em;text-transform:uppercase;color:#fff;margin-bottom:5px}
-html body #setup#setup .story .sgt{margin:0!important;font:400 25px/1.12 "Fun",sans-serif!important;color:#fff!important;-webkit-text-stroke:1.2px #111;paint-order:stroke fill;text-shadow:0 2px 0 #111}
-html body #setup#setup .story .sgt b{font:inherit!important;color:#fff!important}
-html body #setup#setup .story .sgr{margin:7px 0 0!important;font:700 13.5px/1.35 "Txt",sans-serif!important;color:#fff!important;opacity:.95}
-html body #setup#setup .story .sgr b{font:inherit!important;color:#ffe066!important}
-html body #setup#setup .story .semb{flex:none;width:62px;height:62px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(255,255,255,.28);box-shadow:inset 0 0 0 2.5px #111}
-html body #setup#setup .story .semb .sti{width:46px;height:46px}
-html body #setup#setup .story .sboard{display:flex;flex-direction:column;gap:9px}
-html body #setup#setup .story .sbr{display:flex;align-items:center;height:54px;border-radius:99px;background:transparent;box-shadow:inset 0 0 0 2.5px #111;padding-left:18px}
-html body #setup#setup .story .sbl{flex:0 0 34%;min-width:0;font:400 17px/1.05 "Fun",sans-serif!important;color:var(--m-ink,#111)}
-html body #setup#setup .story .sbt{position:relative;flex:1;align-self:stretch;display:flex}
-html body #setup#setup .story .sbb{position:absolute;top:-3px;bottom:-3px;left:calc((var(--i) + .5)*100%/var(--n));width:max(calc(100%/var(--n)),46px);transform:translateX(-50%);border-radius:99px;background:var(--accent);box-shadow:inset 0 0 0 2.5px #111;
-  transition:left .28s cubic-bezier(.3,1.35,.5,1);pointer-events:none}
-html body #setup#setup .story .sbr .sbb{font-style:normal}
-html body #setup#setup .story .sbo{position:relative;z-index:1;flex:1 1 0;min-width:0;border:0;background:none;padding:0 4px;font:400 17px/1 "Fun",sans-serif!important;color:var(--m-ink,#111);opacity:.5;cursor:pointer;transition:color .2s,opacity .2s}
-html body #setup#setup .story .sbo.on{color:#fff!important;opacity:1;-webkit-text-stroke:1px #111;paint-order:stroke fill;text-shadow:0 1.5px 0 #111}
-html body #setup#setup .story .sbr.many .sbl{flex-basis:30%}html body #setup#setup .story .sbr.many .sbo{font-size:19px!important}
-html body #setup#setup .story .sbr:not(.many) .sbo{font-size:16px!important;line-height:1.05}
-html body #setup#setup .story .sboard.big{gap:12px}html body #setup#setup .story .sboard.big .sbr{height:62px}html body #setup#setup .story .sboard.big .sbl{font-size:19px!important}html body #setup#setup .story .sboard.big .sbr:not(.many) .sbo{font-size:18px!important}html body #setup#setup .story .sboard.big .sbr.many .sbo{font-size:21px!important}
-html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sgt,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sgl,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sbl,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sbo,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sti text{font-family:"Fun",sans-serif!important;font-weight:400!important}
-html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sgr,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .story .sgr b{font-family:"Txt",sans-serif!important;font-weight:700!important}
-/* lf-438 : barre des jeux — tous les jeux sur une ligne qui défile, la bulle reste au centre et le jeu choisi vient dessous */
-html body #setup#setup #segGame,html body #setup#setup #segBar{display:none!important}
-#setup.b2.p2 #gReel,html body #setup#setup.b2.pp #gReel{display:none!important}
-#gReel{position:relative;flex:none;height:46px;margin:calc(var(--u,1dvh)*1.2) 0 0;border-radius:99px;background:var(--ui-track,transparent);box-shadow:inset 0 0 0 2.5px #111}
-#gReel .grb{position:absolute;left:50%;top:-3px;bottom:-3px;width:128px;transform:translateX(-50%);border-radius:99px;background:var(--accent);box-shadow:inset 0 0 0 2.5px #111;pointer-events:none}
-#gReel .grs{position:relative;z-index:1;height:100%;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;
-  padding:0 calc(50% - 64px);-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 16%,#000 84%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 16%,#000 84%,transparent 100%)}
-#gReel .grs::-webkit-scrollbar{display:none}
-#gReel .grs button{flex:0 0 128px;scroll-snap-align:center;border:0;background:none;padding:0;font:400 21px/1 "Fun",sans-serif;color:var(--m-ink,#111);opacity:.5;cursor:pointer;transition:color .15s,opacity .15s}
-#gReel .grs button.sel{color:#fff;opacity:1;-webkit-text-stroke:1px #111;paint-order:stroke fill;text-shadow:0 1.5px 0 #111}
-html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup #gReel .grs button{font-family:"Fun",sans-serif!important;font-weight:400!important}
-
 </style>
 </head>
 <body>
@@ -4001,7 +3950,6 @@ html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup #gReel .g
 
   <div class="seg gamepick" id="segGame"><button data-v="cricket">Cricket</button><button data-v="x01">501</button><button data-v="bar">Mini jeux</button></div>
   <div class="seg gamepick barpick" id="segBar"><button data-v="killer">Killer</button><button data-v="clock">L'horloge</button><button data-v="shanghai">Shanghai</button><button data-v="halveit">Halve-it</button></div>
-  <div id="gReel" class="greel"><i class="grb"></i><div class="grs"><button data-v="cricket">Cricket</button><button data-v="x01">501</button><button data-v="killer">Killer</button><button data-v="clock">L’horloge</button><button data-v="shanghai">Shanghai</button><button data-v="halveit">Halve-it</button></div></div>
   <p id="gRules" class="grules"></p>
 
   <div class="grp">
@@ -5369,17 +5317,6 @@ function setGame(v){if(v==='bar')v=BARG.includes(S.game)?S.game:(S.lastBar||'kil
   const g=document.querySelector('#setup .grp:has(.sect.s2)');if(g){g.classList.remove('gslideL','gslideR');void g.offsetWidth;g.classList.add(d>0?'gslideL':'gslideR')}}
 $('segGame').addEventListener('click',e=>{const v=e.target.dataset.v;if(v)setGame(v)});
 $('segBar').addEventListener('click',e=>{const v=e.target.dataset.v;if(v){haptic();SFX.ui();setGame(v)}});
-
-/* lf-438 : barre des jeux qui défile — toucher un jeu ou faire glisser : le jeu au centre est choisi */
-{const RS=$('gReel').querySelector('.grs');
-  const sync=smooth=>{const b=RS.querySelector(`button[data-v="${S.game}"]`);RS.querySelectorAll('button').forEach(x=>x.classList.toggle('sel',x===b));
-    if(b&&RS.clientWidth)RS.scrollTo({left:b.offsetLeft+b.offsetWidth/2-RS.clientWidth/2,behavior:smooth?'smooth':'instant'})};
-  const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{sync(true)}catch(x){}return r};
-  RS.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.dataset.v===S.game)return;haptic();SFX.ui();setGame(b.dataset.v)});
-  RS.addEventListener('scroll',()=>{clearTimeout(RS._t);RS._t=setTimeout(()=>{const c=RS.scrollLeft+RS.clientWidth/2;let best=null,bd=1e9;
-    RS.querySelectorAll('button').forEach(b=>{const d=Math.abs(b.offsetLeft+b.offsetWidth/2-c);if(d<bd){bd=d;best=b}});
-    if(best&&best.dataset.v!==S.game){haptic();SFX.ui();setGame(best.dataset.v)}},140)},{passive:true});
-  if(window.ResizeObserver)new ResizeObserver(()=>sync(false)).observe(RS);}
 /* glisser le doigt vers la gauche / la droite sur la page des règles : jeu suivant / précédent */
 {let sx=null,sy=0,st=0;const SU0=$('setup');
  SU0.addEventListener('touchstart',e=>{if(SU0.classList.contains('p2')||e.touches.length>1){sx=null;return}const t=e.touches[0];sx=t.clientX;sy=t.clientY;st=performance.now()},{passive:true});
@@ -6931,129 +6868,6 @@ function showRules(){const e=$('gRules');if(!e)return;const g=S.game||'cricket',
     return out};
   e.innerHTML='<span class="rgoal"><i>Le but</i>'+nb(goal)+'</span>'+ps.map(x=>'<span class="rp">'+nb(x)+'</span>').join('')}
 {const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{showRules()}catch(e){}return r}}
-/* ===== lf-426 (essai) : page 1 = un texte d'explication ; les paramètres choisis y sont en surbrillance, on les touche pour les changer ===== */
-S.story=S.story!==false;
-/* lf-435 : page 1 « choix illustrés » — bandeau but, puis chaque réglage montre tous ses choix (tuiles dessinées ou jetons), le choix actif en orange */
-const STF={
-  segMode:{standard:'Pour toi',cut:'Aux autres'},
-  clegs:v=>String(v),xlegs:v=>String(v),
-  seq:{0:'Désordre',1:'Dans l’ordre'},
-  xstart:v=>String(+v?v:(S.xstart||501)),
-  xin:{0:'Direct',1:'Sur un double'},xout:{0:'Libre',1:'Sur un double'},
-  xrep:{1:'Tour fini',0:'Gagne direct'},xhint:{1:'Avec aide',0:'Sans aide'},
-  shr:v=>String(v),segShw:{1:'Victoire',0:'Gros bonus'},
-  clkm:{0:'Valent 1',1:'Font sauter'},
-  clkr:{0:'Jamais',2:'2 touches',3:'3 touches'},
-  clkb:{0:'Au 20',1:'À la Bulle'},
-  segHiSeq:{0:'Classiques',1:'Perso'},hid:v=>String(v),
-  hip:{1:'Score ÷ 2',0:'Aucune'},
-  segLives:v=>String(v),kbonus:{1:'+1 vie',0:'Rien'},
-  kcarry:{1:'Avantage',0:'Égalité'},
-  kdef:{1:'Se défend',0:'Éliminé'}};
-/* pictogramme de chaque choix (clé:valeur) */
-const STO={'seq:0':'mess','seq:1':'seq','segMode:standard':'star','segMode:cut':'give','xin:0':'flag','xin:1':'dbl','xout:0':'finish','xout:1':'dbl',
-  'xhint:1':'bulb','xhint:0':'nobulb','xrep:1':'timer','xrep:0':'cup','kbonus:1':'heartplus','kbonus:0':'none','kdef:1':'shield','kdef:0':'broken',
-  'kcarry:1':'crown','kcarry:0':'equal','clkb:0':'n20','clkb:1':'board','clkm:0':'p1','clkm:1':'jump','clkr:0':'none','clkr:2':'r2','clkr:3':'r3',
-  'segShw:1':'cup','segShw:0':'star','segHiSeq:0':'board','segHiSeq:1':'pencil','hip:1':'half','hip:0':'shield'};
-const STN=new Set(['clegs','xlegs','segLives','shr','hid','xstart']);
-const STC={
-  cricket:{goal:['board','Ferme le <b>15 au 20</b> et la <b>Bulle</b> avant les autres'],rows:[['Ordre','seq','Dans quel ordre ?'],['Les points','segMode','Les points, pour qui ?'],['Manches','clegs','Combien de manches ?']],
-    rules:'3 touches ferment un numéro. Fermé chez toi, il marque des points.'},
-  x01:{goal:['zero','Descends à <b>zéro pile</b>'],rows:[['Score de départ','xstart'],['Départ','xin'],['Finish','xout'],['Aide au finish','xhint'],['Premier à zéro','xrep'],['Manches','xlegs']],
-    rules:'Chaque volée est retirée du score. Trop bas : <b>bust</b>.'},
-  killer:{goal:['heart','Sois le <b>dernier en vie</b>'],rows:[['Vies','segLives','Combien de vies ?'],['Quand tu tues','kbonus','Et quand tu tues ?'],['Dernier menacé','kdef','Le dernier menacé…'],['Manche suivante','kcarry','À la manche suivante…']],
-    rules:'3 touches sur ton numéro : tu deviens <b>Killer</b>. Chaque touche sur un autre lui coûte une vie.'},
-  clock:{goal:['clock','Fais le <b>tour de la cible</b> le premier'],rows:[['Arrivée','clkb','On s’arrête où ?'],['Doubles et triples','clkm','Doubles et triples…'],['Rejouer après','clkr','On rejoue quand ?']],
-    rules:'Touche les numéros dans l’ordre, à partir du 1.'},
-  shanghai:{goal:['board','Marque le <b>plus de points</b>'],rows:[['Tours','shr','Combien de tours ?'],['Shanghai','segShw','Un Shanghai, ça donne…']],
-    rules:'Un seul numéro compte par tour : le 1, puis le 2… Simple + double + triple du même : <b>Shanghai</b>.'},
-  halveit:{goal:['half','Marque le <b>plus de points</b> sans être coupé en deux'],rows:[['Cibles','segHiSeq','Quelles cibles ?'],['Fléchettes par manche','hid','Fléchettes par manche'],['Cible ratée','hip','Cible ratée ?']],
-    rules:'Chaque manche a sa cible : rate-la et tu es puni.'}};
-/* pictogrammes 40×40 dans la DA : trait noir, aplats orange / blanc / jaune / rouge */
-const STI=(()=>{const A='var(--accent)',W='#fff',Y='#ffd23f',R='#ff4d5e',K='#111',s=`stroke="${K}" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"`,
-  H=(x,y,k,f)=>`<path transform="translate(${x} ${y}) scale(${k})" d="M0 9L-8.5 .5A5 5 0 0 1 0-6.5A5 5 0 0 1 8.5 .5Z" fill="${f}" ${s}/>`,
-  T=(x,y,t,f,z=15)=>`<text x="${x}" y="${y}" text-anchor="middle" style="font:400 ${z}px Fun,sans-serif!important" fill="${f}" stroke="${K}" stroke-width="1" paint-order="stroke">${t}</text>`,
-  tile=(x,y,w,h,f)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="5" fill="${f}" ${s}/>`;
-  return{
-  board:`<circle cx="20" cy="20" r="16" fill="${W}" ${s}/><circle cx="20" cy="20" r="10.5" fill="${A}" ${s}/><circle cx="20" cy="20" r="5" fill="${W}" ${s}/><circle cx="20" cy="20" r="1.8" fill="${K}"/>`,
-  marks:`<circle cx="20" cy="20" r="15" fill="${A}" ${s}/><path d="M13 13L27 27M27 13L13 27" stroke="${W}" stroke-width="4.5" stroke-linecap="round"/>`,
-  star:`<path d="M20 4l4.6 9.6 10.4 1.4-7.6 7.2 1.9 10.3L20 27.4l-9.3 5.1 1.9-10.3L5 15l10.4-1.4z" fill="${Y}" ${s}/>`,
-  cup:`<path d="M12 7h16v9a8 8 0 0 1-16 0z" fill="${Y}" ${s}/><path d="M12 10H7a5 5 0 0 0 6 7M28 10h5a5 5 0 0 1-6 7" fill="none" ${s}/><path d="M20 24v6" ${s}/>${tile(12,30,16,5,A)}`,
-  zero:`<circle cx="20" cy="20" r="16" fill="${W}" ${s}/>${T(20,27.5,'0',A,22)}`,
-  flag:`<path d="M11 35V6" ${s}/><path d="M11 7h20l-5 6 5 6H11z" fill="${A}" ${s}/>`,
-  boom:`<path d="M20 3l3.5 8.5 8.5-4-3 8.8 8.5 3.7-8.5 3.7 3 8.8-8.5-4L20 37l-3.5-8.5-8.5 4 3-8.8L2.5 20 11 16.3l-3-8.8 8.5 4z" fill="${A}" ${s}/><path d="M20 13l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="${Y}" stroke="${K}" stroke-width="1.6" stroke-linejoin="round"/>`,
-  finish:`<path d="M10 35V5" ${s}/><rect x="10" y="6" width="22" height="15" fill="${W}" ${s}/><path d="M10 6h5.5v5H10zM21 6h5.5v5H21zM15.5 11H21v5h-5.5zM26.5 11H32v5h-5.5zM10 16h5.5v5H10zM21 16h5.5v5H21z" fill="${K}"/>`,
-  timer:`<circle cx="20" cy="22" r="13" fill="${W}" ${s}/><path d="M20 22V14M20 22l5 3" ${s}/>${tile(16,4,8,5,A)}`,
-  heart:H(20,20,1.9,R),
-  hearts:H(11,22,1,R)+H(29,22,1,R)+H(20,15,1.15,R),
-  heartplus:H(17,19,1.6,R)+`<circle cx="29" cy="28" r="7" fill="${W}" ${s}/><path d="M29 24.5v7M25.5 28h7" stroke="${K}" stroke-width="2.4" stroke-linecap="round"/>`,
-  scope:`<circle cx="20" cy="20" r="13" fill="${A}" ${s}/><circle cx="20" cy="20" r="5" fill="${W}" ${s}/><path d="M20 3v8M20 29v8M3 20h8M29 20h8" ${s}/>`,
-  shield:`<path d="M20 4l13 5v9c0 9-6 15-13 18C13 33 7 27 7 18V9z" fill="${A}" ${s}/><path d="M14 19l4 4 8-8" fill="none" stroke="${W}" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>`,
-  again:`<path d="M31 17A12 12 0 1 0 31 25" fill="none" stroke="${K}" stroke-width="7" stroke-linecap="round"/><path d="M31 17A12 12 0 1 0 31 25" fill="none" stroke="${A}" stroke-width="3.6" stroke-linecap="round"/><path d="M26 9l8 1-1 8z" fill="${A}" ${s}/>`,
-  clock:`<circle cx="20" cy="20" r="16" fill="${W}" ${s}/><path d="M20 20V10M20 20l7 4" ${s}/><circle cx="20" cy="20" r="2" fill="${A}" ${s}/><path d="M20 5.5v2M34.5 20h-2M20 34.5v-2M5.5 20h2" stroke="${K}" stroke-width="2"/>`,
-  order:tile(2,13,11,14,W)+tile(14.5,13,11,14,A)+tile(27,13,11,14,Y)+T(7.5,25,'1',K,12)+T(20,25,'2',W,12)+T(32.5,25,'3',K,12),
-  x23:tile(3,9,16,22,A)+tile(21,9,16,22,Y)+T(11,25.5,'×2',W,12.5)+T(29,25.5,'×3',K,12.5),
-  one:tile(9,5,22,30,A)+T(20,29,'1',W,22),
-  sdt:tile(4,4,32,9,W)+tile(4,15.5,32,9,A)+tile(4,27,32,9,Y),
-  half:`<circle cx="20" cy="20" r="15" fill="${W}" ${s}/><path d="M20 5a15 15 0 0 1 0 30z" fill="${A}" ${s}/><path d="M20 2v36" stroke="${K}" stroke-width="2.6" stroke-dasharray="3 3"/>`,
-  mess:T(11,17,'20',K,12)+T(29,33,'17',K,12)+T(30,15,'B',A,11)+T(12,34,'19',K,11),
-  seq:T(9,25,'15',K,12)+`<path d="M18 21h8M23 16.5l4.5 4.5-4.5 4.5" fill="none" ${s}/>`+T(33,25,'20',K,12),
-  give:`<circle cx="10" cy="20" r="6.5" fill="${A}" ${s}/><path d="M18 20h9M24 15.5l4.5 4.5-4.5 4.5" fill="none" ${s}/><circle cx="34" cy="11" r="4.5" fill="${W}" ${s}/><circle cx="34" cy="29" r="4.5" fill="${W}" ${s}/>`,
-  dbl:tile(8,8,24,24,A)+T(20,26.5,'D',W,17),
-  bulb:`<path d="M20 5a10 10 0 0 0-6 18v4h12v-4A10 10 0 0 0 20 5z" fill="${Y}" ${s}/><path d="M15 31h10M16.5 35h7" ${s}/>`,
-  nobulb:`<path d="M20 5a10 10 0 0 0-6 18v4h12v-4A10 10 0 0 0 20 5z" fill="${W}" ${s}/><path d="M15 31h10M16.5 35h7M7 7l26 26" ${s}/>`,
-  none:`<circle cx="20" cy="20" r="13" fill="${W}" ${s}/><path d="M13 20h14" ${s}/>`,
-  broken:`<path d="M20 34L6.5 21A7.5 7.5 0 0 1 20 10.5A7.5 7.5 0 0 1 33.5 21Z" fill="#bbb" ${s}/><path d="M20 11l-3 7 5 3-3 7" fill="none" ${s}/>`,
-  crown:`<path d="M6 30V13l8 7 6-10 6 10 8-7v17z" fill="${Y}" ${s}/>`,
-  equal:tile(8,8,24,24,W)+`<path d="M14 17h12M14 24h12" ${s}/>`,
-  n20:tile(6,8,28,24,W)+T(20,26.5,'20',K,15),
-  p1:tile(8,8,24,24,W)+T(20,26.5,'+1',K,14),
-  jump:`<path d="M6 30q7-20 14 0q7-20 14 0" fill="none" stroke="${K}" stroke-width="6" stroke-linecap="round"/><path d="M6 30q7-20 14 0q7-20 14 0" fill="none" stroke="${A}" stroke-width="2.6" stroke-linecap="round"/>`,
-  r2:tile(8,8,24,24,A)+T(20,26.5,'2',W,17),r3:tile(8,8,24,24,Y)+T(20,26.5,'3',K,17),
-  pencil:`<path d="M9 31l2-7 16-16 5 5-16 16z" fill="${Y}" ${s}/><path d="M24 11l5 5M9 31l7-2" ${s}/>`,
-  dart:`<path d="M8 32L26 14" stroke="${K}" stroke-width="6.5" stroke-linecap="round"/><path d="M8 32L26 14" stroke="${W}" stroke-width="2.4" stroke-linecap="round"/><path d="M26 14l2-9 7 7-9 2z" fill="${A}" ${s}/><path d="M8 32l-4 4" ${s}/>`}})();
-const STM='<svg class="smas" viewBox="0 0 60 66" aria-hidden="true"><path d="M19 56l-5 8M41 56l5 8" stroke="#111" stroke-width="4" stroke-linecap="round"/><circle cx="30" cy="31" r="26" fill="#fff" stroke="#111" stroke-width="3"/><circle cx="30" cy="31" r="18.5" fill="var(--accent)" stroke="#111" stroke-width="2.6"/><circle cx="30" cy="31" r="11" fill="#fff" stroke="#111" stroke-width="2.6"/><ellipse cx="25.5" cy="28" rx="2.6" ry="3.8" fill="#111"/><ellipse cx="34.5" cy="28" rx="2.6" ry="3.8" fill="#111"/><circle cx="26.4" cy="26.6" r="1" fill="#fff"/><circle cx="35.4" cy="26.6" r="1" fill="#fff"/><path d="M25.5 34.5q4.5 4.5 9 0" fill="none" stroke="#111" stroke-width="2.2" stroke-linecap="round"/><circle cx="20" cy="34" r="2.2" fill="#ff8fa0" opacity=".8"/><circle cx="40" cy="34" r="2.2" fill="#ff8fa0" opacity=".8"/></svg>';
-const stIco=n=>`<svg class="sti" viewBox="0 0 40 40" aria-hidden="true">${STI[n]||''}</svg>`;
-const stSeg=k=>document.getElementById(k)||document.querySelector('#setup .seg[data-k="'+k+'"]');
-const stVal=k=>{const sg=stSeg(k),b=sg&&sg.querySelector('button.sel');return b?b.dataset.v:null};
-const stFrag=(k,v)=>{const f=STF[k];if(!f)return v;const t=typeof f==='function'?f(v):f[v];if(t!=null)return t;const b=stSeg(k)&&stSeg(k).querySelector(`button[data-v="${v}"]`);return b?b.textContent.trim():v};
-function storyRender(){const e=$('gRules');if(!e)return;SU.classList.toggle('story',!!S.story);if(!S.story){const l=SU.querySelector('.stlink');if(!l){const a=el('button','stlink','Voir en texte ›');a.addEventListener('click',()=>{haptic();S.story=true;store.set(K_S,S);renderSetup()});e.after(a)}return}
-  SU.querySelectorAll('.stlink').forEach(x=>x.remove());
-  const T=STC[S.game]||STC.cricket,nb=x=>x.replace(/ ([:!?;])/g,' $1');
-  const opts=k=>{const sg=stSeg(k);return sg?[...sg.querySelectorAll('button')].map(b=>({v:b.dataset.v,on:b.classList.contains('sel'),cus:b.classList.contains('xcus')})):[]};
-  /* une ligne = une capsule du tableau de cricket : intitulé à gauche, choix à droite, la bulle orange glisse sur le choix */
-  const line=([l,k])=>{const O=opts(k);let C;
-    if(STN.has(k)){const max=k==='xstart'?9:5,std=O.filter(o=>!o.cus),vis=std.slice(0,max),rest=std.slice(max),cu=O.find(o=>o.cus);
-      const hid=rest.find(o=>o.on)||(cu&&cu.on?{v:String(S.xstart),on:true}:null);
-      C=vis.map(o=>({v:o.v,t:stFrag(k,o.v),on:o.on}));if(rest.length||cu)C.push({more:1,t:hid?hid.v:(k==='xstart'?'…':'+'),on:!!hid})}
-    else C=O.map(o=>({v:o.v,t:stFrag(k,o.v),on:o.on}));
-    const i=Math.max(0,C.findIndex(c=>c.on));
-    return `<div class="sbr${C.length>3?' many':''}" data-k="${k}" style="--n:${C.length};--i:${i}"><span class="sbl">${nb(l)}</span><div class="sbt"><i class="sbb"></i>`
-      +C.map((c,j)=>`<button class="sbo${j===i?' on':''}${c.more?' more':''}" data-k="${k}"${c.more?'':` data-v="${c.v}"`} data-j="${j}">${nb(c.t)}</button>`).join('')+'</div></div>'};
-  e.innerHTML='<div class="story"><div class="sgoal"><div class="sgx"><span class="sgl">Le but</span><p class="sgt">'+nb(T.goal[1])+'</p><p class="sgr">'+nb(T.rules)+'</p></div><span class="semb">'+stIco(T.goal[0])+'</span></div>'
-    +'<div class="sboard'+(T.rows.length<=3?' big':'')+'">'+T.rows.map(line).join('')+'</div></div>'
-    +'<button class="stlist">Voir les réglages en liste ›</button>';
-}
-{const _sr=showRules;showRules=function(){_sr.apply(this,arguments);try{storyRender()}catch(x){console.warn(x)}}}
-/* toucher un mot en surbrillance : petite bulle avec les choix possibles */
-function stPop(btn){const k=btn.dataset.k,sg=stSeg(k);if(!sg)return;const old=$('stpop');if(old)old.remove();
-  const B=[...sg.querySelectorAll('button')].filter(b=>!b.classList.contains('xcus')||true);
-  const p=el('div','');p.id='stpop';
-  p.innerHTML=B.map(b=>{const v=b.dataset.v,cus=b.classList.contains('xcus');const lab=cus?'Autre score…':(typeof STF[k]==='function'?STF[k](v):(STF[k]&&STF[k][v])||b.textContent.trim());
-    return`<button data-v="${v}" class="${b.classList.contains('sel')?'on':''}${cus?' cus':''}">${lab.charAt(0).toUpperCase()+lab.slice(1)}</button>`}).join('')+(k==='xstart'?'<div class="stcus" hidden><input type="number" inputmode="numeric" min="2" max="1001" placeholder="2 à 1001"><button class="ok">OK</button></div>':'');
-  document.body.append(p);const r=btn.getBoundingClientRect(),w=p.offsetWidth,h=p.offsetHeight;
-  p.style.left=Math.max(10,Math.min(innerWidth-w-10,r.left+r.width/2-w/2))+'px';p.style.top=(r.bottom+h+10<innerHeight?r.bottom+8:Math.max(10,r.top-h-8))+'px';
-  requestAnimationFrame(()=>p.classList.add('on'));
-  p.addEventListener('click',e=>{e.stopPropagation();const c=e.target.closest('button');if(!c)return;
-    if(c.classList.contains('cus')){p.querySelector('.stcus').hidden=false;p.querySelector('input').focus();return}
-    if(c.classList.contains('ok')){const v=Math.round(+p.querySelector('input').value);if(!(v>=2&&v<=1001)){toast('ENTRE UN SCORE ENTRE 2 ET 1001','',true);return}S.xstart=v;store.set(K_S,S);p.remove();SFX.ui();renderSetup();return}
-    const b=sg.querySelector(`button[data-v="${c.dataset.v}"]`);haptic();if(b&&!b.classList.contains('sel'))b.click();p.remove();setTimeout(()=>{renderSetup()},30)})}
-document.addEventListener('click',e=>{const t=e.target;const o=t.closest&&t.closest('#setup .sbo');if(o){e.stopPropagation();haptic();SFX.tick();
-    if(o.classList.contains('more')){stPop(o);return}const r=o.closest('.sbr');if(o.classList.contains('on'))return;
-    r.style.setProperty('--i',o.dataset.j);r.querySelectorAll('.sbo').forEach(x=>x.classList.toggle('on',x===o));
-    setTimeout(()=>{const sg=stSeg(o.dataset.k),b=sg&&sg.querySelector(`button[data-v="${o.dataset.v}"]`);if(b&&!b.classList.contains('sel'))b.click();renderSetup()},290);return}
-  if(t.closest&&t.closest('#setup .stlist')){haptic();S.story=false;store.set(K_S,S);renderSetup();return}
-  const p=$('stpop');if(p&&!t.closest('#stpop'))p.remove()},true);
 /* 501 : score libre (x01) et plus de « Master » */
 if(S.xin===2)S.xin=1;if(S.xout===2)S.xout=1;
 function xcusSync(){const b=document.querySelector('#setup .xcus');if(!b)return;const std=[301,501,701].includes(S.xstart);
@@ -7717,7 +7531,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-438';   // à changer avec VERSION dans sw.js
+const APPV='lf-439';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
