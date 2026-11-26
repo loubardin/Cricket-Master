@@ -3925,19 +3925,37 @@ html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRule
 html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRules .rp,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRules .rp *{font-size:17px!important;line-height:1.45!important}html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRules .rp{display:block!important;position:relative;padding-left:18px;margin:0 0 12px!important;opacity:.85}
 html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRules :is(.rp,.rgoal) *{display:inline!important;white-space:normal!important}html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRules :is(.rp,.rgoal){text-wrap:wrap!important}
 html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRules .rp::before{content:'';position:absolute;left:0;top:.55em;width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 2px #111}
-#setup .gpq{grid-column:1/-1;margin:0 0 2px;text-align:center;font:400 27px/1.1 "Fun",sans-serif;color:var(--m-ink,#111)}
-#setup .gpc{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;width:100%;min-width:0;aspect-ratio:1/.92;padding:10px 8px 12px;border:0;border-radius:26px;
-  background:linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,0) 45%),var(--gc);box-shadow:inset 0 0 0 3px #111,0 5px 0 #111;color:#fff;cursor:pointer;font:inherit;transition:transform .08s,box-shadow .08s}
-#setup .gpc:active{transform:translateY(4px);box-shadow:inset 0 0 0 3px #111,0 1px 0 #111}
-#setup .gpb{width:min(17vw,70px);height:min(17vw,70px);overflow:visible;margin-bottom:2px;filter:drop-shadow(0 3px 0 rgba(0,0,0,.25))}
+#setup .gpq{order:-9;grid-column:1/-1;margin:0 0 2px;text-align:center;font:400 27px/1.1 "Fun",sans-serif;color:var(--m-ink,#111)}
+#setup .gpc{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;width:100%;min-width:0;aspect-ratio:1/.9;padding:10px 8px 12px;border-radius:24px;
+  background:var(--gc);box-shadow:inset 0 0 0 2.5px #111,0 0 0 4px var(--gc);color:#fff;cursor:pointer;text-align:center;-webkit-tap-highlight-color:transparent}
+#setup .gpc:active:not(.big){transform:scale(.96)}
+#setup .gph{display:flex;flex-direction:column;align-items:center;gap:4px}
+#setup .gpb{width:min(17vw,70px);height:min(17vw,70px);overflow:visible;flex:none}
 #setup .gpn{font:400 23px/1 "Fun",sans-serif;color:#fff;-webkit-text-stroke:1.4px #111;paint-order:stroke fill;text-shadow:0 2px 0 #111}
-#setup .gpx{font:750 12px/1.2 "UI",sans-serif;color:#fff;opacity:.95;text-align:center}
-#setup .gpc.hero{flex-direction:row;flex-wrap:wrap;justify-content:flex-start;align-content:center;column-gap:14px;row-gap:2px;aspect-ratio:auto;padding:16px 18px;text-align:left;cursor:default}
-#setup .gpc.hero:active{transform:none;box-shadow:inset 0 0 0 3px #111,0 5px 0 #111}
-#setup .gpc.hero .gpb{width:62px;height:62px;margin:0}
-#setup .gpc.hero .gpn{font-size:30px}
-#setup .gpc.hero .gpx{flex:0 0 100%;font-size:14px;text-align:left}
-html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup :is(.gpc .gpn,.gpq){font-family:"Fun",sans-serif!important;font-weight:400!important}
+#setup .gpx{font:750 12px/1.2 "UI",sans-serif;color:#fff;opacity:.95}
+/* un jeu ouvert : sa case prend toute la largeur, les autres se font petites */
+#setup .gpick.open{grid-auto-flow:row}
+#setup .gpick.open .gpc:not(.big){aspect-ratio:auto;flex-direction:row;justify-content:flex-start;padding:10px 12px;min-height:60px}
+#setup .gpick.open .gpc:not(.big) .gph{flex-direction:row;gap:9px}
+#setup .gpick.open .gpc:not(.big) .gpb{width:34px;height:34px}
+#setup .gpick.open .gpc:not(.big) .gpn{font-size:18px}
+#setup .gpick.open .gpc:not(.big) .gpx{display:none}
+#setup .gpc.big{grid-column:1/-1;aspect-ratio:auto;align-items:stretch;justify-content:flex-start;gap:8px;padding:16px 18px 18px;text-align:left;cursor:default}
+#setup .gpc.big .gph{flex-direction:row;gap:12px}
+#setup .gpc.big .gpb{width:56px;height:56px}
+#setup .gpc.big .gpn{font-size:30px}
+#setup .gpc.big .gpx{display:none}
+#setup .gpr{display:flex;flex-direction:column;gap:6px;color:#fff}
+#setup .gpr .rgoal{display:block;font-size:18px;line-height:1.25;-webkit-text-stroke:.6px #111;paint-order:stroke fill}
+#setup .gpr .rgoal i{display:none}
+#setup .gpr .rp{display:block;position:relative;padding-left:16px;font-size:14px;line-height:1.4}
+#setup .gpr .rp::before{content:"";position:absolute;left:1px;top:.5em;width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px #111}
+#setup .gpr b{color:#fff;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:2px}
+#setup .gpgo{align-self:center;margin-top:6px;padding:12px 30px 13px;border-radius:99px;background:#fff;color:#111;box-shadow:inset 0 0 0 2.5px #111,0 0 0 4px #fff;font:400 21px/1 "Fun",sans-serif;cursor:pointer}
+#setup .gpgo::after{content:" →"}
+#setup .gpgo:active{transform:scale(.95)}
+::view-transition-group(*){animation-duration:.32s;animation-timing-function:cubic-bezier(.3,1.25,.5,1)}
+html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup :is(.gpc .gpn,.gpq,.gpgo){font-family:"Fun",sans-serif!important;font-weight:400!important}
 html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .gpc .gpx{font-family:"UI",sans-serif!important;font-weight:750!important}
 
 </style>
@@ -5360,11 +5378,19 @@ const GPI=(()=>{const K='#111',W='#fff',s=`stroke="${K}" stroke-width="2.6" stro
    clock:`<circle cx="20" cy="20" r="16" fill="${W}" ${s}/><path d="M20 20V10M20 20l7 4" ${s}/><circle cx="20" cy="20" r="2.2" fill="${K}"/>`,
    shanghai:tl(2,9,11,22)+tl(14.5,9,11,22)+tl(27,9,11,22)+T(7.5,25,'S',13,'#111')+T(20,25,'D',13,'#111')+T(32.5,25,'T',13,'#111'),
    halveit:`<circle cx="20" cy="20" r="16" fill="${W}" ${s}/><path d="M20 4a16 16 0 0 0 0 32z" fill="${K}" opacity=".85"/><circle cx="20" cy="20" r="16" fill="none" ${s}/>`}})();
-const gpCard=(g,hero)=>{const P=GPK[g];return`<button class="gpc${hero?' hero':''}" data-g="${g}" style="--gc:${P.c}">`
-  +`<svg class="gpb" viewBox="0 0 40 40" aria-hidden="true">${GPI[g]}</svg><span class="gpn">${GNAME[g]}</span><span class="gpx">${P.t}</span></button>`};
-function gpRender(){const P=$('gPick'),H=$('gHero');if(P)P.innerHTML='<h2 class="gpq">À quoi on joue ?</h2>'+GAMES.map(g=>gpCard(g)).join('');if(H)H.innerHTML=gpCard(S.game,1)}
+/* lf-442 : DA bulle (couleur qui dépasse du cadre noir) ; toucher un jeu = sa case s'agrandit (règles + « On y va ») */
+let GPO=null;
+const gpCard=(g,i)=>{const P=GPK[g],big=g===GPO,R='';return`<div class="gpc${big?' big':''}" role="button" tabindex="0" data-g="${g}" style="--gc:${P.c};view-transition-name:gp-${g};order:${big?(i-i%2)*2-1:i*2}">`
+  +`<div class="gph"><svg class="gpb" viewBox="0 0 40 40" aria-hidden="true">${GPI[g]}</svg><span class="gpn">${GNAME[g]}</span></div><span class="gpx">${P.t}</span>`
+  +(big?`<div class="gpr">${R}</div><span class="gpgo" role="button">On y va !</span>`:'')+'</div>'};
+function gpRender(){const P=$('gPick');if(!P)return;P.classList.toggle('open',!!GPO);P.innerHTML='<h2 class="gpq">À quoi on joue ?</h2>'+GAMES.map(gpCard).join('');gpRules()}
 {const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{gpRender()}catch(x){}return r}}
-$('gPick').addEventListener('click',e=>{const b=e.target.closest('.gpc');if(!b)return;haptic();SFX.ui();if(b.dataset.g!==S.game)setGame(b.dataset.g);gpRender();setupPage(1,1)});
+function gpRules(){const c=$('gPick')&&$('gPick').querySelector('.gpc.big .gpr'),e=$('gRules');if(!c||!e)return;const x=e.cloneNode(true);x.querySelectorAll('.rold').forEach(o=>o.remove());c.innerHTML=x.innerHTML}
+setTimeout(()=>{const _s=showRules;showRules=function(){const r=_s.apply(this,arguments);try{gpRules()}catch(x){}return r}},0);
+const gpVT=f=>{if(document.startViewTransition&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.startViewTransition(f);else f()};
+$('gPick').addEventListener('click',e=>{const b=e.target.closest('.gpc');if(!b)return;const g=b.dataset.g;haptic();SFX.ui();
+  if(e.target.closest('.gpgo')){setupPage(1.5,1);return}
+  gpVT(()=>{GPO=GPO===g?null:g;if(g!==S.game&&GPO)setGame(g);else gpRender()})});
 /* glisser le doigt vers la gauche / la droite sur la page des règles : jeu suivant / précédent */
 {let sx=null,sy=0,st=0;const SU0=$('setup');
  SU0.addEventListener('touchstart',e=>{if(SU0.classList.contains('p2')||e.touches.length>1){sx=null;return}const t=e.touches[0];sx=t.clientX;sy=t.clientY;st=performance.now()},{passive:true});
@@ -6620,9 +6646,9 @@ function optHelp(){document.querySelectorAll('#setup .opt').forEach(o=>{const sg
     Object.values(rows).forEach(L=>{if(L.length<2)return;const m=Math.max(...L.map(h=>h.offsetHeight));L.forEach(h=>h.style.minHeight=m+'px')})})}
 document.getElementById('setup').addEventListener('click',()=>setTimeout(()=>{optHelp();fitP2()},30));
 {const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{optHelp()}catch(e){}requestAnimationFrame(fitP2);return r}}
-{const _show=show;show=function(id){if(id==='setup'&&!SU.classList.contains('on'))setupPage(0);_show(id)}}
-$('go').addEventListener('click',e=>{const p=SU._pg||0;if(p<2){e.stopImmediatePropagation();haptic();SFX.ui();setupPage(p<1?1:p<1.5?1.5:2,1)}},true);
-$('sBack').addEventListener('click',e=>{const p=SU._pg||0;if(p>0){e.stopImmediatePropagation();haptic();SFX.back();setupPage(p>1.5?1.5:p>1?1:0,1)}},true);
+{const _show=show;show=function(id){if(id==='setup'&&!SU.classList.contains('on')){GPO=null;try{gpRender()}catch(x){}setupPage(0)}_show(id)}}
+$('go').addEventListener('click',e=>{const p=SU._pg||0;if(p<2){e.stopImmediatePropagation();haptic();SFX.ui();setupPage(p<1.5?1.5:2,1)}},true);
+$('sBack').addEventListener('click',e=>{const p=SU._pg||0;if(p>0){e.stopImmediatePropagation();haptic();SFX.back();setupPage(p>1.5?1.5:0,1)}},true);
 /* panneau « Ajouter un joueur » ouvert : on laisse de la place sous la liste */
 new MutationObserver(()=>SU.classList.toggle('pk',$('ppick').classList.contains('on'))).observe($('ppick'),{attributes:true,attributeFilter:['class']});
 
@@ -7579,7 +7605,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-441';   // à changer avec VERSION dans sw.js
+const APPV='lf-442';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
