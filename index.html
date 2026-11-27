@@ -4038,9 +4038,9 @@ html body #setup#setup #gHero .ghb{box-shadow:inset 0 0 0 calc(2.5px * var(--mn-
 html body #setup#setup .gpgo{box-shadow:inset 0 0 0 calc(2.5px * var(--mn-olz,1)) #111,0 0 0 4px #fff!important}
 
 /* lf-457 : animations — traits qui bouillonnent et aplats qui respirent dans les dessins, cases de jeux qui flottent, bulles des réglages qui bougent */
-@keyframes gpFl{0%,100%{transform:translate(0,0)}50%{transform:translate(-1.6px,-1.6px)}}
-@keyframes gpFloat{0%,100%{translate:0 0}50%{translate:0 -3px}}
-@keyframes gpWob{0%,100%{rotate:-1.2deg;scale:1}50%{rotate:1.2deg;scale:1.03}}
+@keyframes gpFl{0%,100%{transform:translate(0,0)}50%{transform:translate(-2.6px,-2.6px)}}
+@keyframes gpFloat{0%,100%{translate:0 0;scale:1}50%{translate:0 -6px;scale:1.02}}
+@keyframes gpWob{0%,100%{rotate:-2.4deg;scale:1}50%{rotate:2.4deg;scale:1.06}}
 @media (prefers-reduced-motion:no-preference){
  html:not(.noanim) #setup .gpb .gfl{animation:gpFl 2.6s ease-in-out infinite}
  html:not(.noanim) #setup .gpick .gpc:not(.big){animation:gpFloat 3.4s ease-in-out infinite}
@@ -4070,6 +4070,9 @@ html body #setup#setup .gpc.big .gph{justify-content:flex-start!important;gap:10
 html body #setup#setup.p2 #gHero .gph{justify-content:flex-start!important;gap:10px!important}
 html body #setup#setup .gpc .gpr{gap:5px!important}
 html body #setup#setup .gpc.big{gap:6px!important}
+
+/* lf-462 : fonds des dessins plus grands (réglable), animations plus marquées */
+#setup .gpb .gfl>path{transform-box:fill-box;transform-origin:center;scale:var(--mn-jfz,1.12)}
 
 </style>
 </head>
@@ -5504,7 +5507,7 @@ const GPI=(()=>{const K='#111',W='#fff',Y='#ffd23f',R='#ff4d5e',o=3,sw=3.4,
    clock:B(C(24,24,18))+L('M24 24V12M24 24l8 5',3.6)+`<circle cx="24" cy="24" r="3" fill="${K}"/>`,
    shanghai:B(RR(3,12,13,26,4))+B(RR(17.5,12,13,26,4),'#ff9d4d')+B(RR(32,12,13,26,4),Y)+T(9.5,31,'S',13)+T(24,31,'D',13)+T(38.5,31,'T',13),
    halveit:B('M22 6a18 18 0 0 0 0 36z',Y)+B('M27 6a18 18 0 0 1 0 36z')}})();
-const gpSk=(g,x)=>`<defs><filter id="gpb-${g}" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".045" numOctaves="1" seed="1"><animate attributeName="seed" values="1;4;7" dur=".75s" repeatCount="indefinite" calcMode="discrete"/></feTurbulence><feDisplacementMap in="SourceGraphic" scale="1.5"/></filter></defs><g class="gboil" filter="url(#gpb-${g})">${x}</g>`;const gpSkOld=(g,x)=>`<defs><filter id="gps-${g}" x="-20%" y="-20%" width="140%" height="140%"><feMorphology in="SourceAlpha" operator="dilate" radius="2.6" result="d"/><feFlood flood-color="#fff"/><feComposite in2="d" operator="in" result="w"/><feMerge><feMergeNode in="w"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g filter="url(#gps-${g})">${x}</g>`;
+const gpSk=(g,x)=>`<defs><filter id="gpb-${g}" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".045" numOctaves="1" seed="1"><animate attributeName="seed" values="1;4;7" dur=".75s" repeatCount="indefinite" calcMode="discrete"/></feTurbulence><feDisplacementMap in="SourceGraphic" scale="2.2"/></filter></defs><g class="gboil" filter="url(#gpb-${g})">${x}</g>`;const gpSkOld=(g,x)=>`<defs><filter id="gps-${g}" x="-20%" y="-20%" width="140%" height="140%"><feMorphology in="SourceAlpha" operator="dilate" radius="2.6" result="d"/><feFlood flood-color="#fff"/><feComposite in2="d" operator="in" result="w"/><feMerge><feMergeNode in="w"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g filter="url(#gps-${g})">${x}</g>`;
 /* lf-442 : DA bulle (couleur qui dépasse du cadre noir) ; toucher un jeu = sa case s'agrandit (règles + « On y va ») */
 let GPO=null;
 const gpCard=(g,i)=>{const P=GPK[g],big=g===GPO,R='';return`<div class="gpc${big?' big':''}${P.light?' light':''}" role="button" tabindex="0" data-g="${g}" style="--gc:${P.c};view-transition-name:gp-${g};order:${big?(i-i%2)*2-1:i*2}">`
@@ -7734,7 +7737,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-461';   // à changer avec VERSION dans sw.js
+const APPV='lf-462';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -8209,7 +8212,7 @@ const MN=[
  ['gth','Couleurs des jeux',[['Vif','v'],['Fluo','f'],['Pastel','p']],'Vif'],['anim','Animations',[['Oui','1'],['Non','0']],'Oui'],
  ['olz','Contours noirs (tous les menus)',0,3,.05,1,''],
  ['Cases des jeux'],
- ['jis','Contour des dessins',.3,2.2,.05,1,''], ['jr','Arrondi',6,40,1,24,'px'],['jbw','Contour',0,5,.25,2.5,'px'],['jbh','Débord de la couleur',0,12,.5,4,'px'],['jsh','Ombre dure',0,10,.5,0,'px'],['jtl','Inclinaison',0,5,.25,0,''],
+ ['jis','Contour des dessins',.3,2.2,.05,1,''],['jfz','Taille des fonds des dessins',.8,1.4,.02,1.12,''], ['jr','Arrondi',6,40,1,24,'px'],['jbw','Contour',0,5,.25,2.5,'px'],['jbh','Débord de la couleur',0,12,.5,4,'px'],['jsh','Ombre dure',0,10,.5,0,'px'],['jtl','Inclinaison',0,5,.25,0,''],
  ['jgap','Écart entre les cases',4,30,1,14,'px'],['jh','Hauteur des cases',.6,1.4,.02,.9,''],['jiz','Taille du dessin',.4,1.6,.02,1,''],['jnz','Taille du nom',.6,1.7,.02,1,''],['jns','Nom (case fermée) : contour',0,4,.1,1.4,'px'],['jnsh','Nom (case fermée) : ombre',0,8,.25,2,'px'],['jbns','Nom (case ouverte) : contour',0,5,.1,2,'px'],['jbnsh','Nom (case ouverte) : ombre',0,10,.25,3,'px'],['jtz','Petite phrase (0 = cachée)',0,1.5,.05,1,''],['jqz','Titre « À quoi on joue ? »',0,1.6,.05,1,''],
  ['Capsule joueur'],
  ['cw','Largeur',30,100,1,51,''],['cph','Hauteur',-10,14,.5,0,'px'],['cr','Arrondi',0,30,.5,30,'px'],['cbw','Contour',0,5,.25,2,'px'],['cbh','Débord de la bulle',0,10,.25,3.5,'px'],['cbc','Couleur du contour',MN_COL,'Noir'],['cbg','Fond à la couleur du joueur',0,100,5,100,'%'],
