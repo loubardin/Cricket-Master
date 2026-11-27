@@ -3930,7 +3930,7 @@ html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRule
 #setup .gpc:active:not(.big){transform:scale(.96)}
 #setup .gph{display:flex;flex-direction:column;align-items:center;gap:4px}
 #setup .gpb{width:min(19vw,80px);height:min(19vw,80px);overflow:visible;flex:none}
-#setup .gpn{font:400 23px/1 "Fun",sans-serif;color:#fff;-webkit-text-stroke:1.4px #111;paint-order:stroke fill;text-shadow:0 2px 0 #111}
+#setup .gpn{margin-bottom:4px;font:400 23px/1 "Fun",sans-serif;color:#fff;-webkit-text-stroke:1.4px #111;paint-order:stroke fill;text-shadow:0 2px 0 #111}
 #setup .gpx{font:750 12px/1.2 "UI",sans-serif;color:#fff;opacity:.95}
 /* un jeu ouvert : sa case prend toute la largeur, les autres se font petites */
 #setup .gpick.open{grid-auto-flow:row}
@@ -3940,7 +3940,7 @@ html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRule
 #setup .gpick.open .gpc:not(.big) .gpn{font-size:18px}
 #setup .gpick.open .gpc:not(.big) .gpx{display:none}
 #setup .gpc.big{grid-column:1/-1;aspect-ratio:auto;align-items:stretch;justify-content:flex-start;gap:8px;padding:16px 18px 18px;text-align:left;cursor:default}
-#setup .gpc.big .gph{flex-direction:row-reverse;justify-content:space-between;align-items:center;gap:12px;margin:-2px 0 2px}
+#setup .gpc.big .gph{flex-direction:row;justify-content:space-between;align-items:center;gap:12px;margin:-2px 0 2px}
 #setup .gpc.big .gpb{width:74px;height:74px}
 #setup .gpc.big .gpn{font-size:46px;-webkit-text-stroke:2px #111;text-shadow:0 3px 0 #111;letter-spacing:.01em}
 #setup .gpc.big .gpx{display:none}
@@ -5432,7 +5432,7 @@ const GPI=(()=>{const K='#111',W='#fff',Y='#ffd23f',o=2.2,sw=2.3,
 /* lf-442 : DA bulle (couleur qui dépasse du cadre noir) ; toucher un jeu = sa case s'agrandit (règles + « On y va ») */
 let GPO=null;
 const gpCard=(g,i)=>{const P=GPK[g],big=g===GPO,R='';return`<div class="gpc${big?' big':''}" role="button" tabindex="0" data-g="${g}" style="--gc:${P.c};view-transition-name:gp-${g};order:${big?(i-i%2)*2-1:i*2}">`
-  +`<div class="gph"><svg class="gpb" viewBox="0 0 48 48" aria-hidden="true">${GPI[g]}</svg><span class="gpn">${GNAME[g]}</span></div><span class="gpx">${P.t}</span>`
+  +`<div class="gph"><span class="gpn">${GNAME[g]}</span><svg class="gpb" viewBox="0 0 48 48" aria-hidden="true">${GPI[g]}</svg></div><span class="gpx">${P.t}</span>`
   +(big?`<div class="gpr">${R}</div><span class="gpgo" role="button">On y va !</span>`:'')+'</div>'};
 function gpRender(){const P=$('gPick');if(!P)return;P.classList.toggle('open',!!GPO);P.innerHTML='<h2 class="gpq">À quoi on joue ?</h2>'+GAMES.map(gpCard).join('');gpRules()}
 {const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{gpRender()}catch(x){}return r}}
@@ -7656,7 +7656,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-446';   // à changer avec VERSION dans sw.js
+const APPV='lf-447';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
