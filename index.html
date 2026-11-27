@@ -3918,7 +3918,7 @@ html body #setup#setup.b2.p0>:not(.sh):not(#gPick):not(.gghost){display:none!imp
 html body #setup#setup.b2.p0>#gPick{display:grid!important;grid-template-columns:1fr 1fr;gap:16px 14px;margin:auto 0;padding:4px 2px 10px}
 html body #setup#setup.b2.p1 :is(.seg.gamepick,#segBar,.gill){display:none!important}
 html body #setup#setup.b2.p1>.grp{display:none!important}
-html body #setup#setup.b2.p1>#gHero{display:block!important;margin:calc(var(--u,1dvh)*2.4) 0 6px}
+html body #setup#setup.b2:is(.pp,.p2)>#gHero{display:block!important;margin:calc(var(--u,1dvh)*1.6) 4px 0}
 html body #setup#setup.b2.p1>#gRules{display:block!important;margin:8px 2px auto!important;width:auto!important;max-width:none!important;padding-right:0!important}
 html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRules .rgoal,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRules .rgoal *{font-size:23px!important;line-height:1.25!important}html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRules .rgoal{display:block!important;margin-bottom:14px!important}
 html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRules .rp,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRules .rp *{font-size:17px!important;line-height:1.45!important}html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRules .rp{display:block!important;position:relative;padding-left:18px;margin:0 0 12px!important;opacity:.85}
@@ -3954,35 +3954,38 @@ html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRule
 #setup .gpgo::after{content:" →"}
 #setup .gpgo:active{transform:scale(.95)}
 ::view-transition-group(*){animation-duration:.32s;animation-timing-function:cubic-bezier(.3,1.25,.5,1)}
+#setup .gpc.hero{flex-direction:column;align-items:stretch;justify-content:center;gap:2px;aspect-ratio:auto;padding:12px 18px 14px;text-align:left;cursor:default}
+#setup .gpc.hero .gph{flex-direction:row;justify-content:space-between;align-items:center;gap:12px}
+#setup .gpc.hero .gpn{font-size:40px;margin:0;-webkit-text-stroke:2px #111;text-shadow:0 3px 0 #111}
+#setup .gpc.hero .gpb{width:70px;height:70px;margin:-4px 0}
+#setup .gpc.hero .gpx{font-size:14px;text-align:left;margin-top:-2px}
+#setup .gpc.hero:active{transform:none}
+/* page joueurs : simple rappel du jeu */
+#setup.p2 .gpc.hero{padding:7px 14px;border-radius:99px}
+#setup.p2 .gpc.hero .gpn{font-size:22px;-webkit-text-stroke:1.4px #111;text-shadow:0 2px 0 #111}
+#setup.p2 .gpc.hero .gpb{width:36px;height:36px;margin:-2px 0}
+#setup.p2 .gpc.hero .gpx{display:none}
 html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup :is(.gpc .gpn,.gpq,.gpgo){font-family:"Fun",sans-serif!important;font-weight:400!important}
 html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .gpc .gpx{font-family:"UI",sans-serif!important;font-weight:750!important}
 
-/* lf-444/445 : page après le choix du jeu = joueurs (en haut) + options (dessous) ; écarts serrés pour garder la taille d'origine (zoom seulement en dernier recours) */
-html body #setup#setup#setup.b2.p2>.grp:has(.sect.s1){margin-top:6px!important;margin-bottom:0!important}
-html body #setup#setup#setup.b2.p2>.grp:has(.sect.s2){margin-top:4px!important;margin-bottom:auto!important}
-html body #setup#setup#setup.b2.p2>.gobar{margin-top:8px!important}
-html body #setup#setup#setup.b2.p2 .sect{row-gap:10px!important}
-html body #setup#setup#setup.b2.p2 .sect.s1{padding-top:2px!important}
-html body #setup#setup#setup.b2.p2 .grp:has(.sect.s2) .glab{padding-top:10px!important;padding-bottom:6px!important;min-height:0!important;height:auto!important}
-html body #setup#setup#setup.b2.p2 .opt{row-gap:4px!important}
-html body #setup#setup#setup.b2.p2 .opt .ohelp{margin-top:2px!important}
-html body #setup#setup#setup.b2.p2 .nlab{margin-bottom:-6px!important}
+/* lf-449 : options et joueurs à nouveau sur deux pages */
+html body #setup#setup.b2.p2>.grp:has(.sect.s2){display:none!important}
 /* lf-446 : interrupteurs des réglages secondaires (page joueurs + options) */
 #setup .tsw{display:none}
-html body #setup#setup#setup.b2.p2 .opt.istg{order:9!important;flex:1 1 100%!important;width:100%!important;max-width:none!important;grid-template-areas:none!important;grid-template-columns:1fr!important;min-height:0!important;margin:0!important;padding:0!important}
-html body #setup#setup#setup.b2.p2 .opt.istg>.tsw{grid-column:1/-1!important;grid-row:auto!important;grid-area:auto!important}
-html body #setup#setup#setup.b2.p2 .kpair:has(.istg){display:contents!important}html body #setup#setup#setup.b2.p2 .sect>.opt:not(.istg){order:1!important}
-html body #setup#setup#setup.b2.p2 .opt.istg>:not(.tsw){display:none!important}
-html body #setup#setup#setup.b2.p2 .opt.istg>.tsw{display:flex!important;align-items:center;justify-content:space-between;gap:12px;width:100%;margin:0;padding:3px 2px 3px 4px;border:0;background:none;color:var(--m-ink,#111);cursor:pointer;-webkit-tap-highlight-color:transparent}
-html body #setup#setup#setup.b2.p2 .tsw .tsl{font:600 15.5px/1.2 "UI",sans-serif;text-align:left}
-html body #setup#setup#setup.b2.p2 .tsw i{position:relative;flex:none;width:46px;height:27px;border-radius:99px;background:var(--m-cell,#ece5d3);box-shadow:inset 0 0 0 2.5px #111;transition:background .15s}
-html body #setup#setup#setup.b2.p2 .tsw i::after{content:"";position:absolute;left:4px;top:4px;width:19px;height:19px;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 2.5px #111;transition:transform .18s cubic-bezier(.3,1.4,.5,1)}
-html body #setup#setup#setup.b2.p2 .tsw.on i{background:#4b4b4b;box-shadow:inset 0 0 0 2.5px #111,0 0 0 3px #4b4b4b}
-html body #setup#setup#setup.b2.p2 .tsw.on i::after{transform:translateX(19px)}
-html body #setup#setup#setup.b2.p2 .tsw .tsl{opacity:.6}html body #setup#setup#setup.b2.p2 .tsw.on .tsl{opacity:1}
-html body #setup#setup#setup.b2.p2 .sect:has(.opt.istg){row-gap:12px!important}
-html body #setup#setup#setup.b2.p2 .opt.istg+.opt.istg{margin-top:-4px!important}
-html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p2 .tsw .tsl{font-family:"UI",sans-serif!important;font-weight:600!important}
+html body #setup#setup#setup.b2:is(.p2,.pp) .opt.istg{order:9!important;flex:1 1 100%!important;width:100%!important;max-width:none!important;grid-template-areas:none!important;grid-template-columns:1fr!important;min-height:0!important;margin:0!important;padding:0!important}
+html body #setup#setup#setup.b2:is(.p2,.pp) .opt.istg>.tsw{grid-column:1/-1!important;grid-row:auto!important;grid-area:auto!important}
+html body #setup#setup#setup.b2:is(.p2,.pp) .kpair:has(.istg){display:contents!important}html body #setup#setup#setup.b2:is(.p2,.pp) .sect>.opt:not(.istg){order:1!important}
+html body #setup#setup#setup.b2:is(.p2,.pp) .opt.istg>:not(.tsw){display:none!important}
+html body #setup#setup#setup.b2:is(.p2,.pp) .opt.istg>.tsw{display:flex!important;align-items:center;justify-content:space-between;gap:12px;width:100%;margin:0;padding:3px 2px 3px 4px;border:0;background:none;color:var(--m-ink,#111);cursor:pointer;-webkit-tap-highlight-color:transparent}
+html body #setup#setup#setup.b2:is(.p2,.pp) .tsw .tsl{font:600 15.5px/1.2 "UI",sans-serif;text-align:left}
+html body #setup#setup#setup.b2:is(.p2,.pp) .tsw i{position:relative;flex:none;width:46px;height:27px;border-radius:99px;background:var(--m-cell,#ece5d3);box-shadow:inset 0 0 0 2.5px #111;transition:background .15s}
+html body #setup#setup#setup.b2:is(.p2,.pp) .tsw i::after{content:"";position:absolute;left:4px;top:4px;width:19px;height:19px;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 2.5px #111;transition:transform .18s cubic-bezier(.3,1.4,.5,1)}
+html body #setup#setup#setup.b2:is(.p2,.pp) .tsw.on i{background:#4b4b4b;box-shadow:inset 0 0 0 2.5px #111,0 0 0 3px #4b4b4b}
+html body #setup#setup#setup.b2:is(.p2,.pp) .tsw.on i::after{transform:translateX(19px)}
+html body #setup#setup#setup.b2:is(.p2,.pp) .tsw .tsl{opacity:.6}html body #setup#setup#setup.b2:is(.p2,.pp) .tsw.on .tsl{opacity:1}
+html body #setup#setup#setup.b2:is(.p2,.pp) .sect:has(.opt.istg){row-gap:12px!important}
+html body #setup#setup#setup.b2:is(.p2,.pp) .opt.istg+.opt.istg{margin-top:-4px!important}
+html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup:is(.p2,.pp) .tsw .tsl{font-family:"UI",sans-serif!important;font-weight:600!important}
 
 </style>
 </head>
@@ -5429,13 +5432,14 @@ let GPO=null;
 const gpCard=(g,i)=>{const P=GPK[g],big=g===GPO,R='';return`<div class="gpc${big?' big':''}" role="button" tabindex="0" data-g="${g}" style="--gc:${P.c};view-transition-name:gp-${g};order:${big?(i-i%2)*2-1:i*2}">`
   +`<div class="gph"><span class="gpn">${GNAME[g]}</span><svg class="gpb" viewBox="0 0 48 48" aria-hidden="true">${gpSk(g,GPI[g])}</svg></div><span class="gpx">${P.t}</span>`
   +(big?`<div class="gpr">${R}</div><span class="gpgo" role="button">On y va !</span>`:'')+'</div>'};
-function gpRender(){const P=$('gPick');if(!P)return;P.classList.toggle('open',!!GPO);P.innerHTML='<h2 class="gpq">À quoi on joue ?</h2>'+GAMES.map(gpCard).join('');gpRules()}
+function gpRender(){const H=$('gHero');if(H){const g=S.game,P=GPK[g];H.innerHTML=`<div class="gpc hero" style="--gc:${P.c}"><div class="gph"><span class="gpn">${GNAME[g]}</span><svg class="gpb" viewBox="0 0 48 48" aria-hidden="true">${gpSk('h-'+g,GPI[g])}</svg></div><span class="gpx">${P.t}</span></div>`}
+  const P=$('gPick');if(!P)return;P.classList.toggle('open',!!GPO);P.innerHTML='<h2 class="gpq">À quoi on joue ?</h2>'+GAMES.map(gpCard).join('');gpRules()}
 {const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{gpRender()}catch(x){}return r}}
 function gpRules(){const c=$('gPick')&&$('gPick').querySelector('.gpc.big .gpr'),e=$('gRules');if(!c||!e)return;const x=e.cloneNode(true);x.querySelectorAll('.rold').forEach(o=>o.remove());c.innerHTML=x.innerHTML}
 setTimeout(()=>{const _s=showRules;showRules=function(){const r=_s.apply(this,arguments);try{gpRules()}catch(x){}return r}},0);
 const gpVT=f=>{if(document.startViewTransition&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.startViewTransition(f);else f()};
 $('gPick').addEventListener('click',e=>{const b=e.target.closest('.gpc');if(!b)return;const g=b.dataset.g;haptic();SFX.ui();
-  if(e.target.closest('.gpgo')){setupPage(2,1);return}
+  if(e.target.closest('.gpgo')){setupPage(1.5,1);return}
   gpVT(()=>{GPO=GPO===g?null:g;if(g!==S.game&&GPO)setGame(g);else gpRender()})});
 /* glisser le doigt vers la gauche / la droite sur la page des règles : jeu suivant / précédent */
 {let sx=null,sy=0,st=0;const SU0=$('setup');
@@ -6648,7 +6652,7 @@ function setupPage(n,anim){if(typeof noInertia==='function')noInertia();
     c.querySelectorAll('[id]').forEach(e=>e.removeAttribute('id'));c.removeAttribute('id');c.classList.add('gghost');
     Object.assign(c.style,{position:'fixed',left:r.left+'px',top:r.top+'px',width:r.width+'px',height:r.height+'px',margin:'0',pointerEvents:'none',zIndex:5});SU.append(c);
     c.animate([{transform:'none'},{transform:`translateX(${fw?-110:110}%)`}],{duration:520,easing:'cubic-bezier(.65,0,.25,1)',fill:'forwards'}).onfinish=()=>c.remove()})}if(!anim)SU._pg=n;SU.classList.toggle('p2',n===2);SU.classList.toggle('pp',n===1.5);SU.classList.toggle('p0',n===0);SU.classList.toggle('p1',n===1);$('go').innerHTML='<span>'+(n===2?'Lancer la partie':n===1.5?'Joueurs':'Paramètres')+'</span>';
-  SU.querySelector('.sh h1').textContent=n===2?'La partie':n===1.5?'Paramètres':n===1?'Les règles':'Nouvelle partie';requestAnimationFrame(fitP2);setTimeout(fitP2,450);SU.scrollTop=0;$('ppick').classList.remove('on');
+  SU.querySelector('.sh h1').textContent=n===2?'Joueurs':n===1.5?'Paramètres':n===1?'Les règles':'Nouvelle partie';requestAnimationFrame(fitP2);setTimeout(fitP2,450);SU.scrollTop=0;$('ppick').classList.remove('on');
   if(typeof placeThumbs==='function')requestAnimationFrame(placeThumbs);
   SU.classList.remove('p1in','p2in');if(anim){void SU.offsetWidth;SU.classList.add(SU._pg>=1.5&&n>1?'p2in':'p1in');clearTimeout(SU._pt);SU._pt=setTimeout(()=>SU.classList.remove('p1in','p2in'),950)}}
 /* lf-415 : page 2 = paramètres de partie + joueurs ; tout tient sans défiler (zoom auto si besoin) */
@@ -6693,8 +6697,8 @@ function optHelp(){document.querySelectorAll('#setup .opt').forEach(o=>{const sg
 document.getElementById('setup').addEventListener('click',()=>setTimeout(()=>{optHelp();fitP2()},30));
 {const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{optHelp()}catch(e){}requestAnimationFrame(fitP2);return r}}
 {const _show=show;show=function(id){if(id==='setup'&&!SU.classList.contains('on')){GPO=null;try{gpRender()}catch(x){}setupPage(0)}_show(id)}}
-$('go').addEventListener('click',e=>{const p=SU._pg||0;if(p<2){e.stopImmediatePropagation();haptic();SFX.ui();setupPage(2,1)}},true);
-$('sBack').addEventListener('click',e=>{const p=SU._pg||0;if(p>0){e.stopImmediatePropagation();haptic();SFX.back();setupPage(0,1)}},true);
+$('go').addEventListener('click',e=>{const p=SU._pg||0;if(p<2){e.stopImmediatePropagation();haptic();SFX.ui();setupPage(p<1.5?1.5:2,1)}},true);
+$('sBack').addEventListener('click',e=>{const p=SU._pg||0;if(p>0){e.stopImmediatePropagation();haptic();SFX.back();setupPage(p>1.5?1.5:0,1)}},true);
 /* panneau « Ajouter un joueur » ouvert : on laisse de la place sous la liste */
 new MutationObserver(()=>SU.classList.toggle('pk',$('ppick').classList.contains('on'))).observe($('ppick'),{attributes:true,attributeFilter:['class']});
 
@@ -7651,7 +7655,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-448';   // à changer avec VERSION dans sw.js
+const APPV='lf-449';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
