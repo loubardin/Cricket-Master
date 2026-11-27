@@ -3997,6 +3997,32 @@ html body #setup#setup.b2:is(.pp,.p2) .sh h1 .gtag{display:none!important}
 html body #setup#setup.b2.glight .opt .seg button.sel,html body #setup#setup.b2.glight .opt .seg button.on{color:#111!important;-webkit-text-stroke:0!important;text-shadow:none!important}
 html body #setup#setup.b2.glight:is(.pp,.p2) #go .ga{color:#111!important;-webkit-text-stroke:0!important;text-shadow:none!important}
 
+/* lf-454 : accueil — typo ronde de l'affiche (Baloo) et ses proportions : emblème plus petit, grand titre, sous-titre espacé */
+html body #home#home.simple .board.lmark{width:min(48vw,27dvh)!important}
+html body #home#home#home#home#home#home#home#home#home#home .ht{font-family:"FunL",sans-serif!important;font-weight:400!important;font-size:min(17.5vw,8.6dvh)!important;line-height:.9!important;letter-spacing:.005em!important;margin-top:min(9vw,5dvh)!important}
+html body #home#home#home#home#home#home#home#home#home#home .hs{font-family:"FunL",sans-serif!important;font-weight:400!important;font-size:min(4.3vw,2.1dvh)!important;letter-spacing:.17em!important;text-transform:uppercase!important;margin-top:min(3vw,1.6dvh)!important}
+
+/* lf-454 : en-tête = la case du jeu (couleur du jeu) avec retour et réglages dedans */
+html body #setup#setup.b2:is(.pp,.p2)>.sh{display:none!important}
+#gHero .gpc.hero{position:relative}
+#gHero .ghb{position:absolute;top:12px;z-index:2;width:42px;height:42px;padding:0;border:0;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 2.5px #111;display:flex;align-items:center;justify-content:center;cursor:pointer}
+#gHero .ghb svg{width:22px;height:22px;fill:none;stroke:#111;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+#gHero .ghb:active{transform:scale(.92)}
+#gHero .gback{left:12px}#gHero .gset{right:12px}
+#setup.pp #gHero .gpn{margin-top:22px!important}
+#setup.p2 #gHero .gpc.hero{padding-left:66px;padding-right:66px}
+#setup.p2 #gHero .ghb{top:50%;margin-top:-21px}
+
+/* lf-454 : cases des jeux pilotées par le panneau de réglages (valeurs par défaut = rendu actuel) */
+html body #setup#setup#setup.b2.p0>#gPick{gap:var(--mn-jgap,14px)!important}
+#setup .gpick .gpc{border-radius:var(--mn-jr,24px);box-shadow:inset 0 0 0 var(--mn-jbw,2.5px) #111,0 0 0 var(--mn-jbh,4px) var(--gc),0 calc(var(--mn-jbh,4px) + var(--mn-jsh,0px)) 0 calc(var(--mn-jbh,4px) - 1px) #111;aspect-ratio:1/var(--mn-jh,.9)}
+#setup .gpick .gpc:not(.big):nth-of-type(odd){rotate:calc(var(--mn-jtl,0) * -1deg)}#setup .gpick .gpc:not(.big):nth-of-type(even){rotate:calc(var(--mn-jtl,0) * 1deg)}
+#setup .gpick .gpb{width:calc(min(19vw,80px) * var(--mn-jiz,1));height:calc(min(19vw,80px) * var(--mn-jiz,1))}
+#setup .gpick .gpn{font-size:calc(23px * var(--mn-jnz,1));-webkit-text-stroke-width:var(--mn-jns,1.4px)}
+#setup .gpick .gpx{font-size:calc(12px * var(--mn-jtz,1))}
+#setup .gpick .gpq{font-size:calc(27px * var(--mn-jqz,1))}
+#setup .gpick.open .gpc:not(.big),#setup .gpick .gpc.big{aspect-ratio:auto}
+
 </style>
 </head>
 <body>
@@ -5431,12 +5457,13 @@ let GPO=null;
 const gpCard=(g,i)=>{const P=GPK[g],big=g===GPO,R='';return`<div class="gpc${big?' big':''}${P.light?' light':''}" role="button" tabindex="0" data-g="${g}" style="--gc:${P.c};view-transition-name:gp-${g};order:${big?(i-i%2)*2-1:i*2}">`
   +`<div class="gph"><span class="gpn">${GNAME[g]}</span><svg class="gpb" viewBox="0 0 48 48" aria-hidden="true">${gpSk(g,GPI[g])}</svg></div><span class="gpx">${P.t}</span>`
   +(big?`<div class="gpr">${R}</div><span class="gpgo" role="button">On y va !</span>`:'')+'</div>'};
-function gpRender(){{const c=GPK[S.game].c,SE=$('setup');SE.style.setProperty('--gc',c);SE.style.setProperty('--gc-rgb',[1,3,5].map(i=>parseInt(c.slice(i,i+2),16)).join(','));SE.classList.toggle('glight',!!GPK[S.game].light)}const H=$('gHero');if(H){const g=S.game,P=GPK[g];H.innerHTML=`<div class="gpc hero${P.light?' light':''}" style="--gc:${P.c}"><div class="gph"><span class="gpn">${GNAME[g]}</span><svg class="gpb" viewBox="0 0 48 48" aria-hidden="true">${gpSk('h-'+g,GPI[g])}</svg></div><span class="gpx">${P.t}</span><div class="gpr"></div></div>`}
+function gpRender(){{const c=GPK[S.game].c,SE=$('setup');SE.style.setProperty('--gc',c);SE.style.setProperty('--gc-rgb',[1,3,5].map(i=>parseInt(c.slice(i,i+2),16)).join(','));SE.classList.toggle('glight',!!GPK[S.game].light)}const H=$('gHero');if(H){const g=S.game,P=GPK[g];H.innerHTML=`<div class="gpc hero${P.light?' light':''}" style="--gc:${P.c}"><button class="ghb gback" aria-label="Retour"><svg viewBox="0 0 24 24"><path d="M15 5 8 12l7 7"/></svg></button><button class="ghb gset" aria-label="Réglages du menu"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.5 5.5l1.8 1.8M16.7 16.7l1.8 1.8M5.5 18.5l1.8-1.8M16.7 7.3l1.8-1.8"/></svg></button><div class="gph"><span class="gpn">${GNAME[g]}</span><svg class="gpb" viewBox="0 0 48 48" aria-hidden="true">${gpSk('h-'+g,GPI[g])}</svg></div><span class="gpx">${P.t}</span><div class="gpr"></div></div>`}
   const P=$('gPick');if(!P)return;P.classList.toggle('open',!!GPO);P.innerHTML='<h2 class="gpq">À quoi on joue ?</h2>'+GAMES.map(gpCard).join('');gpRules()}
 {const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{gpRender()}catch(x){}return r}}
 function gpRules(){const e=$('gRules');if(!e)return;const x=e.cloneNode(true);x.querySelectorAll('.rold').forEach(o=>o.remove());document.querySelectorAll('#gPick .gpc.big .gpr,#gHero .gpr').forEach(c=>c.innerHTML=x.innerHTML)}
 setTimeout(()=>{const _s=showRules;showRules=function(){const r=_s.apply(this,arguments);try{gpRules()}catch(x){}return r}},0);
 const gpVT=f=>{if(document.startViewTransition&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.startViewTransition(f);else f()};
+$('gHero').addEventListener('click',e=>{const b=e.target.closest('.ghb');if(!b)return;e.stopPropagation();if(b.classList.contains('gback'))$('sBack').click();else{const m=document.querySelector('#setup .sh .mnbtn');if(m)m.click()}});
 $('gPick').addEventListener('click',e=>{const b=e.target.closest('.gpc');if(!b)return;const g=b.dataset.g;haptic();SFX.ui();
   if(e.target.closest('.gpgo')){setupPage(1.5,1);return}
   gpVT(()=>{GPO=GPO===g?null:g;if(g!==S.game&&GPO)setGame(g);else gpRender()})});
@@ -7654,7 +7681,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-453';   // à changer avec VERSION dans sw.js
+const APPV='lf-454';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -8125,12 +8152,16 @@ document.addEventListener('click',e=>{const h=e.target.closest&&e.target.closest
    chaque réglage = une variable CSS posée sur #setup ; copiable pour devenir la base */
 const MN_COL=[['Joueur','var(--pc,#111)'],['Noir','#111'],['Blanc','#fff']];
 const MN=[
+ ['Cases des jeux'],
+ ['jr','Arrondi',6,40,1,24,'px'],['jbw','Contour',0,5,.25,2.5,'px'],['jbh','Débord de la couleur',0,12,.5,4,'px'],['jsh','Ombre dure',0,10,.5,0,'px'],['jtl','Inclinaison',0,5,.25,0,''],
+ ['jgap','Écart entre les cases',4,30,1,14,'px'],['jh','Hauteur des cases',.6,1.4,.02,.9,''],['jiz','Taille du dessin',.4,1.6,.02,1,''],['jnz','Taille du nom',.6,1.7,.02,1,''],['jns','Contour du nom',0,4,.1,1.4,'px'],['jtz','Petite phrase (0 = cachée)',0,1.5,.05,1,''],['jqz','Titre « À quoi on joue ? »',0,1.6,.05,1,''],
  ['Capsule joueur'],
  ['cw','Largeur',30,100,1,51,''],['cph','Hauteur',-10,14,.5,0,'px'],['cr','Arrondi',0,30,.5,30,'px'],['cbw','Contour',0,5,.25,2,'px'],['cbh','Débord de la bulle',0,10,.25,3.5,'px'],['cbc','Couleur du contour',MN_COL,'Noir'],['cbg','Fond à la couleur du joueur',0,100,5,100,'%'],
  ['Nom'],
  ['nz','Taille',.6,1.6,.05,1.2,''],['ns','Contour',0,7,.25,3,'px'],['nc','Couleur',MN_COL,'Blanc'],['nsc','Couleur du contour',MN_COL,'Noir'],['nx','Position ← →',-20,40,1,14,'px'],['ny','Position ↑ ↓',-10,10,.5,0,'px'],
  ['Croix'],
  ['xf','Taille',8,30,.5,14,'px'],['xr','Marge à droite',0,30,1,3,'px'],['xy','Position ↑ ↓',-10,10,.5,0,'px'],['xc','Couleur',MN_COL,'Noir'],
+ ['Autres éléments (tailles)'],
  ['Autres éléments (tailles)'],
  ['gz','Choix du jeu (Cricket / 501…)',.6,1.4,.02,1,''],['oz','Options (Mode, Équipes…)',.6,1.4,.02,1,''],['lz','Titres des options',.6,1.5,.02,1,''],['pz','Bouton +',.5,1.6,.02,1.02,''],['bz','Bouton du bas',.6,1.3,.02,1,'']];
 S.mnu=S.mnu||{};
@@ -8154,7 +8185,7 @@ function mnOpen(){haptic();SFX.open();let p=$('mnp');if(!p){p=el('div','');p.id=
       if(t.closest('[data-mnx]')){SFX.back();p.classList.remove('on');return}
       if(t.closest('[data-mnr]')){haptic();SFX.back();S.mnu={};store.set(K_S,S);mnApply();mnDraw();mnFit();return}
       if(t.closest('[data-mncp]')){haptic();const txt='Réglages menu '+APPV+' : '+JSON.stringify(S.mnu);try{navigator.clipboard.writeText(txt).then(()=>toast('RÉGLAGES COPIÉS','',true),()=>prompt('Copie ces réglages',txt))}catch(x){prompt('Copie ces réglages',txt)}}})}
-  if(typeof setupPage==='function'&&!$('setup').classList.contains('p2'))setupPage(2,1);
+  if(typeof setupPage==='function'&&!$('setup').classList.contains('p2')&&!$('setup').classList.contains('p0')&&!$('setup').classList.contains('pp'))setupPage(2,1);
   mnDraw();requestAnimationFrame(()=>p.classList.add('on'))}
 {const sh=document.querySelector('#setup .sh');const b=el('button','circ mnbtn');b.setAttribute('aria-label','Réglages du menu');b.innerHTML='<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 13.5a7.6 7.6 0 0 0 0-3l2-1.6-2-3.4-2.4 1a7.4 7.4 0 0 0-2.6-1.5L14 2.5h-4l-.4 2.5A7.4 7.4 0 0 0 7 6.5l-2.4-1-2 3.4 2 1.6a7.6 7.6 0 0 0 0 3l-2 1.6 2 3.4 2.4-1a7.4 7.4 0 0 0 2.6 1.5l.4 2.5h4l.4-2.5a7.4 7.4 0 0 0 2.6-1.5l2.4 1 2-3.4Z"/></svg>';
  b.addEventListener('click',e=>{e.stopPropagation();mnOpen()});sh.append(b);mnApply()}
