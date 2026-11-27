@@ -5408,31 +5408,26 @@ setTimeout(()=>{try{tgSync()}catch(x){}},0);
 /* lf-440 : choix du jeu en cases façon Killer (dessin + petite info) → page des règles → page des paramètres → joueurs */
 const GPK={cricket:{c:'#1fa2d6',t:'Ferme le 15 au 20'},x01:{c:'#ff8a1f',t:'Descends pile à zéro'},killer:{c:'#ef3b4f',t:'Le dernier en vie gagne'},
   clock:{c:'#7b5cd6',t:'Fais le tour de la cible'},shanghai:{c:'#ff5fa2',t:'Un numéro par tour'},halveit:{c:'#22b573',t:'Rate et tu perds la moitié'}};
-/* lf-443 : illustrations « bulle » — l'aplat est décalé et dépasse de son contour noir ; trait fin, peu d'éléments */
-const GPI=(()=>{const K='#111',W='#fff',Y='#ffd23f',o=2.2,sw=2.3,
-  /* B : forme en bulle (aplat décalé + contour) ; L : trait seul */
+/* lf-448 : illustrations « sticker » — trait gras, aplat décalé qui dépasse du contour, couleurs vives, liseré blanc autour */
+const GPI=(()=>{const K='#111',W='#fff',Y='#ffd23f',R='#ff4d5e',o=3,sw=3.4,
   B=(d,f=W)=>`<path d="${d}" fill="${f}" transform="translate(${o} ${o})"/><path d="${d}" fill="none" stroke="${K}" stroke-width="${sw}" stroke-linejoin="round" stroke-linecap="round"/>`,
   L=(d,w=sw)=>`<path d="${d}" fill="none" stroke="${K}" stroke-width="${w}" stroke-linejoin="round" stroke-linecap="round"/>`,
   C=(cx,cy,r)=>`M${cx-r} ${cy}a${r} ${r} 0 1 0 ${2*r} 0a${r} ${r} 0 1 0 ${-2*r} 0z`,
   RR=(x,y,w,h,r)=>`M${x+r} ${y}h${w-2*r}a${r} ${r} 0 0 1 ${r} ${r}v${h-2*r}a${r} ${r} 0 0 1 ${-r} ${r}h${-(w-2*r)}a${r} ${r} 0 0 1 ${-r} ${-r}v${-(h-2*r)}a${r} ${r} 0 0 1 ${r} ${-r}z`,
-  T=(x,y,t,z)=>`<text x="${x}" y="${y}" text-anchor="middle" style="font:400 ${z}px Fun,sans-serif!important" fill="${K}">${t}</text>`;
+  T=(x,y,t,z)=>`<text x="${x}" y="${y}" text-anchor="middle" style="font:400 ${z}px Fun,sans-serif!important" fill="${K}">${t}</text>`,
+  heart='M24 41L8.5 26a9 9 0 0 1 15.5-9.5A9 9 0 0 1 39.5 26z';
   return{
-   /* cricket : les trois marques — une, deux, fermé */
-   cricket:B(RR(1,15,46,19,9.5))+L('M8.5 29l5-10',2.6)+L('M20 19.5l8 9M28 19.5l-8 9',2.6)+L(C(38,24,5.6),2.3)+L('M34.6 20.6l6.8 6.8M41.4 20.6l-6.8 6.8',2.1)+L('M16.5 17v15M31.5 17v15',1.6),
-   /* 501 : une fléchette en vol */
-   x01:B('M7 37l3.5-3.5 17-17 4.5 4.5-17 17L11.5 41.5z')+B('M27.5 16.5l3-13 14 14-13 3z',Y)+L('M31.5 16.5l7-7')+L('M9 39.5l-6 6',2.8)+L('M30 34h12M26 41h10',2.2),
-   /* killer : un cœur dans le viseur */
-   killer:B('M24 38L11 25.5a7.5 7.5 0 0 1 13-8 7.5 7.5 0 0 1 13 8z')+L(C(24,25,17),2)+L('M24 4v6M24 40v6M3 25h6M39 25h6',2.2),
-   /* horloge : cadran, aiguilles, quatre repères */
-   clock:B(C(24,24,17))+L('M24 24V13M24 24l7 5',2.6)+L('M24 9.5v2.5M38.5 24H36M24 38.5V36M9.5 24H12',2)+`<circle cx="24" cy="24" r="2" fill="${K}"/>`,
-   /* shanghai : simple, double, triple — trois cases qui montent */
-   shanghai:B(RR(2,25,13,18,3.5))+B(RR(17.5,15,13,28,3.5))+B(RR(33,5,13,38,3.5),Y)+T(8.5,38,'1',11)+T(24,33,'2',11)+T(39.5,28,'3',11),
-   /* halve-it : la moitié tranchée */
-   halveit:B('M22 7a17 17 0 0 0 0 34z')+L('M27 7a17 17 0 0 1 0 34z')+L('M24.5 3v42',1.8).replace('stroke-linecap="round"','stroke-dasharray="2.5 3"')}})();
+   cricket:B(C(24,24,17))+L('M15 15l18 18M33 15L15 33',5),
+   x01:B('M8 36l20-20 5 5-20 20z')+B('M27 17l3-12 13 13-12 3z',Y)+L('M9 40l-5 5',4),
+   killer:B(heart,R)+'<path d="M17 21a5 5 0 0 1 5-4" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round"/>',
+   clock:B(C(24,24,18))+L('M24 24V12M24 24l8 5',3.6)+`<circle cx="24" cy="24" r="3" fill="${K}"/>`,
+   shanghai:B(RR(3,12,13,26,4))+B(RR(17.5,12,13,26,4),'#ff9d4d')+B(RR(32,12,13,26,4),Y)+T(9.5,31,'S',13)+T(24,31,'D',13)+T(38.5,31,'T',13),
+   halveit:B('M22 6a18 18 0 0 0 0 36z',Y)+B('M27 6a18 18 0 0 1 0 36z')}})();
+const gpSk=(g,x)=>`<defs><filter id="gps-${g}" x="-20%" y="-20%" width="140%" height="140%"><feMorphology in="SourceAlpha" operator="dilate" radius="2.6" result="d"/><feFlood flood-color="#fff"/><feComposite in2="d" operator="in" result="w"/><feMerge><feMergeNode in="w"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g filter="url(#gps-${g})">${x}</g>`;
 /* lf-442 : DA bulle (couleur qui dépasse du cadre noir) ; toucher un jeu = sa case s'agrandit (règles + « On y va ») */
 let GPO=null;
 const gpCard=(g,i)=>{const P=GPK[g],big=g===GPO,R='';return`<div class="gpc${big?' big':''}" role="button" tabindex="0" data-g="${g}" style="--gc:${P.c};view-transition-name:gp-${g};order:${big?(i-i%2)*2-1:i*2}">`
-  +`<div class="gph"><span class="gpn">${GNAME[g]}</span><svg class="gpb" viewBox="0 0 48 48" aria-hidden="true">${GPI[g]}</svg></div><span class="gpx">${P.t}</span>`
+  +`<div class="gph"><span class="gpn">${GNAME[g]}</span><svg class="gpb" viewBox="0 0 48 48" aria-hidden="true">${gpSk(g,GPI[g])}</svg></div><span class="gpx">${P.t}</span>`
   +(big?`<div class="gpr">${R}</div><span class="gpgo" role="button">On y va !</span>`:'')+'</div>'};
 function gpRender(){const P=$('gPick');if(!P)return;P.classList.toggle('open',!!GPO);P.innerHTML='<h2 class="gpq">À quoi on joue ?</h2>'+GAMES.map(gpCard).join('');gpRules()}
 {const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{gpRender()}catch(x){}return r}}
@@ -7656,7 +7651,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-447';   // à changer avec VERSION dans sw.js
+const APPV='lf-448';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
