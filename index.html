@@ -4040,7 +4040,7 @@ html body #setup#setup .gpgo{box-shadow:inset 0 0 0 calc(2.5px * var(--mn-olz,1)
 /* lf-457 : animations — traits qui bouillonnent et aplats qui respirent dans les dessins, cases de jeux qui flottent, bulles des réglages qui bougent */
 @keyframes gpFl{0%,100%{transform:translate(0,0)}25%{transform:translate(1.8px,-1.2px)}50%{transform:translate(-1.2px,1.8px)}75%{transform:translate(-1.8px,-1.4px)}}
 @keyframes gpFloat{0%,100%{translate:0 0;rotate:var(--tlt,0deg);scale:1}25%{translate:2.5px -4px;rotate:calc(var(--tlt,0deg) + .9deg);scale:1.015}50%{translate:-1px -6px;rotate:calc(var(--tlt,0deg) - .7deg);scale:1.005}75%{translate:-2.5px -2px;rotate:calc(var(--tlt,0deg) + .5deg);scale:1.02}}
-@keyframes gpWob{0%,100%{rotate:-2deg;scale:1;translate:0 0}25%{rotate:1.6deg;scale:1.05;translate:1px -1px}50%{rotate:2.4deg;scale:1.02;translate:-1px 1px}75%{rotate:-.8deg;scale:1.06;translate:1.2px .5px}}
+@keyframes gpWob{0%,100%{scale:1}50%{scale:1.05}}
 @media (prefers-reduced-motion:no-preference){
  html:not(.noanim) #setup .gpb .gfl{animation:gpFl 2.6s ease-in-out infinite}
  html:not(.noanim) #setup .gpick .gpc:not(.big){animation:gpFloat 3.4s ease-in-out infinite}
@@ -7760,7 +7760,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-465';   // à changer avec VERSION dans sw.js
+const APPV='lf-466';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
