@@ -4037,6 +4037,19 @@ html body #setup#setup #gHero .gpc.hero{box-shadow:inset 0 0 0 calc(2.5px * var(
 html body #setup#setup #gHero .ghb{box-shadow:inset 0 0 0 calc(2.5px * var(--mn-olz,1)) #111!important}
 html body #setup#setup .gpgo{box-shadow:inset 0 0 0 calc(2.5px * var(--mn-olz,1)) #111,0 0 0 4px #fff!important}
 
+/* lf-457 : animations — traits qui bouillonnent et aplats qui respirent dans les dessins, cases de jeux qui flottent, bulles des réglages qui bougent */
+@keyframes gpFl{0%,100%{transform:translate(0,0)}50%{transform:translate(-1.6px,-1.6px)}}
+@keyframes gpFloat{0%,100%{translate:0 0}50%{translate:0 -3px}}
+@keyframes gpWob{0%,100%{rotate:-1.2deg;scale:1}50%{rotate:1.2deg;scale:1.03}}
+@media (prefers-reduced-motion:no-preference){
+ html:not(.noanim) #setup .gpb .gfl{animation:gpFl 2.6s ease-in-out infinite}
+ html:not(.noanim) #setup .gpick .gpc:not(.big){animation:gpFloat 3.4s ease-in-out infinite}
+ html:not(.noanim) #setup .gpick .gpc:nth-of-type(2){animation-delay:-.6s}html:not(.noanim) #setup .gpick .gpc:nth-of-type(3){animation-delay:-1.3s}
+ html:not(.noanim) #setup .gpick .gpc:nth-of-type(4){animation-delay:-2s}html:not(.noanim) #setup .gpick .gpc:nth-of-type(5){animation-delay:-2.6s}html:not(.noanim) #setup .gpick .gpc:nth-of-type(6){animation-delay:-.3s}
+ html:not(.noanim) #setup .seg .thumb,html:not(.noanim) #setup #go .gth{animation:gpWob 2.8s ease-in-out infinite}
+}
+html.noanim #setup .gboil{filter:none}
+
 </style>
 </head>
 <body>
@@ -5448,11 +5461,16 @@ $('segBar').addEventListener('click',e=>{const v=e.target.dataset.v;if(v){haptic
 S.hid=3;
 /* lf-440 : choix du jeu en cases façon Killer (dessin + petite info) → page des règles → page des paramètres → joueurs */
 /* lf-455 : couleurs claires (palette élargie à partir d'Azure Skies / Vibrant Fusion), texte noir partout */
+/* lf-457 : trois thèmes (panneau ⚙︎ « Couleurs des jeux ») — Vif (par défaut, couleurs franches), Fluo, Pastel ; texte noir partout */
+const GPT={Vif:{cricket:'#4f7cff',x01:'#ffc83d',killer:'#ef4b4b',clock:'#9b72f2',shanghai:'#ff8a3d',halveit:'#2fbf8f'},
+  Fluo:{cricket:'#29e3ff',x01:'#fff03a',killer:'#ff3f86',clock:'#c062ff',shanghai:'#ff8f1f',halveit:'#3dff8b'},
+  Pastel:{cricket:'#9db7fa',x01:'#f5cb5c',killer:'#ee8f86',clock:'#c7b5ee',shanghai:'#f6b87e',halveit:'#93cbb9'}};
+function gpTheme(){const t=GPT[(S.mnu&&S.mnu.gth)||'Vif']||GPT.Vif;for(const g in GPK)GPK[g].c=t[g]}
 const GPK={cricket:{c:'#9db7fa',t:'Ferme le 15 au 20',light:1},x01:{c:'#f5cb5c',t:'Descends pile à zéro',light:1},killer:{c:'#ee8f86',t:'Le dernier en vie gagne',light:1},
   clock:{c:'#c7b5ee',t:'Fais le tour de la cible',light:1},shanghai:{c:'#f6b87e',t:'Un numéro par tour',light:1},halveit:{c:'#93cbb9',t:'Rate et tu perds la moitié',light:1}};
 /* lf-448 : illustrations « sticker » — trait gras, aplat décalé qui dépasse du contour, couleurs vives, liseré blanc autour */
 const GPI=(()=>{const K='#111',W='#fff',Y='#ffd23f',R='#ff4d5e',o=3,sw=3.4,
-  B=(d,f=W)=>`<path d="${d}" fill="${f}" transform="translate(${o} ${o})"/><path d="${d}" fill="none" stroke="${K}" style="stroke-width:calc(${sw}px * var(--mn-jis,1))" stroke-linejoin="round" stroke-linecap="round"/>`,
+  B=(d,f=W)=>`<g class="gfl"><path d="${d}" fill="${f}" transform="translate(${o} ${o})"/></g><path d="${d}" fill="none" stroke="${K}" style="stroke-width:calc(${sw}px * var(--mn-jis,1))" stroke-linejoin="round" stroke-linecap="round"/>`,
   L=(d,w=sw)=>`<path d="${d}" fill="none" stroke="${K}" style="stroke-width:calc(${w}px * var(--mn-jis,1))" stroke-linejoin="round" stroke-linecap="round"/>`,
   C=(cx,cy,r)=>`M${cx-r} ${cy}a${r} ${r} 0 1 0 ${2*r} 0a${r} ${r} 0 1 0 ${-2*r} 0z`,
   RR=(x,y,w,h,r)=>`M${x+r} ${y}h${w-2*r}a${r} ${r} 0 0 1 ${r} ${r}v${h-2*r}a${r} ${r} 0 0 1 ${-r} ${r}h${-(w-2*r)}a${r} ${r} 0 0 1 ${-r} ${-r}v${-(h-2*r)}a${r} ${r} 0 0 1 ${r} ${-r}z`,
@@ -5465,13 +5483,13 @@ const GPI=(()=>{const K='#111',W='#fff',Y='#ffd23f',R='#ff4d5e',o=3,sw=3.4,
    clock:B(C(24,24,18))+L('M24 24V12M24 24l8 5',3.6)+`<circle cx="24" cy="24" r="3" fill="${K}"/>`,
    shanghai:B(RR(3,12,13,26,4))+B(RR(17.5,12,13,26,4),'#ff9d4d')+B(RR(32,12,13,26,4),Y)+T(9.5,31,'S',13)+T(24,31,'D',13)+T(38.5,31,'T',13),
    halveit:B('M22 6a18 18 0 0 0 0 36z',Y)+B('M27 6a18 18 0 0 1 0 36z')}})();
-const gpSk=(g,x)=>x;const gpSkOld=(g,x)=>`<defs><filter id="gps-${g}" x="-20%" y="-20%" width="140%" height="140%"><feMorphology in="SourceAlpha" operator="dilate" radius="2.6" result="d"/><feFlood flood-color="#fff"/><feComposite in2="d" operator="in" result="w"/><feMerge><feMergeNode in="w"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g filter="url(#gps-${g})">${x}</g>`;
+const gpSk=(g,x)=>`<defs><filter id="gpb-${g}" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".045" numOctaves="1" seed="1"><animate attributeName="seed" values="1;4;7" dur=".75s" repeatCount="indefinite" calcMode="discrete"/></feTurbulence><feDisplacementMap in="SourceGraphic" scale="1.5"/></filter></defs><g class="gboil" filter="url(#gpb-${g})">${x}</g>`;const gpSkOld=(g,x)=>`<defs><filter id="gps-${g}" x="-20%" y="-20%" width="140%" height="140%"><feMorphology in="SourceAlpha" operator="dilate" radius="2.6" result="d"/><feFlood flood-color="#fff"/><feComposite in2="d" operator="in" result="w"/><feMerge><feMergeNode in="w"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g filter="url(#gps-${g})">${x}</g>`;
 /* lf-442 : DA bulle (couleur qui dépasse du cadre noir) ; toucher un jeu = sa case s'agrandit (règles + « On y va ») */
 let GPO=null;
 const gpCard=(g,i)=>{const P=GPK[g],big=g===GPO,R='';return`<div class="gpc${big?' big':''}${P.light?' light':''}" role="button" tabindex="0" data-g="${g}" style="--gc:${P.c};view-transition-name:gp-${g};order:${big?(i-i%2)*2-1:i*2}">`
   +`<div class="gph"><span class="gpn">${GNAME[g]}</span><svg class="gpb" viewBox="0 0 48 48" aria-hidden="true">${gpSk(g,GPI[g])}</svg></div><span class="gpx">${P.t}</span>`
   +(big?`<div class="gpr">${R}</div><span class="gpgo" role="button">On y va !</span>`:'')+'</div>'};
-function gpRender(){{const c=GPK[S.game].c,SE=$('setup');SE.style.setProperty('--gc',c);SE.style.setProperty('--gc-rgb',[1,3,5].map(i=>parseInt(c.slice(i,i+2),16)).join(','));SE.classList.toggle('glight',!!GPK[S.game].light)}const H=$('gHero');if(H){const g=S.game,P=GPK[g];H.innerHTML=`<div class="gpc hero${P.light?' light':''}" style="--gc:${P.c}"><button class="ghb gback" aria-label="Retour"><svg viewBox="0 0 24 24"><path d="M15 5 8 12l7 7"/></svg></button><button class="ghb gset" aria-label="Réglages du menu"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.5 5.5l1.8 1.8M16.7 16.7l1.8 1.8M5.5 18.5l1.8-1.8M16.7 7.3l1.8-1.8"/></svg></button><div class="gph"><span class="gpn">${GNAME[g]}</span><svg class="gpb" viewBox="0 0 48 48" aria-hidden="true">${gpSk('h-'+g,GPI[g])}</svg></div><span class="gpx">${P.t}</span><div class="gpr"></div></div>`}
+function gpRender(){gpTheme();{const c=GPK[S.game].c,SE=$('setup');SE.style.setProperty('--gc',c);SE.style.setProperty('--gc-rgb',[1,3,5].map(i=>parseInt(c.slice(i,i+2),16)).join(','));SE.classList.toggle('glight',!!GPK[S.game].light)}const H=$('gHero');if(H){const g=S.game,P=GPK[g];H.innerHTML=`<div class="gpc hero${P.light?' light':''}" style="--gc:${P.c}"><button class="ghb gback" aria-label="Retour"><svg viewBox="0 0 24 24"><path d="M15 5 8 12l7 7"/></svg></button><button class="ghb gset" aria-label="Réglages du menu"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.5 5.5l1.8 1.8M16.7 16.7l1.8 1.8M5.5 18.5l1.8-1.8M16.7 7.3l1.8-1.8"/></svg></button><div class="gph"><span class="gpn">${GNAME[g]}</span><svg class="gpb" viewBox="0 0 48 48" aria-hidden="true">${gpSk('h-'+g,GPI[g])}</svg></div><span class="gpx">${P.t}</span><div class="gpr"></div></div>`}
   const P=$('gPick');if(!P)return;P.classList.toggle('open',!!GPO);P.innerHTML='<h2 class="gpq">À quoi on joue ?</h2>'+GAMES.map(gpCard).join('');gpRules()}
 {const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{gpRender()}catch(x){}return r}}
 function gpRules(){const e=$('gRules');if(!e)return;const x=e.cloneNode(true);x.querySelectorAll('.rold').forEach(o=>o.remove());document.querySelectorAll('#gPick .gpc.big .gpr,#gHero .gpr').forEach(c=>c.innerHTML=x.innerHTML)}
@@ -7695,7 +7713,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-456';   // à changer avec VERSION dans sw.js
+const APPV='lf-457';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -8167,6 +8185,7 @@ document.addEventListener('click',e=>{const h=e.target.closest&&e.target.closest
 const MN_COL=[['Joueur','var(--pc,#111)'],['Noir','#111'],['Blanc','#fff']];
 const MN=[
  ['Général'],
+ ['gth','Couleurs des jeux',[['Vif','v'],['Fluo','f'],['Pastel','p']],'Vif'],['anim','Animations',[['Oui','1'],['Non','0']],'Oui'],
  ['olz','Contours noirs (tous les menus)',0,3,.05,1,''],
  ['Cases des jeux'],
  ['jis','Contour des dessins',.3,2.2,.05,1,''], ['jr','Arrondi',6,40,1,24,'px'],['jbw','Contour',0,5,.25,2.5,'px'],['jbh','Débord de la couleur',0,12,.5,4,'px'],['jsh','Ombre dure',0,10,.5,0,'px'],['jtl','Inclinaison',0,5,.25,0,''],
@@ -8186,7 +8205,8 @@ function mnApply(){/* variables posées dans une feuille de style sur #setup ET 
   const st=$('setup').style;let css='';MN.forEach(d=>{if(d.length<2)return;const k=d[0],v=S.mnu[k]??(Array.isArray(d[2])?d[3]:d[5]);st.removeProperty('--mn-'+k);
     if(Array.isArray(d[2])){const c=d[2].find(x=>x[0]===v);if(c)css+=`--mn-${k}:${c[1]};`}else css+=`--mn-${k}:${v}${d[6]};`});
   let t=$('mnst');if(!t){t=document.createElement('style');t.id='mnst';document.head.append(t)}t.textContent=`#setup,#setup #names .nslot,#ppick,#ppick .rchip,#draw,#draw .slot{${css}}`}
-function mnFit(){try{renderSetup()}catch(e){}try{placeThumbs()}catch(e){}}
+function mnAnim(){document.documentElement.classList.toggle('noanim',(S.mnu&&S.mnu.anim)==='Non')}
+function mnFit(){mnAnim();try{renderSetup()}catch(e){}try{placeThumbs()}catch(e){}}
 function mnDraw(){const p=$('mnp');const fv=(d,v)=>(d[6]===''?String(Math.round(v*100)/100):String(v)+(d[6]==='%'?' %':' px')).replace('.',',');
   p.innerHTML=`<div class="mnh"><b>Menu</b><button class="lt" data-mnr>Rétablir</button><button class="lt" data-mncp>Copier</button><button data-mnx>OK</button></div>`+
    MN.map(d=>{if(d.length<2)return`<h4>${d[0]}</h4>`;const k=d[0],v=S.mnu[k],mod=v!==undefined&&v!==null?' mod':'';
@@ -8196,14 +8216,14 @@ function mnOpen(){haptic();SFX.open();let p=$('mnp');if(!p){p=el('div','');p.id=
     p.addEventListener('input',e=>{const r=e.target.closest('input[data-mnk]');if(!r)return;const d=MN.find(x=>x[0]===r.dataset.mnk);S.mnu[d[0]]=+r.value;mnApply();
       const row=r.closest('.mnr');row.classList.add('mod');row.querySelector('i').textContent=(d[6]===''?String(Math.round(+r.value*100)/100):r.value+(d[6]==='%'?' %':' px')).replace('.',',');clearTimeout(p._t);p._t=setTimeout(()=>{store.set(K_S,S);mnFit()},120)});
     p.addEventListener('click',e=>{const t=e.target;
-      const c=t.closest('[data-mnv]');if(c){haptic();SFX.tick();const d=MN.find(x=>x[0]===c.dataset.mnk);S.mnu[d[0]]=c.dataset.mnv===d[3]?undefined:c.dataset.mnv;if(S.mnu[d[0]]===undefined)delete S.mnu[d[0]];store.set(K_S,S);mnApply();mnDraw();return}
+      const c=t.closest('[data-mnv]');if(c){haptic();SFX.tick();const d=MN.find(x=>x[0]===c.dataset.mnk);S.mnu[d[0]]=c.dataset.mnv===d[3]?undefined:c.dataset.mnv;if(S.mnu[d[0]]===undefined)delete S.mnu[d[0]];store.set(K_S,S);mnApply();mnDraw();mnFit();return}
       if(t.closest('[data-mnx]')){SFX.back();p.classList.remove('on');return}
       if(t.closest('[data-mnr]')){haptic();SFX.back();S.mnu={};store.set(K_S,S);mnApply();mnDraw();mnFit();return}
       if(t.closest('[data-mncp]')){haptic();const txt='Réglages menu '+APPV+' : '+JSON.stringify(S.mnu);try{navigator.clipboard.writeText(txt).then(()=>toast('RÉGLAGES COPIÉS','',true),()=>prompt('Copie ces réglages',txt))}catch(x){prompt('Copie ces réglages',txt)}}})}
   if(typeof setupPage==='function'&&!$('setup').classList.contains('p2')&&!$('setup').classList.contains('p0')&&!$('setup').classList.contains('pp'))setupPage(2,1);
   mnDraw();requestAnimationFrame(()=>p.classList.add('on'))}
 {const sh=document.querySelector('#setup .sh');const b=el('button','circ mnbtn');b.setAttribute('aria-label','Réglages du menu');b.innerHTML='<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 13.5a7.6 7.6 0 0 0 0-3l2-1.6-2-3.4-2.4 1a7.4 7.4 0 0 0-2.6-1.5L14 2.5h-4l-.4 2.5A7.4 7.4 0 0 0 7 6.5l-2.4-1-2 3.4 2 1.6a7.6 7.6 0 0 0 0 3l-2 1.6 2 3.4 2.4-1a7.4 7.4 0 0 0 2.6 1.5l.4 2.5h4l.4-2.5a7.4 7.4 0 0 0 2.6-1.5l2.4 1 2-3.4Z"/></svg>';
- b.addEventListener('click',e=>{e.stopPropagation();mnOpen()});sh.append(b);mnApply()}
+ b.addEventListener('click',e=>{e.stopPropagation();mnOpen()});sh.append(b);mnApply();try{mnAnim()}catch(x){}}
 /* ===== carte « FIFA » du joueur : note générale + 6 attributs, retournable (trophées / records au dos), partageable ===== */
 const FC_ATT=['MPR','Moyenne','Finish','Triples','Régularité','Victoires'];
 function fcRate(v,a,b){return Math.max(30,Math.min(99,Math.round(40+(v-a)*59/(b-a))))}
