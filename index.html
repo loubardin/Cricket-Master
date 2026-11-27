@@ -4050,6 +4050,18 @@ html body #setup#setup .gpgo{box-shadow:inset 0 0 0 calc(2.5px * var(--mn-olz,1)
 }
 html.noanim #setup .gboil{filter:none}
 
+/* lf-458 : textes blancs dans les switchs, noms des jeux blancs à contour noir, « le but » en blanc, explication dans un encadré blanc */
+html body #setup#setup .gpc .gpn{color:#fff!important;-webkit-text-stroke:var(--mn-jns,1.4px) #111!important;paint-order:stroke fill;text-shadow:0 2px 0 #111!important}
+html body #setup#setup .gpc.big .gpn,html body #setup#setup #gHero .gpn{-webkit-text-stroke:2px #111!important;text-shadow:0 3px 0 #111!important}
+html body #setup#setup .gpc .gpx{color:#fff!important;opacity:1!important;-webkit-text-stroke:.7px #111;paint-order:stroke fill;text-shadow:0 1px 0 #111}
+html body #setup#setup .gpc .gpr{color:#111!important;opacity:1!important;gap:10px}
+html body #setup#setup .gpc .gpr .rgoal{color:#fff!important;font-size:20px;-webkit-text-stroke:1.2px #111!important;paint-order:stroke fill;text-shadow:0 2px 0 #111}
+html body #setup#setup .gpc .gpr .rgoal b{color:#fff!important;text-decoration:none}
+html body #setup#setup .gpc .rbox{display:flex;flex-direction:column;gap:6px;padding:11px 13px 12px;border-radius:16px;background:#fff;color:#111;box-shadow:inset 0 0 0 calc(2.5px * var(--mn-olz,1)) #111}
+html body #setup#setup .gpc .rbox .rp{color:#111!important;opacity:1!important}
+html body #setup#setup .gpc .rbox .rp::before{background:var(--gc)!important;box-shadow:0 0 0 2px #111!important}
+html body #setup#setup .gpc .rbox b{color:#111!important;text-decoration:none!important}
+
 </style>
 </head>
 <body>
@@ -5489,10 +5501,10 @@ let GPO=null;
 const gpCard=(g,i)=>{const P=GPK[g],big=g===GPO,R='';return`<div class="gpc${big?' big':''}${P.light?' light':''}" role="button" tabindex="0" data-g="${g}" style="--gc:${P.c};view-transition-name:gp-${g};order:${big?(i-i%2)*2-1:i*2}">`
   +`<div class="gph"><span class="gpn">${GNAME[g]}</span><svg class="gpb" viewBox="0 0 48 48" aria-hidden="true">${gpSk(g,GPI[g])}</svg></div><span class="gpx">${P.t}</span>`
   +(big?`<div class="gpr">${R}</div><span class="gpgo" role="button">On y va !</span>`:'')+'</div>'};
-function gpRender(){gpTheme();{const c=GPK[S.game].c,SE=$('setup');SE.style.setProperty('--gc',c);SE.style.setProperty('--gc-rgb',[1,3,5].map(i=>parseInt(c.slice(i,i+2),16)).join(','));SE.classList.toggle('glight',!!GPK[S.game].light)}const H=$('gHero');if(H){const g=S.game,P=GPK[g];H.innerHTML=`<div class="gpc hero${P.light?' light':''}" style="--gc:${P.c}"><button class="ghb gback" aria-label="Retour"><svg viewBox="0 0 24 24"><path d="M15 5 8 12l7 7"/></svg></button><button class="ghb gset" aria-label="Réglages du menu"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.5 5.5l1.8 1.8M16.7 16.7l1.8 1.8M5.5 18.5l1.8-1.8M16.7 7.3l1.8-1.8"/></svg></button><div class="gph"><span class="gpn">${GNAME[g]}</span><svg class="gpb" viewBox="0 0 48 48" aria-hidden="true">${gpSk('h-'+g,GPI[g])}</svg></div><span class="gpx">${P.t}</span><div class="gpr"></div></div>`}
+function gpRender(){gpTheme();{const c=GPK[S.game].c,SE=$('setup');SE.style.setProperty('--gc',c);SE.style.setProperty('--gc-rgb',[1,3,5].map(i=>parseInt(c.slice(i,i+2),16)).join(','));SE.classList.toggle('glight',false)}const H=$('gHero');if(H){const g=S.game,P=GPK[g];H.innerHTML=`<div class="gpc hero${P.light?' light':''}" style="--gc:${P.c}"><button class="ghb gback" aria-label="Retour"><svg viewBox="0 0 24 24"><path d="M15 5 8 12l7 7"/></svg></button><button class="ghb gset" aria-label="Réglages du menu"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.5 5.5l1.8 1.8M16.7 16.7l1.8 1.8M5.5 18.5l1.8-1.8M16.7 7.3l1.8-1.8"/></svg></button><div class="gph"><span class="gpn">${GNAME[g]}</span><svg class="gpb" viewBox="0 0 48 48" aria-hidden="true">${gpSk('h-'+g,GPI[g])}</svg></div><span class="gpx">${P.t}</span><div class="gpr"></div></div>`}
   const P=$('gPick');if(!P)return;P.classList.toggle('open',!!GPO);P.innerHTML='<h2 class="gpq">À quoi on joue ?</h2>'+GAMES.map(gpCard).join('');gpRules()}
 {const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{gpRender()}catch(x){}return r}}
-function gpRules(){const e=$('gRules');if(!e)return;const x=e.cloneNode(true);x.querySelectorAll('.rold').forEach(o=>o.remove());document.querySelectorAll('#gPick .gpc.big .gpr,#gHero .gpr').forEach(c=>c.innerHTML=x.innerHTML)}
+function gpRules(){const e=$('gRules');if(!e)return;const x=e.cloneNode(true);x.querySelectorAll('.rold').forEach(o=>o.remove());{const P=[...x.querySelectorAll('.rp')];if(P.length){const b=document.createElement('div');b.className='rbox';P[0].before(b);P.forEach(r=>b.append(r))}}document.querySelectorAll('#gPick .gpc.big .gpr,#gHero .gpr').forEach(c=>c.innerHTML=x.innerHTML)}
 setTimeout(()=>{const _s=showRules;showRules=function(){const r=_s.apply(this,arguments);try{gpRules()}catch(x){}return r}},0);
 const gpVT=f=>{if(document.startViewTransition&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.startViewTransition(f);else f()};
 $('gHero').addEventListener('click',e=>{const b=e.target.closest('.ghb');if(!b)return;e.stopPropagation();if(b.classList.contains('gback'))$('sBack').click();else{const m=document.querySelector('#setup .sh .mnbtn');if(m)m.click()}});
@@ -7713,7 +7725,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-457';   // à changer avec VERSION dans sw.js
+const APPV='lf-458';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
