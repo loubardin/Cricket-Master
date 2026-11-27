@@ -4016,7 +4016,7 @@ html body #setup#setup.b2:is(.pp,.p2)>.sh{display:none!important}
 /* lf-454 : cases des jeux pilotées par le panneau de réglages (valeurs par défaut = rendu actuel) */
 html body #setup#setup#setup.b2.p0>#gPick{gap:var(--mn-jgap,14px)!important}
 #setup .gpick .gpc{border-radius:var(--mn-jr,24px);box-shadow:inset 0 0 0 calc(var(--mn-jbw,2.5px) * var(--mn-olz,1)) #111,0 0 0 var(--mn-jbh,4px) var(--gc),0 var(--mn-jsh,0px) 0 var(--mn-jbh,4px) #111;aspect-ratio:1/var(--mn-jh,.9)}
-#setup .gpick .gpc:not(.big):nth-of-type(odd){rotate:calc(var(--mn-jtl,0) * -1deg)}#setup .gpick .gpc:not(.big):nth-of-type(even){rotate:calc(var(--mn-jtl,0) * 1deg)}
+#setup .gpick .gpc:not(.big):nth-of-type(odd){--tlt:calc(var(--mn-jtl,0) * -1deg);rotate:var(--tlt)}#setup .gpick .gpc:not(.big):nth-of-type(even){--tlt:calc(var(--mn-jtl,0) * 1deg);rotate:var(--tlt)}
 #setup .gpick .gpb{width:calc(min(19vw,80px) * var(--mn-jiz,1));height:calc(min(19vw,80px) * var(--mn-jiz,1))}
 #setup .gpick .gpn{font-size:calc(23px * var(--mn-jnz,1));-webkit-text-stroke-width:var(--mn-jns,1.4px)}
 #setup .gpick .gpx{font-size:calc(12px * var(--mn-jtz,1))}
@@ -4038,9 +4038,9 @@ html body #setup#setup #gHero .ghb{box-shadow:inset 0 0 0 calc(2.5px * var(--mn-
 html body #setup#setup .gpgo{box-shadow:inset 0 0 0 calc(2.5px * var(--mn-olz,1)) #111,0 0 0 4px #fff!important}
 
 /* lf-457 : animations — traits qui bouillonnent et aplats qui respirent dans les dessins, cases de jeux qui flottent, bulles des réglages qui bougent */
-@keyframes gpFl{0%,100%{transform:translate(0,0)}50%{transform:translate(-2.6px,-2.6px)}}
-@keyframes gpFloat{0%,100%{translate:0 0;scale:1}50%{translate:0 -6px;scale:1.02}}
-@keyframes gpWob{0%,100%{rotate:-2.4deg;scale:1}50%{rotate:2.4deg;scale:1.06}}
+@keyframes gpFl{0%,100%{transform:translate(0,0)}25%{transform:translate(1.8px,-1.2px)}50%{transform:translate(-1.2px,1.8px)}75%{transform:translate(-1.8px,-1.4px)}}
+@keyframes gpFloat{0%,100%{translate:0 0;rotate:var(--tlt,0deg);scale:1}25%{translate:2.5px -4px;rotate:calc(var(--tlt,0deg) + .9deg);scale:1.015}50%{translate:-1px -6px;rotate:calc(var(--tlt,0deg) - .7deg);scale:1.005}75%{translate:-2.5px -2px;rotate:calc(var(--tlt,0deg) + .5deg);scale:1.02}}
+@keyframes gpWob{0%,100%{rotate:-2deg;scale:1;translate:0 0}25%{rotate:1.6deg;scale:1.05;translate:1px -1px}50%{rotate:2.4deg;scale:1.02;translate:-1px 1px}75%{rotate:-.8deg;scale:1.06;translate:1.2px .5px}}
 @media (prefers-reduced-motion:no-preference){
  html:not(.noanim) #setup .gpb .gfl{animation:gpFl 2.6s ease-in-out infinite}
  html:not(.noanim) #setup .gpick .gpc:not(.big){animation:gpFloat 3.4s ease-in-out infinite}
@@ -4076,6 +4076,16 @@ html body #setup#setup .gpc.big{gap:6px!important}
 
 /* lf-463 : petites cases et grande case — dessin à gauche du nom */
 html body #setup#setup .gpick.open .gpc .gpb,html body #setup#setup .gpc.big .gpb,html body #setup#setup.p2 #gHero .gpb{order:-1}
+
+/* lf-464 : mouvements sur plusieurs axes, rythmes et sens différents ; fonds des dessins centrés (débord régulier, plus d'effet d'ombre) */
+@media (prefers-reduced-motion:no-preference){
+ html:not(.noanim) #setup .gpick .gpc:nth-of-type(1){animation-duration:4.2s}html:not(.noanim) #setup .gpick .gpc:nth-of-type(2){animation-duration:3.6s;animation-direction:reverse}
+ html:not(.noanim) #setup .gpick .gpc:nth-of-type(3){animation-duration:4.8s}html:not(.noanim) #setup .gpick .gpc:nth-of-type(4){animation-duration:3.9s;animation-direction:reverse}
+ html:not(.noanim) #setup .gpick .gpc:nth-of-type(5){animation-duration:4.5s;animation-direction:reverse}html:not(.noanim) #setup .gpick .gpc:nth-of-type(6){animation-duration:3.3s}
+ html:not(.noanim) #setup .gpick .gpc:nth-of-type(even) .gfl{animation-direction:reverse;animation-duration:3.1s}html:not(.noanim) #setup .gpick .gpc:nth-of-type(3n) .gfl{animation-duration:2.3s}
+ html:not(.noanim) #setup .opt:nth-child(odd) .seg .thumb{animation-duration:3.4s;animation-direction:reverse}html:not(.noanim) #setup .opt:nth-child(3n) .seg .thumb{animation-duration:2.4s}
+ html:not(.noanim) #setup #go .gth{animation-duration:3.7s}
+}
 
 </style>
 </head>
@@ -5496,7 +5506,7 @@ function gpTheme(){const t=GPT[(S.mnu&&S.mnu.gth)||'Vif']||GPT.Vif;for(const g i
 const GPK={cricket:{c:'#9db7fa',t:'Ferme le 15 au 20',light:1},x01:{c:'#f5cb5c',t:'Descends pile à zéro',light:1},killer:{c:'#ee8f86',t:'Le dernier en vie gagne',light:1},
   clock:{c:'#c7b5ee',t:'Fais le tour de la cible',light:1},shanghai:{c:'#f6b87e',t:'Un numéro par tour',light:1},halveit:{c:'#93cbb9',t:'Rate et tu perds la moitié',light:1}};
 /* lf-448 : illustrations « sticker » — trait gras, aplat décalé qui dépasse du contour, couleurs vives, liseré blanc autour */
-const GPI=(()=>{const K='#111',W='#fff',Y='#ffd23f',R='#ff4d5e',o=3,sw=3.4,
+const GPI=(()=>{const K='#111',W='#fff',Y='#ffd23f',R='#ff4d5e',o=0,sw=3.4,
   B=(d,f=W)=>`<g class="gfl"><path d="${d}" fill="${f}" transform="translate(${o} ${o})"/></g><path d="${d}" fill="none" stroke="${K}" style="stroke-width:calc(${sw}px * var(--mn-jis,1))" stroke-linejoin="round" stroke-linecap="round"/>`,
   L=(d,w=sw)=>`<path d="${d}" fill="none" stroke="${K}" style="stroke-width:calc(${w}px * var(--mn-jis,1))" stroke-linejoin="round" stroke-linecap="round"/>`,
   C=(cx,cy,r)=>`M${cx-r} ${cy}a${r} ${r} 0 1 0 ${2*r} 0a${r} ${r} 0 1 0 ${-2*r} 0z`,
@@ -7740,7 +7750,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-463';   // à changer avec VERSION dans sw.js
+const APPV='lf-464';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
