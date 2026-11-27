@@ -4074,6 +4074,9 @@ html body #setup#setup .gpc.big{gap:6px!important}
 /* lf-462 : fonds des dessins plus grands (réglable), animations plus marquées */
 #setup .gpb .gfl>path{transform-box:fill-box;transform-origin:center;scale:var(--mn-jfz,1.12)}
 
+/* lf-463 : petites cases et grande case — dessin à gauche du nom */
+html body #setup#setup .gpick.open .gpc .gpb,html body #setup#setup .gpc.big .gpb,html body #setup#setup.p2 #gHero .gpb{order:-1}
+
 </style>
 </head>
 <body>
@@ -7737,7 +7740,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-462';   // à changer avec VERSION dans sw.js
+const APPV='lf-463';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
