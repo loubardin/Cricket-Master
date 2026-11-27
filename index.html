@@ -4107,6 +4107,14 @@ html body #setup#setup#setup.b2:is(.pp,.p2) .opt>.ohelp{margin-top:var(--mn-ohg,
 html body #setup#setup#setup.b2:is(.pp,.p2)>.gobar{margin-top:var(--mn-obot,30px)!important;padding-top:0!important}
 html body #setup#setup#setup.b2:is(.pp,.p2)>.grp{margin-top:0!important;margin-bottom:0!important}
 
+/* lf-469 : Safari — l'entête ne doit jamais pousser les réglages hors de l'écran (le dessin ne réclame plus de hauteur, la page défile si besoin) */
+html body #setup#setup#setup.b2:is(.pp,.p2)>#gHero{overflow:hidden!important;max-height:calc(max(var(--mn-hmin,110px),46dvh) + 12px);padding:6px!important;margin:calc(var(--mn-hmt,10px) - 6px) -2px calc(var(--mn-hmb,18px) - 6px)!important}
+html body #setup#setup#setup#setup.b2:is(.pp,.p2)>.grp{margin-top:auto!important}
+html body #setup#setup #gHero .gpc.hero{min-height:0!important;height:auto!important}
+html body #setup#setup #gHero .gpb{height:0!important;min-height:0!important;flex:1 1 0!important}
+html body #setup#setup#setup.b2:is(.pp,.p2)>.grp,html body #setup#setup#setup.b2:is(.pp,.p2)>.gobar{flex-shrink:0!important}
+html body #setup#setup#setup.b2:is(.pp,.p2){overflow-y:auto!important}
+
 </style>
 </head>
 <body>
@@ -7770,7 +7778,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-468';   // à changer avec VERSION dans sw.js
+const APPV='lf-469';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
