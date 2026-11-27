@@ -3972,6 +3972,21 @@ html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .gpc .gpx
 /* lf-449 : options et joueurs à nouveau sur deux pages */
 html body #setup#setup.b2.p2>.grp:has(.sect.s2){display:none!important}
 
+/* lf-452 : page joueurs — on accepte le défilement ; tout à sa taille naturelle, de haut en bas */
+html body #setup#setup#setup.b2.p2>#gHero{flex:0 0 auto!important;margin:calc(var(--u,1dvh)*1.4) 4px 6px!important}
+#setup.p2 #gHero .gpc.hero{flex:0 0 auto;flex-direction:row;justify-content:space-between;gap:12px;padding:12px 18px;border-radius:24px}
+#setup.p2 #gHero .gph{display:flex;flex-direction:row;align-items:center;justify-content:space-between;width:100%}
+#setup.p2 #gHero .gpn{font-size:32px!important;-webkit-text-stroke:1.8px #111;text-shadow:0 2px 0 #111}
+#setup.p2 #gHero .gpb{flex:none;width:56px;height:56px;max-height:none;margin:-4px 0}
+#setup.p2 #gHero .gpx{display:none}
+html body #setup#setup#setup.b2.p2>.grp:has(.sect.s1){margin-top:calc(var(--u,1dvh)*1.6)!important;margin-bottom:0!important;flex:0 0 auto!important}
+html body #setup#setup#setup.b2.p2>.gobar{margin-top:auto!important;padding-top:calc(var(--u,1dvh)*2.6)}
+
+html body #setup#setup#setup.b2.p2 .opt:is(.ordopt,.knopt){grid-template-columns:1fr!important;grid-template-areas:"l" "s" "h"!important;row-gap:8px!important;column-gap:0!important;align-items:stretch!important;justify-items:stretch!important;margin:0!important}
+html body #setup#setup#setup.b2.p2 .opt:is(.ordopt,.knopt)>span{grid-area:l!important;margin:0!important;align-self:start!important}
+html body #setup#setup#setup.b2.p2 .opt:is(.ordopt,.knopt)>.seg{grid-area:s!important;width:100%!important;max-width:none!important;margin:0!important;justify-self:stretch!important}
+html body #setup#setup#setup.b2.p2 .opt:is(.ordopt,.knopt)>.ohelp{grid-area:h!important;margin:0!important;min-height:0!important}
+
 </style>
 </head>
 <body>
@@ -6629,7 +6644,7 @@ function setupPage(n,anim){if(typeof noInertia==='function')noInertia();
   if(typeof placeThumbs==='function')requestAnimationFrame(placeThumbs);
   SU.classList.remove('p1in','p2in');if(anim){void SU.offsetWidth;SU.classList.add(SU._pg>=1.5&&n>1?'p2in':'p1in');clearTimeout(SU._pt);SU._pt=setTimeout(()=>SU.classList.remove('p1in','p2in'),950)}}
 /* lf-415 : page 2 = paramètres de partie + joueurs ; tout tient sans défiler (zoom auto si besoin) */
-function fitP2(){const G=[...SU.querySelectorAll(':scope>.grp')];G.forEach(g=>g.style.zoom='');if(!(SU.classList.contains('p2')||SU.classList.contains('pp'))||!SU.offsetHeight)return;
+function fitP2(){const G=[...SU.querySelectorAll(':scope>.grp')];G.forEach(g=>g.style.zoom='');if(!SU.classList.contains('pp')||!SU.offsetHeight)return;
   const need=SU.scrollHeight,av=SU.clientHeight;if(need>av+1){const sh=SU.querySelector('.sh'),gb=SU.querySelector('.gobar'),fixed=(sh?sh.offsetHeight:0)+(gb?gb.offsetHeight:0)+24,
     cont=G.reduce((a,g)=>a+(g.offsetHeight||0),0),z=Math.max(.66,Math.min(1,1-(need-av)/Math.max(1,cont)));G.forEach(g=>{if(g.offsetHeight)g.style.zoom=z.toFixed(3)});
     for(let k=0;k<25&&SU.scrollHeight>SU.clientHeight+1;k++){const zz=Math.max(.6,(+G[0].style.zoom||1)*.988);G.forEach(g=>g.style.zoom=zz.toFixed(3))}}
@@ -7628,7 +7643,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-451';   // à changer avec VERSION dans sw.js
+const APPV='lf-452';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
