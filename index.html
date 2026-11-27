@@ -4115,6 +4115,20 @@ html body #setup#setup #gHero .gpb{height:0!important;min-height:0!important;fle
 html body #setup#setup#setup.b2:is(.pp,.p2)>.grp,html body #setup#setup#setup.b2:is(.pp,.p2)>.gobar{flex-shrink:0!important}
 html body #setup#setup#setup.b2:is(.pp,.p2){overflow-y:auto!important}
 
+/* lf-470 : jeu ouvert — tout tient à l'écran : la grande case en haut, les autres jeux en petites pastilles dessous, titre masqué, textes un peu plus compacts */
+html body #setup#setup .gpick.open .gpq{display:none!important}
+html body #setup#setup.b2.p0>#gPick.open{margin:8px 0 auto!important;gap:10px 12px!important}
+html body #setup#setup .gpick.open .gpc:not(.big){min-height:46px!important;padding:6px 10px!important}
+html body #setup#setup .gpick.open .gpc:not(.big) .gpb{width:30px!important;height:30px!important}
+html body #setup#setup .gpick.open .gpc:not(.big) .gpn{font-size:17px!important;margin:0!important}
+html body #setup#setup .gpc.big{padding:14px 16px 16px!important;gap:6px!important}
+html body #setup#setup .gpc.big .gpb{width:58px!important;height:58px!important}
+html body #setup#setup .gpc.big .gpn{font-size:40px!important;margin:0!important}
+html body #setup#setup .gpc .gpr .rgoal{font-size:17.5px!important;line-height:1.22!important}
+html body #setup#setup .gpc .rbox{padding:9px 11px 10px!important;gap:5px!important}
+html body #setup#setup .gpc .rbox .rp{font-size:13px!important;line-height:1.35!important}
+html body #setup#setup .gpgo{margin-top:4px!important;padding:10px 26px 11px!important}
+
 </style>
 </head>
 <body>
@@ -5551,7 +5565,7 @@ const GPI=(()=>{const K='#111',W='#fff',Y='#ffd23f',R='#ff4d5e',o=0,sw=3.4,
 const gpSk=(g,x)=>`<defs><filter id="gpb-${g}" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".045" numOctaves="1" seed="1"><animate attributeName="seed" values="1;4;7" dur=".75s" repeatCount="indefinite" calcMode="discrete"/></feTurbulence><feDisplacementMap in="SourceGraphic" scale="2.2"/></filter></defs><g class="gboil" filter="url(#gpb-${g})">${x}</g>`;const gpSkOld=(g,x)=>`<defs><filter id="gps-${g}" x="-20%" y="-20%" width="140%" height="140%"><feMorphology in="SourceAlpha" operator="dilate" radius="2.6" result="d"/><feFlood flood-color="#fff"/><feComposite in2="d" operator="in" result="w"/><feMerge><feMergeNode in="w"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g filter="url(#gps-${g})">${x}</g>`;
 /* lf-442 : DA bulle (couleur qui dépasse du cadre noir) ; toucher un jeu = sa case s'agrandit (règles + « On y va ») */
 let GPO=null;
-const gpCard=(g,i)=>{const P=GPK[g],big=g===GPO,R='';return`<div class="gpc${big?' big':''}${P.light?' light':''}" role="button" tabindex="0" data-g="${g}" style="--gc:${P.c};view-transition-name:gp-${g};order:${big?(i-i%2)*2-1:i*2}">`
+const gpCard=(g,i)=>{const P=GPK[g],big=g===GPO,R='';return`<div class="gpc${big?' big':''}${P.light?' light':''}" role="button" tabindex="0" data-g="${g}" style="--gc:${P.c};view-transition-name:gp-${g};order:${big?-1:i*2}">`
   +`<div class="gph"><span class="gpn">${GNAME[g]}</span><svg class="gpb" viewBox="0 0 48 48" aria-hidden="true">${gpSk(g,GPI[g])}</svg></div><span class="gpx">${P.t}</span>`
   +(big?`<div class="gpr">${R}</div><span class="gpgo" role="button">On y va !</span>`:'')+'</div>'};
 function gpRender(){gpTheme();{const c=GPK[S.game].c,SE=$('setup');SE.style.setProperty('--gc',c);SE.style.setProperty('--gc-rgb',[1,3,5].map(i=>parseInt(c.slice(i,i+2),16)).join(','));SE.classList.toggle('glight',false)}const H=$('gHero');if(H){const g=S.game,P=GPK[g];H.innerHTML=`<div class="gpc hero${P.light?' light':''}" style="--gc:${P.c}"><button class="ghb gback" aria-label="Retour"><svg viewBox="0 0 24 24"><path d="M15 5 8 12l7 7"/></svg></button><button class="ghb gset" aria-label="Réglages du menu"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.5 5.5l1.8 1.8M16.7 16.7l1.8 1.8M5.5 18.5l1.8-1.8M16.7 7.3l1.8-1.8"/></svg></button><div class="gph"><span class="gpn">${GNAME[g]}</span><svg class="gpb" viewBox="0 0 48 48" aria-hidden="true">${gpSk('h-'+g,GPI[g])}</svg></div><span class="gpx">${P.t}</span><div class="gpr"></div></div>`}
@@ -5563,7 +5577,7 @@ const gpVT=f=>{if(document.startViewTransition&&!matchMedia('(prefers-reduced-mo
 $('gHero').addEventListener('click',e=>{const b=e.target.closest('.ghb');if(!b)return;e.stopPropagation();if(b.classList.contains('gback'))$('sBack').click();else{const m=document.querySelector('#setup .sh .mnbtn');if(m)m.click()}});
 $('gPick').addEventListener('click',e=>{const b=e.target.closest('.gpc');if(!b)return;const g=b.dataset.g;haptic();SFX.ui();
   if(e.target.closest('.gpgo')){setupPage(1.5,1);return}
-  gpVT(()=>{GPO=GPO===g?null:g;if(g!==S.game&&GPO)setGame(g);else gpRender()})});
+  gpVT(()=>{GPO=GPO===g?null:g;if(g!==S.game&&GPO)setGame(g);else gpRender();SU.scrollTop=0})});
 /* glisser le doigt vers la gauche / la droite sur la page des règles : jeu suivant / précédent */
 {let sx=null,sy=0,st=0;const SU0=$('setup');
  SU0.addEventListener('touchstart',e=>{if(SU0.classList.contains('p2')||e.touches.length>1){sx=null;return}const t=e.touches[0];sx=t.clientX;sy=t.clientY;st=performance.now()},{passive:true});
@@ -7778,7 +7792,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-469';   // à changer avec VERSION dans sw.js
+const APPV='lf-470';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
