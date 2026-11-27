@@ -3792,7 +3792,7 @@ html body:is(.m2,.m3) #killer:not(.bron) #pkl .pkng,html body:is(.m2,.m3) #kille
 html body #setup.b2 #names .nslot:not(.ph),html body #setup.b2 #names .nslot:not(.ph)+.nslot{position:relative;overflow:visible!important;border-radius:99px!important;padding-left:0!important}
 html body #setup.b2 #names .nslot:not(.bot):not(.ph),html body #setup.b2 #names .nslot:not(.bot):not(.ph)+.nslot,html body #setup.b2 #names .nslot.drag:not(.bot){background:color-mix(in srgb,var(--pc,#cfc9be) var(--mn-cbg,0%),transparent)!important}
 html body #setup#setup.b2 #names .nslot:not(.ph),html body #setup#setup.b2 #names .nslot:not(.ph)+.nslot{border-radius:var(--mn-cr,99px)!important}
-html body #setup.b2 #names .nslot:not(.ph)::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 calc(var(--mn-cbw,1.75px) * var(--mn-olz,1)) var(--mn-cbc,var(--m-strong,#111));pointer-events:none;z-index:3}
+html body #setup.b2 #names .nslot:not(.ph)::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 var(--mn-cbw,1.75px) var(--mn-cbc,var(--m-strong,#111));pointer-events:none;z-index:3}
 html body #setup.b2 #names .nslot:not(.bot):not(.ph) .pname{color:var(--mn-nc,var(--pc,#111))!important;-webkit-text-stroke:var(--mn-ns,3px) var(--mn-nsc,#111);paint-order:stroke fill;opacity:1;position:relative;left:var(--mn-nx,0px);top:var(--mn-ny,0px);font-size:calc(var(--u)*2.7*var(--mn-nz,1))!important}
 html body #setup.b2 #names .nslot:not(.bot):not(.ph) .pdel{color:var(--mn-xc,var(--m-ink,#111))!important}
 html body #setup.b2 #names .pcol.ptr{position:relative;z-index:1;width:var(--mn-rz,38px)!important;height:var(--mn-rz,38px)!important;margin:0 6px 0 var(--mn-rx,5px)!important;top:var(--mn-ry,0px);display:grid;place-items:center;padding:0;flex:none;
@@ -3860,10 +3860,10 @@ html body #setup#setup.b2 #names .pcol.ptr{background:rgba(255,255,255,.22)!impo
 html body #setup#setup.b2 #names .pcol{display:none!important}
 /* lf-407 : « Ajouter un joueur » et tirage au sort = mêmes capsules que le menu (couleur du joueur, nom blanc contour noir, cadre noir) */
 html body #ppick#ppick .rchip{position:relative;background:color-mix(in srgb,var(--pc,#cfc9be) var(--mn-cbg,100%),transparent)!important;border-radius:var(--mn-cr,30px)!important;
-  box-shadow:inset 0 0 0 calc(var(--mn-cbw,2px) * var(--mn-olz,1)) var(--mn-cbc,#111)!important;color:var(--mn-nc,#fff)!important;-webkit-text-stroke:var(--mn-ns,3px) var(--mn-nsc,#111);paint-order:stroke fill;text-transform:uppercase;font-size:calc(16px*var(--mn-nz,1.2))!important;padding:.5em 1.1em!important;letter-spacing:.02em}
+  box-shadow:inset 0 0 0 var(--mn-cbw,2px) var(--mn-cbc,#111)!important;color:var(--mn-nc,#fff)!important;-webkit-text-stroke:var(--mn-ns,3px) var(--mn-nsc,#111);paint-order:stroke fill;text-transform:uppercase;font-size:calc(16px*var(--mn-nz,1.2))!important;padding:.5em 1.1em!important;letter-spacing:.02em}
 html body #ppick#ppick .rchip::before{content:none!important}
-html body #draw#draw .slot{border-radius:var(--mn-cr,30px)!important;box-shadow:inset 0 0 0 calc(var(--mn-cbw,2px) * var(--mn-olz,1)) var(--mn-cbc,#111)!important}
-html body #draw#draw .slot.lock{background:color-mix(in srgb,var(--pc,var(--accent)) var(--mn-cbg,100%),transparent)!important;box-shadow:inset 0 0 0 calc(var(--mn-cbw,2px) * var(--mn-olz,1)) var(--mn-cbc,#111)!important}
+html body #draw#draw .slot{border-radius:var(--mn-cr,30px)!important;box-shadow:inset 0 0 0 var(--mn-cbw,2px) var(--mn-cbc,#111)!important}
+html body #draw#draw .slot.lock{background:color-mix(in srgb,var(--pc,var(--accent)) var(--mn-cbg,100%),transparent)!important;box-shadow:inset 0 0 0 var(--mn-cbw,2px) var(--mn-cbc,#111)!important}
 html body #draw#draw .slot.lock span{color:var(--mn-nc,#fff)!important;-webkit-text-stroke:calc(var(--mn-ns,3px)*1.3) var(--mn-nsc,#111);paint-order:stroke fill}
 html body #draw#draw .slot.lock b{color:#fff!important;-webkit-text-stroke:2.5px #111;paint-order:stroke fill}
 #prof .prfg{display:block;margin:26px auto 4px;border:0;border-radius:99px;padding:9px 18px;background:transparent;box-shadow:inset 0 0 0 2px #c0271c;color:#c0271c;font:400 14px "Fun",sans-serif}
@@ -3871,11 +3871,12 @@ html body #draw#draw .slot.lock b{color:#fff!important;-webkit-text-stroke:2.5px
 #prof .prfgn{text-align:center;font:400 11px "Lbl","Lexend",sans-serif;opacity:.65;margin:0 0 16px}
 /* lf-409 : la bulle de couleur déborde un peu de son contour noir (DA bulle) */
 html body #setup#setup.b2 #names .nslot:not(.ph):not(.bot),html body #setup#setup.b2 #names .nslot:not(.ph):not(.bot)+.nslot{box-shadow:0 0 0 var(--mn-cbh,3.5px) color-mix(in srgb,var(--pc,#cfc9be) var(--mn-cbg,100%),transparent)!important}
-html body #ppick#ppick .rchip{box-shadow:inset 0 0 0 calc(var(--mn-cbw,2px) * var(--mn-olz,1)) var(--mn-cbc,#111),0 0 0 var(--mn-cbh,3.5px) color-mix(in srgb,var(--pc,#cfc9be) var(--mn-cbg,100%),transparent)!important}
-html body #draw#draw .slot.lock{box-shadow:inset 0 0 0 calc(var(--mn-cbw,2px) * var(--mn-olz,1)) var(--mn-cbc,#111),0 0 0 var(--mn-cbh,3.5px) color-mix(in srgb,var(--pc,var(--accent)) var(--mn-cbg,100%),transparent)!important}
+html body #ppick#ppick .rchip{box-shadow:inset 0 0 0 var(--mn-cbw,2px) var(--mn-cbc,#111),0 0 0 var(--mn-cbh,3.5px) color-mix(in srgb,var(--pc,#cfc9be) var(--mn-cbg,100%),transparent)!important}
+html body #draw#draw .slot.lock{box-shadow:inset 0 0 0 var(--mn-cbw,2px) var(--mn-cbc,#111),0 0 0 var(--mn-cbh,3.5px) color-mix(in srgb,var(--pc,var(--accent)) var(--mn-cbg,100%),transparent)!important}
 html body #ppick#ppick .rchipw{margin:4px 5px}
 #prof .prbadge{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 6px;border-radius:99px;background:var(--accent,#ff5a1f);color:#fff;font:400 12px "Fun",sans-serif;font-style:normal;vertical-align:2px}
 /* lf-417 : 3 pages — 1. le jeu (démos à faire glisser + règles) · 2. paramètres (avec explications) · 3. joueurs */
+html body #setup#setup.b2.p2>.grp:has(.sect.s2){display:none!important}
 html body #setup#setup.b2.pp :is(.seg.gamepick,#segBar,.gill,#gRules){display:none!important}
 html body #setup#setup.b2.pp>.grp:has(.sect.s2){margin-top:calc(var(--u)*1.5)!important;margin-bottom:auto!important}
 html body #setup#setup.b2:is(.p2,.pp) .gill{display:none!important}
@@ -3898,7 +3899,7 @@ html body #setup#setup.b2>.gobar{margin-top:auto!important}
 #prof .mcs div{display:flex;flex-direction:column;align-items:center;gap:1px}#prof .mcs .rkl{font-size:22px}#prof .mcs span{font:400 9px "Lbl","Lexend",sans-serif;opacity:.8}
 #prof .mcg2{position:absolute;left:0;right:0;top:172px;text-align:center;font:400 10px "Lbl","Lexend",sans-serif;opacity:.75}
 /* lf-422 : bulles des options secondaires en gris très foncé — seul le choix du jeu (en haut) reste à la couleur de l'appli */
-html body #setup#setup.b2 .opt .seg .thumb{background:var(--gc,#4b4b4b)!important;background-image:none!important;box-shadow:0 0 0 calc(var(--u)*1.7) var(--gc,#4b4b4b),0 6px 14px rgba(0,0,0,.22)!important}
+html body #setup#setup.b2 .opt .seg .thumb{background:#4b4b4b!important;background-image:none!important;box-shadow:0 0 0 calc(var(--u)*1.7) #4b4b4b,0 6px 14px rgba(0,0,0,.22)!important}
 html.night body #setup#setup.b2 .opt .seg .thumb,html[data-th=dark] body #setup#setup.b2 .opt .seg .thumb{background:#4a4a4a!important;box-shadow:0 0 0 calc(var(--u)*1.7) #4a4a4a,0 6px 14px rgba(0,0,0,.35)!important}
 /* lf-423 : explication juste sous le titre du paramètre ; les paramètres sont calés en bas, toujours au même écart du bouton du bas */
 #setup .opt .ohelp{margin:6px 2px 0!important}
@@ -3912,223 +3913,6 @@ html body #setup#setup.b2 .grp:has(.sect.s2)>.sect,html body #setup#setup.b2 .gr
 html body #setup#setup #go :is(em,.ga){font-size:calc(var(--u)*2.55)!important}
 /* lf-425 : dans les options, la couleur de l'appli devient le gris foncé — plus aucun orange pendant les clics et animations */
 html body #setup#setup.b2 .opt{--accent:#4b4b4b;--acc-rgb:75,75,75;--accimg:none}
-/* lf-440 : pages 0 (jeux) et 1 (règles) */
-#gPick,#gHero{display:none}
-html body #setup#setup.b2.p0>:not(.sh):not(#gPick):not(.gghost){display:none!important}
-html body #setup#setup.b2.p0>#gPick{display:grid!important;grid-template-columns:1fr 1fr;gap:16px 14px;margin:auto 0;padding:4px 2px 10px}
-html body #setup#setup.b2.p1 :is(.seg.gamepick,#segBar,.gill){display:none!important}
-html body #setup#setup.b2.p1>.grp{display:none!important}
-html body #setup#setup.b2:is(.pp,.p2)>#gHero{display:flex!important;flex:1 1 auto;min-height:0;margin:calc(var(--u,1dvh)*1.6) 4px 18px}
-html body #setup#setup.b2:is(.pp,.p2)>.grp{margin-top:0!important}
-html body #setup#setup.b2.p1>#gRules{display:block!important;margin:8px 2px auto!important;width:auto!important;max-width:none!important;padding-right:0!important}
-html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRules .rgoal,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRules .rgoal *{font-size:23px!important;line-height:1.25!important}html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRules .rgoal{display:block!important;margin-bottom:14px!important}
-html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRules .rp,html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRules .rp *{font-size:17px!important;line-height:1.45!important}html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRules .rp{display:block!important;position:relative;padding-left:18px;margin:0 0 12px!important;opacity:.85}
-html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRules :is(.rp,.rgoal) *{display:inline!important;white-space:normal!important}html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRules :is(.rp,.rgoal){text-wrap:wrap!important}
-html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup.p1 #gRules .rp::before{content:'';position:absolute;left:0;top:.55em;width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 2px #111}
-#setup .gpq{order:-9;grid-column:1/-1;margin:0 0 2px;text-align:center;font:400 27px/1.1 "Fun",sans-serif;color:var(--m-ink,#111)}
-#setup .gpc{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;width:100%;min-width:0;aspect-ratio:1/.9;padding:10px 8px 12px;border-radius:24px;
-  background:var(--gc);box-shadow:inset 0 0 0 2.5px #111,0 0 0 4px var(--gc);color:#fff;cursor:pointer;text-align:center;-webkit-tap-highlight-color:transparent}
-#setup .gpc:active:not(.big){transform:scale(.96)}
-#setup .gph{display:flex;flex-direction:column;align-items:center;gap:4px}
-#setup .gpb{width:min(19vw,80px);height:min(19vw,80px);overflow:visible;flex:none}
-#setup .gpn{margin-bottom:4px;font:400 23px/1 "Fun",sans-serif;color:#fff;-webkit-text-stroke:1.4px #111;paint-order:stroke fill;text-shadow:0 2px 0 #111}
-#setup .gpx{font:750 12px/1.2 "UI",sans-serif;color:#fff;opacity:.95}
-/* un jeu ouvert : sa case prend toute la largeur, les autres se font petites */
-#setup .gpick.open{grid-auto-flow:row}
-#setup .gpick.open .gpc:not(.big){aspect-ratio:auto;flex-direction:row;justify-content:flex-start;padding:10px 12px;min-height:60px}
-#setup .gpick.open .gpc:not(.big) .gph{flex-direction:row;gap:9px}
-#setup .gpick.open .gpc:not(.big) .gpb{width:34px;height:34px}
-#setup .gpick.open .gpc:not(.big) .gpn{font-size:18px}
-#setup .gpick.open .gpc:not(.big) .gpx{display:none}
-#setup .gpc.big{grid-column:1/-1;aspect-ratio:auto;align-items:stretch;justify-content:flex-start;gap:8px;padding:16px 18px 18px;text-align:left;cursor:default}
-#setup .gpc.big .gph{flex-direction:row;justify-content:space-between;align-items:center;gap:12px;margin:-2px 0 2px}
-#setup .gpc.big .gpb{width:74px;height:74px}
-#setup .gpc.big .gpn{font-size:46px;-webkit-text-stroke:2px #111;text-shadow:0 3px 0 #111;letter-spacing:.01em}
-#setup .gpc.big .gpx{display:none}
-#setup .gpr{display:flex;flex-direction:column;gap:6px;color:#fff}
-#setup .gpr .rgoal{display:block;font-size:18px;line-height:1.25;-webkit-text-stroke:.6px #111;paint-order:stroke fill}
-#setup .gpr .rgoal i{display:none}
-#setup .gpr .rp{display:block;position:relative;padding-left:16px;font-size:14px;line-height:1.4}
-#setup .gpr .rp::before{content:"";position:absolute;left:1px;top:.5em;width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px #111}
-#setup .gpr b{color:#fff;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:2px}
-#setup .gpgo{align-self:center;margin-top:6px;padding:12px 30px 13px;border-radius:99px;background:#fff;color:#111;box-shadow:inset 0 0 0 2.5px #111,0 0 0 4px #fff;font:400 21px/1 "Fun",sans-serif;cursor:pointer}
-#setup .gpgo::after{content:" →"}
-#setup .gpgo:active{transform:scale(.95)}
-::view-transition-group(*){animation-duration:.32s;animation-timing-function:cubic-bezier(.3,1.25,.5,1)}
-/* lf-450 : la case du jeu remplit la place libre (options : nom, grand dessin, règles ; joueurs : nom + dessin, elle rétrécit quand on ajoute des joueurs) */
-#gHero .gpc.hero{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;aspect-ratio:auto;padding:16px 20px 18px;border-radius:28px;text-align:center;cursor:default;overflow:hidden}
-#gHero .gpc.hero:active{transform:none}
-#gHero .gph{display:contents}
-#gHero .gpn{font-size:44px;margin:0;-webkit-text-stroke:2px #111;text-shadow:0 3px 0 #111}
-#gHero .gpb{flex:1 1 0;min-height:34px;max-height:170px;width:100%;margin:2px 0}
-#gHero .gpx{font-size:15px}
-#gHero .gpr{align-self:stretch;text-align:left;max-width:100%}
-#gHero .gpr{display:none!important}
-#setup.p2 #gHero .gpn{font-size:34px}
-#setup.p2 #gHero .gpb{max-height:110px}
-html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup :is(.gpq,.gpgo){font-family:"Fun",sans-serif!important;font-weight:400!important}html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .gpc .gpn{font-family:var(--gf,"Fun"),"Fun",sans-serif!important;font-weight:400!important}
-html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .gpc .gpx{font-family:"UI",sans-serif!important;font-weight:750!important}
-
-/* lf-449 : options et joueurs à nouveau sur deux pages */
-html body #setup#setup.b2.p2>.grp:has(.sect.s2){display:none!important}
-
-/* lf-452 : page joueurs — on accepte le défilement ; tout à sa taille naturelle, de haut en bas */
-html body #setup#setup#setup.b2.p2>#gHero{flex:0 0 auto!important;margin:calc(var(--u,1dvh)*1.4) 4px 6px!important}
-#setup.p2 #gHero .gpc.hero{flex:0 0 auto;flex-direction:row;justify-content:space-between;gap:12px;padding:12px 18px;border-radius:24px}
-#setup.p2 #gHero .gph{display:flex;flex-direction:row;align-items:center;justify-content:space-between;width:100%}
-#setup.p2 #gHero .gpn{font-size:32px!important;-webkit-text-stroke:1.8px #111;text-shadow:0 2px 0 #111}
-#setup.p2 #gHero .gpb{flex:none;width:56px;height:56px;max-height:none;margin:-4px 0}
-#setup.p2 #gHero .gpx{display:none}
-html body #setup#setup#setup.b2.p2>.grp:has(.sect.s1){margin-top:calc(var(--u,1dvh)*1.6)!important;margin-bottom:0!important;flex:0 0 auto!important}
-html body #setup#setup#setup.b2.p2>.gobar{margin-top:auto!important;padding-top:calc(var(--u,1dvh)*2.6)}
-
-html body #setup#setup#setup.b2.p2 .opt:is(.ordopt,.knopt){grid-template-columns:1fr!important;grid-template-areas:"l" "s" "h"!important;row-gap:8px!important;column-gap:0!important;align-items:stretch!important;justify-items:stretch!important;margin:0!important}
-html body #setup#setup#setup.b2.p2 .opt:is(.ordopt,.knopt)>span{grid-area:l!important;margin:0!important;align-self:start!important}
-html body #setup#setup#setup.b2.p2 .opt:is(.ordopt,.knopt)>.seg{grid-area:s!important;width:100%!important;max-width:none!important;margin:0!important;justify-self:stretch!important}
-html body #setup#setup#setup.b2.p2 .opt:is(.ordopt,.knopt)>.ohelp{grid-area:h!important;margin:0!important;min-height:0!important}
-
-/* lf-453 : réglages et bouton du bas aux couleurs du jeu choisi ; en-tête sans le nom du jeu en double */
-html body #setup#setup.b2:is(.pp,.p2),html body #setup#setup.b2:is(.pp,.p2) .opt,html body #setup#setup.b2:is(.pp,.p2) .gobar{--accent:var(--gc)!important;--acc-rgb:var(--gc-rgb)!important;--accimg:none!important}
-html body #setup#setup.b2:is(.pp,.p2) .sh h1 .gtag{display:none!important}
-
-/* jaune (501) : texte foncé là où le blanc ne se lit pas */
-#setup .gpc.light .gpx,#setup .gpc.light .gpr{color:#111!important;opacity:.85}
-#setup .gpc.light .gpr .rp::before{background:#111;box-shadow:0 0 0 2px #fff}
-html body #setup#setup.b2.glight .opt .seg button.sel,html body #setup#setup.b2.glight .opt .seg button.on{color:#111!important;-webkit-text-stroke:0!important;text-shadow:none!important}
-html body #setup#setup.b2.glight:is(.pp,.p2) #go .ga{color:#111!important;-webkit-text-stroke:0!important;text-shadow:none!important}
-
-/* lf-454 : accueil — typo ronde de l'affiche (Baloo) et ses proportions : emblème plus petit, grand titre, sous-titre espacé */
-html body #home#home.simple .board.lmark{width:min(48vw,27dvh)!important}
-html body #home#home#home#home#home#home#home#home#home#home .ht{font-family:"FunL",sans-serif!important;font-weight:400!important;font-size:min(17.5vw,8.6dvh)!important;line-height:.9!important;letter-spacing:.005em!important;margin-top:min(9vw,5dvh)!important}
-html body #home#home#home#home#home#home#home#home#home#home .hs{font-family:"FunL",sans-serif!important;font-weight:400!important;font-size:min(4.3vw,2.1dvh)!important;letter-spacing:.17em!important;text-transform:uppercase!important;margin-top:min(1vw,.5dvh)!important}
-
-/* lf-454 : en-tête = la case du jeu (couleur du jeu) avec retour et réglages dedans */
-html body #setup#setup.b2:is(.pp,.p2)>.sh{display:none!important}
-#gHero .gpc.hero{position:relative}
-#gHero .ghb{position:absolute;top:12px;z-index:2;width:42px;height:42px;padding:0;border:0;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 2.5px #111;display:flex;align-items:center;justify-content:center;cursor:pointer}
-#gHero .ghb svg{width:22px;height:22px;fill:none;stroke:#111;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
-#gHero .ghb:active{transform:scale(.92)}
-#gHero .gback{left:12px}#gHero .gset{right:12px}
-#setup.pp #gHero .gpn{margin-top:22px!important}
-#setup.p2 #gHero .gpc.hero{padding-left:66px;padding-right:66px}
-#setup.p2 #gHero .ghb{top:50%;margin-top:-21px}
-
-/* lf-454 : cases des jeux pilotées par le panneau de réglages (valeurs par défaut = rendu actuel) */
-html body #setup#setup#setup.b2.p0>#gPick{gap:var(--mn-jgap,14px)!important}
-#setup .gpick .gpc{border-radius:var(--mn-jr,24px);box-shadow:inset 0 0 0 calc(var(--mn-jbw,2.5px) * var(--mn-olz,1)) #111,0 0 0 var(--mn-jbh,4px) var(--gc),0 var(--mn-jsh,0px) 0 var(--mn-jbh,4px) #111;aspect-ratio:1/var(--mn-jh,.9)}
-#setup .gpick .gpc:not(.big):nth-of-type(odd){--tlt:calc(var(--mn-jtl,0) * -1deg);rotate:var(--tlt)}#setup .gpick .gpc:not(.big):nth-of-type(even){--tlt:calc(var(--mn-jtl,0) * 1deg);rotate:var(--tlt)}
-#setup .gpick .gpb{width:calc(min(19vw,80px) * var(--mn-jiz,1));height:calc(min(19vw,80px) * var(--mn-jiz,1))}
-#setup .gpick .gpn{font-size:calc(23px * var(--mn-jnz,1));-webkit-text-stroke-width:var(--mn-jns,1.4px)}
-#setup .gpick .gpx{font-size:calc(12px * var(--mn-jtz,1))}
-#setup .gpick .gpq{font-size:calc(27px * var(--mn-jqz,1))}
-#setup .gpick.open .gpc:not(.big),#setup .gpick .gpc.big{aspect-ratio:auto}
-
-/* lf-455 : typo noire sur les cases de jeux claires */
-html body #setup .gpc .gpn,html body #setup .gpc.big .gpn,html body #setup #gHero .gpn{color:#111!important;-webkit-text-stroke:0!important;text-shadow:none!important}
-html body #setup .gpc .gpx,html body #setup .gpc .gpr{color:#111!important;opacity:.8}
-html body #setup .gpc .gpr .rgoal{-webkit-text-stroke:0!important}
-html body #setup .gpc .gpr .rp::before{background:#111!important;box-shadow:0 0 0 2px #fff!important}
-html body #setup .gpc .gpr b{color:#111!important}
-
-/* lf-456 : un réglage pour tous les contours noirs des menus (facteur --mn-olz) */
-html body #setup#setup.b2 .seg.gamepick::after,html body #setup#setup.b2 .opt .seg.mini::after,html body #setup#setup.b2 #go::after{border-width:calc(2px * var(--mn-olz,1))!important;inset:calc(-2px * var(--mn-olz,1))!important}
-html body #setup#setup .circ{border-width:calc(2px * var(--mn-olz,1))!important}
-html body #setup#setup #gHero .gpc.hero{box-shadow:inset 0 0 0 calc(2.5px * var(--mn-olz,1)) #111,0 0 0 4px var(--gc)!important}
-html body #setup#setup #gHero .ghb{box-shadow:inset 0 0 0 calc(2.5px * var(--mn-olz,1)) #111!important}
-html body #setup#setup .gpgo{box-shadow:inset 0 0 0 calc(2.5px * var(--mn-olz,1)) #111,0 0 0 4px #fff!important}
-
-/* lf-457 : animations — traits qui bouillonnent et aplats qui respirent dans les dessins, cases de jeux qui flottent, bulles des réglages qui bougent */
-@keyframes gpFl{0%,100%{transform:translate(0,0)}25%{transform:translate(1.8px,-1.2px)}50%{transform:translate(-1.2px,1.8px)}75%{transform:translate(-1.8px,-1.4px)}}
-@keyframes gpFloat{0%,100%{translate:0 0;rotate:var(--tlt,0deg);scale:1}25%{translate:2.5px -4px;rotate:calc(var(--tlt,0deg) + .9deg);scale:1.015}50%{translate:-1px -6px;rotate:calc(var(--tlt,0deg) - .7deg);scale:1.005}75%{translate:-2.5px -2px;rotate:calc(var(--tlt,0deg) + .5deg);scale:1.02}}
-@keyframes gpWob{0%,100%{scale:1}50%{scale:1.05}}
-@media (prefers-reduced-motion:no-preference){
- html:not(.noanim) #setup .gpb .gfl{animation:gpFl 2.6s ease-in-out infinite}
- html:not(.noanim) #setup .gpick .gpc:not(.big){animation:gpFloat 3.4s ease-in-out infinite}
- html:not(.noanim) #setup .gpick .gpc:nth-of-type(2){animation-delay:-.6s}html:not(.noanim) #setup .gpick .gpc:nth-of-type(3){animation-delay:-1.3s}
- html:not(.noanim) #setup .gpick .gpc:nth-of-type(4){animation-delay:-2s}html:not(.noanim) #setup .gpick .gpc:nth-of-type(5){animation-delay:-2.6s}html:not(.noanim) #setup .gpick .gpc:nth-of-type(6){animation-delay:-.3s}
- html:not(.noanim) #setup .seg .thumb,html:not(.noanim) #setup #go .gth{animation:gpWob 2.8s ease-in-out infinite}
-}
-html.noanim #setup .gboil{filter:none}
-
-/* lf-458 : textes blancs dans les switchs, noms des jeux blancs à contour noir, « le but » en blanc, explication dans un encadré blanc */
-html body #setup#setup .gpc .gpn{color:#fff!important;-webkit-text-stroke:var(--mn-jns,1.4px) #111!important;paint-order:stroke fill;text-shadow:0 var(--mn-jnsh,2px) 0 #111!important}
-html body #setup#setup .gpc.big .gpn,html body #setup#setup #gHero .gpn{-webkit-text-stroke:var(--mn-jbns,2px) #111!important;text-shadow:0 var(--mn-jbnsh,3px) 0 #111!important}
-html body #setup#setup .gpc .gpx{color:#fff!important;opacity:1!important;-webkit-text-stroke:.7px #111;paint-order:stroke fill;text-shadow:0 1px 0 #111}
-html body #setup#setup .gpc .gpr{color:#111!important;opacity:1!important;gap:10px}
-html body #setup#setup .gpc .gpr .rgoal{color:#fff!important;font-size:20px;-webkit-text-stroke:1.2px #111!important;paint-order:stroke fill;text-shadow:0 2px 0 #111}
-html body #setup#setup .gpc .gpr .rgoal b{color:#fff!important;text-decoration:none}
-html body #setup#setup .gpc .rbox{display:flex;flex-direction:column;gap:6px;padding:11px 13px 12px;border-radius:16px;background:#fff;color:#111;box-shadow:inset 0 0 0 calc(2.5px * var(--mn-olz,1)) #111}
-html body #setup#setup .gpc .rbox .rp{color:#111!important;opacity:1!important}
-html body #setup#setup .gpc .rbox .rp::before{background:var(--gc)!important;box-shadow:0 0 0 2px #111!important}
-html body #setup#setup .gpc .rbox b{color:#111!important;text-decoration:none!important}
-
-/* lf-459 : « On y va ! » — contour blanc, texte blanc, sans fond */
-html body #setup#setup .gpgo{background:transparent!important;color:#fff!important;box-shadow:inset 0 0 0 calc(2.5px * var(--mn-olz,1)) #fff!important;-webkit-text-stroke:1px #111;paint-order:stroke fill;text-shadow:0 2px 0 #111}
-
-/* lf-460 : case ouverte — dessin collé au nom, but et explication rapprochés */
-html body #setup#setup .gpc.big .gph{justify-content:flex-start!important;gap:10px!important}
-html body #setup#setup.p2 #gHero .gph{justify-content:flex-start!important;gap:10px!important}
-html body #setup#setup .gpc .gpr{gap:5px!important}
-html body #setup#setup .gpc.big{gap:6px!important}
-
-/* lf-462 : fonds des dessins plus grands (réglable), animations plus marquées */
-#setup .gpb .gfl>path{transform-box:fill-box;transform-origin:center;scale:var(--mn-jfz,1.12)}
-
-/* lf-463 : petites cases et grande case — dessin à gauche du nom */
-html body #setup#setup .gpick.open .gpc .gpb,html body #setup#setup .gpc.big .gpb,html body #setup#setup.p2 #gHero .gpb{order:-1}
-
-/* lf-464 : mouvements sur plusieurs axes, rythmes et sens différents ; fonds des dessins centrés (débord régulier, plus d'effet d'ombre) */
-@media (prefers-reduced-motion:no-preference){
- html:not(.noanim) #setup .gpick .gpc:nth-of-type(1){animation-duration:4.2s}html:not(.noanim) #setup .gpick .gpc:nth-of-type(2){animation-duration:3.6s;animation-direction:reverse}
- html:not(.noanim) #setup .gpick .gpc:nth-of-type(3){animation-duration:4.8s}html:not(.noanim) #setup .gpick .gpc:nth-of-type(4){animation-duration:3.9s;animation-direction:reverse}
- html:not(.noanim) #setup .gpick .gpc:nth-of-type(5){animation-duration:4.5s;animation-direction:reverse}html:not(.noanim) #setup .gpick .gpc:nth-of-type(6){animation-duration:3.3s}
- html:not(.noanim) #setup .gpick .gpc:nth-of-type(even) .gfl{animation-direction:reverse;animation-duration:3.1s}html:not(.noanim) #setup .gpick .gpc:nth-of-type(3n) .gfl{animation-duration:2.3s}
- html:not(.noanim) #setup .opt:nth-child(odd) .seg .thumb{animation-duration:3.4s;animation-direction:reverse}html:not(.noanim) #setup .opt:nth-child(3n) .seg .thumb{animation-duration:2.4s}
- html:not(.noanim) #setup #go .gth{animation-duration:3.7s}
-}
-
-
-/* lf-468 : entête du jeu (page options ET page joueurs) — prend la place libre, entièrement réglable */
-html body #setup#setup#setup.b2:is(.pp,.p2)>#gHero{display:flex!important;flex:0 0 auto!important;min-height:0!important;margin:var(--mn-hmt,10px) 4px var(--mn-hmb,18px)!important}
-html body #setup#setup #gHero .gpc.hero{flex:1 1 auto!important;flex-direction:column!important;justify-content:center!important;align-items:center!important;gap:6px!important;
-  padding:var(--mn-hpad,16px)!important;border-radius:var(--mn-hr,28px)!important;box-shadow:inset 0 0 0 calc(2.5px * var(--mn-olz,1)) #111,0 0 0 var(--mn-hjb,4px) var(--gc)!important}
-html body #setup#setup #gHero .gph{display:contents!important}
-html body #setup#setup #gHero .gpn{order:0!important;font-size:calc(44px * var(--mn-hnz,1))!important;margin:calc(14px * var(--mn-hbz,1)) 0 0!important}
-html body #setup#setup #gHero .gpb{order:1!important;flex:1 1 0!important;min-height:0!important;max-height:calc(170px * var(--mn-hiz,1))!important;width:100%!important;height:auto!important;margin:0!important}
-html body #setup#setup #gHero .gpx{order:2!important;display:block!important;font-size:calc(15px * var(--mn-htz,1))!important}
-html body #setup#setup #gHero .ghb{top:calc(var(--mn-hpad,16px) - 4px)!important;margin:0!important;width:calc(42px * var(--mn-hbz,1))!important;height:calc(42px * var(--mn-hbz,1))!important}
-html body #setup#setup #gHero .gback{left:calc(var(--mn-hpad,16px) - 4px)!important}html body #setup#setup #gHero .gset{right:calc(var(--mn-hpad,16px) - 4px)!important}
-html body #setup#setup.p2 #gHero .gpc.hero{padding:var(--mn-hpad,16px)!important}
-/* réglages : écarts réglables (pages options et joueurs) */
-html body #setup#setup#setup.b2:is(.pp,.p2) .sect{row-gap:var(--mn-ogap,19px)!important}
-html body #setup#setup#setup.b2:is(.pp,.p2) .opt{row-gap:0!important}
-html body #setup#setup#setup.b2:is(.pp,.p2) .opt>span{margin-bottom:var(--mn-olg,8px)!important}
-html body #setup#setup#setup.b2:is(.pp,.p2) .opt>.ohelp{margin-top:var(--mn-ohg,8px)!important}
-html body #setup#setup#setup.b2:is(.pp,.p2)>.gobar{margin-top:var(--mn-obot,30px)!important;padding-top:0!important}
-html body #setup#setup#setup.b2:is(.pp,.p2)>.grp{margin-top:0!important;margin-bottom:0!important}
-
-/* lf-469 : Safari — l'entête ne doit jamais pousser les réglages hors de l'écran (le dessin ne réclame plus de hauteur, la page défile si besoin) */
-html body #setup#setup#setup.b2:is(.pp,.p2)>#gHero{overflow:hidden!important;height:var(--ghh,auto);padding:6px!important;margin:calc(var(--mn-hmt,10px) - 6px) -2px calc(var(--mn-hmb,18px) - 6px)!important}
-html body #setup#setup#setup#setup.b2:is(.pp,.p2)>.grp{margin-top:auto!important}
-html body #setup#setup #gHero .gpc.hero{min-height:0!important;height:auto!important}
-html body #setup#setup #gHero .gpb{height:0!important;min-height:0!important;flex:1 1 0!important}
-html body #setup#setup#setup.b2:is(.pp,.p2)>.grp,html body #setup#setup#setup.b2:is(.pp,.p2)>.gobar{flex-shrink:0!important}
-html body #setup#setup#setup.b2:is(.pp,.p2){overflow-y:auto!important}
-
-/* lf-470 : jeu ouvert — tout tient à l'écran : la grande case en haut, les autres jeux en petites pastilles dessous, titre masqué, textes un peu plus compacts */
-html body #setup#setup .gpick.open .gpq{display:none!important}
-html body #setup#setup.b2.p0>#gPick.open{margin:8px 0 auto!important;gap:10px 12px!important}
-html body #setup#setup .gpick.open .gpc:not(.big){min-height:46px!important;padding:6px 10px!important}
-html body #setup#setup .gpick.open .gpc:not(.big) .gpb{width:30px!important;height:30px!important}
-html body #setup#setup .gpick.open .gpc:not(.big) .gpn{font-size:17px!important;margin:0!important}
-html body #setup#setup .gpc.big{padding:14px 16px 16px!important;gap:6px!important}
-html body #setup#setup .gpc.big .gpb{width:58px!important;height:58px!important}
-html body #setup#setup .gpc.big .gpn{font-size:40px!important;margin:0!important}
-html body #setup#setup .gpc .gpr .rgoal{font-size:17.5px!important;line-height:1.22!important}
-html body #setup#setup .gpc .rbox{padding:9px 11px 10px!important;gap:5px!important}
-html body #setup#setup .gpc .rbox .rp{font-size:13px!important;line-height:1.35!important}
-html body #setup#setup .gpgo{margin-top:4px!important;padding:10px 26px 11px!important}
-
 </style>
 </head>
 <body>
@@ -4166,8 +3950,6 @@ html body #setup#setup .gpgo{margin-top:4px!important;padding:10px 26px 11px!imp
 
   <div class="seg gamepick" id="segGame"><button data-v="cricket">Cricket</button><button data-v="x01">501</button><button data-v="bar">Mini jeux</button></div>
   <div class="seg gamepick barpick" id="segBar"><button data-v="killer">Killer</button><button data-v="clock">L'horloge</button><button data-v="shanghai">Shanghai</button><button data-v="halveit">Halve-it</button></div>
-  <div id="gPick" class="gpick"></div>
-  <div id="gHero" class="ghero"></div>
   <p id="gRules" class="grules"></p>
 
   <div class="grp">
@@ -4205,6 +3987,7 @@ html body #setup#setup .gpgo{margin-top:4px!important;padding:10px 26px 11px!imp
       <div class="opt clo"><span>Joueur rejoue</span><div class="seg mini" data-k="clkr"><button data-v="0">Non</button><button data-v="2">MPR ≥ 2</button><button data-v="3">MPR ≥ 3</button></div></div>
       <div class="opt clo"><span>Arrivée</span><div class="seg mini" data-k="clkb"><button data-v="0">Le 20</button><button data-v="1">La Bulle</button></div></div>
       <div class="opt hio"><span>Cibles</span><div class="seg mini" id="segHiSeq"><button data-v="0" id="hiSeqC">Classique</button><button data-v="1" id="hiSeqB">Perso</button></div></div>
+      <div class="opt hio"><span>Fléchettes</span><div class="seg mini" data-k="hid"><button data-v="3">3</button><button data-v="4">4</button><button data-v="5">5</button></div></div>
       <div class="opt hio"><span>Pénalité ÷ 2</span><div class="seg mini yn" data-k="hip"><button data-v="1">Oui</button><button data-v="0">Non</button></div></div>
       <div class="opt kl"><span>Vies</span><div class="seg mini" id="segLives"><button data-v="3">3</button><button data-v="4">4</button><button data-v="5">5</button></div></div>
       <div class="kpair kl"><div class="opt kl"><span>Tuer = +1 ♥</span><div class="seg mini yn" data-k="kbonus"><button data-v="1">Oui</button><button data-v="0">Non</button></div></div>
@@ -5534,61 +5317,6 @@ function setGame(v){if(v==='bar')v=BARG.includes(S.game)?S.game:(S.lastBar||'kil
   const g=document.querySelector('#setup .grp:has(.sect.s2)');if(g){g.classList.remove('gslideL','gslideR');void g.offsetWidth;g.classList.add(d>0?'gslideL':'gslideR')}}
 $('segGame').addEventListener('click',e=>{const v=e.target.dataset.v;if(v)setGame(v)});
 $('segBar').addEventListener('click',e=>{const v=e.target.dataset.v;if(v){haptic();SFX.ui();setGame(v)}});
-
-
-/* lf-451 : on joue toujours 3 fléchettes par tour (Halve-it compris) */
-S.hid=3;
-/* lf-440 : choix du jeu en cases façon Killer (dessin + petite info) → page des règles → page des paramètres → joueurs */
-/* lf-455 : couleurs claires (palette élargie à partir d'Azure Skies / Vibrant Fusion), texte noir partout */
-/* lf-457 : trois thèmes (panneau ⚙︎ « Couleurs des jeux ») — Vif (par défaut, couleurs franches), Fluo, Pastel ; texte noir partout */
-const GPT={Vif:{cricket:'#4f7cff',x01:'#ef4b4b',killer:'#ffc83d',clock:'#9b72f2',shanghai:'#ff8a3d',halveit:'#2fbf8f'},
-  Fluo:{cricket:'#29e3ff',x01:'#ff3f86',killer:'#fff03a',clock:'#c062ff',shanghai:'#ff8f1f',halveit:'#3dff8b'},
-  Pastel:{cricket:'#9db7fa',x01:'#ee8f86',killer:'#f5cb5c',clock:'#c7b5ee',shanghai:'#f6b87e',halveit:'#93cbb9'}};
-function gpTheme(){const t=GPT[(S.mnu&&S.mnu.gth)||'Vif']||GPT.Vif;for(const g in GPK)GPK[g].c=t[g]}
-const GPK={cricket:{c:'#9db7fa',t:'Ferme le 15 au 20',light:1},x01:{c:'#f5cb5c',t:'Descends pile à zéro',light:1},killer:{c:'#ee8f86',t:'Le dernier en vie gagne',light:1},
-  clock:{c:'#c7b5ee',t:'Fais le tour de la cible',light:1},shanghai:{c:'#f6b87e',t:'Un numéro par tour',light:1},halveit:{c:'#93cbb9',t:'Rate et tu perds la moitié',light:1}};
-/* lf-448 : illustrations « sticker » — trait gras, aplat décalé qui dépasse du contour, couleurs vives, liseré blanc autour */
-const GPI=(()=>{const K='#111',W='#fff',Y='#ffd23f',R='#ff4d5e',o=0,sw=3.4,
-  B=(d,f=W)=>`<g class="gfl"><path d="${d}" fill="${f}" transform="translate(${o} ${o})"/></g><path d="${d}" fill="none" stroke="${K}" style="stroke-width:calc(${sw}px * var(--mn-jis,1))" stroke-linejoin="round" stroke-linecap="round"/>`,
-  L=(d,w=sw)=>`<path d="${d}" fill="none" stroke="${K}" style="stroke-width:calc(${w}px * var(--mn-jis,1))" stroke-linejoin="round" stroke-linecap="round"/>`,
-  C=(cx,cy,r)=>`M${cx-r} ${cy}a${r} ${r} 0 1 0 ${2*r} 0a${r} ${r} 0 1 0 ${-2*r} 0z`,
-  RR=(x,y,w,h,r)=>`M${x+r} ${y}h${w-2*r}a${r} ${r} 0 0 1 ${r} ${r}v${h-2*r}a${r} ${r} 0 0 1 ${-r} ${r}h${-(w-2*r)}a${r} ${r} 0 0 1 ${-r} ${-r}v${-(h-2*r)}a${r} ${r} 0 0 1 ${r} ${-r}z`,
-  T=(x,y,t,z)=>`<text x="${x}" y="${y}" text-anchor="middle" style="font:400 ${z}px Fun,sans-serif!important" fill="${K}">${t}</text>`,
-  heart='M24 41L8.5 26a9 9 0 0 1 15.5-9.5A9 9 0 0 1 39.5 26z';
-  return{
-   cricket:B(C(24,24,17))+L('M15 15l18 18M33 15L15 33',5),
-   x01:B('M8 36l20-20 5 5-20 20z')+B('M27 17l3-12 13 13-12 3z',Y)+L('M9 40l-5 5',4),
-   killer:B(heart,R)+'<path d="M17 21a5 5 0 0 1 5-4" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round"/>',
-   clock:B(C(24,24,18))+L('M24 24V12M24 24l8 5',3.6)+`<circle cx="24" cy="24" r="3" fill="${K}"/>`,
-   shanghai:B(RR(3,12,13,26,4))+B(RR(17.5,12,13,26,4),'#ff9d4d')+B(RR(32,12,13,26,4),Y)+T(9.5,31,'S',13)+T(24,31,'D',13)+T(38.5,31,'T',13),
-   halveit:B('M22 6a18 18 0 0 0 0 36z',Y)+B('M27 6a18 18 0 0 1 0 36z')}})();
-const gpSk=(g,x)=>`<defs><filter id="gpb-${g}" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".045" numOctaves="1" seed="1"><animate attributeName="seed" values="1;4;7" dur=".75s" repeatCount="indefinite" calcMode="discrete"/></feTurbulence><feDisplacementMap in="SourceGraphic" scale="2.2"/></filter></defs><g class="gboil" filter="url(#gpb-${g})">${x}</g>`;const gpSkOld=(g,x)=>`<defs><filter id="gps-${g}" x="-20%" y="-20%" width="140%" height="140%"><feMorphology in="SourceAlpha" operator="dilate" radius="2.6" result="d"/><feFlood flood-color="#fff"/><feComposite in2="d" operator="in" result="w"/><feMerge><feMergeNode in="w"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g filter="url(#gps-${g})">${x}</g>`;
-/* lf-442 : DA bulle (couleur qui dépasse du cadre noir) ; toucher un jeu = sa case s'agrandit (règles + « On y va ») */
-let GPO=null;
-const gpCard=(g,i)=>{const P=GPK[g],big=g===GPO,R='';return`<div class="gpc${big?' big':''}${P.light?' light':''}" role="button" tabindex="0" data-g="${g}" style="--gc:${P.c};view-transition-name:gp-${g};order:${big?-1:i*2}">`
-  +`<div class="gph"><span class="gpn">${GNAME[g]}</span><svg class="gpb" viewBox="0 0 48 48" aria-hidden="true">${gpSk(g,GPI[g])}</svg></div><span class="gpx">${P.t}</span>`
-  +(big?`<div class="gpr">${R}</div><span class="gpgo" role="button">On y va !</span>`:'')+'</div>'};
-function gpRender(){gpTheme();{const c=GPK[S.game].c,SE=$('setup');SE.style.setProperty('--gc',c);SE.style.setProperty('--gc-rgb',[1,3,5].map(i=>parseInt(c.slice(i,i+2),16)).join(','));SE.classList.toggle('glight',false)}const H=$('gHero');if(H){const g=S.game,P=GPK[g];H.innerHTML=`<div class="gpc hero${P.light?' light':''}" style="--gc:${P.c}"><button class="ghb gback" aria-label="Retour"><svg viewBox="0 0 24 24"><path d="M15 5 8 12l7 7"/></svg></button><button class="ghb gset" aria-label="Réglages du menu"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.5 5.5l1.8 1.8M16.7 16.7l1.8 1.8M5.5 18.5l1.8-1.8M16.7 7.3l1.8-1.8"/></svg></button><div class="gph"><span class="gpn">${GNAME[g]}</span><svg class="gpb" viewBox="0 0 48 48" aria-hidden="true">${gpSk('h-'+g,GPI[g])}</svg></div><span class="gpx">${P.t}</span><div class="gpr"></div></div>`}
-  const P=$('gPick');if(!P)return;P.classList.toggle('open',!!GPO);P.innerHTML='<h2 class="gpq">À quoi on joue ?</h2>'+GAMES.map(gpCard).join('');gpRules()}
-{const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{gpRender()}catch(x){}return r}}
-function gpRules(){const e=$('gRules');if(!e)return;const x=e.cloneNode(true);x.querySelectorAll('.rold').forEach(o=>o.remove());{const P=[...x.querySelectorAll('.rp')];if(P.length){const b=document.createElement('div');b.className='rbox';P[0].before(b);P.forEach(r=>b.append(r))}}document.querySelectorAll('#gPick .gpc.big .gpr,#gHero .gpr').forEach(c=>c.innerHTML=x.innerHTML)}
-setTimeout(()=>{const _s=showRules;showRules=function(){const r=_s.apply(this,arguments);try{gpRules()}catch(x){}return r}},0);
-const gpVT=f=>{if(document.startViewTransition&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.startViewTransition(f);else f()};
-/* lf-471 : hauteur de l'entête du jeu calculée (place libre réelle, entre la hauteur mini et la moitié de l'écran) — ne dépend plus du comportement de Safari */
-function gpFitHero(){const SE=$('setup'),H=$('gHero');if(!SE||!H)return;if(!(SE.classList.contains('pp')||SE.classList.contains('p2'))||!SE.offsetHeight){SE.style.removeProperty('--ghh');return}
-  SE.style.setProperty('--ghh','0px');const cs=getComputedStyle(SE);let used=parseFloat(cs.paddingTop)+parseFloat(cs.paddingBottom),gap=parseFloat(cs.rowGap)||0,n=0;
-  for(const e of SE.children){if(e===H||!e.offsetHeight||e.classList.contains('gghost'))continue;const c=getComputedStyle(e);if(c.position==='absolute'||c.position==='fixed')continue;
-    const auto=e.classList.contains('grp');if(auto)e.style.setProperty('margin-top','0px','important');used+=e.offsetHeight+parseFloat(getComputedStyle(e).marginTop)+parseFloat(c.marginBottom);if(auto)e.style.removeProperty('margin-top');n++}
-  const hc=getComputedStyle(H);used+=parseFloat(hc.marginTop)+parseFloat(hc.marginBottom)+gap*n;
-  const mn=parseFloat(cs.getPropertyValue('--mn-hmin'))||110,mx=SE.clientHeight*.5,free=SE.clientHeight-used-2;
-  SE.style.setProperty('--ghh',Math.round(Math.max(mn,Math.min(free,mx)))+'px')}
-{const _sp=setupPage;setupPage=function(){const r=_sp.apply(this,arguments);requestAnimationFrame(gpFitHero);setTimeout(gpFitHero,460);return r}}
-{const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);requestAnimationFrame(gpFitHero);return r}}
-addEventListener('resize',()=>requestAnimationFrame(gpFitHero));
-$('gHero').addEventListener('click',e=>{const b=e.target.closest('.ghb');if(!b)return;e.stopPropagation();if(b.classList.contains('gback'))$('sBack').click();else{const m=document.querySelector('#setup .sh .mnbtn');if(m)m.click()}});
-$('gPick').addEventListener('click',e=>{const b=e.target.closest('.gpc');if(!b)return;const g=b.dataset.g;haptic();SFX.ui();
-  if(e.target.closest('.gpgo')){setupPage(1.5,1);return}
-  gpVT(()=>{GPO=GPO===g?null:g;if(g!==S.game&&GPO)setGame(g);else gpRender();SU.scrollTop=0})});
 /* glisser le doigt vers la gauche / la droite sur la page des règles : jeu suivant / précédent */
 {let sx=null,sy=0,st=0;const SU0=$('setup');
  SU0.addEventListener('touchstart',e=>{if(SU0.classList.contains('p2')||e.touches.length>1){sx=null;return}const t=e.touches[0];sx=t.clientX;sy=t.clientY;st=performance.now()},{passive:true});
@@ -6353,7 +6081,7 @@ function startX01(names,starter=0,teams=null,mode){
     players:names.map(n=>({name:n,rem:st,open:inR===0,darts:0,pts:0,legs:0,turns:0,best:0,n180:0,n140:0,n100:0,co:0,busts:0,bestLeg:0,legDarts:0,last:[]})),
     cur:starter,starter,turn:[],ts:st,tso:inR===0,mult:1,round:1,leg:1,legW:null,winner:null};
   if(teams){XG.teams=true;XG.players.forEach((p,i)=>{p.members=teams[i].slice();p.mi=p.members.length>1&&Math.random()<.5?1:0})}   // qui commence dans l'équipe : au hasard
-  if(mode){XG.mode=mode;XG.legsTo=1;XG.shr=S.shr||7;XG.shw=S.shw!==0;XG.shb=S.shb||100;XG.clkm=!!S.clkm;XG.clkb=S.clkb!==0;XG.clkr=S.clkr||0;XG.clkrv2=1;XG.hiseq=(Array.isArray(S.hiseq)&&S.hiseq.length?S.hiseq:HI_CLASSIC).slice();XG.hid=3;XG.hip=S.hip!==0;XG.players.forEach(p=>{p.rem=0;p.hits=0;p.tgt=1;p.sh=0;p.n3=0;p.halves=0;p.lost=0})}
+  if(mode){XG.mode=mode;XG.legsTo=1;XG.shr=S.shr||7;XG.shw=S.shw!==0;XG.shb=S.shb||100;XG.clkm=!!S.clkm;XG.clkb=S.clkb!==0;XG.clkr=S.clkr||0;XG.clkrv2=1;XG.hiseq=(Array.isArray(S.hiseq)&&S.hiseq.length?S.hiseq:HI_CLASSIC).slice();XG.hid=S.hid||3;XG.hip=S.hip!==0;XG.players.forEach(p=>{p.rem=0;p.hits=0;p.tgt=1;p.sh=0;p.n3=0;p.halves=0;p.lost=0})}
   XH=[];S.last='x01';store.set(K_S,S);xSave();showX01();
 }
 function showX01(){if(XG&&XG.mode){showBar();return}if(BARC){BARC=false;G=GREAL;R=null;$('game').classList.remove('bcg')}BARON=false;mountFooter('x01');show('x01');xBuildKeys();xRender()}
@@ -6799,15 +6527,15 @@ function setupPage(n,anim){if(typeof noInertia==='function')noInertia();
   if(anim){const old=[...SU.querySelectorAll(':scope>.grp')].filter(g=>g.offsetHeight);const fw=n>(SU._pg||1);SU._pg=n;old.forEach(g=>{const r=g.getBoundingClientRect(),c=g.cloneNode(true);
     c.querySelectorAll('[id]').forEach(e=>e.removeAttribute('id'));c.removeAttribute('id');c.classList.add('gghost');
     Object.assign(c.style,{position:'fixed',left:r.left+'px',top:r.top+'px',width:r.width+'px',height:r.height+'px',margin:'0',pointerEvents:'none',zIndex:5});SU.append(c);
-    c.animate([{transform:'none'},{transform:`translateX(${fw?-110:110}%)`}],{duration:520,easing:'cubic-bezier(.65,0,.25,1)',fill:'forwards'}).onfinish=()=>c.remove()})}if(!anim)SU._pg=n;SU.classList.toggle('p2',n===2);SU.classList.toggle('pp',n===1.5);SU.classList.toggle('p0',n===0);SU.classList.toggle('p1',n===1);$('go').innerHTML='<span>'+(n===2?'Lancer la partie':n===1.5?'Joueurs':'Paramètres')+'</span>';
-  SU.querySelector('.sh h1').textContent=n===2?'Joueurs':n===1.5?'Paramètres':n===1?'Les règles':'Nouvelle partie';requestAnimationFrame(fitP2);setTimeout(fitP2,450);SU.scrollTop=0;$('ppick').classList.remove('on');
+    c.animate([{transform:'none'},{transform:`translateX(${fw?-110:110}%)`}],{duration:520,easing:'cubic-bezier(.65,0,.25,1)',fill:'forwards'}).onfinish=()=>c.remove()})}if(!anim)SU._pg=n;SU.classList.toggle('p2',n===2);SU.classList.toggle('pp',n===1.5);$('go').innerHTML='<span>'+(n===2?'Lancer la partie':n===1.5?'Joueurs':'Paramètres')+'</span>';
+  SU.querySelector('.sh h1').textContent=n===2?'Joueurs':n===1.5?'Paramètres':'Nouvelle partie';requestAnimationFrame(fitP2);SU.scrollTop=0;$('ppick').classList.remove('on');
   if(typeof placeThumbs==='function')requestAnimationFrame(placeThumbs);
   SU.classList.remove('p1in','p2in');if(anim){void SU.offsetWidth;SU.classList.add(SU._pg>=1.5&&n>1?'p2in':'p1in');clearTimeout(SU._pt);SU._pt=setTimeout(()=>SU.classList.remove('p1in','p2in'),950)}}
 /* lf-415 : page 2 = paramètres de partie + joueurs ; tout tient sans défiler (zoom auto si besoin) */
-function fitP2(){const G=[...SU.querySelectorAll(':scope>.grp')];G.forEach(g=>g.style.zoom='');if(!SU.classList.contains('pp')||!SU.offsetHeight)return;
+function fitP2(){const G=[...SU.querySelectorAll(':scope>.grp')];G.forEach(g=>g.style.zoom='');if(!(SU.classList.contains('p2')||SU.classList.contains('pp'))||!SU.offsetHeight)return;
   const need=SU.scrollHeight,av=SU.clientHeight;if(need>av+1){const sh=SU.querySelector('.sh'),gb=SU.querySelector('.gobar'),fixed=(sh?sh.offsetHeight:0)+(gb?gb.offsetHeight:0)+24,
-    cont=G.reduce((a,g)=>a+(g.offsetHeight||0),0),z=Math.max(.66,Math.min(1,1-(need-av)/Math.max(1,cont)));G.forEach(g=>{if(g.offsetHeight)g.style.zoom=z.toFixed(3)});
-    for(let k=0;k<25&&SU.scrollHeight>SU.clientHeight+1;k++){const zz=Math.max(.6,(+G[0].style.zoom||1)*.988);G.forEach(g=>g.style.zoom=zz.toFixed(3))}}
+    cont=G.reduce((a,g)=>a+(g.offsetHeight||0),0),z=Math.max(.66,Math.min(1,(av-fixed)/Math.max(1,cont+(need-av>0?0:0))));G.forEach(g=>{if(g.offsetHeight)g.style.zoom=z.toFixed(3)});
+    for(let k=0;k<8&&SU.scrollHeight>SU.clientHeight+1;k++){const zz=Math.max(.6,(+G[0].style.zoom||1)*.96);G.forEach(g=>g.style.zoom=zz.toFixed(3))}}
   if(typeof placeThumbs==='function')placeThumbs()}
 window.addEventListener('resize',()=>requestAnimationFrame(fitP2));
 const OHELP={   /* lf-421 : courtes et générales */
@@ -6844,9 +6572,9 @@ function optHelp(){document.querySelectorAll('#setup .opt').forEach(o=>{const sg
     Object.values(rows).forEach(L=>{if(L.length<2)return;const m=Math.max(...L.map(h=>h.offsetHeight));L.forEach(h=>h.style.minHeight=m+'px')})})}
 document.getElementById('setup').addEventListener('click',()=>setTimeout(()=>{optHelp();fitP2()},30));
 {const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{optHelp()}catch(e){}requestAnimationFrame(fitP2);return r}}
-{const _show=show;show=function(id){if(id==='setup'&&!SU.classList.contains('on')){GPO=null;try{gpRender()}catch(x){}setupPage(0)}_show(id)}}
-$('go').addEventListener('click',e=>{const p=SU._pg||0;if(p<2){e.stopImmediatePropagation();haptic();SFX.ui();setupPage(p<1.5?1.5:2,1)}},true);
-$('sBack').addEventListener('click',e=>{const p=SU._pg||0;if(p>0){e.stopImmediatePropagation();haptic();SFX.back();setupPage(p>1.5?1.5:0,1)}},true);
+{const _show=show;show=function(id){if(id==='setup'&&!SU.classList.contains('on'))setupPage(1);_show(id)}}
+$('go').addEventListener('click',e=>{if(!SU.classList.contains('p2')){e.stopImmediatePropagation();haptic();SFX.ui();setupPage(2,1)}},true);
+$('sBack').addEventListener('click',e=>{if(SU.classList.contains('p2')){e.stopImmediatePropagation();haptic();SFX.back();setupPage(1,1)}},true);
 /* panneau « Ajouter un joueur » ouvert : on laisse de la place sous la liste */
 new MutationObserver(()=>SU.classList.toggle('pk',$('ppick').classList.contains('on'))).observe($('ppick'),{attributes:true,attributeFilter:['class']});
 
@@ -7803,7 +7531,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-471';   // à changer avec VERSION dans sw.js
+const APPV='lf-472';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -8274,17 +8002,6 @@ document.addEventListener('click',e=>{const h=e.target.closest&&e.target.closest
    chaque réglage = une variable CSS posée sur #setup ; copiable pour devenir la base */
 const MN_COL=[['Joueur','var(--pc,#111)'],['Noir','#111'],['Blanc','#fff']];
 const MN=[
- ['Entête du jeu (options / joueurs)'],
- ['hmt','Marge au-dessus',0,40,1,10,'px'],['hmb','Marge en dessous',0,40,1,18,'px'],['hmin','Hauteur mini',50,320,2,110,'px'],['hr','Arrondi',6,50,1,28,'px'],['hpad','Marge intérieure',4,40,1,16,'px'],['hjb','Débord de la couleur',0,12,.5,4,'px'],
- ['hnz','Taille du nom',.4,2,.02,1,''],['hiz','Taille du dessin',.2,2,.02,1,''],['htz','Petite phrase (0 = cachée)',0,1.6,.05,1,''],['hbz','Boutons retour / réglages',.6,1.5,.02,1,''],
- ['Réglages (options / joueurs)'],
- ['ogap','Écart entre les réglages',0,40,1,19,'px'],['olg','Titre → bouton',0,24,1,8,'px'],['ohg','Bouton → explication',0,24,1,8,'px'],['obot','Espace au-dessus du bouton du bas',0,80,1,30,'px'],
- ['Général'],
- ['gth','Couleurs des jeux',[['Vif','v'],['Fluo','f'],['Pastel','p']],'Vif'],['anim','Animations',[['Oui','1'],['Non','0']],'Oui'],
- ['olz','Contours noirs (tous les menus)',0,3,.05,1,''],
- ['Cases des jeux'],
- ['jis','Contour des dessins',.3,2.2,.05,1,''],['jfz','Taille des fonds des dessins',.8,1.4,.02,1.12,''], ['jr','Arrondi',6,40,1,24,'px'],['jbw','Contour',0,5,.25,2.5,'px'],['jbh','Débord de la couleur',0,12,.5,4,'px'],['jsh','Ombre dure',0,10,.5,0,'px'],['jtl','Inclinaison',0,5,.25,0,''],
- ['jgap','Écart entre les cases',4,30,1,14,'px'],['jh','Hauteur des cases',.6,1.4,.02,.9,''],['jiz','Taille du dessin',.4,1.6,.02,1,''],['jnz','Taille du nom',.6,1.7,.02,1,''],['jns','Nom (case fermée) : contour',0,4,.1,1.4,'px'],['jnsh','Nom (case fermée) : ombre',0,8,.25,2,'px'],['jbns','Nom (case ouverte) : contour',0,5,.1,2,'px'],['jbnsh','Nom (case ouverte) : ombre',0,10,.25,3,'px'],['jtz','Petite phrase (0 = cachée)',0,1.5,.05,1,''],['jqz','Titre « À quoi on joue ? »',0,1.6,.05,1,''],
  ['Capsule joueur'],
  ['cw','Largeur',30,100,1,51,''],['cph','Hauteur',-10,14,.5,0,'px'],['cr','Arrondi',0,30,.5,30,'px'],['cbw','Contour',0,5,.25,2,'px'],['cbh','Débord de la bulle',0,10,.25,3.5,'px'],['cbc','Couleur du contour',MN_COL,'Noir'],['cbg','Fond à la couleur du joueur',0,100,5,100,'%'],
  ['Nom'],
@@ -8300,8 +8017,7 @@ function mnApply(){/* variables posées dans une feuille de style sur #setup ET 
   const st=$('setup').style;let css='';MN.forEach(d=>{if(d.length<2)return;const k=d[0],v=S.mnu[k]??(Array.isArray(d[2])?d[3]:d[5]);st.removeProperty('--mn-'+k);
     if(Array.isArray(d[2])){const c=d[2].find(x=>x[0]===v);if(c)css+=`--mn-${k}:${c[1]};`}else css+=`--mn-${k}:${v}${d[6]};`});
   let t=$('mnst');if(!t){t=document.createElement('style');t.id='mnst';document.head.append(t)}t.textContent=`#setup,#setup #names .nslot,#ppick,#ppick .rchip,#draw,#draw .slot{${css}}`}
-function mnAnim(){document.documentElement.classList.toggle('noanim',(S.mnu&&S.mnu.anim)==='Non')}
-function mnFit(){mnAnim();try{requestAnimationFrame(gpFitHero)}catch(x){}try{renderSetup()}catch(e){}try{placeThumbs()}catch(e){}}
+function mnFit(){try{renderSetup()}catch(e){}try{placeThumbs()}catch(e){}}
 function mnDraw(){const p=$('mnp');const fv=(d,v)=>(d[6]===''?String(Math.round(v*100)/100):String(v)+(d[6]==='%'?' %':' px')).replace('.',',');
   p.innerHTML=`<div class="mnh"><b>Menu</b><button class="lt" data-mnr>Rétablir</button><button class="lt" data-mncp>Copier</button><button data-mnx>OK</button></div>`+
    MN.map(d=>{if(d.length<2)return`<h4>${d[0]}</h4>`;const k=d[0],v=S.mnu[k],mod=v!==undefined&&v!==null?' mod':'';
@@ -8311,14 +8027,14 @@ function mnOpen(){haptic();SFX.open();let p=$('mnp');if(!p){p=el('div','');p.id=
     p.addEventListener('input',e=>{const r=e.target.closest('input[data-mnk]');if(!r)return;const d=MN.find(x=>x[0]===r.dataset.mnk);S.mnu[d[0]]=+r.value;mnApply();
       const row=r.closest('.mnr');row.classList.add('mod');row.querySelector('i').textContent=(d[6]===''?String(Math.round(+r.value*100)/100):r.value+(d[6]==='%'?' %':' px')).replace('.',',');clearTimeout(p._t);p._t=setTimeout(()=>{store.set(K_S,S);mnFit()},120)});
     p.addEventListener('click',e=>{const t=e.target;
-      const c=t.closest('[data-mnv]');if(c){haptic();SFX.tick();const d=MN.find(x=>x[0]===c.dataset.mnk);S.mnu[d[0]]=c.dataset.mnv===d[3]?undefined:c.dataset.mnv;if(S.mnu[d[0]]===undefined)delete S.mnu[d[0]];store.set(K_S,S);mnApply();mnDraw();mnFit();return}
+      const c=t.closest('[data-mnv]');if(c){haptic();SFX.tick();const d=MN.find(x=>x[0]===c.dataset.mnk);S.mnu[d[0]]=c.dataset.mnv===d[3]?undefined:c.dataset.mnv;if(S.mnu[d[0]]===undefined)delete S.mnu[d[0]];store.set(K_S,S);mnApply();mnDraw();return}
       if(t.closest('[data-mnx]')){SFX.back();p.classList.remove('on');return}
       if(t.closest('[data-mnr]')){haptic();SFX.back();S.mnu={};store.set(K_S,S);mnApply();mnDraw();mnFit();return}
       if(t.closest('[data-mncp]')){haptic();const txt='Réglages menu '+APPV+' : '+JSON.stringify(S.mnu);try{navigator.clipboard.writeText(txt).then(()=>toast('RÉGLAGES COPIÉS','',true),()=>prompt('Copie ces réglages',txt))}catch(x){prompt('Copie ces réglages',txt)}}})}
-  if(typeof setupPage==='function'&&!$('setup').classList.contains('p2')&&!$('setup').classList.contains('p0')&&!$('setup').classList.contains('pp'))setupPage(2,1);
+  if(typeof setupPage==='function'&&!$('setup').classList.contains('p2'))setupPage(2,1);
   mnDraw();requestAnimationFrame(()=>p.classList.add('on'))}
 {const sh=document.querySelector('#setup .sh');const b=el('button','circ mnbtn');b.setAttribute('aria-label','Réglages du menu');b.innerHTML='<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 13.5a7.6 7.6 0 0 0 0-3l2-1.6-2-3.4-2.4 1a7.4 7.4 0 0 0-2.6-1.5L14 2.5h-4l-.4 2.5A7.4 7.4 0 0 0 7 6.5l-2.4-1-2 3.4 2 1.6a7.6 7.6 0 0 0 0 3l-2 1.6 2 3.4 2.4-1a7.4 7.4 0 0 0 2.6 1.5l.4 2.5h4l.4-2.5a7.4 7.4 0 0 0 2.6-1.5l2.4 1 2-3.4Z"/></svg>';
- b.addEventListener('click',e=>{e.stopPropagation();mnOpen()});sh.append(b);mnApply();try{mnAnim()}catch(x){}}
+ b.addEventListener('click',e=>{e.stopPropagation();mnOpen()});sh.append(b);mnApply()}
 /* ===== carte « FIFA » du joueur : note générale + 6 attributs, retournable (trophées / records au dos), partageable ===== */
 const FC_ATT=['MPR','Moyenne','Finish','Triples','Régularité','Victoires'];
 function fcRate(v,a,b){return Math.max(30,Math.min(99,Math.round(40+(v-a)*59/(b-a))))}
