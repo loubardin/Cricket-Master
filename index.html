@@ -3792,7 +3792,7 @@ html body:is(.m2,.m3) #killer:not(.bron) #pkl .pkng,html body:is(.m2,.m3) #kille
 html body #setup.b2 #names .nslot:not(.ph),html body #setup.b2 #names .nslot:not(.ph)+.nslot{position:relative;overflow:visible!important;border-radius:99px!important;padding-left:0!important}
 html body #setup.b2 #names .nslot:not(.bot):not(.ph),html body #setup.b2 #names .nslot:not(.bot):not(.ph)+.nslot,html body #setup.b2 #names .nslot.drag:not(.bot){background:color-mix(in srgb,var(--pc,#cfc9be) var(--mn-cbg,0%),transparent)!important}
 html body #setup#setup.b2 #names .nslot:not(.ph),html body #setup#setup.b2 #names .nslot:not(.ph)+.nslot{border-radius:var(--mn-cr,99px)!important}
-html body #setup.b2 #names .nslot:not(.ph)::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 var(--mn-cbw,1.75px) var(--mn-cbc,var(--m-strong,#111));pointer-events:none;z-index:3}
+html body #setup.b2 #names .nslot:not(.ph)::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 calc(var(--mn-cbw,1.75px) * var(--mn-olz,1)) var(--mn-cbc,var(--m-strong,#111));pointer-events:none;z-index:3}
 html body #setup.b2 #names .nslot:not(.bot):not(.ph) .pname{color:var(--mn-nc,var(--pc,#111))!important;-webkit-text-stroke:var(--mn-ns,3px) var(--mn-nsc,#111);paint-order:stroke fill;opacity:1;position:relative;left:var(--mn-nx,0px);top:var(--mn-ny,0px);font-size:calc(var(--u)*2.7*var(--mn-nz,1))!important}
 html body #setup.b2 #names .nslot:not(.bot):not(.ph) .pdel{color:var(--mn-xc,var(--m-ink,#111))!important}
 html body #setup.b2 #names .pcol.ptr{position:relative;z-index:1;width:var(--mn-rz,38px)!important;height:var(--mn-rz,38px)!important;margin:0 6px 0 var(--mn-rx,5px)!important;top:var(--mn-ry,0px);display:grid;place-items:center;padding:0;flex:none;
@@ -3860,10 +3860,10 @@ html body #setup#setup.b2 #names .pcol.ptr{background:rgba(255,255,255,.22)!impo
 html body #setup#setup.b2 #names .pcol{display:none!important}
 /* lf-407 : « Ajouter un joueur » et tirage au sort = mêmes capsules que le menu (couleur du joueur, nom blanc contour noir, cadre noir) */
 html body #ppick#ppick .rchip{position:relative;background:color-mix(in srgb,var(--pc,#cfc9be) var(--mn-cbg,100%),transparent)!important;border-radius:var(--mn-cr,30px)!important;
-  box-shadow:inset 0 0 0 var(--mn-cbw,2px) var(--mn-cbc,#111)!important;color:var(--mn-nc,#fff)!important;-webkit-text-stroke:var(--mn-ns,3px) var(--mn-nsc,#111);paint-order:stroke fill;text-transform:uppercase;font-size:calc(16px*var(--mn-nz,1.2))!important;padding:.5em 1.1em!important;letter-spacing:.02em}
+  box-shadow:inset 0 0 0 calc(var(--mn-cbw,2px) * var(--mn-olz,1)) var(--mn-cbc,#111)!important;color:var(--mn-nc,#fff)!important;-webkit-text-stroke:var(--mn-ns,3px) var(--mn-nsc,#111);paint-order:stroke fill;text-transform:uppercase;font-size:calc(16px*var(--mn-nz,1.2))!important;padding:.5em 1.1em!important;letter-spacing:.02em}
 html body #ppick#ppick .rchip::before{content:none!important}
-html body #draw#draw .slot{border-radius:var(--mn-cr,30px)!important;box-shadow:inset 0 0 0 var(--mn-cbw,2px) var(--mn-cbc,#111)!important}
-html body #draw#draw .slot.lock{background:color-mix(in srgb,var(--pc,var(--accent)) var(--mn-cbg,100%),transparent)!important;box-shadow:inset 0 0 0 var(--mn-cbw,2px) var(--mn-cbc,#111)!important}
+html body #draw#draw .slot{border-radius:var(--mn-cr,30px)!important;box-shadow:inset 0 0 0 calc(var(--mn-cbw,2px) * var(--mn-olz,1)) var(--mn-cbc,#111)!important}
+html body #draw#draw .slot.lock{background:color-mix(in srgb,var(--pc,var(--accent)) var(--mn-cbg,100%),transparent)!important;box-shadow:inset 0 0 0 calc(var(--mn-cbw,2px) * var(--mn-olz,1)) var(--mn-cbc,#111)!important}
 html body #draw#draw .slot.lock span{color:var(--mn-nc,#fff)!important;-webkit-text-stroke:calc(var(--mn-ns,3px)*1.3) var(--mn-nsc,#111);paint-order:stroke fill}
 html body #draw#draw .slot.lock b{color:#fff!important;-webkit-text-stroke:2.5px #111;paint-order:stroke fill}
 #prof .prfg{display:block;margin:26px auto 4px;border:0;border-radius:99px;padding:9px 18px;background:transparent;box-shadow:inset 0 0 0 2px #c0271c;color:#c0271c;font:400 14px "Fun",sans-serif}
@@ -3871,8 +3871,8 @@ html body #draw#draw .slot.lock b{color:#fff!important;-webkit-text-stroke:2.5px
 #prof .prfgn{text-align:center;font:400 11px "Lbl","Lexend",sans-serif;opacity:.65;margin:0 0 16px}
 /* lf-409 : la bulle de couleur déborde un peu de son contour noir (DA bulle) */
 html body #setup#setup.b2 #names .nslot:not(.ph):not(.bot),html body #setup#setup.b2 #names .nslot:not(.ph):not(.bot)+.nslot{box-shadow:0 0 0 var(--mn-cbh,3.5px) color-mix(in srgb,var(--pc,#cfc9be) var(--mn-cbg,100%),transparent)!important}
-html body #ppick#ppick .rchip{box-shadow:inset 0 0 0 var(--mn-cbw,2px) var(--mn-cbc,#111),0 0 0 var(--mn-cbh,3.5px) color-mix(in srgb,var(--pc,#cfc9be) var(--mn-cbg,100%),transparent)!important}
-html body #draw#draw .slot.lock{box-shadow:inset 0 0 0 var(--mn-cbw,2px) var(--mn-cbc,#111),0 0 0 var(--mn-cbh,3.5px) color-mix(in srgb,var(--pc,var(--accent)) var(--mn-cbg,100%),transparent)!important}
+html body #ppick#ppick .rchip{box-shadow:inset 0 0 0 calc(var(--mn-cbw,2px) * var(--mn-olz,1)) var(--mn-cbc,#111),0 0 0 var(--mn-cbh,3.5px) color-mix(in srgb,var(--pc,#cfc9be) var(--mn-cbg,100%),transparent)!important}
+html body #draw#draw .slot.lock{box-shadow:inset 0 0 0 calc(var(--mn-cbw,2px) * var(--mn-olz,1)) var(--mn-cbc,#111),0 0 0 var(--mn-cbh,3.5px) color-mix(in srgb,var(--pc,var(--accent)) var(--mn-cbg,100%),transparent)!important}
 html body #ppick#ppick .rchipw{margin:4px 5px}
 #prof .prbadge{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 6px;border-radius:99px;background:var(--accent,#ff5a1f);color:#fff;font:400 12px "Fun",sans-serif;font-style:normal;vertical-align:2px}
 /* lf-417 : 3 pages — 1. le jeu (démos à faire glisser + règles) · 2. paramètres (avec explications) · 3. joueurs */
@@ -4015,7 +4015,7 @@ html body #setup#setup.b2:is(.pp,.p2)>.sh{display:none!important}
 
 /* lf-454 : cases des jeux pilotées par le panneau de réglages (valeurs par défaut = rendu actuel) */
 html body #setup#setup#setup.b2.p0>#gPick{gap:var(--mn-jgap,14px)!important}
-#setup .gpick .gpc{border-radius:var(--mn-jr,24px);box-shadow:inset 0 0 0 var(--mn-jbw,2.5px) #111,0 0 0 var(--mn-jbh,4px) var(--gc),0 var(--mn-jsh,0px) 0 var(--mn-jbh,4px) #111;aspect-ratio:1/var(--mn-jh,.9)}
+#setup .gpick .gpc{border-radius:var(--mn-jr,24px);box-shadow:inset 0 0 0 calc(var(--mn-jbw,2.5px) * var(--mn-olz,1)) #111,0 0 0 var(--mn-jbh,4px) var(--gc),0 var(--mn-jsh,0px) 0 var(--mn-jbh,4px) #111;aspect-ratio:1/var(--mn-jh,.9)}
 #setup .gpick .gpc:not(.big):nth-of-type(odd){rotate:calc(var(--mn-jtl,0) * -1deg)}#setup .gpick .gpc:not(.big):nth-of-type(even){rotate:calc(var(--mn-jtl,0) * 1deg)}
 #setup .gpick .gpb{width:calc(min(19vw,80px) * var(--mn-jiz,1));height:calc(min(19vw,80px) * var(--mn-jiz,1))}
 #setup .gpick .gpn{font-size:calc(23px * var(--mn-jnz,1));-webkit-text-stroke-width:var(--mn-jns,1.4px)}
@@ -4029,6 +4029,13 @@ html body #setup .gpc .gpx,html body #setup .gpc .gpr{color:#111!important;opaci
 html body #setup .gpc .gpr .rgoal{-webkit-text-stroke:0!important}
 html body #setup .gpc .gpr .rp::before{background:#111!important;box-shadow:0 0 0 2px #fff!important}
 html body #setup .gpc .gpr b{color:#111!important}
+
+/* lf-456 : un réglage pour tous les contours noirs des menus (facteur --mn-olz) */
+html body #setup#setup.b2 .seg.gamepick::after,html body #setup#setup.b2 .opt .seg.mini::after,html body #setup#setup.b2 #go::after{border-width:calc(2px * var(--mn-olz,1))!important;inset:calc(-2px * var(--mn-olz,1))!important}
+html body #setup#setup .circ{border-width:calc(2px * var(--mn-olz,1))!important}
+html body #setup#setup #gHero .gpc.hero{box-shadow:inset 0 0 0 calc(2.5px * var(--mn-olz,1)) #111,0 0 0 4px var(--gc)!important}
+html body #setup#setup #gHero .ghb{box-shadow:inset 0 0 0 calc(2.5px * var(--mn-olz,1)) #111!important}
+html body #setup#setup .gpgo{box-shadow:inset 0 0 0 calc(2.5px * var(--mn-olz,1)) #111,0 0 0 4px #fff!important}
 
 </style>
 </head>
@@ -5445,8 +5452,8 @@ const GPK={cricket:{c:'#9db7fa',t:'Ferme le 15 au 20',light:1},x01:{c:'#f5cb5c',
   clock:{c:'#c7b5ee',t:'Fais le tour de la cible',light:1},shanghai:{c:'#f6b87e',t:'Un numéro par tour',light:1},halveit:{c:'#93cbb9',t:'Rate et tu perds la moitié',light:1}};
 /* lf-448 : illustrations « sticker » — trait gras, aplat décalé qui dépasse du contour, couleurs vives, liseré blanc autour */
 const GPI=(()=>{const K='#111',W='#fff',Y='#ffd23f',R='#ff4d5e',o=3,sw=3.4,
-  B=(d,f=W)=>`<path d="${d}" fill="${f}" transform="translate(${o} ${o})"/><path d="${d}" fill="none" stroke="${K}" stroke-width="${sw}" stroke-linejoin="round" stroke-linecap="round"/>`,
-  L=(d,w=sw)=>`<path d="${d}" fill="none" stroke="${K}" stroke-width="${w}" stroke-linejoin="round" stroke-linecap="round"/>`,
+  B=(d,f=W)=>`<path d="${d}" fill="${f}" transform="translate(${o} ${o})"/><path d="${d}" fill="none" stroke="${K}" style="stroke-width:calc(${sw}px * var(--mn-jis,1))" stroke-linejoin="round" stroke-linecap="round"/>`,
+  L=(d,w=sw)=>`<path d="${d}" fill="none" stroke="${K}" style="stroke-width:calc(${w}px * var(--mn-jis,1))" stroke-linejoin="round" stroke-linecap="round"/>`,
   C=(cx,cy,r)=>`M${cx-r} ${cy}a${r} ${r} 0 1 0 ${2*r} 0a${r} ${r} 0 1 0 ${-2*r} 0z`,
   RR=(x,y,w,h,r)=>`M${x+r} ${y}h${w-2*r}a${r} ${r} 0 0 1 ${r} ${r}v${h-2*r}a${r} ${r} 0 0 1 ${-r} ${r}h${-(w-2*r)}a${r} ${r} 0 0 1 ${-r} ${-r}v${-(h-2*r)}a${r} ${r} 0 0 1 ${r} ${-r}z`,
   T=(x,y,t,z)=>`<text x="${x}" y="${y}" text-anchor="middle" style="font:400 ${z}px Fun,sans-serif!important" fill="${K}">${t}</text>`,
@@ -7688,7 +7695,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-455';   // à changer avec VERSION dans sw.js
+const APPV='lf-456';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -8159,8 +8166,10 @@ document.addEventListener('click',e=>{const h=e.target.closest&&e.target.closest
    chaque réglage = une variable CSS posée sur #setup ; copiable pour devenir la base */
 const MN_COL=[['Joueur','var(--pc,#111)'],['Noir','#111'],['Blanc','#fff']];
 const MN=[
+ ['Général'],
+ ['olz','Contours noirs (tous les menus)',0,3,.05,1,''],
  ['Cases des jeux'],
- ['jr','Arrondi',6,40,1,24,'px'],['jbw','Contour',0,5,.25,2.5,'px'],['jbh','Débord de la couleur',0,12,.5,4,'px'],['jsh','Ombre dure',0,10,.5,0,'px'],['jtl','Inclinaison',0,5,.25,0,''],
+ ['jis','Contour des dessins',.3,2.2,.05,1,''], ['jr','Arrondi',6,40,1,24,'px'],['jbw','Contour',0,5,.25,2.5,'px'],['jbh','Débord de la couleur',0,12,.5,4,'px'],['jsh','Ombre dure',0,10,.5,0,'px'],['jtl','Inclinaison',0,5,.25,0,''],
  ['jgap','Écart entre les cases',4,30,1,14,'px'],['jh','Hauteur des cases',.6,1.4,.02,.9,''],['jiz','Taille du dessin',.4,1.6,.02,1,''],['jnz','Taille du nom',.6,1.7,.02,1,''],['jns','Contour du nom',0,4,.1,1.4,'px'],['jtz','Petite phrase (0 = cachée)',0,1.5,.05,1,''],['jqz','Titre « À quoi on joue ? »',0,1.6,.05,1,''],
  ['Capsule joueur'],
  ['cw','Largeur',30,100,1,51,''],['cph','Hauteur',-10,14,.5,0,'px'],['cr','Arrondi',0,30,.5,30,'px'],['cbw','Contour',0,5,.25,2,'px'],['cbh','Débord de la bulle',0,10,.25,3.5,'px'],['cbc','Couleur du contour',MN_COL,'Noir'],['cbg','Fond à la couleur du joueur',0,100,5,100,'%'],
