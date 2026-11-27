@@ -4000,7 +4000,7 @@ html body #setup#setup.b2.glight:is(.pp,.p2) #go .ga{color:#111!important;-webki
 /* lf-454 : accueil — typo ronde de l'affiche (Baloo) et ses proportions : emblème plus petit, grand titre, sous-titre espacé */
 html body #home#home.simple .board.lmark{width:min(48vw,27dvh)!important}
 html body #home#home#home#home#home#home#home#home#home#home .ht{font-family:"FunL",sans-serif!important;font-weight:400!important;font-size:min(17.5vw,8.6dvh)!important;line-height:.9!important;letter-spacing:.005em!important;margin-top:min(9vw,5dvh)!important}
-html body #home#home#home#home#home#home#home#home#home#home .hs{font-family:"FunL",sans-serif!important;font-weight:400!important;font-size:min(4.3vw,2.1dvh)!important;letter-spacing:.17em!important;text-transform:uppercase!important;margin-top:min(3vw,1.6dvh)!important}
+html body #home#home#home#home#home#home#home#home#home#home .hs{font-family:"FunL",sans-serif!important;font-weight:400!important;font-size:min(4.3vw,2.1dvh)!important;letter-spacing:.17em!important;text-transform:uppercase!important;margin-top:min(1vw,.5dvh)!important}
 
 /* lf-454 : en-tête = la case du jeu (couleur du jeu) avec retour et réglages dedans */
 html body #setup#setup.b2:is(.pp,.p2)>.sh{display:none!important}
@@ -4015,13 +4015,20 @@ html body #setup#setup.b2:is(.pp,.p2)>.sh{display:none!important}
 
 /* lf-454 : cases des jeux pilotées par le panneau de réglages (valeurs par défaut = rendu actuel) */
 html body #setup#setup#setup.b2.p0>#gPick{gap:var(--mn-jgap,14px)!important}
-#setup .gpick .gpc{border-radius:var(--mn-jr,24px);box-shadow:inset 0 0 0 var(--mn-jbw,2.5px) #111,0 0 0 var(--mn-jbh,4px) var(--gc),0 calc(var(--mn-jbh,4px) + var(--mn-jsh,0px)) 0 calc(var(--mn-jbh,4px) - 1px) #111;aspect-ratio:1/var(--mn-jh,.9)}
+#setup .gpick .gpc{border-radius:var(--mn-jr,24px);box-shadow:inset 0 0 0 var(--mn-jbw,2.5px) #111,0 0 0 var(--mn-jbh,4px) var(--gc),0 var(--mn-jsh,0px) 0 var(--mn-jbh,4px) #111;aspect-ratio:1/var(--mn-jh,.9)}
 #setup .gpick .gpc:not(.big):nth-of-type(odd){rotate:calc(var(--mn-jtl,0) * -1deg)}#setup .gpick .gpc:not(.big):nth-of-type(even){rotate:calc(var(--mn-jtl,0) * 1deg)}
 #setup .gpick .gpb{width:calc(min(19vw,80px) * var(--mn-jiz,1));height:calc(min(19vw,80px) * var(--mn-jiz,1))}
 #setup .gpick .gpn{font-size:calc(23px * var(--mn-jnz,1));-webkit-text-stroke-width:var(--mn-jns,1.4px)}
 #setup .gpick .gpx{font-size:calc(12px * var(--mn-jtz,1))}
 #setup .gpick .gpq{font-size:calc(27px * var(--mn-jqz,1))}
 #setup .gpick.open .gpc:not(.big),#setup .gpick .gpc.big{aspect-ratio:auto}
+
+/* lf-455 : typo noire sur les cases de jeux claires */
+html body #setup .gpc .gpn,html body #setup .gpc.big .gpn,html body #setup #gHero .gpn{color:#111!important;-webkit-text-stroke:0!important;text-shadow:none!important}
+html body #setup .gpc .gpx,html body #setup .gpc .gpr{color:#111!important;opacity:.8}
+html body #setup .gpc .gpr .rgoal{-webkit-text-stroke:0!important}
+html body #setup .gpc .gpr .rp::before{background:#111!important;box-shadow:0 0 0 2px #fff!important}
+html body #setup .gpc .gpr b{color:#111!important}
 
 </style>
 </head>
@@ -5433,9 +5440,9 @@ $('segBar').addEventListener('click',e=>{const v=e.target.dataset.v;if(v){haptic
 /* lf-451 : on joue toujours 3 fléchettes par tour (Halve-it compris) */
 S.hid=3;
 /* lf-440 : choix du jeu en cases façon Killer (dessin + petite info) → page des règles → page des paramètres → joueurs */
-/* lf-453 : couleurs des jeux tirées des palettes « Azure Skies » et « Vibrant Fusion » */
-const GPK={cricket:{c:'#4873f6',t:'Ferme le 15 au 20'},x01:{c:'#f4bc45',t:'Descends pile à zéro',light:1},killer:{c:'#cc3e3e',t:'Le dernier en vie gagne'},
-  clock:{c:'#132a43',t:'Fais le tour de la cible'},shanghai:{c:'#5188bf',t:'Un numéro par tour'},halveit:{c:'#366f67',t:'Rate et tu perds la moitié'}};
+/* lf-455 : couleurs claires (palette élargie à partir d'Azure Skies / Vibrant Fusion), texte noir partout */
+const GPK={cricket:{c:'#9db7fa',t:'Ferme le 15 au 20',light:1},x01:{c:'#f5cb5c',t:'Descends pile à zéro',light:1},killer:{c:'#ee8f86',t:'Le dernier en vie gagne',light:1},
+  clock:{c:'#c7b5ee',t:'Fais le tour de la cible',light:1},shanghai:{c:'#f6b87e',t:'Un numéro par tour',light:1},halveit:{c:'#93cbb9',t:'Rate et tu perds la moitié',light:1}};
 /* lf-448 : illustrations « sticker » — trait gras, aplat décalé qui dépasse du contour, couleurs vives, liseré blanc autour */
 const GPI=(()=>{const K='#111',W='#fff',Y='#ffd23f',R='#ff4d5e',o=3,sw=3.4,
   B=(d,f=W)=>`<path d="${d}" fill="${f}" transform="translate(${o} ${o})"/><path d="${d}" fill="none" stroke="${K}" stroke-width="${sw}" stroke-linejoin="round" stroke-linecap="round"/>`,
@@ -5451,7 +5458,7 @@ const GPI=(()=>{const K='#111',W='#fff',Y='#ffd23f',R='#ff4d5e',o=3,sw=3.4,
    clock:B(C(24,24,18))+L('M24 24V12M24 24l8 5',3.6)+`<circle cx="24" cy="24" r="3" fill="${K}"/>`,
    shanghai:B(RR(3,12,13,26,4))+B(RR(17.5,12,13,26,4),'#ff9d4d')+B(RR(32,12,13,26,4),Y)+T(9.5,31,'S',13)+T(24,31,'D',13)+T(38.5,31,'T',13),
    halveit:B('M22 6a18 18 0 0 0 0 36z',Y)+B('M27 6a18 18 0 0 1 0 36z')}})();
-const gpSk=(g,x)=>`<defs><filter id="gps-${g}" x="-20%" y="-20%" width="140%" height="140%"><feMorphology in="SourceAlpha" operator="dilate" radius="2.6" result="d"/><feFlood flood-color="#fff"/><feComposite in2="d" operator="in" result="w"/><feMerge><feMergeNode in="w"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g filter="url(#gps-${g})">${x}</g>`;
+const gpSk=(g,x)=>x;const gpSkOld=(g,x)=>`<defs><filter id="gps-${g}" x="-20%" y="-20%" width="140%" height="140%"><feMorphology in="SourceAlpha" operator="dilate" radius="2.6" result="d"/><feFlood flood-color="#fff"/><feComposite in2="d" operator="in" result="w"/><feMerge><feMergeNode in="w"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g filter="url(#gps-${g})">${x}</g>`;
 /* lf-442 : DA bulle (couleur qui dépasse du cadre noir) ; toucher un jeu = sa case s'agrandit (règles + « On y va ») */
 let GPO=null;
 const gpCard=(g,i)=>{const P=GPK[g],big=g===GPO,R='';return`<div class="gpc${big?' big':''}${P.light?' light':''}" role="button" tabindex="0" data-g="${g}" style="--gc:${P.c};view-transition-name:gp-${g};order:${big?(i-i%2)*2-1:i*2}">`
@@ -7681,7 +7688,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-454';   // à changer avec VERSION dans sw.js
+const APPV='lf-455';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
