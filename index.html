@@ -3971,22 +3971,6 @@ html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup .gpc .gpx
 
 /* lf-449 : options et joueurs à nouveau sur deux pages */
 html body #setup#setup.b2.p2>.grp:has(.sect.s2){display:none!important}
-/* lf-446 : interrupteurs des réglages secondaires (page joueurs + options) */
-#setup .tsw{display:none}
-html body #setup#setup#setup.b2:is(.p2,.pp) .opt.istg{order:9!important;flex:1 1 100%!important;width:100%!important;max-width:none!important;grid-template-areas:none!important;grid-template-columns:1fr!important;min-height:0!important;margin:0!important;padding:0!important}
-html body #setup#setup#setup.b2:is(.p2,.pp) .opt.istg>.tsw{grid-column:1/-1!important;grid-row:auto!important;grid-area:auto!important}
-html body #setup#setup#setup.b2:is(.p2,.pp) .kpair:has(.istg){display:contents!important}html body #setup#setup#setup.b2:is(.p2,.pp) .sect>.opt:not(.istg){order:1!important}
-html body #setup#setup#setup.b2:is(.p2,.pp) .opt.istg>:not(.tsw){display:none!important}
-html body #setup#setup#setup.b2:is(.p2,.pp) .opt.istg>.tsw{display:flex!important;align-items:center;justify-content:space-between;gap:12px;width:100%;margin:0;padding:3px 2px 3px 4px;border:0;background:none;color:var(--m-ink,#111);cursor:pointer;-webkit-tap-highlight-color:transparent}
-html body #setup#setup#setup.b2:is(.p2,.pp) .tsw .tsl{font:600 15.5px/1.2 "UI",sans-serif;text-align:left}
-html body #setup#setup#setup.b2:is(.p2,.pp) .tsw i{position:relative;flex:none;width:46px;height:27px;border-radius:99px;background:var(--m-cell,#ece5d3);box-shadow:inset 0 0 0 2.5px #111;transition:background .15s}
-html body #setup#setup#setup.b2:is(.p2,.pp) .tsw i::after{content:"";position:absolute;left:4px;top:4px;width:19px;height:19px;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 2.5px #111;transition:transform .18s cubic-bezier(.3,1.4,.5,1)}
-html body #setup#setup#setup.b2:is(.p2,.pp) .tsw.on i{background:#4b4b4b;box-shadow:inset 0 0 0 2.5px #111,0 0 0 3px #4b4b4b}
-html body #setup#setup#setup.b2:is(.p2,.pp) .tsw.on i::after{transform:translateX(19px)}
-html body #setup#setup#setup.b2:is(.p2,.pp) .tsw .tsl{opacity:.6}html body #setup#setup#setup.b2:is(.p2,.pp) .tsw.on .tsl{opacity:1}
-html body #setup#setup#setup.b2:is(.p2,.pp) .sect:has(.opt.istg){row-gap:12px!important}
-html body #setup#setup#setup.b2:is(.p2,.pp) .opt.istg+.opt.istg{margin-top:-4px!important}
-html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup:is(.p2,.pp) .tsw .tsl{font-family:"UI",sans-serif!important;font-weight:600!important}
 
 </style>
 </head>
@@ -4064,7 +4048,6 @@ html body #setup#setup#setup#setup#setup#setup#setup#setup#setup#setup:is(.p2,.p
       <div class="opt clo"><span>Joueur rejoue</span><div class="seg mini" data-k="clkr"><button data-v="0">Non</button><button data-v="2">MPR ≥ 2</button><button data-v="3">MPR ≥ 3</button></div></div>
       <div class="opt clo"><span>Arrivée</span><div class="seg mini" data-k="clkb"><button data-v="0">Le 20</button><button data-v="1">La Bulle</button></div></div>
       <div class="opt hio"><span>Cibles</span><div class="seg mini" id="segHiSeq"><button data-v="0" id="hiSeqC">Classique</button><button data-v="1" id="hiSeqB">Perso</button></div></div>
-      <div class="opt hio"><span>Fléchettes</span><div class="seg mini" data-k="hid"><button data-v="3">3</button><button data-v="4">4</button><button data-v="5">5</button></div></div>
       <div class="opt hio"><span>Pénalité ÷ 2</span><div class="seg mini yn" data-k="hip"><button data-v="1">Oui</button><button data-v="0">Non</button></div></div>
       <div class="opt kl"><span>Vies</span><div class="seg mini" id="segLives"><button data-v="3">3</button><button data-v="4">4</button><button data-v="5">5</button></div></div>
       <div class="kpair kl"><div class="opt kl"><span>Tuer = +1 ♥</span><div class="seg mini yn" data-k="kbonus"><button data-v="1">Oui</button><button data-v="0">Non</button></div></div>
@@ -5395,20 +5378,9 @@ function setGame(v){if(v==='bar')v=BARG.includes(S.game)?S.game:(S.lastBar||'kil
 $('segGame').addEventListener('click',e=>{const v=e.target.dataset.v;if(v)setGame(v)});
 $('segBar').addEventListener('click',e=>{const v=e.target.dataset.v;if(v){haptic();SFX.ui();setGame(v)}});
 
-/* lf-446 : page joueurs + options — les réglages secondaires (deux choix) deviennent de petits interrupteurs « marqué / pas marqué » ; les importants restent en grand */
-const TOG={'Équipes':['Équipes','1'],'Qui commence ?':['Ordre au hasard','draw'],'Enjeu':['On joue quelque chose','1'],'Mode':['Coupe-gorge','cut'],
-  'Fermeture':['Fermer dans l’ordre (15 → Bulle)','1'],'Entrée':['Entrée sur un double','1'],'Sortie':['Sortie sur un double','1'],'Droit de réponse':['Droit de réponse','1'],
-  'Aide finish':['Aide au finish','1'],'Numéros':['Numéros au hasard','draw'],'Tuer = +1 ♥':['Tuer redonne une vie','1'],'Vainqueur +1 ♥':['Le vainqueur garde +1 vie','1'],
-  'Défense finale':['Défense finale','1'],'Double / triple':['Double et triple font sauter','1'],'Arrivée':['Finir à la Bulle','1'],'Shanghai =':['Shanghai = victoire','1'],
-  'Cibles':['Cibles perso','1'],'Pénalité ÷ 2':['Cible ratée = score ÷ 2','1']};
-function tgSync(){$('setup').querySelectorAll(':scope>.grp .opt').forEach(o=>{const sp=o.querySelector(':scope>span');if(!sp)return;const lab=o.dataset.tl0||sp.textContent.replace(/\s+/g,' ').trim(),t=TOG[lab];if(!t)return;
-  o.dataset.tl0=lab;const sg=o.querySelector('.seg');if(!sg)return;let w=o.querySelector(':scope>.tsw');
-  if(!w){w=document.createElement('button');w.type='button';w.className='tsw';w.innerHTML='<span class="tsl"></span><i></i>';o.appendChild(w);
-    w.addEventListener('click',e=>{e.stopPropagation();const on=w.classList.contains('on'),b=[...sg.querySelectorAll('button')].find(x=>on?x.dataset.v!==t[1]:x.dataset.v===t[1]);if(b)b.click();setTimeout(tgSync,0)})}
-  w.querySelector('.tsl').textContent=t[0];o.classList.add('istg');const sel=sg.querySelector('button.sel');w.classList.toggle('on',!!sel&&sel.dataset.v===t[1])})}
-{const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{tgSync()}catch(x){}return r}}
-setTimeout(()=>{try{tgSync()}catch(x){}},0);
 
+/* lf-451 : on joue toujours 3 fléchettes par tour (Halve-it compris) */
+S.hid=3;
 /* lf-440 : choix du jeu en cases façon Killer (dessin + petite info) → page des règles → page des paramètres → joueurs */
 const GPK={cricket:{c:'#1fa2d6',t:'Ferme le 15 au 20'},x01:{c:'#ff8a1f',t:'Descends pile à zéro'},killer:{c:'#ef3b4f',t:'Le dernier en vie gagne'},
   clock:{c:'#7b5cd6',t:'Fais le tour de la cible'},shanghai:{c:'#ff5fa2',t:'Un numéro par tour'},halveit:{c:'#22b573',t:'Rate et tu perds la moitié'}};
@@ -6206,7 +6178,7 @@ function startX01(names,starter=0,teams=null,mode){
     players:names.map(n=>({name:n,rem:st,open:inR===0,darts:0,pts:0,legs:0,turns:0,best:0,n180:0,n140:0,n100:0,co:0,busts:0,bestLeg:0,legDarts:0,last:[]})),
     cur:starter,starter,turn:[],ts:st,tso:inR===0,mult:1,round:1,leg:1,legW:null,winner:null};
   if(teams){XG.teams=true;XG.players.forEach((p,i)=>{p.members=teams[i].slice();p.mi=p.members.length>1&&Math.random()<.5?1:0})}   // qui commence dans l'équipe : au hasard
-  if(mode){XG.mode=mode;XG.legsTo=1;XG.shr=S.shr||7;XG.shw=S.shw!==0;XG.shb=S.shb||100;XG.clkm=!!S.clkm;XG.clkb=S.clkb!==0;XG.clkr=S.clkr||0;XG.clkrv2=1;XG.hiseq=(Array.isArray(S.hiseq)&&S.hiseq.length?S.hiseq:HI_CLASSIC).slice();XG.hid=S.hid||3;XG.hip=S.hip!==0;XG.players.forEach(p=>{p.rem=0;p.hits=0;p.tgt=1;p.sh=0;p.n3=0;p.halves=0;p.lost=0})}
+  if(mode){XG.mode=mode;XG.legsTo=1;XG.shr=S.shr||7;XG.shw=S.shw!==0;XG.shb=S.shb||100;XG.clkm=!!S.clkm;XG.clkb=S.clkb!==0;XG.clkr=S.clkr||0;XG.clkrv2=1;XG.hiseq=(Array.isArray(S.hiseq)&&S.hiseq.length?S.hiseq:HI_CLASSIC).slice();XG.hid=3;XG.hip=S.hip!==0;XG.players.forEach(p=>{p.rem=0;p.hits=0;p.tgt=1;p.sh=0;p.n3=0;p.halves=0;p.lost=0})}
   XH=[];S.last='x01';store.set(K_S,S);xSave();showX01();
 }
 function showX01(){if(XG&&XG.mode){showBar();return}if(BARC){BARC=false;G=GREAL;R=null;$('game').classList.remove('bcg')}BARON=false;mountFooter('x01');show('x01');xBuildKeys();xRender()}
@@ -7656,7 +7628,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-450';   // à changer avec VERSION dans sw.js
+const APPV='lf-451';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
