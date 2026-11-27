@@ -4089,7 +4089,7 @@ html body #setup#setup .gpick.open .gpc .gpb,html body #setup#setup .gpc.big .gp
 
 
 /* lf-468 : entête du jeu (page options ET page joueurs) — prend la place libre, entièrement réglable */
-html body #setup#setup#setup.b2:is(.pp,.p2)>#gHero{display:flex!important;flex:1 1 auto!important;min-height:var(--mn-hmin,110px)!important;margin:var(--mn-hmt,10px) 4px var(--mn-hmb,18px)!important}
+html body #setup#setup#setup.b2:is(.pp,.p2)>#gHero{display:flex!important;flex:0 0 auto!important;min-height:0!important;margin:var(--mn-hmt,10px) 4px var(--mn-hmb,18px)!important}
 html body #setup#setup #gHero .gpc.hero{flex:1 1 auto!important;flex-direction:column!important;justify-content:center!important;align-items:center!important;gap:6px!important;
   padding:var(--mn-hpad,16px)!important;border-radius:var(--mn-hr,28px)!important;box-shadow:inset 0 0 0 calc(2.5px * var(--mn-olz,1)) #111,0 0 0 var(--mn-hjb,4px) var(--gc)!important}
 html body #setup#setup #gHero .gph{display:contents!important}
@@ -4108,7 +4108,7 @@ html body #setup#setup#setup.b2:is(.pp,.p2)>.gobar{margin-top:var(--mn-obot,30px
 html body #setup#setup#setup.b2:is(.pp,.p2)>.grp{margin-top:0!important;margin-bottom:0!important}
 
 /* lf-469 : Safari — l'entête ne doit jamais pousser les réglages hors de l'écran (le dessin ne réclame plus de hauteur, la page défile si besoin) */
-html body #setup#setup#setup.b2:is(.pp,.p2)>#gHero{overflow:hidden!important;max-height:calc(max(var(--mn-hmin,110px),46dvh) + 12px);padding:6px!important;margin:calc(var(--mn-hmt,10px) - 6px) -2px calc(var(--mn-hmb,18px) - 6px)!important}
+html body #setup#setup#setup.b2:is(.pp,.p2)>#gHero{overflow:hidden!important;height:var(--ghh,auto);padding:6px!important;margin:calc(var(--mn-hmt,10px) - 6px) -2px calc(var(--mn-hmb,18px) - 6px)!important}
 html body #setup#setup#setup#setup.b2:is(.pp,.p2)>.grp{margin-top:auto!important}
 html body #setup#setup #gHero .gpc.hero{min-height:0!important;height:auto!important}
 html body #setup#setup #gHero .gpb{height:0!important;min-height:0!important;flex:1 1 0!important}
@@ -5574,6 +5574,17 @@ function gpRender(){gpTheme();{const c=GPK[S.game].c,SE=$('setup');SE.style.setP
 function gpRules(){const e=$('gRules');if(!e)return;const x=e.cloneNode(true);x.querySelectorAll('.rold').forEach(o=>o.remove());{const P=[...x.querySelectorAll('.rp')];if(P.length){const b=document.createElement('div');b.className='rbox';P[0].before(b);P.forEach(r=>b.append(r))}}document.querySelectorAll('#gPick .gpc.big .gpr,#gHero .gpr').forEach(c=>c.innerHTML=x.innerHTML)}
 setTimeout(()=>{const _s=showRules;showRules=function(){const r=_s.apply(this,arguments);try{gpRules()}catch(x){}return r}},0);
 const gpVT=f=>{if(document.startViewTransition&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.startViewTransition(f);else f()};
+/* lf-471 : hauteur de l'entête du jeu calculée (place libre réelle, entre la hauteur mini et la moitié de l'écran) — ne dépend plus du comportement de Safari */
+function gpFitHero(){const SE=$('setup'),H=$('gHero');if(!SE||!H)return;if(!(SE.classList.contains('pp')||SE.classList.contains('p2'))||!SE.offsetHeight){SE.style.removeProperty('--ghh');return}
+  SE.style.setProperty('--ghh','0px');const cs=getComputedStyle(SE);let used=parseFloat(cs.paddingTop)+parseFloat(cs.paddingBottom),gap=parseFloat(cs.rowGap)||0,n=0;
+  for(const e of SE.children){if(e===H||!e.offsetHeight||e.classList.contains('gghost'))continue;const c=getComputedStyle(e);if(c.position==='absolute'||c.position==='fixed')continue;
+    const auto=e.classList.contains('grp');if(auto)e.style.setProperty('margin-top','0px','important');used+=e.offsetHeight+parseFloat(getComputedStyle(e).marginTop)+parseFloat(c.marginBottom);if(auto)e.style.removeProperty('margin-top');n++}
+  const hc=getComputedStyle(H);used+=parseFloat(hc.marginTop)+parseFloat(hc.marginBottom)+gap*n;
+  const mn=parseFloat(cs.getPropertyValue('--mn-hmin'))||110,mx=SE.clientHeight*.5,free=SE.clientHeight-used-2;
+  SE.style.setProperty('--ghh',Math.round(Math.max(mn,Math.min(free,mx)))+'px')}
+{const _sp=setupPage;setupPage=function(){const r=_sp.apply(this,arguments);requestAnimationFrame(gpFitHero);setTimeout(gpFitHero,460);return r}}
+{const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);requestAnimationFrame(gpFitHero);return r}}
+addEventListener('resize',()=>requestAnimationFrame(gpFitHero));
 $('gHero').addEventListener('click',e=>{const b=e.target.closest('.ghb');if(!b)return;e.stopPropagation();if(b.classList.contains('gback'))$('sBack').click();else{const m=document.querySelector('#setup .sh .mnbtn');if(m)m.click()}});
 $('gPick').addEventListener('click',e=>{const b=e.target.closest('.gpc');if(!b)return;const g=b.dataset.g;haptic();SFX.ui();
   if(e.target.closest('.gpgo')){setupPage(1.5,1);return}
@@ -7792,7 +7803,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-470';   // à changer avec VERSION dans sw.js
+const APPV='lf-471';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -8290,7 +8301,7 @@ function mnApply(){/* variables posées dans une feuille de style sur #setup ET 
     if(Array.isArray(d[2])){const c=d[2].find(x=>x[0]===v);if(c)css+=`--mn-${k}:${c[1]};`}else css+=`--mn-${k}:${v}${d[6]};`});
   let t=$('mnst');if(!t){t=document.createElement('style');t.id='mnst';document.head.append(t)}t.textContent=`#setup,#setup #names .nslot,#ppick,#ppick .rchip,#draw,#draw .slot{${css}}`}
 function mnAnim(){document.documentElement.classList.toggle('noanim',(S.mnu&&S.mnu.anim)==='Non')}
-function mnFit(){mnAnim();try{renderSetup()}catch(e){}try{placeThumbs()}catch(e){}}
+function mnFit(){mnAnim();try{requestAnimationFrame(gpFitHero)}catch(x){}try{renderSetup()}catch(e){}try{placeThumbs()}catch(e){}}
 function mnDraw(){const p=$('mnp');const fv=(d,v)=>(d[6]===''?String(Math.round(v*100)/100):String(v)+(d[6]==='%'?' %':' px')).replace('.',',');
   p.innerHTML=`<div class="mnh"><b>Menu</b><button class="lt" data-mnr>Rétablir</button><button class="lt" data-mncp>Copier</button><button data-mnx>OK</button></div>`+
    MN.map(d=>{if(d.length<2)return`<h4>${d[0]}</h4>`;const k=d[0],v=S.mnu[k],mod=v!==undefined&&v!==null?' mod':'';
