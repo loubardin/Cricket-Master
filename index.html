@@ -3898,7 +3898,7 @@ html body #setup#setup.b2>.gobar{margin-top:auto!important}
 #prof .mcs div{display:flex;flex-direction:column;align-items:center;gap:1px}#prof .mcs .rkl{font-size:22px}#prof .mcs span{font:400 9px "Lbl","Lexend",sans-serif;opacity:.8}
 #prof .mcg2{position:absolute;left:0;right:0;top:172px;text-align:center;font:400 10px "Lbl","Lexend",sans-serif;opacity:.75}
 /* lf-422 : bulles des options secondaires en gris très foncé — seul le choix du jeu (en haut) reste à la couleur de l'appli */
-html body #setup#setup.b2 .opt .seg .thumb{background:#4b4b4b!important;background-image:none!important;box-shadow:0 0 0 calc(var(--u)*1.7) #4b4b4b,0 6px 14px rgba(0,0,0,.22)!important}
+html body #setup#setup.b2 .opt .seg .thumb{background:var(--gc,#4b4b4b)!important;background-image:none!important;box-shadow:0 0 0 calc(var(--u)*1.7) var(--gc,#4b4b4b),0 6px 14px rgba(0,0,0,.22)!important}
 html.night body #setup#setup.b2 .opt .seg .thumb,html[data-th=dark] body #setup#setup.b2 .opt .seg .thumb{background:#4a4a4a!important;box-shadow:0 0 0 calc(var(--u)*1.7) #4a4a4a,0 6px 14px rgba(0,0,0,.35)!important}
 /* lf-423 : explication juste sous le titre du paramètre ; les paramètres sont calés en bas, toujours au même écart du bouton du bas */
 #setup .opt .ohelp{margin:6px 2px 0!important}
@@ -3986,6 +3986,16 @@ html body #setup#setup#setup.b2.p2 .opt:is(.ordopt,.knopt){grid-template-columns
 html body #setup#setup#setup.b2.p2 .opt:is(.ordopt,.knopt)>span{grid-area:l!important;margin:0!important;align-self:start!important}
 html body #setup#setup#setup.b2.p2 .opt:is(.ordopt,.knopt)>.seg{grid-area:s!important;width:100%!important;max-width:none!important;margin:0!important;justify-self:stretch!important}
 html body #setup#setup#setup.b2.p2 .opt:is(.ordopt,.knopt)>.ohelp{grid-area:h!important;margin:0!important;min-height:0!important}
+
+/* lf-453 : réglages et bouton du bas aux couleurs du jeu choisi ; en-tête sans le nom du jeu en double */
+html body #setup#setup.b2:is(.pp,.p2),html body #setup#setup.b2:is(.pp,.p2) .opt,html body #setup#setup.b2:is(.pp,.p2) .gobar{--accent:var(--gc)!important;--acc-rgb:var(--gc-rgb)!important;--accimg:none!important}
+html body #setup#setup.b2:is(.pp,.p2) .sh h1 .gtag{display:none!important}
+
+/* jaune (501) : texte foncé là où le blanc ne se lit pas */
+#setup .gpc.light .gpx,#setup .gpc.light .gpr{color:#111!important;opacity:.85}
+#setup .gpc.light .gpr .rp::before{background:#111;box-shadow:0 0 0 2px #fff}
+html body #setup#setup.b2.glight .opt .seg button.sel,html body #setup#setup.b2.glight .opt .seg button.on{color:#111!important;-webkit-text-stroke:0!important;text-shadow:none!important}
+html body #setup#setup.b2.glight:is(.pp,.p2) #go .ga{color:#111!important;-webkit-text-stroke:0!important;text-shadow:none!important}
 
 </style>
 </head>
@@ -5397,8 +5407,9 @@ $('segBar').addEventListener('click',e=>{const v=e.target.dataset.v;if(v){haptic
 /* lf-451 : on joue toujours 3 fléchettes par tour (Halve-it compris) */
 S.hid=3;
 /* lf-440 : choix du jeu en cases façon Killer (dessin + petite info) → page des règles → page des paramètres → joueurs */
-const GPK={cricket:{c:'#1fa2d6',t:'Ferme le 15 au 20'},x01:{c:'#ff8a1f',t:'Descends pile à zéro'},killer:{c:'#ef3b4f',t:'Le dernier en vie gagne'},
-  clock:{c:'#7b5cd6',t:'Fais le tour de la cible'},shanghai:{c:'#ff5fa2',t:'Un numéro par tour'},halveit:{c:'#22b573',t:'Rate et tu perds la moitié'}};
+/* lf-453 : couleurs des jeux tirées des palettes « Azure Skies » et « Vibrant Fusion » */
+const GPK={cricket:{c:'#4873f6',t:'Ferme le 15 au 20'},x01:{c:'#f4bc45',t:'Descends pile à zéro',light:1},killer:{c:'#cc3e3e',t:'Le dernier en vie gagne'},
+  clock:{c:'#132a43',t:'Fais le tour de la cible'},shanghai:{c:'#5188bf',t:'Un numéro par tour'},halveit:{c:'#366f67',t:'Rate et tu perds la moitié'}};
 /* lf-448 : illustrations « sticker » — trait gras, aplat décalé qui dépasse du contour, couleurs vives, liseré blanc autour */
 const GPI=(()=>{const K='#111',W='#fff',Y='#ffd23f',R='#ff4d5e',o=3,sw=3.4,
   B=(d,f=W)=>`<path d="${d}" fill="${f}" transform="translate(${o} ${o})"/><path d="${d}" fill="none" stroke="${K}" stroke-width="${sw}" stroke-linejoin="round" stroke-linecap="round"/>`,
@@ -5417,10 +5428,10 @@ const GPI=(()=>{const K='#111',W='#fff',Y='#ffd23f',R='#ff4d5e',o=3,sw=3.4,
 const gpSk=(g,x)=>`<defs><filter id="gps-${g}" x="-20%" y="-20%" width="140%" height="140%"><feMorphology in="SourceAlpha" operator="dilate" radius="2.6" result="d"/><feFlood flood-color="#fff"/><feComposite in2="d" operator="in" result="w"/><feMerge><feMergeNode in="w"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g filter="url(#gps-${g})">${x}</g>`;
 /* lf-442 : DA bulle (couleur qui dépasse du cadre noir) ; toucher un jeu = sa case s'agrandit (règles + « On y va ») */
 let GPO=null;
-const gpCard=(g,i)=>{const P=GPK[g],big=g===GPO,R='';return`<div class="gpc${big?' big':''}" role="button" tabindex="0" data-g="${g}" style="--gc:${P.c};view-transition-name:gp-${g};order:${big?(i-i%2)*2-1:i*2}">`
+const gpCard=(g,i)=>{const P=GPK[g],big=g===GPO,R='';return`<div class="gpc${big?' big':''}${P.light?' light':''}" role="button" tabindex="0" data-g="${g}" style="--gc:${P.c};view-transition-name:gp-${g};order:${big?(i-i%2)*2-1:i*2}">`
   +`<div class="gph"><span class="gpn">${GNAME[g]}</span><svg class="gpb" viewBox="0 0 48 48" aria-hidden="true">${gpSk(g,GPI[g])}</svg></div><span class="gpx">${P.t}</span>`
   +(big?`<div class="gpr">${R}</div><span class="gpgo" role="button">On y va !</span>`:'')+'</div>'};
-function gpRender(){const H=$('gHero');if(H){const g=S.game,P=GPK[g];H.innerHTML=`<div class="gpc hero" style="--gc:${P.c}"><div class="gph"><span class="gpn">${GNAME[g]}</span><svg class="gpb" viewBox="0 0 48 48" aria-hidden="true">${gpSk('h-'+g,GPI[g])}</svg></div><span class="gpx">${P.t}</span><div class="gpr"></div></div>`}
+function gpRender(){{const c=GPK[S.game].c,SE=$('setup');SE.style.setProperty('--gc',c);SE.style.setProperty('--gc-rgb',[1,3,5].map(i=>parseInt(c.slice(i,i+2),16)).join(','));SE.classList.toggle('glight',!!GPK[S.game].light)}const H=$('gHero');if(H){const g=S.game,P=GPK[g];H.innerHTML=`<div class="gpc hero${P.light?' light':''}" style="--gc:${P.c}"><div class="gph"><span class="gpn">${GNAME[g]}</span><svg class="gpb" viewBox="0 0 48 48" aria-hidden="true">${gpSk('h-'+g,GPI[g])}</svg></div><span class="gpx">${P.t}</span><div class="gpr"></div></div>`}
   const P=$('gPick');if(!P)return;P.classList.toggle('open',!!GPO);P.innerHTML='<h2 class="gpq">À quoi on joue ?</h2>'+GAMES.map(gpCard).join('');gpRules()}
 {const _rs=renderSetup;renderSetup=function(){const r=_rs.apply(this,arguments);try{gpRender()}catch(x){}return r}}
 function gpRules(){const e=$('gRules');if(!e)return;const x=e.cloneNode(true);x.querySelectorAll('.rold').forEach(o=>o.remove());document.querySelectorAll('#gPick .gpc.big .gpr,#gHero .gpr').forEach(c=>c.innerHTML=x.innerHTML)}
@@ -7643,7 +7654,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-452';   // à changer avec VERSION dans sw.js
+const APPV='lf-453';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
