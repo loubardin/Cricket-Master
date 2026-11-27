@@ -4051,8 +4051,8 @@ html body #setup#setup .gpgo{box-shadow:inset 0 0 0 calc(2.5px * var(--mn-olz,1)
 html.noanim #setup .gboil{filter:none}
 
 /* lf-458 : textes blancs dans les switchs, noms des jeux blancs à contour noir, « le but » en blanc, explication dans un encadré blanc */
-html body #setup#setup .gpc .gpn{color:#fff!important;-webkit-text-stroke:var(--mn-jns,1.4px) #111!important;paint-order:stroke fill;text-shadow:0 2px 0 #111!important}
-html body #setup#setup .gpc.big .gpn,html body #setup#setup #gHero .gpn{-webkit-text-stroke:2px #111!important;text-shadow:0 3px 0 #111!important}
+html body #setup#setup .gpc .gpn{color:#fff!important;-webkit-text-stroke:var(--mn-jns,1.4px) #111!important;paint-order:stroke fill;text-shadow:0 var(--mn-jnsh,2px) 0 #111!important}
+html body #setup#setup .gpc.big .gpn,html body #setup#setup #gHero .gpn{-webkit-text-stroke:var(--mn-jbns,2px) #111!important;text-shadow:0 var(--mn-jbnsh,3px) 0 #111!important}
 html body #setup#setup .gpc .gpx{color:#fff!important;opacity:1!important;-webkit-text-stroke:.7px #111;paint-order:stroke fill;text-shadow:0 1px 0 #111}
 html body #setup#setup .gpc .gpr{color:#111!important;opacity:1!important;gap:10px}
 html body #setup#setup .gpc .gpr .rgoal{color:#fff!important;font-size:20px;-webkit-text-stroke:1.2px #111!important;paint-order:stroke fill;text-shadow:0 2px 0 #111}
@@ -7734,7 +7734,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-460';   // à changer avec VERSION dans sw.js
+const APPV='lf-461';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
@@ -8210,7 +8210,7 @@ const MN=[
  ['olz','Contours noirs (tous les menus)',0,3,.05,1,''],
  ['Cases des jeux'],
  ['jis','Contour des dessins',.3,2.2,.05,1,''], ['jr','Arrondi',6,40,1,24,'px'],['jbw','Contour',0,5,.25,2.5,'px'],['jbh','Débord de la couleur',0,12,.5,4,'px'],['jsh','Ombre dure',0,10,.5,0,'px'],['jtl','Inclinaison',0,5,.25,0,''],
- ['jgap','Écart entre les cases',4,30,1,14,'px'],['jh','Hauteur des cases',.6,1.4,.02,.9,''],['jiz','Taille du dessin',.4,1.6,.02,1,''],['jnz','Taille du nom',.6,1.7,.02,1,''],['jns','Contour du nom',0,4,.1,1.4,'px'],['jtz','Petite phrase (0 = cachée)',0,1.5,.05,1,''],['jqz','Titre « À quoi on joue ? »',0,1.6,.05,1,''],
+ ['jgap','Écart entre les cases',4,30,1,14,'px'],['jh','Hauteur des cases',.6,1.4,.02,.9,''],['jiz','Taille du dessin',.4,1.6,.02,1,''],['jnz','Taille du nom',.6,1.7,.02,1,''],['jns','Nom (case fermée) : contour',0,4,.1,1.4,'px'],['jnsh','Nom (case fermée) : ombre',0,8,.25,2,'px'],['jbns','Nom (case ouverte) : contour',0,5,.1,2,'px'],['jbnsh','Nom (case ouverte) : ombre',0,10,.25,3,'px'],['jtz','Petite phrase (0 = cachée)',0,1.5,.05,1,''],['jqz','Titre « À quoi on joue ? »',0,1.6,.05,1,''],
  ['Capsule joueur'],
  ['cw','Largeur',30,100,1,51,''],['cph','Hauteur',-10,14,.5,0,'px'],['cr','Arrondi',0,30,.5,30,'px'],['cbw','Contour',0,5,.25,2,'px'],['cbh','Débord de la bulle',0,10,.25,3.5,'px'],['cbc','Couleur du contour',MN_COL,'Noir'],['cbg','Fond à la couleur du joueur',0,100,5,100,'%'],
  ['Nom'],
