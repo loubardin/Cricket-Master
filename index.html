@@ -4062,6 +4062,9 @@ html body #setup#setup .gpc .rbox .rp{color:#111!important;opacity:1!important}
 html body #setup#setup .gpc .rbox .rp::before{background:var(--gc)!important;box-shadow:0 0 0 2px #111!important}
 html body #setup#setup .gpc .rbox b{color:#111!important;text-decoration:none!important}
 
+/* lf-459 : « On y va ! » — contour blanc, texte blanc, sans fond */
+html body #setup#setup .gpgo{background:transparent!important;color:#fff!important;box-shadow:inset 0 0 0 calc(2.5px * var(--mn-olz,1)) #fff!important;-webkit-text-stroke:1px #111;paint-order:stroke fill;text-shadow:0 2px 0 #111}
+
 </style>
 </head>
 <body>
@@ -7725,7 +7728,7 @@ $('grid').addEventListener('click',e=>{if(!BARC)return;e.stopImmediatePropagatio
 /* ===== thème : 3 réglages de couleur (fond, contours et textes, bulles) ===== */
 /* thème unique (Bulle d'origine) : on efface les anciens réglages de couleurs et de style */
 if(S.th||S.style||S.pfT||S.pfN||S.pst){['th','style','pfT','pfN','pst'].forEach(k=>delete S[k]);try{store.set(K_S,S)}catch(e){}}
-const APPV='lf-458';   // à changer avec VERSION dans sw.js
+const APPV='lf-459';   // à changer avec VERSION dans sw.js
 ['--m-bg','--m-card','--m-line','--m-strongtx','--btx','--accent','--acc-rgb','--m-home','--ui-bg','--page','--m-cell','--ink','--m-ink','--m-strong','--mute','--m-sub'].forEach(k=>document.documentElement.style.removeProperty(k));
 try{colApply()}catch(e){}   // couleurs choisies : rétablies à chaque ouverture
 $('skinT').addEventListener('click',e=>{e.stopPropagation();haptic();SFX.ui();
